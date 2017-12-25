@@ -199,7 +199,7 @@ The following free third party components are included in MusicDB:
    * `jQuery UI <https://jqueryui.com/>`_
    * `jQuery nanoScroller.js <https://jamesflorentino.github.io/nanoScrollerJS/>`_
    * `Silkscreen <http://www.kottke.org/plus/type/silkscreen/index.html>`_
-   * `Source Sans Pro <https://github.com/adobe-fonts/source-sans-pro>`_ and `Source Serif Pro <https://github.com/adobe-fonts/source-serif-pro>`
+   * `Source Sans Pro <https://github.com/adobe-fonts/source-sans-pro>`_ and `Source Serif Pro <https://github.com/adobe-fonts/source-serif-pro>`_
    * `DejaVuSans <https://github.com/dejavu-fonts/dejavu-fonts>`_
    * `Font Awesome <http://fontawesome.io/>`_
    * `ConvertUTF.h <http://llvm.org/doxygen/ConvertUTF_8h_source.html>`_
