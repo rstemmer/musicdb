@@ -17,6 +17,23 @@
 from lib.clui.frame import Frame
 
 class Pane(Frame):
+    """
+    This class can be used to define a whole, filled are in the shell.
+    The area consist of spaces in the defined color.
+    Around the area, a :class:`~lib.clui.frame.Frame` gets printed.
+
+    If a title is set, then this title gets printed in the top left corner of the frame.
+    The title gets surrounded by a space character.
+
+    The coordinates define the placement of the frame, the usable area starts with an offset of one.
+
+    Args:
+        title (str): Optional title for the area.
+        x,y (int): Start position of the frame (top left corner) of this area
+        w (int): width of the frame
+        h (int): height of the frame
+    """
+
     def __init__(self, title=None, x=0, y=0, w=0, h=0):
         Frame.__init__(self)
         self.title = title
@@ -26,15 +43,17 @@ class Pane(Frame):
         self.h = h
 
     def Draw(self):
+        """
+        This method prints a whole area in the shell.
+
+        Returns:
+            *Nothing*
+        """
         self.SetColor("1;31", "40") # reset color
         Frame.Draw(self, self.x, self.y, self.w, self.h)
         if self.title:
             self.SetCursor(self.x+2, self.y)
             self.PrintText(" " + self.title + " ")
-
-
-
-
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

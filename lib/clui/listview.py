@@ -17,6 +17,64 @@
 from lib.clui.pane import Pane
 
 class ListView(Pane):
+    """
+    This class provides a ListView that shows a list the user can scroll through using the arrow keys.
+
+    The data shown in the list must be a string in this class.
+    For derived classes, they can be considered abstract and contain any kind of type as long as
+    you adopt the :meth:`~onDrawElement` method.
+
+    An example on how to use this class:
+
+        .. code-block:: python
+
+
+            class MusicView(ListView):
+                def __init__(self, title):
+                    ListView.__init__(self, title)
+
+                def SetData(self, artists, albums, songs):
+                    artistdata = [("artist", name) for name in artists]
+                    albumdata  = [("album",  name) for name in albums ]
+                    songdata   = [("song",   name) for name in songs  ]
+
+                    data = []
+                    data.extend(artistdata)
+                    data.extend(albumdata )
+                    data.extend(songdata  )
+                    ListView.SetData(self, data)
+
+                def onDrawElement(self, element, number, maxwidth):
+                    tag  = element[0]
+                    path = element[1]
+                    maxnamelen = maxwidth - 6   # - "[xxx] "
+
+                    string = "\033[1;30m["
+                    if tag == "artist":
+                        string += "art"
+                    elif tag == "album":
+                        string += "alb"
+                    elif tag == "song":
+                        string += "sng"
+                    else:
+                        string += "INV"
+                    string += "] \033[1;34m"
+                    string += path[:(maxnamelen)].ljust(maxpathlen)
+                    return string
+
+
+            artists = ["Artist A", "Brtist B"]
+            albums  = ["An album", "And Another Album"]
+            songs   = ["This is a song name"]
+            sv  = MusicView("Music", 2, 2, 10, 5)
+            sv.SetData(artists, albums, songs)
+            sv.Draw()
+
+    Args:
+        title (str): Title of the list view
+        x,y (int): Position of the list view
+        w,h (int): Width and height
+    """
     def __init__(self, title=None, x=0, y=0, w=0, h=0):
         Pane.__init__(self, title, x, y, w, h)
         self.listoffset     = 0
@@ -26,6 +84,21 @@ class ListView(Pane):
 
 
     def onDrawElement(self, element, number, maxwidth):
+        """
+        This method gets called when an element gets printed into the list view.
+        To customize how elements will appear in the list, overload this method.
+
+        The returned string can contain ANSI Escape Sequences for coloring.
+        The number of printable character should not exceed the maximum width ``maxwidth``.
+
+        Args:
+            element: The element that shall be printed.
+            number (int): The index of the element in the list of all elements
+            maxwidth (int): The maximum number of characters that can be printed in one line of the list view
+
+        Returns:
+            The string that will be printed in one line of the list view
+        """
         string = str(element)
         string = string[:maxwidth]
         string = string.ljust(maxwidth)
@@ -33,22 +106,62 @@ class ListView(Pane):
 
 
     def onAction(self, element, key):
+        """
+        This method gets called when a key gets passed to the :meth:`~HandleKey` method.
+        It is supposed to process the selected line in the list of elements.
+        In this class, nothing will be done.
+        
+        Args:
+            element: The selected element in the list
+            key (str): The key that was pressed while the element was selected
+
+        Returns:
+            The modified element that will be put back in the list of elements
+        """
         return element
 
 
     def SetData(self, elements):
+        """
+        This method can be used to initialize the list of data that will be shown in the list view
+        If the :meth:`~onDrawElement` method is not overloaded, the list must contain strings.
+
+        Args:
+            elements (list): A list of data
+
+        Returns:
+            *Nothing*
+        """
         self.elements = elements
 
 
     def SetSelectedData(self, element):
+        """
+        Replaces the selected element with a new one.
+
+        Args:
+            element: An element that replaces the selected element
+
+        Returns:
+            *Nothing*
+        """
         self.elements[self.linemarker] = element
 
 
     def GetSelectedData(self):
+        """
+        This method returns the selected element.
+
+        Returns:
+            The selected element
+        """
         return self.elements[self.linemarker]
 
 
     def Draw(self):
+        """
+        This method draws the list of elements.
+        """
         self.SetFGColor("1;31")
         Pane.Draw(self)
 
@@ -102,6 +215,22 @@ class ListView(Pane):
 
 
     def HandleKey(self, key):
+        """
+        This method must be called whenever a key was pressed and this ListView is "active".
+        It expects the key name returned by :meth:`lib.clui.text.Text.GetKey`.
+
+        If the key is ``"up"`` the element above the current selected element gets selected.
+        If the key is ``"down"`` the one below will be selected.
+        Any other key gets passed to the :meth:`~onAction` method.
+
+        After handling an key, the :meth:`~Draw` method gets called to refresh the view.
+
+        Args:
+            key (str): Key name that shall be handled
+
+        Returns:
+            *Nothing*
+        """
         if key == "up":
             if self.linemarker > 0:
                 self.linemarker -= 1
@@ -124,8 +253,6 @@ class ListView(Pane):
             if self.elements:
                 self.elements[self.linemarker] = self.onAction(self.elements[self.linemarker], key)
             self.Draw()
-
-
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

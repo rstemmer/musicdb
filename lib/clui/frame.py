@@ -91,7 +91,7 @@ class Frame(Text):
         You may want to call :meth:`~Draw` to redraw the frame with the new style.
 
         Args:
-            The new style
+            linestyle: The new style
 
         Returns:
             *Nothing*
@@ -124,6 +124,7 @@ class Frame(Text):
 
         Raises:
             TypeError: When one of the arguments is not of type integer.
+            ValueError: When *x* or *y* is negative.
         """
         if type(x) != int or type(y) != int or type(w) != int or type(h) != int:
             raise TypeError("Coordinates, width and height must be of type integer")
