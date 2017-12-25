@@ -7,15 +7,15 @@ Until now I spent more than 6 years for developing this software.
 Since I finished a first test version, I use it nearly every day.
 Time to share it with the world :)
 
-For more details see the start page [rstemmer.github.io/musicdb](https://rstemmer.github.io/musicdb)
+For more details see the start page [rstemmer.github.io/musicdb](https://rstemmer.github.io/musicdb/index.html)
 
 ## Installation
 
-[How to Install MusicDB](https://rstemmer.github.io/musicdb/docs/build/html/usage/install.html)
+[How to Install MusicDB](https://rstemmer.github.io/musicdb/build/html/usage/install.html)
 
 ## Documentation
 
-[MusicDB's Documentation](https://rstemmer.github.io/musicdb/docs/build/html/usage/index.html)
+[MusicDB's Documentation](https://rstemmer.github.io/musicdb/build/html/index.html)
 
 ## Social
 
@@ -31,6 +31,6 @@ and ends with adding new features to MusicDB.
 You can also improve the documentation.
 
 Please work only on the *develop* branch and don't commit docs/build if it is not mandatory.
-Read [Working on MusicDB's Code](https://rstemmer.github.io/musicdb/docs/build/html/basics/workflow.html) before
+Read [Working on MusicDB's Code](https://rstemmer.github.io/musicdb/build/html/basics/workflow.html) before
 you start.
 
