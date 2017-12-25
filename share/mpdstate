@@ -1,0 +1,10 @@
+sw_volume: 100
+state: pause
+current: 0
+random: 0
+repeat: 1
+single: 0
+consume: 1
+crossfade: 0
+mixrampdb: 0.000000
+mixrampdelay: -1.000000

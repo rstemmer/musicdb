@@ -1,0 +1,31 @@
+
+/******************/
+/* Base settings  */
+/******************/
+
+body
+{
+    height:         100vh;
+    margin:         0 auto;
+    overflow:       hidden;
+    font-family:    SourceSansPro, DejaVuSans;
+    font-size:      12pt;
+    cursor:         default;
+
+    background-image: url(../pics/BGTexture05.png); /*root is css/ -> css/../pics/ */
+    image-rendering:  pixelated;
+}
+
+input
+{
+    font-family:    SourceSansPro, DejaVuSans;
+}
+
+[draggable] 
+{
+    cursor:         move;
+}
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

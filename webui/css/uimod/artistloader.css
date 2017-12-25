@@ -1,0 +1,117 @@
+
+/******************/
+/* Main Container */
+/******************/
+
+div#ALMainBox
+{
+    display:        flex;
+    height:         100%;
+    width:          100%;
+    align-items:    center;
+    flex-direction: column;
+}
+
+div#ALMainFrame
+{
+}
+
+div#ALTaglist
+{
+    display:        flex;
+    flex-direction: row;
+    padding:        5px;
+}
+
+div#ALControls
+{
+    display:        flex;
+    flex-direction: row;
+    padding:        5px;
+    padding-top:    0px;
+}
+
+
+@media only screen and (max-width: 1600px) 
+{
+    div#ALTaglist
+    {
+        flex-wrap:  wrap;
+        max-width:  250px;
+    }
+    div#ALControls
+    {
+        display:    none;
+    }
+}
+
+
+/******************/
+/* Control-Buttons */
+/******************/
+
+div.AL_controlbutton
+{
+    display:    inline-box;
+    padding:    2px;
+    margin:     2px;
+}
+
+div.AL_controlbutton:before 
+{
+    font-family:    FontAwesome;
+    font-weight:    normal;
+    text-align:     right;
+
+    display:        inline-block;
+    padding-right:  3px;
+}
+
+
+div#ArtistControlButton_Reload:before
+{
+    content: "\f021";   /*fa-refresh*/
+}
+
+
+
+
+/******************/
+/* Tag-Buttons    */
+/******************/
+
+div.AL_tagbutton
+{
+    display:    inline-box;
+    min-width:  60px;
+    padding:    2px;
+    margin:     2px;
+}
+
+div.AL_tagbutton:before 
+{
+    font-family:    FontAwesome;
+    font-weight:    normal;
+    text-align:     right;
+
+    display:        inline-block;
+    padding-right:  3px;
+    width:          9px;
+}
+
+div.AL_tagbutton[data-checked=true]:before 
+{
+    color:   #084010;
+    content: "\f00c";
+}
+
+div.AL_tagbutton[data-checked=false]:before 
+{
+    color:   #611;
+    content: "\f00d";
+}
+
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

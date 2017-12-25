@@ -1,0 +1,19 @@
+#!/bin/bash
+
+ID3EDIT="id3edit"
+ARG="$1"
+
+if [ "$ARG" == "--help" ] || [ "$ARG" == "-h" ] ; then
+    $ID3EDIT --help
+    exit 0
+fi
+
+if [ "$ARG" == "--version" ] || [ "$ARG" == "-v" ] ; then
+    $ID3EDIT --version
+    exit 0
+fi
+
+$ID3EDIT --readonly --get-all "$ARG"
+
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
+

@@ -1,0 +1,512 @@
+Installation & Update
+=====================
+
+The following sections describe how to install MusicDB and its dependencies.
+
+.. attention::
+
+   * This is a one-man hobby project.
+   * I cannot guarantee anything.
+   * Whatever you do, first do a backup.
+   * Please `Create a new issue on GitHub <https://github.com/rstemmer/musicdb/issues>`_ if there are any problems with MusicDB.
+
+   I guess everyone reads this part of the documentation, so hopefully this is the most read text of the whole project.
+
+
+Installation (Automatic)
+------------------------
+
+To install MusicDB, there is a script ``install.sh`` that will help you.
+The following subsections explain how to install MusicDB using this script.
+
+Install Dependencies
+^^^^^^^^^^^^^^^^^^^^
+
+First, you need to install some dependencies using your systems package manager:
+
+   * openssl
+   * sqlite3
+   * sed
+   * git
+   * mpd
+   * dialog
+   * gcc/clang
+
+Executing the install.sh Script
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Now you can simply execute the script from the source directory, after you have cloned the `git <https://github.com/rstemmer/musicdb>`_ repository from GitHub.
+
+.. code-block:: bash
+
+   # cd to a place where the source repository shall be downloaded
+   cd /src
+
+   # download MusicDB
+   git clone https://github.com/rstemmer/musicdb
+   cd musicdb
+
+   # start the installation
+   su    # you need to be root
+   ./install.sh
+   # set and confirm the installation setup to start, or cancle and nothing will be done.
+
+After starting the ``install.sh`` script, the script tries to determine some variables.
+It also recognizes if this is a new installation or an update by checking for the symlink ``/etc/musicdb.ini``.
+Then it opens a dialog where these variables can be confirmed or modified.
+
+The following settings must be configured for the installation (and will be recognized when MusicDB shall only be updated):
+
+   Source directory:
+      The git repository with the source code.
+
+   Server directory:
+      In this directory will the MusicDB code be installed
+
+   Data directory:
+      The directory for MusicDB's data and configuration as wall as the data and configuration for its dependencies
+
+   Music directory:
+      The music collection following the :doc:`/usage/music` naming scheme
+
+   HTTP group:
+      The Unix group for HTTP documents necessary to access the WebUI
+
+   MPD user:
+      The user name the Music Playing Daemon (MPD) uses
+
+   SSL Certificate:
+      Certificate file for the SSL encryption of the WebSocket communication
+
+   SSL Key:
+      Key file for the WebSocket SSL certificate
+
+
+During the installation process, SSL certificates gets generated for the WebSocket connection.
+The following files will be generated during installation: ``musicdb.key``, ``musicdb.crt``, ``musicdb.pfx`` and ``musicdb.pem``.
+At least the *.key* and *.crt* files are needed to start the MusicDB server.
+If you want to use your own already available files, you can set in the settings mentioned above.
+For details on how the files are created, search inside the ``install.sh`` file for ``CreateMusicDBSSLKeys``.
+
+Whenever there is a problem, the installation process stops with an error message.
+After solving the problem you can just restart the install script.
+Make sure the settings are the same or still valid.
+The script always tries to determine the state of a single installation step and recognizes if it is already done.
+
+Install all Dependencies
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Execute the ``musicdb-check.sh`` script to see what dependencies are missing.
+In context of the install.sh script, the name of this script is a bit misleading.
+It only checks for dependencies. It does not check the installation.
+
+Install at least all mandatory (none optional) dependencies.
+You can use your system package manager or pythons package manager ``pip`` (``pip3`` on Debian) to install them.
+
+Configureing MusicDB
+^^^^^^^^^^^^^^^^^^^^
+
+To configure MusicDB edit the ``musicdb.ini`` file in the data directory (that is also linked to /etc/musicdb.ini)
+
+
+Installation (Manually)
+-----------------------
+
+The following steps give an idea of how to install MusicDB.
+
+System Preparation
+^^^^^^^^^^^^^^^^^^
+
+   - create a user ``musicdb`` and a group ``musicdb``
+   - add your user (here called ``user``) to group ``musicdb`` so you can access the files created by MusicDB as user.
+     MusicDB will set music and artwork files ownerships to ``user:musicdb``, other files are ``musicdb:musicdb``.
+   - Create a directory for MusicDB installation (here ``/srv/musicdb``) and for MusicDB's data (here ``/data/musicdb``).
+     The ownership must be ``musicdb:musicdb``.
+   - Create a music-directory (here ``/data/music``) and set the ownership to ``user:musicdb``
+
+.. code-block:: bash
+
+   # as root in /
+   groupadd -g 2666 musicdb
+   useradd -d /data/musicdb -s /usr/bin/zsh -g 2666 -u 2666 -M musicdb
+   usermod -a -G http musicdb
+   usermod -a -G musicdb user
+
+   mkdir /srv/musicdb  && chown -R musicdb:musicdb /srv/musicdb
+   mkdir /data/musicdb && chown -R musicdb:musicdb /data/musicdb
+   mkdir /data/music   && chown -R user:musicdb    /data/music
+
+
+Install dependencies
+^^^^^^^^^^^^^^^^^^^^
+
+Some: ``git``, ``gcc``, ``python``, ``pip``
+
+.. attention::
+
+   On Debian the ``python`` command runs the ancient Python 2.
+   Whenever this documentation is talking about Python, Python 3 is meant!
+
+Further more, everything ``musicdb-check`` is missing.
+The following list gives you some details about the listed modules.
+
+   * If an optional dependency is missing, read the ``musicdb-check.sh`` script. The comments help you to decide if you need them.
+   * The *PIL* module can be found as ``pillow``.
+   * ``icecast`` won't be detected on Debian because there it is called ``icecast2`` (This has no impact).
+   * ``apachectl`` my be not found if it is only available for root user. Or you simply use another HTTP server.
+   * ``jsdoc`` can be installed via ``npm install -g jsdoc``.
+   * ``mpd`` comes with the ``python-mpd2`` module.
+   * The following modules are optional in case you don't want to use the AI infrastructure: ``numpy``, ``h5py``, ``tensorflow``, ``tflearn``
+
+Basic packages
+^^^^^^^^^^^^^^
+
+There are some external tools necessary.
+Furthermore there are lots of python packages needed.
+You can use the ``musicdb-check.sh`` script to see what packages are missing.
+
+The missing ``id3edit`` tool is part of MusicDB.
+It's installation is described in this documentation later on.
+
+MPD - Music Player Daemon
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+MPD needs a working directory and some configuration.
+The following setup binds MPD to MusicDB as close as possible.
+
+   - Create a working directory relative to MusicDB's data directory: ``/data/musicdb/mpd``
+   - Set permissions so that all users in group ``musicdb`` have access to the files
+   - Change the home directory of ``mpd`` to ``/data/musicdb/mpd``
+
+.. code-block:: bash
+
+   # as root
+   cd /data/musicdb
+
+   # create MPD working directory
+   mkdir -p mpd/playlists
+   touch mpd/state
+   touch mpd/mpd.conf
+   chown -R mpd:musicdb mpd
+   chmod g+w            mpd/mpd.conf
+    
+   # configure
+   vim mpd/mpd.conf
+    
+   # set /data/musicdb/mpd as home dir for user mpd
+   vim /etc/passwd
+
+   # final test and setup
+   mpd --no-daemon /data/musicdb/mpd/mpd.conf
+   mpc -p 9999 enable 1
+   mpc -p 9999 consume 1
+
+The configuration can look like this:
+
+.. code-block:: bash
+
+   music_directory         "/data/music"
+   playlist_directory      "~/playlists"
+   db_file                 "~/database"
+   log_file                "~/log.txt"
+   pid_file                "/run/mpd/mpd.pid"
+   state_file              "~/state"
+   sticker_file            "~/sticker.db"
+    
+   user                    "mpd"
+   group                   "musicdb"
+   bind_to_address         "127.0.0.1"
+   bind_to_address         "~/socket"
+   port                    "9999"
+   metadata_to_use         "artist,album,title,track,name,genre,date,composer,performer,disc"
+   filesystem_charset      "UTF-8"
+   auto_update             "yes"
+   follow_outside_symlinks "yes"
+   follow_inside_symlinks  "yes"
+    
+   default_permissions     "read,add,control,admin"
+    
+   decoder {
+      plugin "mad"
+      enabled "no"
+   }
+   decoder {
+      plugin "ffmpeg"
+      enabled "yes"
+   }
+
+   audio_output {
+      type            "httpd"
+      name            "M45ch1n3::mpd::stream"
+      encoder         "lame"
+      port            "6666"
+      bind_to_address "127.0.0.1"
+      bitrate         "320"
+      format          "44100:16:2"
+      max_clients     "0"             # 0=no limit
+   }
+
+
+
+Apache HTTP-Server
+^^^^^^^^^^^^^^^^^^
+
+.. code-block:: bash
+
+   cd /etc/httpd/conf
+   vim apps/musicdb.conf
+   vim httpd.conf
+   #> Include conf/apps/musicdb.conf
+
+The musicdb.conf file can look like this:
+
+.. code-block:: apache
+
+   Alias /musicdb/artwork/ "/data/musicdb/artwork/"
+   <Directory "/data/musicdb/artwork">
+      AllowOverride None
+      Options +FollowSymLinks
+      Require all granted
+   </Directory>
+
+   Alias /musicdb/music/ "/data/music/"
+   <Directory "/data/music">
+      AllowOverride None
+      Options +FollowSymLinks
+      Require all granted
+   </Directory>
+
+   Alias /musicdb/ "/srv/musicdb/"
+   <Directory "/srv/musicdb">
+      AllowOverride None
+      Options +ExecCGI +FollowSymLinks
+      Require all granted
+      AddType text/cache-manifest .iOSmanifest  
+   </Directory>
+
+
+Download MusicDB
+^^^^^^^^^^^^^^^^
+
+.. code-block:: bash
+
+   # as user in ~/projects
+   git clone https://github.com/rstemmer/libprinthex.git
+   git clone https://github.com/rstemmer/musicdb.git
+
+
+
+libprinthex
+^^^^^^^^^^^
+
+.. code-block:: bash
+
+   cd libprinthex
+   ./build.sh
+   ./install.sh
+
+
+id3edit
+^^^^^^^
+
+.. code-block:: bash
+
+   cd musicdb/id3edit
+   ./build.sh
+   ./install.sh
+
+musicdb
+^^^^^^^
+
+.. code-block:: bash
+
+   cd /srv/musicdb
+   cp ~/projects/musicdb/update.sh .
+   # edit update.sh and make sure it does what you expect
+   ./update.sh
+
+   # config
+   cd /data/musicdb
+   cp ~/projects/musicdb/share/musicdb.ini .
+   cp ~/projects/musicdb/share/mdbstate.ini .
+   chown musicdb:musicdb musicdb.ini
+   chown musicdb:musicdb mdbstate.ini
+   chmod g+w musicdb.ini
+   chmod g+w mdbstate.ini
+   vim musicdb.ini
+    
+   # this config can also be the default config
+   cd /etc
+   ln -s /data/musicdb/musicdb.ini musicdb.ini
+   cd -
+    
+   # artwork
+   mkdir -p artwork
+   chown -R user:musicdb artwork
+   chmod -R g+w artwork 
+    
+   cp ~/projects/musicdb/share/default.jpg artwork/default.jpg
+   chown musicdb:musicdb artwork/default.jpg 
+    
+   # MusicAI
+   mkdir -p musicai/{models,log,spectrograms,tmp}
+   chown -R musicdb:musicdb musicai
+    
+   # logfile
+   touch debuglog.ansi && chown musicdb:musicdb debuglog.ansi
+    
+   # logrotate
+   cp ~/projects/musicdb/share/logrotate.conf /etc/logrotate.d/musicdb
+
+
+
+Configureing MusicDB WebUI
+--------------------------
+
+The WebUI configuration must be done inside the file ``webui/js/musicdb.js``
+
+At the begin of that file, the variable ``WEBSOCKET_URL`` must be configured.
+In particular the port number must match the one set in the MusicDB Configuration file /etc/musicdb.ini.
+An example variable is ``WEBSOCKET_URL = "wss://testserver.org:9000"``.
+
+For further details, read the :doc:`/webui/websockets` documentation
+See the sections for the watchdog and the communication to the server.
+
+This configuration will be persistent when updating.
+The update process saves the lines with the configuration and restores them after the file got replaced by a new one.
+
+The web server must provide the following virtual directories:
+
+   * ``/musicdb/`` pointing to the WebUI directory (``$SERVERDIR/webui``)
+   * ``/musicdb/artwork/`` pointing to the artwork directory (``$DATADIR/artwork``)
+   * ``/musicdb/music/`` pointing to the music collection
+   * ``/musicdb/docs/`` pointing to the documentation directory (``$SERVERDIR/docs``)
+
+An example `Apache <https://httpd.apache.org/>` configuration can look like this:
+
+.. code-block:: apache
+
+   Alias /musicdb/artwork/ "/data/musicdb/artwork/"
+   <Directory "/data/musicdb/artwork">
+      AllowOverride None
+      Options +FollowSymLinks
+      Require all granted
+   </Directory>
+
+   Alias /musicdb/music/ "/data/music/"
+   <Directory "/data/music">
+      AllowOverride None
+      Options +FollowSymLinks
+      Require all granted
+   </Directory>
+ 
+   Alias /musicdb/docs/ "/srv/musicdb/docs/"
+   <Directory "/srv/musicdb/docs">
+       AllowOverride None
+       Options +FollowSymLinks
+       Require all granted
+   </Directory>
+
+   Alias /musicdb/ "/srv/musicdb/"
+   <Directory "/srv/musicdb">
+      AllowOverride None
+      Options +ExecCGI +FollowSymLinks
+      Require all granted
+      AddType text/cache-manifest .iOSmanifest  
+   </Directory>
+
+
+When everything is correct, and the server running, the WebUI can be reached via `http://localhost/musicdb/webui/moderator.html`
+
+
+
+CUDA for MusicAI
+----------------
+
+.. note::
+
+   **MusicAI is optional!**
+
+   You only should consider using MusicAI if you know how to handle Neural Networks - or if you are willing to learn.
+   This feature is very computation intensive and requires expensive hardware to be usable.
+   You should first read the :doc:`/mdbapi/musicai` documentation.
+   If you still think working with a Convolutional Deep Neural Network is a good idea, then you should give it a try.
+   For me it works well and it has a coolness level over 9000.
+
+When you want to use MusicAI you need a working `TensorFlow <https://www.tensorflow.org/>`_ environment 
+with `CUDA <https://developer.nvidia.com/cuda-zone>`_ support.
+
+.. code-block:: bash
+
+   pacman -S nvidia
+   shutdown -r now
+   pacman -S opencl-nvidia opencl-headers cuda
+
+The `CuDNN <https://developer.nvidia.com/cudnn>`_ libraries are needed by *TensorFlow*.
+To download them you need a `NVidia Developer Account <https://developer.nvidia.com/rdp/form/cudnn-download-survey>`_.
+
+.. code-block:: bash
+
+   cp cudnn-8.0-linux-x64-v6.0.tgz /opt
+   cd /opt
+   tar xf cudnn-8.0-linux-x64-v6.0.tgz
+   echo 'export LD_LIBRARY_PATH=/opt/cuda/lib64:$LD_LIBRARY_PATH' >> /etc/profile.d/cuda.sh
+
+
+
+First Run
+---------
+
+If you start MusicDB Server right after installation, lots of warnings will appear periodically.
+The reason is, that there are no songs in MPDs playlist and that the random song selector(Randy) does not know what songs to add.
+
+So before starting the server, it is recommended to add some music to MusicDB and so, indirectly to MPD.
+If you only want to check the installation and setup, you can run the server and ignore the warning.
+
+For starting and stopping the MusicDB WebSocket Server and its dependent processes, 
+the scripts described in :doc:`/usage/scripts` are recommended.
+
+For details of the configuration, see :doc:`/basics/config`.
+
+You can access the WebUI by opening the file ``webui/moderator.html`` in Firefox.
+
+The first time you want to connect to the WebSocket server you have to tell Firefox that your SSL
+certificates are "good".
+Open the WebSocket URL in the browser with ``https`` instead of ``wss`` and create an exception.
+So if your WebSocket address is ``wss://localhost:9000`` visit `https://localhost:9000`.
+
+
+Update
+------
+
+.. warning::
+   
+   The MusicDB installation script cannot be tested as good as it should be tested.
+   There may be some problems in special cases.
+   Espacially when you use it for updating MusicDB, it could happen that you loose some configuration or in worts case your database.
+
+   You really should **make a backup** of the MusicDB data directory!
+
+After updating *CUDA*, *TensorFlow* must be updated, too.
+
+.. code-block:: bash
+
+   pip install --upgrade tensorflow
+   pip install --upgrade tflearn
+
+
+If you want to update MusicDB, pull the latest version from GitHub, and execute the ``install.sh`` script.
+Make sure the detected settings that are displayed in the dialog are correct.
+
+.. code-block:: bash
+
+   cd /src/musicdb      # go to MusicDB's source directory
+   git pull             # get the latest source code
+   git checkout master  # make sure you are in the master branch
+   su                   # you must be root for the updating process
+   ./install.sh         # update
+
+
+
+
+

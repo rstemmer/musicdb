@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<html lang="de" manifest="manifest.appcache">
+    <head>
+        <!-- Make things clear -->
+        <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <!-- Make things fancy -->
+        <!-- icons -->
+        <link rel="icon"              type="image/png" href="pics/MusicDB.png"  >
+        <link rel="apple-touch-icon" sizes="152x152"   href="pics/TouchIcon.png">
+        <!-- libs -->
+        <link rel="stylesheet" href="lib/nanoscroller/nanoscroller.css">
+        <link rel="stylesheet" href="lib/jquery-ui/jquery-ui.min.css">
+        <link rel="stylesheet" href="lib/font-awesome/font-awesome.css">
+        <!-- styles -->
+        <link rel="stylesheet" href="css/fonts.css">
+        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="css/style.css">
+        <!-- tools/helper -->
+        <link rel="stylesheet" href="css/tools/hovpacity.css">
+        <link rel="stylesheet" href="css/tools/ColorInput.css">
+        <!-- mods -->
+
+        <!-- TEST -->
+        <link rel="stylesheet" href="css/uimod/taginput.css">
+        <!-- /TEST -->
+
+        <link rel="stylesheet" href="css/moderator/frames.css">
+        <link rel="stylesheet" href="css/test/test.css">
+
+
+        <!-- Make things work -->
+        <!-- libs -->
+        <script src="lib/jquery/jquery-3.min.js"></script>  
+        <script src="lib/jquery-ui/jquery-ui.min.js"></script>  
+        <script src="lib/nanoscroller/jquery.nanoscroller.min.js"></script>  
+        <script src="lib/color-thief/color-thief.min.js"></script>  
+        <!-- tools -->
+        <script src="js/tools/scrollto.js"></script>  
+        <script src="js/style.js"></script>  
+        <!-- scripts -->
+
+        <!-- TEST -->
+        <script src="js/uimod/tagmanager.js"></script>
+        <script src="js/uimod/taginput.js"></script>
+        <!-- /TEST -->
+
+        <script src="js/musicdb.js"></script>  
+        <!-- This needs to be the last one. It connects to the server and starts running the functionality. -->
+        <script src="js/test/test.js"></script>  
+
+        <title>MusicDB</title>
+        <!-- UNCOMMENT FOR DEBUGGING DIVS
+        <style type="text/css">
+        div
+        {
+            border: 1px solid #f00;
+        }
+        </style>
+        -->
+    </head>
+
+
+    <body class="bgcolor fgcolor">
+    <div class=MainView>
+
+        <div class="MainViewRow">
+            <div class="MainViewColumn">
+                <div id="MainViewContent1"></div>
+            </div>
+            <div class="MainViewColumn">
+                <div id="MainViewContent2"></div>
+            </div>
+            <div class="MainViewColumn">
+                <div id="MainViewContent3"></div>
+            </div>
+        </div>
+
+        <div class="MainViewRow">
+            <div class="MainViewColumn">
+                <div id="MainViewContent4"></div>
+            </div>
+            <div class="MainViewColumn">
+                <div id="MainViewContent5"></div>
+            </div>
+        </div>
+
+    </div>
+    </body>
+
+</html>
+
+<!--
+vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+-->
+

@@ -1,0 +1,1688 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mdbapi.database &mdash; MusicDB 1.0.0 alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> MusicDB
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/changelog.html#id1">1.0.0 - 31.12.2017</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/comparison.html">Comparison to Other Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#comparison">Comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#server">server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#websocket">websocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tls">TLS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#database">database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#music">music</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#extern">extern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tracker">tracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#lycra">lycra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#musicai">MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#randy">Randy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#log">log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/logging.html">Handling log-files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/mods.html">MusicDB Commandline Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/mods.html#loading-of-modules">Loading of Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/testvm.html">MusicDB Test VMs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/testvm.html#qemu-installation">qemu Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#basic-setup">Basic Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#disk-images">Disk Images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/testvm.html#system-setup">System Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#installing-updating-musicdb-test-environment">Installing/Updating MusicDB Test Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#create-dummy-files">Create Dummy Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/testvm.html#test-systems">Test Systems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#debian">Debian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#raspian">Raspian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#arch-linux">Arch Linux</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/webapi.html">MusicDB Websocket API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#communication">Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#packet-format">Packet format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#client-side-interface">Client side interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#callback-functions">Callback functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#artists">Artists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#albums">Albums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#queue">Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#tag-related">Tag related</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#other">Other</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/workflow.html">Workflow for development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/workflow.html#working-on-code">Working on code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#rebuilding-the-documentation">Rebuilding the Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/workflow.html#using-git">Using git</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#micro-commits">Micro Commits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#createing-a-hotfix">Createing a Hotfix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#merging-develop-to-master">Merging Develop to Master</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/workflow.html#releasing-a-new-version">Releasing a New Version</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/install.html">Installation &amp; Update</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-all-dependencies">Install all Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#configureing-musicdb">Configureing MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-manually">Installation (Manually)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#system-preparation">System Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#basic-packages">Basic packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#apache-http-server">Apache HTTP-Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#download-musicdb">Download MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#libprinthex">libprinthex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#musicdb">musicdb</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#cuda-for-musicai">CUDA for MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#update">Update</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/music.html">Music</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#naming">Naming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#artist-directory">Artist Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#album-directory">Album Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#song-file">Song File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#itunes">iTunes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#bandcamp">Bandcamp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-database-module">Using the database module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#updating-songs">Updating Songs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/scripts.html">Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-boot">musicdb-boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-start">musicdb-start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#quickupdate">quickupdate</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/artwork.html">artwork - Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/artwork.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/database.html">database - Music DB Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/extern.html">extern - Music File Uploader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/extern.html#class">class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/extern.html#automatization">Automatization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/metadata.html">metadata - Metadata Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/mise.html">mise - Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/mise.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/musicai.html">musicai - MusicAI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#module-mod.musicai">Module Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#class-description">Class Description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/server.html">server - MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/stats.html">stats - MusicDB Song Statistic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#main-commands">Main commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#style-guide">Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#example-calls">Example calls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/tracker.html">tracker - Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tracker.html#module-mod.tracker">Module Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tracker.html#class-description">Class Description</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/artwork.html">Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#path-structure">Path structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/artwork.html#webbrowsers">Webbrowsers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#manifest">Manifest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/database.html">MusicDBDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/extern.html">MusicDBExtern</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#initializing-a-storage">Initializing a Storage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/extern.html#storage-configuration">Storage Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/extern.html#the-state-file">The State-File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#updating-a-storage">Updating a Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#handling-toxic-environments">Handling Toxic Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#musicdbextern-class">MusicDBExtern Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/lycra.html">LyCra - Lyrics Crawler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/lycra.html#module-mdbapi.lycra">Lycra API Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/lycra.html#crawler-base-class">Crawler Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/lycra.html#module-lib.db.lycradb">Lycra Database</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/mise.html">Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/mpd.html">mpd / Music Playing Daemon Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#observer-thread">Observer Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#callbacks">Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#managing-mpd">Managing MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#queue-management">Queue management</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/musicai.html">MusicAI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#training-time">Training Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#featureset">Featureset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/randy.html">Randomizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#randyinterface-class">RandyInterface Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tags.html">MusicDBTags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tracker.html">Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/clui.html">Command Line User Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.text">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.frame">Frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.pane">Pane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.buttonview">ButtonView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.listview">ListView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.group">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/config.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/database.html">Database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/database.html#database-class">Database Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/filesystem.html">Filesystem Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/hdf5storage.html">HDF5Storage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/metatags.html">Meta Tags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/metatags.html#metatags-class">MetaTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#albums">Albums</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#artworks">Artworks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#origin">Origin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#artists">Artists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#lyrics">Lyrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#tags">Tags</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#database-api">Database API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/pidfile.html">PID File Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/websockets.html#module-lib.ws.server">Websocket Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/websockets.html#module-lib.ws.websocket">Websocket Protocol</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../webui/taginput.html">Tag Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/taginput.html#taginput-js">taginput.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id1">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id2">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id3">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../webui/websockets.html">Websocket Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#connection-process">Connection Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#watchdog">Watchdog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/websockets.html#sending-data">Sending Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/websockets.html#receiving-data">Receiving Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#minimal-usage">Minimal usage</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/impressum.html">Impressum</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#kontakt">Kontakt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#verantwortlich-fur-den-inhalt-nach-55-abs-2-rstv">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#haftung-fur-inhalte">Haftung für Inhalte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#haftung-fur-links">Haftung für Links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#urheberrecht">Urheberrecht</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/impressum.html#datenschutzerklarung">Datenschutzerklärung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#datenschutz">Datenschutz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#cookies">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#server-log-files">Server-Log-Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#facebook-plugins-like-button">Facebook-Plugins (Like-Button)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#twitter">Twitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#google">Google+</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#youtube">YouTube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#ssl-verschlusselung">SSL-Verschlüsselung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#widerspruch-werbe-mails">Widerspruch Werbe-Mails</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MusicDB</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>mdbapi.database</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mdbapi.database</h1><div class="highlight"><pre>
+<span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
+<span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># </span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1"># </span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1"># </span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module is the core of the music handling of MusicDB.</span>
+<span class="sd">It is the interface between the music and its entries in the database (:mod:`lib.db.musicdb`).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">stat</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">from</span> <span class="nn">lib.filesystem</span>     <span class="k">import</span> <span class="n">Filesystem</span>
+<span class="kn">from</span> <span class="nn">lib.metatags</span>       <span class="k">import</span> <span class="n">MetaTags</span>
+<span class="kn">from</span> <span class="nn">lib.pidfile</span>        <span class="k">import</span> <span class="o">*</span>                    <span class="c1"># Check PID File…</span>
+<span class="kn">from</span> <span class="nn">lib.cfg.musicdb</span>    <span class="k">import</span> <span class="n">MusicDBConfig</span>
+<span class="kn">from</span> <span class="nn">lib.db.musicdb</span>     <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">lib.db.trackerdb</span>   <span class="k">import</span> <span class="n">TrackerDatabase</span>      <span class="c1"># To update when a song gets removed</span>
+
+
+<div class="viewcode-block" id="MusicDBDatabase"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase">[docs]</a><span class="k">class</span> <span class="nc">MusicDBDatabase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">        config: MusicDB configuration object</span>
+<span class="sd">        database: MusicDB database</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: when *config* or *database* not of type :class:`~lib.cfg.musicdb.MusicDBConfig` or :class:`~lib.db.musicdb.MusicDatabase`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDBConfig</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31mFATAL ERROR: Config-class of unknown type!</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;config argument not of type MusicDBConfig&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">database</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDatabase</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31mFATAL ERROR: Database-class of unknown type!</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;database argument not of type MusicDatabase&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span>     <span class="o">=</span> <span class="n">database</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span>    <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fs</span>     <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span>   <span class="o">=</span> <span class="n">MetaTags</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="c1"># -rw-rw-r--</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filepermissions</span><span class="o">=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRUSR</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWUSR</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRGRP</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWGRP</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IROTH</span>
+        <span class="c1"># drwxrwxr-x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dirpermissions</span> <span class="o">=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRWXU</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRWXG</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IROTH</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IXOTH</span>                 
+
+        <span class="c1"># read lists with files and directories that shall be ignored by the scanner</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignoreartists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">ignoreartists</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignorealbums</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">ignorealbums</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignoresongs</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">ignoresongs</span>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.FindLostPaths"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.FindLostPaths">[docs]</a>    <span class="k">def</span> <span class="nf">FindLostPaths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method checks all artist, album and song entries if the pathes to their related directories and files are still valid.</span>
+<span class="sd">        Entries with invalid paths gets returned in three lists: ``artists, albums, songs``</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A three lists of database entries with invalid paths. Empty lists if there is no invalid entrie.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lostartists</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">lostalbums</span>  <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">lostsongs</span>   <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Check Artists</span>
+        <span class="n">artists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAllArtists</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">artist</span> <span class="ow">in</span> <span class="n">artists</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">artist</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]):</span>
+                <span class="n">lostartists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">artist</span><span class="p">)</span>
+
+        <span class="c1"># Check Albums</span>
+        <span class="n">albums</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAllAlbums</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">album</span> <span class="ow">in</span> <span class="n">albums</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">album</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]):</span>
+                <span class="n">lostalbums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">album</span><span class="p">)</span>
+
+        <span class="c1"># Check Songs</span>
+        <span class="n">songs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAllSongs</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">song</span> <span class="ow">in</span> <span class="n">songs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsFile</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]):</span>
+                <span class="n">lostsongs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">lostartists</span><span class="p">,</span> <span class="n">lostalbums</span><span class="p">,</span> <span class="n">lostsongs</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.FindNewPaths"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.FindNewPaths">[docs]</a>    <span class="k">def</span> <span class="nf">FindNewPaths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method searches inside the music directory for valid artist, album and song paths.</span>
+<span class="sd">        If those paths are not in the database, they will be returned.</span>
+<span class="sd">        So this method returns three lists: ``artistpaths, albumpaths, songpaths``.</span>
+<span class="sd">        Each representing an artist, album or song that is not known by the database yet.</span>
+<span class="sd">        Files and directories in the configured ignore-list will be ignored.</span>
+
+<span class="sd">        If a new directory was found, the subdirectories will not be added!</span>
+<span class="sd">        So for a new album, the new songs are implicite and not listed in the new-songs-list.</span>
+
+<span class="sd">        This method is very optimistic. It will also list empty directories.</span>
+<span class="sd">        The user may want to check if the results of this method are valid for him.</span>
+
+<span class="sd">        Further more this method is error tolerant. This means, if in the database is an invalid entry,</span>
+<span class="sd">        this does not lead to errors. For example, if an album path gets renamed, this path will be returned.</span>
+<span class="sd">        It does not lead to an error that the old path is still in the database.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A three lists of paths that are valid but unknown by the database. Empty lists if there is no invalid entrie.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">newartists</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">newalbums</span>  <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">newsongs</span>   <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Check Artists</span>
+        <span class="n">artists</span>          <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAllArtists</span><span class="p">()</span>
+        <span class="n">knownartistpaths</span> <span class="o">=</span> <span class="p">[</span><span class="n">artist</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">artist</span> <span class="ow">in</span> <span class="n">artists</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">artist</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])]</span>
+        <span class="n">artistpaths</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetSubdirectories</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignoreartists</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">artistpaths</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">knownartistpaths</span><span class="p">:</span>
+                <span class="n">newartists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="c1"># Check Albums</span>
+        <span class="n">albums</span>          <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAllAlbums</span><span class="p">()</span>
+        <span class="n">knownalbumpaths</span> <span class="o">=</span> <span class="p">[</span><span class="n">album</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">album</span> <span class="ow">in</span> <span class="n">albums</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">album</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])]</span>
+        <span class="n">albumpaths</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetSubdirectories</span><span class="p">(</span><span class="n">knownartistpaths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignorealbums</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">albumpaths</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">knownalbumpaths</span><span class="p">:</span>
+                <span class="n">newalbums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="c1"># Check Songs</span>
+        <span class="n">songs</span>           <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAllSongs</span><span class="p">()</span>
+        <span class="n">knownsongpaths</span>  <span class="o">=</span> <span class="p">[</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">song</span> <span class="ow">in</span> <span class="n">songs</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsFile</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])]</span>
+        <span class="n">songpaths</span>       <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetFiles</span><span class="p">(</span><span class="n">knownalbumpaths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignoresongs</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">songpaths</span><span class="p">:</span>
+
+            <span class="c1"># check if this is really an audio file</span>
+            <span class="n">extension</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetFileExtension</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">extension</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;mp4&quot;</span><span class="p">,</span> <span class="s2">&quot;aac&quot;</span><span class="p">,</span> <span class="s2">&quot;m4a&quot;</span><span class="p">,</span> <span class="s2">&quot;mp3&quot;</span><span class="p">,</span> <span class="s2">&quot;flac&quot;</span><span class="p">,</span> <span class="s2">&quot;MP3&quot;</span><span class="p">]:</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">knownsongpaths</span><span class="p">:</span>
+                <span class="n">newsongs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">newartists</span><span class="p">,</span> <span class="n">newalbums</span><span class="p">,</span> <span class="n">newsongs</span></div>
+
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.FixAttributes"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.FixAttributes">[docs]</a>    <span class="k">def</span> <span class="nf">FixAttributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method changes the access permissions and ownership of a file or directory.</span>
+<span class="sd">        Only the addressed files or directory&#39;s permissions gets changed, not their parents.</span>
+
+<span class="sd">            * File permissions: ``rw-rw-r--``</span>
+<span class="sd">            * Directory permissions: ``rwxrwxr-x``</span>
+<span class="sd">            * Ownership as configured in the settings: ``[music]-&gt;owner``:``[music]-&gt;group``</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path (str): Path to an artist, album or song, relative to the music directory</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError if path is neither a file nor a directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># check if file or dir permissions must be used</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">permissions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dirpermissions</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsFile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">permissions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepermissions</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Path </span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> is not a directory or file&quot;</span><span class="p">)</span>
+
+        <span class="c1"># change attributes and ownership</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">group</span><span class="p">,</span> <span class="n">permissions</span><span class="p">)</span></div>
+        
+
+
+<div class="viewcode-block" id="MusicDBDatabase.AnalysePath"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AnalysePath">[docs]</a>    <span class="k">def</span> <span class="nf">AnalysePath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method analyses a path to a song and extracts all the information encoded in the path.</span>
+<span class="sd">        The path must consist of three parts: The artist directory, the album directory and the song file.</span>
+
+<span class="sd">        A valid path has one the following structures: </span>
+<span class="sd">        </span>
+<span class="sd">            * ``{artistname}/{albumrelease} - {albumname}/{songnumber} {songname}.{extension}``</span>
+<span class="sd">            * ``{artistname}/{albumrelease} - {albumname}/{cdnumber}-{songnumber} {songname}.{extension}``</span>
+
+<span class="sd">        The returned dictionary holds all the extracted information.</span>
+<span class="sd">        In case there is no *cdnumber*, this entry is ``1``.</span>
+<span class="sd">        The names can have all printable Unicode characters and of cause spaces.</span>
+
+<span class="sd">        If an error occurs because the path does not follow the scheme, ``None`` gets returned.</span>
+<span class="sd">        This method does not check if the path exists!</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path (str): A path of a song including artist and album directory.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            On success, a dictionary with information about the artist, album and song.</span>
+<span class="sd">            Otherwise ``None`` gets returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># separate the artist album and song name stored in the filesystem</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">artist</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">song</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Analysing </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed!&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;path cannot be split into three parts: </span><span class="si">{artist}</span><span class="s2">/</span><span class="si">{album}</span><span class="s2">/</span><span class="si">{song}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># analyse the artist-infos</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">artist</span>
+
+        <span class="c1"># analyse the album-infos</span>
+        <span class="n">albuminfos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">AnalyseAlbumDirectoryName</span><span class="p">(</span><span class="n">album</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">albuminfos</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Analysing </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed!&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unexpected album directory name. Expecting </span><span class="se">\&quot;</span><span class="si">{year}</span><span class="s2"> - </span><span class="si">{name}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">albuminfos</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">albuminfos</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+
+        <span class="c1"># analyse the song-infos</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">songname</span>   <span class="o">=</span> <span class="n">song</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="n">songnumber</span> <span class="o">=</span> <span class="n">song</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="p">[</span><span class="n">cdnumber</span><span class="p">,</span> <span class="n">songnumber</span><span class="p">]</span> <span class="o">=</span> <span class="n">songnumber</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">cdnumber</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="n">songnumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">songnumber</span><span class="p">)</span>
+            <span class="n">cdnumber</span>   <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cdnumber</span><span class="p">)</span>
+            <span class="n">songname</span>   <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">songname</span><span class="p">)</span>
+            <span class="n">extension</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">songname</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># get extension without leading &quot;.&quot;</span>
+            <span class="n">songname</span>   <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">songname</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>      <span class="c1"># remove extension</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Analysing </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed!&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unexpected song file name. Expected </span><span class="se">\&quot;</span><span class="s2">[</span><span class="si">{cdnumber}</span><span class="s2">-]</span><span class="si">{songnumber}</span><span class="s2"> </span><span class="si">{songname}</span><span class="s2">.</span><span class="si">{ending}</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">songname</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;songnumber&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">songnumber</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;cdnumber&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">cdnumber</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">extension</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.TryAnalysePathFor"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.TryAnalysePathFor">[docs]</a>    <span class="k">def</span> <span class="nf">TryAnalysePathFor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method checks if a path is valid for a specific target.</span>
+
+<span class="sd">        The check is done in the following steps:</span>
+
+<span class="sd">            #. Get all song paths</span>
+<span class="sd">            #. Apply an information extraction on all found song paths using :meth:`~mdbapi.database.MusicDBDatabase.AnalysePath`</span>
+
+<span class="sd">        This guarantees, that all files are valid to process with MusicDB.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            target (str): Optional, default value is ``&quot;all&quot;``. One of the following targets: ``&quot;all&quot;``, ``&quot;artist&quot;``, ``&quot;album&quot;`` or ``&quot;song&quot;``</span>
+<span class="sd">            path (str): Optional, default value is ``None``. Path to an artist, album or song. If target is ``&quot;all&quot;``, path can be ``None``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` If the path is valid for the given target. Otherwise ``False`` gets returned.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: when *target* is not ``&quot;all&quot;``, ``&quot;artist&quot;``, ``&quot;album&quot;`` or ``&quot;song&quot;``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">!=</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Path to check if it is a valid for </span><span class="si">%s</span><span class="s2"> may not be None!&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Get all song paths</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+                <span class="n">artistpaths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetSubdirectories</span><span class="p">(</span><span class="n">path</span><span class="p">,</span>        <span class="bp">self</span><span class="o">.</span><span class="n">ignoreartists</span><span class="p">)</span>
+                <span class="n">albumpaths</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetSubdirectories</span><span class="p">(</span><span class="n">artistpaths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignorealbums</span><span class="p">)</span>
+                <span class="n">songpaths</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetFiles</span><span class="p">(</span><span class="n">albumpaths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignoresongs</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;artist&quot;</span><span class="p">:</span>
+                <span class="n">albumpaths</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetSubdirectories</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignorealbums</span><span class="p">)</span>
+                <span class="n">songpaths</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetFiles</span><span class="p">(</span><span class="n">albumpaths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignoresongs</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;album&quot;</span><span class="p">:</span>
+                <span class="n">songpaths</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetFiles</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignoresongs</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;song&quot;</span><span class="p">:</span>
+                <span class="n">songpaths</span>   <span class="o">=</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;target not in {all, artist, album, song}&quot;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;FATAL ERROR: The given path (</span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">) was not a valid </span><span class="si">%s</span><span class="s2">-path!</span><span class="se">\033</span><span class="s2">[1;30m (</span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">songpaths</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;No songs in </span><span class="si">%s</span><span class="s2">-path (</span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">songpath</span> <span class="ow">in</span> <span class="n">songpaths</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">songpath</span><span class="p">):</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;The song path </span><span class="si">%s</span><span class="s2"> does not exist.&quot;</span><span class="p">,</span> <span class="n">songpath</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Scan all songpathes - if they are not analysable, give an error</span>
+        <span class="k">for</span> <span class="n">songpath</span> <span class="ow">in</span> <span class="n">songpaths</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AnalysePath</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Invalid path: &quot;</span> <span class="o">+</span> <span class="n">songpath</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.AddArtist"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddArtist">[docs]</a>    <span class="k">def</span> <span class="nf">AddArtist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artistpath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The *AddArtist* method adds a new artist to the database.</span>
+<span class="sd">        This is done in the following steps:</span>
+
+<span class="sd">            #. Check if the artist path is inside the music root directory</span>
+<span class="sd">            #. Check if the artist is already in the database</span>
+<span class="sd">            #. Extract the artist name from the path</span>
+<span class="sd">            #. Set directory attributes and ownership using :meth:`~mdbapi.database.MusicDBDatabase.FixAttributes`</span>
+<span class="sd">            #. Add artist to database</span>
+<span class="sd">            #. Call :meth:`~mdbapi.database.MusicDBDatabase.AddAlbum` for all subdirectories of the artistpath. (Except for the directory-names in the *ignorealbum* list)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            artistpath (str): Absolute or relative (to the music directory) path to the artist that shall be added to the database.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the path does not address a directory</span>
+<span class="sd">            ValueError: If artist is already in the database</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># remove the leading part to the music directory</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">artistpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">artistpath</span><span class="p">)</span> <span class="c1"># remove the path to the musicdirectory</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">artistpath</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Artist path &quot;</span> <span class="o">+</span> <span class="n">artistpath</span> <span class="o">+</span> <span class="s2">&quot; is not a directory!&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check if the artist already exists in the database</span>
+        <span class="n">artist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetArtistByPath</span><span class="p">(</span><span class="n">artistpath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">artist</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Artist </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">artist</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> does already exist in the database.&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># The filesystem is always right - Survivor of the &quot;tag over fs&quot;-apocalypse - THE FS IS _ALWAYS_ RIGHT!</span>
+        <span class="n">artistname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">artistpath</span><span class="p">)</span>
+
+        <span class="c1"># fix attributes to fit in mdb environment before adding it to the database</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">FixAttributes</span><span class="p">(</span><span class="n">artistpath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Fixing file attributes failed with error: </span><span class="si">%s</span><span class="s2"> </span><span class="se">\033</span><span class="s2">[1;30m(leaving permissions as they are)&quot;</span><span class="p">,</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="c1"># add artist to database</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">AddArtist</span><span class="p">(</span><span class="n">artistname</span><span class="p">,</span> <span class="n">artistpath</span><span class="p">)</span>
+        <span class="n">artist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetArtistByPath</span><span class="p">(</span><span class="n">artistpath</span><span class="p">)</span>
+
+        <span class="c1"># Add all albums to the artist</span>
+        <span class="n">albumpaths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetSubdirectories</span><span class="p">(</span><span class="n">artistpath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignorealbums</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">albumpath</span> <span class="ow">in</span> <span class="n">albumpaths</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">AddAlbum</span><span class="p">(</span><span class="n">albumpath</span><span class="p">,</span> <span class="n">artist</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.UpdateArtist"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateArtist">[docs]</a>    <span class="k">def</span> <span class="nf">UpdateArtist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artistid</span><span class="p">,</span> <span class="n">newpath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method updates an already existing artist entry in the database.</span>
+
+<span class="sd">        Updates information are:</span>
+
+<span class="sd">            * path</span>
+<span class="sd">            * name</span>
+
+<span class="sd">        All albums and songs of this artist will also be updated using</span>
+<span class="sd">        :meth:`~UpdateAlbum` and :meth:`~UpdateSong`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            artistid (int): ID of the artist entry that shall be updated</span>
+<span class="sd">            newpath (str): Relative path to the new artist</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">newpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">newpath</span><span class="p">)</span> <span class="c1"># remove the path to the musicdirectory</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="n">artist</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetArtistById</span><span class="p">(</span><span class="n">artistid</span><span class="p">)</span>
+        <span class="n">artist</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">newpath</span>
+        <span class="n">artist</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">newpath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">WriteArtist</span><span class="p">(</span><span class="n">artist</span><span class="p">)</span>
+
+        <span class="n">albums</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAlbumsByArtistId</span><span class="p">(</span><span class="n">artistid</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">album</span> <span class="ow">in</span> <span class="n">albums</span><span class="p">:</span>
+            <span class="n">albumpath</span>    <span class="o">=</span> <span class="n">album</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>
+            <span class="n">albumpath</span>    <span class="o">=</span> <span class="n">albumpath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span>
+            <span class="n">albumpath</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">newpath</span>
+            <span class="n">albumpath</span>    <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">albumpath</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">albumpath</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">UpdateAlbum</span><span class="p">(</span><span class="n">album</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">albumpath</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.AddAlbum"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddAlbum">[docs]</a>    <span class="k">def</span> <span class="nf">AddAlbum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumpath</span><span class="p">,</span> <span class="n">artistid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method adds an album to the database in the following steps:</span>
+
+<span class="sd">            #. Check if the album already exists in the database</span>
+<span class="sd">            #. Get all songs of the album by getting all files inside the directory except those on the *ignoresongs*-list.</span>
+<span class="sd">            #. Load the metadata from one of those songs using :meth:`lib.metatags.MetaTags.GetAllMetadata`</span>
+<span class="sd">            #. Analyze the path of one of those songs using :meth:`~mdbapi.database.MusicDBDatabase.AnalysePath`</span>
+<span class="sd">            #. If *artistid* is not given as parameter, it gets read from the database identifying the artist by its path.</span>
+<span class="sd">            #. Set directory attributes and ownership using :meth:`~mdbapi.database.MusicDBDatabase.FixAttributes`</span>
+<span class="sd">            #. Create new entry for the new album in the database and get the default values</span>
+<span class="sd">            #. Add each song of the album to the database by calling :meth:`~mdbapi.database.MusicDBDatabase.AddSong`</span>
+<span class="sd">            #. Write all collected information of the album into the database</span>
+
+<span class="sd">        If adding the songs to the database raises an exception, that song gets skipped.</span>
+<span class="sd">        The *numofsongs* value for the album is the number of actual existing songs for this album in the database.</span>
+<span class="sd">        It is save to add the failed song later by using the :meth:`~mdbapi.database.MusicDBDatabase.AddSong` method.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            albumpath (str): Absolute path, or path relative to the music root directory, to the album that shall be added to the database.</span>
+<span class="sd">            artistid (int): Optional, default value is ``None``. The ID of the artist this album belongs to.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the path does not address a directory</span>
+<span class="sd">            ValueError: If album already exists in the database</span>
+<span class="sd">            AssertionError: If there is no artist for this album in the database</span>
+<span class="sd">            AssertionError: If loading metadata from one of the song files failed</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># remove the leading part to the music directory (it may be already removed)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">albumpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">albumpath</span><span class="p">)</span> <span class="c1"># remove the path to the musicdirectory</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">albumpath</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Artist path &quot;</span> <span class="o">+</span> <span class="n">artistpath</span> <span class="o">+</span> <span class="s2">&quot; is not a directory!&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check if the album already exists in the database</span>
+        <span class="n">album</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAlbumByPath</span><span class="p">(</span><span class="n">albumpath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">album</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Album </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">album</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> does already exist in the database.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># This album dictionary gets filled with all kind of infors during this method.</span>
+        <span class="c1"># At the end they are written into the database</span>
+        <span class="n">album</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">albumpath</span>
+
+        <span class="c1"># get all songs from the albums - this is important to collect all infos for the album entry</span>
+        <span class="n">songpaths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetFiles</span><span class="p">(</span><span class="n">albumpath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignoresongs</span><span class="p">)</span> <span class="c1"># ignores also all directories</span>
+
+        <span class="c1"># analyse the first one for the album-entry</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">Load</span><span class="p">(</span><span class="n">songpaths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">tagmeta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">GetAllMetadata</span><span class="p">()</span>
+        <span class="n">fsmeta</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AnalysePath</span><span class="p">(</span><span class="n">songpaths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">fsmeta</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Analysing path </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed!&quot;</span><span class="p">,</span> <span class="n">songpaths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1"># usually, the filesystem is always right, but in case of iTunes, the meta data are</span>
+        <span class="c1"># FIX: NO! THEY ARE NOT! - THE FILESYSTEM IS _ALWAYS_ RIGHT!</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="n">artistid</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># the artistname IS the path, because thats how the fsmeta data came from</span>
+            <span class="n">artist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetArtistByPath</span><span class="p">(</span><span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">artist</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Artist for the album </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">album</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> is not avaliable in the database.&quot;</span><span class="p">)</span>
+            <span class="n">artistid</span> <span class="o">=</span> <span class="n">artist</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+
+        <span class="c1"># fix attributes to fit in mdb environment before adding it to the database</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">FixAttributes</span><span class="p">(</span><span class="n">albumpath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Fixing file attributes failed with error: </span><span class="si">%s</span><span class="s2"> </span><span class="se">\033</span><span class="s2">[1;30m(leaving permissions as they are)&quot;</span><span class="p">,</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="c1"># Add Album to database</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">AddAlbum</span><span class="p">(</span><span class="n">artistid</span><span class="p">,</span> <span class="n">album</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">album</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+
+        <span class="c1"># read the new database entry to get defaults - this is needed by the WriteAlbum-method</span>
+        <span class="n">entry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAlbumByPath</span><span class="p">(</span><span class="n">album</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>         <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;artworkpath&quot;</span><span class="p">]</span><span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;artworkpath&quot;</span><span class="p">]</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;bgcolor&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;bgcolor&quot;</span><span class="p">]</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;fgcolor&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;fgcolor&quot;</span><span class="p">]</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;hlcolor&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;hlcolor&quot;</span><span class="p">]</span>
+
+        <span class="c1"># update the album entry</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">artistid</span>
+
+        <span class="c1"># now add all the albums songs to the database</span>
+        <span class="k">for</span> <span class="n">songpath</span> <span class="ow">in</span> <span class="n">songpaths</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">songpath</span><span class="p">,</span> <span class="n">artistid</span><span class="p">,</span> <span class="n">album</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;CRITICAL ERROR! Adding a song to the new added album </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed with the exception </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">! </span><span class="se">\033</span><span class="s2">[1;30m(ignoring that song (</span><span class="si">%s</span><span class="s2">) and continue with next)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">album</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">songpath</span><span class="p">))</span>
+
+        <span class="c1"># get some final information after adding the songs</span>
+        <span class="n">songs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetSongsByAlbumId</span><span class="p">(</span><span class="n">album</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+        <span class="n">numofcds</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">song</span> <span class="ow">in</span> <span class="n">songs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;cd&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">numofcds</span><span class="p">:</span>
+                <span class="n">numofcds</span> <span class="o">=</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;cd&quot;</span><span class="p">]</span>
+
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;numofsongs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">songs</span><span class="p">)</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;numofcds&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">numofcds</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">WriteAlbum</span><span class="p">(</span><span class="n">album</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.UpdateAlbum"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateAlbum">[docs]</a>    <span class="k">def</span> <span class="nf">UpdateAlbum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">,</span> <span class="n">newpath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method updates an already existing album entry in the database.</span>
+<span class="sd">        So in case some information in the filesystem were changed (renaming, new files, …) the database gets updated.</span>
+<span class="sd">        The following steps will be done to do this:</span>
+
+<span class="sd">            #. Update the *path* entry of the album to the new path</span>
+<span class="sd">            #. Reading a song file inside the directory to load meta data</span>
+<span class="sd">            #. Analyse the path to collect further information from the filesystem</span>
+<span class="sd">            #. Update database entry for the album with the new collected information</span>
+
+<span class="sd">        Updates information are:</span>
+
+<span class="sd">            * path</span>
+<span class="sd">            * name</span>
+<span class="sd">            * release date</span>
+<span class="sd">            * origin</span>
+
+<span class="sd">        All albums and songs of this artist will also be updated using</span>
+<span class="sd">        :meth:`~UpdateSong`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            albumid (int): ID of the album entry that shall be updated</span>
+<span class="sd">            newpath (str): Relative path to the new album</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: When the new path is invalid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">album</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAlbumById</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">newpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">newpath</span><span class="p">)</span> <span class="c1"># remove the path to the musicdirectory</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">newpath</span>
+
+        <span class="c1"># get all songs from the albums - this is important to collect all infos for the album entry</span>
+        <span class="n">songpaths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetFiles</span><span class="p">(</span><span class="n">newpath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignoresongs</span><span class="p">)</span> <span class="c1"># ignores also all directories</span>
+
+        <span class="c1"># analyse the first one for the album-entry</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">Load</span><span class="p">(</span><span class="n">songpaths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">tagmeta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">GetAllMetadata</span><span class="p">()</span>
+        <span class="n">fsmeta</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AnalysePath</span><span class="p">(</span><span class="n">songpaths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">fsmeta</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Analysing path </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed!&quot;</span><span class="p">,</span> <span class="n">songpaths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">WriteAlbum</span><span class="p">(</span><span class="n">album</span><span class="p">)</span>
+
+        <span class="n">songs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetSongsByAlbumId</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">song</span> <span class="ow">in</span> <span class="n">songs</span><span class="p">:</span>
+            <span class="n">songpath</span>    <span class="o">=</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>
+            <span class="n">songpath</span>    <span class="o">=</span> <span class="n">songpath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span>    <span class="c1"># [artist, album, song]</span>
+            <span class="n">songpath</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>                         <span class="c1"># [album, song]         // remove old artist</span>
+            <span class="n">songpath</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">newpath</span>                   <span class="c1"># [artist/album, song]  // add new artist/album string</span>
+            <span class="n">songpath</span>    <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span>
+
+            <span class="c1"># If it does not work, it does not matter.</span>
+            <span class="c1"># This can be fixed by the user later.</span>
+            <span class="c1"># It may faile because not only the albumname changed,</span>
+            <span class="c1"># but also the files inside</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsFile</span><span class="p">(</span><span class="n">songpath</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">UpdateSong</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">songpath</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.AddSong"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddSong">[docs]</a>    <span class="k">def</span> <span class="nf">AddSong</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songpath</span><span class="p">,</span> <span class="n">artistid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">albumid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method adds a song to the MusicDB database.</span>
+<span class="sd">        To do so, the following steps were done:</span>
+
+<span class="sd">            #. Check if the song already exists in the database</span>
+<span class="sd">            #. Load the metadata from the song using :meth:`lib.metatags.MetaTags.GetAllMetadata`</span>
+<span class="sd">            #. Analyze the path of one of the song using :meth:`~mdbapi.database.MusicDBDatabase.AnalysePath`</span>
+<span class="sd">            #. If *artistid* is not given as parameter, it gets read from the database identifying the artist by its path.</span>
+<span class="sd">            #. If *albumid* is not given as parameter, it gets read from the database identifying the album by its path.</span>
+<span class="sd">            #. Set file attributes and ownership using :meth:`~mdbapi.database.MusicDBDatabase.FixAttributes`</span>
+<span class="sd">            #. Add song to database</span>
+<span class="sd">            #. If the parameter *albumid* was ``None`` the *numofsongs* entry of the determined album gets incremented</span>
+<span class="sd">            #. If there are lyrics in the song file, they get also inserted into the database</span>
+
+<span class="sd">        In case the album ID is set, this method assumes that its database entry gets managed by the :meth:`~mdbapi.database.MusicDBDatabase.AddAlbum` method.</span>
+<span class="sd">        So, nothing will be changed regarding the album.</span>
+<span class="sd">        If album ID was ``None``, this method also updates the album-entry, namely the *numofsongs* value gets incremented.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            songpath (str): Absolute path, or path relative to the music root directory, to the song that shall be added to the database.</span>
+<span class="sd">            artistid (int): Optional, default value is ``None``. The ID of the artist this song belongs to.</span>
+<span class="sd">            albumid (int): Optional, default value is ``None``. The ID of the album this song belongs to.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If song already exists in the database</span>
+<span class="sd">            AssertionError: If analyzing the path fails</span>
+<span class="sd">            AssertionError: If there is no album for this song in the database</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># do some checks</span>
+        <span class="c1"># remove the root-path to the music directory</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">songpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span> <span class="c1"># remove the path to the musicdirectory</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="c1"># Check if the song already exists in the database</span>
+        <span class="n">song</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetSongByPath</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">song</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Song </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> does already exist in the database.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Get all information from the songpath and its meta data</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">Load</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Metadata of file </span><span class="si">%s</span><span class="s2"> cannot be load. Assuming this is not a song file!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">songpath</span><span class="p">))</span>
+            <span class="c1"># Ignore this file, it is not a valid song file</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">tagmeta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">GetAllMetadata</span><span class="p">()</span>
+        <span class="n">fsmeta</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AnalysePath</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fsmeta</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Invalid path-format: &quot;</span> <span class="o">+</span> <span class="n">songpath</span><span class="p">)</span>
+
+        <span class="c1"># Collect all data needed for the song-entry (except the song ID)</span>
+        <span class="c1"># Remember! The filesystem is always right</span>
+        <span class="n">song</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">artistid</span> <span class="c1"># \_ In case they are None yet, they will be updated later in the code</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">albumid</span>  <span class="c1"># /</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">songpath</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;songnumber&quot;</span><span class="p">]</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;cd&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;cdnumber&quot;</span><span class="p">]</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;disabled&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;bitrate&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;bitrate&quot;</span><span class="p">]</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;likes&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;dislikes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;qskips&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;qadds&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;qremoves&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;favorite&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;qrndadds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;lyricsstate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SONG_LYRICSSTATE_EMPTY</span>
+
+        <span class="c1"># FIX: THE FILESYSTEM IS _ALWAYS_ RIGHT! - WHAT THE FUCK!</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span> 
+
+        <span class="c1"># artistid may be not given by the arguments of this method.</span>
+        <span class="c1"># In this case, it must be searched in the database</span>
+        <span class="k">if</span> <span class="n">artistid</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">artist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetArtistByPath</span><span class="p">(</span><span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">artist</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Artist for the song </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">songpath</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> is not avaliable in the database.&quot;</span><span class="p">)</span>
+
+            <span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">artist</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">albumid</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># reconstruct the album path out of the songs meta-information from the filesystem</span>
+            <span class="c1"># so it is easy to find the right album by just comparing the pathes</span>
+            <span class="n">albumpath</span> <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>
+
+            <span class="c1"># find the album from the given artist to that the song belongs</span>
+            <span class="n">albums</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAlbumsByArtistId</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">album</span> <span class="ow">in</span> <span class="n">albums</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">album</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">albumpath</span><span class="p">:</span>
+                    <span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">album</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;The album for the song </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">songpath</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> is not avaliable in the database.&quot;</span><span class="p">)</span>
+            <span class="c1"># if the albumid was unknown, the numofsongs was not updated before.</span>
+            <span class="c1"># So the next section is necessary to determin the new numofsongs</span>
+            <span class="c1"># (Will not be written to DB yet, only if AddFullSong at the end succeeds)</span>
+            <span class="n">newalbumentry</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAlbumById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
+            <span class="n">songlist</span>        <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetSongsByAlbumId</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
+            <span class="n">newalbumentry</span><span class="p">[</span><span class="s2">&quot;numofsongs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">songlist</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">newalbumentry</span>   <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># there is no update for the album-entry</span>
+
+        <span class="c1"># fix attributes to fit in mdb environment before adding it to the database</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">FixAttributes</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Fixing file attributes failed with error: </span><span class="si">%s</span><span class="s2"> </span><span class="se">\033</span><span class="s2">[1;30m(leaving permissions as they are)&quot;</span><span class="p">,</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="c1"># add to database</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">AddFullSong</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">retval</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Adding song </span><span class="si">%s</span><span class="s2"> failed!&quot;</span><span class="p">,</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">newalbumentry</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">WriteAlbum</span><span class="p">(</span><span class="n">newalbumentry</span><span class="p">)</span>
+
+        <span class="c1"># Add lyrics for this song</span>
+        <span class="k">if</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;lyrics&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">SetLyrics</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;lyrics&quot;</span><span class="p">],</span> <span class="n">SONG_LYRICSSTATE_FROMFILE</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Adding lyrics for song </span><span class="si">%s</span><span class="s2"> failed with error </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(Does not break anything)&quot;</span><span class="p">,</span>
+                        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.UpdateSong"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateSong">[docs]</a>    <span class="k">def</span> <span class="nf">UpdateSong</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">newpath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method updates a song entry and parts of the related album entry.</span>
+<span class="sd">        The following steps will be done to do this:</span>
+
+<span class="sd">            #. Update the *path* entry of the album to the new path</span>
+<span class="sd">            #. Reading the song files meta data</span>
+<span class="sd">            #. Analyse the path to collect further information from the filesystem</span>
+<span class="sd">            #. Update database entry with the new collected information</span>
+
+<span class="sd">        Updates information are:</span>
+
+<span class="sd">            * path</span>
+<span class="sd">            * name</span>
+<span class="sd">            * song number</span>
+<span class="sd">            * cd number</span>
+<span class="sd">            * playtime</span>
+<span class="sd">            * bitrate</span>
+
+<span class="sd">        Further more the following album information get updted:</span>
+
+<span class="sd">            * numofsongs</span>
+<span class="sd">            * numofcds</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            songid (int): ID of the song entry that shall be updated</span>
+<span class="sd">            newpath (str): Relative path to the new album</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: When the new path is invalid</span>
+<span class="sd">            Exception: When loading the meta data failes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">newpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">newpath</span><span class="p">)</span> <span class="c1"># remove the path to the musicdirectory</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="n">song</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
+        <span class="n">songpath</span> <span class="o">=</span> <span class="n">newpath</span>
+
+        <span class="c1"># Get all information from the songpath and its meta data</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">Load</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">excpetion</span><span class="p">(</span><span class="s2">&quot;Metadata of file </span><span class="si">%s</span><span class="s2"> cannot be load. Error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">songpath</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">e</span>
+
+        <span class="n">tagmeta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">GetAllMetadata</span><span class="p">()</span>
+        <span class="n">fsmeta</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AnalysePath</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fsmeta</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Invalid path-format: &quot;</span> <span class="o">+</span> <span class="n">songpath</span><span class="p">)</span>
+
+        <span class="c1"># Remember! The filesystem is always right</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">songpath</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span> 
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;songnumber&quot;</span><span class="p">]</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;cd&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;cdnumber&quot;</span><span class="p">]</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;bitrate&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;bitrate&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">WriteSong</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
+
+        <span class="c1"># Fix album information</span>
+        <span class="n">album</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAlbumById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
+        <span class="n">songs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetSongsByAlbumId</span><span class="p">(</span><span class="n">album</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+        <span class="n">numofcds</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">song</span> <span class="ow">in</span> <span class="n">songs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;cd&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">numofcds</span><span class="p">:</span>
+                <span class="n">numofcds</span> <span class="o">=</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;cd&quot;</span><span class="p">]</span>
+
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;numofsongs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">songs</span><span class="p">)</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;numofcds&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">numofcds</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">WriteAlbum</span><span class="p">(</span><span class="n">album</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.RemoveSong"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.RemoveSong">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveSong</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method removed a song from the database.</span>
+<span class="sd">        The file gets not touched, and so it does not matter if it even exists.</span>
+<span class="sd">        All related information will also be removed.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This is not a *&quot;set the deleted flag&quot;* method.</span>
+<span class="sd">            The data gets actually removed from the database.</span>
+<span class="sd">            No recovery possible!</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            songid (int): ID of the song that shall be removed from database</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            ``None``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tracker</span> <span class="o">=</span> <span class="n">TrackerDatabase</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">tracker</span><span class="o">.</span><span class="n">dbpath</span><span class="p">)</span>
+
+        <span class="c1"># remove from music.db</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">RemoveSong</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
+        <span class="c1"># remove from tracker.db</span>
+        <span class="n">tracker</span><span class="o">.</span><span class="n">RemoveSong</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.AddLyricsFromFile"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddLyricsFromFile">[docs]</a>    <span class="k">def</span> <span class="nf">AddLyricsFromFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songpath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method can be used to add lyrics from the file of a song into the database.</span>
+<span class="sd">        It tries to load the metadata from the song file.</span>
+<span class="sd">        If that succeeds, the song entry gets loaded from the database and the lyrics state of that entry gets checked.</span>
+<span class="sd">        The lyrics from the file gets stored in the song database in case the current lyrics state is *empty*.</span>
+<span class="sd">        Otherwise the files lyrics get rejected.</span>
+
+<span class="sd">        This method returns ``True`` when *new* lyrics were added. If there already exist lyrics ``False`` gets returned.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            songpath (str): Absolute song path, or relative to the music root directory.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` on success, otherwise ``False``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># remove the root-path to the music directory</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">songpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span> <span class="c1"># remove the path to the musicdirectory</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="c1"># if RemoveRoot raises an ValueError, this only means that songpath is already a realtive path</span>
+            <span class="k">pass</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Invalid song path: </span><span class="si">%s</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(No lyrics will be loaded)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Get all information from the songpath and its meta data</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">Load</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Loading songs metadata failed with error: </span><span class="si">%s</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(No lyrics will be loaded)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># read all meta-tags</span>
+        <span class="n">tagmeta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">GetAllMetadata</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;lyrics&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># No lyrics - no warning because this is common</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Check if the song exists in the database</span>
+        <span class="n">song</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetSongByPath</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">song</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;There is no song with file </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> in the database! </span><span class="se">\033</span><span class="s2">[1;30m(No lyrics will be added)&quot;</span><span class="p">,</span> <span class="n">songpath</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># check if there are already lyrics, if yes, cancel</span>
+        <span class="k">if</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;lyricsstate&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">SONG_LYRICSSTATE_EMPTY</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Song </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> has already lyrics. They will NOT be overwritten!&quot;</span><span class="p">,</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        
+        <span class="c1"># store lyrics and update lyricsstate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">SetLyrics</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;lyrics&quot;</span><span class="p">],</span> <span class="n">SONG_LYRICSSTATE_FROMFILE</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.UpdateSongPath"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateSongPath">[docs]</a>    <span class="k">def</span> <span class="nf">UpdateSongPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newsongpath</span><span class="p">,</span> <span class="n">oldsongpath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method can be used to update a song.</span>
+
+<span class="sd">        The new song file must be names as necessary for MusicDB.</span>
+<span class="sd">        It is OK when the songs filename changes, as long as the cd and track number are equal to the old file.</span>
+
+<span class="sd">        The following steps will be done:</span>
+
+<span class="sd">            #. Get database entry from old song</span>
+<span class="sd">            #. Analyse new songs metatags and file name</span>
+<span class="sd">            #. Check if it is a valid replacement</span>
+<span class="sd">            #. Replace files (and creating a backup of the old song)</span>
+<span class="sd">            #. Try to set file attributes</span>
+<span class="sd">            #. Update database</span>
+
+<span class="sd">        .. attention::</span>
+
+<span class="sd">            If something went wrong, ``False`` gets returned.</span>
+<span class="sd">            Then only the new file must be replaced by the backup file.</span>
+<span class="sd">            The database is still consistent.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            A single CD song cannot be updated to a multi CD one</span>
+
+<span class="sd">            The old and new song must have the same track number</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            newsongpath (str): Absolute path to the new song</span>
+<span class="sd">            oldsongpath (str): Absolute path to the current song</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            ``True`` on success, otherwise ``False``</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+<span class="sd">                </span>
+<span class="sd">                # replace an old mp3 by a new flac file</span>
+<span class="sd">                db.UpdateSongPath(&quot;/tmp/downloads/23 Is Everywhere.flac&quot;, &quot;/data/music/Illuminati/2023 - Sheeple/23 Is Everwhere.mp3&quot;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">newsongpath</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">oldsongpath</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Arguments of wrong type. Strings were expected&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Get song database entry</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Getting old song database entry …&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">relsongpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">oldsongpath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The path </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> is not inside the music root directory! </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="n">oldsongpath</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">song</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetSongByPath</span><span class="p">(</span><span class="n">relsongpath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">song</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The song with path </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> does not exist in the database. </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="n">relsongpath</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Analyse new song</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Analysing new song …&quot;</span><span class="p">)</span>
+        <span class="n">newmetadata</span> <span class="o">=</span> <span class="n">MetaTags</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;source: &quot;</span> <span class="o">+</span> <span class="n">newsongpath</span><span class="p">)</span>
+            <span class="n">newmetadata</span><span class="o">.</span><span class="n">Load</span><span class="p">(</span><span class="n">newsongpath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Loading meta data from file </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed with error: </span><span class="si">%s</span><span class="s2">! </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="n">newsongpath</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">tagmeta</span> <span class="o">=</span> <span class="n">newmetadata</span><span class="o">.</span><span class="n">GetAllMetadata</span><span class="p">()</span>
+        
+        <span class="n">songfilename</span> <span class="o">=</span> <span class="n">newsongpath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">fsmeta</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">AnalyseSongFileName</span><span class="p">(</span><span class="n">songfilename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fsmeta</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Analysing song file name </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed! </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="n">songfilename</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Check if this is a valid replacement</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Checking if replacement is valid …&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;cd&quot;</span><span class="p">]</span>     <span class="o">!=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;cdnumber&quot;</span><span class="p">]:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Old CD number (</span><span class="si">%s</span><span class="s2">) is not equal to the new CD number (</span><span class="si">%s</span><span class="s2">)! </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> 
+                    <span class="nb">str</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;cd&quot;</span><span class="p">]),</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;cdnumber&quot;</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">]:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Old song number (</span><span class="si">%s</span><span class="s2">) is not equal to the new song number (</span><span class="si">%s</span><span class="s2">)! </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> 
+                    <span class="nb">str</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">]),</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+
+        <span class="c1"># Replace files</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Replacing song file …&quot;</span><span class="p">)</span>
+        <span class="n">albumpath</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAlbumById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>
+        <span class="n">relbackup</span>      <span class="o">=</span> <span class="n">relsongpath</span> <span class="o">+</span> <span class="s2">&quot;.bak&quot;</span>
+        <span class="n">newrelsongpath</span> <span class="o">=</span> <span class="n">albumpath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">newsongpath</span><span class="p">)</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot; mv </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">relsongpath</span><span class="p">,</span> <span class="n">relbackup</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">MoveFile</span><span class="p">(</span><span class="n">relsongpath</span><span class="p">,</span> <span class="n">relbackup</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Creating backup failed! </span><span class="se">\033</span><span class="s2">[1;30m(Doning nothing)&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot; cp </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">newsongpath</span><span class="p">,</span> <span class="n">newrelsongpath</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">CopyFile</span><span class="p">(</span><span class="n">newsongpath</span><span class="p">,</span> <span class="n">newrelsongpath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Copying new song fail failed! Trying to restore backup. Check if file </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> is back in place!&quot;</span><span class="p">,</span> <span class="n">oldsongpath</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">MoveFile</span><span class="p">(</span><span class="n">relbackup</span><span class="p">,</span> <span class="n">relsongpath</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Update database</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Updating database …&quot;</span><span class="p">)</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">newrelsongpath</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;bitrate&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;bitrate&quot;</span><span class="p">]</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> 
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">FixAttributes</span><span class="p">(</span><span class="n">newsongpath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Fixing file attributes failed with error: </span><span class="si">%s</span><span class="s2"> </span><span class="se">\033</span><span class="s2">[1;30m(leaving permissions as they are)&quot;</span><span class="p">,</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="c1"># write to database</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">WriteSong</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.UpdateServerCache"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateServerCache">[docs]</a>    <span class="k">def</span> <span class="nf">UpdateServerCache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method signals the MusicDB Websocket Server to update its caches.</span>
+<span class="sd">        This should always be done when there are new artists, albums or songs added to the database.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">serverpid</span> <span class="o">=</span> <span class="n">CheckPIDFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">pidfile</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">serverpid</span><span class="p">:</span>
+            <span class="k">return</span>  <span class="c1"># server not running, so no cacheupdate needed</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">serverpid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGUSR1</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33mWARNING:</span><span class="se">\033</span><span class="s2">[0m Updating servercache failed with exception:&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;34mTry to update manually: </span><span class="se">\033</span><span class="s2">[1;36mkill -USR1 &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">pidfile</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span></div></div>
+
+
+<span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
+
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Ralf Stemmer.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.0 alpha',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

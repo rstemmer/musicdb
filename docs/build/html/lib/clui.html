@@ -1,0 +1,1016 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Command Line User Interface &mdash; MusicDB 1.0.0 alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="../index.html"/>
+        <link rel="next" title="Configuration" href="config.html"/>
+        <link rel="prev" title="Song Tracker" href="../mdbapi/tracker.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> MusicDB
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basics/changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/changelog.html#id1">1.0.0 - 31.12.2017</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#comparison">Comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#server">server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#websocket">websocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tls">TLS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#database">database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#music">music</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/logging.html">Handling log-files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/mods.html">MusicDB Commandline Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#loading-of-modules">Loading of Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#qemu-installation">qemu Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#basic-setup">Basic Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#disk-images">Disk Images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#system-setup">System Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#installing-updating-musicdb-test-environment">Installing/Updating MusicDB Test Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#create-dummy-files">Create Dummy Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#test-systems">Test Systems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#debian">Debian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#raspian">Raspian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#arch-linux">Arch Linux</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/webapi.html">MusicDB Websocket API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#communication">Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#packet-format">Packet format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#client-side-interface">Client side interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#callback-functions">Callback functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#queue">Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#tag-related">Tag related</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#other">Other</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/workflow.html">Workflow for development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#working-on-code">Working on code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#rebuilding-the-documentation">Rebuilding the Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#using-git">Using git</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#micro-commits">Micro Commits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#createing-a-hotfix">Createing a Hotfix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#merging-develop-to-master">Merging Develop to Master</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#releasing-a-new-version">Releasing a New Version</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-all-dependencies">Install all Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#configureing-musicdb">Configureing MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-manually">Installation (Manually)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#system-preparation">System Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#apache-http-server">Apache HTTP-Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#musicdb">musicdb</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#cuda-for-musicai">CUDA for MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#naming">Naming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory">Artist Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory">Album Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file">Song File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#itunes">iTunes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#bandcamp">Bandcamp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-database-module">Using the database module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/scripts.html">Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-boot">musicdb-boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-start">musicdb-start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#quickupdate">quickupdate</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mod/artwork.html">artwork - Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#automatization">Automatization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/metadata.html">metadata - Metadata Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/mise.html">mise - Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/mise.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/musicai.html">musicai - MusicAI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#module-mod.musicai">Module Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/server.html">server - MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/stats.html">stats - MusicDB Song Statistic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#main-commands">Main commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#style-guide">Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#example-calls">Example calls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/tracker.html">tracker - Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#module-mod.tracker">Module Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#class-description">Class Description</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#path-structure">Path structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/artwork.html#webbrowsers">Webbrowsers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#manifest">Manifest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/database.html">MusicDBDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/extern.html">MusicDBExtern</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#initializing-a-storage">Initializing a Storage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/extern.html#storage-configuration">Storage Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/extern.html#the-state-file">The State-File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#updating-a-storage">Updating a Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#handling-toxic-environments">Handling Toxic Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#musicdbextern-class">MusicDBExtern Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/lycra.html">LyCra - Lyrics Crawler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/lycra.html#module-mdbapi.lycra">Lycra API Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/lycra.html#crawler-base-class">Crawler Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/lycra.html#module-lib.db.lycradb">Lycra Database</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/mise.html">Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/mpd.html">mpd / Music Playing Daemon Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#observer-thread">Observer Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#callbacks">Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#managing-mpd">Managing MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#queue-management">Queue management</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicai.html">MusicAI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#training-time">Training Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#featureset">Featureset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#trainingset">Trainingset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randyinterface-class">RandyInterface Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/tags.html">MusicDBTags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/tracker.html">Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Command Line User Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.text">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.frame">Frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.pane">Pane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.buttonview">ButtonView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.listview">ListView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.group">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.tabgroup">TabGroup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="database.html#database-class">Database Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem.html">Filesystem Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hdf5storage.html">HDF5Storage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metatags.html">Meta Tags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metatags.html#metatags-class">MetaTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#adding-a-column">Adding a Column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#albums">Albums</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#album-related-methods">Album Related Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#artworks">Artworks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#origin">Origin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#artists">Artists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#lyrics">Lyrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#tags">Tags</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-definition-table">Tag Definition Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#database-api">Database API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pidfile.html">PID File Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="websockets.html">MusicDB Websocket Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="websockets.html#module-lib.ws.server">Websocket Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="websockets.html#module-lib.ws.websocket">Websocket Protocol</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#sending-data">Sending Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#receiving-data">Receiving Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#minimal-usage">Minimal usage</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#kontakt">Kontakt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#verantwortlich-fur-den-inhalt-nach-55-abs-2-rstv">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#haftung-fur-inhalte">Haftung für Inhalte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#haftung-fur-links">Haftung für Links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#urheberrecht">Urheberrecht</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../other/impressum.html#datenschutzerklarung">Datenschutzerklärung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#datenschutz">Datenschutz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#cookies">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#server-log-files">Server-Log-Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#facebook-plugins-like-button">Facebook-Plugins (Like-Button)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#twitter">Twitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#google">Google+</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#youtube">YouTube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#ssl-verschlusselung">SSL-Verschlüsselung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#widerspruch-werbe-mails">Widerspruch Werbe-Mails</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MusicDB</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Command Line User Interface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/lib/clui.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="command-line-user-interface">
+<h1>Command Line User Interface<a class="headerlink" href="#command-line-user-interface" title="Permalink to this headline">¶</a></h1>
+<p>The Command Line User Interface (CLUI) is an unicode based “graphical” user interface library.
+It provides some primitive UI elements documented in this section of the documentation.</p>
+<blockquote>
+<div><object data="../_images/graphviz-1997cc332d7c89cf7bf43c9addd7b90d5dc2abfb.svg" type="image/svg+xml">
+            <p class="warning">digraph hierarchy {
+   size=&quot;5,8&quot;
+   node[shape=record,style=filled,fillcolor=gray95]
+   edge[dir=back, arrowtail=empty]
+
+   Text        [label = &quot;{Text||}&quot;]
+   Frame       [label = &quot;{Frame||+ Draw()\l}&quot;]
+   Pane        [label = &quot;{Pane||+ Draw()\l}&quot;]
+   ButtonView  [label = &quot;{ButtonView||+ Draw()\l}&quot;]
+   ListView    [label = &quot;{ListView||+ Draw()\l+ HandleKey()\l# onDraw()\l# onAction()\l}&quot;]
+   Group       [label = &quot;{Group||+ Draw()\l}&quot;]
+   HGroup      [label = &quot;{HGroup||/+ Draw()\l}&quot;]
+   VGroup      [label = &quot;{VGroup||/+ Draw()\l}&quot;]
+   TabGroup    [label = &quot;{TabGroup||+ HandleKey()\l}&quot;]
+
+   Text        -&gt; Frame
+   Frame       -&gt; Pane
+
+   Pane        -&gt; ButtonView
+   Pane        -&gt; ListView
+   Pane        -&gt; Group
+
+   Group       -&gt; HGroup
+   Group       -&gt; VGroup
+
+   TabGroup
+
+}</p></object>
+</div></blockquote>
+<div class="section" id="module-lib.clui.text">
+<span id="text"></span><h2>Text<a class="headerlink" href="#module-lib.clui.text" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lib.clui.text.Text">
+<em class="property">class </em><code class="descclassname">lib.clui.text.</code><code class="descname">Text</code><a class="reference internal" href="../_modules/lib/clui/text.html#Text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class handles the shell output.
+It sets color and cursor settings and handles the screen.</p>
+<p>The default color is gray text on black background (<code class="docutils literal"><span class="pre">0;37;40</span></code>).</p>
+<p>Whenever a parameter is a color, the ANSI escape format for colors as strings were expected.
+These strings were sent to the terminal as shown in the following code example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">SetColor</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[</span><span class="si">%s</span><span class="s2">m&quot;</span> <span class="o">%</span> <span class="n">color</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">SetColor</span><span class="p">(</span><span class="s2">&quot;1;32&quot;</span><span class="p">)</span>    <span class="c1"># bright green text</span>
+<span class="n">SetColor</span><span class="p">(</span><span class="s2">&quot;44&quot;</span><span class="p">)</span>      <span class="c1"># blue background</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="lib.clui.text.Text.ClearScreen">
+<code class="descname">ClearScreen</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.ClearScreen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.ClearScreen" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method clears the screen using the ANSI escape squence <code class="docutils literal"><span class="pre">[2J</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.text.Text.FlushScreen">
+<code class="descname">FlushScreen</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.FlushScreen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.FlushScreen" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method forces the shell to flush the <em>stdout</em> buffer.
+After calling this method, everything written into the output buffer will be visible on the screen.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.text.Text.GetKey">
+<code class="descname">GetKey</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.GetKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.GetKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the name of the pressed key.
+The key input gets not printed to the screen.</p>
+<p>Until now, the following keys will be recognized:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The usual prinable keys</li>
+<li><code class="docutils literal"><span class="pre">enter</span></code></li>
+<li><code class="docutils literal"><span class="pre">up</span></code>, <code class="docutils literal"><span class="pre">down</span></code>, <code class="docutils literal"><span class="pre">left</span></code>, <code class="docutils literal"><span class="pre">right</span></code></li>
+</ul>
+</div></blockquote>
+<p>In case you want to get other keys, it is easy to add them by editing the code of this method.
+I just implemented the one I need for the <a class="reference internal" href="#lib.clui.listview.ListView" title="lib.clui.listview.ListView"><code class="xref py py-class docutils literal"><span class="pre">ListView</span></code></a> UI element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The pressed key. If it is a special key, then the name of the key gets returnd as string.
+<code class="docutils literal"><span class="pre">None</span></code> will be returnd for unknown keys.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.text.Text.GetRawKey">
+<code class="descname">GetRawKey</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.GetRawKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.GetRawKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method reads a raw key input from the input buffer without printing it on the screen.</p>
+<p>Usually you want to use the more abstract method <a class="reference internal" href="#lib.clui.text.Text.GetKey" title="lib.clui.text.Text.GetKey"><code class="xref py py-meth docutils literal"><span class="pre">GetKey()</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The key from the input buffer</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.text.Text.GetScreenSize">
+<code class="descname">GetScreenSize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.GetScreenSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.GetScreenSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the screen size as columns and rows.
+For detecting the screen size, the tool <code class="docutils literal"><span class="pre">stty</span></code> gets called:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>stty size
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">columns, rows (as integer)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.text.Text.PrintText">
+<code class="descname">PrintText</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.PrintText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.PrintText" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method simply prints text to the screen.
+It does nothing more than:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>So instead of the “normal” print, there will be no line break at the end.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.text.Text.SetBGColor">
+<code class="descname">SetBGColor</code><span class="sig-paren">(</span><em>color=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.SetBGColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.SetBGColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method sets the background color.
+If the color argument is <code class="docutils literal"><span class="pre">None</span></code>, then the default background color gets used.
+If the color argument is a color, then a new default backgound color gets defined and set.
+Next time this method gets called without an argument, this new color will be used as default.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>color</strong> (<em>str</em>) – New background color</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When argument is set and not a string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.text.Text.SetColor">
+<code class="descname">SetColor</code><span class="sig-paren">(</span><em>fgcolor=None</em>, <em>bgcolor=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.SetColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.SetColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method calls <a class="reference internal" href="#lib.clui.text.Text.SetFGColor" title="lib.clui.text.Text.SetFGColor"><code class="xref py py-meth docutils literal"><span class="pre">SetFGColor()</span></code></a> and <a class="reference internal" href="#lib.clui.text.Text.SetBGColor" title="lib.clui.text.Text.SetBGColor"><code class="xref py py-meth docutils literal"><span class="pre">SetBGColor()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.text.Text.SetCursor">
+<code class="descname">SetCursor</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.SetCursor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.SetCursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method sets the position of the curser.
+The top left corner is at position <em>x=0; y=0</em>.
+<em>y</em> represents the rows and <em>x</em> the columns.</p>
+<p>For setting the cursor the ANSI escape sequence <code class="docutils literal"><span class="pre">[y;xH</span></code> gets used.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>int</em>) – Column position of the cursor</li>
+<li><strong>y</strong> (<em>int</em>) – Row position of the cursor</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><em>Nothing</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>x</em> or <em>y</em> are not of type integer</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When <em>x</em> or <em>y</em> are negative</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.text.Text.SetFGColor">
+<code class="descname">SetFGColor</code><span class="sig-paren">(</span><em>color=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.SetFGColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.SetFGColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method sets the foreground (text) color.
+If the color argument is <code class="docutils literal"><span class="pre">None</span></code>, then the default foreground color gets used.
+If the color argument is a color, then a new default foreground color gets defined and set.
+Next time this method gets called without an argument, this new color will be used as default.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>color</strong> (<em>str</em>) – New foreground (text) color</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When argument is set and not a string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.text.Text.ShowCursor">
+<code class="descname">ShowCursor</code><span class="sig-paren">(</span><em>show=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.ShowCursor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.ShowCursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method makes the cursor visible or invisible.</p>
+<p>Therefore the ANSI escape seqneces <code class="docutils literal"><span class="pre">[?25h</span></code> and <code class="docutils literal"><span class="pre">[?25l</span></code> will be used.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>show</strong> (<em>bool</em>) – <code class="docutils literal"><span class="pre">True</span></code>: Make cursor visible, <code class="docutils literal"><span class="pre">False</span></code>: Hide cursor</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lib.clui.frame">
+<span id="frame"></span><h2>Frame<a class="headerlink" href="#module-lib.clui.frame" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lib.clui.frame.Frame">
+<em class="property">class </em><code class="descclassname">lib.clui.frame.</code><code class="descname">Frame</code><span class="sig-paren">(</span><em>linestyle=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/frame.html#Frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.frame.Frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides an unicode based frame that gets printed around a certain area.</p>
+<p>There are the following styles available:</p>
+<p><code class="docutils literal"><span class="pre">LINESTYLE_NORMAL</span></code>:</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span>┌─┐
+│ │
+└─┘
+</pre></div>
+</div>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">LINESTYLE_BOLD</span></code>:</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span>┏━┓
+┃ ┃
+┗━┛
+</pre></div>
+</div>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">LINESTYLE_ASCII</span></code>:</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span>+-+
+<span class="p">|</span> <span class="p">|</span>
++-+
+</pre></div>
+</div>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">LINESTYLE_DOUBLE</span></code>:</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span>╔═╗
+║ ║
+╚═╝
+</pre></div>
+</div>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">LINESTYLE_ROUND</span></code>:</p>
+<blockquote>
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span>╭─╮
+│ │
+╰─╯
+</pre></div>
+</div>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>linestyle</strong> – The style used to draw the lines. The default linestyle is <code class="docutils literal"><span class="pre">LINESTYLE_NORMAL</span></code>.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lib.clui.frame.Frame.Draw">
+<code class="descname">Draw</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>w</em>, <em>h</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/frame.html#Frame.Draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.frame.Frame.Draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method draws the frame around a certain area.</p>
+<p>The upper left corner of the frame will be at <em>(x;y)</em>, the bottom right corner at <em>(x+w;y+h)</em></p>
+<p>Only the frame characters gets drawn.
+Every character inside the frame stays.
+So this method can also be called to draw a frame around already printed content.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong><strong>,</strong><strong>y</strong> (<em>int</em>) – Start position of the frame (top left corner)</li>
+<li><strong>w</strong> (<em>int</em>) – width of the frame</li>
+<li><strong>h</strong> (<em>int</em>) – height of the frame</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><em>Nothing</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When one of the arguments is not of type integer.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.frame.Frame.SetLineStyle">
+<code class="descname">SetLineStyle</code><span class="sig-paren">(</span><em>linestyle</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/frame.html#Frame.SetLineStyle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.frame.Frame.SetLineStyle" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method can be used to set a different line style.
+You may want to call <a class="reference internal" href="#lib.clui.frame.Frame.Draw" title="lib.clui.frame.Frame.Draw"><code class="xref py py-meth docutils literal"><span class="pre">Draw()</span></code></a> to redraw the frame with the new style.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new style</strong> (<em>The</em>) – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When the argument does not address a valid style</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lib.clui.pane">
+<span id="pane"></span><h2>Pane<a class="headerlink" href="#module-lib.clui.pane" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lib.clui.pane.Pane">
+<em class="property">class </em><code class="descclassname">lib.clui.pane.</code><code class="descname">Pane</code><span class="sig-paren">(</span><em>title=None</em>, <em>x=0</em>, <em>y=0</em>, <em>w=0</em>, <em>h=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/pane.html#Pane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.pane.Pane" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-lib.clui.buttonview">
+<span id="buttonview"></span><h2>ButtonView<a class="headerlink" href="#module-lib.clui.buttonview" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lib.clui.buttonview.ButtonView">
+<em class="property">class </em><code class="descclassname">lib.clui.buttonview.</code><code class="descname">ButtonView</code><span class="sig-paren">(</span><em>x=0</em>, <em>y=0</em>, <em>w=0</em>, <em>h=0</em>, <em>align='left'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/buttonview.html#ButtonView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.buttonview.ButtonView" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-lib.clui.listview">
+<span id="listview"></span><h2>ListView<a class="headerlink" href="#module-lib.clui.listview" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lib.clui.listview.ListView">
+<em class="property">class </em><code class="descclassname">lib.clui.listview.</code><code class="descname">ListView</code><span class="sig-paren">(</span><em>title=None</em>, <em>x=0</em>, <em>y=0</em>, <em>w=0</em>, <em>h=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/listview.html#ListView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.listview.ListView" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-lib.clui.group">
+<span id="group"></span><h2>Group<a class="headerlink" href="#module-lib.clui.group" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lib.clui.group.Group">
+<em class="property">class </em><code class="descclassname">lib.clui.group.</code><code class="descname">Group</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>space=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/group.html#Group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.group.Group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="lib.clui.group.HGroup">
+<em class="property">class </em><code class="descclassname">lib.clui.group.</code><code class="descname">HGroup</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>space=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/group.html#HGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.group.HGroup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="lib.clui.group.VGroup">
+<em class="property">class </em><code class="descclassname">lib.clui.group.</code><code class="descname">VGroup</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>space=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/group.html#VGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.group.VGroup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-lib.clui.tabgroup">
+<span id="tabgroup"></span><h2>TabGroup<a class="headerlink" href="#module-lib.clui.tabgroup" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lib.clui.tabgroup.TabGroup">
+<em class="property">class </em><code class="descclassname">lib.clui.tabgroup.</code><code class="descname">TabGroup</code><a class="reference internal" href="../_modules/lib/clui/tabgroup.html#TabGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.tabgroup.TabGroup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Ralf Stemmer.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.0 alpha',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

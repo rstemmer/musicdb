@@ -1,0 +1,29 @@
+
+/******************/
+/* Main Container */
+/******************/
+
+div#MDBAlphabetBar
+{
+    display:            flex;
+    flex-direction:     row;
+    justify-content:    center;
+    width:              100%;
+}
+
+span.AB_Jumpchar
+{
+    min-width:          11px;
+    text-align:         center;
+    margin-bottom:      1px;
+}
+span.AB_Arrow
+{
+    min-width:          15px;
+}
+
+
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

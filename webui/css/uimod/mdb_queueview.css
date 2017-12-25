@@ -1,0 +1,30 @@
+
+/******************/
+/* Main Container */
+/******************/
+
+div#QMainBox
+{
+    display:        flex;
+    padding:        10px;
+    flex-direction: column;
+}
+
+div.Q_entry
+{
+    width:          100%;
+}
+
+div.Q_separator
+{
+    height:         15px;
+    width:          100%;
+}
+div.Q_hldropzone
+{
+    height:         60px;   /* hight of an entry */
+}
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

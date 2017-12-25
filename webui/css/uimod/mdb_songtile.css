@@ -1,0 +1,74 @@
+
+/******************/
+/* Main Container */
+/******************/
+
+div.ST_tile
+{
+}
+div.ST_body
+{
+    display:        flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height:         50px;
+    padding-left:   10px;
+}
+
+
+div.ST_artworkbox
+{
+    display:        flex;
+    height:         50px;
+    border-radius:  5px;
+    overflow:       hidden;
+    float:          left;
+}
+img.ST_artwork
+{
+    max-width:      50px;
+    max-height:     50px;
+}
+
+div.ST_row
+{
+    display:            flex;
+    flex-direction:     row;
+    justify-content:    space-between;
+    align-items:        center;
+}
+
+div.ST_songname
+{
+    font-weight:    bold;
+    overflow:       hidden;
+    white-space:    nowrap;
+}
+div.ST_buttonbox
+{
+}
+
+div.ST_subtitle
+{
+    overflow:       hidden;
+    white-space:    nowrap;
+}
+
+span.ST_albumname
+{
+    overflow:       hidden;
+    white-space:    nowrap;
+}
+span.ST_separator
+{
+    padding-left:   5px;
+    padding-right:  5px;
+}
+span.ST_artistgname
+{
+    overflow:       hidden;
+    white-space:    nowrap;
+}
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

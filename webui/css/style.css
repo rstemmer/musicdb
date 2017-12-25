@@ -1,0 +1,41 @@
+
+/***********************/
+/* default color sytle */
+/***********************/
+
+.fgcolor
+{
+    color:          #CCC;
+}
+.hlcolor
+{
+    color:          #779;
+}
+.bgcolor
+{
+    background-color:     #181819;
+}
+.fmcolor
+{
+    border-color:   #888;
+}
+
+.smallfont
+{
+    font-size:      9pt;
+}
+.tinyfont
+{
+    font-family:    Silkscreen;
+    font-size:      6px;
+}
+.seriffont
+{
+    font-family:    SourceSerifPro;
+}
+
+
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

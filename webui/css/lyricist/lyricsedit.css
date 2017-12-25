@@ -1,0 +1,151 @@
+
+#LyricsTab .databox {
+    display: block;
+
+    border:        1px solid #555;
+    border-radius: 4px;
+
+    margin:  5px;
+    padding: 5px;
+}
+
+#LyricsTab div#LyricsInputBox {
+    display: inline-block;
+    border:        1px solid #555;
+    border-radius: 4px;
+    margin:  5px;
+    padding: 5px;
+}
+#LyricsTab div#CrawlerBox {
+    display: inline-block;
+    vertical-align: top;
+    border:        1px solid #555;
+    border-radius: 4px;
+    padding: 5px;
+    margin:  5px;
+}
+
+#LyricsTab div#LyricsContentbox {
+}
+#LyricsTab span#TriggerLyricsVisibility[data-state=untriggered]:before {
+    content: "\f06e";   /* auge */
+}
+#LyricsTab span#TriggerLyricsVisibility[data-state=triggered]:before {
+    content: "\f070";   /* durchgestrichenes auge */
+}
+
+
+#LyricsTab #LyricsStateInputBox {
+    display: inline-block;
+    margin:  5px;
+}
+
+#LyricsTab span.triggerbutton {
+    border:         1px solid #555;
+    border-radius:  4px;
+    margin-left:    5px;
+    margin-right:   5px;
+    padding-left:   5px;
+    padding-right:  5px;
+}
+
+#LyricsTab span.triggerbutton:before {
+    display: inline-block;
+
+    padding-top:    5px;
+    padding-bottom: 5px;
+    min-width:     20px;
+    font-family:    FontAwesome;
+    font-weight:    normal;
+}
+
+#LyricsTab span#InsertHighlightButton[data-state=untriggered]:before {
+    content: "\f1dc";   /* H */
+}
+#LyricsTab span#InsertRefrainButton[data-state=untriggered]:before {
+    content: "\f03c";   /* indent */
+}
+#LyricsTab span#InsertCommentButton[data-state=untriggered]:before {
+    content: "\f24a";   /* stiky-note */
+}
+
+#LyricsTab span#UndoButton[data-state=untriggered]:before {
+    content: "\f021";   /* refresh */
+}
+#LyricsTab span#UndoButton[data-state=triggered]:before {
+    content: "\f021";   /* refresh */
+    opacity: 0.3;
+}
+#LyricsTab span#UndoButton[data-state=triggered] {
+    opacity: 0.3;
+}
+
+#LyricsTab span#SaveButton[data-state=untriggered]:before {
+    content: "\f0c7";   /* floppy */
+}
+#LyricsTab span#SaveButton[data-state=triggered]:before {
+    content: "\f0c7";   /* floppy */
+    opacity: 0.3;
+}
+#LyricsTab span#SaveButton[data-state=triggered] {
+    opacity: 0.3;
+}
+
+#LyricsTab span#LCCacheButton[data-state=untriggered]:before {
+    content: "\f187";   /* archive-box */
+}
+#LyricsTab span#LCCacheButton[data-state=triggered]:before {
+    content: "\f187";   /* archive-box */
+    opacity: 0.3;
+}
+#LyricsTab span#LCCacheButton[data-state=triggered] {
+    opacity: 0.3;
+}
+
+#LyricsTab span#CrawlerButton[data-state=untriggered]:before {
+    content: "\f21b";   /* agent */
+}
+#LyricsTab span#CrawlerButton[data-state=triggered]:before {
+    content: "\f21b";   /* agent */
+    opacity: 0.3;
+}
+#LyricsTab span#CrawlerButton[data-state=triggered] {
+    opacity: 0.3;
+}
+
+
+#LyricsTab span.buttonseparator:before {
+    display: inline-block;
+
+    padding-left:   5px;
+    padding-right:  5px;
+    font-weight:    normal;
+    color:          #333;
+    content:        "|";
+}
+
+
+#LyricsTab span.TriggerCachedLyricsVisibility[data-state=untriggered]:before {
+    content: "\f06e";   /* auge */
+}
+#LyricsTab span.TriggerCachedLyricsVisibility[data-state=triggered]:before {
+    content: "\f070";   /* durchgestrichenes auge */
+}
+#LyricsTab span#CopyButton[data-state=untriggered]:before {
+    content: "\f00c";   /* check */
+}
+
+#LyricsTab div.cachedlyrics {
+    display: none;
+    font-family: Silkscreen;
+    font-size: 6pt;
+}
+
+#LyricsTab table#CrawlerCacheList td {
+    vertical-align: top;
+    padding-left:  5px;
+    padding-right: 5px;
+}
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

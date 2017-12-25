@@ -1,0 +1,11 @@
+
+div.propertybutton[data-button=unpressed] {
+    opacity:    0.5;
+}
+div.propertybutton[data-button=pressed] {
+    opacity:    1.0;
+}
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

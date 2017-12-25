@@ -1,0 +1,22 @@
+
+table.grid_table
+{
+    border-spacing: 10px;
+    border-collapse: separate;
+}
+
+tr.grid_row
+{
+}
+
+td.grid_cell
+{
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

@@ -1,0 +1,1365 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mdbapi.musicai &mdash; MusicDB 1.0.0 alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> MusicDB
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/changelog.html#id1">1.0.0 - 31.12.2017</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/comparison.html">Comparison to Other Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#comparison">Comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#server">server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#websocket">websocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tls">TLS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#database">database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#music">music</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#extern">extern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tracker">tracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#lycra">lycra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#musicai">MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#randy">Randy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#log">log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/logging.html">Handling log-files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/mods.html">MusicDB Commandline Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/mods.html#loading-of-modules">Loading of Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/testvm.html">MusicDB Test VMs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/testvm.html#qemu-installation">qemu Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#basic-setup">Basic Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#disk-images">Disk Images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/testvm.html#system-setup">System Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#installing-updating-musicdb-test-environment">Installing/Updating MusicDB Test Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#create-dummy-files">Create Dummy Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/testvm.html#test-systems">Test Systems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#debian">Debian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#raspian">Raspian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#arch-linux">Arch Linux</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/webapi.html">MusicDB Websocket API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#communication">Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#packet-format">Packet format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#client-side-interface">Client side interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#callback-functions">Callback functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#artists">Artists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#albums">Albums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#queue">Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#tag-related">Tag related</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#other">Other</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/workflow.html">Workflow for development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/workflow.html#working-on-code">Working on code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#rebuilding-the-documentation">Rebuilding the Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/workflow.html#using-git">Using git</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#micro-commits">Micro Commits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#createing-a-hotfix">Createing a Hotfix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#merging-develop-to-master">Merging Develop to Master</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/workflow.html#releasing-a-new-version">Releasing a New Version</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/install.html">Installation &amp; Update</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-all-dependencies">Install all Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#configureing-musicdb">Configureing MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-manually">Installation (Manually)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#system-preparation">System Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#basic-packages">Basic packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#apache-http-server">Apache HTTP-Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#download-musicdb">Download MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#libprinthex">libprinthex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#musicdb">musicdb</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#cuda-for-musicai">CUDA for MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#update">Update</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/music.html">Music</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#naming">Naming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#artist-directory">Artist Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#album-directory">Album Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#song-file">Song File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#itunes">iTunes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#bandcamp">Bandcamp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-database-module">Using the database module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#updating-songs">Updating Songs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/scripts.html">Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-boot">musicdb-boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-start">musicdb-start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#quickupdate">quickupdate</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/artwork.html">artwork - Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/artwork.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/database.html">database - Music DB Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/extern.html">extern - Music File Uploader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/extern.html#class">class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/extern.html#automatization">Automatization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/metadata.html">metadata - Metadata Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/mise.html">mise - Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/mise.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/musicai.html">musicai - MusicAI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#module-mod.musicai">Module Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#class-description">Class Description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/server.html">server - MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/stats.html">stats - MusicDB Song Statistic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#main-commands">Main commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#style-guide">Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#example-calls">Example calls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/tracker.html">tracker - Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tracker.html#module-mod.tracker">Module Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tracker.html#class-description">Class Description</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/artwork.html">Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#path-structure">Path structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/artwork.html#webbrowsers">Webbrowsers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#manifest">Manifest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/database.html">MusicDBDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/extern.html">MusicDBExtern</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#initializing-a-storage">Initializing a Storage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/extern.html#storage-configuration">Storage Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/extern.html#the-state-file">The State-File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#updating-a-storage">Updating a Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#handling-toxic-environments">Handling Toxic Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#musicdbextern-class">MusicDBExtern Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/lycra.html">LyCra - Lyrics Crawler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/lycra.html#module-mdbapi.lycra">Lycra API Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/lycra.html#crawler-base-class">Crawler Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/lycra.html#module-lib.db.lycradb">Lycra Database</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/mise.html">Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/mpd.html">mpd / Music Playing Daemon Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#observer-thread">Observer Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#callbacks">Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#managing-mpd">Managing MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#queue-management">Queue management</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/musicai.html">MusicAI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#training-time">Training Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#featureset">Featureset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/randy.html">Randomizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#randyinterface-class">RandyInterface Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tags.html">MusicDBTags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tracker.html">Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/clui.html">Command Line User Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.text">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.frame">Frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.pane">Pane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.buttonview">ButtonView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.listview">ListView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.group">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/config.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/database.html">Database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/database.html#database-class">Database Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/filesystem.html">Filesystem Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/hdf5storage.html">HDF5Storage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/metatags.html">Meta Tags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/metatags.html#metatags-class">MetaTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#albums">Albums</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#artworks">Artworks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#origin">Origin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#artists">Artists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#lyrics">Lyrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#tags">Tags</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#database-api">Database API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/pidfile.html">PID File Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/websockets.html#module-lib.ws.server">Websocket Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/websockets.html#module-lib.ws.websocket">Websocket Protocol</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../webui/taginput.html">Tag Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/taginput.html#taginput-js">taginput.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id1">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id2">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id3">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../webui/websockets.html">Websocket Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#connection-process">Connection Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#watchdog">Watchdog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/websockets.html#sending-data">Sending Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/websockets.html#receiving-data">Receiving Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#minimal-usage">Minimal usage</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/impressum.html">Impressum</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#kontakt">Kontakt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#verantwortlich-fur-den-inhalt-nach-55-abs-2-rstv">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#haftung-fur-inhalte">Haftung für Inhalte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#haftung-fur-links">Haftung für Links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#urheberrecht">Urheberrecht</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/impressum.html#datenschutzerklarung">Datenschutzerklärung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#datenschutz">Datenschutz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#cookies">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#server-log-files">Server-Log-Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#facebook-plugins-like-button">Facebook-Plugins (Like-Button)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#twitter">Twitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#google">Google+</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#youtube">YouTube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#ssl-verschlusselung">SSL-Verschlüsselung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#widerspruch-werbe-mails">Widerspruch Werbe-Mails</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MusicDB</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>mdbapi.musicai</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mdbapi.musicai</h1><div class="highlight"><pre>
+<span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
+<span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># </span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1"># </span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1"># </span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">MusicAI is made to set genre tags to songs based on the tags set to albums.</span>
+
+<span class="sd">This AI works for on a predefined set of genre.</span>
+<span class="sd">This set can be defined in the MusicDB Configuration ``[MusicAI]-&gt;genrelist``.</span>
+<span class="sd">The list is bound to the model name also set in the configuration.</span>
+<span class="sd">If the gerelist changes, the model name should change, too.</span>
+<span class="sd">Otherwise the datasets loose their relation to the genres.</span>
+
+<span class="sd">This module changes two environment variables:</span>
+
+<span class="sd">    * ``TF_CPP_MIN_LOG_LEVEL`` will be set to ``2`` to suppress printing warnings.</span>
+<span class="sd">    * ``CUDA_VISIBLE_DEVICES`` will be set to ``0``. This is the GPU ID that will be used by TensorFlow.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">lib.cfg.musicdb</span>    <span class="k">import</span> <span class="n">MusicDBConfig</span>
+<span class="kn">from</span> <span class="nn">lib.hdf5storage</span>    <span class="k">import</span> <span class="n">HDF5Storage</span>
+<span class="kn">from</span> <span class="nn">lib.filesystem</span>     <span class="k">import</span> <span class="n">Filesystem</span>
+<span class="kn">from</span> <span class="nn">PIL</span>                <span class="k">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">tqdm</span>               <span class="k">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TF_CPP_MIN_LOG_LEVEL&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>  <span class="c1"># Do not show warnings</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CUDA_VISIBLE_DEVICES&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>  <span class="c1"># ID of GPU that shall be used</span>
+<span class="kn">import</span> <span class="nn">tflearn</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span>
+<span class="kn">from</span> <span class="nn">tflearn.layers.conv</span>        <span class="k">import</span> <span class="n">conv_2d</span><span class="p">,</span> <span class="n">max_pool_2d</span>
+<span class="kn">from</span> <span class="nn">tflearn.layers.core</span>        <span class="k">import</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">dropout</span><span class="p">,</span> <span class="n">fully_connected</span><span class="p">,</span> <span class="n">flatten</span>
+<span class="kn">from</span> <span class="nn">tflearn.layers.estimator</span>   <span class="k">import</span> <span class="n">regression</span>
+
+
+<div class="viewcode-block" id="MusicAI"><a class="viewcode-back" href="../../mdbapi/musicai.html#mdbapi.musicai.MusicAI">[docs]</a><span class="k">class</span> <span class="nc">MusicAI</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config: Instance of :class:`lib.cfg.musicdb.MusicDBConfig`.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: If *config* is of an invalid type</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDBConfig</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;FATAL ERROR: Config-class of unknown type </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">config</span><span class="p">)))</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span>     <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fs</span>         <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">genrelist</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">genrelist</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelname</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">modelname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modelfile</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">modelpath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelname</span> <span class="o">+</span> <span class="s2">&quot;.DCNN.tfl&quot;</span>
+
+
+<div class="viewcode-block" id="MusicAI.LoadModel"><a class="viewcode-back" href="../../mdbapi/musicai.html#mdbapi.musicai.MusicAI.LoadModel">[docs]</a>    <span class="k">def</span> <span class="nf">LoadModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modelfilepath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method creates a neural network model and loads the trained data from the model in ``modelfilepath`` if the file ``modelfilepath + &quot;.index&quot;`` exists.</span>
+<span class="sd">        The model will be created to run on the GPU if the related configuration is set to ``True``, otherwise the model will run on the CPU.</span>
+<span class="sd">        Currently only ``/gpu:0`` and ``/cpu:0`` are supported.</span>
+<span class="sd">        This method also resets *TensorFlows* and *TFLearn* internals by calling ``tensorflow.reset_default_graph()`` and ``tflearn.config.init_graph()``.</span>
+<span class="sd">        The model can then be saved by :meth:`~mdbapi.musicai.MusicAI.SaveModel`</span>
+
+<span class="sd">        If model creation fails, an exception gets raised.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            The model data can become invalid if the code for creating the model (:meth:`~mdbapi.musicai.MusicAI.CreateModel`) changes the architecture of the model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            modelfilepath (str): Path where the models data are stored</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The TFLearn-model</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            tensorflow.errors.InternalError: When creating the model failes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Reset tensorflow</span>
+        <span class="n">tensorflow</span><span class="o">.</span><span class="n">reset_default_graph</span><span class="p">()</span>
+        <span class="n">tflearn</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">init_graph</span><span class="p">()</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Create Model</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">usegpu</span><span class="p">:</span>
+            <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;/gpu:0&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;/cpu:0&quot;</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Create Model for device </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">tensorflow</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">device</span><span class="p">):</span>
+                <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreateModel</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">tensorflow</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">InternalError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">ename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+                    <span class="s2">&quot;Creating Tensorflow Model for device </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed with error </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
+                    <span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">ename</span><span class="p">)</span>
+                    <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31mCreating Tensorflow Model for device </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed with error </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> </span><span class="se">\033</span><span class="s2">[1;30m(My be related to Out-Of-Memory error for GPU usage)</span><span class="se">\033</span><span class="s2">[0m&quot;</span>
+                    <span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">ename</span><span class="p">)</span>
+                    <span class="p">)</span>
+            <span class="k">raise</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="c1"># Load weights/biases if available</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">modelfilepath</span><span class="o">+</span><span class="s2">&quot;.index&quot;</span><span class="p">):</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">modelfilepath</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">model</span></div>
+
+
+<div class="viewcode-block" id="MusicAI.SaveModel"><a class="viewcode-back" href="../../mdbapi/musicai.html#mdbapi.musicai.MusicAI.SaveModel">[docs]</a>    <span class="k">def</span> <span class="nf">SaveModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">modelfilepath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method stores the configuration (weights, biases, …) in ``modelfilepath``.</span>
+<span class="sd">        *TFLearn* creates multiple files with ``modelfilepath`` as suffix.</span>
+
+<span class="sd">        The model can then be loaded by :meth:`~mdbapi.musicai.MusicAI.LoadModel`</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            The model data can become invalid if the code for creating the model (:meth:`~mdbapi.musicai.MusicAI.CreateModel`) changes the architecture of the model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model: The *TFLearn* model of the neural network</span>
+<span class="sd">            modelfilepath (str): The path and filename-(prefix) where the data of the model will be saved</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">modelfilepath</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MusicAI.GetStatistics"><a class="viewcode-back" href="../../mdbapi/musicai.html#mdbapi.musicai.MusicAI.GetStatistics">[docs]</a>    <span class="k">def</span> <span class="nf">GetStatistics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns statistics of the sizes of the training and feature sets.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary with statistics or ``None`` if there is no training set</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                stats = musicai.GetStatistics()</span>
+<span class="sd">                print(&quot;Set Size: &quot;, stats[&quot;setsize&quot;])</span>
+<span class="sd">                print(&quot;Number of Songs in Set: &quot;, stats[&quot;numofsongs&quot;])</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">trainingfilepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">modelpath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelname</span> <span class="o">+</span> <span class="s2">&quot;.h5&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">trainingfilepath</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">trainingfile</span> <span class="o">=</span> <span class="n">HDF5Storage</span><span class="p">(</span><span class="n">trainingfilepath</span><span class="p">)</span>
+        <span class="c1"># Check if the song was already added to the trainingset</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">songset</span>   <span class="o">=</span> <span class="n">trainingfile</span><span class="o">.</span><span class="n">ReadDataset</span><span class="p">(</span><span class="s2">&quot;songids&quot;</span><span class="p">)</span>
+            <span class="n">outputset</span> <span class="o">=</span> <span class="n">trainingfile</span><span class="o">.</span><span class="n">ReadDataset</span><span class="p">(</span><span class="s2">&quot;outputs&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+            <span class="n">trainingfile</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">stats</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;setsize&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">outputset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;numofsongs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">songset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">stats</span></div>
+
+
+    
+    <span class="c1"># This MUST BE THREADSAFE to process multiple files at once</span>
+    <span class="c1"># Accessing own database is allowed</span>
+    <span class="c1"># returns file to spetrogram on success or None if something failed</span>
+<div class="viewcode-block" id="MusicAI.CreateSpectrogram"><a class="viewcode-back" href="../../mdbapi/musicai.html#mdbapi.musicai.MusicAI.CreateSpectrogram">[docs]</a>    <span class="k">def</span> <span class="nf">CreateSpectrogram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">songpath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method creates the spectrograms used for the feature set.</span>
+<span class="sd">        If the spectrogram already exists, it will skip the process.</span>
+<span class="sd">        The spectrogram is a png-image.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This method must be thread safe to process multiple files at once</span>
+
+<span class="sd">        This method represents the following shell commands:</span>
+
+<span class="sd">        .. code-block:: bash</span>
+
+<span class="sd">            # decode song to wave-file</span>
+<span class="sd">            ffmpeg -v quiet -y -i $songpath &quot;$songid-stereo.wav&quot;</span>
+
+<span class="sd">            # make mono wave file out of the stereo wave file</span>
+<span class="sd">            sox &quot;$songid-stereo.wav&quot; &quot;$songid-mono.wav&quot; remix 1,2</span>
+
+<span class="sd">            # create spectrogram out of the mono wave file</span>
+<span class="sd">            sox &quot;$songid-mono.wav&quot; -n spectrogram -y $slizesize -X 50 -m -r -o &quot;$songid.png&quot;</span>
+
+<span class="sd">        The temporary wave files are stored in the *musicai-tmppath*.</span>
+<span class="sd">        They will be removed if the spectrogram was created successfully.</span>
+<span class="sd">        Otherwise they will be kept.</span>
+<span class="sd">        The spectrogram in the *musicai-specpath*.</span>
+<span class="sd">        The slicesize denotes the height of the spectrogram which basically means the granularity of frequencies.</span>
+<span class="sd">        This value gets increased by 1 to cover the offset (f=0).</span>
+<span class="sd">        One column in the spectrogram represents 50ms of the song.</span>
+<span class="sd">        All those variables can be set in the MusicDB Configuration.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            Before changing the slice-size read the ``sox`` manpages for the ``-y`` parameter carefully.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            songid: The song ID is used to create temporary files</span>
+<span class="sd">            songpath (str): The path to the song that shall be analyzed</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            path to the spectrogram</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># prepare pathes</span>
+        <span class="n">sourcefile</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span>
+        <span class="n">wavefile</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">tmppath</span>  <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-stereo.wav&quot;</span>
+        <span class="n">monofile</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">tmppath</span>  <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-mono.wav&quot;</span>
+        <span class="n">spectrogram</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">specpath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.png&quot;</span>
+
+        <span class="c1"># we are already done</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">spectrogram</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">spectrogram</span>
+
+        <span class="c1"># create wave-file</span>
+        <span class="c1"># ffmpeg -i audio.aac stereo.wav</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">wavefile</span><span class="p">):</span>
+            <span class="n">process</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="s2">&quot;ffmpeg&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;-v&quot;</span><span class="p">,</span> <span class="s2">&quot;quiet&quot;</span><span class="p">,</span>      <span class="c1"># don&#39;t be verbose</span>
+                    <span class="s2">&quot;-y&quot;</span><span class="p">,</span>               <span class="c1"># overwrite existing file</span>
+                    <span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="n">sourcefile</span><span class="p">,</span>
+                    <span class="n">wavefile</span>
+                    <span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">process</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> while executing: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">process</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># create mono-file</span>
+        <span class="c1"># sox stereo.wav mono.wav remix 1,2</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">monofile</span><span class="p">):</span>
+            <span class="n">process</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="s2">&quot;sox&quot;</span><span class="p">,</span>
+                    <span class="n">wavefile</span><span class="p">,</span>
+                    <span class="n">monofile</span><span class="p">,</span>
+                    <span class="s2">&quot;remix&quot;</span><span class="p">,</span> <span class="s2">&quot;1,2&quot;</span>
+                    <span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">process</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> while executing: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">process</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># create spectrogram</span>
+        <span class="c1"># sox mono.wav -n spectrogram -Y 200 -X 50 -m -r -o mono.png</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">spectrogram</span><span class="p">):</span>
+            <span class="n">process</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="s2">&quot;sox&quot;</span><span class="p">,</span>
+                    <span class="n">monofile</span><span class="p">,</span>
+                    <span class="s2">&quot;-n&quot;</span><span class="p">,</span> <span class="s2">&quot;spectrogram&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">slicesize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+                    <span class="s2">&quot;-X&quot;</span><span class="p">,</span> <span class="s2">&quot;50&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;-r&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="n">spectrogram</span>
+                    <span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">process</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> while executing: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">process</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># remove tempfiles - Keep spectrogram because it looks so cool. Maybe it finds its place in the UI</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveFile</span><span class="p">(</span><span class="n">wavefile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveFile</span><span class="p">(</span><span class="n">monofile</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">spectrogram</span></div>
+        
+    
+    <span class="c1"># This MUST BE THREADSAFE to process multiple files at once</span>
+    <span class="c1"># Accessing own database is allowed</span>
+    <span class="c1"># returns True on success</span>
+<div class="viewcode-block" id="MusicAI.CreateFeatureset"><a class="viewcode-back" href="../../mdbapi/musicai.html#mdbapi.musicai.MusicAI.CreateFeatureset">[docs]</a>    <span class="k">def</span> <span class="nf">CreateFeatureset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">songpath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function generates the feature set for the MusicAI.</span>
+<span class="sd">        The features are generated by the following steps:</span>
+
+<span class="sd">            #. First step is to create the spectrogram calling :meth:`~mdbapi.musicai.MusicAI.CreateSpectrogram`.</span>
+<span class="sd">            #. Next it takes slices from the resulting image and converts it into a normalized *numpy* array.</span>
+<span class="sd">            #. The begin and end of a song will be chopped of and gets ignored.</span>
+
+<span class="sd">        A slicesize can be defind in the MusicDB Configuration under musicai-&gt;slicesize. **Be careful with this configuration and check the influence to other methods in this class!**</span>
+<span class="sd">        The first 10 and the last 10 slices will be skipped to avoid unnecessary much intro/outro-data-noise.</span>
+<span class="sd">        </span>
+<span class="sd">        The resulting data (a feature) is a *numpy* 3D (slicesize, slicesize, 1) matrix of type float in range of 0.0 to 1.0.</span>
+<span class="sd">        This matrix of all features of a song gets stored in a HDF5 file under ``$spectrograms/$SongID.h5``</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            songid: ID of the song the feature set belongs to</span>
+<span class="sd">            songpath (str): path to the song that shall be analyzed</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` on success, otherwise ``False``</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                musicai = MusicAI(&quot;./musicdb.ini&quot;)</span>
+<span class="sd">                musicai.CreateFeatureset(mdbsong[&quot;id&quot;], mdbsong[&quot;path&quot;]):</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create Spectrogram</span>
+        <span class="n">spectrogram</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreateSpectrogram</span><span class="p">(</span><span class="n">songid</span><span class="p">,</span> <span class="n">songpath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">spectrogram</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Open it and make raw data out of the image</span>
+        <span class="n">image</span>           <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">spectrogram</span><span class="p">)</span>
+        <span class="n">width</span><span class="p">,</span> <span class="n">height</span>   <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">slicesize</span>       <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">slicesize</span>
+        <span class="n">numslices</span>       <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">width</span> <span class="o">/</span> <span class="n">slicesize</span><span class="p">)</span> <span class="o">-</span> <span class="mi">20</span>   <span class="c1"># \_ skip slices (intro+outro)</span>
+        <span class="n">startoffset</span>     <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">slicesize</span>                <span class="c1"># / </span>
+
+        <span class="k">if</span> <span class="n">numslices</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;song </span><span class="si">%s</span><span class="s2"> too small! </span><span class="se">\033</span><span class="s2">[1;30m(do not use for featureset)&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">songpath</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    
+        <span class="c1"># create data</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">numslices</span><span class="p">,</span> <span class="n">slicesize</span><span class="p">,</span> <span class="n">slicesize</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numslices</span><span class="p">):</span>
+            <span class="c1"># Crop into slices</span>
+            <span class="n">startpixel</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">slicesize</span> <span class="o">+</span> <span class="n">startoffset</span>
+            <span class="n">imageslice</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="n">startpixel</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">startpixel</span> <span class="o">+</span> <span class="n">slicesize</span><span class="p">,</span> <span class="n">slicesize</span><span class="p">))</span>
+
+            <span class="c1"># Make numpy-arrays out of it</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">imageslice</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span> <span class="c1"># image -&gt; ndarray</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">/</span> <span class="mf">255.0</span>                                 <span class="c1"># [0 … 255] -&gt; [0.0 … 1.0] (and makes float)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">slicesize</span><span class="p">,</span> <span class="n">slicesize</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>      <span class="c1"># X² -&gt; X³</span>
+
+            <span class="c1"># Store the feature dataset</span>
+            <span class="n">dataset</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+
+        <span class="c1"># Open storage for the features</span>
+        <span class="n">featurefilepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">specpath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.h5&quot;</span>
+        <span class="n">featurefile</span>     <span class="o">=</span> <span class="n">HDF5Storage</span><span class="p">(</span><span class="n">featurefilepath</span><span class="p">)</span>
+        <span class="n">featurefile</span><span class="o">.</span><span class="n">WriteDataset</span><span class="p">(</span><span class="s2">&quot;featureset&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+        <span class="n">featurefile</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="MusicAI.HasFeatureset"><a class="viewcode-back" href="../../mdbapi/musicai.html#mdbapi.musicai.MusicAI.HasFeatureset">[docs]</a>    <span class="k">def</span> <span class="nf">HasFeatureset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method checks if a song has already a feature set.</span>
+<span class="sd">        If there is a HDF5 file in the spectrogram directors the method assumes that this file contains the feature set.</span>
+<span class="sd">        The file gets not read.</span>
+<span class="sd">        The png encoded spectrogram is not the final feature set and so its existence is not relevant for this method.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            songid: ID of the song that shall be checked</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` if the songs feature set is available, otherwise ``False``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">featurefilepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">specpath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.h5&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">featurefilepath</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="MusicAI.AddSongToTrainingset"><a class="viewcode-back" href="../../mdbapi/musicai.html#mdbapi.musicai.MusicAI.AddSongToTrainingset">[docs]</a>    <span class="k">def</span> <span class="nf">AddSongToTrainingset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">genre</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method can be used to add a song to the available training sets.</span>
+<span class="sd">        To do so, first the feature set must be created.</span>
+
+<span class="sd">        The feature set file gets read and a genre vector generated.</span>
+<span class="sd">        The resultuing two sets (*inputs* = feature set and *outputs* = genre vector) will be stored in the training file.</span>
+
+<span class="sd">        The **inputs** are a HDF5 dataset handler shaping a numpy-array of size *n* of input matrices:</span>
+<span class="sd">        ``(n, slicesize, slicesize, 1)``</span>
+
+<span class="sd">        The **outputs** are a HDF5 dataset handler shaping a numpy-array of size *n* of genre-vectors formatted as shown in :meth:`mdbapi.musicai.MusicAI.GetGenreMatrix`:</span>
+<span class="sd">        ``(n, 4, 1)``</span>
+
+<span class="sd">        The genre name should be the same as the related genre tag is named in the database.</span>
+<span class="sd">        It also must be part of the list of genres this AI works with.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            songid: ID of the song that shall be used for training</span>
+<span class="sd">            genre (str): Lower case name of the genre (as stored in the database) the song belongs to</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` if the song has a feature set so that it was added to the database. Otherwise ``False``</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                musicai = MusicAI(&quot;./musicdb.ini&quot;)</span>
+<span class="sd">                musicai.CreateFeatureset(mdbsong[&quot;id&quot;], mdbsong[&quot;path&quot;]):</span>
+<span class="sd">                musicai.AddSongToTrainingset(mdbsong[&quot;id&quot;], &quot;metal&quot;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">genre</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">genrelist</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;The genre </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> is not in the genrelist: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="n">genre</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genrelist</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">HasFeatureset</span><span class="p">(</span><span class="n">songid</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">waring</span><span class="p">(</span><span class="s2">&quot;Song with id </span><span class="si">%s</span><span class="s2"> does not have a featureset&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">featurefilepath</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">specpath</span>  <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>    <span class="o">+</span> <span class="s2">&quot;.h5&quot;</span>
+        <span class="n">trainingfilepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">modelpath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelname</span> <span class="o">+</span> <span class="s2">&quot;.h5&quot;</span>
+
+        <span class="n">featurefile</span>  <span class="o">=</span> <span class="n">HDF5Storage</span><span class="p">(</span><span class="n">featurefilepath</span><span class="p">)</span>
+        <span class="n">trainingfile</span> <span class="o">=</span> <span class="n">HDF5Storage</span><span class="p">(</span><span class="n">trainingfilepath</span><span class="p">)</span>
+
+        <span class="c1"># Check if the song was already added to the trainingset</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">songids</span> <span class="o">=</span> <span class="n">trainingfile</span><span class="o">.</span><span class="n">ReadDataset</span><span class="p">(</span><span class="s2">&quot;songids&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+            <span class="n">songids</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="n">songid</span> <span class="ow">in</span> <span class="n">songids</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">waring</span><span class="p">(</span><span class="s2">&quot;Song with id </span><span class="si">%s</span><span class="s2"> does already exist in trainingset&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">))</span>
+            <span class="n">featurefile</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+            <span class="n">trainingfile</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Read Featureset</span>
+        <span class="n">featureset</span>   <span class="o">=</span> <span class="n">featurefile</span><span class="o">.</span><span class="n">ReadDataset</span><span class="p">(</span><span class="s2">&quot;featureset&quot;</span><span class="p">)</span>    <span class="c1"># read features</span>
+        <span class="n">setsize</span>      <span class="o">=</span> <span class="n">featureset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>                      <span class="c1"># determin size of the workingset</span>
+        <span class="n">genrevector</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetGenreMatrix</span><span class="p">()[</span><span class="n">genre</span><span class="p">]</span>             <span class="c1"># get genre vector</span>
+        <span class="n">genrevector</span>  <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">genrevector</span><span class="p">)</span>                 <span class="c1"># \_ create outputs-set</span>
+        <span class="n">genreset</span>     <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">genrevector</span><span class="p">,</span> <span class="p">(</span><span class="n">setsize</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>    <span class="c1"># /</span>
+        <span class="n">songidset</span>    <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">songid</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+
+        <span class="c1"># Write trainingset</span>
+        <span class="n">trainingfile</span><span class="o">.</span><span class="n">WriteDataset</span><span class="p">(</span><span class="s2">&quot;inputs&quot;</span><span class="p">,</span>  <span class="n">featureset</span><span class="p">)</span>
+        <span class="n">trainingfile</span><span class="o">.</span><span class="n">WriteDataset</span><span class="p">(</span><span class="s2">&quot;outputs&quot;</span><span class="p">,</span> <span class="n">genreset</span><span class="p">)</span>
+        <span class="n">trainingfile</span><span class="o">.</span><span class="n">WriteDataset</span><span class="p">(</span><span class="s2">&quot;songids&quot;</span><span class="p">,</span> <span class="n">songidset</span><span class="p">)</span>
+
+        <span class="n">featurefile</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+        <span class="n">trainingfile</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="MusicAI.CreateModel"><a class="viewcode-back" href="../../mdbapi/musicai.html#mdbapi.musicai.MusicAI.CreateModel">[docs]</a>    <span class="k">def</span> <span class="nf">CreateModel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method creates and returns the following deep convolutional neural network.</span>
+
+<span class="sd">        The architecture of the network is close to the one provided the following blog article:</span>
+<span class="sd">        </span>
+<span class="sd">            Julien Despois, *&quot;Finding the genre of a song with Deep Learning -- A.I. Odyyssey part. 1&quot;*, Nov. 2016, internet (non-scientific source), https://chatbotslife.com/finding-the-genre-of-a-song-with-deep-learning-da8f59a61194</span>
+
+<span class="sd">        Inside the method there are some configurable variables to easily change some basic settings of the network:</span>
+
+<span class="sd">            * ``useflatten = True``: Create a flatten-layer between the convolutional part and the fully connected end</span>
+<span class="sd">            * ``keepprob = 0.5``: Probability of an input gets propagated through the dropout-layer</span>
+<span class="sd">            * ``activation = &quot;elu&quot;``: Name of the activation function used for the convolutional networks as used by *tensorflow*</span>
+<span class="sd">            * ``weightinit = &quot;Xavier&quot;``: Initialisation function for the convolutional layers</span>
+<span class="sd">            * ``weightdecay = 0.001``</span>
+<span class="sd">            * ``learningrate = 0.001``</span>
+
+<span class="sd">        The reason for using ``&quot;elu&quot;`` as activation function can be found in the following paper:</span>
+
+<span class="sd">            Djork-Arné Clevert, Thomas Unterthiner and Sepp Hochreiter, *&quot;Fast and Accurate Deep Network Learning by Exponential Linear Units (ELUs)&quot;*, Nov. 2015, CoRR (scientific source), https://arxiv.org/abs/1511.07289</span>
+
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The created TFLearn-model</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">slicesize</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">slicesize</span>      <span class="c1"># the slice size of the spectrograms define the size of the input layer</span>
+        <span class="n">genrecount</span>  <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">genrelist</span><span class="p">)</span> <span class="c1"># number of genres and so the number of output neurons</span>
+
+        <span class="c1"># Some general architechture configuration</span>
+        <span class="n">useflatten</span>  <span class="o">=</span> <span class="kc">True</span>      <span class="c1"># Use a flatten layer afrer the convolutional layers</span>
+        <span class="n">keepprob</span>    <span class="o">=</span> <span class="mf">0.5</span>       <span class="c1"># configures the dropout layer</span>
+        <span class="n">activation</span>  <span class="o">=</span> <span class="s2">&quot;elu&quot;</span>     <span class="c1"># elu? warum nicht das übliche relu? -&gt; Weil besser: https://arxiv.org/abs/1511.07289</span>
+        <span class="n">weightinit</span>  <span class="o">=</span> <span class="s2">&quot;Xavier&quot;</span>  <span class="c1"># Initialisation function for the convolutional layers</span>
+        <span class="n">weightdecay</span> <span class="o">=</span> <span class="mf">0.001</span>
+        <span class="n">learningrate</span><span class="o">=</span> <span class="mf">0.001</span>
+
+        <span class="n">convnet</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">slicesize</span><span class="p">,</span> <span class="n">slicesize</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;input&#39;</span><span class="p">)</span>
+
+        <span class="n">convnet</span> <span class="o">=</span> <span class="n">conv_2d</span><span class="p">(</span><span class="n">convnet</span><span class="p">,</span>  <span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">activation</span><span class="p">,</span> <span class="n">weights_init</span><span class="o">=</span><span class="n">weightinit</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">weightdecay</span><span class="p">)</span>
+        <span class="n">convnet</span> <span class="o">=</span> <span class="n">max_pool_2d</span><span class="p">(</span><span class="n">convnet</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">convnet</span> <span class="o">=</span> <span class="n">conv_2d</span><span class="p">(</span><span class="n">convnet</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">activation</span><span class="p">,</span> <span class="n">weights_init</span><span class="o">=</span><span class="n">weightinit</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">weightdecay</span><span class="p">)</span>
+        <span class="n">convnet</span> <span class="o">=</span> <span class="n">max_pool_2d</span><span class="p">(</span><span class="n">convnet</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">convnet</span> <span class="o">=</span> <span class="n">conv_2d</span><span class="p">(</span><span class="n">convnet</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">activation</span><span class="p">,</span> <span class="n">weights_init</span><span class="o">=</span><span class="n">weightinit</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">weightdecay</span><span class="p">)</span>
+        <span class="n">convnet</span> <span class="o">=</span> <span class="n">max_pool_2d</span><span class="p">(</span><span class="n">convnet</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">convnet</span> <span class="o">=</span> <span class="n">conv_2d</span><span class="p">(</span><span class="n">convnet</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">activation</span><span class="p">,</span> <span class="n">weights_init</span><span class="o">=</span><span class="n">weightinit</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">weightdecay</span><span class="p">)</span>
+        <span class="n">convnet</span> <span class="o">=</span> <span class="n">max_pool_2d</span><span class="p">(</span><span class="n">convnet</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">useflatten</span><span class="p">:</span>
+            <span class="n">convnet</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">(</span><span class="n">convnet</span><span class="p">)</span>
+
+        <span class="n">convnet</span> <span class="o">=</span> <span class="n">fully_connected</span><span class="p">(</span><span class="n">convnet</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">activation</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">weightdecay</span><span class="p">)</span>
+        <span class="n">convnet</span> <span class="o">=</span> <span class="n">dropout</span><span class="p">(</span><span class="n">convnet</span><span class="p">,</span> <span class="n">keepprob</span><span class="p">)</span>
+
+        <span class="n">convnet</span> <span class="o">=</span> <span class="n">fully_connected</span><span class="p">(</span><span class="n">convnet</span><span class="p">,</span> <span class="n">genrecount</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">weightdecay</span><span class="p">)</span>
+        <span class="n">convnet</span> <span class="o">=</span> <span class="n">regression</span><span class="p">(</span><span class="n">convnet</span><span class="p">,</span> 
+                <span class="n">optimizer</span>       <span class="o">=</span> <span class="s1">&#39;rmsprop&#39;</span><span class="p">,</span> 
+                <span class="n">loss</span>            <span class="o">=</span> <span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> 
+                <span class="n">learning_rate</span>   <span class="o">=</span> <span class="n">learningrate</span>
+                <span class="p">)</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="n">tflearn</span><span class="o">.</span><span class="n">DNN</span><span class="p">(</span><span class="n">convnet</span><span class="p">,</span>
+                <span class="n">tensorboard_verbose</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>    <span class="c1"># many nice graphs inside tensorboard</span>
+                <span class="n">tensorboard_dir</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">logpath</span>
+                <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">model</span></div>
+
+
+<div class="viewcode-block" id="MusicAI.GetGenreMatrix"><a class="viewcode-back" href="../../mdbapi/musicai.html#mdbapi.musicai.MusicAI.GetGenreMatrix">[docs]</a>    <span class="k">def</span> <span class="nf">GetGenreMatrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a dictionary with the categorization vector for each genre.</span>
+<span class="sd">        When training a neural network for categorizing, each element of the result-vector is mapped to one category.</span>
+<span class="sd">        This static mapping is returned by this method.</span>
+<span class="sd">        The matrix gets dynamic generated out of the configuration of MusicDB.</span>
+<span class="sd">        The configured genre list gets just transformed into the matirx.</span>
+
+<span class="sd">        For example, the mapping for the genrelist ``Metal, NDH, Gothic, Elector`` is the following:</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \begin{pmatrix}</span>
+<span class="sd">                \text{Metal}\\</span>
+<span class="sd">                \text{NDH}\\</span>
+<span class="sd">                \text{Gothic}\\</span>
+<span class="sd">                \text{Electro}</span>
+<span class="sd">            \end{pmatrix}</span>
+
+<span class="sd">        The format of the mapping is a dictionary with each genre as key.</span>
+<span class="sd">        Each entry in the dictionary is a vector with the related cell set to 1.0 and the other cells to 0.0. For *Gothic* music, the vector would look like this:</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \text{Gothic} = \begin{pmatrix}</span>
+<span class="sd">                0.0\\</span>
+<span class="sd">                0.0\\</span>
+<span class="sd">                1.0\\</span>
+<span class="sd">                0.0</span>
+<span class="sd">            \end{pmatrix}</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary with expected-prediction-vectors for training</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">matrix</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">genre</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genrelist</span><span class="p">):</span>
+            <span class="n">matrix</span><span class="p">[</span><span class="n">genre</span><span class="p">]</span>        <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genrelist</span><span class="p">)</span>
+            <span class="n">matrix</span><span class="p">[</span><span class="n">genre</span><span class="p">][</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+        <span class="k">return</span> <span class="n">matrix</span></div>
+
+
+<div class="viewcode-block" id="MusicAI.HasTrainingset"><a class="viewcode-back" href="../../mdbapi/musicai.html#mdbapi.musicai.MusicAI.HasTrainingset">[docs]</a>    <span class="k">def</span> <span class="nf">HasTrainingset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method checks if a song is used for training - if there exists a training set.</span>
+<span class="sd">        The check is done in two steps:</span>
+
+<span class="sd">            #. Does the training set file for the model exist.</span>
+<span class="sd">            #. Is the song ID listed in the set of training songs in the training set file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            songid: ID of the song that shall be checked</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` if there exists a training set, otherwise ``False``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">trainingfilepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">modelpath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelname</span> <span class="o">+</span> <span class="s2">&quot;.h5&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">trainingfilepath</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">trainingfile</span> <span class="o">=</span> <span class="n">HDF5Storage</span><span class="p">(</span><span class="n">trainingfilepath</span><span class="p">)</span>
+        <span class="c1"># Check if the song was already added to the trainingset</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">songids</span> <span class="o">=</span> <span class="n">trainingfile</span><span class="o">.</span><span class="n">ReadDataset</span><span class="p">(</span><span class="s2">&quot;songids&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+            <span class="n">trainingfile</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># if the song is listed in this list, it exists in the trainingset</span>
+        <span class="k">if</span> <span class="n">songid</span> <span class="ow">in</span> <span class="n">songids</span><span class="p">:</span>
+            <span class="n">trainingfile</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="MusicAI.PerformTraining"><a class="viewcode-back" href="../../mdbapi/musicai.html#mdbapi.musicai.MusicAI.PerformTraining">[docs]</a>    <span class="k">def</span> <span class="nf">PerformTraining</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method performs the training of the neural network.</span>
+<span class="sd">        The training is done in several steps:</span>
+
+<span class="sd">            #. Loading the model using :meth:`~mdbapi.musicai.MusicAI.LoadModel`</span>
+<span class="sd">            #. Loading the training set from file</span>
+<span class="sd">            #. Performing the training itself. This can be canceled by pressing ctrl-c.</span>
+<span class="sd">            #. Saving new model state by calling :meth:`~mdbapi.musicai.MusicAI.SaveModel`</span>
+
+<span class="sd">        The size of the training set is determined by the MusicDB Configuration.</span>
+
+<span class="sd">        Each run gets logged in the log-directory that can be configured in the MusicDB Configuration.</span>
+<span class="sd">        The name of each run is the module-name extended with the date (YY-MM-DD) and time (HH:MM) of the training.</span>
+<span class="sd">        These logs can be used for visualization using TensorBoard.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` on success, otherwise ``False``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># shorten config</span>
+        <span class="n">runid</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelname</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M&quot;</span><span class="p">)</span>
+        <span class="n">batchsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">batchsize</span>
+        <span class="n">epoch</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">epoch</span>
+
+        <span class="c1"># load model</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;34mLoading model … </span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LoadModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modelfile</span><span class="p">)</span>
+
+        <span class="c1"># getting features</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;34mLoading training data … </span><span class="se">\033</span><span class="s2">[0;36m&quot;</span><span class="p">)</span>
+        <span class="n">trainingfilepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">modelpath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelname</span> <span class="o">+</span> <span class="s2">&quot;.h5&quot;</span>
+        <span class="n">trainingfile</span>     <span class="o">=</span> <span class="n">HDF5Storage</span><span class="p">(</span><span class="n">trainingfilepath</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">inputset</span>         <span class="o">=</span> <span class="n">trainingfile</span><span class="o">.</span><span class="n">ReadDataset</span><span class="p">(</span><span class="s2">&quot;inputs&quot;</span><span class="p">)</span>
+            <span class="n">outputset</span>        <span class="o">=</span> <span class="n">trainingfile</span><span class="o">.</span><span class="n">ReadDataset</span><span class="p">(</span><span class="s2">&quot;outputs&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Reading the Trainingset failed!&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31m … failed!</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+            <span class="n">trainingfile</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># run training</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;34mRunning training process … </span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+                    <span class="n">inputset</span><span class="p">,</span> <span class="n">outputset</span><span class="p">,</span>
+                    <span class="n">n_epoch</span>         <span class="o">=</span> <span class="n">epoch</span><span class="p">,</span>
+                    <span class="n">batch_size</span>      <span class="o">=</span> <span class="n">batchsize</span><span class="p">,</span>
+                    <span class="n">shuffle</span>         <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> 
+                    <span class="n">validation_set</span>  <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span>
+                    <span class="n">snapshot_step</span>   <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> 
+                    <span class="n">show_metric</span>     <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> 
+                    <span class="n">run_id</span>          <span class="o">=</span> <span class="n">runid</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Training canceled by user. </span><span class="se">\033</span><span class="s2">[1;30m(Progress will not be saved)</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33m … canceled by user. </span><span class="se">\033</span><span class="s2">[1;30m(Progress will not be saved)</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+            <span class="n">trainingfile</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># save model</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;34mSaving Model … </span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SaveModel</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">modelfile</span><span class="p">)</span>
+        <span class="n">trainingfile</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="MusicAI.PerformPrediction"><a class="viewcode-back" href="../../mdbapi/musicai.html#mdbapi.musicai.MusicAI.PerformPrediction">[docs]</a>    <span class="k">def</span> <span class="nf">PerformPrediction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method starts a prediction of the genre for a song addressed by its song ID.</span>
+<span class="sd">        It returns a vector of confidence for the genres as described in :meth:`~mdbapi.musicai.MusicAI.GetGenreMatrix`.</span>
+<span class="sd">        The confidence is the average of all features in the set.</span>
+<span class="sd">        The featureset gets loaded from the related HDF5 file in the spectrogram directory configured</span>
+<span class="sd">        in the MusicDB Configuration.</span>
+<span class="sd">        A feature set can be created using the :meth:`~mdbapi.musicai.MusicAI.CreateFeatureset`</span>
+<span class="sd">        If the file does not exist ``None`` gets returned.</span>
+
+<span class="sd">        The result is calculated the following way from the set *P* of predictions based on a feature</span>
+<span class="sd">        for each genre in the set of genres *G*.</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            p_{g} = \frac{1}{\lvert P \rvert}\sum_{i}^{\lvert P \rvert}{p_{i}} \qquad p_{i} \in P; \; g \in G</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            songid: The ID of the song that shall be categorized</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A confidence-vector for the genres that were predicted, or ``None`` if an error occurs</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            </span>
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                # Create a feature set if there is none yet</span>
+<span class="sd">                if not musicai.HasFeatureset(mdbsong[&quot;id&quot;]):</span>
+<span class="sd">                    musicai.CreateFeatureset(mdbsong[&quot;id&quot;], mdbsong[&quot;path&quot;])</span>
+
+<span class="sd">                # Perform prediction</span>
+<span class="sd">                confidence = musicai.PerformPrediction(mdbsong[&quot;id&quot;])</span>
+
+<span class="sd">                if confidence == None:</span>
+<span class="sd">                    print(&quot;Prediction Failed! No featureset available?&quot;)</span>
+<span class="sd">                    return</span>
+
+<span class="sd">                # Print results</span>
+<span class="sd">                # The order of the Genre-List is important! The mapping (index, genre) must be correct!</span>
+<span class="sd">                for index, genre in enumerate(config.musicai.genrelist):</span>
+<span class="sd">                    print(&quot;%.2f: %s&quot; % (confidence[index], genre))</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">HasFeatureset</span><span class="p">(</span><span class="n">songid</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Song with id </span><span class="si">%s</span><span class="s2"> does not have a featureset&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># load features</span>
+        <span class="n">featurefilepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">specpath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.h5&quot;</span>
+        <span class="n">featurefile</span>     <span class="o">=</span> <span class="n">HDF5Storage</span><span class="p">(</span><span class="n">featurefilepath</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">featureset</span>  <span class="o">=</span> <span class="n">featurefile</span><span class="o">.</span><span class="n">ReadDataset</span><span class="p">(</span><span class="s2">&quot;featureset&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AssertionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Reading Featureset failed with error </span><span class="si">%s</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="n">featureset</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">featurefile</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">featureset</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># load model</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LoadModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modelfile</span><span class="p">)</span>
+
+        <span class="c1"># run prediction</span>
+        <span class="n">predictionset</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">featureset</span><span class="p">)</span>
+        <span class="n">featurefile</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+
+        <span class="c1"># accumulate results</span>
+        <span class="n">numofgenres</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genrelist</span><span class="p">)</span>
+        <span class="n">prediction</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="n">numofgenres</span>
+
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">predictionset</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numofgenres</span><span class="p">):</span>
+                <span class="n">prediction</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">entry</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numofgenres</span><span class="p">):</span>
+            <span class="n">prediction</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">predictionset</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">prediction</span></div></div>
+
+
+
+<span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
+
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Ralf Stemmer.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.0 alpha',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

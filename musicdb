@@ -1,0 +1,181 @@
+#!/usr/bin/env python3
+
+# MusicDB,  a music manager with web-bases UI that focus on music.
+# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import argparse
+import imp
+import os
+import sys
+from lib.filesystem     import Filesystem
+from lib.cfg.musicdb    import MusicDBConfig
+from lib.db.musicdb     import MusicDatabase
+from lib.logging        import MusicDBLogger
+
+
+VERSION = "1.0.0 alpha"
+
+DEFAULTCONFIGFILE = "/etc/musicdb.ini"
+
+
+def LoadAllModules():
+    moddir = os.path.join(os.path.dirname(sys.argv[0]), "mod")
+
+    # Get a list of all modules
+    fs = Filesystem(moddir)
+    modulenames = fs.GetFiles()
+    modulenames = [fs.GetFileName(x) for x in modulenames if fs.GetFileExtension(x) == "py"]
+
+    # load all modules
+    modules = {}
+    for modulename in modulenames:
+        try:
+            modfp, modpath, moddesc = imp.find_module(modulename, [moddir])
+        except Exception as e:
+            print(str(e))
+            continue
+
+        try:
+            module = imp.load_module(modulename, modfp, modpath, moddesc)
+        finally:
+            # Since we may exit via an exception, close fp explicitly.
+            if modfp:
+                modfp.close()
+
+        modules[modulename] = module
+
+    return modules
+
+
+if __name__ == "__main__":
+    print("\033[1;31mMusicDB [\033[1;34m" + VERSION + "\033[1;31m]\033[0m")
+
+    # Generate argument parser
+    argparser = argparse.ArgumentParser(description="Universal MusicDB command line tool")
+    argparser.add_argument("-v", "--version", action="store_true", help="show version and exit")
+    argparser.add_argument("-q", "--quiet",   action="store_true", help="be quiet - do not show and write logs")
+    argparser.add_argument("--config"       # allows using nondefault config file
+        , action="store"
+        , type=str
+        , metavar="path"
+        , default=DEFAULTCONFIGFILE
+        , help="Path to a nondefault config file. This will also influence the database file.")
+    argparser.add_argument("--logfile"
+        , action="store"
+        , type=str
+        , metavar="dest"
+        , help="Override log-setting. dest can be a path to a file or \"stdout\" or \"stderr\".")
+    argparser.add_argument("--loglevel"
+        , action="store"
+        , choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
+        , type=str
+        , metavar="level"
+        , help="Override log-setting for the loglevel that shall be logged.")
+
+    parserset = argparser.add_subparsers(title="Modules", metavar="module", help="module help")
+
+    log = MusicDBLogger()   # The MusicDBConfig moduel needs a set up logger. The setting for logging will be applied later on.
+
+
+    # Get all modules and extend the argument parser
+    print("\033[1;34mLoading modules …\033[0m")
+    modules = LoadAllModules()
+
+    print("\033[1;34mInitializing …\033[0m")
+    for modulename in modules:
+        modclass = getattr(modules[modulename], modulename)
+        modclass.MDBM_CreateArgumentParser(parserset, modulename)
+
+    args = argparser.parse_args()
+
+    if args.version:
+        # was already printed
+        exit(0)
+
+    fs = Filesystem("/")
+
+
+    # open the config file
+    args.config = os.path.abspath(args.config)
+    if not fs.IsFile(args.config):
+        print("\033[1;31mFATAL ERROR: Config-file does not exist!\033[0m (" + args.config + ")")
+        exit(1)
+
+    try:
+        config = MusicDBConfig(args.config)
+    except Exception as e:
+        print("\033[1;31mFATAL ERROR: Opening config-file failed!\033[0m (" + args.config + ")")
+        print(e)
+        exit(1)
+
+
+    # reconfigure logger
+    if args.quiet:
+        debugfile = "/dev/null"
+    else:
+        debugfile = config.log.debugfile
+
+    if args.logfile:
+        args.logfile= os.path.abspath(args.logfile)
+        logfile = args.logfile
+    elif args.quiet:
+        logfile   = "/dev/null"
+    else:
+        logfile = config.log.logfile
+        
+    if args.loglevel:
+        loglevel = args.loglevel
+    else:
+        loglevel = config.log.loglevel
+    log.Reconfigure(logfile, loglevel, debugfile, config)
+
+    # get, check and open the database from path
+    databasepath = config.database.path
+
+    if not fs.IsFile(databasepath):
+        print("\033[1;31mFATAL ERROR: Invalid database path!\n  " 
+                + databasepath + " is not a file or does not exist!\033[0m")
+        exit(1)
+    if fs.GetFileExtension(databasepath) != "db":
+        print("\033[1;31mFATAL ERROR: Invalid database path!\n  " 
+                + databasepath + " has an unexpected extension!\033[0m (.db expected)")
+        exit(1)
+
+    try:
+        fs.AssertFile(databasepath)
+        database = MusicDatabase(databasepath)
+    except Exception as e:
+        print("\033[1;31mFATAL ERROR: Opening database failed!\033[0m (" + databasepath + ")")
+        print(e)
+        exit(1)
+
+
+
+    # execute module
+    try:
+        modulename = args.module
+    except:
+        argparser.print_help()
+        exit(1)
+
+    modclass = getattr(modules[modulename], modulename)
+    modobj   = modclass(config, database)
+    exitcode = modobj.MDBM_Main(args)
+    exit(exitcode)
+
+
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
+

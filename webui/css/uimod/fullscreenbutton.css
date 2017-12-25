@@ -1,0 +1,31 @@
+
+/******************/
+/* Main Container */
+/******************/
+
+div#FSBBox
+{
+    position:       absolute;
+    top:            1px;
+    right:          1px;
+}
+
+div#FSB:before
+{
+    font-family:    FontAwesome;
+    font-weight:    normal;
+    display:        inline-block;
+    padding:        5px;
+}
+div#FSB[data-fsstate=normal]:before 
+{
+    content: "\f065";   /*fa-expand*/
+}
+div#FSB[data-fsstate=fullscreen]:before
+{
+    content: "\f066";   /*fa-compress*/
+}
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

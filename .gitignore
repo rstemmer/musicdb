@@ -1,0 +1,8 @@
+*~
+*.o
+*.pyc
+*.swp
+*.swo
+tmp/*
+id3edit/id3edit
+docs/build/doctrees

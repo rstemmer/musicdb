@@ -1,0 +1,11 @@
+
+div.moodbutton[data-button=unpressed] {
+    opacity:    0.5;
+}
+div.moodbutton[data-button=pressed] {
+    opacity:    1.0;
+}
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

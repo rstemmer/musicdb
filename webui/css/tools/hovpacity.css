@@ -1,0 +1,21 @@
+
+/*************************/
+/* Hover Opacity changer */
+/*************************/
+
+.hovpacity
+{
+    opacity: 0.5;
+}
+
+.hovpacity:hover
+{
+    opacity: 1.0;
+}
+
+
+
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

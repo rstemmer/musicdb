@@ -1,0 +1,6 @@
+
+repare - Repare Database Entries
+================================
+
+.. automodule:: mod.repare
+

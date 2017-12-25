@@ -1,17 +1,36 @@
 # musicdb
-A music manager with focus on remote access to your music using a webui and MPD for streaming
 
-I'm working on the documentation and some major changes to make this great software useful for more people than me.
-If this is done I'll publish it here.
+MusicDB is a music manager with focus on remote access to your music using a WebUI and MPD for streaming.
+It is more a presentation of your music than a database frontend.
 
-Until now I spent more than 6 years of development into the tool.
-And since I finished a first test version, I use it nearly every day.
+Until now I spent more than 6 years for developing this software.
+Since I finished a first test version, I use it nearly every day.
 Time to share it with the world :)
 
-**The code will be released in the last week of this year 2017**
+For more details see the start page [rstemmer.github.io/musicdb](https://rstemmer.github.io/musicdb)
 
-Things I need to do befor alpha release:
+## Installation
 
-  * [75%] Create a landing page
-  * [75%] Review of documentation
-  * [25%] Clean up repository (remove passwords, API keys, dick pics, …)
+[How to Install MusicDB](https://rstemmer.github.io/musicdb/docs/build/html/usage/install.html)
+
+## Documentation
+
+[MusicDB's Documentation](https://rstemmer.github.io/musicdb/docs/build/html/usage/index.html)
+
+## Social
+
+Providing and maintaining open source software comes with some downsides.
+I'd like to know if anyone is using this software, and what they are doing with it.
+So feel free to follow my project account [@MusicDBProject](https://twitter.com/MusicDBProject) on twitter
+or e-mail me.
+
+## Contributing
+
+Every help is welcome. It starts by easy things like writing an Issue in the issue tracker when you find a bug
+and ends with adding new features to MusicDB.
+You can also improve the documentation.
+
+Please work only on the *develop* branch and don't commit docs/build if it is not mandatory.
+Read [Working on MusicDB's Code](https://rstemmer.github.io/musicdb/docs/build/html/basics/workflow.html) before
+you start.
+

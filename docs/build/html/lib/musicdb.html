@@ -1,0 +1,2043 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MusicDatabase &mdash; MusicDB 1.0.0 alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="../index.html"/>
+        <link rel="next" title="PID File Handling" href="pidfile.html"/>
+        <link rel="prev" title="Meta Tags" href="metatags.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> MusicDB
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basics/changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/changelog.html#id1">1.0.0 - 31.12.2017</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#comparison">Comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#server">server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#websocket">websocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tls">TLS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#database">database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#music">music</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/logging.html">Handling log-files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/mods.html">MusicDB Commandline Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#loading-of-modules">Loading of Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#qemu-installation">qemu Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#basic-setup">Basic Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#disk-images">Disk Images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#system-setup">System Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#installing-updating-musicdb-test-environment">Installing/Updating MusicDB Test Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#create-dummy-files">Create Dummy Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#test-systems">Test Systems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#debian">Debian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#raspian">Raspian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#arch-linux">Arch Linux</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/webapi.html">MusicDB Websocket API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#communication">Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#packet-format">Packet format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#client-side-interface">Client side interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#callback-functions">Callback functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#queue">Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#tag-related">Tag related</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#other">Other</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/workflow.html">Workflow for development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#working-on-code">Working on code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#rebuilding-the-documentation">Rebuilding the Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#using-git">Using git</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#micro-commits">Micro Commits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#createing-a-hotfix">Createing a Hotfix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#merging-develop-to-master">Merging Develop to Master</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#releasing-a-new-version">Releasing a New Version</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-all-dependencies">Install all Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#configureing-musicdb">Configureing MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-manually">Installation (Manually)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#system-preparation">System Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#apache-http-server">Apache HTTP-Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#musicdb">musicdb</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#cuda-for-musicai">CUDA for MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#naming">Naming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory">Artist Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory">Album Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file">Song File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#itunes">iTunes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#bandcamp">Bandcamp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-database-module">Using the database module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/scripts.html">Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-boot">musicdb-boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-start">musicdb-start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#quickupdate">quickupdate</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mod/artwork.html">artwork - Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#automatization">Automatization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/metadata.html">metadata - Metadata Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/mise.html">mise - Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/mise.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/musicai.html">musicai - MusicAI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#module-mod.musicai">Module Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/server.html">server - MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/stats.html">stats - MusicDB Song Statistic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#main-commands">Main commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#style-guide">Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#example-calls">Example calls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/tracker.html">tracker - Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#module-mod.tracker">Module Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#class-description">Class Description</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#path-structure">Path structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/artwork.html#webbrowsers">Webbrowsers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#manifest">Manifest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/database.html">MusicDBDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/extern.html">MusicDBExtern</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#initializing-a-storage">Initializing a Storage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/extern.html#storage-configuration">Storage Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/extern.html#the-state-file">The State-File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#updating-a-storage">Updating a Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#handling-toxic-environments">Handling Toxic Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#musicdbextern-class">MusicDBExtern Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/lycra.html">LyCra - Lyrics Crawler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/lycra.html#module-mdbapi.lycra">Lycra API Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/lycra.html#crawler-base-class">Crawler Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/lycra.html#module-lib.db.lycradb">Lycra Database</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/mise.html">Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/mpd.html">mpd / Music Playing Daemon Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#observer-thread">Observer Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#callbacks">Callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#managing-mpd">Managing MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#queue-management">Queue management</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicai.html">MusicAI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#training-time">Training Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#featureset">Featureset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#trainingset">Trainingset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randyinterface-class">RandyInterface Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/tags.html">MusicDBTags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/tracker.html">Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clui.html">Command Line User Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.text">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.frame">Frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.pane">Pane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.buttonview">ButtonView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.listview">ListView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.group">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="database.html#database-class">Database Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem.html">Filesystem Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hdf5storage.html">HDF5Storage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metatags.html">Meta Tags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metatags.html#metatags-class">MetaTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-column">Adding a Column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#albums">Albums</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#album-related-methods">Album Related Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#artworks">Artworks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#origin">Origin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#artists">Artists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lyrics">Lyrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tags">Tags</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tag-definition-table">Tag Definition Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tag-mapping-table">Tag Mapping Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database-api">Database API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#musicdatabase-class">MusicDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pidfile.html">PID File Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="websockets.html">MusicDB Websocket Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="websockets.html#module-lib.ws.server">Websocket Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="websockets.html#module-lib.ws.websocket">Websocket Protocol</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#sending-data">Sending Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#receiving-data">Receiving Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#minimal-usage">Minimal usage</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#kontakt">Kontakt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#verantwortlich-fur-den-inhalt-nach-55-abs-2-rstv">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#haftung-fur-inhalte">Haftung für Inhalte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#haftung-fur-links">Haftung für Links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#urheberrecht">Urheberrecht</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../other/impressum.html#datenschutzerklarung">Datenschutzerklärung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#datenschutz">Datenschutz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#cookies">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#server-log-files">Server-Log-Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#facebook-plugins-like-button">Facebook-Plugins (Like-Button)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#twitter">Twitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#google">Google+</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#youtube">YouTube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#ssl-verschlusselung">SSL-Verschlüsselung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#widerspruch-werbe-mails">Widerspruch Werbe-Mails</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MusicDB</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>MusicDatabase</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/lib/musicdb.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-lib.db.musicdb">
+<span id="musicdatabase"></span><h1>MusicDatabase<a class="headerlink" href="#module-lib.db.musicdb" title="Permalink to this headline">¶</a></h1>
+<p>This class manages the <em>MusicDB Database</em> the core of <em>MusicDB</em>.
+It caches information from the filesystem and provides augmentation of those files.
+This database handles the following components:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#songs">Songs</a></li>
+<li><a class="reference internal" href="#albums">Albums</a></li>
+<li><a class="reference internal" href="#artists">Artists</a></li>
+<li><a class="reference internal" href="#artworks">Artworks</a></li>
+<li><a class="reference internal" href="#lyrics">Lyrics</a></li>
+<li><a class="reference internal" href="#tags">Tags</a></li>
+</ul>
+</div></blockquote>
+<p>All database entries (= rows) are handled as dictionaries.
+The key of the dictionary corresponds to the column name of the database.</p>
+<p>If an entry of this dictionary got changed directly, the following methods can be used to store the changes in the database.
+This is not the recommended way because the content gets not checked.
+The preferred way to change any data is using the related method described in the following sections.</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.WriteArtist" title="lib.db.musicdb.MusicDatabase.WriteArtist"><code class="xref py py-meth docutils literal"><span class="pre">WriteArtist()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.WriteAlbum" title="lib.db.musicdb.MusicDatabase.WriteAlbum"><code class="xref py py-meth docutils literal"><span class="pre">WriteAlbum()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.WriteSong" title="lib.db.musicdb.MusicDatabase.WriteSong"><code class="xref py py-meth docutils literal"><span class="pre">WriteSong()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.WriteTag" title="lib.db.musicdb.MusicDatabase.WriteTag"><code class="xref py py-meth docutils literal"><span class="pre">WriteTag()</span></code></a></li>
+</ul>
+</div></blockquote>
+<div class="section" id="adding-a-column">
+<h2>Adding a Column<a class="headerlink" href="#adding-a-column" title="Permalink to this headline">¶</a></h2>
+<p>When a new column shall be added, the following steps are necessary.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Kill the server: <code class="docutils literal"><span class="pre">kill</span> <span class="pre">$(</span> <span class="pre">cat</span> <span class="pre">/srv/data/musicdb/musicdb.pid</span> <span class="pre">)</span></code></li>
+<li>Backup the database: <code class="docutils literal"><span class="pre">sqlite3</span> <span class="pre">music.db</span> <span class="pre">.dump</span> <span class="pre">&gt;</span> <span class="pre">backup/music.db.bak</span></code></li>
+<li>Update this file.</li>
+<li>Update the SQL file <em>sql/music.sql</em></li>
+<li><dl class="first docutils">
+<dt>Modify the database:</dt>
+<dd><ol class="first last arabic">
+<li>Open: <code class="docutils literal"><span class="pre">sqlite3</span> <span class="pre">music.db</span></code></li>
+<li>Add column. For example <code class="docutils literal"><span class="pre">ALTER</span> <span class="pre">TABLE</span> <span class="pre">songs</span> <span class="pre">ADD</span> <span class="pre">COLUMN</span> <span class="pre">feature</span> <span class="pre">INTEGER</span> <span class="pre">DEFAULT</span> <span class="pre">0;</span></code></li>
+<li>Quit: <code class="docutils literal"><span class="pre">.quit</span></code></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+</div></blockquote>
+<p>Furthermore be sure that all command line modules and API modules handle the new added column, and so new added feature correct.
+For example, methods creating a new entry in the modified row may be adopted.</p>
+</div>
+<div class="section" id="songs">
+<h2>Songs<a class="headerlink" href="#songs" title="Permalink to this headline">¶</a></h2>
+<p>The columns of the songs table are the following:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="23%" />
+<col width="26%" />
+<col width="15%" />
+<col width="15%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>songid</td>
+<td>albumid</td>
+<td>artistid</td>
+<td>name</td>
+<td>path</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="10%" />
+<col width="24%" />
+<col width="24%" />
+<col width="22%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>number</td>
+<td>cd</td>
+<td>disabled</td>
+<td>playtime</td>
+<td>bitrate</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="13%" />
+<col width="11%" />
+<col width="9%" />
+<col width="13%" />
+<col width="13%" />
+<col width="13%" />
+<col width="17%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>likes</td>
+<td>dislikes</td>
+<td>qskips</td>
+<td>qadds</td>
+<td>qremoves</td>
+<td>favorite</td>
+<td>qrndadds</td>
+<td>lyricsstate</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>The following methods exist to handle song entries in the database:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.AddSong" title="lib.db.musicdb.MusicDatabase.AddSong"><code class="xref py py-meth docutils literal"><span class="pre">AddSong()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.AddFullSong" title="lib.db.musicdb.MusicDatabase.AddFullSong"><code class="xref py py-meth docutils literal"><span class="pre">AddFullSong()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetSongById" title="lib.db.musicdb.MusicDatabase.GetSongById"><code class="xref py py-meth docutils literal"><span class="pre">GetSongById()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetSongByPath" title="lib.db.musicdb.MusicDatabase.GetSongByPath"><code class="xref py py-meth docutils literal"><span class="pre">GetSongByPath()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetSongsByArtistId" title="lib.db.musicdb.MusicDatabase.GetSongsByArtistId"><code class="xref py py-meth docutils literal"><span class="pre">GetSongsByArtistId()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetSongsByAlbumId" title="lib.db.musicdb.MusicDatabase.GetSongsByAlbumId"><code class="xref py py-meth docutils literal"><span class="pre">GetSongsByAlbumId()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAllSongs" title="lib.db.musicdb.MusicDatabase.GetAllSongs"><code class="xref py py-meth docutils literal"><span class="pre">GetAllSongs()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetSongs" title="lib.db.musicdb.MusicDatabase.GetSongs"><code class="xref py py-meth docutils literal"><span class="pre">GetSongs()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetRandomSong" title="lib.db.musicdb.MusicDatabase.GetRandomSong"><code class="xref py py-meth docutils literal"><span class="pre">GetRandomSong()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds" title="lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds"><code class="xref py py-meth docutils literal"><span class="pre">GetSongIdsByAlbumIds()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.UpdateSongStatistic" title="lib.db.musicdb.MusicDatabase.UpdateSongStatistic"><code class="xref py py-meth docutils literal"><span class="pre">UpdateSongStatistic()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.RemoveSong" title="lib.db.musicdb.MusicDatabase.RemoveSong"><code class="xref py py-meth docutils literal"><span class="pre">RemoveSong()</span></code></a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="albums">
+<h2>Albums<a class="headerlink" href="#albums" title="Permalink to this headline">¶</a></h2>
+<p>Data structure:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="14%" />
+<col width="9%" />
+<col width="9%" />
+<col width="17%" />
+<col width="14%" />
+<col width="11%" />
+<col width="13%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>albumid</td>
+<td>artistid</td>
+<td>name</td>
+<td>path</td>
+<td>numofsongs</td>
+<td>numofcds</td>
+<td>origin</td>
+<td>release</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="23%" />
+<col width="23%" />
+<col width="23%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>artworkpath</td>
+<td>bgcolor</td>
+<td>fgcolor</td>
+<td>hlcolor</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="section" id="album-related-methods">
+<h3>Album Related Methods<a class="headerlink" href="#album-related-methods" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.AddAlbum" title="lib.db.musicdb.MusicDatabase.AddAlbum"><code class="xref py py-meth docutils literal"><span class="pre">AddAlbum()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAlbumByPath" title="lib.db.musicdb.MusicDatabase.GetAlbumByPath"><code class="xref py py-meth docutils literal"><span class="pre">GetAlbumByPath()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAlbumById" title="lib.db.musicdb.MusicDatabase.GetAlbumById"><code class="xref py py-meth docutils literal"><span class="pre">GetAlbumById()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAllAlbums" title="lib.db.musicdb.MusicDatabase.GetAllAlbums"><code class="xref py py-meth docutils literal"><span class="pre">GetAllAlbums()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId" title="lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId"><code class="xref py py-meth docutils literal"><span class="pre">GetAlbumsByArtistId()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="lib.db.musicdb.MusicDatabase.GetAlbums"><code class="xref py py-meth docutils literal"><span class="pre">GetAlbums()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAllAlbumIds" title="lib.db.musicdb.MusicDatabase.GetAllAlbumIds"><code class="xref py py-meth docutils literal"><span class="pre">GetAllAlbumIds()</span></code></a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="artworks">
+<h3>Artworks<a class="headerlink" href="#artworks" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.SetArtwork" title="lib.db.musicdb.MusicDatabase.SetArtwork"><code class="xref py py-meth docutils literal"><span class="pre">SetArtwork()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.SetArtworkColorByAlbumId" title="lib.db.musicdb.MusicDatabase.SetArtworkColorByAlbumId"><code class="xref py py-meth docutils literal"><span class="pre">SetArtworkColorByAlbumId()</span></code></a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="origin">
+<h3>Origin<a class="headerlink" href="#origin" title="Permalink to this headline">¶</a></h3>
+<p>Valid values:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">&quot;iTunes&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">&quot;bandcamp&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">&quot;music163&quot;</span></code> aka 网易云音乐</li>
+<li><code class="docutils literal"><span class="pre">&quot;CD&quot;</span></code> as fallback for unknown <em>flac</em> files</li>
+<li><code class="docutils literal"><span class="pre">&quot;internet&quot;</span></code> as fallback for any other unknown files</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="artists">
+<h2>Artists<a class="headerlink" href="#artists" title="Permalink to this headline">¶</a></h2>
+<p>Database structure:</p>
+<blockquote>
+<div><blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="27%" />
+<col width="27%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>artistid</td>
+<td>name</td>
+<td>path</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<ul class="simple">
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.AddArtist" title="lib.db.musicdb.MusicDatabase.AddArtist"><code class="xref py py-meth docutils literal"><span class="pre">AddArtist()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAllArtists" title="lib.db.musicdb.MusicDatabase.GetAllArtists"><code class="xref py py-meth docutils literal"><span class="pre">GetAllArtists()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetArtistByPath" title="lib.db.musicdb.MusicDatabase.GetArtistByPath"><code class="xref py py-meth docutils literal"><span class="pre">GetArtistByPath()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetArtistById" title="lib.db.musicdb.MusicDatabase.GetArtistById"><code class="xref py py-meth docutils literal"><span class="pre">GetArtistById()</span></code></a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="lyrics">
+<h2>Lyrics<a class="headerlink" href="#lyrics" title="Permalink to this headline">¶</a></h2>
+<p>Lyrics state is part of the <em>songs</em> table.
+The lyrics itself are stored in the <em>lyrics</em> table with the following layout:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>songid</td>
+<td>lyrics</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>Lyrics are stored in a simple markup language:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">::</span> <span class="pre">ref</span></code> starts a section for the refrain</li>
+<li><code class="docutils literal"><span class="pre">::</span> <span class="pre">comment</span></code> starts a section for comments that are not part of the lyrics</li>
+<li><code class="docutils literal"><span class="pre">::</span></code> ends a section</li>
+<li><code class="docutils literal"><span class="pre">&lt;&lt;…&gt;&gt;</span></code> “highlight” text - use secondary color for printing this text</li>
+</ul>
+</div></blockquote>
+<p>A lyrics entry could look like the following example:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">::</span> <span class="n">comment</span>
+<span class="n">Just</span> <span class="n">a</span> <span class="n">dummy</span> <span class="n">text</span>
+<span class="p">::</span>
+
+<span class="n">Lorem</span> <span class="n">ipsum</span> <span class="n">dolor</span> <span class="n">sit</span> <span class="n">amet</span><span class="p">,</span>
+<span class="n">consetetur</span> <span class="n">sadipscing</span> <span class="n">elitr</span><span class="p">,</span>
+<span class="n">sed</span> <span class="n">diam</span> <span class="n">nonumy</span> <span class="n">eirmod</span> <span class="n">tempor</span>
+<span class="n">invidunt</span> <span class="n">ut</span> <span class="n">labore</span> <span class="n">et</span> <span class="n">dolore</span>
+<span class="n">magna</span> <span class="n">aliquyam</span> <span class="n">erat</span><span class="p">,</span>
+<span class="n">sed</span> <span class="n">diam</span> <span class="n">voluptua</span><span class="o">.</span>
+
+<span class="p">::</span> <span class="n">ref</span>
+<span class="n">At</span> <span class="n">vero</span> <span class="n">eos</span> <span class="n">et</span> <span class="n">accusam</span> <span class="n">et</span> <span class="n">justo</span> <span class="n">duo</span> <span class="n">dolores</span> <span class="n">et</span> <span class="n">ea</span> <span class="n">rebum</span><span class="o">.</span>
+<span class="n">Stet</span> <span class="n">clita</span> <span class="n">kasd</span> <span class="n">gubergren</span><span class="p">,</span>
+<span class="n">no</span> <span class="n">sea</span> <span class="n">takimata</span> <span class="n">sanctus</span> <span class="n">est</span> <span class="n">Lorem</span> <span class="n">ipsum</span> <span class="n">dolor</span> <span class="n">sit</span> <span class="n">amet</span><span class="o">.</span>
+<span class="p">::</span>
+
+<span class="o">&lt;&lt;</span> <span class="p">(</span><span class="mi">5</span> <span class="n">times</span><span class="p">)</span> <span class="o">&gt;&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetLyrics" title="lib.db.musicdb.MusicDatabase.GetLyrics"><code class="xref py py-meth docutils literal"><span class="pre">GetLyrics()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.SetLyrics" title="lib.db.musicdb.MusicDatabase.SetLyrics"><code class="xref py py-meth docutils literal"><span class="pre">SetLyrics()</span></code></a></li>
+</ul>
+</div></blockquote>
+<p>The <em>lyrics</em> column can have the following states:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">SONG_LYRICSSTATE_EMPTY</span></code> - There are no lyrics set yet</li>
+<li><code class="docutils literal"><span class="pre">SONG_LYRICSSTATE_FROMFILE</span></code> - The lyrics set come from the metatags of the song file</li>
+<li><code class="docutils literal"><span class="pre">SONG_LYRICSSTATE_FROMNET</span></code> - The lyrics were grabbed from the internet by a crawler</li>
+<li><code class="docutils literal"><span class="pre">SONG_LYRICSSTATE_FROMUSER</span></code> - The lyrics were reviewed by the user. This noted the highest state of quality for lyrics.</li>
+<li><code class="docutils literal"><span class="pre">SONG_LYRICSSTATE_NONE</span></code> - There are no lyrics for this song - it is an instrumental song.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="tags">
+<h2>Tags<a class="headerlink" href="#tags" title="Permalink to this headline">¶</a></h2>
+<p>In this section, the tag management is described.
+A <em>Toxi</em> scheme is used to implement the tag system in MusicDB.
+This means there are n+2 tables:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>A Table with the definition of a tag,</li>
+<li>a table that maps the tag to an entity,</li>
+<li>and <em>n</em> tables with entities with a global unique identifier.</li>
+</ol>
+</div></blockquote>
+<p>MusicDB does not have global unique identifier for artists, albums an genres, so instead of one mapping table, there are two.
+One for the songs, and one for the albums.
+Tags for Artists are not expected.
+If there will be a need later on, it an easy be implemented by adding a third mapping table and/or introducing new classes of tags.
+A tag must be identifiable by the combination of its name and class.</p>
+<div class="section" id="tag-definition-table">
+<h3>Tag Definition Table<a class="headerlink" href="#tag-definition-table" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="9%" />
+<col width="11%" />
+<col width="15%" />
+<col width="15%" />
+<col width="9%" />
+<col width="11%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+</tr>
+<tr class="row-even"><td>TagID</td>
+<td>Name</td>
+<td>Class</td>
+<td>ParentID</td>
+<td>IconType</td>
+<td>Icon</td>
+<td>Color</td>
+<td>PosX</td>
+<td>PosY</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl class="docutils">
+<dt>TagID (Integer)</dt>
+<dd>ID of the tag that gets generated by the database</dd>
+<dt>Name (String)</dt>
+<dd>Name of the tag. It will be used inside the MusicDB code or by the UI as it is stored in the database.
+So, the name is set as it shall be displayed.
+It must also be a unique name inside its class.</dd>
+<dt>Class (Integer)</dt>
+<dd><p class="first">ID of the class:</p>
+<ul class="last simple">
+<li><code class="docutils literal"><span class="pre">1</span></code> - Genre</li>
+<li><code class="docutils literal"><span class="pre">2</span></code> - Subgenre</li>
+<li><code class="docutils literal"><span class="pre">3</span></code> - Mood</li>
+</ul>
+</dd>
+<dt>ParentID (Integer / None)</dt>
+<dd>ID of a related tag. In case of subgenre, the main genres ID would be the ParentID.
+<strong>Important:</strong> A parent tag must always be of class <em>Genre</em>. And only <em>Subgenre</em> can and must have a parent!</dd>
+<dt>IconType (Integer / None)</dt>
+<dd><p class="first">If <code class="docutils literal"><span class="pre">None</span></code> the icon-column will be ignored. Otherwise it defines the type of icon:</p>
+<ul class="last simple">
+<li><code class="docutils literal"><span class="pre">1</span></code> - Unicode character</li>
+<li><code class="docutils literal"><span class="pre">2</span></code> - HTML tag for special fonts: <code class="docutils literal"><span class="pre">&lt;i</span> <span class="pre">class=&quot;fa</span> <span class="pre">fa-beer&quot;&gt;&lt;/i&gt;</span></code></li>
+<li><code class="docutils literal"><span class="pre">3</span></code> - png image <strong>Future feature - specification incomplete</strong></li>
+<li><code class="docutils literal"><span class="pre">4</span></code> - svg image <strong>Future feature - specification incomplete</strong></li>
+</ul>
+</dd>
+<dt>Icon (Text / None)</dt>
+<dd>A shorter version of the name. The Icon must be compatible to the specified type.</dd>
+<dt>Color (Text / None)</dt>
+<dd>A HTML-like color code that can be used to highlight a very special tag. Do not use this feature too much, it can break the UI visual design.</dd>
+<dt>PosX, PosY (Integer / None)</dt>
+<dd>The (X;Y) Position of the Name or the Icon in a grid if the tags were presented as grid in an UI.
+The tag position gets stored in the global database to make sure that every UI provides a similar layout of the tags to make it more usable.
+<code class="docutils literal"><span class="pre">(0;0)</span></code> is the upper left corner.
+If not a grid but a list gets described, <code class="docutils literal"><span class="pre">posx</span></code> determines the position and <code class="docutils literal"><span class="pre">posy</span></code> is set to <code class="docutils literal"><span class="pre">NULL</span></code>.</dd>
+</dl>
+</div>
+<div class="section" id="tag-mapping-table">
+<h3>Tag Mapping Table<a class="headerlink" href="#tag-mapping-table" title="Permalink to this headline">¶</a></h3>
+<p>The mapping-tables have all the same layout</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="19%" />
+<col width="19%" />
+<col width="23%" />
+<col width="19%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr class="row-even"><td>EntryID</td>
+<td>SongID</td>
+<td>TagID</td>
+<td>Confidence</td>
+<td>Approval</td>
+</tr>
+<tr class="row-odd"><td>EntryID</td>
+<td>AlbumID</td>
+<td>TagID</td>
+<td>Confidence</td>
+<td>Approval</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl class="docutils">
+<dt>EntryID (Integer)</dt>
+<dd>ID of the entry in the mapping-table</dd>
+<dt>TagID (Integer)</dt>
+<dd>ID of the tag in the Tag-Definition-Table</dd>
+<dt>xxxID (Integer)</dt>
+<dd>ID of the song or album entry in the related tables</dd>
+<dt>Confidence (Floating point, Default: 1.0)</dt>
+<dd>Confidence that the tag is correct.
+This is important in case an AI set the tag (See <em>Approval</em>).
+Otherwise this column can be ignored. - Ignoring means setting it to <code class="docutils literal"><span class="pre">1.0</span></code>!</dd>
+<dt>Approval (Integer, Default: 1)</dt>
+<dd><p class="first">Three stages to approve the tag.</p>
+<ul class="last simple">
+<li><code class="docutils literal"><span class="pre">0</span></code> - Set by AI. This tag may be wrong. The <em>Confidence</em> value is relevant in this case.</li>
+<li><code class="docutils literal"><span class="pre">1</span></code> - Set by the User. <em>Confidence</em> must be set to <code class="docutils literal"><span class="pre">1.0</span></code></li>
+<li><code class="docutils literal"><span class="pre">2</span></code> - Can be used for training. This Song/Album is a good representation for this tag. It can be used to train an AI.</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="database-api">
+<h3>Database API<a class="headerlink" href="#database-api" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.CreateTag" title="lib.db.musicdb.MusicDatabase.CreateTag"><code class="xref py py-meth docutils literal"><span class="pre">CreateTag()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAllTags" title="lib.db.musicdb.MusicDatabase.GetAllTags"><code class="xref py py-meth docutils literal"><span class="pre">GetAllTags()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetTagByName" title="lib.db.musicdb.MusicDatabase.GetTagByName"><code class="xref py py-meth docutils literal"><span class="pre">GetTagByName()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.DeleteTag" title="lib.db.musicdb.MusicDatabase.DeleteTag"><code class="xref py py-meth docutils literal"><span class="pre">DeleteTag()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.ModifyTag" title="lib.db.musicdb.MusicDatabase.ModifyTag"><code class="xref py py-meth docutils literal"><span class="pre">ModifyTag()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.SetTargetTag" title="lib.db.musicdb.MusicDatabase.SetTargetTag"><code class="xref py py-meth docutils literal"><span class="pre">SetTargetTag()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.RemoveTargetTag" title="lib.db.musicdb.MusicDatabase.RemoveTargetTag"><code class="xref py py-meth docutils literal"><span class="pre">RemoveTargetTag()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetTargetTags" title="lib.db.musicdb.MusicDatabase.GetTargetTags"><code class="xref py py-meth docutils literal"><span class="pre">GetTargetTags()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.SplitTagsByClass" title="lib.db.musicdb.MusicDatabase.SplitTagsByClass"><code class="xref py py-meth docutils literal"><span class="pre">SplitTagsByClass()</span></code></a></li>
+</ul>
+</div></blockquote>
+<p>The following tag classes exist:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">MusicDatabase.TAG_CLASS_GENRE</span></code>: Main genres like Metal, Electro, Classic, …</li>
+<li><code class="docutils literal"><span class="pre">MusicDatabase.TAG_CLASS_SUBGENRE</span></code>: Subgenre like Dark Metal, New Wave, …</li>
+<li><code class="docutils literal"><span class="pre">MusicDatabase.TAG_CLASS_MOOD</span></code>: Moods like Lucky, Sad, …</li>
+</ul>
+</div></blockquote>
+<p>A target can be “song” or “album”.</p>
+</div>
+</div>
+<div class="section" id="musicdatabase-class">
+<h2>MusicDatabase Class<a class="headerlink" href="#musicdatabase-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lib.db.musicdb.MusicDatabase">
+<em class="property">class </em><code class="descclassname">lib.db.musicdb.</code><code class="descname">MusicDatabase</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is the interface to the Music Database.
+It is derived from <a class="reference internal" href="database.html#lib.db.database.Database" title="lib.db.database.Database"><code class="xref py py-class docutils literal"><span class="pre">lib.db.database.Database</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – path to the music database</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.AddAlbum">
+<code class="descname">AddAlbum</code><span class="sig-paren">(</span><em>artistid</em>, <em>name</em>, <em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddAlbum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new entry for an album.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>artistid</strong> – ID of the artist who is related to the album</li>
+<li><strong>name</strong> (<em>str</em>) – name of album</li>
+<li><strong>path</strong> (<em>str</em>) – relative path of the album</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>path</em> or <em>name</em> is not of type string, and <em>artistid</em> not a string or an integer</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When <em>artistid</em> is not a decimal number</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.AddArtist">
+<code class="descname">AddArtist</code><span class="sig-paren">(</span><em>name</em>, <em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddArtist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new artist into the artists table</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) – name of the artist</li>
+<li><strong>path</strong> (<em>str</em>) – relative path of the artist directory</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If <em>path</em> is not of type <code class="docutils literal"><span class="pre">str</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.AddFullSong">
+<code class="descname">AddFullSong</code><span class="sig-paren">(</span><em>song</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddFullSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddFullSong" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a new entry for a song and adds all its attributes into the database.
+Creating the song is done by calling <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.AddSong" title="lib.db.musicdb.MusicDatabase.AddSong"><code class="xref py py-meth docutils literal"><span class="pre">AddSong()</span></code></a>.
+When the song was added a new song ID is generated by the database engine.
+The new entry gets read from the database.
+Then, the new ID is set as song ID to the dictionary given as argument.
+After that, the whole song dictionary gest written to the database via <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.WriteSong" title="lib.db.musicdb.MusicDatabase.WriteSong"><code class="xref py py-meth docutils literal"><span class="pre">WriteSong()</span></code></a></p>
+<p>In case adding the song fails on half the way, the new added entry gets deleted.
+As long as nothing references the song entry, it is no problem to remove it.
+So, when this method returns <code class="docutils literal"><span class="pre">False</span></code> Nothing changed in the database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>song</strong> – A complete dictionary with all keys of a MusicDB Song entry for the database</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal"><span class="pre">False</span></code> which indicates that nothing changed in the database.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.AddSong">
+<code class="descname">AddSong</code><span class="sig-paren">(</span><em>artistid</em>, <em>albumid</em>, <em>name</em>, <em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddSong" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a new database entry for a song and sets the most important values.</p>
+<p>If a song with the same path is already in the database, its <em>artistid</em>, <em>albumid</em> and <em>name</em> gets compared to the arguments.
+If they match, everything is fine and the method returns.
+If they differ, an AssertionError gets raised.
+Adding an existing song is a bug!
+Even if this method allows it under some conditions, this should not be exploited!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>artistid</strong> (<em>int</em>) – ID of the artist of this song</li>
+<li><strong>albumid</strong> (<em>int</em>) – ID of the album of this song</li>
+<li><strong>name</strong> (<em>string</em>) – Name of the song</li>
+<li><strong>path</strong> (<em>string</em>) – Path of the song file relative to the music root directory</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If one of the arguments is <code class="docutils literal"><span class="pre">None</span></code></li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If song is already in the database <strong>and</strong> does not match the other parameters</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.CreateTag">
+<code class="descname">CreateTag</code><span class="sig-paren">(</span><em>tagname</em>, <em>tagclass</em>, <em>parentid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.CreateTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.CreateTag" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a new tag in the tags-table.</p>
+<p>If the tag already exists in its class, it will not be created.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tagname</strong> (<em>str</em>) – Name of the new tag. This is also the name that gets displayed in the GUI.</li>
+<li><strong>tagclass</strong> (<em>int</em>) – Defines the class of the tag.</li>
+<li><strong>parentid</strong> (<em>int</em>) – Optional parent relation to other tags - Mandatory for subgenre</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – if <em>tagname</em> is not a string or <em>parentid</em> does not have the value it should have regarding the specification</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When <em>tagclass</em> has an invalid value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.DeleteTag">
+<code class="descname">DeleteTag</code><span class="sig-paren">(</span><em>tagname</em>, <em>tagclass</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.DeleteTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.DeleteTag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes an entry from the tags-table with the name <em>tagname</em> and that belongs to <em>tagclass</em>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This method does NOT delete child tags or the relation between the tag and songs or albums.
+You should only delete new created tags that are not used!</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tagname</strong> (<em>str</em>) – Name of the tag that shall be deleted.</li>
+<li><strong>tagclass</strong> (<em>int</em>) – Class of the name the tag belongs to.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If <em>tagname</em> is not of type <code class="docutils literal"><span class="pre">str</span></code></li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If <em>tagclass</em> is not a valid class ID.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetAlbumById">
+<code class="descname">GetAlbumById</code><span class="sig-paren">(</span><em>albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbumById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbumById" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an album entry if available</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>albumid</strong> – entry ID of the album in the album table</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An album entry or <code class="docutils literal"><span class="pre">None</span></code> it the album does not exits</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If <em>albumid</em> is not set</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code> – If there is more than one album with the given ID</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetAlbumByPath">
+<code class="descname">GetAlbumByPath</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbumByPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbumByPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an album entry if available</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>path</strong> (<em>str</em>) – relative path of an album</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An album entry or <code class="docutils literal"><span class="pre">None</span></code> it the album does not exits</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If <em>path</em> is not of type <code class="docutils literal"><span class="pre">str</span></code></li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code> – If there is more than one album with the given path</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetAlbums">
+<code class="descname">GetAlbums</code><span class="sig-paren">(</span><em>artistid=None</em>, <em>withsongs=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns a list with all albums in the database, or all albums of an artist if <em>artistid</em> is not <code class="docutils literal"><span class="pre">None</span></code>.
+If the <em>withsongs</em> parameter is <code class="docutils literal"><span class="pre">True</span></code>, for each album all songs will be included.
+They are added as list into each album entry under the key <code class="docutils literal"><span class="pre">songs</span></code></p>
+<p class="rubric">Example</p>
+<p>The following example prints all songs of the artist with the ID <code class="docutils literal"><span class="pre">1000</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">albums</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetAlbums</span><span class="p">(</span><span class="n">artistid</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">withsongs</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">album</span> <span class="ow">in</span> <span class="n">albums</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">song</span> <span class="ow">in</span> <span class="n">album</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>artistid</strong> – ID for an artist whose albums shall be returned. If <code class="docutils literal"><span class="pre">None</span></code> the albums get not filtered by <em>artistid</em>.</li>
+<li><strong>withsongs</strong> (<em>bool</em>) – also return all songs of the album.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list with all albums.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If <em>withsongs</em> is not of type <code class="docutils literal"><span class="pre">bool</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId">
+<code class="descname">GetAlbumsByArtistId</code><span class="sig-paren">(</span><em>artistid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbumsByArtistId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="lib.db.musicdb.MusicDatabase.GetAlbums"><code class="xref py py-meth docutils literal"><span class="pre">GetAlbums()</span></code></a> (<code class="docutils literal"><span class="pre">GetAlbums(artistid,</span> <span class="pre">withsongs=False</span></code>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetAllAlbumIds">
+<code class="descname">GetAllAlbumIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllAlbumIds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllAlbumIds" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Returns a list of all album IDs</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetAllAlbums">
+<code class="descname">GetAllAlbums</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllAlbums" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="lib.db.musicdb.MusicDatabase.GetAlbums"><code class="xref py py-meth docutils literal"><span class="pre">GetAlbums()</span></code></a> (<code class="docutils literal"><span class="pre">GetAlbums(artistid=None,</span> <span class="pre">withsongs=False</span></code>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetAllArtists">
+<code class="descname">GetAllArtists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllArtists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllArtists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all artists in the artists table.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of all artists</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetAllSongs">
+<code class="descname">GetAllSongs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllSongs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllSongs" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetSongs" title="lib.db.musicdb.MusicDatabase.GetSongs"><code class="xref py py-meth docutils literal"><span class="pre">GetSongs()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetAllTags">
+<code class="descname">GetAllTags</code><span class="sig-paren">(</span><em>tagclass=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllTags" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns a list of tags from the tags table.
+If <em>tagclass</em> is set, only tags of the specified class gets returned.
+Otherwise all tags.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tagclass</strong> (<em>int</em>) – Optional, to only get tags of the given class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of tags</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If <em>tagclass</em> is set (not <code class="docutils literal"><span class="pre">None</span></code>) with an invalid value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetArtistById">
+<code class="descname">GetArtistById</code><span class="sig-paren">(</span><em>artistid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetArtistById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetArtistById" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the artist by its ID</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>artistid</strong> – ID of the artist in the artist table</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The database entry of the artist or <code class="docutils literal"><span class="pre">None</span></code> if there is no entry for this artist directory</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>artistid</em> is not an integer or a string</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When <em>artistid</em> is a string that cannot be interpreted as a decimal number</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code> – When there is more than one entry with the same ID (This should never happen)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetArtistByPath">
+<code class="descname">GetArtistByPath</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetArtistByPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetArtistByPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the artist by the relative path of the music directory.
+This is usually only a directroy name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>parth</strong> (<em>str</em>) – relative path of an artist</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The database entry of the artist or <code class="docutils literal"><span class="pre">None</span></code> if there is no entry for this artist directory</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>path</em> is not a string</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code> – When there is no artist with the given path</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetLyrics">
+<code class="descname">GetLyrics</code><span class="sig-paren">(</span><em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetLyrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetLyrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the lyrics of a song.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>songid</strong> (<em>int</em>) – ID of the song for that the lyrics shall be returned</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The lyrics of a song or <code class="docutils literal"><span class="pre">None</span></code> if there are no lyrics for the song.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>sonid</em> is not an integer or string</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code> – If there were multiple lyrics entries for the given song ID</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetRandomSong">
+<code class="descname">GetRandomSong</code><span class="sig-paren">(</span><em>filterlist=[]</em>, <em>nodisabled=True</em>, <em>nohated=False</em>, <em>minlen=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetRandomSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetRandomSong" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns a random song that fulfills several constraints.</p>
+<p>The <em>filterlist</em> can be either a set of genre tag IDs or a set of genre names.</p>
+<p>Filtering is done by the following steps:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Get album IDs of all albums in the database</li>
+<li>Translate <em>filterlist</em> into a list of tag IDs</li>
+<li>For each album, get its tags and compare that with the set of tag IDs from the filter. (If there is no filter list set, all album IDs are selected)</li>
+<li>Get all song IDs that are related to the filtered album IDs by calling <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds" title="lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds"><code class="xref py py-meth docutils literal"><span class="pre">GetSongIdsByAlbumIds()</span></code></a></li>
+<li>Select a random song ID and get its song entry from the database</li>
+</ol>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filterlist</strong> – Optional, default value is <code class="docutils literal"><span class="pre">[]</span></code>. A list of genre names or genre tag IDs that limits the search set. The tags have <em>OR</em> relations.</li>
+<li><strong>nodisabled</strong> (<em>bool</em>) – If <code class="docutils literal"><span class="pre">True</span></code> no disables songs will be selected</li>
+<li><strong>nohated</strong> (<em>bool</em>) – If <code class="docutils literal"><span class="pre">True</span></code> no hated songs will be selected</li>
+<li><strong>minlen</strong> (<em>int</em>) – If set, no songs with less than <em>minlen</em> seconds will be selected</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A random MusicDB Song dictionary that fulfills the constraints,
+or <code class="docutils literal"><span class="pre">None</span></code> when there is no song fulfilling the constraints</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>nodisabled</em> or <em>nohated</em> are not of type <code class="docutils literal"><span class="pre">bool</span></code></li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>minlen</em> is not <code class="docutils literal"><span class="pre">None</span></code> and not of type integer</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>filterlist</em> is not a list</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetSongById">
+<code class="descname">GetSongById</code><span class="sig-paren">(</span><em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongById" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a song from the database that matches the <em>songid</em></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>songid</strong> (<em>int</em>) – ID of the song that shall be returned</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A MusicDB Song dictionary or <code class="docutils literal"><span class="pre">None</span></code> if there is no song with that ID</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If <em>songid</em> is not an integer or a string</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code> – If there is more than one song with the same ID</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetSongByPath">
+<code class="descname">GetSongByPath</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongByPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongByPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a song from the database that matches the <em>path</em></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>path</strong> (<em>str</em>) – A song path relative to the music root directory</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A MusicDB Song dictionary or <code class="docutils literal"><span class="pre">None</span></code> if there is no song with that path</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If <em>path</em> is <code class="docutils literal"><span class="pre">None</span></code></li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code> – If there is more than one song with the same path</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds">
+<code class="descname">GetSongIdsByAlbumIds</code><span class="sig-paren">(</span><em>albumids</em>, <em>nodisabled=True</em>, <em>nohated=False</em>, <em>minlen=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongIdsByAlbumIds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns a list of songs that belong to the albums addressed by their IDs in the <em>albumids</em> list.
+The songs of the returned IDs also fulfill the constraints given by the other parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>albumids</strong> – A list of album IDs that songs are considered to get</li>
+<li><strong>nodisabled</strong> (<em>bool</em>) – If <code class="docutils literal"><span class="pre">True</span></code> no disables songs will be selected</li>
+<li><strong>nohated</strong> (<em>bool</em>) – If <code class="docutils literal"><span class="pre">True</span></code> no hated songs will be selected</li>
+<li><strong>minlen</strong> (<em>int</em>) – If set, no songs with less than <em>minlen</em> seconds will be selected</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of song IDs</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>nodisabled</em> or <em>nohated</em> are not of type <code class="docutils literal"><span class="pre">bool</span></code></li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>minlen</em> is not <code class="docutils literal"><span class="pre">None</span></code> and not of type integer</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When minlen is less than <code class="docutils literal"><span class="pre">0</span></code></li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>albumuids</em> is <code class="docutils literal"><span class="pre">None</span></code></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetSongs">
+<code class="descname">GetSongs</code><span class="sig-paren">(</span><em>albumid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongs" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns all songs in the database if <em>albumid</em> is <code class="docutils literal"><span class="pre">None</span></code>, or all songs of an album if <em>albumid</em> is set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>albumid</strong> (<em>int</em>) – ID of an album or <code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of MusicDB Songs</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetSongsByAlbumId">
+<code class="descname">GetSongsByAlbumId</code><span class="sig-paren">(</span><em>albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongsByAlbumId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongsByAlbumId" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetSongs" title="lib.db.musicdb.MusicDatabase.GetSongs"><code class="xref py py-meth docutils literal"><span class="pre">GetSongs()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetSongsByArtistId">
+<code class="descname">GetSongsByArtistId</code><span class="sig-paren">(</span><em>artistid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongsByArtistId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongsByArtistId" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns all song entries of an Artist.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>artistid</strong> (<em>int</em>) – ID of an artist</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of MusicDB Songs</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If artistid is not a decimal number of type integer or sting</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetTagByName">
+<code class="descname">GetTagByName</code><span class="sig-paren">(</span><em>tagname</em>, <em>tagclass=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetTagByName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetTagByName" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns a tag entry addressed by the tagname and tagclass.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tagname</strong> (<em>str</em>) – Name of the tag that shall be returned</li>
+<li><strong>tagclass</strong> (<em>int</em>) – ID of the tagclass - Default is the main genre class.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The row of the specified tag, or <code class="docutils literal"><span class="pre">None</span></code> if no tag was found</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If no name or valid tagclass was given</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If <em>tagname</em> is not a string</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code> – If more than one tag was found - This should never happen!</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.GetTargetTags">
+<code class="descname">GetTargetTags</code><span class="sig-paren">(</span><em>target</em>, <em>targetid</em>, <em>tagclass=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetTargetTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetTargetTags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all tags of a target.
+A target can be a song (<code class="docutils literal"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;song&quot;</span></code>) or an album (<code class="docutils literal"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;album&quot;</span></code>).
+This list contains all classes of tags if <em>tagclass</em> is <code class="docutils literal"><span class="pre">None</span></code>, otherwise only of type <em>tagclass</em>.</p>
+<p>The returned list is the target-tag-mapping augmented with the tag-entry.
+So, each element in the list is a merged dictionary of the table row of the mapping and the tag itself.
+The <code class="docutils literal"><span class="pre">id</span></code> entry in the dictionary is the ID of the Tag and identical to the entry <code class="docutils literal"><span class="pre">tagid</span></code>.
+The ID of the ID of the entry in the mapping-table is <code class="docutils literal"><span class="pre">entryid</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>target</strong> (<em>str</em>) – Target that shall be tagged (<code class="docutils literal"><span class="pre">&quot;song&quot;</span></code> for a song, <code class="docutils literal"><span class="pre">&quot;album&quot;</span></code> for an album)</li>
+<li><strong>targetid</strong> (<em>int</em>) – ID of the target that tags shall be returned (song ID or album ID)</li>
+<li><strong>tagclass</strong> (<em>int</em>) – If not <code class="docutils literal"><span class="pre">None</span></code> only tags of a specific class will be returned</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of tags or <code class="docutils literal"><span class="pre">None</span></code> if there are no tags</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If <em>songid</em> is <code class="docutils literal"><span class="pre">None</span></code></li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If <em>tagclass</em> is set to an invalid value (<code class="docutils literal"><span class="pre">None</span></code> is valid)</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If <em>target</em> not in <em>{“song”, “album”}</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tags</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">GetTargetTags</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="n">songid</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Tagname: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>  <span class="n">tag</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;; &quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Approval: </span><span class="si">%i</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">tag</span><span class="p">[</span><span class="s2">&quot;approval&quot;</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Approval: </span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">tag</span><span class="p">[</span><span class="s2">&quot;confidence&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.ModifyTag">
+<code class="descname">ModifyTag</code><span class="sig-paren">(</span><em>tagname</em>, <em>tagclass</em>, <em>columnname</em>, <em>newvalue</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.ModifyTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.ModifyTag" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows to modify most of the attributes of a tag.
+The <em>tagname</em> and <em>tagclass</em> addresses the tag, <em>columnname</em> the attribute.
+<em>newvalue</em> is the new attribute set for the tag.</p>
+<p>In case the icon gets modified, take care that the icon type is up to date. (update order does not matter).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tagname</strong> (<em>str</em>) – Name of the tag that shall be modified</li>
+<li><strong>tagclass</strong> (<em>int</em>) – Class of the tag</li>
+<li><strong>columnname</strong> (<em>str</em>) – The name of the attribute that shall be modified</li>
+<li><strong>newvalue</strong> – The new value. Read the introduction at the top of the document to see what values are possible for a specific attribute</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – if <em>tagname</em> is not a string or <em>parentid</em> does not have the value it should have regarding the specification</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When <em>tagclass</em> has an invalid value</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If columnname is not “name”, “parentid”, “icontype”, “icon”, “color”, “posx”, “posy”</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If columnname is “color” and <em>newvalue</em> is not a valid #RRGGBB-Formated string</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If columnname is “icontype” and <em>newvalue</em> is not valid</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.RemoveSong">
+<code class="descname">RemoveSong</code><span class="sig-paren">(</span><em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.RemoveSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.RemoveSong" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method removes a song entry and all related data from all tables.</p>
+<p>The removed data are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The complete row in the songs-table for this song</li>
+<li>The lyrics of this song</li>
+<li>All tags of this song (not the tag definition)</li>
+<li>Decrementation of the albums <em>numofsongs</em> value. (not the <em>numofcds</em> entry!)</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songid</strong> (<em>int</em>) – ID of the song</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>songid</em> is not an integer or string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.RemoveTargetTag">
+<code class="descname">RemoveTargetTag</code><span class="sig-paren">(</span><em>target</em>, <em>targetid</em>, <em>tagid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.RemoveTargetTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.RemoveTargetTag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes an association between a target and a tag in the tag map - Or short: Removes a tag from a song or an album.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>target</strong> (<em>str</em>) – Target that shall be tagged (<code class="docutils literal"><span class="pre">&quot;song&quot;</span></code> for a song, <code class="docutils literal"><span class="pre">&quot;album&quot;</span></code> for an album)</li>
+<li><strong>targetid</strong> (<em>int</em>) – ID of the target that shall be tagged. (a song ID or an album ID)</li>
+<li><strong>tagid</strong> (<em>int</em>) – ID of the tag that shall be associated with the target</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If <em>target</em> not in <em>{“song”, “album”}</em></li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If <code class="docutils literal"><span class="pre">songid</span> <span class="pre">==</span> <span class="pre">None</span> <span class="pre">or</span> <span class="pre">tagid</span> <span class="pre">==</span> <span class="pre">None</span></code></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.SetArtwork">
+<code class="descname">SetArtwork</code><span class="sig-paren">(</span><em>albumid</em>, <em>artworkpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetArtwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetArtwork" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method updates the <em>artworkpath</em> entry of the MusicDB Database for an album.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>albumid</strong> – ID of the album that artwork path shall be updated</li>
+<li><strong>artworkpath</strong> (<em>str</em>) – New relative artwork path for the album</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>albumid</em> is not an integer or a string</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If <em>artworkpath</em> is not of type <code class="docutils literal"><span class="pre">str</span></code></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.SetArtworkColorByAlbumId">
+<code class="descname">SetArtworkColorByAlbumId</code><span class="sig-paren">(</span><em>albumid</em>, <em>colorname</em>, <em>color</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetArtworkColorByAlbumId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetArtworkColorByAlbumId" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is for setting a color for an album.
+Valid color names are the following and must be given as string to the <em>colorname</em> parameter.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">&quot;bgcolor&quot;</span></code> -  Background color</li>
+<li><code class="docutils literal"><span class="pre">&quot;fgcolor&quot;</span></code> -  Primary foreground color</li>
+<li><code class="docutils literal"><span class="pre">&quot;hlcolor&quot;</span></code> -  Secondary foreground color</li>
+</ul>
+<p>The color itself must be in HTML-Format: <code class="docutils literal"><span class="pre">#RRGGBB</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>albumid</strong> – The ID of the album that color shall be set</li>
+<li><strong>colorname</strong> (<em>str</em>) – Name of the color that shall be set</li>
+<li><strong>color</strong> (<em>str</em>) – Color in HTML format</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If one of the arguments is None</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If <em>colorname</em> not <code class="docutils literal"><span class="pre">&quot;bgcolor&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;fgcolor&quot;</span></code> or <code class="docutils literal"><span class="pre">&quot;hlcolor&quot;</span></code></li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If color length is not <code class="docutils literal"><span class="pre">7</span></code> and first character not <code class="docutils literal"><span class="pre">&quot;#&quot;</span></code></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.SetLyrics">
+<code class="descname">SetLyrics</code><span class="sig-paren">(</span><em>songid</em>, <em>lyrics</em>, <em>lyricsstate=3</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetLyrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetLyrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method can be used to store or to update lyrics of a song.
+It stores the lyrics in the lyrics table and updates the lyrics state in the songs table for a given song.</p>
+<p>If there are no lyrics for the song, or lyrics shall be removed, the lyrics argument must be <code class="docutils literal"><span class="pre">None</span></code> or <code class="docutils literal"><span class="pre">&quot;&quot;</span></code>.
+In this case the lyrics state gets forced to <code class="docutils literal"><span class="pre">SONG_LYRICSSTATE_EMPTY</span></code>.
+Only excepetion is, when the <em>lyricsstate</em> is <code class="docutils literal"><span class="pre">SONG_LYRICSSTATE_NONE</span></code> which indicates that the song does not have lyrics at all.
+For example, instrumental songs or intros.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>songid</strong> (<em>int</em>) – ID of the song the lyrics belong to</li>
+<li><strong>lyrics</strong> (<em>str</em>) – The lyrics to store</li>
+<li><strong>lyricsstate</strong> (<em>int</em>) – The new state of the lyrics. Default is “From User” (<code class="docutils literal"><span class="pre">SONG_LYRICSSTATE_FROMUSER</span></code>)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Always <code class="docutils literal"><span class="pre">True</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>sonid</em> is not an integer or string</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If lyrics state is not a number.</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If lyrics state is not in <code class="docutils literal"><span class="pre">SONG_LYRICSSTATE_*</span></code></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.SetTargetTag">
+<code class="descname">SetTargetTag</code><span class="sig-paren">(</span><em>target</em>, <em>targetid</em>, <em>tagid</em>, <em>approval=1</em>, <em>confidence=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetTargetTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetTargetTag" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method sets a tag for a target.
+A target can be a song (<code class="docutils literal"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;song&quot;</span></code>) or an album (<code class="docutils literal"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;album&quot;</span></code>).</p>
+<p>The defaults for this method assume that the tag got set by a user.</p>
+<blockquote>
+<div><ul class="simple">
+<li>If <em>approval</em> equals <code class="docutils literal"><span class="pre">1</span></code> or <code class="docutils literal"><span class="pre">2</span></code>, the confidence gets set to <code class="docutils literal"><span class="pre">1.0</span></code>.</li>
+<li>If <em>approval</em> equals <code class="docutils literal"><span class="pre">0</span></code> a <em>confidence</em> must be given, otherwise an <code class="docutils literal"><span class="pre">AssertionError</span></code> gets thrown.</li>
+</ul>
+</div></blockquote>
+<p>If the tag was already set, the <em>approval</em> and <em>confidence</em> values get updated.
+But only if the new approval level is greater or equal to the already set one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>target</strong> (<em>str</em>) – Target that shall be tagged (<code class="docutils literal"><span class="pre">&quot;song&quot;</span></code> for a song, <code class="docutils literal"><span class="pre">&quot;album&quot;</span></code> for an album)</li>
+<li><strong>songid</strong> (<em>int</em>) – ID of the target that shall be tagged. (a song ID or an album ID)</li>
+<li><strong>tagid</strong> (<em>int</em>) – ID of the tag that shall be associated with the target</li>
+<li><strong>approval</strong> (<em>int</em>) – Approval of the association. Default is <code class="docutils literal"><span class="pre">1</span></code> - “Set by User”</li>
+<li><strong>confidence</strong> (<em>float</em>) – Confidence of the association in case <em>approval</em> is <code class="docutils literal"><span class="pre">0</span></code> - “Set by AI”</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If <em>target</em> not in <em>{“song”, “album”}</em></li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If <code class="docutils literal"><span class="pre">approval</span> <span class="pre">==</span> <span class="pre">0</span> <span class="pre">and</span> <span class="pre">confidence</span> <span class="pre">==</span> <span class="pre">None</span></code></li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If <em>approval</em> not in <em>{0,1,2}</em></li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If <code class="docutils literal"><span class="pre">songid</span> <span class="pre">==</span> <span class="pre">None</span> <span class="pre">or</span> <span class="pre">tagid</span> <span class="pre">==</span> <span class="pre">None</span></code></li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code> – If there already exists more than one entry</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.SplitTagsByClass">
+<code class="descname">SplitTagsByClass</code><span class="sig-paren">(</span><em>tags</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SplitTagsByClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SplitTagsByClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits a list of tags into several lists, each of a specific class.</p>
+<p>If the <em>tags</em> parameter is <code class="docutils literal"><span class="pre">None</span></code>, this method returns <code class="docutils literal"><span class="pre">[]</span></code> for each class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tags</strong> (<em>list</em>) – A list of tags</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">genres, subgenres, moods</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">three lists, each of a specific class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If a tag contains an invalid class ID</td>
+</tr>
+</tbody>
+</table>
+<p>Exampe:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">tags</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">GetTagretTags</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="n">songid</span><span class="p">)</span>
+<span class="n">genres</span><span class="p">,</span> <span class="n">subgenres</span><span class="p">,</span> <span class="n">moods</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">SplitTagsByClass</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.UpdateSongStatistic">
+<code class="descname">UpdateSongStatistic</code><span class="sig-paren">(</span><em>songid</em>, <em>stat</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.UpdateSongStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.UpdateSongStatistic" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method updates the song statistics.</p>
+<p>Statistics are: <code class="docutils literal"><span class="pre">&quot;likes&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;dislikes&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;qskips&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;qadds&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;qrndadds&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;qremoves&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;favorite&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;disabled&quot;</span></code></p>
+<p>Values are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">&quot;inc&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;love&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;yes&quot;</span></code>: Increment value</li>
+<li><code class="docutils literal"><span class="pre">&quot;dec&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;hate&quot;</span></code>: Decrement value</li>
+<li><code class="docutils literal"><span class="pre">&quot;reset&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;none&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;no&quot;</span></code>: Set value to <code class="docutils literal"><span class="pre">0</span></code></li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>songid</strong> (<em>int</em>) – ID of the song</li>
+<li><strong>stat</strong> (<em>str</em>) – Name of the statistics to update</li>
+<li><strong>value</strong> (<em>str</em>) – How to update</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">None</span></code></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>songid</em> is not an integer or string</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – if stats or value have an invalid value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.WriteAlbum">
+<code class="descname">WriteAlbum</code><span class="sig-paren">(</span><em>album</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteAlbum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the whole row for an album.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.WriteArtist">
+<code class="descname">WriteArtist</code><span class="sig-paren">(</span><em>artist</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteArtist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the whole row for an artist.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.WriteSong">
+<code class="descname">WriteSong</code><span class="sig-paren">(</span><em>song</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteSong" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the whole row for a song.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.WriteTag">
+<code class="descname">WriteTag</code><span class="sig-paren">(</span><em>tag</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteTag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the whole row for a tag.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Ralf Stemmer.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.0 alpha',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
