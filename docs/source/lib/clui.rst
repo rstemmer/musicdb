@@ -25,9 +25,6 @@ It provides some primitive UI elements documented in this section of the documen
          ButtonView  [label = "{ButtonView||+ Draw()\l}"]
          ListView    [label = "{ListView||+ Draw()\l+ HandleKey()\l# onDraw()\l# onAction()\l}"]
          Dialog      [label = "{Dialog||/+ Draw()\l/+ HandleKey()\l}"]
-         Group       [label = "{Group||+ Draw()\l}"]
-         HGroup      [label = "{HGroup||/+ Draw()\l}"]
-         VGroup      [label = "{VGroup||/+ Draw()\l}"]
          TabGroup    [label = "{TabGroup||+ HandleKey()\l}"]
          TextInput   [label = "{TextInput||+ Draw()\l+ HandleKey\l}"]
          BoolInput   [label = "{BoolInput||+ Draw()\l+ HandleKey\l}"]
@@ -122,21 +119,6 @@ BoolInput
 .. automodule:: lib.clui.boolinput
 
 .. autoclass:: lib.clui.boolinput.BoolInput
-   :members:
-
-
-Group
------
-
-.. automodule:: lib.clui.group
-
-.. autoclass:: lib.clui.group.Group
-   :members:
-
-.. autoclass:: lib.clui.group.HGroup
-   :members:
-
-.. autoclass:: lib.clui.group.VGroup
    :members:
 
 
