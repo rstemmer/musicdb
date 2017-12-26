@@ -29,6 +29,7 @@ class TextInput(Text):
         self.w     = w
         self.data  = ""
         self.caret = 0
+        self.offset= 0 # where to start printing - important when data is larger than input element
 
 
     def SetData(self, string):
@@ -66,7 +67,7 @@ class TextInput(Text):
         This method draws the input control.
         """
         self.SetColor("1;37", "44")
-        string = self.data[:self.w]
+        string = self.data[self.offset:self.offset+self.w]
         string = string.ljust(self.w)
         self.SetCursor(self.x, self.y)
         self.PrintText(string)
@@ -90,20 +91,33 @@ class TextInput(Text):
         if type(key) != str:
             return
 
-        if key == "left" and self.caret > 0:
-            self.caret -= 1
-        elif key == "right" and self.caret < len(self.data):
-            self.caret += 1
+        if key == "left":
+            if self.caret > 0:
+                self.caret -= 1
+            elif self.offset > 0:
+                self.offset -= 1
+
+        elif key == "right":
+            if self.caret < min(len(self.data), self.w-1):
+                self.caret += 1
+            elif self.offset + len(self.data) > self.w and self.offset+self.caret < len(self.data):
+                self.offset += 1
+
         elif key == "backspace" and self.caret > 0:
-            self.data   = self.data[:self.caret-1] + self.data[self.caret:]
+            self.data   = self.data[:self.offset + self.caret-1] + self.data[self.offset + self.caret:]
             self.caret -= 1
+
         elif key == "entf" and self.caret < len(self.data):
-            self.data   = self.data[:self.caret] + self.data[self.caret+1:]
-        elif len(key) == 1 and key.isprintable() and len(self.data) < self.w:
-            self.data   = self.data[:self.caret] + key + self.data[self.caret:]
-            self.caret += 1
-            if len(self.data) > self.w:
-                self.data = self.data[:self.w]
+            self.data   = self.data[:self.offset + self.caret] + self.data[self.offset + self.caret+1:]
+
+        elif len(key) == 1 and key.isprintable():
+            self.data   = self.data[:self.offset + self.caret] + key + self.data[self.offset + self.caret:]
+            if self.caret < min(len(self.data), self.w-1):
+                self.caret += 1
+            elif self.offset + len(self.data) >= self.w:
+                self.offset += 1
+            #if len(self.data) > self.w:
+            #    self.data = self.data[:self.w]
         self.Draw()
 
 
