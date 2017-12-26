@@ -223,16 +223,16 @@ class repair(MDBModule, MusicDBDatabase):
         # Buttons
         width = ((maxw) // 3) - 2
 
-        lbuttons = ButtonView(2, 1, width, 1, align="left")
+        lbuttons = ButtonView(2, 1, width, align="left")
         lbuttons.AddButton("a", "Add path to database")
         
-        mbuttons = ButtonView(maxw//3, 1, width, 1, align="middle")
+        mbuttons = ButtonView(maxw//3, 1, width, align="middle")
         mbuttons.AddButton("u", "Update database entry path")
 
-        rbuttons = ButtonView(2*maxw//3, 1, width, 1, align="right")
+        rbuttons = ButtonView(2*maxw//3, 1, width, align="right")
         rbuttons.AddButton("r", "Remove song from database")
         
-        bbuttons = ButtonView(2, maxh-2, maxw, 1)       # bottombuttons
+        bbuttons = ButtonView(2, maxh-2, maxw)       # bottombuttons
         bbuttons.AddButton("c", "Check again")
         bbuttons.AddButton("q", "Quit")
         
