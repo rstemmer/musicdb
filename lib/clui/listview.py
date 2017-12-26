@@ -184,8 +184,7 @@ class ListView(Pane):
         This method can be used to initialize the list of data that will be shown in the list view
         If the :meth:`~onDrawElement` method is not overloaded, the list must contain strings.
 
-        After setting the new ``elements`` list, the ``linemarker`` gets updated when it points outside the new list.
-        Otherwise the line marker stays at its position.
+        After setting the new ``elements`` list, the ``linemarker`` gets set to the begin of the list.
 
         Args:
             elements (list): A list of data
@@ -194,8 +193,8 @@ class ListView(Pane):
             *Nothing*
         """
         self.elements = elements
-        if self.linemarker >= len(self.elements):
-            self.linemarker = len(self.elements)-1
+        self.linemarker = 0
+        self.listoffset = 0
 
 
     def SetSelectedData(self, element):
