@@ -194,7 +194,7 @@ class tags(MDBModule, MusicDBTags):
                 print("\033[1;30mNone", end=separator)
 
             if tag["icontype"] != None:
-                print("\033[0;36m[%1i]\033[1;34m %13s"  %(tag["icontype"], tag["icon"]), end=separator)
+                print("\033[0;36m[%1i]\033[1;34m %13s"  %(tag["icontype"], tag["icon"][0]), end=separator)
             else:
                 print("\033[1;30mNone", end=separator)
 
