@@ -50,13 +50,12 @@ from mdbapi.database    import MusicDBDatabase
 from lib.clui.listview  import ListView
 from lib.clui.text      import Text
 from lib.clui.buttonview import ButtonView
-from lib.clui.group     import HGroup, VGroup
 from lib.clui.tabgroup  import TabGroup
 
 
 class OrphanPathView(ListView):
-    def __init__(self, title):
-        ListView.__init__(self, title)
+    def __init__(self, title, x=0, y=0, w=0, h=0):
+        ListView.__init__(self, title, x, y, w, h)
 
     def SetData(self, artists, albums, songs):
         artistdata = [("artist", path) for path in artists]
@@ -89,8 +88,8 @@ class OrphanPathView(ListView):
 
 
 class OrphanEntryView(ListView):
-    def __init__(self, title):
-        ListView.__init__(self, title)
+    def __init__(self, title, x=0, y=0, w=0, h=0):
+        ListView.__init__(self, title, x, y, w, h)
 
     def SetData(self, artists, albums, songs):
         artistdata = [("artist", entry) for entry in artists]
@@ -202,7 +201,8 @@ class repair(MDBModule, MusicDBDatabase):
         self.RunCheck()
         self.orphanpathview.SetData(self.newartists, self.newalbums, self.newsongs)
         self.orphanentryview.SetData(self.lostartists, self.lostalbums, self.lostsongs)
-        self.listgroup.Draw()
+        self.orphanpathview.Draw()
+        self.orphanentryview.Draw()
 
 
     def ShowUI(self):
@@ -212,24 +212,29 @@ class repair(MDBModule, MusicDBDatabase):
         maxw, maxh = cli.GetScreenSize()
 
         # List Views
-        self.orphanpathview  = OrphanPathView("Orphan Paths")
+        self.orphanpathview  = OrphanPathView("Orphan Paths", x=1, y=3, w=maxw//2-1, h=maxh-6)
         self.orphanpathview.SetData(self.newartists, self.newalbums, self.newsongs)
 
-        self.orphanentryview = OrphanEntryView("Orphan DB Entries")
+        self.orphanentryview = OrphanEntryView("Orphan DB Entries", x=maxw//2+1, y=3, w=maxw//2-1, h=maxh-6)
         self.orphanentryview.SetData(self.lostartists, self.lostalbums, self.lostsongs)
 
         # Buttons
         lbuttons = ButtonView(align="left")
         lbuttons.AddButton("a", "Add path to database")
+        lbuttons.AddButton("↑", "Go up")
+        lbuttons.AddButton("↓", "Go down")
         
         mbuttons = ButtonView(align="middle")
         mbuttons.AddButton("u", "Update database entry path")
 
         rbuttons = ButtonView(align="right")
+        rbuttons.AddButton("↑", "Go up")
+        rbuttons.AddButton("↓", "Go down")
         rbuttons.AddButton("r", "Remove song from database")
         
         bbuttons = ButtonView() # bottom-buttons
         bbuttons.AddButton("c", "Check again")
+        bbuttons.AddButton("↹", "Select list")
         bbuttons.AddButton("q", "Quit")
         
         # Draw ButtonViews
@@ -239,12 +244,11 @@ class repair(MDBModule, MusicDBDatabase):
         rbuttons.Draw(2*maxw//3, 1,      w)
         bbuttons.Draw(2,         maxh-2, maxw)
 
-        # Composition
-        self.listgroup = HGroup(0, 3, maxw, maxh-6, space=2)
-        self.listgroup.AddPane(self.orphanpathview)
-        self.listgroup.AddPane(self.orphanentryview)
-        self.listgroup.Draw()
+        # Draw Lists
+        self.orphanpathview.Draw()
+        self.orphanentryview.Draw()
 
+        # Create Tab group
         tabgroup = TabGroup()
         tabgroup.AddPane(self.orphanpathview)
         tabgroup.AddPane(self.orphanentryview)
@@ -290,7 +294,6 @@ class repair(MDBModule, MusicDBDatabase):
                 self.RemoveFromDatabase(target, targetid)
                 self.UpdateUI()
 
-                self.UpdateUI()
 
         cli.ClearScreen()
         cli.SetCursor(0,0)

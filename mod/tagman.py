@@ -37,7 +37,6 @@ from lib.clui.dialog    import Dialog
 from lib.clui.textinput import TextInput
 from lib.clui.boolinput import BoolInput
 from lib.clui.buttonview import ButtonView
-from lib.clui.group     import HGroup, VGroup
 from lib.clui.tabgroup  import TabGroup
 
 class GenreView(ListView, MusicDBTags):
