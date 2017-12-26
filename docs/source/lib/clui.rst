@@ -42,9 +42,6 @@ It provides some primitive UI elements documented in this section of the documen
          ListView    -> Dialog
          ButtonView  -> Dialog
 
-         Group       -> HGroup
-         Group       -> VGroup
-
          TabGroup
 
       }
