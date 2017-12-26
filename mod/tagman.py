@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 This command runs a command line "GUI" to manage tags.
+Press ``Ctrl-D`` to exit the tag manager.
 
 Example:
 
@@ -476,7 +477,7 @@ class tagman(MDBModule):
         self.genreframe.SetFGColor("0;31")
 
         # Buttons
-        self.buttons = ButtonView(0, maxh-2, maxw, align="middle")
+        self.buttons = ButtonView(align="middle")
         self.buttons.AddButton("a", "Add new tag")
         self.buttons.AddButton("e", "Edit tag")
         self.buttons.AddButton("m", "Arrange tags")
@@ -491,7 +492,7 @@ class tagman(MDBModule):
 
         # Draw once
         self.genreframe.Draw()
-        self.buttons.Draw()
+        self.buttons.Draw(0, maxh-2, maxw)
 
         key = " "
         while key != "Ctrl-D":

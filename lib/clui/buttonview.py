@@ -85,7 +85,7 @@ class ButtonView(Text):
             x,y (int): Position where to start printing the ButtonView
             w (int): Width of the ButtonView
         """
-        rbuttons = []
+        rbuttons = [] # rendered buttons
 
         # calculate max button text length
         numbuttons = len(self.buttons)
