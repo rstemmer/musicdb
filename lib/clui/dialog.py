@@ -14,15 +14,36 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from lib.clui.pane      import Pane
-from lib.clui.listview  import ListView
+from lib.clui.pane       import Pane
+from lib.clui.listview   import ListView
 from lib.clui.buttonview import ButtonView
 
-class Dialog(ListView):
+class Dialog(ListView, ButtonView):
     """
     This class provides a dialog box that is organized like a list view.
 
     It provides one input element per line over several lines.
+    The lines can be selected using the up (↑) and down (↓) key.
+    Pressing the space bar on an :class:`~lib.clui.boolinput.BoolInput` toggles its value.
+    On enter (↵), the changes shoud be committed, on escape (␛) they should be rejected.
+
+    Beside the list of input elements a :class:`~lib.clui.buttonview.ButtonView` gets printed at the bottom of
+    the dialog view telling the user about the key mentioned above.
+
+    The dialog works on a list with each element beeing a tuple of a label, the control itself and a hint for the user.
+
+    Example on using a Dialog:
+
+        .. code-block:: python
+
+            dialog     = Dialog("Add Unicode Icon", 1, 1, 40, 10)
+            nameinput  = TextInput()
+            iconinput  = TextInput()
+            varselector= BoolInput()
+            dialog.AddInput("Name:",  self.nameinput,   "Visibly for user")
+            dialog.AddInput("Icon:",  self.iconinput,   "Unicode char")
+            dialog.AddInput("U+FE0E:",self.varselector, "Do not replace with emoji")
+
 
     Args:
         title (str): Title of the list view
@@ -31,34 +52,40 @@ class Dialog(ListView):
     """
     def __init__(self, title=None, x=0, y=0, w=0, h=0):
         ListView.__init__(self, title, x, y, w, h)
-        self.buttons = ButtonView(align="center")
-        self.buttons.AddButton("↑", "Go up")
-        self.buttons.AddButton("↓", "Go down")
-        self.buttons.AddButton("↵", "Commit")
-        self.buttons.AddButton("␣", "Toggle")
-        self.buttons.AddButton("␛", "Cancel")
-
+        ButtonView.__init__(self, align="center")
 
         self.elements       = []  # ListView works on this list. It contains a tuple (label, control, hint)
         self.maxlabellength = 0
         self.maxhintlength  = 0
 
+        self.AddButton("↑", "Go up")
+        self.AddButton("↓", "Go down")
+        self.AddButton("↵", "Commit")
+        self.AddButton("␣", "Toggle")
+        self.AddButton("␛", "Cancel")
 
-    def AddInput(self, label, control, hint):
+
+    def AddInput(self, label, control, hint=None):
         """
         This method adds a new control to the list of controls.
         The input control element must provide a ``Draw`` and a ``HandleKey`` method.
         Position and width of the control element will be calculated when they get printed.
         The label gets printed in front of the control element, the hint at the end of the list entry.
 
+        The following inputs are suitable for the dialog:
+            * :class:`lib.clui.textinbut.TextInput`
+            * :class:`lib.clui.boolinput.BoolInput`
+
         Args:
             label (str): Label of the input element
             control: The input element itself
-            hint (str): An additional hint to the input element
+            hint (str): An additional hint to the input element. ``None`` for no hint.
 
         Returns:
             *Nothing*
         """
+        if hint == None:
+            hint = ""
         self.maxlabellength = max(self.maxlabellength, len(label))
         self.maxhintlength  = max(self.maxhintlength,  len(hint))
         self.elements.append((label, control, hint))
@@ -70,6 +97,7 @@ class Dialog(ListView):
         Keep in mind that the dialog element is not able to scroll.
 
         The number of printable character should not exceed the maximum width ``maxwidth``.
+        The ``element`` is a tuple containing the label, the control element and the hint.
 
         Args:
             element: The element that shall be printed.
@@ -149,7 +177,7 @@ class Dialog(ListView):
 
     def Draw(self):
         """
-        This method draws the list of elements.
+        This method draws the list of control elements.
         """
         self.SetFGColor("1;31")
         Pane.Draw(self)
@@ -164,20 +192,23 @@ class Dialog(ListView):
 
         self.SetColor("1;31", "40") # reset color
 
-        self.buttons.x = self.x + 1
-        self.buttons.y = self.y + self.h - 1
-        self.buttons.w = self.w - 2
-        self.buttons.Draw()
+        x = self.x + 1
+        y = self.y + self.h - 1
+        w = self.w - 2
+        ButtonView.Draw(self, x, y, w)
+        #self.buttons.Draw(x, y, w)
 
 
     def HandleKey(self, key):
         """
-        This method must be called whenever a key was pressed and this ListView is "active".
+        This method must be called whenever a key was pressed and this dialog is "active".
         It expects the key name returned by :meth:`lib.clui.text.Text.GetKey`.
 
         If the key is ``"up"`` the element above the current selected element gets selected.
         If the key is ``"down"`` the one below will be selected.
-        Any other key gets passed to the :meth:`~onAction` method.
+        This will be done by passing the *up* and *down* key to the ``HandleKey`` method of the base class.
+
+        Any other key gets passed to the :meth:`~onAction` method of this class.
 
         After handling an key, the :meth:`~Draw` method gets called to refresh the view.
 

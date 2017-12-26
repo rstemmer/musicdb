@@ -18,7 +18,10 @@ from lib.clui.text import Text
 
 class TextInput(Text):
     """
-    This class provides a simple one-line text input element
+    This class provides a simple one-line text input element.
+
+    The cursor mentioned in this class documentation is not related to the cursor of the terminal!
+    Each TextInput maintain its own cursor.
 
     Args:
         x,y (int): Position of the list view
@@ -27,14 +30,15 @@ class TextInput(Text):
     def __init__(self, x=0, y=0, w=0):
         Text.__init__(self)
         self.w     = w
-        self.data  = ""
-        self.caret = 0
-        self.offset= 0 # where to start printing - important when data is larger than input element
+        self.data  = "" # text buffer
+        self.cursor= 0
+        self.offset= 0  # where to start printing - important when data is larger than input element
 
 
     def SetData(self, string):
         """
-        This method sets the data of the input element
+        This method sets the data of the input element.
+        The cursor points to the end of the input data.
 
         Args:
             string (str): String that will be used as the input
@@ -48,8 +52,8 @@ class TextInput(Text):
         if type(string) != str:
             raise TypeError("Data must be of type string!")
 
-        self.data = string
-        self.caret= len(self.data)  # caret at the end of the text
+        self.data   = string
+        self.cursor = len(self.data)  # cursor at the end of the text
 
 
     def GetData(self):
@@ -64,7 +68,12 @@ class TextInput(Text):
 
     def Draw(self):
         """
-        This method draws the input control.
+        This method draws the input control and the cursor.
+        The input elements color are white text on blue background.
+        The element the cursor points to has a cyan background.
+
+        Returns:
+            *Nothing*
         """
         self.SetColor("1;37", "44")
         string = self.data[self.offset:self.offset+self.w]
@@ -72,13 +81,19 @@ class TextInput(Text):
         self.SetCursor(self.x, self.y)
         self.PrintText(string)
 
-        self.SetCursor(self.x+self.caret, self.y)
+        self.SetCursor(self.x+self.cursor, self.y)
         self.SetBGColor("46")
-        self.PrintText(string[self.caret])
+        self.PrintText(string[self.cursor])
 
 
     def HandleKey(self, key):
         """
+        This method handled the users input.
+        The keys are expected as the method :meth:`lib.clui.text.Text.GetKey` returns.
+        With the ``"right"`` and ``"left"`` key, the user can navigate through the text.
+        With ``"backspace"`` the character left to the cursor gets removed.
+        With ``"entf"`` the character right below the cursor.
+        Each printable character gets inserted left to the cursor.
 
         Args:
             key (str): Key name that shall be handled
@@ -92,32 +107,31 @@ class TextInput(Text):
             return
 
         if key == "left":
-            if self.caret > 0:
-                self.caret -= 1
+            if self.cursor > 0:
+                self.cursor -= 1
             elif self.offset > 0:
                 self.offset -= 1
 
         elif key == "right":
-            if self.caret < min(len(self.data), self.w-1):
-                self.caret += 1
-            elif self.offset + len(self.data) > self.w and self.offset+self.caret < len(self.data):
+            if self.cursor < min(len(self.data), self.w-1):
+                self.cursor += 1
+            elif self.offset + len(self.data) > self.w and self.offset+self.cursor < len(self.data):
                 self.offset += 1
 
-        elif key == "backspace" and self.caret > 0:
-            self.data   = self.data[:self.offset + self.caret-1] + self.data[self.offset + self.caret:]
-            self.caret -= 1
+        elif key == "backspace" and self.cursor > 0:
+            self.data   = self.data[:self.offset + self.cursor-1] + self.data[self.offset + self.cursor:]
+            self.cursor -= 1
 
-        elif key == "entf" and self.caret < len(self.data):
-            self.data   = self.data[:self.offset + self.caret] + self.data[self.offset + self.caret+1:]
+        elif key == "entf" and self.cursor < len(self.data):
+            self.data   = self.data[:self.offset + self.cursor] + self.data[self.offset + self.cursor+1:]
 
         elif len(key) == 1 and key.isprintable():
-            self.data   = self.data[:self.offset + self.caret] + key + self.data[self.offset + self.caret:]
-            if self.caret < min(len(self.data), self.w-1):
-                self.caret += 1
+            self.data   = self.data[:self.offset + self.cursor] + key + self.data[self.offset + self.cursor:]
+            if self.cursor < min(len(self.data), self.w-1):
+                self.cursor += 1
             elif self.offset + len(self.data) >= self.w:
                 self.offset += 1
-            #if len(self.data) > self.w:
-            #    self.data = self.data[:self.w]
+
         self.Draw()
 
 

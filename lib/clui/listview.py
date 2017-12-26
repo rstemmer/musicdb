@@ -17,17 +17,16 @@
 from lib.clui.pane import Pane
 
 class ListView(Pane):
-    """
+    r"""
     This class provides a ListView that shows a list the user can scroll through using the arrow keys.
 
-    The data shown in the list must be a string in this class.
+    The data shown in the list must be a string.
     For derived classes, they can be considered abstract and contain any kind of type as long as
     you adopt the :meth:`~onDrawElement` method.
 
-    An example on how to use this class:
+    An example on how to use this class with complex data structures:
 
         .. code-block:: python
-
 
             class MusicView(ListView):
                 def __init__(self, title):
@@ -62,13 +61,21 @@ class ListView(Pane):
                     string += path[:(maxnamelen)].ljust(maxpathlen)
                     return string
 
-
             artists = ["Artist A", "Brtist B"]
             albums  = ["An album", "And Another Album"]
             songs   = ["This is a song name"]
             sv  = MusicView("Music", 2, 2, 10, 5)
             sv.SetData(artists, albums, songs)
             sv.Draw()
+
+
+    The elements in the list are stored in a variable ``elements``.
+    This list can be maintained using :meth:`~SetData`.
+
+    A second variable ``linemarker`` points (in form of an index) to the selected element in this list.
+    The element the linemarker points to can be accessed via :meth:`~GetSelectedData` and :meth:`~SetSelectedData`
+
+    When the list of element exceeds the height of the list, a scroll bar will be printed in place of the right frame edge.
 
     Args:
         title (str): Title of the list view
@@ -80,16 +87,36 @@ class ListView(Pane):
         self.listoffset     = 0
         self.linemarker     = 0
         self.elements       = []
-        self.drawcallback   = None
 
 
     def onDrawElement(self, element, number, maxwidth):
-        """
+        r"""
         This method gets called when an element gets printed into the list view.
         To customize how elements will appear in the list, overload this method.
 
         The returned string can contain ANSI Escape Sequences for coloring.
         The number of printable character should not exceed the maximum width ``maxwidth``.
+        Furthermore the string should be exact ``maxwidth`` wide.
+
+        An example how to implement a custom ``onDrawElement`` method can be seen in the following code example:
+
+        .. code-block:: python
+
+            def onDrawElement(self, element, number, maxwidth):
+                # Print the element number in front of each entry.
+                # Alternate the text color with each line. Odd lines in white, even in blue.
+
+                num = "%2d: "%(number)      # start list entry with the index of the element
+                val = element[:maxwidth-4]  # Limit string to max width. 4 Characters are consumed for the num variable
+
+                # Alternating colors with each line
+                # Colors do not count to the width of the string because they are not printable
+                if num % 2:
+                    color = "\033[1;37m"    # Set color to white for odd lines
+                else:
+                    color = "\033[1;34m"    # Set color to blue for even lines
+    
+                return color + num + val
 
         Args:
             element: The element that shall be printed.
@@ -109,7 +136,38 @@ class ListView(Pane):
         """
         This method gets called when a key gets passed to the :meth:`~HandleKey` method.
         It is supposed to process the selected line in the list of elements.
-        In this class, nothing will be done.
+        In this class, nothing will be done with the data.
+
+        This function must return the processed element back to the list.
+        It is also possible to return a new element to replace the old one.
+        When a line shall not be updated, return None.
+        A case where this may be useful will be presented in the following example:
+
+        .. code-block:: python
+            
+            def onAction(self, element, key):
+                # this method manipulates a list of numbers
+
+                if key == "r":      # remove element
+                    self.elements.remove(element)
+                    return None
+
+                elif key == "a":    # append number to list
+                    self.elements.append("0")
+
+                elif key == "0":    # reset number
+                    return "0"
+
+                elif key == "+":    # increment number
+                    element = str(int(element) + 1)
+
+                elif key == "-":    # decrement number
+                    element = str(int(element) - 1)
+
+                return element
+
+        When the last element gets removed, the ``linemarker`` variable gets moved to the previous line.
+        Otherwise it stays at its position that will now be the element next after the removed one.
         
         Args:
             element: The selected element in the list
@@ -126,6 +184,9 @@ class ListView(Pane):
         This method can be used to initialize the list of data that will be shown in the list view
         If the :meth:`~onDrawElement` method is not overloaded, the list must contain strings.
 
+        After setting the new ``elements`` list, the ``linemarker`` gets updated when it points outside the new list.
+        Otherwise the line marker stays at its position.
+
         Args:
             elements (list): A list of data
 
@@ -140,6 +201,7 @@ class ListView(Pane):
     def SetSelectedData(self, element):
         """
         Replaces the selected element with a new one.
+        This method can be used to interact with the list without triggering the :meth:`~onAction` callback.
 
         Args:
             element: An element that replaces the selected element
@@ -152,7 +214,7 @@ class ListView(Pane):
 
     def GetSelectedData(self):
         """
-        This method returns the selected element.
+        This method returns the selected element from the list.
 
         Returns:
             The selected element
@@ -163,6 +225,15 @@ class ListView(Pane):
     def Draw(self):
         """
         This method draws the list of elements.
+        If the list exceeds the height of the list view, a scroll bar gets added and the user can scroll though the data.
+
+        The background of the list view will be black.
+        The surrounding frame is red.
+        The lines in the list will be printed in blue.
+        The selected line gets a cyan background color.
+
+        Returns:
+            *Nothing*
         """
         self.SetFGColor("1;31")
         Pane.Draw(self)
@@ -186,12 +257,8 @@ class ListView(Pane):
                 bgcolor = "40"
             self.SetColor("1;34", bgcolor)
             self.PrintText(string)
-        self.SetColor("1;31", "40") # reset color
 
-        # DEBUG
-        #self.SetCursor(self.x+1, self.y+self.h-1)
-        #self.SetColor("1;30", "40")
-        #self.PrintText("m=%d,o=%d"%(self.linemarker,self.listoffset))
+        self.SetColor("1;31", "40") # reset color
 
 
     def DrawScrollbar(self, offset, start, end):
@@ -211,20 +278,16 @@ class ListView(Pane):
             else:
                 self.PrintText("░")
 
-        # DEBUG
-        #self.SetCursor(self.x+self.w-9, self.y+self.h-1)
-        #self.SetColor("1;30", "40")
-        #self.PrintText("sp=%d,%d"%(pos,marker))
-
 
     def HandleKey(self, key):
         """
-        This method must be called whenever a key was pressed and this ListView is "active".
+        This method must be called whenever a key was pressed and this list view is "active".
         It expects the key name returned by :meth:`lib.clui.text.Text.GetKey`.
 
         If the key is ``"up"`` the element above the current selected element gets selected.
         If the key is ``"down"`` the one below will be selected.
         Any other key gets passed to the :meth:`~onAction` method.
+        Read the documentation of the :meth:`~onAction` method to see how the return value of that method gets processed.
 
         After handling an key, the :meth:`~Draw` method gets called to refresh the view.
 
@@ -241,8 +304,6 @@ class ListView(Pane):
             if self.linemarker < self.listoffset:
                 self.listoffset -= 1
 
-            self.Draw()
-
         elif key == "down":
             if self.linemarker < len(self.elements)-1:
                 self.linemarker += 1
@@ -250,14 +311,15 @@ class ListView(Pane):
             if self.linemarker >= self.listoffset + self.h-2:
                 self.listoffset += 1
 
-            self.Draw()
-
         else:
             if self.elements:
                 updatedelement = self.onAction(self.elements[self.linemarker], key)
                 if updatedelement:
                     self.elements[self.linemarker] = updatedelement
-            self.Draw()
+                elif self.linemarker >= len(self.elements):
+                    self.linemarker = len(self.elements)-1
+
+        self.Draw()
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

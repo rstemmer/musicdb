@@ -35,14 +35,15 @@ It provides some primitive UI elements documented in this section of the documen
          Text        -> Frame
          Text        -> TextInput
          Text        -> BoolInput
+         Text        -> ButtonView
+
          Frame       -> Pane
          
-         Pane        -> ButtonView
          Pane        -> ListView
          Pane        -> Group
 
          ListView    -> Dialog
-         ButtonView  -> Dialog [arrowtail=open]
+         ButtonView  -> Dialog
 
          Group       -> HGroup
          Group       -> VGroup

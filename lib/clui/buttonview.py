@@ -14,12 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from lib.clui.pane import Pane
+from lib.clui.text import Text
 
-class ButtonView(Pane):
+class ButtonView(Text):
     """
     This class provides a button view.
-    It is a line where a key function is described: ``[a:Add element][r:Remove element]``
+    It is a line where a key event is described.
+    For example: ``[a:Add element][r:Remove element]``
 
     Example:
 
@@ -35,14 +36,12 @@ class ButtonView(Pane):
             buttons.AddButton("r", "Remove tag")
 
     Args:
-        x,y (int): Position where to start printing the ButtonView
-        w (int): Width of the ButtonView
         align (str): If the buttons are ``"left"``, ``"right"`` or ``"center"`` shall be aligned over the span of the View width.
     """
-    def __init__(self, x=0, y=0, w=0, align="left"):
-        Pane.__init__(self, None, x, y, w, 1)
+    def __init__(self, align="left"):
+        Text.__init__(self)
         self.buttons = []
-        
+
         align = align[0]
         # middle = center
         if align == "m":
@@ -77,16 +76,20 @@ class ButtonView(Pane):
         self.buttons.append((key, name))
 
 
-    def Draw(self):
+    def Draw(self, x, y, w):
         """
         This method prints the ButtonView.
         It always uses the colors *red* for the [:]-characters, *light blue* for the key and *blue* for the description.
+
+        Args:
+            x,y (int): Position where to start printing the ButtonView
+            w (int): Width of the ButtonView
         """
         rbuttons = []
 
         # calculate max button text length
         numbuttons = len(self.buttons)
-        maxsize    = self.w // numbuttons
+        maxsize    = w // numbuttons
         maxsize   -= 4  # "[x:]"
         barlength  = 0  # length of the button bar
 
@@ -101,13 +104,13 @@ class ButtonView(Pane):
             barlength += 4 + min(maxsize,len(button[1]))  # 4: "[x:]"
 
         if self.align == "l":
-            x = self.x
+            x = x
         elif self.align == "c":
-            x = self.x + (self.w - barlength) // 2
+            x = x + (w - barlength) // 2
         elif self.align == "r":
-            x = self.x + (self.w - barlength)
+            x = x + (w - barlength)
 
-        self.SetCursor(x, self.y)
+        self.SetCursor(x, y)
         for rbutton in rbuttons:
             self.PrintText(rbutton)
 
