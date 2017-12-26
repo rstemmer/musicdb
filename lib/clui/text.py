@@ -38,7 +38,8 @@ class Text(object):
         SetColor("44")      # blue background
 
     """
-    KEY_ESCAPE = "\x1B"
+    KEY_ESCAPE      = "\x1B"
+    KEY_BACKSPACE   = "\x7F"
 
     def __init__(self):
         self.fgcolor = "37"
@@ -222,8 +223,11 @@ class Text(object):
         Until now, the following keys will be recognized:
 
             * The usual prinable keys
-            * ``enter``
+            * ``escape`` (Must be hit twice)
+            * ``enter``, ``backspace``, ``entf``
+            * ``backtab`` (shift+tab)
             * ``up``, ``down``, ``left``, ``right``
+            * ``Ctrl-D``
 
         In case you want to get other keys, it is easy to add them by editing the code of this method.
         I just implemented the one I need for the :class:`~lib.clui.listview.ListView` UI element.
@@ -235,11 +239,17 @@ class Text(object):
         key = self.GetRawKey()
         if key == "\x0D":
             return "enter"
-        if key != Text.KEY_ESCAPE:
+        elif key == Text.KEY_BACKSPACE:
+            return "backspace"
+        elif key == "\04":
+            return "Ctrl-D"
+        elif key != Text.KEY_ESCAPE:
             return key
 
         key = self.GetRawKey()
-        if key != "\x5B":
+        if key == Text.KEY_ESCAPE:
+            return "escape"
+        elif key != "[":
             return None
 
         key = self.GetRawKey()
@@ -251,6 +261,16 @@ class Text(object):
             return "right"
         elif key == "\x44":
             return "left"
+        elif key == "Z":
+            return "backtab"
+
+        # In case of 3, there is more comming
+        if key != "3":
+            return None
+
+        key = self.GetRawKey()
+        if key == "~":
+            return "entf"
 
         return None
 

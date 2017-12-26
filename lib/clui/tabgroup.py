@@ -65,6 +65,12 @@ class TabGroup(object):
             self.panes[self.index].SetLineStyle(Frame.LINESTYLE_BOLD)
             self.panes[self.index].Draw()
             return
+        elif key == "backtab":
+            self.panes[self.index].SetLineStyle(Frame.LINESTYLE_NORMAL)
+            self.panes[self.index].Draw()
+            self.index = (self.index - 1) % len(self.panes)
+            self.panes[self.index].SetLineStyle(Frame.LINESTYLE_BOLD)
+            self.panes[self.index].Draw()
 
         self.panes[self.index].HandleKey(key)
         return

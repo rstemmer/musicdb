@@ -65,6 +65,8 @@ class Frame(Text):
 
     Args:
         linestyle: The style used to draw the lines. The default linestyle is ``LINESTYLE_NORMAL``.
+        x,y (int): Coordinates of the frame
+        w,h (int): Width and height of the frame
     """
 
     LINESTYLE_NORMAL    = 0
@@ -80,9 +82,13 @@ class Frame(Text):
             ["─", "│", "╭", "╮", "╰", "╯"],
             ]
 
-    def __init__(self, linestyle=LINESTYLE_NORMAL):
+    def __init__(self, linestyle=LINESTYLE_NORMAL, x=None, y=None, w=None, h=None):
         Text.__init__(self)
         self.linestyle = linestyle
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
 
 
     def SetLineStyle(self, linestyle):
@@ -99,12 +105,12 @@ class Frame(Text):
         Raises:
             ValueError: When the argument does not address a valid style
         """
-        if linestyle not in [LINESTYLE_NORMAL, LINESTYLE_BOLD, LINESTYLE_ASCII, LINESTYLE_DOUBLE, LINESTYLE_ROUND]:
+        if linestyle not in [Frame.LINESTYLE_NORMAL, Frame.LINESTYLE_BOLD, Frame.LINESTYLE_ASCII, Frame.LINESTYLE_DOUBLE, Frame.LINESTYLE_ROUND]:
             raise ValueError("Invalid line style.")
         self.linestyle = linestyle
 
 
-    def Draw(self, x, y, w, h):
+    def Draw(self, x=None, y=None, w=None, h=None):
         """
         This method draws the frame around a certain area.
 
@@ -126,9 +132,18 @@ class Frame(Text):
             TypeError: When one of the arguments is not of type integer.
             ValueError: When *x* or *y* is negative.
         """
-        if type(x) != int or type(y) != int or type(w) != int or type(h) != int:
+        if x:
+            self.x = x
+        if y:
+            self.y = y
+        if w:
+            self.w = w
+        if h:
+            self.h = h
+
+        if type(self.x) != int or type(self.y) != int or type(self.w) != int or type(self.h) != int:
             raise TypeError("Coordinates, width and height must be of type integer")
-        if x < 0 or y < 0:
+        if self.x < 0 or self.y < 0:
             raise ValueError("No negative coordinates allowed")
 
         linechars = Frame.LINESTYLES[self.linestyle]

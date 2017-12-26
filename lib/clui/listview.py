@@ -79,7 +79,7 @@ class ListView(Pane):
         Pane.__init__(self, title, x, y, w, h)
         self.listoffset     = 0
         self.linemarker     = 0
-        self.elements       = None
+        self.elements       = []
         self.drawcallback   = None
 
 
@@ -116,7 +116,7 @@ class ListView(Pane):
             key (str): The key that was pressed while the element was selected
 
         Returns:
-            The modified element that will be put back in the list of elements
+            The modified element that will be put back in the list of elements.
         """
         return element
 
@@ -133,6 +133,8 @@ class ListView(Pane):
             *Nothing*
         """
         self.elements = elements
+        if self.linemarker >= len(self.elements):
+            self.linemarker = len(self.elements)-1
 
 
     def SetSelectedData(self, element):
@@ -166,6 +168,7 @@ class ListView(Pane):
         Pane.Draw(self)
 
         maxelements = len(self.elements)
+
         self.DrawScrollbar(self.listoffset, 0, maxelements)
 
         for i in range(1, self.h-1):  # line number between the frames
@@ -251,7 +254,9 @@ class ListView(Pane):
 
         else:
             if self.elements:
-                self.elements[self.linemarker] = self.onAction(self.elements[self.linemarker], key)
+                updatedelement = self.onAction(self.elements[self.linemarker], key)
+                if updatedelement:
+                    self.elements[self.linemarker] = updatedelement
             self.Draw()
 
 

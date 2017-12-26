@@ -21,6 +21,19 @@ class ButtonView(Pane):
     This class provides a button view.
     It is a line where a key function is described: ``[a:Add element][r:Remove element]``
 
+    Example:
+
+        .. code-block:: python
+
+            cli  = Text()
+            maxw, maxh = cli.GetScreenSize()
+
+            # Place a button view in the middle of the line before the last line of the screen
+            buttons = ButtonView(0, maxh-2, maxw, align="middle")
+            buttons.AddButton("a", "Add new tag")
+            buttons.AddButton("e", "Edit tag")
+            buttons.AddButton("r", "Remove tag")
+
     Args:
         x,y (int): Position where to start printing the ButtonView
         w (int): Width of the ButtonView

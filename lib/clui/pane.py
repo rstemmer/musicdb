@@ -37,10 +37,17 @@ class Pane(Frame):
     def __init__(self, title=None, x=0, y=0, w=0, h=0):
         Frame.__init__(self)
         self.title = title
+
+        if type(x) != int or type(y) != int or type(w) != int or type(h) != int:
+            raise TypeError("Coordinates, width and height must be of type integer")
+        if x < 0 or y < 0:
+            raise ValueError("No negative coordinates allowed")
+        
         self.x = x
         self.y = y
         self.w = w
         self.h = h
+        self.SetColor("1;31", "40")
 
     def Draw(self):
         """
@@ -49,7 +56,7 @@ class Pane(Frame):
         Returns:
             *Nothing*
         """
-        self.SetColor("1;31", "40") # reset color
+        self.SetColor() # reset color
         Frame.Draw(self, self.x, self.y, self.w, self.h)
         if self.title:
             self.SetCursor(self.x+2, self.y)

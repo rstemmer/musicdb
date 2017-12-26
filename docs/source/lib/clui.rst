@@ -2,8 +2,15 @@
 Command Line User Interface
 ===========================
 
+   .. warning::
+
+      This library is very experimental.
+      Handle with care and expect interface changes with the next update.
+
 The Command Line User Interface (CLUI) is an unicode based "graphical" user interface library.
 It provides some primitive UI elements documented in this section of the documentation.
+
+
 
    .. graphviz::
 
@@ -17,17 +24,25 @@ It provides some primitive UI elements documented in this section of the documen
          Pane        [label = "{Pane||+ Draw()\l}"]
          ButtonView  [label = "{ButtonView||+ Draw()\l}"]
          ListView    [label = "{ListView||+ Draw()\l+ HandleKey()\l# onDraw()\l# onAction()\l}"]
+         Dialog      [label = "{Dialog||/+ Draw()\l/+ HandleKey()\l}"]
          Group       [label = "{Group||+ Draw()\l}"]
          HGroup      [label = "{HGroup||/+ Draw()\l}"]
          VGroup      [label = "{VGroup||/+ Draw()\l}"]
          TabGroup    [label = "{TabGroup||+ HandleKey()\l}"]
+         TextInput   [label = "{TextInput||+ Draw()\l+ HandleKey\l}"]
+         BoolInput   [label = "{BoolInput||+ Draw()\l+ HandleKey\l}"]
 
          Text        -> Frame
+         Text        -> TextInput
+         Text        -> BoolInput
          Frame       -> Pane
          
          Pane        -> ButtonView
          Pane        -> ListView
          Pane        -> Group
+
+         ListView    -> Dialog
+         ButtonView  -> Dialog [arrowtail=open]
 
          Group       -> HGroup
          Group       -> VGroup
@@ -79,6 +94,33 @@ ListView
 .. automodule:: lib.clui.listview
 
 .. autoclass:: lib.clui.listview.ListView
+   :members:
+
+
+Dialog
+------
+
+.. automodule:: lib.clui.dialog
+
+.. autoclass:: lib.clui.dialog.Dialog
+   :members:
+
+
+TextInput
+---------
+
+.. automodule:: lib.clui.textinput
+
+.. autoclass:: lib.clui.textinput.TextInput
+   :members:
+
+
+BoolInput
+---------
+
+.. automodule:: lib.clui.boolinput
+
+.. autoclass:: lib.clui.boolinput.BoolInput
    :members:
 
 
