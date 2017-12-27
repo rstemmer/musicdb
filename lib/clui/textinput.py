@@ -92,7 +92,7 @@ class TextInput(Text):
         The keys are expected as the method :meth:`lib.clui.text.Text.GetKey` returns.
         With the ``"right"`` and ``"left"`` key, the user can navigate through the text.
         With ``"backspace"`` the character left to the cursor gets removed.
-        With ``"entf"`` the character right below the cursor.
+        With ``"delete"`` the character right below the cursor.
         Each printable character gets inserted left to the cursor.
 
         Args:
@@ -122,7 +122,7 @@ class TextInput(Text):
             self.data   = self.data[:self.offset + self.cursor-1] + self.data[self.offset + self.cursor:]
             self.cursor -= 1
 
-        elif key == "entf" and self.cursor < len(self.data):
+        elif key == "delete" and self.cursor < len(self.data):
             self.data   = self.data[:self.offset + self.cursor] + self.data[self.offset + self.cursor+1:]
 
         elif len(key) == 1 and key.isprintable():

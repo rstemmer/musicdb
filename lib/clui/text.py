@@ -224,7 +224,7 @@ class Text(object):
 
             * The usual prinable keys
             * ``escape`` (Must be hit twice)
-            * ``enter``, ``backspace``, ``entf``
+            * ``enter``, ``backspace``, ``delete``
             * ``backtab`` (shift+tab)
             * ``up``, ``down``, ``left``, ``right``
             * ``Ctrl-D``
@@ -270,7 +270,7 @@ class Text(object):
 
         key = self.GetRawKey()
         if key == "~":
-            return "entf"
+            return "delete"
 
         return None
 
