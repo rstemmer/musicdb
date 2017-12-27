@@ -17,14 +17,18 @@
 This command checks the database and finds inconsistent information.
 The following things get checked:
 
-    #. Do all artist, album and song files have an database entrie
+    #. Do all artist, album and song files have an database entry
     #. Do all artist, album and song database entries have a file
 
 The result gets presented in two lists.
 The left list lists all files without a database entry, the right list all database entries without a file.
 To switch between those lists use *tab* key.
 The key commands listed above the lists work on the selected entries.
-The key commands listed below are independed of the data.
+The key commands listed below are independent of the data.
+
+The update command ``u`` will merge the file selected in the left list with the database entry selected in the right list
+
+Press ``q`` key, or ``Ctrl-D`` to exit the tool.
 
 .. warning::
     
@@ -46,13 +50,12 @@ from mdbapi.database    import MusicDBDatabase
 from lib.clui.listview  import ListView
 from lib.clui.text      import Text
 from lib.clui.buttonview import ButtonView
-from lib.clui.group     import HGroup, VGroup
 from lib.clui.tabgroup  import TabGroup
 
 
 class OrphanPathView(ListView):
-    def __init__(self, title):
-        ListView.__init__(self, title)
+    def __init__(self, title, x=0, y=0, w=0, h=0):
+        ListView.__init__(self, title, x, y, w, h)
 
     def SetData(self, artists, albums, songs):
         artistdata = [("artist", path) for path in artists]
@@ -85,8 +88,8 @@ class OrphanPathView(ListView):
 
 
 class OrphanEntryView(ListView):
-    def __init__(self, title):
-        ListView.__init__(self, title)
+    def __init__(self, title, x=0, y=0, w=0, h=0):
+        ListView.__init__(self, title, x, y, w, h)
 
     def SetData(self, artists, albums, songs):
         artistdata = [("artist", entry) for entry in artists]
@@ -136,12 +139,6 @@ class repair(MDBModule, MusicDBDatabase):
         #self.db  = None
         #self.cfg = None
         #self.fs  = None
-
-        #if config:
-        #    self.cfg = config
-        #    self.fs  = Filesystem(self.cfg.music.path)
-        #if database:
-        #    self.db  = database
 
         self.lostartists = []
         self.lostalbums  = []
@@ -204,7 +201,8 @@ class repair(MDBModule, MusicDBDatabase):
         self.RunCheck()
         self.orphanpathview.SetData(self.newartists, self.newalbums, self.newsongs)
         self.orphanentryview.SetData(self.lostartists, self.lostalbums, self.lostsongs)
-        self.listgroup.Draw()
+        self.orphanpathview.Draw()
+        self.orphanentryview.Draw()
 
 
     def ShowUI(self):
@@ -214,45 +212,49 @@ class repair(MDBModule, MusicDBDatabase):
         maxw, maxh = cli.GetScreenSize()
 
         # List Views
-        self.orphanpathview  = OrphanPathView("Orphan Paths")
+        self.orphanpathview  = OrphanPathView("Orphan Paths", x=1, y=3, w=maxw//2-1, h=maxh-6)
         self.orphanpathview.SetData(self.newartists, self.newalbums, self.newsongs)
 
-        self.orphanentryview = OrphanEntryView("Orphan DB Entries")
+        self.orphanentryview = OrphanEntryView("Orphan DB Entries", x=maxw//2+1, y=3, w=maxw//2-1, h=maxh-6)
         self.orphanentryview.SetData(self.lostartists, self.lostalbums, self.lostsongs)
 
         # Buttons
-        width = ((maxw) // 3) - 2
-
-        lbuttons = ButtonView(2, 1, width, 1, align="left")
+        lbuttons = ButtonView(align="left")
         lbuttons.AddButton("a", "Add path to database")
+        lbuttons.AddButton("↑", "Go up")
+        lbuttons.AddButton("↓", "Go down")
         
-        mbuttons = ButtonView(maxw//3, 1, width, 1, align="middle")
+        mbuttons = ButtonView(align="middle")
         mbuttons.AddButton("u", "Update database entry path")
 
-        rbuttons = ButtonView(2*maxw//3, 1, width, 1, align="right")
+        rbuttons = ButtonView(align="right")
+        rbuttons.AddButton("↑", "Go up")
+        rbuttons.AddButton("↓", "Go down")
         rbuttons.AddButton("r", "Remove song from database")
         
-        bbuttons = ButtonView(2, maxh-2, maxw, 1)       # bottombuttons
+        bbuttons = ButtonView() # bottom-buttons
         bbuttons.AddButton("c", "Check again")
+        bbuttons.AddButton("↹", "Select list")
         bbuttons.AddButton("q", "Quit")
         
-        lbuttons.Draw()
-        rbuttons.Draw()
-        mbuttons.Draw()
-        bbuttons.Draw()
+        # Draw ButtonViews
+        w = (maxw // 3) - 2
+        lbuttons.Draw(2,         1,      w)
+        mbuttons.Draw(maxw//3,   1,      w)
+        rbuttons.Draw(2*maxw//3, 1,      w)
+        bbuttons.Draw(2,         maxh-2, maxw)
 
-        # Composition
-        self.listgroup = HGroup(0, 3, maxw, maxh-6, space=2)
-        self.listgroup.AddPane(self.orphanpathview)
-        self.listgroup.AddPane(self.orphanentryview)
-        self.listgroup.Draw()
+        # Draw Lists
+        self.orphanpathview.Draw()
+        self.orphanentryview.Draw()
 
+        # Create Tab group
         tabgroup = TabGroup()
         tabgroup.AddPane(self.orphanpathview)
         tabgroup.AddPane(self.orphanentryview)
 
         key = " "
-        while key != "q":
+        while key != "q" and key != "Ctrl-D":
             cli.FlushScreen()
             key = cli.GetKey()
             tabgroup.HandleKey(key)
@@ -292,7 +294,6 @@ class repair(MDBModule, MusicDBDatabase):
                 self.RemoveFromDatabase(target, targetid)
                 self.UpdateUI()
 
-                self.UpdateUI()
 
         cli.ClearScreen()
         cli.SetCursor(0,0)

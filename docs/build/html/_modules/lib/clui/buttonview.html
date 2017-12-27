@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.clui.buttonview &mdash; MusicDB 1.0.0 alpha documentation</title>
+  <title>lib.clui.buttonview &mdash; MusicDB 1.0.0 beta documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -91,10 +91,6 @@
             
               <p class="caption"><span class="caption-text">Concepts</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../basics/changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../basics/changelog.html#id1">1.0.0 - 31.12.2017</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#metrics">Metrics</a></li>
@@ -252,11 +248,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/genres.html">genres - Genre Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/mise.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/musicai.html#class-description">Class Description</a></li>
@@ -364,7 +362,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.pane">Pane</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.buttonview">ButtonView</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.listview">ListView</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.group">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.dialog">Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.textinput">TextInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.boolinput">BoolInput</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
 </ul>
 </li>
@@ -548,13 +548,34 @@
 <span class="c1"># You should have received a copy of the GNU General Public License</span>
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
-<span class="kn">from</span> <span class="nn">lib.clui.pane</span> <span class="k">import</span> <span class="n">Pane</span>
+<span class="kn">from</span> <span class="nn">lib.clui.text</span> <span class="k">import</span> <span class="n">Text</span>
 
-<div class="viewcode-block" id="ButtonView"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.buttonview.ButtonView">[docs]</a><span class="k">class</span> <span class="nc">ButtonView</span><span class="p">(</span><span class="n">Pane</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">):</span>
-        <span class="n">Pane</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+<div class="viewcode-block" id="ButtonView"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.buttonview.ButtonView">[docs]</a><span class="k">class</span> <span class="nc">ButtonView</span><span class="p">(</span><span class="n">Text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class provides a button view.</span>
+<span class="sd">    It is a line where a key event is described.</span>
+<span class="sd">    For example: ``[a:Add element][r:Remove element]``</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            cli  = Text()</span>
+<span class="sd">            maxw, maxh = cli.GetScreenSize()</span>
+
+<span class="sd">            # Place a button view in the middle of the line before the last line of the screen</span>
+<span class="sd">            buttons = ButtonView(0, maxh-2, maxw, align=&quot;middle&quot;)</span>
+<span class="sd">            buttons.AddButton(&quot;a&quot;, &quot;Add new tag&quot;)</span>
+<span class="sd">            buttons.AddButton(&quot;e&quot;, &quot;Edit tag&quot;)</span>
+<span class="sd">            buttons.AddButton(&quot;r&quot;, &quot;Remove tag&quot;)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        align (str): If the buttons are ``&quot;left&quot;``, ``&quot;right&quot;`` or ``&quot;center&quot;`` shall be aligned over the span of the View width.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">):</span>
+        <span class="n">Text</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span> <span class="o">=</span> <span class="p">[]</span>
-        
+
         <span class="n">align</span> <span class="o">=</span> <span class="n">align</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="c1"># middle = center</span>
         <span class="k">if</span> <span class="n">align</span> <span class="o">==</span> <span class="s2">&quot;m&quot;</span><span class="p">:</span>
@@ -566,16 +587,43 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">align</span> <span class="o">=</span> <span class="s2">&quot;l&quot;</span>
 
 
-    <span class="k">def</span> <span class="nf">AddButton</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+<div class="viewcode-block" id="ButtonView.AddButton"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.buttonview.ButtonView.AddButton">[docs]</a>    <span class="k">def</span> <span class="nf">AddButton</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method adds a new button-description to the ButtonView.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str): A single Unicode character key</span>
+<span class="sd">            name (str): What pressing that key will do</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: When ``key`` or ``name`` are not a string</span>
+<span class="sd">            ValueError: When ``key`` is larger than one character</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Arguments must be of type string&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Key must not exceed one character&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span></div>
 
 
-    <span class="k">def</span> <span class="nf">Draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">rbuttons</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="viewcode-block" id="ButtonView.Draw"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.buttonview.ButtonView.Draw">[docs]</a>    <span class="k">def</span> <span class="nf">Draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method prints the ButtonView.</span>
+<span class="sd">        It always uses the colors *red* for the [:]-characters, *light blue* for the key and *blue* for the description.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x,y (int): Position where to start printing the ButtonView</span>
+<span class="sd">            w (int): Width of the ButtonView</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rbuttons</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># rendered buttons</span>
 
         <span class="c1"># calculate max button text length</span>
         <span class="n">numbuttons</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="p">)</span>
-        <span class="n">maxsize</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">//</span> <span class="n">numbuttons</span>
+        <span class="n">maxsize</span>    <span class="o">=</span> <span class="n">w</span> <span class="o">//</span> <span class="n">numbuttons</span>
         <span class="n">maxsize</span>   <span class="o">-=</span> <span class="mi">4</span>  <span class="c1"># &quot;[x:]&quot;</span>
         <span class="n">barlength</span>  <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># length of the button bar</span>
 
@@ -590,15 +638,15 @@
             <span class="n">barlength</span> <span class="o">+=</span> <span class="mi">4</span> <span class="o">+</span> <span class="nb">min</span><span class="p">(</span><span class="n">maxsize</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">button</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>  <span class="c1"># 4: &quot;[x:]&quot;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">align</span> <span class="o">==</span> <span class="s2">&quot;l&quot;</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">align</span> <span class="o">==</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">-</span> <span class="n">barlength</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">barlength</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">align</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">-</span> <span class="n">barlength</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">barlength</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">SetCursor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetCursor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">rbutton</span> <span class="ow">in</span> <span class="n">rbuttons</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">PrintText</span><span class="p">(</span><span class="n">rbutton</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">PrintText</span><span class="p">(</span><span class="n">rbutton</span><span class="p">)</span></div></div>
 
 
 
@@ -640,7 +688,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0.0 alpha',
+            VERSION:'1.0.0 beta',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

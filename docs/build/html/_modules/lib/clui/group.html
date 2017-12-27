@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.clui.group &mdash; MusicDB 1.0.0 alpha documentation</title>
+  <title>lib.clui.group &mdash; MusicDB 1.0.0 beta documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -91,10 +91,6 @@
             
               <p class="caption"><span class="caption-text">Concepts</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../basics/changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../basics/changelog.html#id1">1.0.0 - 31.12.2017</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#metrics">Metrics</a></li>
@@ -252,11 +248,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/genres.html">genres - Genre Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/mise.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/musicai.html#class-description">Class Description</a></li>
@@ -364,7 +362,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.pane">Pane</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.buttonview">ButtonView</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.listview">ListView</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.group">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.dialog">Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.textinput">TextInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.boolinput">BoolInput</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
 </ul>
 </li>
@@ -551,25 +551,59 @@
 <span class="kn">from</span> <span class="nn">lib.clui.pane</span> <span class="k">import</span> <span class="n">Pane</span>
 
 <div class="viewcode-block" id="Group"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.group.Group">[docs]</a><span class="k">class</span> <span class="nc">Group</span><span class="p">(</span><span class="n">Pane</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class manages a group of UI elements based on the :class:`~lib.clui.pane.Pane` class.</span>
+<span class="sd">    It is possible to add multiple panes to this group and print them all by just calling :meth:`~Draw` once.</span>
+<span class="sd">    This makes only sense when using the derived classes :class:`~HGroup` or :class:`~VGroup` that rearrange the panes dynamically.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x,y (int): Position of the pane group</span>
+<span class="sd">        w,h (int): Width and Height of that area</span>
+<span class="sd">        space (int): Spaces (space-characters) between two panes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="n">Pane</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="n">space</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">panes</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">def</span> <span class="nf">AddPane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pane</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pane</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Rearange</span><span class="p">()</span>
+<div class="viewcode-block" id="Group.AddPane"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.group.Group.AddPane">[docs]</a>    <span class="k">def</span> <span class="nf">AddPane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pane</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a pane to the group</span>
 
-    <span class="k">def</span> <span class="nf">Draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="sd">        Args:</span>
+<span class="sd">            pane: A pane that shall be added to the group</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pane</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Rearange</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Group.Draw"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.group.Group.Draw">[docs]</a>    <span class="k">def</span> <span class="nf">Draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calls for each pane the ``Draw`` method</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">pane</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">:</span>
-            <span class="n">pane</span><span class="o">.</span><span class="n">Draw</span><span class="p">()</span></div>
+            <span class="n">pane</span><span class="o">.</span><span class="n">Draw</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="HGroup"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.group.HGroup">[docs]</a><span class="k">class</span> <span class="nc">HGroup</span><span class="p">(</span><span class="n">Group</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    See :class:`~Group`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="n">Group</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">space</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">Rearange</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="HGroup.Rearange"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.group.HGroup.Rearange">[docs]</a>    <span class="k">def</span> <span class="nf">Rearange</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the position and with for each added pane to arrange them horizontal.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">numpanes</span>  <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">)</span>
         <span class="n">numspaces</span> <span class="o">=</span> <span class="n">numpanes</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
@@ -580,14 +614,23 @@
             <span class="n">pane</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">num</span> <span class="o">*</span> <span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">space</span><span class="p">)</span>
             <span class="n">pane</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
             <span class="n">pane</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">w</span>
-            <span class="n">pane</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">h</span></div>
+            <span class="n">pane</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">h</span></div></div>
 
 
 <div class="viewcode-block" id="VGroup"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.group.VGroup">[docs]</a><span class="k">class</span> <span class="nc">VGroup</span><span class="p">(</span><span class="n">Group</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    See :class:`~Group`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="n">Group</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">space</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">Rearange</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="VGroup.Rearange"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.group.VGroup.Rearange">[docs]</a>    <span class="k">def</span> <span class="nf">Rearange</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the position and with for each added pane to arrange them vertical.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">numpanes</span>  <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">)</span>
         <span class="n">numspaces</span> <span class="o">=</span> <span class="n">numpanes</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
@@ -598,9 +641,7 @@
             <span class="n">pane</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
             <span class="n">pane</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">num</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">space</span><span class="p">)</span>
             <span class="n">pane</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">w</span>
-            <span class="n">pane</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">h</span></div>
-
-
+            <span class="n">pane</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">h</span></div></div>
 
 
 <span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
@@ -641,7 +682,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0.0 alpha',
+            VERSION:'1.0.0 beta',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

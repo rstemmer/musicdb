@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to MusicDB’s documentation! &mdash; MusicDB 1.0.0 alpha documentation</title>
+  <title>Welcome to MusicDB’s documentation! &mdash; MusicDB 1.0.0 beta documentation</title>
   
 
   
@@ -35,8 +35,8 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="#"/>
-        <link rel="next" title="Changelog" href="basics/changelog.html"/> 
+    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="#"/>
+        <link rel="next" title="Comparison to Other Tools" href="basics/comparison.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -91,10 +91,6 @@
             
               <p class="caption"><span class="caption-text">Concepts</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="basics/changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="basics/changelog.html#id1">1.0.0 - 31.12.2017</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/comparison.html#metrics">Metrics</a></li>
@@ -252,11 +248,13 @@
 <li class="toctree-l2"><a class="reference internal" href="mod/extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="mod/genres.html">genres - Genre Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mod/mise.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mod/musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mod/musicai.html#class-description">Class Description</a></li>
@@ -364,7 +362,9 @@
 <li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.pane">Pane</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.buttonview">ButtonView</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.listview">ListView</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.group">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.dialog">Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.textinput">TextInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.boolinput">BoolInput</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
 </ul>
 </li>
@@ -586,7 +586,6 @@ Those chapters are for users as well as for developers.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Concepts</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="basics/changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basics/comparison.html">Comparison to Other Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basics/concept.html">Basic Rules for MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basics/config.html">MusicDB Configuration</a></li>
@@ -619,8 +618,10 @@ They provide lots of examples on how to use the MusicDB command line tool.</p>
 <li class="toctree-l1"><a class="reference internal" href="mod/artwork.html">artwork - Artwork Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/extern.html">extern - Music File Uploader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mod/genres.html">genres - Genre Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/mise.html">mise - Micro Search Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/musicai.html">musicai - MusicAI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/repair.html">repair - Repair Database Entries</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/server.html">server - MusicDB Websocket Server</a></li>
@@ -744,7 +745,7 @@ Source code and documentation can be found at <a class="reference external" href
 <li><a class="reference external" href="https://jqueryui.com/">jQuery UI</a></li>
 <li><a class="reference external" href="https://jamesflorentino.github.io/nanoScrollerJS/">jQuery nanoScroller.js</a></li>
 <li><a class="reference external" href="http://www.kottke.org/plus/type/silkscreen/index.html">Silkscreen</a></li>
-<li><a class="reference external" href="https://github.com/adobe-fonts/source-sans-pro">Source Sans Pro</a> and <cite>Source Serif Pro &lt;https://github.com/adobe-fonts/source-serif-pro&gt;</cite></li>
+<li><a class="reference external" href="https://github.com/adobe-fonts/source-sans-pro">Source Sans Pro</a> and <a class="reference external" href="https://github.com/adobe-fonts/source-serif-pro">Source Serif Pro</a></li>
 <li><a class="reference external" href="https://github.com/dejavu-fonts/dejavu-fonts">DejaVuSans</a></li>
 <li><a class="reference external" href="http://fontawesome.io/">Font Awesome</a></li>
 <li><a class="reference external" href="http://llvm.org/doxygen/ConvertUTF_8h_source.html">ConvertUTF.h</a></li>
@@ -804,7 +805,7 @@ Source code and documentation can be found at <a class="reference external" href
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0.0 alpha',
+            VERSION:'1.0.0 beta',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

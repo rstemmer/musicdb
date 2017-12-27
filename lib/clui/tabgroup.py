@@ -17,11 +17,27 @@
 from lib.clui.frame import Frame
 
 class TabGroup(object):
+    """
+    This class can be used to group multiple UI elements.
+    They can be selected by pressing *tab* (``"\t"``).
+    All other keys get passed to the selected UI element.
+    The selected element gets highlighted by setting its frame line-style to ``Frame.LINESTYLE_BOLD``.
+    """
     def __init__(self):
         self.panes = []
         self.index = 0 # index of the current selected pane
 
     def AddPane(self, pane):
+        """
+        Add a pane to the list of UI elements.
+        They must provide the ``HandleKey``, ``Draw`` and ``SetLineStyle`` method!
+
+        Args:
+            pane: A UI element that shall be added.
+
+        Returns:
+            *Nothing*
+        """
         self.panes.append(pane)
 
         # select first pane
@@ -30,6 +46,15 @@ class TabGroup(object):
             self.panes[0].Draw()
 
     def HandleKey(self, key):
+        """
+        Pass the key to the current selected pane.
+        If the key is ``"\t"``, then the next pane in the list gets selected.
+
+        Args:
+            key (str): A key name as returned by :meth:`lib.clui.text.GetKey`.
+        Returns:
+            *Nothing*
+        """
         if not self.panes:
             return
 
@@ -40,6 +65,12 @@ class TabGroup(object):
             self.panes[self.index].SetLineStyle(Frame.LINESTYLE_BOLD)
             self.panes[self.index].Draw()
             return
+        elif key == "backtab":
+            self.panes[self.index].SetLineStyle(Frame.LINESTYLE_NORMAL)
+            self.panes[self.index].Draw()
+            self.index = (self.index - 1) % len(self.panes)
+            self.panes[self.index].SetLineStyle(Frame.LINESTYLE_BOLD)
+            self.panes[self.index].Draw()
 
         self.panes[self.index].HandleKey(key)
         return

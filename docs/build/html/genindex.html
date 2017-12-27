@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; MusicDB 1.0.0 alpha documentation</title>
+  <title>Index &mdash; MusicDB 1.0.0 beta documentation</title>
   
 
   
@@ -36,7 +36,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="index.html"/> 
+    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -91,10 +91,6 @@
             
               <p class="caption"><span class="caption-text">Concepts</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="basics/changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="basics/changelog.html#id1">1.0.0 - 31.12.2017</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/comparison.html#metrics">Metrics</a></li>
@@ -252,11 +248,13 @@
 <li class="toctree-l2"><a class="reference internal" href="mod/extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="mod/genres.html">genres - Genre Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mod/mise.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mod/musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mod/musicai.html#class-description">Class Description</a></li>
@@ -364,7 +362,9 @@
 <li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.pane">Pane</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.buttonview">ButtonView</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.listview">ListView</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.group">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.dialog">Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.textinput">TextInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.boolinput">BoolInput</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
 </ul>
 </li>
@@ -553,7 +553,6 @@
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
- | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
  
 </div>
@@ -576,9 +575,15 @@
         <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddArtist">(mdbapi.database.MusicDBDatabase method)</a>
 </li>
       </ul></li>
+      <li><a href="lib/clui.html#lib.clui.buttonview.ButtonView.AddButton">AddButton() (lib.clui.buttonview.ButtonView method)</a>
+</li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.AddFullSong">AddFullSong() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
+      <li><a href="lib/clui.html#lib.clui.dialog.Dialog.AddInput">AddInput() (lib.clui.dialog.Dialog method)</a>
+</li>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddLyricsFromFile">AddLyricsFromFile() (mdbapi.database.MusicDBDatabase method)</a>
+</li>
+      <li><a href="lib/clui.html#lib.clui.tabgroup.TabGroup.AddPane">AddPane() (lib.clui.tabgroup.TabGroup method)</a>
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue">AddRandomSongToQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
@@ -630,6 +635,8 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="lib/clui.html#lib.clui.boolinput.BoolInput">BoolInput (class in lib.clui.boolinput)</a>
+</li>
       <li><a href="lib/websockets.html#lib.ws.websocket.MusicDBWebSocketFactory.BroadcastPacket">BroadcastPacket() (lib.ws.websocket.MusicDBWebSocketFactory method)</a>
 
       <ul>
@@ -714,18 +721,34 @@
 </li>
       <li><a href="lib/pidfile.html#lib.pidfile.DeletePIDFile">DeletePIDFile() (in module lib.pidfile)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeleteSubgenre">DeleteSubgenre() (mdbapi.tags.MusicDBTags method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.DeleteTag">DeleteTag() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
+      <li><a href="lib/clui.html#lib.clui.dialog.Dialog">Dialog (class in lib.clui.dialog)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/mpd.html#mdbapi.mpd.Disconnect">Disconnect() (in module mdbapi.mpd)</a>
 </li>
       <li><a href="mdbapi/lycra.html#lib.crawlerapi.LycraCrawler.DoCrawl">DoCrawl() (lib.crawlerapi.LycraCrawler method)</a>
 </li>
-      <li><a href="lib/clui.html#lib.clui.frame.Frame.Draw">Draw() (lib.clui.frame.Frame method)</a>
+      <li><a href="lib/clui.html#lib.clui.boolinput.BoolInput.Draw">Draw() (lib.clui.boolinput.BoolInput method)</a>
+
+      <ul>
+        <li><a href="lib/clui.html#lib.clui.buttonview.ButtonView.Draw">(lib.clui.buttonview.ButtonView method)</a>
 </li>
+        <li><a href="lib/clui.html#lib.clui.dialog.Dialog.Draw">(lib.clui.dialog.Dialog method)</a>
+</li>
+        <li><a href="lib/clui.html#lib.clui.frame.Frame.Draw">(lib.clui.frame.Frame method)</a>
+</li>
+        <li><a href="lib/clui.html#lib.clui.listview.ListView.Draw">(lib.clui.listview.ListView method)</a>
+</li>
+        <li><a href="lib/clui.html#lib.clui.pane.Pane.Draw">(lib.clui.pane.Pane method)</a>
+</li>
+        <li><a href="lib/clui.html#lib.clui.textinput.TextInput.Draw">(lib.clui.textinput.TextInput method)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -856,6 +879,12 @@
 </li>
       <li><a href="mdbapi/mpd.html#mdbapi.mpd.GetCurrentSong">GetCurrentSong() (in module mdbapi.mpd)</a>
 </li>
+      <li><a href="lib/clui.html#lib.clui.boolinput.BoolInput.GetData">GetData() (lib.clui.boolinput.BoolInput method)</a>
+
+      <ul>
+        <li><a href="lib/clui.html#lib.clui.textinput.TextInput.GetData">(lib.clui.textinput.TextInput method)</a>
+</li>
+      </ul></li>
       <li><a href="lib/config.html#lib.cfg.musicdb.MusicDBConfig.GetDirectory">GetDirectory() (lib.cfg.musicdb.MusicDBConfig method)</a>
 </li>
       <li><a href="lib/config.html#lib.cfg.musicdb.MusicDBConfig.GetFile">GetFile() (lib.cfg.musicdb.MusicDBConfig method)</a>
@@ -914,6 +943,12 @@
 </li>
       <li><a href="lib/clui.html#lib.clui.text.Text.GetScreenSize">GetScreenSize() (lib.clui.text.Text method)</a>
 </li>
+      <li><a href="lib/clui.html#lib.clui.dialog.Dialog.GetSelectedData">GetSelectedData() (lib.clui.dialog.Dialog method)</a>
+
+      <ul>
+        <li><a href="lib/clui.html#lib.clui.listview.ListView.GetSelectedData">(lib.clui.listview.ListView method)</a>
+</li>
+      </ul></li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong">GetSong() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetSongById">GetSongById() (lib.db.musicdb.MusicDatabase method)</a>
@@ -952,8 +987,6 @@
 </li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetTracknumber">GetTracknumber() (lib.metatags.MetaTags method)</a>
 </li>
-      <li><a href="lib/clui.html#lib.clui.group.Group">Group (class in lib.clui.group)</a>
-</li>
   </ul></td>
 </tr></table>
 
@@ -962,15 +995,25 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/websockets.html#lib.ws.server.MusicDBWebSocketServer.HandleEvents">HandleEvents() (lib.ws.server.MusicDBWebSocketServer method)</a>
 </li>
-      <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI.HasFeatureset">HasFeatureset() (mdbapi.musicai.MusicAI method)</a>
+      <li><a href="lib/clui.html#lib.clui.boolinput.BoolInput.HandleKey">HandleKey() (lib.clui.boolinput.BoolInput method)</a>
+
+      <ul>
+        <li><a href="lib/clui.html#lib.clui.dialog.Dialog.HandleKey">(lib.clui.dialog.Dialog method)</a>
 </li>
+        <li><a href="lib/clui.html#lib.clui.listview.ListView.HandleKey">(lib.clui.listview.ListView method)</a>
+</li>
+        <li><a href="lib/clui.html#lib.clui.tabgroup.TabGroup.HandleKey">(lib.clui.tabgroup.TabGroup method)</a>
+</li>
+        <li><a href="lib/clui.html#lib.clui.textinput.TextInput.HandleKey">(lib.clui.textinput.TextInput method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI.HasFeatureset">HasFeatureset() (mdbapi.musicai.MusicAI method)</a>
+</li>
       <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI.HasTrainingset">HasTrainingset() (mdbapi.musicai.MusicAI method)</a>
 </li>
       <li><a href="lib/hdf5storage.html#lib.hdf5storage.HDF5Storage">HDF5Storage (class in lib.hdf5storage)</a>
-</li>
-      <li><a href="lib/clui.html#lib.clui.group.HGroup">HGroup (class in lib.clui.group)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1006,11 +1049,13 @@
 </li>
       <li><a href="lib/config.html#module-lib.cfg.musicdb">lib.cfg.musicdb (module)</a>
 </li>
+      <li><a href="lib/clui.html#module-lib.clui.boolinput">lib.clui.boolinput (module)</a>
+</li>
       <li><a href="lib/clui.html#module-lib.clui.buttonview">lib.clui.buttonview (module)</a>
 </li>
-      <li><a href="lib/clui.html#module-lib.clui.frame">lib.clui.frame (module)</a>
+      <li><a href="lib/clui.html#module-lib.clui.dialog">lib.clui.dialog (module)</a>
 </li>
-      <li><a href="lib/clui.html#module-lib.clui.group">lib.clui.group (module)</a>
+      <li><a href="lib/clui.html#module-lib.clui.frame">lib.clui.frame (module)</a>
 </li>
       <li><a href="lib/clui.html#module-lib.clui.listview">lib.clui.listview (module)</a>
 </li>
@@ -1020,16 +1065,18 @@
 </li>
       <li><a href="lib/clui.html#module-lib.clui.text">lib.clui.text (module)</a>
 </li>
+      <li><a href="lib/clui.html#module-lib.clui.textinput">lib.clui.textinput (module)</a>
+</li>
       <li><a href="lib/database.html#module-lib.db.database">lib.db.database (module)</a>
 </li>
       <li><a href="mdbapi/lycra.html#module-lib.db.lycradb">lib.db.lycradb (module)</a>
 </li>
       <li><a href="lib/musicdb.html#module-lib.db.musicdb">lib.db.musicdb (module)</a>
 </li>
-      <li><a href="mdbapi/tracker.html#module-lib.db.trackerdb">lib.db.trackerdb (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mdbapi/tracker.html#module-lib.db.trackerdb">lib.db.trackerdb (module)</a>
+</li>
       <li><a href="lib/filesystem.html#module-lib.filesystem">lib.filesystem (module)</a>
 </li>
       <li><a href="lib/hdf5storage.html#module-lib.hdf5storage">lib.hdf5storage (module)</a>
@@ -1112,18 +1159,22 @@
 </li>
       <li><a href="mod/extern.html#module-mod.extern">mod.extern (module)</a>
 </li>
+      <li><a href="mod/genres.html#module-mod.genres">mod.genres (module)</a>
+</li>
       <li><a href="mod/metadata.html#module-mod.metadata">mod.metadata (module)</a>
 </li>
       <li><a href="mod/mise.html#module-mod.mise">mod.mise (module)</a>
+</li>
+      <li><a href="mod/moods.html#module-mod.moods">mod.moods (module)</a>
 </li>
       <li><a href="mod/musicai.html#module-mod.musicai">mod.musicai (module)</a>
 </li>
       <li><a href="mod/repair.html#module-mod.repair">mod.repair (module)</a>
 </li>
-      <li><a href="mod/server.html#module-mod.server">mod.server (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mod/server.html#module-mod.server">mod.server (module)</a>
+</li>
       <li><a href="mod/stats.html#module-mod.stats">mod.stats (module)</a>
 </li>
       <li><a href="mod/tags.html#module-mod.tags">mod.tags (module)</a>
@@ -1200,12 +1251,24 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/mpd.html#mdbapi.mpd.ObserverThread">ObserverThread() (in module mdbapi.mpd)</a>
 </li>
+      <li><a href="lib/clui.html#lib.clui.dialog.Dialog.onAction">onAction() (lib.clui.dialog.Dialog method)</a>
+
+      <ul>
+        <li><a href="lib/clui.html#lib.clui.listview.ListView.onAction">(lib.clui.listview.ListView method)</a>
+</li>
+      </ul></li>
       <li><a href="lib/websockets.html#lib.ws.websocket.WebSocket.onClose">onClose() (lib.ws.websocket.WebSocket method)</a>
 </li>
-      <li><a href="lib/websockets.html#lib.ws.websocket.WebSocket.onMessage">onMessage() (lib.ws.websocket.WebSocket method)</a>
+      <li><a href="lib/clui.html#lib.clui.dialog.Dialog.onDrawElement">onDrawElement() (lib.clui.dialog.Dialog method)</a>
+
+      <ul>
+        <li><a href="lib/clui.html#lib.clui.listview.ListView.onDrawElement">(lib.clui.listview.ListView method)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="lib/websockets.html#lib.ws.websocket.WebSocket.onMessage">onMessage() (lib.ws.websocket.WebSocket method)</a>
+</li>
       <li><a href="lib/websockets.html#lib.ws.websocket.WebSocket.onOpen">onOpen() (lib.ws.websocket.WebSocket method)</a>
 </li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.OptimizeM4ATags">OptimizeM4ATags() (mdbapi.extern.MusicDBExtern method)</a>
@@ -1348,6 +1411,16 @@
 </li>
       <li><a href="lib/clui.html#lib.clui.text.Text.SetCursor">SetCursor() (lib.clui.text.Text method)</a>
 </li>
+      <li><a href="lib/clui.html#lib.clui.boolinput.BoolInput.SetData">SetData() (lib.clui.boolinput.BoolInput method)</a>
+
+      <ul>
+        <li><a href="lib/clui.html#lib.clui.dialog.Dialog.SetData">(lib.clui.dialog.Dialog method)</a>
+</li>
+        <li><a href="lib/clui.html#lib.clui.listview.ListView.SetData">(lib.clui.listview.ListView method)</a>
+</li>
+        <li><a href="lib/clui.html#lib.clui.textinput.TextInput.SetData">(lib.clui.textinput.TextInput method)</a>
+</li>
+      </ul></li>
       <li><a href="lib/clui.html#lib.clui.text.Text.SetFGColor">SetFGColor() (lib.clui.text.Text method)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.frame.Frame.SetLineStyle">SetLineStyle() (lib.clui.frame.Frame method)</a>
@@ -1360,14 +1433,22 @@
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMPDState">SetMPDState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
+      <li><a href="lib/clui.html#lib.clui.boolinput.BoolInput.SetRepresentation">SetRepresentation() (lib.clui.boolinput.BoolInput method)</a>
+</li>
+      <li><a href="lib/clui.html#lib.clui.dialog.Dialog.SetSelectedData">SetSelectedData() (lib.clui.dialog.Dialog method)</a>
+
+      <ul>
+        <li><a href="lib/clui.html#lib.clui.listview.ListView.SetSelectedData">(lib.clui.listview.ListView method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag">SetSongTag() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.SetTargetTag">SetTargetTag() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
       <li><a href="lib/websockets.html#lib.ws.server.MusicDBWebSocketServer.Setup">Setup() (lib.ws.server.MusicDBWebSocketServer method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/clui.html#lib.clui.text.Text.ShowCursor">ShowCursor() (lib.clui.text.Text method)</a>
 </li>
       <li><a href="mod/musicai.html#mod.musicai.musicai.ShowPrediction">ShowPrediction() (mod.musicai.musicai method)</a>
@@ -1440,6 +1521,8 @@
 </li>
       <li><a href="lib/clui.html#lib.clui.text.Text">Text (class in lib.clui.text)</a>
 </li>
+      <li><a href="lib/clui.html#lib.clui.textinput.TextInput">TextInput (class in lib.clui.textinput)</a>
+</li>
       <li><a href="mod/tracker.html#mod.tracker.tracker">tracker (class in mod.tracker)</a>
 </li>
       <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase">TrackerDatabase (class in lib.db.trackerdb)</a>
@@ -1493,14 +1576,6 @@
 </li>
       </ul></li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.UpdateStorage">UpdateStorage() (mdbapi.extern.MusicDBExtern method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="V">V</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="lib/clui.html#lib.clui.group.VGroup">VGroup (class in lib.clui.group)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1565,7 +1640,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0.0 alpha',
+            VERSION:'1.0.0 beta',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

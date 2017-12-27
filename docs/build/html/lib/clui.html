@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Command Line User Interface &mdash; MusicDB 1.0.0 alpha documentation</title>
+  <title>Command Line User Interface &mdash; MusicDB 1.0.0 beta documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../index.html"/>
         <link rel="next" title="Configuration" href="config.html"/>
         <link rel="prev" title="Song Tracker" href="../mdbapi/tracker.html"/> 
 
@@ -92,10 +92,6 @@
             
               <p class="caption"><span class="caption-text">Concepts</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../basics/changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../basics/changelog.html#id1">1.0.0 - 31.12.2017</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#metrics">Metrics</a></li>
@@ -253,11 +249,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/genres.html">genres - Genre Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/mise.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
@@ -365,7 +363,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.pane">Pane</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.buttonview">ButtonView</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.listview">ListView</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.group">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.dialog">Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.textinput">TextInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.boolinput">BoolInput</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lib.clui.tabgroup">TabGroup</a></li>
 </ul>
 </li>
@@ -536,10 +536,17 @@
             
   <div class="section" id="command-line-user-interface">
 <h1>Command Line User Interface<a class="headerlink" href="#command-line-user-interface" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This library is very experimental.
+Handle with care and expect interface changes with the next update.</p>
+</div>
+</div></blockquote>
 <p>The Command Line User Interface (CLUI) is an unicode based “graphical” user interface library.
 It provides some primitive UI elements documented in this section of the documentation.</p>
 <blockquote>
-<div><object data="../_images/graphviz-1997cc332d7c89cf7bf43c9addd7b90d5dc2abfb.svg" type="image/svg+xml">
+<div><object data="../_images/graphviz-6cac2f6425005f3d465442cdf47858fc1cf9cd9c.svg" type="image/svg+xml">
             <p class="warning">digraph hierarchy {
    size=&quot;5,8&quot;
    node[shape=record,style=filled,fillcolor=gray95]
@@ -550,20 +557,23 @@ It provides some primitive UI elements documented in this section of the documen
    Pane        [label = &quot;{Pane||+ Draw()\l}&quot;]
    ButtonView  [label = &quot;{ButtonView||+ Draw()\l}&quot;]
    ListView    [label = &quot;{ListView||+ Draw()\l+ HandleKey()\l# onDraw()\l# onAction()\l}&quot;]
-   Group       [label = &quot;{Group||+ Draw()\l}&quot;]
-   HGroup      [label = &quot;{HGroup||/+ Draw()\l}&quot;]
-   VGroup      [label = &quot;{VGroup||/+ Draw()\l}&quot;]
+   Dialog      [label = &quot;{Dialog||/+ Draw()\l/+ HandleKey()\l}&quot;]
    TabGroup    [label = &quot;{TabGroup||+ HandleKey()\l}&quot;]
+   TextInput   [label = &quot;{TextInput||+ Draw()\l+ HandleKey\l}&quot;]
+   BoolInput   [label = &quot;{BoolInput||+ Draw()\l+ HandleKey\l}&quot;]
 
    Text        -&gt; Frame
+   Text        -&gt; TextInput
+   Text        -&gt; BoolInput
+   Text        -&gt; ButtonView
+
    Frame       -&gt; Pane
 
-   Pane        -&gt; ButtonView
    Pane        -&gt; ListView
    Pane        -&gt; Group
 
-   Group       -&gt; HGroup
-   Group       -&gt; VGroup
+   ListView    -&gt; Dialog
+   ButtonView  -&gt; Dialog
 
    TabGroup
 
@@ -624,8 +634,11 @@ The key input gets not printed to the screen.</p>
 <blockquote>
 <div><ul class="simple">
 <li>The usual prinable keys</li>
-<li><code class="docutils literal"><span class="pre">enter</span></code></li>
+<li><code class="docutils literal"><span class="pre">escape</span></code> (Must be hit twice)</li>
+<li><code class="docutils literal"><span class="pre">enter</span></code>, <code class="docutils literal"><span class="pre">backspace</span></code>, <code class="docutils literal"><span class="pre">entf</span></code></li>
+<li><code class="docutils literal"><span class="pre">backtab</span></code> (shift+tab)</li>
 <li><code class="docutils literal"><span class="pre">up</span></code>, <code class="docutils literal"><span class="pre">down</span></code>, <code class="docutils literal"><span class="pre">left</span></code>, <code class="docutils literal"><span class="pre">right</span></code></li>
+<li><code class="docutils literal"><span class="pre">Ctrl-D</span></code></li>
 </ul>
 </div></blockquote>
 <p>In case you want to get other keys, it is easy to add them by editing the code of this method.
@@ -868,7 +881,10 @@ So this method can also be called to draw a frame around already printed content
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><em>Nothing</em></p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When one of the arguments is not of type integer.</p>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When one of the arguments is not of type integer.</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When <em>x</em> or <em>y</em> is negative.</li>
+</ul>
 </td>
 </tr>
 </tbody>
@@ -884,7 +900,7 @@ You may want to call <a class="reference internal" href="#lib.clui.frame.Frame.D
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new style</strong> (<em>The</em>) – </td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>linestyle</strong> – The new style</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
 </tr>
@@ -902,15 +918,117 @@ You may want to call <a class="reference internal" href="#lib.clui.frame.Frame.D
 <dl class="class">
 <dt id="lib.clui.pane.Pane">
 <em class="property">class </em><code class="descclassname">lib.clui.pane.</code><code class="descname">Pane</code><span class="sig-paren">(</span><em>title=None</em>, <em>x=0</em>, <em>y=0</em>, <em>w=0</em>, <em>h=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/pane.html#Pane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.pane.Pane" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This class can be used to define a whole, filled are in the shell.
+The area consist of spaces in the defined color.
+Around the area, a <a class="reference internal" href="#lib.clui.frame.Frame" title="lib.clui.frame.Frame"><code class="xref py py-class docutils literal"><span class="pre">Frame</span></code></a> gets printed.</p>
+<p>If a title is set, then this title gets printed in the top left corner of the frame.
+The title gets surrounded by a space character.</p>
+<p>The coordinates define the placement of the frame, the usable area starts with an offset of one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>title</strong> (<em>str</em>) – Optional title for the area.</li>
+<li><strong>x</strong><strong>,</strong><strong>y</strong> (<em>int</em>) – Start position of the frame (top left corner) of this area</li>
+<li><strong>w</strong> (<em>int</em>) – width of the frame</li>
+<li><strong>h</strong> (<em>int</em>) – height of the frame</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lib.clui.pane.Pane.Draw">
+<code class="descname">Draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/pane.html#Pane.Draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.pane.Pane.Draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method prints a whole area in the shell.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
 
 </div>
 <div class="section" id="module-lib.clui.buttonview">
 <span id="buttonview"></span><h2>ButtonView<a class="headerlink" href="#module-lib.clui.buttonview" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib.clui.buttonview.ButtonView">
-<em class="property">class </em><code class="descclassname">lib.clui.buttonview.</code><code class="descname">ButtonView</code><span class="sig-paren">(</span><em>x=0</em>, <em>y=0</em>, <em>w=0</em>, <em>h=0</em>, <em>align='left'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/buttonview.html#ButtonView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.buttonview.ButtonView" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="descclassname">lib.clui.buttonview.</code><code class="descname">ButtonView</code><span class="sig-paren">(</span><em>align='left'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/buttonview.html#ButtonView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.buttonview.ButtonView" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a button view.
+It is a line where a key event is described.
+For example: <code class="docutils literal"><span class="pre">[a:Add</span> <span class="pre">element][r:Remove</span> <span class="pre">element]</span></code></p>
+<p class="rubric">Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">cli</span>  <span class="o">=</span> <span class="n">Text</span><span class="p">()</span>
+<span class="n">maxw</span><span class="p">,</span> <span class="n">maxh</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">GetScreenSize</span><span class="p">()</span>
+
+<span class="c1"># Place a button view in the middle of the line before the last line of the screen</span>
+<span class="n">buttons</span> <span class="o">=</span> <span class="n">ButtonView</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">maxh</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxw</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s2">&quot;middle&quot;</span><span class="p">)</span>
+<span class="n">buttons</span><span class="o">.</span><span class="n">AddButton</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;Add new tag&quot;</span><span class="p">)</span>
+<span class="n">buttons</span><span class="o">.</span><span class="n">AddButton</span><span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot;Edit tag&quot;</span><span class="p">)</span>
+<span class="n">buttons</span><span class="o">.</span><span class="n">AddButton</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;Remove tag&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>align</strong> (<em>str</em>) – If the buttons are <code class="docutils literal"><span class="pre">&quot;left&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;right&quot;</span></code> or <code class="docutils literal"><span class="pre">&quot;center&quot;</span></code> shall be aligned over the span of the View width.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lib.clui.buttonview.ButtonView.AddButton">
+<code class="descname">AddButton</code><span class="sig-paren">(</span><em>key</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/buttonview.html#ButtonView.AddButton"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.buttonview.ButtonView.AddButton" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method adds a new button-description to the ButtonView.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> (<em>str</em>) – A single Unicode character key</li>
+<li><strong>name</strong> (<em>str</em>) – What pressing that key will do</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><em>Nothing</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <code class="docutils literal"><span class="pre">key</span></code> or <code class="docutils literal"><span class="pre">name</span></code> are not a string</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When <code class="docutils literal"><span class="pre">key</span></code> is larger than one character</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.buttonview.ButtonView.Draw">
+<code class="descname">Draw</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>w</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/buttonview.html#ButtonView.Draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.buttonview.ButtonView.Draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method prints the ButtonView.
+It always uses the colors <em>red</em> for the [:]-characters, <em>light blue</em> for the key and <em>blue</em> for the description.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong><strong>,</strong><strong>y</strong> (<em>int</em>) – Position where to start printing the ButtonView</li>
+<li><strong>w</strong> (<em>int</em>) – Width of the ButtonView</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
 
 </div>
 <div class="section" id="module-lib.clui.listview">
@@ -918,25 +1036,647 @@ You may want to call <a class="reference internal" href="#lib.clui.frame.Frame.D
 <dl class="class">
 <dt id="lib.clui.listview.ListView">
 <em class="property">class </em><code class="descclassname">lib.clui.listview.</code><code class="descname">ListView</code><span class="sig-paren">(</span><em>title=None</em>, <em>x=0</em>, <em>y=0</em>, <em>w=0</em>, <em>h=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/listview.html#ListView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.listview.ListView" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This class provides a ListView that shows a list the user can scroll through using the arrow keys.</p>
+<p>The data shown in the list must be a string.
+For derived classes, they can be considered abstract and contain any kind of type as long as
+you adopt the <a class="reference internal" href="#lib.clui.listview.ListView.onDrawElement" title="lib.clui.listview.ListView.onDrawElement"><code class="xref py py-meth docutils literal"><span class="pre">onDrawElement()</span></code></a> method.</p>
+<p>An example on how to use this class with complex data structures:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MusicView</span><span class="p">(</span><span class="n">ListView</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+        <span class="n">ListView</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">SetData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artists</span><span class="p">,</span> <span class="n">albums</span><span class="p">,</span> <span class="n">songs</span><span class="p">):</span>
+        <span class="n">artistdata</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;artist&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">artists</span><span class="p">]</span>
+        <span class="n">albumdata</span>  <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;album&quot;</span><span class="p">,</span>  <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">albums</span> <span class="p">]</span>
+        <span class="n">songdata</span>   <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span>   <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">songs</span>  <span class="p">]</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">artistdata</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">albumdata</span> <span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">songdata</span>  <span class="p">)</span>
+        <span class="n">ListView</span><span class="o">.</span><span class="n">SetData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">onDrawElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">maxwidth</span><span class="p">):</span>
+        <span class="n">tag</span>  <span class="o">=</span> <span class="n">element</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">element</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">maxnamelen</span> <span class="o">=</span> <span class="n">maxwidth</span> <span class="o">-</span> <span class="mi">6</span>   <span class="c1"># - &quot;[xxx] &quot;</span>
+
+        <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;30m[&quot;</span>
+        <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;artist&quot;</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;art&quot;</span>
+        <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;album&quot;</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;alb&quot;</span>
+        <span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;song&quot;</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;sng&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;INV&quot;</span>
+        <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot;] </span><span class="se">\033</span><span class="s2">[1;34m&quot;</span>
+        <span class="n">string</span> <span class="o">+=</span> <span class="n">path</span><span class="p">[:(</span><span class="n">maxnamelen</span><span class="p">)]</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">maxpathlen</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">string</span>
+
+<span class="n">artists</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Artist A&quot;</span><span class="p">,</span> <span class="s2">&quot;Brtist B&quot;</span><span class="p">]</span>
+<span class="n">albums</span>  <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;An album&quot;</span><span class="p">,</span> <span class="s2">&quot;And Another Album&quot;</span><span class="p">]</span>
+<span class="n">songs</span>   <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;This is a song name&quot;</span><span class="p">]</span>
+<span class="n">sv</span>  <span class="o">=</span> <span class="n">MusicView</span><span class="p">(</span><span class="s2">&quot;Music&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">sv</span><span class="o">.</span><span class="n">SetData</span><span class="p">(</span><span class="n">artists</span><span class="p">,</span> <span class="n">albums</span><span class="p">,</span> <span class="n">songs</span><span class="p">)</span>
+<span class="n">sv</span><span class="o">.</span><span class="n">Draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The elements in the list are stored in a variable <code class="docutils literal"><span class="pre">elements</span></code>.
+This list can be maintained using <a class="reference internal" href="#lib.clui.listview.ListView.SetData" title="lib.clui.listview.ListView.SetData"><code class="xref py py-meth docutils literal"><span class="pre">SetData()</span></code></a>.</p>
+<p>A second variable <code class="docutils literal"><span class="pre">linemarker</span></code> points (in form of an index) to the selected element in this list.
+The element the linemarker points to can be accessed via <a class="reference internal" href="#lib.clui.listview.ListView.GetSelectedData" title="lib.clui.listview.ListView.GetSelectedData"><code class="xref py py-meth docutils literal"><span class="pre">GetSelectedData()</span></code></a> and <a class="reference internal" href="#lib.clui.listview.ListView.SetSelectedData" title="lib.clui.listview.ListView.SetSelectedData"><code class="xref py py-meth docutils literal"><span class="pre">SetSelectedData()</span></code></a></p>
+<p>When the list of element exceeds the height of the list, a scroll bar will be printed in place of the right frame edge.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>title</strong> (<em>str</em>) – Title of the list view</li>
+<li><strong>x</strong><strong>,</strong><strong>y</strong> (<em>int</em>) – Position of the list view</li>
+<li><strong>w</strong><strong>,</strong><strong>h</strong> (<em>int</em>) – Width and height</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lib.clui.listview.ListView.Draw">
+<code class="descname">Draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/listview.html#ListView.Draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.listview.ListView.Draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method draws the list of elements.
+If the list exceeds the height of the list view, a scroll bar gets added and the user can scroll though the data.</p>
+<p>The background of the list view will be black.
+The surrounding frame is red.
+The lines in the list will be printed in blue.
+The selected line gets a cyan background color.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.listview.ListView.GetSelectedData">
+<code class="descname">GetSelectedData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/listview.html#ListView.GetSelectedData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.listview.ListView.GetSelectedData" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the selected element from the list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The selected element</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.listview.ListView.HandleKey">
+<code class="descname">HandleKey</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/listview.html#ListView.HandleKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.listview.ListView.HandleKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be called whenever a key was pressed and this list view is “active”.
+It expects the key name returned by <a class="reference internal" href="#lib.clui.text.Text.GetKey" title="lib.clui.text.Text.GetKey"><code class="xref py py-meth docutils literal"><span class="pre">lib.clui.text.Text.GetKey()</span></code></a>.</p>
+<p>If the key is <code class="docutils literal"><span class="pre">&quot;up&quot;</span></code> the element above the current selected element gets selected.
+If the key is <code class="docutils literal"><span class="pre">&quot;down&quot;</span></code> the one below will be selected.
+Any other key gets passed to the <a class="reference internal" href="#lib.clui.listview.ListView.onAction" title="lib.clui.listview.ListView.onAction"><code class="xref py py-meth docutils literal"><span class="pre">onAction()</span></code></a> method.
+Read the documentation of the <a class="reference internal" href="#lib.clui.listview.ListView.onAction" title="lib.clui.listview.ListView.onAction"><code class="xref py py-meth docutils literal"><span class="pre">onAction()</span></code></a> method to see how the return value of that method gets processed.</p>
+<p>After handling an key, the <a class="reference internal" href="#lib.clui.listview.ListView.Draw" title="lib.clui.listview.ListView.Draw"><code class="xref py py-meth docutils literal"><span class="pre">Draw()</span></code></a> method gets called to refresh the view.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<em>str</em>) – Key name that shall be handled</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.listview.ListView.SetData">
+<code class="descname">SetData</code><span class="sig-paren">(</span><em>elements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/listview.html#ListView.SetData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.listview.ListView.SetData" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method can be used to initialize the list of data that will be shown in the list view
+If the <a class="reference internal" href="#lib.clui.listview.ListView.onDrawElement" title="lib.clui.listview.ListView.onDrawElement"><code class="xref py py-meth docutils literal"><span class="pre">onDrawElement()</span></code></a> method is not overloaded, the list must contain strings.</p>
+<p>After setting the new <code class="docutils literal"><span class="pre">elements</span></code> list, the <code class="docutils literal"><span class="pre">linemarker</span></code> gets set to the begin of the list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>elements</strong> (<em>list</em>) – A list of data</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.listview.ListView.SetSelectedData">
+<code class="descname">SetSelectedData</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/listview.html#ListView.SetSelectedData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.listview.ListView.SetSelectedData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces the selected element with a new one.
+This method can be used to interact with the list without triggering the <a class="reference internal" href="#lib.clui.listview.ListView.onAction" title="lib.clui.listview.ListView.onAction"><code class="xref py py-meth docutils literal"><span class="pre">onAction()</span></code></a> callback.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>element</strong> – An element that replaces the selected element</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.listview.ListView.onAction">
+<code class="descname">onAction</code><span class="sig-paren">(</span><em>element</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/listview.html#ListView.onAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.listview.ListView.onAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method gets called when a key gets passed to the <a class="reference internal" href="#lib.clui.listview.ListView.HandleKey" title="lib.clui.listview.ListView.HandleKey"><code class="xref py py-meth docutils literal"><span class="pre">HandleKey()</span></code></a> method.
+It is supposed to process the selected line in the list of elements.
+In this class, nothing will be done with the data.</p>
+<p>This function must return the processed element back to the list.
+It is also possible to return a new element to replace the old one.
+When a line shall not be updated, return None.
+A case where this may be useful will be presented in the following example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">onAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="c1"># this method manipulates a list of numbers</span>
+
+    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>      <span class="c1"># remove element</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span>    <span class="c1"># append number to list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;0&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>    <span class="c1"># reset number</span>
+        <span class="k">return</span> <span class="s2">&quot;0&quot;</span>
+
+    <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;+&quot;</span><span class="p">:</span>    <span class="c1"># increment number</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>    <span class="c1"># decrement number</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">element</span>
+</pre></div>
+</div>
+<p>When the last element gets removed, the <code class="docutils literal"><span class="pre">linemarker</span></code> variable gets moved to the previous line.
+Otherwise it stays at its position that will now be the element next after the removed one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> – The selected element in the list</li>
+<li><strong>key</strong> (<em>str</em>) – The key that was pressed while the element was selected</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The modified element that will be put back in the list of elements.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.listview.ListView.onDrawElement">
+<code class="descname">onDrawElement</code><span class="sig-paren">(</span><em>element</em>, <em>number</em>, <em>maxwidth</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/listview.html#ListView.onDrawElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.listview.ListView.onDrawElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method gets called when an element gets printed into the list view.
+To customize how elements will appear in the list, overload this method.</p>
+<p>The returned string can contain ANSI Escape Sequences for coloring.
+The number of printable character should not exceed the maximum width <code class="docutils literal"><span class="pre">maxwidth</span></code>.
+Furthermore the string should be exact <code class="docutils literal"><span class="pre">maxwidth</span></code> wide.</p>
+<p>An example how to implement a custom <code class="docutils literal"><span class="pre">onDrawElement</span></code> method can be seen in the following code example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">onDrawElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">maxwidth</span><span class="p">):</span>
+    <span class="c1"># Print the element number in front of each entry.</span>
+    <span class="c1"># Alternate the text color with each line. Odd lines in white, even in blue.</span>
+
+    <span class="n">num</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%2d</span><span class="s2">: &quot;</span><span class="o">%</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>      <span class="c1"># start list entry with the index of the element</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">element</span><span class="p">[:</span><span class="n">maxwidth</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>  <span class="c1"># Limit string to max width. 4 Characters are consumed for the num variable</span>
+
+    <span class="c1"># Alternating colors with each line</span>
+    <span class="c1"># Colors do not count to the width of the string because they are not printable</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;37m&quot;</span>    <span class="c1"># Set color to white for odd lines</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;34m&quot;</span>    <span class="c1"># Set color to blue for even lines</span>
+
+    <span class="k">return</span> <span class="n">color</span> <span class="o">+</span> <span class="n">num</span> <span class="o">+</span> <span class="n">val</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> – The element that shall be printed.</li>
+<li><strong>number</strong> (<em>int</em>) – The index of the element in the list of all elements</li>
+<li><strong>maxwidth</strong> (<em>int</em>) – The maximum number of characters that can be printed in one line of the list view</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The string that will be printed in one line of the list view</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
 
 </div>
-<div class="section" id="module-lib.clui.group">
-<span id="group"></span><h2>Group<a class="headerlink" href="#module-lib.clui.group" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-lib.clui.dialog">
+<span id="dialog"></span><h2>Dialog<a class="headerlink" href="#module-lib.clui.dialog" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="lib.clui.group.Group">
-<em class="property">class </em><code class="descclassname">lib.clui.group.</code><code class="descname">Group</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>space=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/group.html#Group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.group.Group" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="lib.clui.dialog.Dialog">
+<em class="property">class </em><code class="descclassname">lib.clui.dialog.</code><code class="descname">Dialog</code><span class="sig-paren">(</span><em>title=None</em>, <em>x=0</em>, <em>y=0</em>, <em>w=0</em>, <em>h=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/dialog.html#Dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.dialog.Dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a dialog box that is organized like a list view.</p>
+<p>It provides one input element per line over several lines.
+The lines can be selected using the up (↑) and down (↓) key.
+Pressing the space bar on an <a class="reference internal" href="#lib.clui.boolinput.BoolInput" title="lib.clui.boolinput.BoolInput"><code class="xref py py-class docutils literal"><span class="pre">BoolInput</span></code></a> toggles its value.
+On enter (↵), the changes shoud be committed, on escape (␛) they should be rejected.</p>
+<p>Beside the list of input elements a <a class="reference internal" href="#lib.clui.buttonview.ButtonView" title="lib.clui.buttonview.ButtonView"><code class="xref py py-class docutils literal"><span class="pre">ButtonView</span></code></a> gets printed at the bottom of
+the dialog view telling the user about the key mentioned above.</p>
+<p>The dialog works on a list with each element beeing a tuple of a label, the control itself and a hint for the user.</p>
+<p>Example on using a Dialog:</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">dialog</span>     <span class="o">=</span> <span class="n">Dialog</span><span class="p">(</span><span class="s2">&quot;Add Unicode Icon&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">nameinput</span>  <span class="o">=</span> <span class="n">TextInput</span><span class="p">()</span>
+<span class="n">iconinput</span>  <span class="o">=</span> <span class="n">TextInput</span><span class="p">()</span>
+<span class="n">varselector</span><span class="o">=</span> <span class="n">BoolInput</span><span class="p">()</span>
+<span class="n">dialog</span><span class="o">.</span><span class="n">AddInput</span><span class="p">(</span><span class="s2">&quot;Name:&quot;</span><span class="p">,</span>  <span class="bp">self</span><span class="o">.</span><span class="n">nameinput</span><span class="p">,</span>   <span class="s2">&quot;Visibly for user&quot;</span><span class="p">)</span>
+<span class="n">dialog</span><span class="o">.</span><span class="n">AddInput</span><span class="p">(</span><span class="s2">&quot;Icon:&quot;</span><span class="p">,</span>  <span class="bp">self</span><span class="o">.</span><span class="n">iconinput</span><span class="p">,</span>   <span class="s2">&quot;Unicode char&quot;</span><span class="p">)</span>
+<span class="n">dialog</span><span class="o">.</span><span class="n">AddInput</span><span class="p">(</span><span class="s2">&quot;U+FE0E:&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">varselector</span><span class="p">,</span> <span class="s2">&quot;Do not replace with emoji&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>title</strong> (<em>str</em>) – Title of the list view</li>
+<li><strong>x</strong><strong>,</strong><strong>y</strong> (<em>int</em>) – Position of the list view</li>
+<li><strong>w</strong><strong>,</strong><strong>h</strong> (<em>int</em>) – Width and height</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lib.clui.dialog.Dialog.AddInput">
+<code class="descname">AddInput</code><span class="sig-paren">(</span><em>label</em>, <em>control</em>, <em>hint=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/dialog.html#Dialog.AddInput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.dialog.Dialog.AddInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method adds a new control to the list of controls.
+The input control element must provide a <code class="docutils literal"><span class="pre">Draw</span></code> and a <code class="docutils literal"><span class="pre">HandleKey</span></code> method.
+Position and width of the control element will be calculated when they get printed.
+The label gets printed in front of the control element, the hint at the end of the list entry.</p>
+<dl class="docutils">
+<dt>The following inputs are suitable for the dialog:</dt>
+<dd><ul class="first last simple">
+<li><code class="xref py py-class docutils literal"><span class="pre">lib.clui.textinbut.TextInput</span></code></li>
+<li><a class="reference internal" href="#lib.clui.boolinput.BoolInput" title="lib.clui.boolinput.BoolInput"><code class="xref py py-class docutils literal"><span class="pre">lib.clui.boolinput.BoolInput</span></code></a></li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>label</strong> (<em>str</em>) – Label of the input element</li>
+<li><strong>control</strong> – The input element itself</li>
+<li><strong>hint</strong> (<em>str</em>) – An additional hint to the input element. <code class="docutils literal"><span class="pre">None</span></code> for no hint.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>Nothing</em></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
-<dl class="class">
-<dt id="lib.clui.group.HGroup">
-<em class="property">class </em><code class="descclassname">lib.clui.group.</code><code class="descname">HGroup</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>space=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/group.html#HGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.group.HGroup" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="method">
+<dt id="lib.clui.dialog.Dialog.Draw">
+<code class="descname">Draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/dialog.html#Dialog.Draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.dialog.Dialog.Draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method draws the list of control elements.</p>
+</dd></dl>
 
+<dl class="method">
+<dt id="lib.clui.dialog.Dialog.GetSelectedData">
+<code class="descname">GetSelectedData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/dialog.html#Dialog.GetSelectedData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.dialog.Dialog.GetSelectedData" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">NotImplementedError</span></code> – <em>alway</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.dialog.Dialog.HandleKey">
+<code class="descname">HandleKey</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/dialog.html#Dialog.HandleKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.dialog.Dialog.HandleKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be called whenever a key was pressed and this dialog is “active”.
+It expects the key name returned by <a class="reference internal" href="#lib.clui.text.Text.GetKey" title="lib.clui.text.Text.GetKey"><code class="xref py py-meth docutils literal"><span class="pre">lib.clui.text.Text.GetKey()</span></code></a>.</p>
+<p>If the key is <code class="docutils literal"><span class="pre">&quot;up&quot;</span></code> the element above the current selected element gets selected.
+If the key is <code class="docutils literal"><span class="pre">&quot;down&quot;</span></code> the one below will be selected.
+This will be done by passing the <em>up</em> and <em>down</em> key to the <code class="docutils literal"><span class="pre">HandleKey</span></code> method of the base class.</p>
+<p>Any other key gets passed to the <a class="reference internal" href="#lib.clui.dialog.Dialog.onAction" title="lib.clui.dialog.Dialog.onAction"><code class="xref py py-meth docutils literal"><span class="pre">onAction()</span></code></a> method of this class.</p>
+<p>After handling an key, the <a class="reference internal" href="#lib.clui.dialog.Dialog.Draw" title="lib.clui.dialog.Dialog.Draw"><code class="xref py py-meth docutils literal"><span class="pre">Draw()</span></code></a> method gets called to refresh the view.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<em>str</em>) – Key name that shall be handled</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.dialog.Dialog.SetData">
+<code class="descname">SetData</code><span class="sig-paren">(</span><em>elements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/dialog.html#Dialog.SetData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.dialog.Dialog.SetData" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">NotImplementedError</span></code> – <em>alway</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.dialog.Dialog.SetSelectedData">
+<code class="descname">SetSelectedData</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/dialog.html#Dialog.SetSelectedData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.dialog.Dialog.SetSelectedData" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">NotImplementedError</span></code> – <em>alway</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.dialog.Dialog.onAction">
+<code class="descname">onAction</code><span class="sig-paren">(</span><em>element</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/dialog.html#Dialog.onAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.dialog.Dialog.onAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method gets called when a key gets passed to the <a class="reference internal" href="#lib.clui.dialog.Dialog.HandleKey" title="lib.clui.dialog.Dialog.HandleKey"><code class="xref py py-meth docutils literal"><span class="pre">HandleKey()</span></code></a> method.
+It is supposed to get passed to the selected control element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> – The selected element in the list</li>
+<li><strong>key</strong> (<em>str</em>) – The key that was pressed while the element was selected</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>Nothing</em></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.dialog.Dialog.onDrawElement">
+<code class="descname">onDrawElement</code><span class="sig-paren">(</span><em>element</em>, <em>number</em>, <em>maxwidth</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/dialog.html#Dialog.onDrawElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.dialog.Dialog.onDrawElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method gets called when an element gets printed into the dialog view.
+Keep in mind that the dialog element is not able to scroll.</p>
+<p>The number of printable character should not exceed the maximum width <code class="docutils literal"><span class="pre">maxwidth</span></code>.
+The <code class="docutils literal"><span class="pre">element</span></code> is a tuple containing the label, the control element and the hint.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>element</strong> – The element that shall be printed.</li>
+<li><strong>number</strong> (<em>int</em>) – The index of the element in the list of all elements and at the same time the y coordinate</li>
+<li><strong>maxwidth</strong> (<em>int</em>) – The maximum number of characters that can be printed in one line of the list view</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>Nothing</em></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lib.clui.textinput">
+<span id="textinput"></span><h2>TextInput<a class="headerlink" href="#module-lib.clui.textinput" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="lib.clui.group.VGroup">
-<em class="property">class </em><code class="descclassname">lib.clui.group.</code><code class="descname">VGroup</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>w</em>, <em>h</em>, <em>space=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/group.html#VGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.group.VGroup" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="lib.clui.textinput.TextInput">
+<em class="property">class </em><code class="descclassname">lib.clui.textinput.</code><code class="descname">TextInput</code><span class="sig-paren">(</span><em>x=0</em>, <em>y=0</em>, <em>w=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/textinput.html#TextInput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.textinput.TextInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a simple one-line text input element.</p>
+<p>The cursor mentioned in this class documentation is not related to the cursor of the terminal!
+Each TextInput maintain its own cursor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong><strong>,</strong><strong>y</strong> (<em>int</em>) – Position of the list view</li>
+<li><strong>w</strong> (<em>int</em>) – Width</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lib.clui.textinput.TextInput.Draw">
+<code class="descname">Draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/textinput.html#TextInput.Draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.textinput.TextInput.Draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method draws the input control and the cursor.
+The input elements color are white text on blue background.
+The element the cursor points to has a cyan background.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.textinput.TextInput.GetData">
+<code class="descname">GetData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/textinput.html#TextInput.GetData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.textinput.TextInput.GetData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the string from the input element</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The input as string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.textinput.TextInput.HandleKey">
+<code class="descname">HandleKey</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/textinput.html#TextInput.HandleKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.textinput.TextInput.HandleKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method handled the users input.
+The keys are expected as the method <a class="reference internal" href="#lib.clui.text.Text.GetKey" title="lib.clui.text.Text.GetKey"><code class="xref py py-meth docutils literal"><span class="pre">lib.clui.text.Text.GetKey()</span></code></a> returns.
+With the <code class="docutils literal"><span class="pre">&quot;right&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;left&quot;</span></code> key, the user can navigate through the text.
+With <code class="docutils literal"><span class="pre">&quot;backspace&quot;</span></code> the character left to the cursor gets removed.
+With <code class="docutils literal"><span class="pre">&quot;entf&quot;</span></code> the character right below the cursor.
+Each printable character gets inserted left to the cursor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<em>str</em>) – Key name that shall be handled</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.textinput.TextInput.SetData">
+<code class="descname">SetData</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/textinput.html#TextInput.SetData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.textinput.TextInput.SetData" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method sets the data of the input element.
+The cursor points to the end of the input data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>str</em>) – String that will be used as the input</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When string is not of type string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lib.clui.boolinput">
+<span id="boolinput"></span><h2>BoolInput<a class="headerlink" href="#module-lib.clui.boolinput" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lib.clui.boolinput.BoolInput">
+<em class="property">class </em><code class="descclassname">lib.clui.boolinput.</code><code class="descname">BoolInput</code><span class="sig-paren">(</span><em>x=0</em>, <em>y=0</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/boolinput.html#BoolInput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.boolinput.BoolInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a simple boolean input element.
+<code class="docutils literal"><span class="pre">None</span></code> is also allowed!</p>
+<p>Default representation is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">[✔]</span></code> True</li>
+<li><code class="docutils literal"><span class="pre">[✘]</span></code> False</li>
+<li><code class="docutils literal"><span class="pre">[❓]</span></code> None</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong><strong>,</strong><strong>y</strong> (<em>int</em>) – Position of the list view</li>
+<li><strong>data</strong> (<em>bool</em>) – <code class="docutils literal"><span class="pre">True</span></code>, <code class="docutils literal"><span class="pre">False</span></code> or <code class="docutils literal"><span class="pre">None</span></code> representing the input of the BoolInput element</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lib.clui.boolinput.BoolInput.Draw">
+<code class="descname">Draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/boolinput.html#BoolInput.Draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.boolinput.BoolInput.Draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method draws the input control.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.boolinput.BoolInput.GetData">
+<code class="descname">GetData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/boolinput.html#BoolInput.GetData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.boolinput.BoolInput.GetData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the string from the input element</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The input as bool or <code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.boolinput.BoolInput.HandleKey">
+<code class="descname">HandleKey</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/boolinput.html#BoolInput.HandleKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.boolinput.BoolInput.HandleKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Space key toggles the value of the input element.
+When the previos value was <code class="docutils literal"><span class="pre">None</span></code>, <code class="docutils literal"><span class="pre">True</span></code> will be the next.
+Then it alters between <code class="docutils literal"><span class="pre">True</span></code> and <code class="docutils literal"><span class="pre">False</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<em>str</em>) – Key name that shall be handled</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.boolinput.BoolInput.SetData">
+<code class="descname">SetData</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/boolinput.html#BoolInput.SetData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.boolinput.BoolInput.SetData" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method sets the data of the input element</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>bool</em>) – <code class="docutils literal"><span class="pre">True</span></code>, <code class="docutils literal"><span class="pre">False</span></code> or <code class="docutils literal"><span class="pre">None</span></code> representing the input of the BoolInput element</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.boolinput.BoolInput.SetRepresentation">
+<code class="descname">SetRepresentation</code><span class="sig-paren">(</span><em>true=None</em>, <em>false=None</em>, <em>none=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/boolinput.html#BoolInput.SetRepresentation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.boolinput.BoolInput.SetRepresentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define the representation of True, False and None in form of an Unicode character.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>true</strong><strong>,</strong><strong>false</strong><strong>,</strong><strong>none</strong> (<em>str</em>) – Unicode to represent one of the three states</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><em>Nothing</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – when an argument is not <code class="docutils literal"><span class="pre">None</span></code> and not of type string</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – when the string is larger than one character</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
 
 </div>
 <div class="section" id="module-lib.clui.tabgroup">
@@ -944,7 +1684,45 @@ You may want to call <a class="reference internal" href="#lib.clui.frame.Frame.D
 <dl class="class">
 <dt id="lib.clui.tabgroup.TabGroup">
 <em class="property">class </em><code class="descclassname">lib.clui.tabgroup.</code><code class="descname">TabGroup</code><a class="reference internal" href="../_modules/lib/clui/tabgroup.html#TabGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.tabgroup.TabGroup" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This class can be used to group multiple UI elements.
+They can be selected by pressing <em>tab</em> (<code class="docutils literal"><span class="pre">&quot;</span> <span class="pre">&quot;</span></code>).
+All other keys get passed to the selected UI element.
+The selected element gets highlighted by setting its frame line-style to <code class="docutils literal"><span class="pre">Frame.LINESTYLE_BOLD</span></code>.</p>
+<dl class="method">
+<dt id="lib.clui.tabgroup.TabGroup.AddPane">
+<code class="descname">AddPane</code><span class="sig-paren">(</span><em>pane</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/tabgroup.html#TabGroup.AddPane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.tabgroup.TabGroup.AddPane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a pane to the list of UI elements.
+They must provide the <code class="docutils literal"><span class="pre">HandleKey</span></code>, <code class="docutils literal"><span class="pre">Draw</span></code> and <code class="docutils literal"><span class="pre">SetLineStyle</span></code> method!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pane</strong> – A UI element that shall be added.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.tabgroup.TabGroup.HandleKey">
+<code class="descname">HandleKey</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/tabgroup.html#TabGroup.HandleKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.tabgroup.TabGroup.HandleKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pass the key to the current selected pane.
+If the key is <code class="docutils literal"><span class="pre">&quot;</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;</span></code>, then the next pane in the list gets selected.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<em>str</em>) – A key name as returned by <code class="xref py py-meth docutils literal"><span class="pre">lib.clui.text.GetKey()</span></code>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
 
 </div>
 </div>
@@ -984,7 +1762,7 @@ You may want to call <a class="reference internal" href="#lib.clui.frame.Frame.D
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.0 alpha',
+            VERSION:'1.0.0 beta',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -91,7 +91,7 @@ class Frame(Text):
         You may want to call :meth:`~Draw` to redraw the frame with the new style.
 
         Args:
-            The new style
+            linestyle: The new style
 
         Returns:
             *Nothing*
@@ -99,7 +99,7 @@ class Frame(Text):
         Raises:
             ValueError: When the argument does not address a valid style
         """
-        if linestyle not in [LINESTYLE_NORMAL, LINESTYLE_BOLD, LINESTYLE_ASCII, LINESTYLE_DOUBLE, LINESTYLE_ROUND]:
+        if linestyle not in [Frame.LINESTYLE_NORMAL, Frame.LINESTYLE_BOLD, Frame.LINESTYLE_ASCII, Frame.LINESTYLE_DOUBLE, Frame.LINESTYLE_ROUND]:
             raise ValueError("Invalid line style.")
         self.linestyle = linestyle
 
@@ -124,6 +124,7 @@ class Frame(Text):
 
         Raises:
             TypeError: When one of the arguments is not of type integer.
+            ValueError: When *x* or *y* is negative.
         """
         if type(x) != int or type(y) != int or type(w) != int or type(h) != int:
             raise TypeError("Coordinates, width and height must be of type integer")

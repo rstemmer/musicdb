@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="1.0.0"
+SCRIPTVERSION="1.1.0"
 echo -e "\e[1;31mMusicDB-Install [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
@@ -30,6 +30,7 @@ function CreateBaseDirectories {
             echo -e "\e[1;37malready done!"
         fi
     done
+    chmod g+w $DATADIR
 }
 
 
@@ -40,6 +41,7 @@ function CreateMusicDBGroup {
     if [ -z "$(getent group $MDBGROUP)" ]; then
         # Creates a new unix system group
         groupadd -r $MDBGROUP
+        usermod -a -G $MDBGROUP $USER
         echo -e "\e[1;32mdone"
     else
         echo -e "\e[1;37malready done!"
