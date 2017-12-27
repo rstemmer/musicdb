@@ -120,11 +120,9 @@ function onMusicDBMessage(fnc, sig, args, pass)
         currentalbumid = args.album.id;
     }
     else if(fnc == "GetAlbum" && sig == "UpdateTagInput") {
-        Taginput_Update(pass.taginputid, args.tags);
         if(args.album.id == currentalbumid)
         {
-            Taginput_Show("AlbumGenre",    "AlbumGenreView",    args.album.id, args.tags, "Genre", "Album");
-            Taginput_Show("AlbumSubgenre", "AlbumSubgenreView", args.album.id, args.tags,  "Subgenre", "Album");
+            Albumview_UpdateAlbum(args.album, args.tags);
         }
     }
     else if(fnc == "Find" && sig == "ShowSearchResults")
