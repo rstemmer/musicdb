@@ -14,14 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-This command runs a command line "GUI" to manage tags.
+This command runs a command line "GUI" to manage genre tags.
 Press ``Ctrl-D`` to exit the tag manager.
 
 Example:
 
     .. code-block:: bash
 
-        musicdb -q tagman 
+        musicdb -q genres
         # -q: do not show logs on stdout
 """
 
@@ -39,6 +39,7 @@ from lib.clui.boolinput import BoolInput
 from lib.clui.buttonview import ButtonView
 from lib.clui.tabgroup  import TabGroup
 
+
 class GenreView(ListView, MusicDBTags):
     def __init__(self, config, database, title, x, y, w, h):
         ListView.__init__(self, title, x, y, w, h)
@@ -48,7 +49,9 @@ class GenreView(ListView, MusicDBTags):
         self.dialog     = Dialog("Edit Genre", self.x, self.y+1, self.w, self.h-1)
         self.dialogmode = False
         self.nameinput  = TextInput()
-        self.dialog.AddInput("Name:",  self.nameinput, "Visibly for user")
+        self.posxinput  = TextInput()
+        self.dialog.AddInput("Name:",     self.nameinput, "Visibly for user")
+        self.dialog.AddInput("Position:", self.posxinput, "Position in WebUI list (positive integer)")
 
 
     def UpdateView(self):
@@ -62,18 +65,32 @@ class GenreView(ListView, MusicDBTags):
 
 
     def onDrawElement(self, element, number, maxwidth):
-        string = element["name"]
-        string = string[:maxwidth]
-        string = string.ljust(maxwidth)
-        return string
+        # Render Position
+        posx = element["posx"]
+        posy = element["posy"]
+        if posx == None:
+            posx = "--"
+        else:
+            posx = "%2d"%(posx)
+
+        pos    = " (" + posx + ")"
+
+        # Render Name
+        width = maxwidth - len(pos)
+        name  = element["name"]
+        name  = name[:width]
+        name  = name.ljust(width)
+        return name + "\033[1;30m" + pos
 
 
     def onAction(self, element, key):
         if key == "e":      # Edit tag
             name = element["name"]
+            posx = element["posx"]
 
             # Initialize dialog with element
             self.nameinput.SetData(name)
+            self.posxinput.SetData(str(posx))
 
             # show dialog
             self.dialog.oldname = name # trace Tag so that changes can be associated to a specific tag
@@ -98,7 +115,14 @@ class GenreView(ListView, MusicDBTags):
 
                 # Get data from dialog
                 name = self.nameinput.GetData()
+                posx = self.posxinput.GetData()
                 oldname = self.dialog.oldname
+
+                try:
+                    posx = int(posx)
+                    assert posx >= 0
+                except:
+                    posx = None # do not update an invalid position
 
                 # Update database with new data
                 if oldname == None:
@@ -113,7 +137,7 @@ class GenreView(ListView, MusicDBTags):
                     else:
                         newname = None
 
-                self.ModifyGenre(tagname, newname)
+                self.ModifyGenre(tagname, newname, newposx=posx)
                 self.UpdateView()
                 self.Draw()
 
@@ -130,6 +154,7 @@ class GenreView(ListView, MusicDBTags):
             if key == "a":
                 # Add new tag
                 self.nameinput.SetData("")
+                self.posxinput.SetData("")
                 self.dialog.oldname = None    # new tag has no old name
                 self.dialog.Draw()
                 self.dialogmode = True
@@ -155,7 +180,12 @@ class SubGenreView(ListView, MusicDBTags):
 
 
     def UpdateView(self):
-        self.SetData(self.GetAllSubgenres())
+        # Only show subgenres of the selected genre
+        genre     = self.genreview.GetSelectedData()
+        subgenres = self.GetAllSubgenres()
+        elements  = [ subgenre for subgenre in subgenres if subgenre["parentid"] == genre["id"] ]
+
+        self.SetData(elements)
 
 
     def Draw(self):
@@ -165,15 +195,10 @@ class SubGenreView(ListView, MusicDBTags):
 
 
     def onDrawElement(self, element, number, maxwidth):
-        genre  = self.genreview.GetSelectedData()
-        if element["parentid"] == genre["id"]:
-            color = "\033[1;34m"
-        else:
-            color = "\033[1;30m"
-        string = element["name"]
-        string = string[:maxwidth]
-        string = string.ljust(maxwidth)
-        return color + string
+        name  = element["name"]
+        name  = name[:maxwidth]
+        name  = name.ljust(maxwidth)
+        return name
 
 
     def onAction(self, element, key):
@@ -257,168 +282,7 @@ class SubGenreView(ListView, MusicDBTags):
 
 
 
-class MoodView(ListView, MusicDBTags):
-    def __init__(self, config, database, title, x, y, w, h):
-        ListView.__init__(self, title, x, y, w, h)
-        MusicDBTags.__init__(self, config, database)
-
-        self.UpdateView()
-
-        self.dialog     = Dialog("Edit Mood", self.x, self.y+1, self.w, self.h-1)
-        self.dialogmode = False
-
-        self.nameinput  = TextInput()
-        self.iconinput  = TextInput()
-        self.colorinput = TextInput()
-        self.varselector= BoolInput()
-        self.dialog.AddInput("Name:",  self.nameinput,   "Visibly for user")
-        self.dialog.AddInput("Icon:",  self.iconinput,   "Unicode char")
-        self.dialog.AddInput("U+FE0E:",self.varselector, "Do not replace with emoji")
-        self.dialog.AddInput("Color:", self.colorinput,  "In HTML notation (#RRGGBB)")
-
-
-    def UpdateView(self):
-        self.SetData(self.GetAllMoods())
-
-
-    def onDrawElement(self, element, number, maxwidth):
-        if element["icontype"] == 1:    # unicode icon
-            icon = element["icon"]
-        else:
-            icon = "?"
-
-        if element["color"]:
-            r = int(element["color"][1:3], 16)
-            g = int(element["color"][3:5], 16)
-            b = int(element["color"][5:7], 16)
-        else:
-            r = int("CC", 16)
-            g = int("CC", 16)
-            b = int("CC", 16)
-
-        color = "\033[38;2;%d;%d;%dm"%(r,g,b)
-
-        debug = " " + str(len(icon)) + " " + str(icon.encode())
-
-        # there may be a modifier "\xef\xb8\x8e" at the end to prevent some silly browser
-        #  to replace the Unicode characters with ugly emoji images that totally fuck up the design
-        if len(icon) > 1:
-            icon = icon[0]
-
-        #string = "[" + icon + "] " + element["name"]
-        name = element["name"]
-        name = name[:maxwidth-2]
-        name = name.ljust(maxwidth-2)
-        return color + icon + " \033[1;34m" + name
-
-
-    def Draw(self):
-        # Only draw the list view when not in dialog mode
-        if self.dialogmode == False:
-            ListView.Draw(self)
-
-
-    def onAction(self, element, key):
-        if key == "e":      # Edit tag
-            name = element["name"]
-
-            if element["icon"] == None:
-                icon = ""
-            else:
-                icon = element["icon"][0]
-
-            # Check if variant selector 15 is append to the Unicode character
-            if len(element["icon"]) > 1:
-                varsec15 = True
-            else:
-                varsec15 = False
-
-            # Check if there is a color defined
-            if element["color"]:
-                color = element["color"]
-            else:
-                color = ""
-
-            # Initialize dialog with element
-            self.nameinput.SetData(name)
-            self.iconinput.SetData(icon)
-            self.varselector.SetData(varsec15)
-            self.colorinput.SetData(color)
-
-            # show dialog
-            self.dialog.oldname = element["name"] # trace Tag so that changes can be associated to a specific tag
-            self.dialog.Draw()
-            self.dialogmode = True
-
-        elif key == "r":    # Remove Tag
-            self.DeleteMood(element["name"])
-            self.elements.remove(element)
-            self.UpdateView()
-            self.Draw()
-            return None
-
-        return element
-
-
-    def HandleKey(self, key):
-        if self.dialogmode == True:
-            if key == "enter":  # Commit dialog inputs
-                self.dialogmode = False
-                self.Draw() # show list view instead of dialog
-
-                # Get data from dialog
-                name = self.nameinput.GetData()
-                icon = self.iconinput.GetData()
-                if self.varselector.GetData() == True:
-                    icon += b"\xef\xb8\x8e".decode()
-                color = self.colorinput.GetData()
-                if len(color) != 7 or color[0] != "#":
-                    color = None
-                oldname = self.dialog.oldname
-
-                # Update database with new data
-                if oldname == None:
-                    self.CreateMood(name)
-                    tagname = name
-                    newname = None
-                else:
-                    tagname = oldname
-                    # Was the tag renamed?
-                    if oldname != name:
-                        newname = name
-                    else:
-                        newname = None
-
-                self.ModifyMood(tagname, newname, icon, color)
-                self.UpdateView()
-                self.Draw()
-
-
-            elif key == "escape":
-                self.dialogmode     = False
-                self.dialog.oldname = None  # prevent errors by leaving a clean state
-                self.Draw() # show list view instead of dialog
-                # reject changes
-
-            else:
-                self.dialog.HandleKey(key)
-        else:
-            if key == "a":
-                # Add new tag
-                self.nameinput.SetData("")
-                self.iconinput.SetData("")
-                self.varselector.SetData(False)
-                self.colorinput.SetData("")
-                self.dialog.oldname = None    # new tag has no old name
-                self.dialog.Draw()
-                self.dialogmode = True
-            else:
-                ListView.HandleKey(self, key)
-
-
-
-
-class tagman(MDBModule):
+class genres(MDBModule):
     def __init__(self, config, database):
         MDBModule.__init__(self)
 
@@ -428,7 +292,7 @@ class tagman(MDBModule):
 
     @staticmethod
     def MDBM_CreateArgumentParser(parserset, modulename):
-        parser = parserset.add_parser(modulename, help="Manage tags using a CLI GUI")
+        parser = parserset.add_parser(modulename, help="Manage genres using a CLI GUI")
         parser.set_defaults(module=modulename)
         return parser
 
@@ -443,68 +307,52 @@ class tagman(MDBModule):
 
         maxw, maxh = cli.GetScreenSize()
 
-        # The GUI must have three lists: main genre, sub genre, mood
+        # The GUI must have two lists: main genre, sub genre
         # main and sub genre shall be encapsulated by a frame
-        listwidth   = (maxw - 2) // 3           # -2 for the extra frame, /3 for three lists
-        framewidth  = listwidth * 2 + 2
+        listwidth   = maxw // 2 - 1           # - 1 for some space around
         listystart  = 3
         listheight  = maxh - (listystart + 3)   # +3 for a ButtonView
         list1xstart = 1
-        list2xstart = 1 + listwidth
-        list3xstart = 2 + 2*listwidth
-        framexstart = list1xstart - 1
-
-        # Add spaces between the frames
-        spacewidth   = 1
-        framexstart += spacewidth       # space before
-        framewidth  -= spacewidth * 2   # space around
-        list1xstart += spacewidth * 2   # screen<->frame + frame<->list1
-        list2xstart += spacewidth * 1   # list1<->list2
-        list3xstart += spacewidth * 1   # 
-        listwidth   -= spacewidth * 3
+        list2xstart = 2 + listwidth
 
         # List Views
         self.genreview    = GenreView   (self.cfg, self.db, 
                 "Main Genre", list1xstart, listystart, listwidth, listheight)
         self.subgenreview = SubGenreView(self.cfg, self.db, self.genreview, 
                 "Sub Genre",  list2xstart, listystart, listwidth, listheight)
-        self.moodview     = MoodView    (self.cfg, self.db, 
-                "Moods",      list3xstart, listystart, listwidth, listheight)
-
-        # Frame
-        self.genreframe = Pane("Genre", framexstart, listystart-1, framewidth, listheight+2)
-        self.genreframe.SetFGColor("0;31")
 
         # Buttons
         self.buttons = ButtonView(align="middle")
         self.buttons.AddButton("a", "Add new tag")
         self.buttons.AddButton("e", "Edit tag")
-        self.buttons.AddButton("m", "Arrange tags")
         self.buttons.AddButton("r", "Remove tag")
-        self.buttons.AddButton("↹", "Select next tag list")
+        self.buttons.AddButton("↹", "Select list")
 
         # Composition
         tabgroup = TabGroup()
         tabgroup.AddPane(self.genreview)
         tabgroup.AddPane(self.subgenreview)
-        tabgroup.AddPane(self.moodview)
 
         # Draw once
-        self.genreframe.Draw()
         self.buttons.Draw(0, maxh-2, maxw)
 
+
         key = " "
+        selectedmaingenre = 0   # trace selected main genre to update subgenre view
         while key != "Ctrl-D":
             # Show everything
             self.genreview.Draw()
             self.subgenreview.Draw()
-            self.moodview.Draw()
             cli.FlushScreen()
 
             # Handle keys
             key = cli.GetKey()
             tabgroup.HandleKey(key)
 
+            genre = self.genreview.GetSelectedData()
+            if genre["id"] != selectedmaingenre:
+                selectedmaingenre = genre["id"]
+                self.subgenreview.UpdateView()
 
 
         cli.ClearScreen()
