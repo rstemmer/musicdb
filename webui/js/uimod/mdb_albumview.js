@@ -314,6 +314,15 @@ function _ABV_UpdateSongSettings(MDBSong, MDBSongTags)
     Taginput_Update("ABVS_subgenre_" + songid, MDBSongTags);
 }
 
+
+function Albumview_UpdateAlbum(MDBAlbum, MDBAlbumTags)
+{
+    Taginput_Show("AlbumGenre",    "AlbumGenreView",    MDBAlbum.id, MDBAlbumTags, "Genre", "Album");
+    Taginput_Show("AlbumSubgenre", "AlbumSubgenreView", MDBAlbum.id, MDBAlbumTags, "Subgenre", "Album");
+    Taginput_Update("ABV_albumgenre_"    + MDBAlbum.id, MDBAlbumTags);
+    Taginput_Update("ABV_albumsubgenre_" + MDBAlbum.id, MDBAlbumTags);
+}
+
 /*
  *
  */
