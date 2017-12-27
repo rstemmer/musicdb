@@ -5,6 +5,13 @@
 │ ∗ Other                                │
 └────────────────────────────────────────┘
 
+┍━━━━┫ ########## ┣━━━━┫ 1.1.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ ∗ Derives album genres based on its song genres
+│
+┝━ MINOR CHANGES
+└───────────────────────────────────────╌╌
+
 ┍━━━━┫ 2017-12-27 ┣━━━━┫ 1.0.0 beta ┣━━━╍╍
 ┝━ MAJOR CHANGES
 │ ∗ genres mod added

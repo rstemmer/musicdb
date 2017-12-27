@@ -1788,7 +1788,9 @@ class MusicDatabase(Database):
                 data = {}
 
                 if tag[self.TAGMAP_APPROVAL] > approval:
-                    logging.warning("The tag was already set and has a higher approval level (%d) than the update (%d)! \033[1;30m(update gets rejected for %s %d)", tag[self.TAGMAP_APPROVAL], approval, target, targetid)
+                    # This can now happen very often due to the DeriveAlbumTags method.
+                    # This is no longer a symptom of misbehavior.
+                    #logging.warning("The tag was already set and has a higher approval level (%d) than the update (%d)! \033[1;30m(update gets rejected for %s %d)", tag[self.TAGMAP_APPROVAL], approval, target, targetid)
                     return None
 
                 data["entryid"]    = tag[self.TAGMAP_ENTRYID]
