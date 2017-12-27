@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Python Module Index &mdash; MusicDB 1.0.0 alpha documentation</title>
+  <title>Python Module Index &mdash; MusicDB 1.0.0 beta documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="index.html"/>
+    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="index.html"/>
  
 
 
@@ -93,10 +93,6 @@
             
               <p class="caption"><span class="caption-text">Concepts</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="basics/changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="basics/changelog.html#id1">1.0.0 - 31.12.2017</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/comparison.html#metrics">Metrics</a></li>
@@ -254,11 +250,13 @@
 <li class="toctree-l2"><a class="reference internal" href="mod/extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="mod/genres.html">genres - Genre Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mod/mise.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mod/musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mod/musicai.html#class-description">Class Description</a></li>
@@ -366,7 +364,9 @@
 <li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.pane">Pane</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.buttonview">ButtonView</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.listview">ListView</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.group">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.dialog">Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.textinput">TextInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.boolinput">BoolInput</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
 </ul>
 </li>
@@ -577,17 +577,22 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
+       <a href="lib/clui.html#module-lib.clui.boolinput"><code class="xref">lib.clui.boolinput</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
        <a href="lib/clui.html#module-lib.clui.buttonview"><code class="xref">lib.clui.buttonview</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="lib/clui.html#module-lib.clui.frame"><code class="xref">lib.clui.frame</code></a></td><td>
+       <a href="lib/clui.html#module-lib.clui.dialog"><code class="xref">lib.clui.dialog</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="lib/clui.html#module-lib.clui.group"><code class="xref">lib.clui.group</code></a></td><td>
+       <a href="lib/clui.html#module-lib.clui.frame"><code class="xref">lib.clui.frame</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -608,6 +613,11 @@
        <td></td>
        <td>&#160;&#160;&#160;
        <a href="lib/clui.html#module-lib.clui.text"><code class="xref">lib.clui.text</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="lib/clui.html#module-lib.clui.textinput"><code class="xref">lib.clui.textinput</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -752,12 +762,22 @@
      <tr class="cg-3">
        <td></td>
        <td>&#160;&#160;&#160;
+       <a href="mod/genres.html#module-mod.genres"><code class="xref">mod.genres</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-3">
+       <td></td>
+       <td>&#160;&#160;&#160;
        <a href="mod/metadata.html#module-mod.metadata"><code class="xref">mod.metadata</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-3">
        <td></td>
        <td>&#160;&#160;&#160;
        <a href="mod/mise.html#module-mod.mise"><code class="xref">mod.mise</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-3">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="mod/moods.html#module-mod.moods"><code class="xref">mod.moods</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-3">
        <td></td>
@@ -826,7 +846,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0.0 alpha',
+            VERSION:'1.0.0 beta',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

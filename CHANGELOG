@@ -5,6 +5,16 @@
 │ ∗ Other                                │
 └────────────────────────────────────────┘
 
+┍━━━━┫ 2017-12-27 ┣━━━━┫ 1.0.0 beta ┣━━━╍╍
+┝━ MAJOR CHANGES
+│ ∗ genres mod added
+│ ∗ moods mod added
+│ ∗ CLUI library finalized
+│ ∗ On installation, the user gets added to the musicdb group
+│ ∗ On installation, the data directories group rights get set to writable
+│
+┝━ MINOR CHANGES
+└───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2017-12-25 ┣━━━━┫ 1.0.0 alpha ┣━━╍╍
 ┝━ MAJOR CHANGES

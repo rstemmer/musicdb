@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.clui.text &mdash; MusicDB 1.0.0 alpha documentation</title>
+  <title>lib.clui.text &mdash; MusicDB 1.0.0 beta documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -91,10 +91,6 @@
             
               <p class="caption"><span class="caption-text">Concepts</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../basics/changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../basics/changelog.html#id1">1.0.0 - 31.12.2017</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#metrics">Metrics</a></li>
@@ -252,11 +248,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/genres.html">genres - Genre Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/mise.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/musicai.html#class-description">Class Description</a></li>
@@ -364,7 +362,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.pane">Pane</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.buttonview">ButtonView</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.listview">ListView</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.group">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.dialog">Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.textinput">TextInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.boolinput">BoolInput</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
 </ul>
 </li>
@@ -572,7 +572,8 @@
 <span class="sd">        SetColor(&quot;44&quot;)      # blue background</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">KEY_ESCAPE</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x1B</span><span class="s2">&quot;</span>
+    <span class="n">KEY_ESCAPE</span>      <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x1B</span><span class="s2">&quot;</span>
+    <span class="n">KEY_BACKSPACE</span>   <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x7F</span><span class="s2">&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fgcolor</span> <span class="o">=</span> <span class="s2">&quot;37&quot;</span>
@@ -756,8 +757,11 @@
 <span class="sd">        Until now, the following keys will be recognized:</span>
 
 <span class="sd">            * The usual prinable keys</span>
-<span class="sd">            * ``enter``</span>
+<span class="sd">            * ``escape`` (Must be hit twice)</span>
+<span class="sd">            * ``enter``, ``backspace``, ``entf``</span>
+<span class="sd">            * ``backtab`` (shift+tab)</span>
 <span class="sd">            * ``up``, ``down``, ``left``, ``right``</span>
+<span class="sd">            * ``Ctrl-D``</span>
 
 <span class="sd">        In case you want to get other keys, it is easy to add them by editing the code of this method.</span>
 <span class="sd">        I just implemented the one I need for the :class:`~lib.clui.listview.ListView` UI element.</span>
@@ -769,11 +773,17 @@
         <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetRawKey</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x0D</span><span class="s2">&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;enter&quot;</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="n">Text</span><span class="o">.</span><span class="n">KEY_ESCAPE</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="n">Text</span><span class="o">.</span><span class="n">KEY_BACKSPACE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;backspace&quot;</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\04</span><span class="s2">&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Ctrl-D&quot;</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">!=</span> <span class="n">Text</span><span class="o">.</span><span class="n">KEY_ESCAPE</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">key</span>
 
         <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetRawKey</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;</span><span class="se">\x5B</span><span class="s2">&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">Text</span><span class="o">.</span><span class="n">KEY_ESCAPE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;escape&quot;</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;[&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetRawKey</span><span class="p">()</span>
@@ -785,6 +795,16 @@
             <span class="k">return</span> <span class="s2">&quot;right&quot;</span>
         <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x44</span><span class="s2">&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;left&quot;</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;Z&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;backtab&quot;</span>
+
+        <span class="c1"># In case of 3, there is more comming</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetRawKey</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;~&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;entf&quot;</span>
 
         <span class="k">return</span> <span class="kc">None</span></div></div>
 
@@ -828,7 +848,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0.0 alpha',
+            VERSION:'1.0.0 beta',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

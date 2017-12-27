@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.clui.listview &mdash; MusicDB 1.0.0 alpha documentation</title>
+  <title>lib.clui.listview &mdash; MusicDB 1.0.0 beta documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -91,10 +91,6 @@
             
               <p class="caption"><span class="caption-text">Concepts</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../basics/changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../basics/changelog.html#id1">1.0.0 - 31.12.2017</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#metrics">Metrics</a></li>
@@ -252,11 +248,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/genres.html">genres - Genre Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/mise.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/musicai.html#class-description">Class Description</a></li>
@@ -364,7 +362,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.pane">Pane</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.buttonview">ButtonView</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.listview">ListView</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.group">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.dialog">Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.textinput">TextInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.boolinput">BoolInput</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
 </ul>
 </li>
@@ -551,42 +551,228 @@
 <span class="kn">from</span> <span class="nn">lib.clui.pane</span> <span class="k">import</span> <span class="n">Pane</span>
 
 <div class="viewcode-block" id="ListView"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.listview.ListView">[docs]</a><span class="k">class</span> <span class="nc">ListView</span><span class="p">(</span><span class="n">Pane</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class provides a ListView that shows a list the user can scroll through using the arrow keys.</span>
+
+<span class="sd">    The data shown in the list must be a string.</span>
+<span class="sd">    For derived classes, they can be considered abstract and contain any kind of type as long as</span>
+<span class="sd">    you adopt the :meth:`~onDrawElement` method.</span>
+
+<span class="sd">    An example on how to use this class with complex data structures:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            class MusicView(ListView):</span>
+<span class="sd">                def __init__(self, title):</span>
+<span class="sd">                    ListView.__init__(self, title)</span>
+
+<span class="sd">                def SetData(self, artists, albums, songs):</span>
+<span class="sd">                    artistdata = [(&quot;artist&quot;, name) for name in artists]</span>
+<span class="sd">                    albumdata  = [(&quot;album&quot;,  name) for name in albums ]</span>
+<span class="sd">                    songdata   = [(&quot;song&quot;,   name) for name in songs  ]</span>
+
+<span class="sd">                    data = []</span>
+<span class="sd">                    data.extend(artistdata)</span>
+<span class="sd">                    data.extend(albumdata )</span>
+<span class="sd">                    data.extend(songdata  )</span>
+<span class="sd">                    ListView.SetData(self, data)</span>
+
+<span class="sd">                def onDrawElement(self, element, number, maxwidth):</span>
+<span class="sd">                    tag  = element[0]</span>
+<span class="sd">                    path = element[1]</span>
+<span class="sd">                    maxnamelen = maxwidth - 6   # - &quot;[xxx] &quot;</span>
+
+<span class="sd">                    string = &quot;\033[1;30m[&quot;</span>
+<span class="sd">                    if tag == &quot;artist&quot;:</span>
+<span class="sd">                        string += &quot;art&quot;</span>
+<span class="sd">                    elif tag == &quot;album&quot;:</span>
+<span class="sd">                        string += &quot;alb&quot;</span>
+<span class="sd">                    elif tag == &quot;song&quot;:</span>
+<span class="sd">                        string += &quot;sng&quot;</span>
+<span class="sd">                    else:</span>
+<span class="sd">                        string += &quot;INV&quot;</span>
+<span class="sd">                    string += &quot;] \033[1;34m&quot;</span>
+<span class="sd">                    string += path[:(maxnamelen)].ljust(maxpathlen)</span>
+<span class="sd">                    return string</span>
+
+<span class="sd">            artists = [&quot;Artist A&quot;, &quot;Brtist B&quot;]</span>
+<span class="sd">            albums  = [&quot;An album&quot;, &quot;And Another Album&quot;]</span>
+<span class="sd">            songs   = [&quot;This is a song name&quot;]</span>
+<span class="sd">            sv  = MusicView(&quot;Music&quot;, 2, 2, 10, 5)</span>
+<span class="sd">            sv.SetData(artists, albums, songs)</span>
+<span class="sd">            sv.Draw()</span>
+
+
+<span class="sd">    The elements in the list are stored in a variable ``elements``.</span>
+<span class="sd">    This list can be maintained using :meth:`~SetData`.</span>
+
+<span class="sd">    A second variable ``linemarker`` points (in form of an index) to the selected element in this list.</span>
+<span class="sd">    The element the linemarker points to can be accessed via :meth:`~GetSelectedData` and :meth:`~SetSelectedData`</span>
+
+<span class="sd">    When the list of element exceeds the height of the list, a scroll bar will be printed in place of the right frame edge.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        title (str): Title of the list view</span>
+<span class="sd">        x,y (int): Position of the list view</span>
+<span class="sd">        w,h (int): Width and height</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="n">Pane</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">listoffset</span>     <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span>     <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span>       <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">drawcallback</span>   <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span>       <span class="o">=</span> <span class="p">[]</span>
 
 
-    <span class="k">def</span> <span class="nf">onDrawElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">maxwidth</span><span class="p">):</span>
+<div class="viewcode-block" id="ListView.onDrawElement"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.listview.ListView.onDrawElement">[docs]</a>    <span class="k">def</span> <span class="nf">onDrawElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">maxwidth</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method gets called when an element gets printed into the list view.</span>
+<span class="sd">        To customize how elements will appear in the list, overload this method.</span>
+
+<span class="sd">        The returned string can contain ANSI Escape Sequences for coloring.</span>
+<span class="sd">        The number of printable character should not exceed the maximum width ``maxwidth``.</span>
+<span class="sd">        Furthermore the string should be exact ``maxwidth`` wide.</span>
+
+<span class="sd">        An example how to implement a custom ``onDrawElement`` method can be seen in the following code example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            def onDrawElement(self, element, number, maxwidth):</span>
+<span class="sd">                # Print the element number in front of each entry.</span>
+<span class="sd">                # Alternate the text color with each line. Odd lines in white, even in blue.</span>
+
+<span class="sd">                num = &quot;%2d: &quot;%(number)      # start list entry with the index of the element</span>
+<span class="sd">                val = element[:maxwidth-4]  # Limit string to max width. 4 Characters are consumed for the num variable</span>
+
+<span class="sd">                # Alternating colors with each line</span>
+<span class="sd">                # Colors do not count to the width of the string because they are not printable</span>
+<span class="sd">                if num % 2:</span>
+<span class="sd">                    color = &quot;\033[1;37m&quot;    # Set color to white for odd lines</span>
+<span class="sd">                else:</span>
+<span class="sd">                    color = &quot;\033[1;34m&quot;    # Set color to blue for even lines</span>
+<span class="sd">    </span>
+<span class="sd">                return color + num + val</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            element: The element that shall be printed.</span>
+<span class="sd">            number (int): The index of the element in the list of all elements</span>
+<span class="sd">            maxwidth (int): The maximum number of characters that can be printed in one line of the list view</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The string that will be printed in one line of the list view</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
         <span class="n">string</span> <span class="o">=</span> <span class="n">string</span><span class="p">[:</span><span class="n">maxwidth</span><span class="p">]</span>
         <span class="n">string</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">maxwidth</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">string</span>
+        <span class="k">return</span> <span class="n">string</span></div>
 
 
-    <span class="k">def</span> <span class="nf">onAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">element</span>
+<div class="viewcode-block" id="ListView.onAction"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.listview.ListView.onAction">[docs]</a>    <span class="k">def</span> <span class="nf">onAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method gets called when a key gets passed to the :meth:`~HandleKey` method.</span>
+<span class="sd">        It is supposed to process the selected line in the list of elements.</span>
+<span class="sd">        In this class, nothing will be done with the data.</span>
+
+<span class="sd">        This function must return the processed element back to the list.</span>
+<span class="sd">        It is also possible to return a new element to replace the old one.</span>
+<span class="sd">        When a line shall not be updated, return None.</span>
+<span class="sd">        A case where this may be useful will be presented in the following example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+<span class="sd">            </span>
+<span class="sd">            def onAction(self, element, key):</span>
+<span class="sd">                # this method manipulates a list of numbers</span>
+
+<span class="sd">                if key == &quot;r&quot;:      # remove element</span>
+<span class="sd">                    self.elements.remove(element)</span>
+<span class="sd">                    return None</span>
+
+<span class="sd">                elif key == &quot;a&quot;:    # append number to list</span>
+<span class="sd">                    self.elements.append(&quot;0&quot;)</span>
+
+<span class="sd">                elif key == &quot;0&quot;:    # reset number</span>
+<span class="sd">                    return &quot;0&quot;</span>
+
+<span class="sd">                elif key == &quot;+&quot;:    # increment number</span>
+<span class="sd">                    element = str(int(element) + 1)</span>
+
+<span class="sd">                elif key == &quot;-&quot;:    # decrement number</span>
+<span class="sd">                    element = str(int(element) - 1)</span>
+
+<span class="sd">                return element</span>
+
+<span class="sd">        When the last element gets removed, the ``linemarker`` variable gets moved to the previous line.</span>
+<span class="sd">        Otherwise it stays at its position that will now be the element next after the removed one.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            element: The selected element in the list</span>
+<span class="sd">            key (str): The key that was pressed while the element was selected</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The modified element that will be put back in the list of elements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">element</span></div>
 
 
-    <span class="k">def</span> <span class="nf">SetData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elements</span><span class="p">):</span>
+<div class="viewcode-block" id="ListView.SetData"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.listview.ListView.SetData">[docs]</a>    <span class="k">def</span> <span class="nf">SetData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elements</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method can be used to initialize the list of data that will be shown in the list view</span>
+<span class="sd">        If the :meth:`~onDrawElement` method is not overloaded, the list must contain strings.</span>
+
+<span class="sd">        After setting the new ``elements`` list, the ``linemarker`` gets set to the begin of the list.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            elements (list): A list of data</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">elements</span> <span class="o">=</span> <span class="n">elements</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">listoffset</span> <span class="o">=</span> <span class="mi">0</span></div>
 
 
-    <span class="k">def</span> <span class="nf">SetSelectedData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span>
+<div class="viewcode-block" id="ListView.SetSelectedData"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.listview.ListView.SetSelectedData">[docs]</a>    <span class="k">def</span> <span class="nf">SetSelectedData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Replaces the selected element with a new one.</span>
+<span class="sd">        This method can be used to interact with the list without triggering the :meth:`~onAction` callback.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            element: An element that replaces the selected element</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span></div>
 
 
-    <span class="k">def</span> <span class="nf">GetSelectedData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span><span class="p">]</span>
+<div class="viewcode-block" id="ListView.GetSelectedData"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.listview.ListView.GetSelectedData">[docs]</a>    <span class="k">def</span> <span class="nf">GetSelectedData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns the selected element from the list.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The selected element</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span><span class="p">]</span></div>
 
 
-    <span class="k">def</span> <span class="nf">Draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ListView.Draw"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.listview.ListView.Draw">[docs]</a>    <span class="k">def</span> <span class="nf">Draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method draws the list of elements.</span>
+<span class="sd">        If the list exceeds the height of the list view, a scroll bar gets added and the user can scroll though the data.</span>
+
+<span class="sd">        The background of the list view will be black.</span>
+<span class="sd">        The surrounding frame is red.</span>
+<span class="sd">        The lines in the list will be printed in blue.</span>
+<span class="sd">        The selected line gets a cyan background color.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">SetFGColor</span><span class="p">(</span><span class="s2">&quot;1;31&quot;</span><span class="p">)</span>
         <span class="n">Pane</span><span class="o">.</span><span class="n">Draw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="n">maxelements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">DrawScrollbar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">listoffset</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxelements</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># line number between the frames</span>
@@ -604,12 +790,8 @@
                 <span class="n">bgcolor</span> <span class="o">=</span> <span class="s2">&quot;40&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">SetColor</span><span class="p">(</span><span class="s2">&quot;1;34&quot;</span><span class="p">,</span> <span class="n">bgcolor</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">PrintText</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">SetColor</span><span class="p">(</span><span class="s2">&quot;1;31&quot;</span><span class="p">,</span> <span class="s2">&quot;40&quot;</span><span class="p">)</span> <span class="c1"># reset color</span>
 
-        <span class="c1"># DEBUG</span>
-        <span class="c1">#self.SetCursor(self.x+1, self.y+self.h-1)</span>
-        <span class="c1">#self.SetColor(&quot;1;30&quot;, &quot;40&quot;)</span>
-        <span class="c1">#self.PrintText(&quot;m=%d,o=%d&quot;%(self.linemarker,self.listoffset))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetColor</span><span class="p">(</span><span class="s2">&quot;1;31&quot;</span><span class="p">,</span> <span class="s2">&quot;40&quot;</span><span class="p">)</span> <span class="c1"># reset color</span></div>
 
 
     <span class="k">def</span> <span class="nf">DrawScrollbar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
@@ -629,21 +811,31 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">PrintText</span><span class="p">(</span><span class="s2">&quot;░&quot;</span><span class="p">)</span>
 
-        <span class="c1"># DEBUG</span>
-        <span class="c1">#self.SetCursor(self.x+self.w-9, self.y+self.h-1)</span>
-        <span class="c1">#self.SetColor(&quot;1;30&quot;, &quot;40&quot;)</span>
-        <span class="c1">#self.PrintText(&quot;sp=%d,%d&quot;%(pos,marker))</span>
 
+<div class="viewcode-block" id="ListView.HandleKey"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.listview.ListView.HandleKey">[docs]</a>    <span class="k">def</span> <span class="nf">HandleKey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method must be called whenever a key was pressed and this list view is &quot;active&quot;.</span>
+<span class="sd">        It expects the key name returned by :meth:`lib.clui.text.Text.GetKey`.</span>
 
-    <span class="k">def</span> <span class="nf">HandleKey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="sd">        If the key is ``&quot;up&quot;`` the element above the current selected element gets selected.</span>
+<span class="sd">        If the key is ``&quot;down&quot;`` the one below will be selected.</span>
+<span class="sd">        Any other key gets passed to the :meth:`~onAction` method.</span>
+<span class="sd">        Read the documentation of the :meth:`~onAction` method to see how the return value of that method gets processed.</span>
+
+<span class="sd">        After handling an key, the :meth:`~Draw` method gets called to refresh the view.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str): Key name that shall be handled</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;up&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span> <span class="o">-=</span> <span class="mi">1</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">listoffset</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">listoffset</span> <span class="o">-=</span> <span class="mi">1</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">Draw</span><span class="p">()</span>
 
         <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;down&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
@@ -652,14 +844,15 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">listoffset</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">listoffset</span> <span class="o">+=</span> <span class="mi">1</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">Draw</span><span class="p">()</span>
-
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">onAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span><span class="p">],</span> <span class="n">key</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">Draw</span><span class="p">()</span></div>
+                <span class="n">updatedelement</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">onAction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span><span class="p">],</span> <span class="n">key</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">updatedelement</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span><span class="p">]</span> <span class="o">=</span> <span class="n">updatedelement</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">linemarker</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
 
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">Draw</span><span class="p">()</span></div></div>
 
 
 <span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
@@ -700,7 +893,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0.0 alpha',
+            VERSION:'1.0.0 beta',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

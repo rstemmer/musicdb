@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.clui.pane &mdash; MusicDB 1.0.0 alpha documentation</title>
+  <title>lib.clui.pane &mdash; MusicDB 1.0.0 beta documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -91,10 +91,6 @@
             
               <p class="caption"><span class="caption-text">Concepts</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../basics/changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../basics/changelog.html#id1">1.0.0 - 31.12.2017</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#metrics">Metrics</a></li>
@@ -252,11 +248,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/genres.html">genres - Genre Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/mise.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/musicai.html#class-description">Class Description</a></li>
@@ -364,7 +362,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.pane">Pane</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.buttonview">ButtonView</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.listview">ListView</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.group">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.dialog">Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.textinput">TextInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.boolinput">BoolInput</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
 </ul>
 </li>
@@ -551,24 +551,50 @@
 <span class="kn">from</span> <span class="nn">lib.clui.frame</span> <span class="k">import</span> <span class="n">Frame</span>
 
 <div class="viewcode-block" id="Pane"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.pane.Pane">[docs]</a><span class="k">class</span> <span class="nc">Pane</span><span class="p">(</span><span class="n">Frame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class can be used to define a whole, filled are in the shell.</span>
+<span class="sd">    The area consist of spaces in the defined color.</span>
+<span class="sd">    Around the area, a :class:`~lib.clui.frame.Frame` gets printed.</span>
+
+<span class="sd">    If a title is set, then this title gets printed in the top left corner of the frame.</span>
+<span class="sd">    The title gets surrounded by a space character.</span>
+
+<span class="sd">    The coordinates define the placement of the frame, the usable area starts with an offset of one.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        title (str): Optional title for the area.</span>
+<span class="sd">        x,y (int): Start position of the frame (top left corner) of this area</span>
+<span class="sd">        w (int): width of the frame</span>
+<span class="sd">        h (int): height of the frame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="n">Frame</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Coordinates, width and height must be of type integer&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No negative coordinates allowed&quot;</span><span class="p">)</span>
+        
         <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">w</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="n">h</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetColor</span><span class="p">(</span><span class="s2">&quot;1;31&quot;</span><span class="p">,</span> <span class="s2">&quot;40&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">Draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">SetColor</span><span class="p">(</span><span class="s2">&quot;1;31&quot;</span><span class="p">,</span> <span class="s2">&quot;40&quot;</span><span class="p">)</span> <span class="c1"># reset color</span>
+<div class="viewcode-block" id="Pane.Draw"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.pane.Pane.Draw">[docs]</a>    <span class="k">def</span> <span class="nf">Draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method prints a whole area in the shell.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetColor</span><span class="p">()</span> <span class="c1"># reset color</span>
         <span class="n">Frame</span><span class="o">.</span><span class="n">Draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">SetCursor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">PrintText</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div>
-
-
-
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">PrintText</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">)</span></div></div>
 
 
 <span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
@@ -609,7 +635,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0.0 alpha',
+            VERSION:'1.0.0 beta',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

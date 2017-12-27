@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.clui.tabgroup &mdash; MusicDB 1.0.0 alpha documentation</title>
+  <title>lib.clui.tabgroup &mdash; MusicDB 1.0.0 beta documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -91,10 +91,6 @@
             
               <p class="caption"><span class="caption-text">Concepts</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../basics/changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../basics/changelog.html#id1">1.0.0 - 31.12.2017</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#metrics">Metrics</a></li>
@@ -252,11 +248,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/genres.html">genres - Genre Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/mise.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/musicai.html#class-description">Class Description</a></li>
@@ -364,7 +362,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.pane">Pane</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.buttonview">ButtonView</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.listview">ListView</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.group">Group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.dialog">Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.textinput">TextInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.boolinput">BoolInput</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
 </ul>
 </li>
@@ -551,19 +551,44 @@
 <span class="kn">from</span> <span class="nn">lib.clui.frame</span> <span class="k">import</span> <span class="n">Frame</span>
 
 <div class="viewcode-block" id="TabGroup"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.tabgroup.TabGroup">[docs]</a><span class="k">class</span> <span class="nc">TabGroup</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class can be used to group multiple UI elements.</span>
+<span class="sd">    They can be selected by pressing *tab* (``&quot;\t&quot;``).</span>
+<span class="sd">    All other keys get passed to the selected UI element.</span>
+<span class="sd">    The selected element gets highlighted by setting its frame line-style to ``Frame.LINESTYLE_BOLD``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">panes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># index of the current selected pane</span>
 
-    <span class="k">def</span> <span class="nf">AddPane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pane</span><span class="p">):</span>
+<div class="viewcode-block" id="TabGroup.AddPane"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.tabgroup.TabGroup.AddPane">[docs]</a>    <span class="k">def</span> <span class="nf">AddPane</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pane</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a pane to the list of UI elements.</span>
+<span class="sd">        They must provide the ``HandleKey``, ``Draw`` and ``SetLineStyle`` method!</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pane: A UI element that shall be added.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pane</span><span class="p">)</span>
 
         <span class="c1"># select first pane</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">SetLineStyle</span><span class="p">(</span><span class="n">Frame</span><span class="o">.</span><span class="n">LINESTYLE_BOLD</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Draw</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">Draw</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">HandleKey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="TabGroup.HandleKey"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.tabgroup.TabGroup.HandleKey">[docs]</a>    <span class="k">def</span> <span class="nf">HandleKey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pass the key to the current selected pane.</span>
+<span class="sd">        If the key is ``&quot;\t&quot;``, then the next pane in the list gets selected.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str): A key name as returned by :meth:`lib.clui.text.GetKey`.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -574,9 +599,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">SetLineStyle</span><span class="p">(</span><span class="n">Frame</span><span class="o">.</span><span class="n">LINESTYLE_BOLD</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">Draw</span><span class="p">()</span>
             <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;backtab&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">SetLineStyle</span><span class="p">(</span><span class="n">Frame</span><span class="o">.</span><span class="n">LINESTYLE_NORMAL</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">Draw</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">SetLineStyle</span><span class="p">(</span><span class="n">Frame</span><span class="o">.</span><span class="n">LINESTYLE_BOLD</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">Draw</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">panes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">HandleKey</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-        <span class="k">return</span></div>
+        <span class="k">return</span></div></div>
 
 
 
@@ -618,7 +649,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0.0 alpha',
+            VERSION:'1.0.0 beta',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
