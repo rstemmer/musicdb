@@ -347,6 +347,20 @@ class Filesystem(object):
 
 
 
+    def GetDirectory(self, xpath):
+        """
+        This method returns the directory a file or folder is stored in.
+
+        Args:
+            xpath (str): A path to a file (path must not exist)
+
+        Returns:
+            The directory of that file
+        """
+        return os.path.split(xpath)[0]
+
+
+
     def SetAttributes(self, xpath, owner, group, mode):
         """
         This method sets attributes for a file or directory.
