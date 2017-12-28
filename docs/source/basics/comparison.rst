@@ -16,6 +16,7 @@ Introducing other tools
    * `Ampache <http://ampache.org/index.html>`_
    * `Sonerezh <https://www.sonerezh.bzh/>`_
    * `Music Playing Daemon <https://musicpd.org/>`_
+   * `Modipy <https://www.mopidy.com/>`_
 
 Some tools use `MusicBrainz <https://musicbrainz.org/>`_.
 This project collects music meta data and provides them to the world.
@@ -75,41 +76,48 @@ Comparison
 ----------
 
 
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Metric            | MusicDB     | beets       | CherryMusic | Ampache     | Sonerezh    | mpd         |
-+===================+=============+=============+=============+=============+=============+=============+
-| Focus             | Presenting  | File and    | Web audio   | Remote music| Web audio   | Streaming   |
-|                   | music,      | meta data   | player      | managing via| player      |             |
-|                   | Music queue | management  |             | WebUI       |             |             |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Information Source| Filesystem, | Tags,       | Tags        | Tags,       |             | Tags        |
-|                   | Analysis,   | MusicBrainz |             | MusicBrainz |             |             |
-|                   | AI          |             |             |             |             |             |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| External Sources  | ffmpeg      | MusicBrainz |             | MusicBrainz |             | None        |
-|                   |             |             |             |             |             |             |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| File management   | By user only| Renameing / | None        |             | None        | None        |
-|                   |             | Moving      |             |             |             |             |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| File meta data    | None        | Read/Write  | Read        | Read?       | Read?       | Read        |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Artwork managing  | Yes         |             |             |             |             | No          |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Lyrics managing   | Yes         |             |             | No          | No          | No          |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Export            | Yes         | Yes         | No          | No          | No          | No          |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Streaming         | Yes         | Yes         | No          | Yes         | No          | Yes         |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| UI                | CLI/WebUI   | CLI         | WebUI       | CLI/WebUI   | WebUI       | CLI         |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Playlist          | Queue,      |             | Playlist,   | Playlist,   | Playlist,   | Queue,      |
-|                   | Random      |             | Queue,      | Random      | Queue,      | Playlist    |
-|                   |             |             | Random      |             | Random      | Playlist    |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+
-| Multiuser         | No          |             | Yes         | Yes         | Yes         | Yes         |
-+-------------------+-------------+-------------+-------------+-------------+-------------+-------------+
++-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| Metric            | MusicDB     | beets       | CherryMusic | Ampache     | Sonerezh    | Modipy      | mpd         |
++===================+=============+=============+=============+=============+=============+=============+=============+
+| Focus             | Presenting  | File and    | Web audio   | Remote music| Web audio   | Streaming   | Streaming   |
+|                   | music,      | meta data   | player      | managing via| player      | server, web | server and  |
+|                   | Music queue | management  |             | WebUI       |             | player (1)  | clients (2) |
++-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| Information Source| Filesystem, | Tags,       | Tags        | Tags,       |             | Tags        | Tags        |
+|                   | Analysis,   | MusicBrainz |             | MusicBrainz |             |             |             |
+|                   | AI          |             |             |             |             |             |             |
++-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| External Sources  | ffmpeg      | MusicBrainz |             | MusicBrainz |             |             | None        |
+|                   |             |             |             |             |             |             |             |
++-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| File management   | By user only| Renameing / | None        |             | None        | None        | None        |
+|                   |             | Moving      |             |             |             |             |             |
++-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| File meta data    | None        | Read/Write  | Read        | Read?       | Read?       | Read        | Read        |
++-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| Artwork managing  | Yes         |             |             |             |             |             | No          |
++-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| Lyrics managing   | Yes         |             |             | No          | No          |             | No          |
++-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| Export            | Yes         | Yes         | No          | No          | No          | No          | No          |
++-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| Streaming         | Yes         | Yes         | No          | Yes         | No          | Yes         | Yes         |
++-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| UI                | CLI/WebUI   | CLI         | WebUI       | CLI/WebUI   | WebUI       | CLI/(1)     | CLI/(2)     |
++-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| Playlist          | Queue,      |             | Playlist,   | Playlist,   | Playlist,   | Playlist    | Queue,      |
+|                   | Random      |             | Queue,      | Random      | Queue,      |             | Playlist,   |
+|                   |             |             | Random      |             | Random      |             | Random      |
++-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+| Multiuser         | No          |             | Yes         | Yes         | Yes         | No          | Yes         |
++-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
+
+(1):
+   There are extensions to access the server from the `web <https://docs.mopidy.com/en/latest/ext/web/#ext-web>`_.
+   *Modipy* also supports `MPD Clients<https://docs.mopidy.com/en/latest/clients/mpd/>`_.
+
+(2):
+   There exist also `Music Playing Daemon Clients <https://www.musicpd.org/clients/>`_
 
 Conclusion
 ----------
@@ -122,4 +130,7 @@ When you have a totally messed up collection of files you want to organize, the 
 **MusicDB** is for those who manage their files by himself and want to have music centric WebUI and streaming solution.
 If you cannot live with any of those tools and you want to develop your own solution, 
 `Music Playing Daemon <https://musicpd.org/>`_ is the streaming backend you want to use.
+If *MPD* is a level to low, try `Modipy <https://www.mopidy.com/>`_. It provides the possibility for extensions on server side as well as on client side.
+In fact *Modipy* is very similar to *MusicDB*.
+It just follows the common concepts of audio file management and audio players while *MusicDB* introduces different concepts and approaches.
 
