@@ -33,6 +33,9 @@ class TextInput(Text):
         self.data  = "" # text buffer
         self.cursor= 0
         self.offset= 0  # where to start printing - important when data is larger than input element
+        self.textfg   = "1;37"
+        self.textbg   = "44"
+        self.cursorbg = "46"
 
 
     def SetData(self, string):
@@ -75,14 +78,14 @@ class TextInput(Text):
         Returns:
             *Nothing*
         """
-        self.SetColor("1;37", "44")
+        self.SetColor(self.textfg, self.textbg)
         string = self.data[self.offset:self.offset+self.w]
         string = string.ljust(self.w)
         self.SetCursor(self.x, self.y)
         self.PrintText(string)
 
         self.SetCursor(self.x+self.cursor, self.y)
-        self.SetBGColor("46")
+        self.SetBGColor(self.cursorbg)
         self.PrintText(string[self.cursor])
 
 
@@ -134,6 +137,33 @@ class TextInput(Text):
 
         self.Draw()
 
+
+
+class NoTextInput(TextInput):
+    """
+    This is a *read-only* variation of the :class:`~TextInput` element.
+
+    Args:
+        x,y (int): Position of the list view
+        w (int): Width
+    """
+    def __init__(self, x=0, y=0, w=0):
+        TextInput.__init__(self, x, y, w)
+        self.textfg   = "1;36"
+        self.textbg   = "40"
+        self.cursorbg = "40"
+
+    def HandleKey(self, key=None):
+        """
+        This method does nothing. This is a read-only control element.
+
+        Args:
+            key: *will be ignored*
+
+        Returns:
+            *Nothing*
+        """
+        pass
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
