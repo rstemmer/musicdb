@@ -17,6 +17,12 @@ div#ABVMetaBox
 }
 
 
+div#AlbumGenreBox
+{
+    display:        flex;
+    flex-direction: column;
+    align-items:    flex-end;
+}
 
 /******************/
 /* Artwork        */
