@@ -1276,9 +1276,13 @@ class MusicDBWebSocketInterface(object):
         It is a list of songs that were played before or after the song with song ID *songid*.
 
         The returned dictionary contains the same song ID given as argument to this method, and list of related songs.
-        Each lists entry is a dictionary with the related song, album and artist album from the database.
-        Furthermore the weight is given.
+        Each lists entry is a dictionary with the related ``song``, ``album`` and ``artist`` album from the database.
+        Furthermore the ``weight`` is given.
         The weight indicates how often the two songs were played together.
+
+        Added in 1.1.0:
+            The ``tags`` of that song will also be returned separated into ``genre``, ``subgenre`` and ``mood``.
+            See :meth:`~GetSongTags` for details how they are returned.
 
         Args:
             songid (int): ID so a song
@@ -1301,6 +1305,7 @@ class MusicDBWebSocketInterface(object):
                         console.log("Songs related to the one with ID " + args.songid)
                         for(let entry of args.songs)
                             console.log("Song " + entry.song.name + " with weight " + entry.weight);
+                            console.log(entry.tags.genres)  // With version 1.1.0 tags will be returned, too
                     }
                 }
         """
@@ -1317,7 +1322,9 @@ class MusicDBWebSocketInterface(object):
             songid = result["id"]
             weight = result["weight"]
             song   = self.database.GetSongById(songid)
+            tags   = self.GetSongTags(songid)
             entry["song"]    = song
+            entry["tags"]    = tags
             entry["weight"]  = weight
             entry["album"]   = self.database.GetAlbumById(song["albumid"])
             entry["artist"]  = self.database.GetArtistById(song["artistid"])

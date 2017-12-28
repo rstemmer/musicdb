@@ -5,7 +5,11 @@
 
 div.ST_tile
 {
+    display:        flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
+
 div.ST_body
 {
     display:        flex;
@@ -13,9 +17,26 @@ div.ST_body
     justify-content: space-around;
     height:         50px;
     padding-left:   10px;
+    flex-grow:      1;
+    overflow:       hidden;
 }
-
-
+div.ST_tagbox
+{
+    display:        flex;
+    flex-direction: column;
+    align-items:    flex-end;
+    justify-content: space-around;
+    flex-shrink:    0;
+    flex-grow:      0;
+}
+div.ST_buttonbox
+{
+    display:        flex;
+    flex-direction: column;
+    /*justify-content: space-around;*/
+    flex-shrink:    0;
+    flex-grow:      0;
+}
 div.ST_artworkbox
 {
     display:        flex;
@@ -23,7 +44,10 @@ div.ST_artworkbox
     border-radius:  5px;
     overflow:       hidden;
     float:          left;
+    flex-shrink:    0;
+    flex-grow:      0;
 }
+
 img.ST_artwork
 {
     max-width:      50px;
@@ -43,9 +67,6 @@ div.ST_songname
     font-weight:    bold;
     overflow:       hidden;
     white-space:    nowrap;
-}
-div.ST_buttonbox
-{
 }
 
 div.ST_subtitle

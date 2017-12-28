@@ -10,6 +10,7 @@
 │ ∗ Derives album genres based on its song genres
 │
 ┝━ MINOR CHANGES
+│ ∗ WebAPI GetSongRelationship adds the tags of a related song to the returned list
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2017-12-27 ┣━━━━┫ 1.0.0 beta ┣━━━╍╍
