@@ -197,6 +197,16 @@ class ListView(Pane):
         self.listoffset = 0
 
 
+    def GetData(self):
+        """
+        Returns the list of elements.
+
+        Returns:
+            The list of elements of the list view
+        """
+        return self.elements
+
+
     def SetSelectedData(self, element):
         """
         Replaces the selected element with a new one.
