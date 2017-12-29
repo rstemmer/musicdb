@@ -226,7 +226,7 @@ class Text(object):
             * ``escape`` (Must be hit twice)
             * ``enter``, ``backspace``, ``delete``
             * ``backtab`` (shift+tab)
-            * ``up``, ``down``, ``left``, ``right``
+            * ``up``, ``down``, ``left``, ``right``, ``end``, ``home``
             * ``Ctrl-D``
 
         In case you want to get other keys, it is easy to add them by editing the code of this method.
@@ -264,13 +264,18 @@ class Text(object):
         elif key == "Z":
             return "backtab"
 
-        # In case of 3, there is more comming
-        if key != "3":
-            return None
-
-        key = self.GetRawKey()
-        if key == "~":
-            return "delete"
+        if key == "1":
+            key = self.GetRawKey()
+            if key == "~":
+                return "home"
+        if key == "3":
+            key = self.GetRawKey()
+            if key == "~":
+                return "delete"
+        if key == "4":
+            key = self.GetRawKey()
+            if key == "~":
+                return "end"
 
         return None
 

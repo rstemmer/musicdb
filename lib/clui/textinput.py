@@ -55,8 +55,7 @@ class TextInput(Text):
         if type(string) != str:
             raise TypeError("Data must be of type string!")
 
-        self.data   = string
-        self.cursor = len(self.data)  # cursor at the end of the text
+        self.data = string
 
 
     def GetData(self):
@@ -79,6 +78,7 @@ class TextInput(Text):
             *Nothing*
         """
         self.SetColor(self.textfg, self.textbg)
+
         string = self.data[self.offset:self.offset+self.w]
         string = string.ljust(self.w)
         self.SetCursor(self.x, self.y)
@@ -120,6 +120,15 @@ class TextInput(Text):
                 self.cursor += 1
             elif self.offset + len(self.data) > self.w and self.offset+self.cursor < len(self.data):
                 self.offset += 1
+
+        elif key == "home":
+            self.cursor = 0
+            self.offset = 0
+
+        elif key == "end":
+            self.cursor = min(len(self.data), self.w-1)
+            if len(self.data) > self.w:
+                self.offset = len(self.data)-self.w + 1
 
         elif key == "backspace" and self.cursor > 0:
             self.data   = self.data[:self.offset + self.cursor-1] + self.data[self.offset + self.cursor:]
