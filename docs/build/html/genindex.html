@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; MusicDB 1.0.0 beta documentation</title>
+  <title>Index &mdash; MusicDB 1.1.0 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="index.html"/> 
+    <link rel="top" title="MusicDB 1.1.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0
+                1.1
               </div>
             
           
@@ -238,6 +238,7 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="mod/add.html">add - Add New Album to MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mod/artwork.html#class">class</a></li>
 </ul>
@@ -725,6 +726,8 @@
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.DeleteTag">DeleteTag() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
+      <li><a href="mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeriveAlbumTags">DeriveAlbumTags() (mdbapi.tags.MusicDBTags method)</a>
+</li>
       <li><a href="lib/clui.html#lib.clui.dialog.Dialog">Dialog (class in lib.clui.dialog)</a>
 </li>
   </ul></td>
@@ -882,11 +885,17 @@
       <li><a href="lib/clui.html#lib.clui.boolinput.BoolInput.GetData">GetData() (lib.clui.boolinput.BoolInput method)</a>
 
       <ul>
+        <li><a href="lib/clui.html#lib.clui.listview.ListView.GetData">(lib.clui.listview.ListView method)</a>
+</li>
         <li><a href="lib/clui.html#lib.clui.textinput.TextInput.GetData">(lib.clui.textinput.TextInput method)</a>
 </li>
       </ul></li>
       <li><a href="lib/config.html#lib.cfg.musicdb.MusicDBConfig.GetDirectory">GetDirectory() (lib.cfg.musicdb.MusicDBConfig method)</a>
+
+      <ul>
+        <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.GetDirectory">(lib.filesystem.Filesystem method)</a>
 </li>
+      </ul></li>
       <li><a href="lib/config.html#lib.cfg.musicdb.MusicDBConfig.GetFile">GetFile() (lib.cfg.musicdb.MusicDBConfig method)</a>
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.GetFileExtension">GetFileExtension() (lib.filesystem.Filesystem method)</a>
@@ -895,10 +904,10 @@
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.GetFiles">GetFiles() (lib.filesystem.Filesystem method)</a>
 </li>
-      <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.GetFilterList">GetFilterList() (lib.cfg.mdbstate.MDBState method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.GetFilterList">GetFilterList() (lib.cfg.mdbstate.MDBState method)</a>
+</li>
       <li><a href="lib/database.html#lib.db.database.Database.GetFromDatabase">GetFromDatabase() (lib.db.database.Database method)</a>
 </li>
       <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI.GetGenreMatrix">GetGenreMatrix() (mdbapi.musicai.MusicAI method)</a>
@@ -1153,6 +1162,8 @@
 </li>
       <li><a href="mod/mise.html#mod.mise.mise">mise (class in mod.mise)</a>
 </li>
+      <li><a href="mod/add.html#module-mod.add">mod.add (module)</a>
+</li>
       <li><a href="mod/artwork.html#module-mod.artwork">mod.artwork (module)</a>
 </li>
       <li><a href="mod/database.html#module-mod.database">mod.database (module)</a>
@@ -1193,6 +1204,8 @@
         <li><a href="mdbapi/tags.html#mdbapi.tags.MusicDBTags.ModifyTag">(mdbapi.tags.MusicDBTags method)</a>
 </li>
       </ul></li>
+      <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.MoveDirectory">MoveDirectory() (lib.filesystem.Filesystem method)</a>
+</li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.MoveFile">MoveFile() (lib.filesystem.Filesystem method)</a>
 </li>
       <li><a href="mdbapi/mpd.html#mdbapi.mpd.MoveSong">MoveSong() (in module mdbapi.mpd)</a>
@@ -1340,6 +1353,8 @@
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag">RemoveAlbumTag() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveArtistRelations">RemoveArtistRelations() (lib.db.trackerdb.TrackerDatabase method)</a>
+</li>
+      <li><a href="lib/clui.html#lib.clui.buttonview.ButtonView.RemoveButton">RemoveButton() (lib.clui.buttonview.ButtonView method)</a>
 </li>
       <li><a href="mdbapi/mpd.html#mdbapi.mpd.RemoveCallback">RemoveCallback() (in module mdbapi.mpd)</a>
 </li>
@@ -1640,7 +1655,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0.0 beta',
+            VERSION:'1.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

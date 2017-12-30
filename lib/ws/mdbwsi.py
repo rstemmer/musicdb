@@ -92,6 +92,7 @@ from mdbapi.lycra       import Lycra
 from mdbapi.database    import MusicDBDatabase
 from mdbapi.randy       import RandyInterface
 from mdbapi.mise        import MusicDBMicroSearchEngine
+from mdbapi.tags        import MusicDBTags
 import mdbapi.mpd as mpd
 import logging
 from threading          import Thread
@@ -106,6 +107,7 @@ class MusicDBWebSocketInterface(object):
         self.mise       = mise
         self.cfg        = cfg
         self.fs         = Filesystem(self.cfg.music.path)
+        self.tags       = MusicDBTags(self.cfg, self.database)
         self.mdbstate   = mdbstate
         self.randy      = None  # RandyInterface will be created onWSConnect
 
@@ -732,7 +734,8 @@ class MusicDBWebSocketInterface(object):
 
     def GetAlbumTags(self, albumid):
         """
-        Same as :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags` just for an Album
+        Similar to :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags`.
+        This method returns the tags for an Album.
         """
         tags = self.database.GetTargetTags("album", albumid)
         genres, subgenres, moods = self.database.SplitTagsByClass(tags)
@@ -1273,9 +1276,12 @@ class MusicDBWebSocketInterface(object):
         It is a list of songs that were played before or after the song with song ID *songid*.
 
         The returned dictionary contains the same song ID given as argument to this method, and list of related songs.
-        Each lists entry is a dictionary with the related song, album and artist album from the database.
-        Furthermore the weight is given.
+        Each lists entry is a dictionary with the related ``song``, ``album`` and ``artist`` album from the database.
+        Furthermore the ``weight`` is given.
         The weight indicates how often the two songs were played together.
+
+        The ``tags`` of that song will also be returned separated into ``genre``, ``subgenre`` and ``mood``.
+        See :meth:`~GetSongTags` for details how they are returned.
 
         Args:
             songid (int): ID so a song
@@ -1298,6 +1304,7 @@ class MusicDBWebSocketInterface(object):
                         console.log("Songs related to the one with ID " + args.songid)
                         for(let entry of args.songs)
                             console.log("Song " + entry.song.name + " with weight " + entry.weight);
+                            console.log(entry.tags.genres)
                     }
                 }
         """
@@ -1314,7 +1321,9 @@ class MusicDBWebSocketInterface(object):
             songid = result["id"]
             weight = result["weight"]
             song   = self.database.GetSongById(songid)
+            tags   = self.GetSongTags(songid)
             entry["song"]    = song
+            entry["tags"]    = tags
             entry["weight"]  = weight
             entry["album"]   = self.database.GetAlbumById(song["albumid"])
             entry["artist"]  = self.database.GetArtistById(song["artistid"])
@@ -1488,6 +1497,10 @@ class MusicDBWebSocketInterface(object):
         After executing this method, the MusicDB server broadcasts the result of :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong`. (``method = "broadcast", fncname = "GetSong"``)
         So each client gets informed about the changes made.
         This is important to update the HUD if the song is currently playing.
+        
+        After setting the new tag for the song, 
+        the album tags get updated using :meth:`mdbapi.tags.MusicDBTags.DeriveAlbumTags`.
+        So when changing a genre or sub genre, then they get suggested as album genre or sub genre
 
         Args:
             songid (int): ID of the song
@@ -1521,6 +1534,8 @@ class MusicDBWebSocketInterface(object):
             return None
 
         self.database.SetTargetTag("song", songid, tagid)
+        albumid = self.database.GetSongById(songid)["albumid"]
+        self.tags.DeriveAlbumTags(albumid)
         return None
 
 
@@ -1533,6 +1548,10 @@ class MusicDBWebSocketInterface(object):
         After executing this method, the MusicDB server broadcasts the result of :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong`. (``method = "broadcast", fncname = "GetSong"``)
         So each client gets informed about the changes made.
         This is important to update the HUD if the song is currently playing.
+        
+        After setting the new tag for the song, 
+        the album tags get updated using :meth:`mdbapi.tags.MusicDBTags.DeriveAlbumTags`.
+        So when changing a genre or sub genre, then they get suggested as album genre or sub genre
 
         Args:
             songid (int): ID of the song
@@ -1551,6 +1570,8 @@ class MusicDBWebSocketInterface(object):
             return None
 
         self.database.RemoveTargetTag("song", songid, tagid)
+        albumid = self.database.GetSongById(songid)["albumid"]
+        self.tags.DeriveAlbumTags(albumid)
         return None
 
 

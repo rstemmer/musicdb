@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Websocket API &mdash; MusicDB 1.0.0 beta documentation</title>
+  <title>MusicDB Websocket API &mdash; MusicDB 1.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 1.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Workflow for development" href="workflow.html"/>
         <link rel="prev" title="MusicDB Test VMs" href="testvm.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.0
+                1.1
               </div>
             
           
@@ -239,6 +239,7 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
@@ -1034,7 +1035,8 @@ So, typos or all lowercase input are no problem.</p>
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags">
 <code class="descname">GetAlbumTags</code><span class="sig-paren">(</span><em>albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetAlbumTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="Permalink to this definition">¶</a></dt>
-<dd><p>Same as <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal"><span class="pre">GetSongTags()</span></code></a> just for an Album</p>
+<dd><p>Similar to <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal"><span class="pre">GetSongTags()</span></code></a>.
+This method returns the tags for an Album.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1373,9 +1375,11 @@ If there are not songs in the queue, an empty list gets returned.</p>
 <dd><p>This method returns the relationship of a song.
 It is a list of songs that were played before or after the song with song ID <em>songid</em>.</p>
 <p>The returned dictionary contains the same song ID given as argument to this method, and list of related songs.
-Each lists entry is a dictionary with the related song, album and artist album from the database.
-Furthermore the weight is given.
+Each lists entry is a dictionary with the related <code class="docutils literal"><span class="pre">song</span></code>, <code class="docutils literal"><span class="pre">album</span></code> and <code class="docutils literal"><span class="pre">artist</span></code> album from the database.
+Furthermore the <code class="docutils literal"><span class="pre">weight</span></code> is given.
 The weight indicates how often the two songs were played together.</p>
+<p>The <code class="docutils literal"><span class="pre">tags</span></code> of that song will also be returned separated into <code class="docutils literal"><span class="pre">genre</span></code>, <code class="docutils literal"><span class="pre">subgenre</span></code> and <code class="docutils literal"><span class="pre">mood</span></code>.
+See <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal"><span class="pre">GetSongTags()</span></code></a> for details how they are returned.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1398,6 +1402,7 @@ The weight indicates how often the two songs were played together.</p>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Songs related to the one with ID &quot;</span> <span class="o">+</span> <span class="nx">args</span><span class="p">.</span><span class="nx">songid</span><span class="p">)</span>
         <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">entry</span> <span class="k">of</span> <span class="nx">args</span><span class="p">.</span><span class="nx">songs</span><span class="p">)</span>
             <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Song &quot;</span> <span class="o">+</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">song</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot; with weight &quot;</span> <span class="o">+</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">weight</span><span class="p">);</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">tags</span><span class="p">.</span><span class="nx">genres</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -1621,6 +1626,9 @@ The position is the index of the song in the queue and must be an integer.</p>
 <p>After executing this method, the MusicDB server broadcasts the result of <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong"><code class="xref py py-meth docutils literal"><span class="pre">GetSong()</span></code></a>. (<code class="docutils literal"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;broadcast&quot;,</span> <span class="pre">fncname</span> <span class="pre">=</span> <span class="pre">&quot;GetSong&quot;</span></code>)
 So each client gets informed about the changes made.
 This is important to update the HUD if the song is currently playing.</p>
+<p>After setting the new tag for the song,
+the album tags get updated using <a class="reference internal" href="../mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeriveAlbumTags" title="mdbapi.tags.MusicDBTags.DeriveAlbumTags"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.tags.MusicDBTags.DeriveAlbumTags()</span></code></a>.
+So when changing a genre or sub genre, then they get suggested as album genre or sub genre</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1758,6 +1766,9 @@ So, this method can also be used to approve an AI set tag.</p>
 <p>After executing this method, the MusicDB server broadcasts the result of <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong"><code class="xref py py-meth docutils literal"><span class="pre">GetSong()</span></code></a>. (<code class="docutils literal"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;broadcast&quot;,</span> <span class="pre">fncname</span> <span class="pre">=</span> <span class="pre">&quot;GetSong&quot;</span></code>)
 So each client gets informed about the changes made.
 This is important to update the HUD if the song is currently playing.</p>
+<p>After setting the new tag for the song,
+the album tags get updated using <a class="reference internal" href="../mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeriveAlbumTags" title="mdbapi.tags.MusicDBTags.DeriveAlbumTags"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.tags.MusicDBTags.DeriveAlbumTags()</span></code></a>.
+So when changing a genre or sub genre, then they get suggested as album genre or sub genre</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1842,7 +1853,7 @@ This is important to update the HUD if the song is currently playing.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.0 beta',
+            VERSION:'1.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

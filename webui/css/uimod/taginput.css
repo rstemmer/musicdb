@@ -122,6 +122,7 @@ div.TAGI_TagElement_ConfidenceBar
     color:              #000;
     padding-left:       1px;
     padding-right:      1px;
+    overflow:           hidden;
 }
 
 

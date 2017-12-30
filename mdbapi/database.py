@@ -493,7 +493,13 @@ class MusicDBDatabase(object):
         album["path"]       = albumpath
 
         # get all songs from the albums - this is important to collect all infos for the album entry
-        songpaths = self.fs.GetFiles(albumpath, self.ignoresongs) # ignores also all directories
+        paths = self.fs.GetFiles(albumpath, self.ignoresongs) # ignores also all directories
+
+        # remove files that are not music
+        songpaths = []
+        for path in paths:
+            if self.fs.GetFileExtension(path) in ["mp3", "m4a", "aac", "flac"]:
+                songpaths.append(path)
 
         # analyse the first one for the album-entry
         self.meta.Load(songpaths[0])

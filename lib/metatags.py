@@ -72,7 +72,7 @@ class MetaTags(object):
         self.path = self.fs.AbsolutePath(path)
         if not self.fs.IsFile(self.path):
             self.path = None
-            raise ValueError("File \"%s\" does not exist", fullpath)
+            raise ValueError("File \"%s\" does not exist"%(self.path))
         
         # remenber the path for debugging
         self.extension = self.fs.GetFileExtension(self.path)
@@ -86,7 +86,7 @@ class MetaTags(object):
             self.ftype = "mp3"
         else:
             self.path = None
-            raise ValueError("Unsupported file-extension \"%s\" of \"%s\"", self.extension, path)
+            raise ValueError("Unsupported file-extension \"%s\" of \"%s\""%(self.extension, self.path))
 
         logging.debug("Loading file of type %s from \"%s\"", self.ftype, self.path)
 
@@ -99,7 +99,7 @@ class MetaTags(object):
             self.file = MP4(self.path)
         else:
             self.path = None
-            raise ValueError("Unsupported file-type")
+            raise ValueError("Unsupported file-type %s"%(self.ftype))
 
 
     def GetAllMetadata(self):

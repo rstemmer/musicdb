@@ -57,6 +57,7 @@ Examples:
 import argparse
 from lib.modapi     import MDBModule
 from mdbapi.artwork import MusicDBArtwork
+import logging
 from tqdm           import tqdm
 
 class artwork(MDBModule, MusicDBArtwork):
@@ -85,6 +86,7 @@ class artwork(MDBModule, MusicDBArtwork):
             *Nothing*
         """
         artists = self.db.GetAllArtists()
+        print("\033[1;34mUpdating Artworks\033[0;36m")
         for artist in tqdm(artists, unit="Artists"):
             albums = self.db.GetAlbumsByArtistId(artist["id"])
             for album in albums:
@@ -142,11 +144,17 @@ class artwork(MDBModule, MusicDBArtwork):
             else:
                 self.UpdateArtist()
 
-            self.GenerateAppCacheManifest()
+            try:
+                self.GenerateAppCacheManifest()
+            except PermissionError:
+                logging.error("Cannot write manifest file due to permission error")
 
         # Only update Manifest
         elif args.manifest:
-            self.GenerateAppCacheManifest()
+            try:
+                self.GenerateAppCacheManifest()
+            except PermissionError:
+                logging.error("Cannot write manifest file due to permission error")
 
         return 0
 

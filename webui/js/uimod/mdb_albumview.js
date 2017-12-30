@@ -28,7 +28,7 @@ function ShowAlbum(parentID, MDBArtist, MDBAlbum, MDBCDs, MDBAlbumTags, currents
     // Cover
     html += _ABV_CreateCover(MDBAlbum);
     // Tags
-    html += "<div id=\"AlbumGenreBox\" class=\"hlcolor smallfont\">";
+    html += "<div id=\"AlbumGenreBox\" class=\"hlcolor smallfont hovpacity\">";
     html += "   <div id=\"AlbumGenre\" class=\"hlcolor\"></div>";
     html += "   <div id=\"AlbumSubgenre\" class=\"hlcolor\"></div>";
     html += "</div>";

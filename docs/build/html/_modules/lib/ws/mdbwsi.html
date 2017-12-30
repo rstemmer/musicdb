@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.ws.mdbwsi &mdash; MusicDB 1.0.0 beta documentation</title>
+  <title>lib.ws.mdbwsi &mdash; MusicDB 1.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 1.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0
+                1.1
               </div>
             
           
@@ -238,6 +238,7 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/add.html">add - Add New Album to MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/artwork.html#class">class</a></li>
 </ul>
@@ -626,6 +627,7 @@
 <span class="kn">from</span> <span class="nn">mdbapi.database</span>    <span class="k">import</span> <span class="n">MusicDBDatabase</span>
 <span class="kn">from</span> <span class="nn">mdbapi.randy</span>       <span class="k">import</span> <span class="n">RandyInterface</span>
 <span class="kn">from</span> <span class="nn">mdbapi.mise</span>        <span class="k">import</span> <span class="n">MusicDBMicroSearchEngine</span>
+<span class="kn">from</span> <span class="nn">mdbapi.tags</span>        <span class="k">import</span> <span class="n">MusicDBTags</span>
 <span class="kn">import</span> <span class="nn">mdbapi.mpd</span> <span class="k">as</span> <span class="nn">mpd</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">threading</span>          <span class="k">import</span> <span class="n">Thread</span>
@@ -640,6 +642,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mise</span>       <span class="o">=</span> <span class="n">mise</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span>        <span class="o">=</span> <span class="n">cfg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fs</span>         <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tags</span>       <span class="o">=</span> <span class="n">MusicDBTags</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span>   <span class="o">=</span> <span class="n">mdbstate</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">randy</span>      <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># RandyInterface will be created onWSConnect</span>
 
@@ -1266,7 +1269,8 @@
 
 <div class="viewcode-block" id="MusicDBWebSocketInterface.GetAlbumTags"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags">[docs]</a>    <span class="k">def</span> <span class="nf">GetAlbumTags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Same as :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags` just for an Album</span>
+<span class="sd">        Similar to :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags`.</span>
+<span class="sd">        This method returns the tags for an Album.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetTargetTags</span><span class="p">(</span><span class="s2">&quot;album&quot;</span><span class="p">,</span> <span class="n">albumid</span><span class="p">)</span>
         <span class="n">genres</span><span class="p">,</span> <span class="n">subgenres</span><span class="p">,</span> <span class="n">moods</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">SplitTagsByClass</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
@@ -1807,9 +1811,12 @@
 <span class="sd">        It is a list of songs that were played before or after the song with song ID *songid*.</span>
 
 <span class="sd">        The returned dictionary contains the same song ID given as argument to this method, and list of related songs.</span>
-<span class="sd">        Each lists entry is a dictionary with the related song, album and artist album from the database.</span>
-<span class="sd">        Furthermore the weight is given.</span>
+<span class="sd">        Each lists entry is a dictionary with the related ``song``, ``album`` and ``artist`` album from the database.</span>
+<span class="sd">        Furthermore the ``weight`` is given.</span>
 <span class="sd">        The weight indicates how often the two songs were played together.</span>
+
+<span class="sd">        The ``tags`` of that song will also be returned separated into ``genre``, ``subgenre`` and ``mood``.</span>
+<span class="sd">        See :meth:`~GetSongTags` for details how they are returned.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            songid (int): ID so a song</span>
@@ -1832,6 +1839,7 @@
 <span class="sd">                        console.log(&quot;Songs related to the one with ID &quot; + args.songid)</span>
 <span class="sd">                        for(let entry of args.songs)</span>
 <span class="sd">                            console.log(&quot;Song &quot; + entry.song.name + &quot; with weight &quot; + entry.weight);</span>
+<span class="sd">                            console.log(entry.tags.genres)</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1848,7 +1856,9 @@
             <span class="n">songid</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
             <span class="n">weight</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span>
             <span class="n">song</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
+            <span class="n">tags</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSongTags</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
             <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">song</span>
+            <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">tags</span>
             <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">weight</span>
             <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetAlbumById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
             <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetArtistById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
@@ -2022,6 +2032,10 @@
 <span class="sd">        After executing this method, the MusicDB server broadcasts the result of :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong`. (``method = &quot;broadcast&quot;, fncname = &quot;GetSong&quot;``)</span>
 <span class="sd">        So each client gets informed about the changes made.</span>
 <span class="sd">        This is important to update the HUD if the song is currently playing.</span>
+<span class="sd">        </span>
+<span class="sd">        After setting the new tag for the song, </span>
+<span class="sd">        the album tags get updated using :meth:`mdbapi.tags.MusicDBTags.DeriveAlbumTags`.</span>
+<span class="sd">        So when changing a genre or sub genre, then they get suggested as album genre or sub genre</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            songid (int): ID of the song</span>
@@ -2055,6 +2069,8 @@
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">SetTargetTag</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">tagid</span><span class="p">)</span>
+        <span class="n">albumid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songid</span><span class="p">)[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">DeriveAlbumTags</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
@@ -2067,6 +2083,10 @@
 <span class="sd">        After executing this method, the MusicDB server broadcasts the result of :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong`. (``method = &quot;broadcast&quot;, fncname = &quot;GetSong&quot;``)</span>
 <span class="sd">        So each client gets informed about the changes made.</span>
 <span class="sd">        This is important to update the HUD if the song is currently playing.</span>
+<span class="sd">        </span>
+<span class="sd">        After setting the new tag for the song, </span>
+<span class="sd">        the album tags get updated using :meth:`mdbapi.tags.MusicDBTags.DeriveAlbumTags`.</span>
+<span class="sd">        So when changing a genre or sub genre, then they get suggested as album genre or sub genre</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            songid (int): ID of the song</span>
@@ -2085,6 +2105,8 @@
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">RemoveTargetTag</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">tagid</span><span class="p">)</span>
+        <span class="n">albumid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songid</span><span class="p">)[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">DeriveAlbumTags</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
@@ -2195,7 +2217,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0.0 beta',
+            VERSION:'1.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

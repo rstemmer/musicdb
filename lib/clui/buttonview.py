@@ -76,6 +76,26 @@ class ButtonView(Text):
         self.buttons.append((key, name))
 
 
+    def RemoveButton(self, name):
+        """
+        This method removes a button from the button view.
+        The button gets identified by the name.
+
+        Args:
+            name(str): Name of the button to remove
+
+        Returns:
+            *Nothing*
+        """
+        # find button
+        toremove = None
+        for button in self.buttons:
+            if button[1] == name:
+                toremove = button
+        # remove button
+        self.buttons.remove(toremove)
+
+
     def Draw(self, x, y, w):
         """
         This method prints the ButtonView.

@@ -222,6 +222,7 @@ class Filesystem(object):
         **Handle with care!**
 
         If the source file does not exist, ``False`` gets returned.
+        To move directories, see :meth:`~MoveDirectory`
 
         Args:
             xsrcpath (str): A relative or absolute path of the source
@@ -234,6 +235,30 @@ class Filesystem(object):
         absdest   = self.AbsolutePath(xdstpath)
 
         if not self.IsFile(abssource):
+            return False
+
+        shutil.move(abssource, absdest)
+        return True
+
+    def MoveDirectory(self, xsrcpath, xdstpath):
+        """
+        This method moves a directory in the file system.
+        **Handle with care!**
+
+        If the source directory does not exist, ``False`` gets returned.
+        To move files, see :meth:`~MoveFile`
+
+        Args:
+            xsrcpath (str): A relative or absolute path of the source
+            xdstpath (str): A relative or absolute path where the source file shall be moves to
+
+        Returns:
+            ``False`` if the file does not exist.
+        """
+        abssource = self.AbsolutePath(xsrcpath)
+        absdest   = self.AbsolutePath(xdstpath)
+
+        if not self.IsDirectory(abssource):
             return False
 
         shutil.move(abssource, absdest)
@@ -344,6 +369,20 @@ class Filesystem(object):
         name = os.path.split(xpath)[1]          # [1] get the filename from the returned tuple
         name = os.path.splitext(name)[0]        # [0] to get the name from the returned tuple
         return name
+
+
+
+    def GetDirectory(self, xpath):
+        """
+        This method returns the directory a file or folder is stored in.
+
+        Args:
+            xpath (str): A path to a file (path must not exist)
+
+        Returns:
+            The directory of that file
+        """
+        return os.path.split(xpath)[0]
 
 
 

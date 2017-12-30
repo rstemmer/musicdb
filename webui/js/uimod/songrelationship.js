@@ -21,14 +21,15 @@ function ShowSongRelationship(parentID, songid, MDBSonglist)
     var html = "";
     html += "<div id=SRMainBox>";
 
-    for(var i in MDBSonglist)
+    for(let i in MDBSonglist)
     {
-        var MDBSong     = MDBSonglist[i].song;
-        var MDBAlbum    = MDBSonglist[i].album;
-        var MDBArtist   = MDBSonglist[i].artist;
-        var weight      = MDBSonglist[i].weight;
-        var topbuttons  = Button_AddSongToQueue(MDBSong.id);
-        var bottombuttons;
+        let MDBSong     = MDBSonglist[i].song;
+        let MDBAlbum    = MDBSonglist[i].album;
+        let MDBArtist   = MDBSonglist[i].artist;
+        let MDBTags     = MDBSonglist[i].tags;
+        let weight      = MDBSonglist[i].weight;
+        let topbuttons  = Button_AddSongToQueue(MDBSong.id);
+        let bottombuttons;
         bottombuttons   = Button_RelationshipControls(songid, MDBSong.id, MDBSong.name, weight);
 
         if(i > 0)
@@ -42,7 +43,7 @@ function ShowSongRelationship(parentID, songid, MDBSonglist)
 
         html += "<div class=\"SRSongListEntry fmcolor\">";
         html += "<div class=\"SRRelevance fmcolor\" style=\"opacity:"+opacity+";\"></div>"
-        html += CreateSongTile(MDBSong, MDBAlbum, MDBArtist, topbuttons, bottombuttons);
+        html += CreateSongTile(MDBSong, MDBAlbum, MDBArtist, topbuttons, bottombuttons, MDBTags);
         html += "</div>";
     }
 
@@ -50,6 +51,17 @@ function ShowSongRelationship(parentID, songid, MDBSonglist)
     
     // Create Element
     $("#"+parentID).html(html);
+
+    // Update song tags
+    for(let entry of MDBSonglist)
+    {
+        window.console && console.log(entry);
+        let songid = entry.song.id;
+        let tags   = entry.tags;
+        Taginput_Show("SongTileGenre_"+songid,    "STMGI_"+songid, songid, tags, "Genre",    "Song");
+        Taginput_Show("SongTileSubgenre_"+songid, "STSGI_"+songid, songid, tags, "Subgenre", "Song");
+    }
+
     // New elements were created, update there colors with the current style
     UpdateStyle();
 }

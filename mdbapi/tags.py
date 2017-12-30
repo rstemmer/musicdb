@@ -56,6 +56,55 @@ class MusicDBTags(object):
         self.cfg    = config
 
 
+    def DeriveAlbumTags(self, albumid):
+        """
+        This method derives album tags from its song tags.
+        It looks for all songs of the album and their specific genre and sub genre tags.
+        Tags with a confidence level greater or equal to 1.0 will be collected and set as genres for the album.
+        The set genres have a confidence of the average appearance of the tag over all the album's songs.
+
+        Args:
+            albumid (int): ID of the album that tags shall be updated
+
+        Returns:
+            *Nothing*
+        """
+        songs = self.db.GetSongsByAlbumId(albumid)
+
+        histogram = {}
+        # Get genres of all songs on the album
+        for song in songs:
+            tags = self.db.GetTargetTags("song", song["id"])
+            if not tags:
+                continue
+
+            for tag in tags:
+                # Skill every tag that is not a genre or sub genre
+                if tag["class"] != MusicDatabase.TAG_CLASS_GENRE and tag["class"] != MusicDatabase.TAG_CLASS_SUBGENRE:
+                    continue
+
+                # Ignore tags set by the AI
+                if tag["approval"] == 0:
+                    continue
+
+                # Consider tag in histogram
+                key = str(tag["id"])
+                if not key in histogram:
+                    histogram[key]  = 1
+                else:
+                    histogram[key] += 1
+
+        # Set new tags
+        numofsongs = len(songs)
+        for key in histogram:
+            tagid = int(key)
+            count = histogram[key]
+            confidence = count / numofsongs
+
+            self.db.SetTargetTag("album", albumid, tagid, approval=0, confidence=confidence)
+            
+
+
     def GetAllGenres(self):
         """
         See :meth:`lib.db.musicdb.MusicDatabase.GetAllTags`

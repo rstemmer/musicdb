@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Command Line User Interface &mdash; MusicDB 1.0.0 beta documentation</title>
+  <title>Command Line User Interface &mdash; MusicDB 1.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 1.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Configuration" href="config.html"/>
         <link rel="prev" title="Song Tracker" href="../mdbapi/tracker.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.0
+                1.1
               </div>
             
           
@@ -239,6 +239,7 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
@@ -635,10 +636,11 @@ The key input gets not printed to the screen.</p>
 <div><ul class="simple">
 <li>The usual prinable keys</li>
 <li><code class="docutils literal"><span class="pre">escape</span></code> (Must be hit twice)</li>
-<li><code class="docutils literal"><span class="pre">enter</span></code>, <code class="docutils literal"><span class="pre">backspace</span></code>, <code class="docutils literal"><span class="pre">entf</span></code></li>
+<li><code class="docutils literal"><span class="pre">enter</span></code>, <code class="docutils literal"><span class="pre">backspace</span></code>, <code class="docutils literal"><span class="pre">delete</span></code></li>
 <li><code class="docutils literal"><span class="pre">backtab</span></code> (shift+tab)</li>
-<li><code class="docutils literal"><span class="pre">up</span></code>, <code class="docutils literal"><span class="pre">down</span></code>, <code class="docutils literal"><span class="pre">left</span></code>, <code class="docutils literal"><span class="pre">right</span></code></li>
-<li><code class="docutils literal"><span class="pre">Ctrl-D</span></code></li>
+<li><code class="docutils literal"><span class="pre">up</span></code>, <code class="docutils literal"><span class="pre">down</span></code>, <code class="docutils literal"><span class="pre">left</span></code>, <code class="docutils literal"><span class="pre">right</span></code>, <code class="docutils literal"><span class="pre">end</span></code>, <code class="docutils literal"><span class="pre">home</span></code></li>
+<li><code class="docutils literal"><span class="pre">page</span> <span class="pre">down</span></code>, <code class="docutils literal"><span class="pre">page</span> <span class="pre">up</span></code></li>
+<li><code class="docutils literal"><span class="pre">Ctrl-D</span></code> (Quit), <code class="docutils literal"><span class="pre">Ctrl-W</span></code> (Delete Word), <code class="docutils literal"><span class="pre">Ctrl-U</span></code> (Delete Line)</li>
 </ul>
 </div></blockquote>
 <p>In case you want to get other keys, it is easy to add them by editing the code of this method.
@@ -1028,6 +1030,23 @@ It always uses the colors <em>red</em> for the [:]-characters, <em>light blue</e
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="lib.clui.buttonview.ButtonView.RemoveButton">
+<code class="descname">RemoveButton</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/buttonview.html#ButtonView.RemoveButton"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.buttonview.ButtonView.RemoveButton" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method removes a button from the button view.
+The button gets identified by the name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>str</em>) – Name of the button to remove</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -1116,6 +1135,20 @@ The selected line gets a cyan background color.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.clui.listview.ListView.GetData">
+<code class="descname">GetData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/listview.html#ListView.GetData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.listview.ListView.GetData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of elements.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The list of elements of the list view</td>
 </tr>
 </tbody>
 </table>
@@ -1535,7 +1568,7 @@ The element the cursor points to has a cyan background.</p>
 The keys are expected as the method <a class="reference internal" href="#lib.clui.text.Text.GetKey" title="lib.clui.text.Text.GetKey"><code class="xref py py-meth docutils literal"><span class="pre">lib.clui.text.Text.GetKey()</span></code></a> returns.
 With the <code class="docutils literal"><span class="pre">&quot;right&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;left&quot;</span></code> key, the user can navigate through the text.
 With <code class="docutils literal"><span class="pre">&quot;backspace&quot;</span></code> the character left to the cursor gets removed.
-With <code class="docutils literal"><span class="pre">&quot;entf&quot;</span></code> the character right below the cursor.
+With <code class="docutils literal"><span class="pre">&quot;delete&quot;</span></code> the character right below the cursor.
 Each printable character gets inserted left to the cursor.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1762,7 +1795,7 @@ If the key is <code class="docutils literal"><span class="pre">&quot;</span>&#16
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.0 beta',
+            VERSION:'1.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

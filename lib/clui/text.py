@@ -38,9 +38,6 @@ class Text(object):
         SetColor("44")      # blue background
 
     """
-    KEY_ESCAPE      = "\x1B"
-    KEY_BACKSPACE   = "\x7F"
-
     def __init__(self):
         self.fgcolor = "37"
         self.bgcolor = "40"
@@ -215,6 +212,12 @@ class Text(object):
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return ch
 
+    KEY_ESCAPE      = "\x1B"
+    KEY_BACKSPACE   = "\x7F"
+    KEY_CTRL_D      = "\x04"
+    KEY_CTRL_U      = "\x15"
+    KEY_CTRL_W      = "\x17"
+
     def GetKey(self):
         """
         This method returns the name of the pressed key.
@@ -224,10 +227,11 @@ class Text(object):
 
             * The usual prinable keys
             * ``escape`` (Must be hit twice)
-            * ``enter``, ``backspace``, ``entf``
+            * ``enter``, ``backspace``, ``delete``
             * ``backtab`` (shift+tab)
-            * ``up``, ``down``, ``left``, ``right``
-            * ``Ctrl-D``
+            * ``up``, ``down``, ``left``, ``right``, ``end``, ``home``
+            * ``page down``, ``page up``
+            * ``Ctrl-D`` (Quit), ``Ctrl-W`` (Delete Word), ``Ctrl-U`` (Delete Line)
 
         In case you want to get other keys, it is easy to add them by editing the code of this method.
         I just implemented the one I need for the :class:`~lib.clui.listview.ListView` UI element.
@@ -241,36 +245,55 @@ class Text(object):
             return "enter"
         elif key == Text.KEY_BACKSPACE:
             return "backspace"
-        elif key == "\04":
+        elif key == Text.KEY_CTRL_D:
             return "Ctrl-D"
+        elif key == Text.KEY_CTRL_W:
+            return "Ctrl-W"
+        elif key == Text.KEY_CTRL_U:
+            return "Ctrl-U"
+
+        # in not escape, than it is a usual character
         elif key != Text.KEY_ESCAPE:
             return key
 
         key = self.GetRawKey()
         if key == Text.KEY_ESCAPE:
             return "escape"
+
+        # expecting a sequence opener
         elif key != "[":
             return None
 
         key = self.GetRawKey()
-        if key == "\x41":
+        if key == "A":
             return "up"
-        elif key == "\x42":
+        elif key == "B":
             return "down"
-        elif key == "\x43":
+        elif key == "C":
             return "right"
-        elif key == "\x44":
+        elif key == "D":
             return "left"
         elif key == "Z":
             return "backtab"
 
-        # In case of 3, there is more comming
-        if key != "3":
-            return None
+        # complex codes
+        name = None
 
+        if key == "1":
+            name = "home"
+        elif key == "3":
+            name = "delete"
+        elif key == "4":
+            name = "end"
+        elif key == "6":
+            name = "page up"
+        elif key == "6":
+            name = "page down"
+
+        # either end of sequence (~) or continuing (;)
         key = self.GetRawKey()
         if key == "~":
-            return "entf"
+            return name
 
         return None
 

@@ -2,7 +2,7 @@
 Music
 =====
 
-This chaper explains how to handle music for MusicDB.
+This chapter explains how to handle music for MusicDB.
 
 Naming
 ------
@@ -10,7 +10,7 @@ Naming
 The path to a song follows the scheme "artist directory/album directory/song file".
 The names of the artist and album director and the song files must follow a specific scheme.
 All characters are allowed.
-Obviously, the filesystem that contains your music collection must be unicode compatible.
+Obviously, the file system that contains your music collection must be Unicode compatible.
 
 Artist Directory
 ^^^^^^^^^^^^^^^^
@@ -34,12 +34,17 @@ A complete path to a song file would be: ``$Artistname/$Release - $Albumname/$So
 Importing Albums to the Collection
 ----------------------------------
 
+This section also describes the manual import of songs.
+If you do not use the semi-automatic method (``musicdb add``) you have to rename the your files manually,
+so that they fit to MusicDB's naming scheme.
+
+
 iTunes
 ^^^^^^
 
    #. Copy music to the collection
-   #. rename album directory from ``$Albumname`` to ``$Release - $Albumname``
-   #. Check unicodes and names of all copied files and directories
+   #. Rename album directory from ``$Albumname`` to ``$Release - $Albumname``
+   #. Check Unicodes and names of all copied files and directories
 
 Bandcamp
 ^^^^^^^^
@@ -71,12 +76,15 @@ Importing Albums to MusicDB
 
 There are two ways to import music:
 
-   * The ``musicdb database`` command: :doc:`/mod/database`
-   * The ``musicdb repair`` command: :doc:`/mod/repair`
+   * The ``musicdb add`` command: :doc:`/mod/add` (the semi-automatic way)
+   * The ``musicdb database`` command: :doc:`/mod/database` (the hard way)
+   * The ``musicdb repair`` command: :doc:`/mod/repair` (not recommended - it was not made for importing)
 
-After adding the music the artwork must be imported using ``musicdb artwork`` (:doc:`/mod/artwork`).
+After adding the music via ``musicdb database`` or ``musicdb repair``,
+the artwork must be imported using ``musicdb artwork`` (:doc:`/mod/artwork`).
 
-Because the import methods update the access permissions of the files, ``musicdb`` must be run as *root*.
+Because the import methods update the access permissions of the files, ``musicdb`` should be run as *root*.
+
 
 Using the database module
 ^^^^^^^^^^^^^^^^^^^^^^^^^

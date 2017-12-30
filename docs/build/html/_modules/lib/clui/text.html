@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.clui.text &mdash; MusicDB 1.0.0 beta documentation</title>
+  <title>lib.clui.text &mdash; MusicDB 1.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 1.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0
+                1.1
               </div>
             
           
@@ -238,6 +238,7 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/add.html">add - Add New Album to MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/artwork.html#class">class</a></li>
 </ul>
@@ -572,9 +573,6 @@
 <span class="sd">        SetColor(&quot;44&quot;)      # blue background</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">KEY_ESCAPE</span>      <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x1B</span><span class="s2">&quot;</span>
-    <span class="n">KEY_BACKSPACE</span>   <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x7F</span><span class="s2">&quot;</span>
-
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fgcolor</span> <span class="o">=</span> <span class="s2">&quot;37&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bgcolor</span> <span class="o">=</span> <span class="s2">&quot;40&quot;</span>
@@ -749,6 +747,12 @@
             <span class="n">termios</span><span class="o">.</span><span class="n">tcsetattr</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">termios</span><span class="o">.</span><span class="n">TCSADRAIN</span><span class="p">,</span> <span class="n">old_settings</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ch</span></div>
 
+    <span class="n">KEY_ESCAPE</span>      <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x1B</span><span class="s2">&quot;</span>
+    <span class="n">KEY_BACKSPACE</span>   <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x7F</span><span class="s2">&quot;</span>
+    <span class="n">KEY_CTRL_D</span>      <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x04</span><span class="s2">&quot;</span>
+    <span class="n">KEY_CTRL_U</span>      <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x15</span><span class="s2">&quot;</span>
+    <span class="n">KEY_CTRL_W</span>      <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\x17</span><span class="s2">&quot;</span>
+
 <div class="viewcode-block" id="Text.GetKey"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.text.Text.GetKey">[docs]</a>    <span class="k">def</span> <span class="nf">GetKey</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method returns the name of the pressed key.</span>
@@ -758,10 +762,11 @@
 
 <span class="sd">            * The usual prinable keys</span>
 <span class="sd">            * ``escape`` (Must be hit twice)</span>
-<span class="sd">            * ``enter``, ``backspace``, ``entf``</span>
+<span class="sd">            * ``enter``, ``backspace``, ``delete``</span>
 <span class="sd">            * ``backtab`` (shift+tab)</span>
-<span class="sd">            * ``up``, ``down``, ``left``, ``right``</span>
-<span class="sd">            * ``Ctrl-D``</span>
+<span class="sd">            * ``up``, ``down``, ``left``, ``right``, ``end``, ``home``</span>
+<span class="sd">            * ``page down``, ``page up``</span>
+<span class="sd">            * ``Ctrl-D`` (Quit), ``Ctrl-W`` (Delete Word), ``Ctrl-U`` (Delete Line)</span>
 
 <span class="sd">        In case you want to get other keys, it is easy to add them by editing the code of this method.</span>
 <span class="sd">        I just implemented the one I need for the :class:`~lib.clui.listview.ListView` UI element.</span>
@@ -775,36 +780,55 @@
             <span class="k">return</span> <span class="s2">&quot;enter&quot;</span>
         <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="n">Text</span><span class="o">.</span><span class="n">KEY_BACKSPACE</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;backspace&quot;</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\04</span><span class="s2">&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="n">Text</span><span class="o">.</span><span class="n">KEY_CTRL_D</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;Ctrl-D&quot;</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="n">Text</span><span class="o">.</span><span class="n">KEY_CTRL_W</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Ctrl-W&quot;</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="n">Text</span><span class="o">.</span><span class="n">KEY_CTRL_U</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Ctrl-U&quot;</span>
+
+        <span class="c1"># in not escape, than it is a usual character</span>
         <span class="k">elif</span> <span class="n">key</span> <span class="o">!=</span> <span class="n">Text</span><span class="o">.</span><span class="n">KEY_ESCAPE</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">key</span>
 
         <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetRawKey</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">Text</span><span class="o">.</span><span class="n">KEY_ESCAPE</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;escape&quot;</span>
+
+        <span class="c1"># expecting a sequence opener</span>
         <span class="k">elif</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;[&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetRawKey</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x41</span><span class="s2">&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;up&quot;</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x42</span><span class="s2">&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;down&quot;</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x43</span><span class="s2">&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;right&quot;</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x44</span><span class="s2">&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;left&quot;</span>
         <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;Z&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;backtab&quot;</span>
 
-        <span class="c1"># In case of 3, there is more comming</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
+        <span class="c1"># complex codes</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
 
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;home&quot;</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;delete&quot;</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;4&quot;</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;end&quot;</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;6&quot;</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;page up&quot;</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;6&quot;</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;page down&quot;</span>
+
+        <span class="c1"># either end of sequence (~) or continuing (;)</span>
         <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetRawKey</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;~&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;entf&quot;</span>
+            <span class="k">return</span> <span class="n">name</span>
 
         <span class="k">return</span> <span class="kc">None</span></div></div>
 
@@ -848,7 +872,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0.0 beta',
+            VERSION:'1.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

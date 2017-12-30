@@ -33,6 +33,9 @@ class TextInput(Text):
         self.data  = "" # text buffer
         self.cursor= 0
         self.offset= 0  # where to start printing - important when data is larger than input element
+        self.textfg   = "1;37"
+        self.textbg   = "44"
+        self.cursorbg = "46"
 
 
     def SetData(self, string):
@@ -52,8 +55,7 @@ class TextInput(Text):
         if type(string) != str:
             raise TypeError("Data must be of type string!")
 
-        self.data   = string
-        self.cursor = len(self.data)  # cursor at the end of the text
+        self.data = string
 
 
     def GetData(self):
@@ -75,14 +77,15 @@ class TextInput(Text):
         Returns:
             *Nothing*
         """
-        self.SetColor("1;37", "44")
+        self.SetColor(self.textfg, self.textbg)
+
         string = self.data[self.offset:self.offset+self.w]
         string = string.ljust(self.w)
         self.SetCursor(self.x, self.y)
         self.PrintText(string)
 
         self.SetCursor(self.x+self.cursor, self.y)
-        self.SetBGColor("46")
+        self.SetBGColor(self.cursorbg)
         self.PrintText(string[self.cursor])
 
 
@@ -92,7 +95,7 @@ class TextInput(Text):
         The keys are expected as the method :meth:`lib.clui.text.Text.GetKey` returns.
         With the ``"right"`` and ``"left"`` key, the user can navigate through the text.
         With ``"backspace"`` the character left to the cursor gets removed.
-        With ``"entf"`` the character right below the cursor.
+        With ``"delete"`` the character right below the cursor.
         Each printable character gets inserted left to the cursor.
 
         Args:
@@ -118,11 +121,20 @@ class TextInput(Text):
             elif self.offset + len(self.data) > self.w and self.offset+self.cursor < len(self.data):
                 self.offset += 1
 
+        elif key == "home":
+            self.cursor = 0
+            self.offset = 0
+
+        elif key == "end":
+            self.cursor = min(len(self.data), self.w-1)
+            if len(self.data) > self.w:
+                self.offset = len(self.data)-self.w + 1
+
         elif key == "backspace" and self.cursor > 0:
             self.data   = self.data[:self.offset + self.cursor-1] + self.data[self.offset + self.cursor:]
             self.cursor -= 1
 
-        elif key == "entf" and self.cursor < len(self.data):
+        elif key == "delete" and self.cursor < len(self.data):
             self.data   = self.data[:self.offset + self.cursor] + self.data[self.offset + self.cursor+1:]
 
         elif len(key) == 1 and key.isprintable():
@@ -134,6 +146,33 @@ class TextInput(Text):
 
         self.Draw()
 
+
+
+class NoTextInput(TextInput):
+    """
+    This is a *read-only* variation of the :class:`~TextInput` element.
+
+    Args:
+        x,y (int): Position of the list view
+        w (int): Width
+    """
+    def __init__(self, x=0, y=0, w=0):
+        TextInput.__init__(self, x, y, w)
+        self.textfg   = "1;36"
+        self.textbg   = "40"
+        self.cursorbg = "40"
+
+    def HandleKey(self, key=None):
+        """
+        This method does nothing. This is a read-only control element.
+
+        Args:
+            key: *will be ignored*
+
+        Returns:
+            *Nothing*
+        """
+        pass
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

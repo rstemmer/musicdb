@@ -146,7 +146,9 @@ function InstallMusicDBConfiguration {
 
     # create empty debuglog.ansi
     if [ ! -f "$DATADIR/debuglog.ansi" ] ; then
-        touch $DATADIR/debuglog.ansi && chown $MDBUSER:$MDBGROUP $DATADIR/debuglog.ansi
+        touch $DATADIR/debuglog.ansi 
+        chown $MDBUSER:$MDBGROUP $DATADIR/debuglog.ansi
+        chmod ugo+rw $DATADIR/debuglog.ansi
     fi
 }
 

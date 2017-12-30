@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.artwork &mdash; MusicDB 1.0.0 beta documentation</title>
+  <title>mdbapi.artwork &mdash; MusicDB 1.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 1.1.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0
+                1.1
               </div>
             
           
@@ -238,6 +238,7 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/add.html">add - Add New Album to MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/artwork.html#class">class</a></li>
 </ul>
@@ -759,21 +760,23 @@
 <span class="sd">                # Set the default artwork</span>
 <span class="sd">                self.SetArtwork(albumid, None, any)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">abssrcpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">artworkpath</span><span class="p">)</span>
-        <span class="n">absdstpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">artworkroot</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">artworkname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">artworkpath</span><span class="p">:</span>
+            <span class="n">abssrcpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">artworkpath</span><span class="p">)</span>
+            <span class="n">absdstpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">artworkroot</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">artworkname</span><span class="p">)</span>
 
-        <span class="c1"># Copy file</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Copying file from </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> to </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
+            <span class="c1"># Copy file</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Copying file from </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> to </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
+
+            <span class="c1"># Set permissions to -rw-rw-r--</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">artworkroot</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span><span class="n">artworkname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">group</span><span class="p">,</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRUSR</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWUSR</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRGRP</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWGRP</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IROTH</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Setting artwork file attributes failed with error </span><span class="si">%s</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(Leaving them as they are)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">artworkroot</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">artworkname</span><span class="p">):</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Artwork </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> does not exist but was expected to exist!&quot;</span><span class="p">,</span> <span class="n">artworkname</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="c1"># Set permissions to -rw-rw-r--</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">artworkroot</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span><span class="n">artworkname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">group</span><span class="p">,</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRUSR</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWUSR</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRGRP</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWGRP</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IROTH</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Setting artwork file attributes failed with error </span><span class="si">%s</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(Leaving them as they are)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
 
         <span class="c1"># Scale file</span>
         <span class="c1"># convert edge-size to resolution</span>
@@ -880,6 +883,9 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            *Nothing*</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            PermissonError: When there is no write access to the manifest file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># copy manifest template</span>
         <span class="n">template</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">artwork</span><span class="o">.</span><span class="n">manifesttemplate</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
@@ -942,7 +948,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.0 beta',
+            VERSION:'1.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
