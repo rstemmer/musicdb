@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.clui.textinput &mdash; MusicDB 1.0.0 beta documentation</title>
+  <title>lib.clui.textinput &mdash; MusicDB 1.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 1.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.0
+                1.1
               </div>
             
           
@@ -238,6 +238,7 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/add.html">add - Add New Album to MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/artwork.html#class">class</a></li>
 </ul>
@@ -567,6 +568,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span>  <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># text buffer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="o">=</span> <span class="mi">0</span>  <span class="c1"># where to start printing - important when data is larger than input element</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">textfg</span>   <span class="o">=</span> <span class="s2">&quot;1;37&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">textbg</span>   <span class="o">=</span> <span class="s2">&quot;44&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursorbg</span> <span class="o">=</span> <span class="s2">&quot;46&quot;</span>
 
 
 <div class="viewcode-block" id="TextInput.SetData"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.textinput.TextInput.SetData">[docs]</a>    <span class="k">def</span> <span class="nf">SetData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
@@ -586,8 +590,7 @@
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Data must be of type string!&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span>   <span class="o">=</span> <span class="n">string</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># cursor at the end of the text</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">string</span></div>
 
 
 <div class="viewcode-block" id="TextInput.GetData"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.textinput.TextInput.GetData">[docs]</a>    <span class="k">def</span> <span class="nf">GetData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -609,14 +612,15 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            *Nothing*</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">SetColor</span><span class="p">(</span><span class="s2">&quot;1;37&quot;</span><span class="p">,</span> <span class="s2">&quot;44&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">textfg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">textbg</span><span class="p">)</span>
+
         <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">]</span>
         <span class="n">string</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">SetCursor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PrintText</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">SetCursor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">SetBGColor</span><span class="p">(</span><span class="s2">&quot;46&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetBGColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursorbg</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PrintText</span><span class="p">(</span><span class="n">string</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="p">])</span></div>
 
 
@@ -626,7 +630,7 @@
 <span class="sd">        The keys are expected as the method :meth:`lib.clui.text.Text.GetKey` returns.</span>
 <span class="sd">        With the ``&quot;right&quot;`` and ``&quot;left&quot;`` key, the user can navigate through the text.</span>
 <span class="sd">        With ``&quot;backspace&quot;`` the character left to the cursor gets removed.</span>
-<span class="sd">        With ``&quot;entf&quot;`` the character right below the cursor.</span>
+<span class="sd">        With ``&quot;delete&quot;`` the character right below the cursor.</span>
 <span class="sd">        Each printable character gets inserted left to the cursor.</span>
 
 <span class="sd">        Args:</span>
@@ -652,11 +656,20 @@
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">+=</span> <span class="mi">1</span>
 
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;home&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;end&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">+</span> <span class="mi">1</span>
+
         <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;backspace&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="p">:]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">-=</span> <span class="mi">1</span>
 
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;entf&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;delete&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
 
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">key</span><span class="o">.</span><span class="n">isprintable</span><span class="p">():</span>
@@ -668,6 +681,33 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">Draw</span><span class="p">()</span></div></div>
 
+
+
+<span class="k">class</span> <span class="nc">NoTextInput</span><span class="p">(</span><span class="n">TextInput</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a *read-only* variation of the :class:`~TextInput` element.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x,y (int): Position of the list view</span>
+<span class="sd">        w (int): Width</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">TextInput</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">textfg</span>   <span class="o">=</span> <span class="s2">&quot;1;36&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">textbg</span>   <span class="o">=</span> <span class="s2">&quot;40&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursorbg</span> <span class="o">=</span> <span class="s2">&quot;40&quot;</span>
+
+    <span class="k">def</span> <span class="nf">HandleKey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method does nothing. This is a read-only control element.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key: *will be ignored*</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
 
 
 <span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
@@ -708,7 +748,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0.0 beta',
+            VERSION:'1.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -26,7 +26,7 @@ from lib.db.musicdb     import MusicDatabase
 from lib.logging        import MusicDBLogger
 
 
-VERSION = "1.0.0 beta"
+VERSION = "1.1.0"
 
 DEFAULTCONFIGFILE = "/etc/musicdb.ini"
 

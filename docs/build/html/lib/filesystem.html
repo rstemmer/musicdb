@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Filesystem Interface &mdash; MusicDB 1.0.0 beta documentation</title>
+  <title>Filesystem Interface &mdash; MusicDB 1.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 1.1.0 documentation" href="../index.html"/>
         <link rel="next" title="HDF5Storage" href="hdf5storage.html"/>
         <link rel="prev" title="Database" href="database.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.0
+                1.1
               </div>
             
           
@@ -239,6 +239,7 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
@@ -767,6 +768,22 @@ sync
 </dd></dl>
 
 <dl class="method">
+<dt id="lib.filesystem.Filesystem.GetDirectory">
+<code class="descname">GetDirectory</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetDirectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the directory a file or folder is stored in.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xpath</strong> (<em>str</em>) – A path to a file (path must not exist)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The directory of that file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="lib.filesystem.Filesystem.GetFileExtension">
 <code class="descname">GetFileExtension</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFileExtension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFileExtension" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the file extension of the file addressed by <em>xpath</em>.
@@ -926,11 +943,36 @@ The special directories <code class="docutils literal"><span class="pre">&quot;.
 </dd></dl>
 
 <dl class="method">
+<dt id="lib.filesystem.Filesystem.MoveDirectory">
+<code class="descname">MoveDirectory</code><span class="sig-paren">(</span><em>xsrcpath</em>, <em>xdstpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.MoveDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.MoveDirectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method moves a directory in the file system.
+<strong>Handle with care!</strong></p>
+<p>If the source directory does not exist, <code class="docutils literal"><span class="pre">False</span></code> gets returned.
+To move files, see <a class="reference internal" href="#lib.filesystem.Filesystem.MoveFile" title="lib.filesystem.Filesystem.MoveFile"><code class="xref py py-meth docutils literal"><span class="pre">MoveFile()</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>xsrcpath</strong> (<em>str</em>) – A relative or absolute path of the source</li>
+<li><strong>xdstpath</strong> (<em>str</em>) – A relative or absolute path where the source file shall be moves to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">False</span></code> if the file does not exist.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="lib.filesystem.Filesystem.MoveFile">
 <code class="descname">MoveFile</code><span class="sig-paren">(</span><em>xsrcpath</em>, <em>xdstpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.MoveFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.MoveFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method moves a file in the filesystem.
 <strong>Handle with care!</strong></p>
-<p>If the source file does not exist, <code class="docutils literal"><span class="pre">False</span></code> gets returned.</p>
+<p>If the source file does not exist, <code class="docutils literal"><span class="pre">False</span></code> gets returned.
+To move directories, see <a class="reference internal" href="#lib.filesystem.Filesystem.MoveDirectory" title="lib.filesystem.Filesystem.MoveDirectory"><code class="xref py py-meth docutils literal"><span class="pre">MoveDirectory()</span></code></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1070,7 +1112,7 @@ The <em>mode</em> is the access permissions as defined in the <em>stats</em> mod
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.0 beta',
+            VERSION:'1.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

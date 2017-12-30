@@ -5,18 +5,21 @@
 │ ∗ Other                                │
 └────────────────────────────────────────┘
 
-┍━━━━┫ ########## ┣━━━━┫ 1.1.0 ┣━━━━━━━━╍╍
+┍━━━━┫ 2017-12-30 ┣━━━━┫ 1.1.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
-│ ∗ Derives album genres based on its song genres
+│ + MusicDB Derives album genres based on its song genres
+│ + musicdb add - a new CLI module to for easy album import
+│ + WebUI song relations view shows genre tags of the songs
 │
 ┝━ MINOR CHANGES
-│ ∗ WebAPI GetSongRelationship adds the tags of a related song to the returned list
+│ + WebAPI GetSongRelationship adds the tags of a related song to the returned list
+│ ∗ Some annoying bugs fixed
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2017-12-27 ┣━━━━┫ 1.0.0 beta ┣━━━╍╍
 ┝━ MAJOR CHANGES
-│ ∗ genres mod added
-│ ∗ moods mod added
+│ + genres mod added
+│ + moods mod added
 │ ∗ CLUI library finalized
 │ ∗ On installation, the user gets added to the musicdb group
 │ ∗ On installation, the data directories group rights get set to writable

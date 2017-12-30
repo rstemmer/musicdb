@@ -114,7 +114,7 @@ Comparison
 
 (1):
    There are extensions to access the server from the `web <https://docs.mopidy.com/en/latest/ext/web/#ext-web>`_.
-   *Modipy* also supports `MPD Clients<https://docs.mopidy.com/en/latest/clients/mpd/>`_.
+   *Modipy* also supports `MPD Clients <https://docs.mopidy.com/en/latest/clients/mpd/>`_.
 
 (2):
    There exist also `Music Playing Daemon Clients <https://www.musicpd.org/clients/>`_

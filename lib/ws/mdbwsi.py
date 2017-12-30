@@ -1280,9 +1280,8 @@ class MusicDBWebSocketInterface(object):
         Furthermore the ``weight`` is given.
         The weight indicates how often the two songs were played together.
 
-        Added in 1.1.0:
-            The ``tags`` of that song will also be returned separated into ``genre``, ``subgenre`` and ``mood``.
-            See :meth:`~GetSongTags` for details how they are returned.
+        The ``tags`` of that song will also be returned separated into ``genre``, ``subgenre`` and ``mood``.
+        See :meth:`~GetSongTags` for details how they are returned.
 
         Args:
             songid (int): ID so a song
@@ -1305,7 +1304,7 @@ class MusicDBWebSocketInterface(object):
                         console.log("Songs related to the one with ID " + args.songid)
                         for(let entry of args.songs)
                             console.log("Song " + entry.song.name + " with weight " + entry.weight);
-                            console.log(entry.tags.genres)  // With version 1.1.0 tags will be returned, too
+                            console.log(entry.tags.genres)
                     }
                 }
         """
@@ -1499,10 +1498,9 @@ class MusicDBWebSocketInterface(object):
         So each client gets informed about the changes made.
         This is important to update the HUD if the song is currently playing.
         
-        Added with 1.1.0:
-            After setting the new tag for the song, 
-            the album tags get updated using :meth:`mdbapi.tags.MusicDBTags.DeriveAlbumTags`.
-            So when changing a genre or sub genre, then they get suggested as album genre or sub genre
+        After setting the new tag for the song, 
+        the album tags get updated using :meth:`mdbapi.tags.MusicDBTags.DeriveAlbumTags`.
+        So when changing a genre or sub genre, then they get suggested as album genre or sub genre
 
         Args:
             songid (int): ID of the song
@@ -1551,10 +1549,9 @@ class MusicDBWebSocketInterface(object):
         So each client gets informed about the changes made.
         This is important to update the HUD if the song is currently playing.
         
-        Added with 1.1.0:
-            After setting the new tag for the song, 
-            the album tags get updated using :meth:`mdbapi.tags.MusicDBTags.DeriveAlbumTags`.
-            So when changing a genre or sub genre, then they get suggested as album genre or sub genre
+        After setting the new tag for the song, 
+        the album tags get updated using :meth:`mdbapi.tags.MusicDBTags.DeriveAlbumTags`.
+        So when changing a genre or sub genre, then they get suggested as album genre or sub genre
 
         Args:
             songid (int): ID of the song

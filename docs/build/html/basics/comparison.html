@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Comparison to Other Tools &mdash; MusicDB 1.0.0 beta documentation</title>
+  <title>Comparison to Other Tools &mdash; MusicDB 1.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 beta documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 1.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Basic Rules for MusicDB" href="concept.html"/>
         <link rel="prev" title="Welcome to MusicDB’s documentation!" href="../index.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.0
+                1.1
               </div>
             
           
@@ -239,6 +239,7 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
@@ -551,6 +552,7 @@ Of cause they are all open source, too.</p>
 <li><a class="reference external" href="http://ampache.org/index.html">Ampache</a></li>
 <li><a class="reference external" href="https://www.sonerezh.bzh/">Sonerezh</a></li>
 <li><a class="reference external" href="https://musicpd.org/">Music Playing Daemon</a></li>
+<li><a class="reference external" href="https://www.mopidy.com/">Modipy</a></li>
 </ul>
 </div></blockquote>
 <p>Some tools use <a class="reference external" href="https://musicbrainz.org/">MusicBrainz</a>.
@@ -602,13 +604,14 @@ Using Music Playing Daemon (MPD) for streaming is OK.</dd>
 <h2>Comparison<a class="headerlink" href="#comparison" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="docutils">
 <colgroup>
-<col width="20%" />
-<col width="13%" />
-<col width="13%" />
-<col width="13%" />
-<col width="13%" />
-<col width="13%" />
-<col width="13%" />
+<col width="17%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Metric</th>
@@ -617,6 +620,7 @@ Using Music Playing Daemon (MPD) for streaming is OK.</dd>
 <th class="head">CherryMusic</th>
 <th class="head">Ampache</th>
 <th class="head">Sonerezh</th>
+<th class="head">Modipy</th>
 <th class="head">mpd</th>
 </tr>
 </thead>
@@ -635,7 +639,12 @@ managing via
 WebUI</td>
 <td>Web audio
 player</td>
-<td>Streaming</td>
+<td>Streaming
+server, web
+player (1)</td>
+<td>Streaming
+server and
+clients (2)</td>
 </tr>
 <tr class="row-odd"><td>Information Source</td>
 <td>Filesystem,
@@ -648,12 +657,14 @@ MusicBrainz</td>
 MusicBrainz</td>
 <td>&#160;</td>
 <td>Tags</td>
+<td>Tags</td>
 </tr>
 <tr class="row-even"><td>External Sources</td>
 <td>ffmpeg</td>
 <td>MusicBrainz</td>
 <td>&#160;</td>
 <td>MusicBrainz</td>
+<td>&#160;</td>
 <td>&#160;</td>
 <td>None</td>
 </tr>
@@ -665,6 +676,7 @@ Moving</td>
 <td>&#160;</td>
 <td>None</td>
 <td>None</td>
+<td>None</td>
 </tr>
 <tr class="row-even"><td>File meta data</td>
 <td>None</td>
@@ -673,9 +685,11 @@ Moving</td>
 <td>Read?</td>
 <td>Read?</td>
 <td>Read</td>
+<td>Read</td>
 </tr>
 <tr class="row-odd"><td>Artwork managing</td>
 <td>Yes</td>
+<td>&#160;</td>
 <td>&#160;</td>
 <td>&#160;</td>
 <td>&#160;</td>
@@ -688,11 +702,13 @@ Moving</td>
 <td>&#160;</td>
 <td>No</td>
 <td>No</td>
+<td>&#160;</td>
 <td>No</td>
 </tr>
 <tr class="row-odd"><td>Export</td>
 <td>Yes</td>
 <td>Yes</td>
+<td>No</td>
 <td>No</td>
 <td>No</td>
 <td>No</td>
@@ -705,6 +721,7 @@ Moving</td>
 <td>Yes</td>
 <td>No</td>
 <td>Yes</td>
+<td>Yes</td>
 </tr>
 <tr class="row-odd"><td>UI</td>
 <td>CLI/WebUI</td>
@@ -712,7 +729,8 @@ Moving</td>
 <td>WebUI</td>
 <td>CLI/WebUI</td>
 <td>WebUI</td>
-<td>CLI</td>
+<td>CLI/(1)</td>
+<td>CLI/(2)</td>
 </tr>
 <tr class="row-even"><td>Playlist</td>
 <td>Queue,
@@ -726,9 +744,10 @@ Random</td>
 <td>Playlist,
 Queue,
 Random</td>
+<td>Playlist</td>
 <td>Queue,
-Playlist
-Playlist</td>
+Playlist,
+Random</td>
 </tr>
 <tr class="row-odd"><td>Multiuser</td>
 <td>No</td>
@@ -736,10 +755,18 @@ Playlist</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Yes</td>
+<td>No</td>
 <td>Yes</td>
 </tr>
 </tbody>
 </table>
+<dl class="docutils">
+<dt>(1):</dt>
+<dd>There are extensions to access the server from the <a class="reference external" href="https://docs.mopidy.com/en/latest/ext/web/#ext-web">web</a>.
+<em>Modipy</em> also supports <a class="reference external" href="https://docs.mopidy.com/en/latest/clients/mpd/">MPD Clients</a>.</dd>
+<dt>(2):</dt>
+<dd>There exist also <a class="reference external" href="https://www.musicpd.org/clients/">Music Playing Daemon Clients</a></dd>
+</dl>
 </div>
 <div class="section" id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
@@ -750,7 +777,10 @@ and <a class="reference external" href="http://www.fomori.org/cherrymusic/index.
 When you have a totally messed up collection of files you want to organize, the <a class="reference external" href="http://beets.io/">Beets</a> is the tool you need and you should start with.
 <strong>MusicDB</strong> is for those who manage their files by himself and want to have music centric WebUI and streaming solution.
 If you cannot live with any of those tools and you want to develop your own solution,
-<a class="reference external" href="https://musicpd.org/">Music Playing Daemon</a> is the streaming backend you want to use.</p>
+<a class="reference external" href="https://musicpd.org/">Music Playing Daemon</a> is the streaming backend you want to use.
+If <em>MPD</em> is a level to low, try <a class="reference external" href="https://www.mopidy.com/">Modipy</a>. It provides the possibility for extensions on server side as well as on client side.
+In fact <em>Modipy</em> is very similar to <em>MusicDB</em>.
+It just follows the common concepts of audio file management and audio players while <em>MusicDB</em> introduces different concepts and approaches.</p>
 </div>
 </div>
 
@@ -789,7 +819,7 @@ If you cannot live with any of those tools and you want to develop your own solu
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.0 beta',
+            VERSION:'1.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
