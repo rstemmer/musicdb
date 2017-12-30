@@ -14,10 +14,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+"""
+This library provides the excessive logging system of MusicDB.
+"""
+
 import logging
 import sys
 
 class MBDLogFormatter(logging.Formatter):
+    """
+    This class handles log messages.
+    The class is derived from `logging.Formatter <https://docs.python.org/3/library/logging.html#formatter-objects>`_.
+
+    It sets the *loglevel* of the modules listed in configuration under ``[log]->ignore`` to WARNING.
+
+    Furthermore this class defines how the log entries will look like.
+
+    Args:
+        ignorelist: List of module names that shall not appear in the logs
+    """
 
     start_fmt= "\033[1;34m LOG[\033[0;34m%(asctime)s\033[1;34m|"
     file_fmt = "\033[0;35m%(filename)s\033[0;34m:\033[0;35m%(funcName)s\033[0;34m.\033[0;31m%(lineno)d\033[1;34m: "
@@ -40,8 +55,13 @@ class MBDLogFormatter(logging.Formatter):
         logging.root.setLevel(logging.DEBUG)
 
 
-    # source: http://stackoverflow.com/questions/1343227/can-pythons-logging-format-be-modified-depending-on-the-message-log-level
     def format(self, record):
+        """
+        Overloads the `format method of logging.Formatter <https://docs.python.org/3/library/logging.html#logging.Formatter.format>`_
+        to apply coloring and add additional information to the messages.
+    
+            Source: http://stackoverflow.com/questions/1343227/can-pythons-logging-format-be-modified-depending-on-the-message-log-level
+        """
         # Save the original format configured by the user
         # when the logger formatter was instantiated
         format_orig = self._style._fmt
@@ -68,6 +88,15 @@ class MBDLogFormatter(logging.Formatter):
 
 
 class MusicDBLogger():
+    """
+    This class provides the logging management itself and handles the logging configuration.
+
+    Args:
+        path (str): A "path" where the logs will be written. Use ``"stdout"`` or ``"stderr"`` to show them on the screen.
+        loglevelname (str): Name of the lowest log level that shall be shown: ``"DEBUG"``, ``"INFO"``, ``"WARNING"``, ``"ERROR"`` or ``"CRITICAL"``.
+        debugpath (str): Path to a file where everything (DEBUG) shall be logged in. ``None`` for not such a file.
+        config: A MusicDB Configuration object that hold the ignore list. If ``None`` the configuration will not be appied.
+    """
     def __init__(self, path="stderr", loglevelname="INFO", debugpath=None, config=None):
         # configure loglevel
         loglevelname = loglevelname.upper()
@@ -78,7 +107,6 @@ class MusicDBLogger():
         loglevelmap["ERROR"]    = logging.ERROR
         loglevelmap["CRITICAL"] = logging.CRITICAL
         loglevel = loglevelmap[loglevelname]
-
 
         # create output handler
         self.handler = []   # list of handler, at least one: stderr. maybe a file for more details
