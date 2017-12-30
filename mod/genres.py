@@ -21,8 +21,7 @@ Example:
 
     .. code-block:: bash
 
-        musicdb -q genres
-        # -q: do not show logs on stdout
+        musicdb genres
 """
 
 import argparse

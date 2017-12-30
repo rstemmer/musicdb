@@ -38,8 +38,7 @@ Example:
 
     .. code-block:: bash
 
-        musicdb -q repair
-        # -q: do not show logs on stdout
+        musicdb repair
 """
 
 import argparse

@@ -66,7 +66,8 @@ if __name__ == "__main__":
     # Generate argument parser
     argparser = argparse.ArgumentParser(description="Universal MusicDB command line tool")
     argparser.add_argument("-v", "--version", action="store_true", help="show version and exit")
-    argparser.add_argument("-q", "--quiet",   action="store_true", help="be quiet - do not show and write logs")
+    argparser.add_argument("-q", "--quiet",   action="store_true", help="be quiet - do not write into debug file")
+    argparser.add_argument(      "--verbose", action="store_true", help="be verbose - write into log file (usually stdout)")
     argparser.add_argument("--config"       # allows using nondefault config file
         , action="store"
         , type=str
@@ -131,10 +132,10 @@ if __name__ == "__main__":
     if args.logfile:
         args.logfile= os.path.abspath(args.logfile)
         logfile = args.logfile
-    elif args.quiet:
-        logfile   = "/dev/null"
-    else:
+    elif args.verbose:
         logfile = config.log.logfile
+    else:
+        logfile = "/dev/null"
         
     if args.loglevel:
         loglevel = args.loglevel

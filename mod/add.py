@@ -33,8 +33,7 @@ Example:
 
     .. code-block:: bash
 
-        musicdb -q add
-        # -q: do not show logs on stdout
+        musicdb add
 """
 
 import argparse

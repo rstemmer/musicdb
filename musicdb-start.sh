@@ -22,7 +22,7 @@ fi
 
 # start musicdb
 echo -e "\e[1;37mStarting MusicDB WebSocket Server\e[0m"
-su -l -c "musicdb server" $MDBUSER
+su -l -c "musicdb --verbose server" $MDBUSER
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
