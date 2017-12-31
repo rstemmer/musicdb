@@ -9,7 +9,7 @@ fi
 
 
 SERVER_PIPE=$(awk -F "=" '/fifofile/ {print $2}' /etc/musicdb.ini)
-if [ ! -f "$SERVER_PIPE" ] ; then
+if [ ! -p "$SERVER_PIPE" ] ; then
     echo -e "\e[1;31mCannot find \e[1;36m$SERVER_PIPE\e[1;31m! \e[0;31m(Server not running?)\e[0m"
     exit 1
 fi
