@@ -42,12 +42,26 @@ function ToggleFullscreen()
 
     if(state == "normal")
     {
-        document.documentElement.mozRequestFullScreen();
+        let  el = document.documentElement,
+            rfs = el.requestFullscreen
+               || el.webkitRequestFullScreen
+               || el.mozRequestFullScreen
+               || el.msRequestFullscreen 
+            ;
+
+        rfs.call(el);
         $("#FSB").attr("data-fsstate", "fullscreen");
     }
     else
     {
-        document.mozCancelFullScreen();
+        let  el = window.document,
+            rfs = el.exitFullscreen
+               || el.webkitExitFullscreen
+               || el.mozCancelFullScreen
+               || el.msExitFullscreen 
+            ;
+
+        rfs.call(el);
         $("#FSB").attr("data-fsstate", "normal");
     }
 };
