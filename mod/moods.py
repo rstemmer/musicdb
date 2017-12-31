@@ -627,6 +627,11 @@ class moods(MDBModule):
     def MDBM_Main(self, args):
 
         self.ShowUI()
+
+        # Update caches with the new tags
+        with open(self.cfg.server.fifofile) as fifo:
+            fifo.write("refresh\n")
+
         return 0
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
