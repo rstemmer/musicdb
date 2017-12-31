@@ -11,6 +11,20 @@ For more details see the start page [rstemmer.github.io/musicdb/](https://rstemm
 
 For news, follow [@MusicDBProject](https://twitter.com/MusicDBProject)
 
+## Breaking News
+
+This section contains some important information on how to update to a next major version.
+
+Lines starting with **Change:** are steps you have to do *before* updating via `install.sh` script.
+
+### 1.x.x -> 2.x.x
+
+* Signals got replaced by a named pipe
+  * New configuration: `[server] -> fifofile=DATADIR/musicdb.fifo`
+  * Communication with the server via signals (`SIGTERM`, `SIGUSR1`) is deprecated. Use the named pipe (`"shutdown"`, `"refresh"`) instead.
+  * [Details and examples](https://rstemmer.github.io/musicdb/build/html/mdbapi/server.html)
+  * **Change:** Add the new configuration into your ini file
+
 ## Download
 
 You can clone the git repository or download the archive from the release-page.
@@ -19,6 +33,10 @@ The code of the releases (also tagged in the repository) is stable.
 ## Installation
 
 [How to Install MusicDB](https://rstemmer.github.io/musicdb/build/html/usage/install.html)
+
+For updating, also call the `install.sh` script.
+Read the *Breaking News* for manual steps to do when updating to a new major release.
+
 
 ## Documentation
 
@@ -43,10 +61,13 @@ Read [Working on MusicDB's Code](https://rstemmer.github.io/musicdb/build/html/b
 and [Basic Rules for MusicDB](https://rstemmer.github.io/musicdb/build/html/basics/concept.html) before
 you start editing code.
 
-## Versioning
+## Versioning and Branches
 
 I work on MusicDB in three sprints per year. Each sprint is about one and a half week long.
 The rest of the year I only want to concentrate on fixing critical bugs.
 I'm a bit struggling pressing my development workflow in suitable versioning and git management.
+
+At least one thing can be said for sure: Major releases are not compatible with the previous version.
+How to update will be described in the *Breaking News* section at the beginning of this ReadMe.
 
 

@@ -5,6 +5,16 @@
 │ ∗ Other                                │
 └────────────────────────────────────────┘
 
+┍━━━━┫ 2018-xxxxx ┣━━━━┫ 2.0.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ - Signals (SIGUSR1, SIGTERM) will no longer be used for refreshing cache or shutting down.
+│ +  … instead, named pipe gets used. Write "shutdown" or "refresh" into that pipe.
+│ +  … Therefore a new configuration exists: [server]->fifofile
+│
+┝━ MINOR CHANGES
+│ ∗ --quiet behavior improved by adding --verbose
+└───────────────────────────────────────╌╌
+
 ┍━━━━┫ 2017-12-30 ┣━━━━┫ 1.1.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ + MusicDB Derives album genres based on its song genres

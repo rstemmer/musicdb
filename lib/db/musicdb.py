@@ -42,7 +42,7 @@ Adding a Column
 
 When a new column shall be added, the following steps are necessary.
 
-    #. Kill the server: ``kill $( cat /srv/data/musicdb/musicdb.pid )``
+    #. Shutdown the server: ``echo "shutdown" > /data/musicdb/musicdb.fifo )``
     #. Backup the database: ``sqlite3 music.db .dump > backup/music.db.bak``
     #. Update this file.
     #. Update the SQL file *sql/music.sql*

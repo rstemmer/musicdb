@@ -94,7 +94,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetMDBState" && sig == "UpdateMDBState") {
         Artistloader_UpdateState(args);
     }
-    else if(fnc=="SIGUSR1" && sig == "UpdateCaches") {
+    else if(fnc=="sys:refresh" && sig == "UpdateCaches") {
         MusicDB_Request("GetTags", "UpdateTagsCache");                  // Update tag cache
         MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists"); // Update artist view
     }

@@ -1073,21 +1073,15 @@ class MusicDBDatabase(object):
 
     def UpdateServerCache(self):
         """
-        This method signals the MusicDB Websocket Server to update its caches.
-        This should always be done when there are new artists, albums or songs added to the database.
+        This method signals the MusicDB Websocket Server to update its caches by writing ``refresh`` into its named pipe.
+        This should always be called when there are new artists, albums or songs added to the database.
 
         Returns:
             *Nothing*
         """
-        serverpid = CheckPIDFile(self.cfg.server.pidfile)
-        if not serverpid:
-            return  # server not running, so no cacheupdate needed
-        try:
-            os.kill(serverpid, signal.SIGUSR1)
-        except Exception as e:
-            print("\033[1;33mWARNING:\033[0m Updating servercache failed with exception:")
-            print(e)
-            print("\033[1;34mTry to update manually: \033[1;36mkill -USR1 "+str(self.cfg.server.pidfile)+"\033[0m")
+        with open(self.cfg.server.fifofile) as fifo:
+            fifo.write("refresh\n")
+
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

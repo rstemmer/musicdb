@@ -109,6 +109,7 @@ class MusicDBConfig(Config):
         elif self.server.maxcallthreads > 12:
             logging.warning("Value of [server]->maxcallthreads looks too big.")
         self.server.statefile       = self.Get(str, "server",   "statefile",        "/data/musicdb/state.ini")
+        self.server.fifofile        = self.Get(str, "server",   "fifofile",         "/data/musicdb/musicdb.fifo")
 
 
         # [websocket]

@@ -24,10 +24,10 @@ To start and run the server, the following sequence of function calls is necessa
         StartWebSocketServer()
         Run()
 
-MusicDB Server handles the following system signals:
+MusicDB Server handles the following commands when written into its named pipe:
 
-    * USR1: :meth:`~mdbapi.server.SIGUSR1_Handler` - Update server caches and inform clients to update their caches
-    * TERM: :meth:`~mdbapi.server.SIGTERM_Handler` - Shut down the server
+    * refresh:  :meth:`~mdbapi.server.UpdateCaches` - Update server caches and inform clients to update their caches
+    * shutdown: :meth:`~mdbapi.server.Shutdown` - Shut down the server
 
 Further more does this module maintain global instances of the following classes.
 Those objects can be used inside the thread the server runs. 
@@ -40,15 +40,15 @@ If the server is not started, the objects are all ``None``.
     * :class:`lib.cfg.musicdb.MusicDBConfig` as ``cfg``
     * :class:`lib.cfg.mdbstate.MDBState` as ``mdbstate``
 
-The signals can be triggered using ``kill``:
+The following example shows hot to use the pipe interface:
 
     .. code-block:: bash
 
         # Update caches
-        kill -USR1 $( cat /data/musicdb/musicdb.pid )
+        echo "refresh" > /data/musicdb/musicdb.fifo
 
         # Terminate server
-        kill -TERM $( cat /data/musicdb/musicdb.pid )
+        echo "shutdown" > /data/musicdb/musicdb.fifo
 
 """
 
@@ -61,6 +61,7 @@ from lib.cfg.musicdb    import MusicDBConfig
 from lib.cfg.mdbstate   import MDBState
 from lib.db.musicdb     import MusicDatabase
 from lib.pidfile        import *
+from lib.namedpipe      import NamedPipe
 from lib.ws.server      import MusicDBWebSocketServer
 from mdbapi.mise        import MusicDBMicroSearchEngine
 from mdbapi.randy       import StartRandy, StopRandy
@@ -104,8 +105,13 @@ def SignalHandler(signum, stack):
 
 # Update Caches
 def SIGUSR1_Handler():
+    logging.info("\033[1;33m(DEPRECATED: Signals will be removed in 2019) \033[1;36mSIGUSR1:\033[1;34m Updating caches …\033[0m") # DEPRECATED 2019
+    UpdateCaches()
+
+
+def UpdateCaches():
     """
-    The USR1 signal handler handles the USR1 system signal.
+    This function handles the *refresh* command from the named pipe.
     Its task is to trigger updating the servers cache and to inform the clients to update.
 
     On server side:
@@ -114,11 +120,19 @@ def SIGUSR1_Handler():
         * The MPD database gets updated by calling :meth:`mdbapi.mpd.Update`
 
 
-    To inform the clients a broadcast packet get sent with the following content: ``{method:"broadcast", fncname:"SIGUSR1", fncsig:"UpdateCaches", arguments:null, pass:null}``
+    To inform the clients a broadcast packet get sent with the following content: ``{method:"broadcast", fncname:"sys:refresh", fncsig:"UpdateCaches", arguments:null, pass:null}``
+
+    Example:
+
+        .. code-block:: javascript
+
+            if(fnc == "sys:refresh" && sig == "UpdateCaches") {
+                MusicDB_Request("GetTags", "UpdateTagsCache");                  // Update tag cache
+                MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists"); // Update artist view
+            }
     """
     global mise
     global tlswsserver
-    logging.info("\033[1;36mSIGUSR1:\033[1;34m Updating caches …\033[0m")
 
     try:
         mise.UpdateCache()
@@ -133,7 +147,7 @@ def SIGUSR1_Handler():
     try:
         packet = {}
         packet["method"]      = "broadcast"
-        packet["fncname"]     = "SIGUSR1"
+        packet["fncname"]     = "sys:refresh"
         packet["fncsig"]      = "UpdateCaches"
         packet["arguments"]   = None
         packet["pass"]        = None
@@ -148,7 +162,7 @@ def SIGTERM_Handler():
     This function is the handler for the system signal TERM.
     It signals the server to shut down.
     """
-    logging.info("\033[1;36mSIGTERM:\033[1;34m Initiate Shutdown …\033[0m")
+    logging.info("\033[1;33m(DEPRECATED: Signals will be removed in 2019) \033[1;36mSIGTERM:\033[1;34m Initiate Shutdown …\033[0m") # DEPRECATED 2019
     global shutdown
     shutdown = True
 
@@ -220,10 +234,11 @@ def Initialize(configobj, databaseobj):
     StartRandy(cfg)
 
     # Signal Handler
-    logging.info("Register signals \033[0;36m(" + cfg.server.pidfile + ")\033[0m")
-    logging.info("\t\033[1;36mUSR1:\033[1;34m Update Caches\033[0m")
+    # Don't mention the signals - they are deprecated!
+    #logging.info("Register signals \033[0;36m(" + cfg.server.pidfile + ")\033[0m")
+    #logging.info("\t\033[1;36mUSR1:\033[1;34m Update Caches\033[0m")
     signal.signal(signal.SIGUSR1, SignalHandler)
-    logging.info("\t\033[1;36mTERM:\033[1;34m Shutdown Server\033[0m")
+    #logging.info("\t\033[1;36mTERM:\033[1;34m Shutdown Server\033[0m")
     signal.signal(signal.SIGTERM, SignalHandler)
 
     return None
@@ -313,6 +328,11 @@ def Run():
 
     In as an exception occurs the :meth:`~mdbapi.server.Shutdown` gets called, too. In this case the exit-code will be ``1``.
     """
+    logging.info("Open pipe \033[0;36m(" + cfg.server.fifofile + ")\033[0m")
+    logging.info("\t\033[1;36mrefresh\033[1;34m: Update Caches\033[0m")
+    logging.info("\t\033[1;36mshutdown\033[1;34m: Shutdown Server\033[0m")
+    pipe = NamedPipe(cfg.server.fifofile)
+
     logging.info("Setup complete. \033[1;37mExecuting server.\033[1;34m")
     # enter event loop
     global tlswsserver
@@ -321,11 +341,21 @@ def Run():
         return
 
     try:
+
         global shutdown
         while True:
             tlswsserver.HandleEvents()
+            
+            line = pipe.ReadLine()
+            if line == "shutdown":
+                shutdown = True
+            elif line == "refresh":
+                UpdateCaches()
+
             if shutdown:
+                pipe.Delete()
                 Shutdown()
+
             time.sleep(.1)  # Avoid high CPU load
 
     except KeyboardInterrupt:

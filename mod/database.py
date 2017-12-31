@@ -91,7 +91,7 @@ class database(MDBModule, MusicDBDatabase):
 
 
         # propergate changes
-        print("\033[1;34m - Trying to signal \033[1;36mMusicDB-Server\033[1;34m to update his cache…\033[1;31m")
+        print("\033[1;34m - Trying to signal \033[1;36mMusicDB-Server\033[1;34m to update its cache…\033[1;31m")
         self.UpdateServerCache()
         print("\033[1;32mdone")
         return None
@@ -111,7 +111,7 @@ class database(MDBModule, MusicDBDatabase):
             return None
 
         # propergate changes
-        print("\033[1;34m - Trying to signal \033[1;36mMusicDB-Server\033[1;34m to update his cache…\033[1;31m")
+        print("\033[1;34m - Trying to signal \033[1;36mMusicDB-Server\033[1;34m to update its cache…\033[1;31m")
         self.UpdateServerCache()
         print("\033[1;32mdone")
         return None

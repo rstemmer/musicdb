@@ -65,11 +65,11 @@ For the create-command (``-c``) only the ``--set-name`` and the ``--set-parent``
 .. note::
 
     After changing something, the server or clients my need to update cached tag lists.
-    This can be done sending the signal ``USR1`` via ``kill`` to the server.
+    This can be done sending the command ``refresh`` via named pipe to the server.
 
     .. code-block:: bash
 
-        sudo kill -USR1 $( cat /data/musicdb/musicdb.pid )
+        echo "refresh" > /data/musicdb/musicdb.fifo
 
 Style Guide
 -----------
@@ -96,7 +96,7 @@ Create a new tags (``-c $CLASS``)
     musicdb tags -c subgenre --set-parent Metal --set-name "Dark Metal"
 
     # Signal server to force cache updates on server and clients
-    sudo kill -USR1 $( cat /data/musicdb/musicdb.pid )
+    echo "refresh" > /data/musicdb/musicdb.fifo
 
 
 Modify a tag (``-m $CLASS``)
