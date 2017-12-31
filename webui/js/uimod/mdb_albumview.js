@@ -105,7 +105,7 @@ function _ABV_CreateCover(MDBAlbum)
 {
     var html = "";
     html += "<div id=ABVArtworkBox>";
-    var imgpath = EncodeArtworkPath(MDBAlbum.artworkpath);
+    var imgpath = EncodeArtworkPath(MDBAlbum.artworkpath, "500x500");
     html += "<img id=ABVArtworkImage src=\"" + imgpath + "\">";
     html += "</div>";
     return html;
