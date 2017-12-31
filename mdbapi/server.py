@@ -28,6 +28,7 @@ MusicDB Server handles the following commands when written into its named pipe:
 
     * refresh:  :meth:`~mdbapi.server.UpdateCaches` - Update server caches and inform clients to update their caches
     * shutdown: :meth:`~mdbapi.server.Shutdown` - Shut down the server
+    * blacklist: Show the blacklists maintained by :mod:`~mdbapi.randy`
 
 Further more does this module maintain global instances of the following classes.
 Those objects can be used inside the thread the server runs. 
@@ -64,7 +65,7 @@ from lib.pidfile        import *
 from lib.namedpipe      import NamedPipe
 from lib.ws.server      import MusicDBWebSocketServer
 from mdbapi.mise        import MusicDBMicroSearchEngine
-from mdbapi.randy       import StartRandy, StopRandy
+from mdbapi.randy       import StartRandy, StopRandy, RandyInterface
 from mdbapi.tracker     import StartTracker, StopTracker
 import mdbapi.mpd as mpd
 import logging
@@ -351,6 +352,8 @@ def Run():
                 shutdown = True
             elif line == "refresh":
                 UpdateCaches()
+            elif line == "blacklist":
+                RandyInterface().PrintBlacklist()
 
             if shutdown:
                 pipe.Delete()

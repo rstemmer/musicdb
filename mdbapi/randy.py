@@ -55,7 +55,8 @@ import mdbapi.mpd as mpd
 RUN    = False
 THREAD = None
 CMDQUEUE = []
-CMD_ADDSONG = 1
+CMD_ADDSONG         = 1
+CMD_PRINTBLACKLIST  = 2
 
 def StartRandy(config):
     """
@@ -168,8 +169,21 @@ def RandyThread(config):
             time.sleep(interval)
             continue
 
-        # currently, there is just one command
-        if cmd == CMD_ADDSONG:
+        # execute commands
+        if cmd == CMD_PRINTBLACKLIST:
+            print("\033[1;36mRandy's Blacklists:")
+            print("\033[1;34m\tSongs:")
+            for entry in songblacklist:
+                print("\033[1;31m\t - \033[0;36m%s"%(str(entry)))
+            print("\033[1;34m\tAlbums:")
+            for entry in albumblacklist:
+                print("\033[1;31m\t - \033[0;36m%s"%(str(entry)))
+            print("\033[1;34m\tArtists:")
+            for entry in artistblacklist:
+                print("\033[1;31m\t - \033[0;36m%s"%(str(entry)))
+
+
+        elif cmd == CMD_ADDSONG:
             # Get parameters
             position   = args[0]
 
@@ -283,6 +297,16 @@ class RandyInterface(object):
         return None
 
 
+    def PrintBlacklist(self):
+        """
+        Triggers Randy to print the blacklists to *stdout*.
+        This can be useful for debugging. 
+
+        Returns:
+            ``None``
+        """
+        CMDQUEUE.append((CMD_PRINTBLACKLIST, []))
+        return None
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
