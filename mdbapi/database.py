@@ -24,6 +24,7 @@ import signal
 from lib.filesystem     import Filesystem
 from lib.metatags       import MetaTags
 from lib.pidfile        import *                    # Check PID File…
+from lib.namedpipe      import NamedPipe
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import *
 from lib.db.trackerdb   import TrackerDatabase      # To update when a song gets removed
@@ -1079,9 +1080,8 @@ class MusicDBDatabase(object):
         Returns:
             *Nothing*
         """
-        with open(self.cfg.server.fifofile) as fifo:
-            fifo.write("refresh\n")
-
+        pipe = NamedPipe(self.cfg.server.fifofile)
+        pipe.WriteLine("refresh")
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

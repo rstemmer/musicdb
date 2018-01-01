@@ -16,6 +16,7 @@
 
 import os
 import errno
+import logging
 
 
 class NamedPipe(object):
@@ -75,6 +76,8 @@ class NamedPipe(object):
                     else:
                         time.sleep(1)
 
+        The file gets opened with ``O_NONBLOCK`` flag (non blocking read) and line buffering strategy.
+
         Returns:
             A line from the pipe or ``None``
         """
@@ -82,17 +85,45 @@ class NamedPipe(object):
         def opener(path, flags):
             return os.open(path, os.O_RDONLY | os.O_NONBLOCK)
 
-        with open(self.path, opener=opener) as fifo:
+        with open(self.path, buffering=1, opener=opener) as fifo:
             try:
                 line = fifo.read()
             except OSError as e:
-                if e.errno == errno.EAGAIN or e.errno == errno.EWOULDBLOCK:
-                    line = None
-                else:
-                    raise
+                if e.errno != errno.EAGAIN or e.errno != errno.EWOULDBLOCK:
+                    logging.error("Reading from FIFO failed with error \"%s\"!", str(e))
+                line = None
+            except Exception as e:
+                logging.error("Reading from FIFO failed with exception \"%s\"!", str(e))
+                line = None
 
-        line = line.rstrip()    # remove trailing \n
+        if line:
+            line = line.rstrip()    # remove trailing \n
         return line
+
+
+    def WriteLine(self, line):
+        """
+        Write a line into the named pipe.
+        If line is ``None`` or ``""``, nothing will be done.
+
+        Args:
+            line (str): Line to write into the named pipe (Without ``\n``!)
+
+        Returns:
+            *Nothing*
+        """
+        if not line:
+            return
+
+        line += "\n"
+
+        fd = os.open(self.path, os.O_WRONLY)
+        try:
+            os.write(fd, line.encode())
+        except Exception as e:
+            logging.error("Writing to FIFO failed with exception \"%s\"!", str(e))
+        finally:
+            os.close(fd)
 
 
 
