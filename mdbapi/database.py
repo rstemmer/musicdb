@@ -883,6 +883,64 @@ class MusicDBDatabase(object):
         return None
 
 
+    def RemoveAlbum(self, albumid):
+        """
+        This method removes an album from the database.
+        The files gets not touched, and so it does not matter if they even exists.
+        All related information will also be removed.
+
+        .. warning::
+
+            For all songs in this album, the :meth:`~RemoveSong` method gets called!
+
+        .. warning::
+
+            This is not a *"set the deleted flag"* method.
+            The data gets actually removed from the database.
+            No recovery possible!
+
+        Args:
+            albumid (int): ID of the album that shall be removed from database
+
+        Return:
+            ``None``
+        """
+        songs = self.db.GetSongsByAlbumId(albumid)
+        for song in songs:
+            self.RemoveSong(song["id"])
+        self.db.RemoveAlbum(albumid)
+        return None
+
+
+    def RemoveArtist(self, artistid):
+        """
+        This method removes an artist from the database.
+        The files gets not touched, and so it does not matter if they even exists.
+        All related information will also be removed.
+
+        .. warning::
+
+            For all artists albums, the :meth:`~RemoveAlbum` method gets called!
+
+        .. warning::
+
+            This is not a *"set the deleted flag"* method.
+            The data gets actually removed from the database.
+            No recovery possible!
+
+        Args:
+            artistid (int): ID of the artist that shall be removed from database
+
+        Return:
+            ``None``
+        """
+        albums = self.db.GetAlbumsByArtistId(artistid)
+        for album in albums:
+            self.RemoveAlbum(album["id"])
+        self.db.RemoveArtist(artistid)
+        return None
+
+
 
     def AddLyricsFromFile(self, songpath):
         """

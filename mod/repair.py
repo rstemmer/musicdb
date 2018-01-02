@@ -185,14 +185,12 @@ class repair(MDBModule, MusicDBDatabase):
             self.AddSong(path)
 
     def RemoveFromDatabase(self, target, targetid):
-        if target == "song":
+        if target == "artist":
+            self.RemoveArtist(targetid)
+        elif target == "album":
+            self.RemoveAlbum(targetid)
+        elif target == "song":
             self.RemoveSong(targetid)
-        #if target == "artist":
-        #    pass
-        #elif target == "album":
-        #    pass
-        #elif target == "song":
-        #    pass
 
 
 
