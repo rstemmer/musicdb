@@ -367,6 +367,34 @@ class TrackerDatabase(Database):
 
 
 
+    def RemoveArtist(self, artistid):
+        """
+        This method removes all relations to an artist.
+        This is useful in case a artist gets removed from the database.
+        Its song relations must be removed separately by calling :meth:`~RemoveSong` for each song.
+
+        If the artist relation does not exist, nothing will be done.
+
+        Args:
+            artistid (int): ID of the artist
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: Invalid artist ID type
+        """
+        if type(artistid) != int:
+            raise TypeError("Song IDs must be of type int!")
+
+        with TrackerDatabaseLock:
+            sql = "DELETE FROM artistrelations WHERE artistida = ? OR artistidb = ?"
+            self.Execute(sql, (artistid, artistid))
+
+        return None
+
+
+
     def GetRelations(self, target, targetid):
         """
         This method returns the related songs or artists of a song or an artist, depending on the value of *target*. 

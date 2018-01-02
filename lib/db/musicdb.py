@@ -110,6 +110,7 @@ Album Related Methods
     * :meth:`~lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetAlbums`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetAllAlbumIds`
+    * :meth:`~lib.db.musicdb.MusicDatabase.RemoveAlbum`
 
 Artworks
 ^^^^^^^^
@@ -141,6 +142,7 @@ Database structure:
     * :meth:`~lib.db.musicdb.MusicDatabase.GetAllArtists`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetArtistByPath`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetArtistById`
+    * :meth:`~lib.db.musicdb.MusicDatabase.RemoveArtist`
 
 Lyrics
 ------
@@ -725,6 +727,33 @@ class MusicDatabase(Database):
         return retval
 
 
+    def RemoveArtist(self, artistid):
+        """
+        This method removes an artist entry and all related data from all tables.
+
+        The removed data are:
+
+            * The complete row in the artist-table for this artist
+
+        Args:
+            artistid (int): ID of the artist
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: When *artistid* is not an integer or string
+        """
+        if type(artistid) != str and type(artistid) != int:
+            raise TypeError("artistid must be a decimal number of type integer or string")
+
+        with MusicDatabaseLock:
+            sql = "DELETE FROM albums WHERE artistid = ?"
+            self.Execute(sql, artistid)
+
+        return None
+
+
 
 
     ##########################################################################
@@ -911,6 +940,36 @@ class MusicDatabase(Database):
             albumids = self.GetFromDatabase(sql)
         retval = [x[0] for x in albumids] # do not use tuples
         return retval
+
+
+    def RemoveAlbum(self, albumid):
+        """
+        This method removes an album entry and all related data from all tables.
+
+        The removed data are:
+
+            * The complete row in the album-table for this album
+            * All tags of this album (not the tag definition)
+
+        Args:
+            albumid (int): ID of the album
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: When *albumid* is not an integer or string
+        """
+        if type(albumid) != str and type(albumid) != int:
+            raise TypeError("albumid must be a decimal number of type integer or string")
+
+        with MusicDatabaseLock:
+            sql = "DELETE FROM albums WHERE albumid = ?"
+            self.Execute(sql, albumid)
+            sql = "DELETE FROM albumtags WHERE albumid = ?"
+            self.Execute(sql, albumid)
+
+        return None
 
 
     #------------------------------------------------------------------------#
