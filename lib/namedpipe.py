@@ -117,7 +117,12 @@ class NamedPipe(object):
 
         line += "\n"
 
-        fd = os.open(self.path, os.O_WRONLY)
+        try:
+            fd = os.open(self.path, os.O_WRONLY | os.O_NONBLOCK)
+        except OSError as e:
+            logging.error("Open FIFO failed with error \"%s\"!", str(e))
+            return
+
         try:
             os.write(fd, line.encode())
         except Exception as e:
