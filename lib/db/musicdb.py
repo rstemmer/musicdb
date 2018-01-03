@@ -1345,6 +1345,9 @@ class MusicDatabase(Database):
         if type(filterlist) != list:
             raise TypeError("filterlist must be of type list")
 
+        if albumid and filterlist:
+            logging.warning("Ignoring tag filter because there was an Album ID given. \033[1;30m(This may be a symptom of a bug!)")
+
 
         # Create a list of tagids that limits the set of albums
         if albumid == None:
