@@ -47,6 +47,12 @@ class NamedPipe(object):
         Creates the FIFO file if if does not exist.
 
         The access permissions are Read/Write for all (``0666``)
+
+        Returns:
+            *Nothing*
+
+        Raises:
+            OSError: Except when the FIFO already exists.
         """
 
         try:
@@ -59,9 +65,10 @@ class NamedPipe(object):
 
 
     def ReadLine(self):
-        """
+        r"""
         This method reads a line from the FIFO, if there is a line.
         If nothing got written to the FIFO, ``None`` gets returned.
+        The line does not have a trailing ``\n``.
 
         Example:
 
@@ -71,10 +78,10 @@ class NamedPipe(object):
                 
                 while True:
                     line = pipe.ReadLine()
-                    if line:
-                        ProcessLine(line)
-                    else:
-                        time.sleep(1)
+                    if line == "refresh":
+                        UpdateCaches()
+
+                    time.sleep(1)
 
         The file gets opened with ``O_NONBLOCK`` flag (non blocking read) and line buffering strategy.
 
@@ -101,10 +108,18 @@ class NamedPipe(object):
         return line
 
 
+
     def WriteLine(self, line):
         r"""
         Write a line into the named pipe.
         If line is ``None`` or an empty string, nothing will be done.
+
+        Example:
+
+            .. code-block:: python
+
+                pipe = NamedPipe("/tmp/test.fifo")
+                pipe.WriteLine("refresh")
 
         Args:
             line (str): Line to write into the named pipe (Without ``\n``!)
