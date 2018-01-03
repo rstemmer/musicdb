@@ -55,8 +55,9 @@ import mdbapi.mpd as mpd
 RUN    = False
 THREAD = None
 CMDQUEUE = []
-CMD_ADDSONG         = 1
-CMD_PRINTBLACKLIST  = 2
+CMD_ADDSONG             = 1
+CMD_ADDSONGFROMALBUM    = 2
+CMD_PRINTBLACKLIST      = 10
 
 def StartRandy(config):
     """
@@ -183,6 +184,36 @@ def RandyThread(config):
                 print("\033[1;31m\t - \033[0;36m%s"%(str(entry)))
 
 
+        elif cmd == CMD_ADDSONGFROMALBUM:
+            # Get parameters
+            position   = args[0]
+            albumid    = args[1]
+            try:
+                song = musicdb.GetRandomSong(None, nodisabled, nohated, minlen, albumid)
+            except Exception as e:
+                logging.error("Getting random song failed with error: \"%s\"!", str(e))
+                song = None
+                continue
+
+            # maintain blacklists
+            artistblacklist.pop(0)
+            artistblacklist.append(song["artistid"])
+            albumblacklist.pop(0)
+            albumblacklist.append(song["albumid"])
+            songblacklist.pop(0)
+            songblacklist.append(song["id"])
+
+            # Add song to queue
+            logging.debug("Randy adds the following song: \033[0;36m" + song["path"])
+            success = mpd.AddSong(song["path"], position)
+
+            # Update statistics
+            if success:
+                if config.debug.disablestats:
+                    logging.info("Updating song statistics disabled. \033[1;33m!!")
+                    continue
+                musicdb.UpdateSongStatistic(song["id"], "qrndadds", "inc")
+
         elif cmd == CMD_ADDSONG:
             # Get parameters
             position   = args[0]
@@ -294,6 +325,24 @@ class RandyInterface(object):
             ``None``
         """
         CMDQUEUE.append((CMD_ADDSONG, [position]))
+        return None
+
+
+    def AddSongFromAlbum(self, albumid, position="last"):
+        """
+        Triggers Randy to add a random song from a specific album into the song-queue
+
+        It gets not checked if the song is listed on the black list.
+        But the song gets added to the black list for songs, as well as the album and artist gets added.
+
+        Args:
+            albumid (int): ID of the album the song shall come from
+            position (str): Determines where the song gets added. ``"next"``: after the current playing song, or ``"last"`` at the end of the queue.
+
+        Returns:
+            ``None``
+        """
+        CMDQUEUE.append((CMD_ADDSONGFROMALBUM, [position, albumid]))
         return None
 
 

@@ -222,7 +222,10 @@ class MusicDBWebSocketInterface(object):
         elif fncname == "AddAlbumToQueue":
             retval = self.AddAlbumToQueue(args["albumid"])
         elif fncname == "AddRandomSongToQueue":
-            retval = self.AddRandomSongToQueue(args["position"])
+            if "albumid" in args:
+                retval = self.AddRandomSongToQueue(args["position"], args["albumid"])
+            else:
+                retval = self.AddRandomSongToQueue(args["position"])
         elif fncname == "MoveSongInQueue":
             retval = self.MoveSongInQueue(args["songid"], args["srcpos"], args["dstpos"])
         elif fncname == "RemoveSongFromQueue":
@@ -1171,16 +1174,20 @@ class MusicDBWebSocketInterface(object):
         return None
 
 
-    def AddRandomSongToQueue(self, position):
+    def AddRandomSongToQueue(self, position, albumid=None):
         """
         Similar to :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue`.
-        Instead of a specific song, a random song gets chosen by the randomizer.
+        Instead of a specific song, a random song gets chosen by the random-song manager *Randy*.
         This is done using :meth:`mdbapi.randy.Randy.AddSong`.
 
-        The randomizer also increments the *rndadds* statistics for the song that gets added to the queue.
+        If an album ID is given, the new song will be added from that album
+        using :meth:`mdbapi.randy.Randy.AddSongFromAlbum`.
+
+        The random-song manager also increments the *rndadds* statistics for the song that gets added to the queue.
 
         Args:
             position (str): ``"next"`` or ``"last"`` - Determines where the song gets added
+            albumid (int): Optional album ID from that the song shall be
 
         Returns:
             ``None``
@@ -1189,15 +1196,21 @@ class MusicDBWebSocketInterface(object):
             .. code-block:: javascript
 
                 MusicDB_Call("AddRandomSongToQueue", {position:"last"});
+                MusicDB_Call("AddRandomSongToQueue", {albumid:"42", position:"next"});
 
         """
         # Check if the Randy Interface was created. This is not done in the constructor!
-        # The interface to Randy gets instatioated in the onWSConnect callback funktion.
-        # This is save as long as this (AddRandomSongToQueue) method gets only called by the websocket interface!
-        if self.randy:
-            self.randy.AddSong(position)
-        else:
+        # The interface to Randy gets instantiated in the onWSConnect callback function.
+        # This is save as long as this (AddRandomSongToQueue) method gets only called by the WebSocket interface!
+        if not self.randy:
             logging.warning("No Randy interface created. \033[0:33m(This may not be intentional!) \033[1;30m(Doing nothing)")
+            return None
+
+        if albumid:
+            self.randy.AddSongFromAlbum(albumid, position)
+        else:
+            self.randy.AddSong(position)
+
         return None
 
 

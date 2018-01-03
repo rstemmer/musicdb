@@ -35,7 +35,7 @@ function ShowAlbum(parentID, MDBArtist, MDBAlbum, MDBCDs, MDBAlbumTags, currents
     html += "</div>";
 
     // Add-Button
-    html += "<div id=ABVToolbar class=\"hlcolor hovpacity\" title=\"Add whole album to queue\">";
+    html += "<div id=ABVToolbar class=\"hlcolor hovpacity\">";
     html += Button_AddAlbumToQueue(MDBAlbum.id);
     html += "</div>";
 

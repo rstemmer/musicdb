@@ -63,8 +63,18 @@ function Button_AddAlbumToQueue(albumid)
     html += "<div class=\"BTN_box\">";
     
     html += BTN_CreateIconButton(
-        "<i class=\"fa fa-plus-square\"></i>",
+        "<i class=\"fa fa-plus-square\" title=\"Add whole album to queue\"></i>",
         "MusicDB_Call(\'AddAlbumToQueue\', {albumid:"+albumid+"});");
+    html += BTN_CreateSeparator();
+    html += BTN_CreateSeparator();
+    html += BTN_CreateSeparator();
+    html += BTN_CreateIconButton(
+        "<i class=\"fa fa-plus-circle\" title=\"Add random song to the queue\"></i>",
+        "MusicDB_Call(\'AddRandomSongToQueue\', {albumid:"+albumid+", position:\'last\'});");
+    html += BTN_CreateSeparator();
+    html += BTN_CreateIconButton(
+        "<i class=\"fa fa-play-circle\" title=\"Play random song next\"></i>",
+        "MusicDB_Call(\'AddRandomSongToQueue\', {albumid:"+albumid+", position:\'next\'});");
 
     html += "</div>";
     return html;

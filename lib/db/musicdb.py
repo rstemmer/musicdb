@@ -1265,13 +1265,19 @@ class MusicDatabase(Database):
         return songs
 
 
-    def GetRandomSong(self, filterlist=[], nodisabled=True, nohated=False, minlen=None):
-        """
+    def GetRandomSong(self, filterlist=None, nodisabled=True, nohated=False, minlen=None, albumid=None):
+        r"""
         This method returns a random song that fulfills several constraints.
 
-        The *filterlist* can be either a set of genre tag IDs or a set of genre names.
+        The ``filterlist`` can be either a set of genre tag IDs or a set of genre names.
+        When ``filterlist`` is ``None`` no filter gets applied.
+        Otherwise only albums of the genres in the list will be considered.
 
-        Filtering is done by the following steps:
+        When ``albumid`` is not ``None``, then the process of getting valid albums will be skipped.
+        Instead the predefined album will be used.
+        In that case ``filterlist`` gets ignored.
+
+        Getting a random song is done by the following steps, visualized in the flow chart below:
 
             #. Get album IDs of all albums in the database
             #. Translate *filterlist* into a list of tag IDs
@@ -1279,11 +1285,42 @@ class MusicDatabase(Database):
             #. Get all song IDs that are related to the filtered album IDs by calling :meth:`~lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds`
             #. Select a random song ID and get its song entry from the database
 
+        .. graphviz::
+
+            digraph hierarchy {
+                size="5,8"
+                start           [label="Start"];
+                hasalbumid      [shape=diamond, label="albumid == None"];
+                getallalbums    [shape=box,     label="Get all Album IDs"]
+                getalltags      [shape=box,     label="Get list of Tag IDs\nfrom filterlist"]
+                hasfilterlist   [shape=diamond, label="Is there a filter list"];
+                removealbums    [shape=box,     label="Remove albums without\ntags of filter"]
+                getallsongs     [shape=box,     label="Get all songs of selected albums"]
+                selectsong      [shape=box,     label="Select random song"]
+
+
+                start           -> hasalbumid;
+
+                hasalbumid      -> getallsongs      [label="No"];
+                hasalbumid      -> getallalbums     [label="Yes"];
+                getallalbums    -> getalltags
+
+                getalltags      -> hasfilterlist
+                hasfilterlist   -> removealbums     [label="Yes"];
+                hasfilterlist   -> getallsongs      [label="No"];
+
+                removealbums    -> removealbums     [label="For each album"]
+                removealbums    -> getallsongs
+
+                getallsongs     -> selectsong
+            }
+
         Args:
             filterlist: Optional, default value is ``[]``. A list of genre names or genre tag IDs that limits the search set. The tags have *OR* relations.
             nodisabled (bool): If ``True`` no disables songs will be selected
             nohated (bool): If ``True`` no hated songs will be selected
             minlen (int): If set, no songs with less than *minlen* seconds will be selected
+            albumid (int): Use album with ID ``albumid`` instead of a random album
 
         Returns:
             A random MusicDB Song dictionary that fulfills the constraints,
@@ -1292,7 +1329,7 @@ class MusicDatabase(Database):
         Raises:
             TypeError: When *nodisabled* or *nohated* are not of type ``bool``
             TypeError: When *minlen* is not ``None`` and not of type integer
-            TypeError: When *filterlist* is not a list
+            TypeError: When *filterlist* is not a list and not ``None``
         """
         if type(nodisabled) != bool:
             raise TypeError("nodisabled must be of type bool")
@@ -1303,50 +1340,58 @@ class MusicDatabase(Database):
         if minlen != None and type(minlen) != int:
             raise TypeError("minlen must be None or of type integer")
 
+        if filterlist == None:
+            filterlist = []
         if type(filterlist) != list:
             raise TypeError("filterlist must be of type list")
 
 
         # Create a list of tagids that limits the set of albums
+        if albumid == None:
+            with MusicDatabaseLock:
+                tagids = []
+                if len(filterlist) > 0:
+                    for filterentry in filterlist:
+                        if type(filterentry) == str:
+                            tag   = self.GetTagByName(filterentry, self.TAG_CLASS_GENRE)
+                            tagid = tag["id"]
+                        else:
+                            tagid = filterentry
+
+                        tagids.append(tagid)
+
+                # create a set from the list to compare it with a set of albumtags
+                tagids = set(tagids)
+
+                # Get IDs of all albums existing in the database
+                sql      = "SELECT albumid FROM albums"
+                retval   = self.GetFromDatabase(sql, None)
+                albumids = [entry[self.ALBUM_ID] for entry in retval]
+
+                # Only select albums that have a tag listed in the tagids list
+                selectedalbumids = []
+                if len(tagids) > 0:
+                    for albumid in albumids:
+                        # Get tags of the album
+                        albumtags = self.GetTargetTags("album", albumid, self.TAG_CLASS_GENRE)
+                        if not albumtags:
+                            continue
+
+                        # Check if one tag matches the filter
+                        albumtagids = { albumtag["id"] for albumtag in albumtags }
+                        if not tagids & albumtagids:
+                            continue
+
+                        selectedalbumids.append(albumid)
+                else:
+                    selectedalbumids = albumids
+
+        else:
+            # use the predefined album ID
+            selectedalbumids = [albumid]
+
+        # Get all Songs that may be candidate
         with MusicDatabaseLock:
-            tagids = []
-            if len(filterlist) > 0:
-                for filterentry in filterlist:
-                    if type(filterentry) == str:
-                        tag   = self.GetTagByName(filterentry, self.TAG_CLASS_GENRE)
-                        tagid = tag["id"]
-                    else:
-                        tagid = filterentry
-
-                    tagids.append(tagid)
-
-            # create a set from the list to compare it with a set of albumtags
-            tagids = set(tagids)
-
-            # Get IDs of all albums existing in the database
-            sql      = "SELECT albumid FROM albums"
-            retval   = self.GetFromDatabase(sql, None)
-            albumids = [entry[self.ALBUM_ID] for entry in retval]
-
-            # Only select albums that have a tag listed in the tagids list
-            selectedalbumids = []
-            if len(tagids) > 0:
-                for albumid in albumids:
-                    # Get tags of the album
-                    albumtags = self.GetTargetTags("album", albumid, self.TAG_CLASS_GENRE)
-                    if not albumtags:
-                        continue
-
-                    # Check if one tag matches the filter
-                    albumtagids = { albumtag["id"] for albumtag in albumtags }
-                    if not tagids & albumtagids:
-                        continue
-
-                    selectedalbumids.append(albumid)
-            else:
-                selectedalbumids = albumids
-
-            # Get all Songs that may be candidate
             songids = self.GetSongIdsByAlbumIds(selectedalbumids, nodisabled, nohated, minlen)
 
         if len(songids) == 0:
