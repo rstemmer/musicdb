@@ -67,5 +67,10 @@ function ShowSongRelationship(parentID, songid, MDBSonglist)
 }
 
 
+function UpdateRelationshipTileTags(inputid, MDBTags)
+{
+    Taginput_Update(inputid, MDBTags, "show");
+}
+
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

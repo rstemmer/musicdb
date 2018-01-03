@@ -111,6 +111,12 @@ function onMusicDBMessage(fnc, sig, args, pass)
             Taginput_Show("SubgenreHUD", "MainSongSubgenreView", args.song.id, args.tags, "Subgenre", "Song");
             UpdateStyle();    // Update new tags
         }
+
+        // Update rest if a tag input element must be updated
+        if(sig == "UpdateTagInput")
+        {
+            UpdateRelationshipTileTags(pass.taginputid, args.tags);
+        }
     }
     else if(fnc == "GetQueue" && sig == "ShowQueue")
         ShowQueue("RightContentBox", args);
