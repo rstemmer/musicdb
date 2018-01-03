@@ -102,9 +102,9 @@ class NamedPipe(object):
 
 
     def WriteLine(self, line):
-        """
+        r"""
         Write a line into the named pipe.
-        If line is ``None`` or ``""``, nothing will be done.
+        If line is ``None`` or an empty string, nothing will be done.
 
         Args:
             line (str): Line to write into the named pipe (Without ``\n``!)

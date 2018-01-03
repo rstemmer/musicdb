@@ -24,7 +24,7 @@ The start is done in the following steps:
     #. Create a named pipe (this will be deleted at exit)
     #. Enter the event loop by running :meth:`mdbapi.Run`
 
-Read :doc:`mdbapi.server` for details
+Read :doc:`/mdbapi/server` for details
 
 Example:
 
