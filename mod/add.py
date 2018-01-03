@@ -64,7 +64,7 @@ class FileNameInput(TextInput):
     def HandleKey(self, key):
         # Replace slash with DIVISION SLASH
         if key == "/":
-            key = "⁄"
+            key = "∕"
         TextInput.HandleKey(self, key)
     
 
