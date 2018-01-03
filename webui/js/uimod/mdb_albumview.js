@@ -353,6 +353,9 @@ function Albumview_UpdateSong(MDBAlbum, MDBSong, MDBSongTags)
 
     // Update Style
     UpdateStyle(MDBAlbum.bgcolor, MDBAlbum.fgcolor, MDBAlbum.hlcolor);
+
+    // Update album tag inputs - with new song genres, they get also updated
+    MusicDB_Request("GetAlbum", "UpdateTagInput", {albumid: MDBAlbum.id});
 }
 
 function _ABV_CreateSongEntryNumber(songnumber)
