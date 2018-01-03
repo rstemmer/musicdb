@@ -69,6 +69,7 @@ function ShowSongRelationship(parentID, songid, MDBSonglist)
 
 function UpdateRelationshipTileTags(inputid, MDBTags)
 {
+    if(inputid.startsWith("STMGI_"))
     Taginput_Update(inputid, MDBTags, "show");
 }
 
