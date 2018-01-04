@@ -25,6 +25,11 @@ div#AlbumGenreBox
     align-items:    flex-end;
 }
 
+div#AlbumSubgenreView_tags
+{
+    flex-direction: column;
+}
+
 /******************/
 /* Artwork        */
 /******************/
