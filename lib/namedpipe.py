@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import stat
 import errno
 import logging
 
@@ -112,6 +113,7 @@ class NamedPipe(object):
     def WriteLine(self, line):
         r"""
         Write a line into the named pipe.
+        This method checks if the FIFO exists and rejects the line if not.
         If line is ``None`` or an empty string, nothing will be done.
 
         Example:
@@ -129,11 +131,15 @@ class NamedPipe(object):
         """
         if not line:
             return
+        
+        if not self.Exists():
+            logging.warning("FIFO \033[0;33m%s\033[1;33m does not exist! \033[1;30m(Command \"%s\" will not be send)", self.path, line)
+            return
 
         line += "\n"
 
         try:
-            fd = os.open(self.path, os.O_WRONLY | os.O_NONBLOCK)
+            fd = os.open(self.path, os.O_WRONLY)
         except OSError as e:
             logging.error("Open FIFO failed with error \"%s\"!", str(e))
             return
@@ -147,6 +153,24 @@ class NamedPipe(object):
 
 
 
+    def Exists(self):
+        """
+        This method checks if the FIFO file for the named pipe exists.
+        It not only checks the existence of the file but also if the file is a FIFO.
+
+        Returns:
+            ``True`` When the FIFO exists (and is a valid FIFO), otherwise ``False``
+        """
+        try:
+            if stat.S_ISFIFO(os.stat(self.path).st_mode):
+                return True
+        except OSError:
+            return False
+
+        return False
+
+
+
     def Delete(self):
         """
         This function removes the named FIFO.
@@ -157,8 +181,9 @@ class NamedPipe(object):
         Returns:
             *Nothing*
         """
-        os.remove(self.path)
-        self.fifo = None
+        if self.Exists():
+            logging.debug("Removing FIFO %s", self.path)
+            os.remove(self.path)
 
 
 

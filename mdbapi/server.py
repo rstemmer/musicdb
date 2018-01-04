@@ -77,6 +77,7 @@ database    = None  # music.db object
 mise        = None  # micre searche engine object
 cfg         = None  # overall configuration file
 mdbstate    = None  # ini file holding the state like selected genres and EoQ-Event
+pipe        = None  # Named pipe for server commands
 # Threadhandler
 mpdthread   = None
 # WS Server
@@ -184,7 +185,7 @@ def Initialize(configobj, databaseobj):
         #. Connect to MPD (Music Playing Daemon) and start Observer thread (see :doc:`/mdbapi/mpd` and :doc:`/mdbapi/tracker`)
         #. Update MiSE cache via :meth:`mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache`
         #. Start the randomizer Randy via :meth:`mdbapi.Randy.StartRandy`
-        #. Register the signals USR1 and TERM
+        #. Create FIFO file for named pipe
 
     Args:
         configobj: :class:`~lib.cfg.musicdb.MusicDBConfig` that gets shared between connections
@@ -242,6 +243,13 @@ def Initialize(configobj, databaseobj):
     #logging.info("\t\033[1;36mTERM:\033[1;34m Shutdown Server\033[0m")
     signal.signal(signal.SIGTERM, SignalHandler)
 
+    # Named Pipe
+    global pipe
+    logging.info("Open pipe \033[0;36m(" + cfg.server.fifofile + ")\033[0m")
+    logging.info("\t\033[1;36mrefresh\033[1;34m: Update Caches\033[0m")
+    logging.info("\t\033[1;36mshutdown\033[1;34m: Shutdown Server\033[0m")
+    pipe = NamedPipe(cfg.server.fifofile)
+
     return None
 
 
@@ -280,6 +288,7 @@ def Shutdown():
         #. Stop the randomizer Randy via :meth:`mdbapi.randy.StopRandy`
         #. Stop the song Tracker via :meth:`mdbapi.tracker.StopTracker`
         #. Disconnect from MPD and stop the observer Thread via :meth:`mdbapi.mpd.StopObserver`
+        #. Removing FIFO file for named pipe
         #. Stop the websocket server
 
     At the end, the program gets terminated. So, this function gets never left.
@@ -309,6 +318,10 @@ def Shutdown():
         logging.debug("Stopping TLS WS Server…")
         tlswsserver.Stop()
 
+    global pipe
+    logging.debug("Removing named pipe…")
+    pipe.Delete()
+
     # dead end
     global shutdown
     if shutdown:
@@ -329,10 +342,7 @@ def Run():
 
     In as an exception occurs the :meth:`~mdbapi.server.Shutdown` gets called, too. In this case the exit-code will be ``1``.
     """
-    logging.info("Open pipe \033[0;36m(" + cfg.server.fifofile + ")\033[0m")
-    logging.info("\t\033[1;36mrefresh\033[1;34m: Update Caches\033[0m")
-    logging.info("\t\033[1;36mshutdown\033[1;34m: Shutdown Server\033[0m")
-    pipe = NamedPipe(cfg.server.fifofile)
+    global pipe
 
     logging.info("Setup complete. \033[1;37mExecuting server.\033[1;34m")
     # enter event loop
@@ -356,7 +366,6 @@ def Run():
                 RandyInterface().PrintBlacklist()
 
             if shutdown:
-                pipe.Delete()
                 Shutdown()
 
             time.sleep(.1)  # Avoid high CPU load
