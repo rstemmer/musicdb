@@ -5,14 +5,24 @@
 │ ∗ Other                                │
 └────────────────────────────────────────┘
 
-┍━━━━┫ 2018-xxxxx ┣━━━━┫ 2.0.0 ┣━━━━━━━━╍╍
+┍━━━━┫ 2018-01-05 ┣━━━━┫ 2.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
-│ - Signals (SIGUSR1, SIGTERM) will no longer be used for refreshing cache or shutting down.
-│ +  … instead, named pipe gets used. Write "shutdown" or "refresh" into that pipe.
-│ +  … Therefore a new configuration exists: [server]->fifofile
+│ - Signals (SIGUSR1, SIGTERM) will no longer be used for refreshing the cache or shutting down the server.
+│   + … instead, named pipe are used. Write "shutdown" or "refresh" into the servers FIFO file.
+│   + … Therefore a new configuration exists: [server]->fifofile
+│ ∗ database CLI-Module updated.
+│   - target parameter removed. Gets determined by the paths.
+│   - "update" sub-command removed.
+│   + "remove" sub-command added.
+│ + Adding random song from specific album to queue possible
 │
 ┝━ MINOR CHANGES
 │ ∗ --quiet behavior improved by adding --verbose
+│   * By default, MusicDB writes logs into the debug-file but not to the screen
+│ + Repair-Module now allows removing albums and artists
+│ ∗ Bugfix: Uses progressive JPEG in Album View
+│ ∗ Bugfix: Fullscreen button now works in Chrome
+│ ∗ Bugfixes at WebUI regarding Tag-Input updates
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2017-12-30 ┣━━━━┫ 1.1.0 ┣━━━━━━━━╍╍
