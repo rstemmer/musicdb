@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; MusicDB 1.1.0 documentation</title>
+  <title>Index &mdash; MusicDB 2.0.0 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MusicDB 1.1.0 documentation" href="index.html"/> 
+    <link rel="top" title="MusicDB 2.0.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.1
+                2.0
               </div>
             
           
@@ -209,19 +209,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage/music.html">Music</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="usage/music.html#naming">Naming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="usage/music.html#artist-directory">Artist Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage/music.html#album-directory">Album Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage/music.html#song-file">Song File</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="usage/music.html#itunes">iTunes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage/music.html#bandcamp">Bandcamp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/music.html#song-file-name">Song File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="usage/music.html#using-the-database-module">Using the database module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/music.html#using-the-add-module">Using the add module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage/music.html#updating-songs">Updating Songs</a></li>
@@ -410,6 +406,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lib/namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lib/pidfile.html">PID File Handling</a></li>
@@ -602,6 +602,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mdbapi/randy.html#mdbapi.randy.RandyInterface.AddSongFromAlbum">AddSongFromAlbum() (mdbapi.randy.RandyInterface method)</a>
+</li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue">AddSongToQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI.AddSongToTrainingset">AddSongToTrainingset() (mdbapi.musicai.MusicAI method)</a>
@@ -678,11 +680,13 @@
 </li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.CopySong">CopySong() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/lycra.html#lib.crawlerapi.LycraCrawler.Crawl">Crawl() (lib.crawlerapi.LycraCrawler method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/lycra.html#mdbapi.lycra.Lycra.CrawlForLyrics">CrawlForLyrics() (mdbapi.lycra.Lycra method)</a>
+</li>
+      <li><a href="lib/namedpipe.html#lib.namedpipe.NamedPipe.Create">Create() (lib.namedpipe.NamedPipe method)</a>
 </li>
       <li><a href="mdbapi/artwork.html#mdbapi.artwork.MusicDBArtwork.CreateArtworkName">CreateArtworkName() (mdbapi.artwork.MusicDBArtwork static method)</a>
 </li>
@@ -716,6 +720,8 @@
 </li>
       <li><a href="lib/database.html#lib.db.database.Database.Decompress">Decompress() (lib.db.database.Database method)</a>
 </li>
+      <li><a href="lib/namedpipe.html#lib.namedpipe.NamedPipe.Delete">Delete() (lib.namedpipe.NamedPipe method)</a>
+</li>
       <li><a href="mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeleteGenre">DeleteGenre() (mdbapi.tags.MusicDBTags method)</a>
 </li>
       <li><a href="mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeleteMood">DeleteMood() (mdbapi.tags.MusicDBTags method)</a>
@@ -728,10 +734,10 @@
 </li>
       <li><a href="mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeriveAlbumTags">DeriveAlbumTags() (mdbapi.tags.MusicDBTags method)</a>
 </li>
-      <li><a href="lib/clui.html#lib.clui.dialog.Dialog">Dialog (class in lib.clui.dialog)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="lib/clui.html#lib.clui.dialog.Dialog">Dialog (class in lib.clui.dialog)</a>
+</li>
       <li><a href="mdbapi/mpd.html#mdbapi.mpd.Disconnect">Disconnect() (in module mdbapi.mpd)</a>
 </li>
       <li><a href="mdbapi/lycra.html#lib.crawlerapi.LycraCrawler.DoCrawl">DoCrawl() (lib.crawlerapi.LycraCrawler method)</a>
@@ -766,16 +772,20 @@
 </li>
       <li><a href="mdbapi/mpd.html#mdbapi.mpd.Event_TimeChanged">Event_TimeChanged() (in module mdbapi.mpd)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/database.html#lib.db.database.Database.Execute">Execute() (lib.db.database.Database method)</a>
 
       <ul>
         <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.Execute">(lib.filesystem.Filesystem method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.Exists">Exists() (lib.filesystem.Filesystem method)</a>
+
+      <ul>
+        <li><a href="lib/namedpipe.html#lib.namedpipe.NamedPipe.Exists">(lib.namedpipe.NamedPipe method)</a>
 </li>
+      </ul></li>
       <li><a href="mod/extern.html#mod.extern.extern">extern (class in mod.extern)</a>
 </li>
       <li><a href="lib/config.html#lib.cfg.extern.ExternConfig">ExternConfig (class in lib.cfg.extern)</a>
@@ -1092,6 +1102,8 @@
 </li>
       <li><a href="lib/metatags.html#module-lib.metatags">lib.metatags (module)</a>
 </li>
+      <li><a href="lib/namedpipe.html#module-lib.namedpipe">lib.namedpipe (module)</a>
+</li>
       <li><a href="lib/pidfile.html#module-lib.pidfile">lib.pidfile (module)</a>
 </li>
       <li><a href="basics/webapi.html#module-lib.ws.mdbwsi">lib.ws.mdbwsi (module)</a>
@@ -1250,10 +1262,12 @@
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mdbapi/tracker.html#mdbapi.tracker.TrackerInterface.NewSong">NewSong() (mdbapi.tracker.TrackerInterface method)</a>
+      <li><a href="lib/namedpipe.html#lib.namedpipe.NamedPipe">NamedPipe (class in lib.namedpipe)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mdbapi/tracker.html#mdbapi.tracker.TrackerInterface.NewSong">NewSong() (mdbapi.tracker.TrackerInterface method)</a>
+</li>
       <li><a href="mdbapi/mise.html#mdbapi.mise.MusicDBMicroSearchEngine.NormalizeString">NormalizeString() (mdbapi.mise.MusicDBMicroSearchEngine method)</a>
 </li>
   </ul></td>
@@ -1320,6 +1334,8 @@
         <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong">(lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       </ul></li>
+      <li><a href="mdbapi/randy.html#mdbapi.randy.RandyInterface.PrintBlacklist">PrintBlacklist() (mdbapi.randy.RandyInterface method)</a>
+</li>
       <li><a href="mod/mise.html#mod.mise.mise.PrintResults_ID">PrintResults_ID() (mod.mise.mise method)</a>
 </li>
       <li><a href="mod/mise.html#mod.mise.mise.PrintResults_Short">PrintResults_Short() (mod.mise.mise method)</a>
@@ -1340,6 +1356,8 @@
 </li>
       <li><a href="lib/hdf5storage.html#lib.hdf5storage.HDF5Storage.ReadDataset">ReadDataset() (lib.hdf5storage.HDF5Storage method)</a>
 </li>
+      <li><a href="lib/namedpipe.html#lib.namedpipe.NamedPipe.ReadLine">ReadLine() (lib.namedpipe.NamedPipe method)</a>
+</li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.ReadSongmap">ReadSongmap() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
       <li><a href="mdbapi/mpd.html#mdbapi.mpd.Reconnect">Reconnect() (in module mdbapi.mpd)</a>
@@ -1350,20 +1368,34 @@
 </li>
       <li><a href="lib/config.html#lib.cfg.config.Config.Reload">Reload() (lib.cfg.config.Config method)</a>
 </li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.RemoveAlbum">RemoveAlbum() (lib.db.musicdb.MusicDatabase method)</a>
+
+      <ul>
+        <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.RemoveAlbum">(mdbapi.database.MusicDBDatabase method)</a>
+</li>
+      </ul></li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag">RemoveAlbumTag() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.RemoveArtist">RemoveArtist() (lib.db.musicdb.MusicDatabase method)</a>
+
+      <ul>
+        <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveArtist">(lib.db.trackerdb.TrackerDatabase method)</a>
+</li>
+        <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.RemoveArtist">(mdbapi.database.MusicDBDatabase method)</a>
+</li>
+      </ul></li>
       <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveArtistRelations">RemoveArtistRelations() (lib.db.trackerdb.TrackerDatabase method)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.buttonview.ButtonView.RemoveButton">RemoveButton() (lib.clui.buttonview.ButtonView method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/mpd.html#mdbapi.mpd.RemoveCallback">RemoveCallback() (in module mdbapi.mpd)</a>
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.RemoveFile">RemoveFile() (lib.filesystem.Filesystem method)</a>
 </li>
       <li><a href="lib/websockets.html#lib.ws.websocket.MusicDBWebSocketFactory.RemoveFromBroadcast">RemoveFromBroadcast() (lib.ws.websocket.MusicDBWebSocketFactory method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.RemoveOldSongs">RemoveOldSongs() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
       <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveRelation">RemoveRelation() (lib.db.trackerdb.TrackerDatabase method)</a>
@@ -1478,8 +1510,6 @@
 </li>
       <li><a href="mdbapi/server.html#mdbapi.server.SIGTERM_Handler">SIGTERM_Handler() (in module mdbapi.server)</a>
 </li>
-      <li><a href="mdbapi/server.html#mdbapi.server.SIGUSR1_Handler">SIGUSR1_Handler() (in module mdbapi.server)</a>
-</li>
       <li><a href="mdbapi/tracker.html#mdbapi.tracker.TrackerInterface.SongSkipped">SongSkipped() (mdbapi.tracker.TrackerInterface method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.SplitTagsByClass">SplitTagsByClass() (lib.db.musicdb.MusicDatabase method)</a>
@@ -1576,6 +1606,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mdbapi/server.html#mdbapi.server.UpdateCaches">UpdateCaches() (in module mdbapi.server)</a>
+</li>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateServerCache">UpdateServerCache() (mdbapi.database.MusicDBDatabase method)</a>
 </li>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateSong">UpdateSong() (mdbapi.database.MusicDBDatabase method)</a>
@@ -1608,6 +1640,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="lib/namedpipe.html#lib.namedpipe.NamedPipe.WriteLine">WriteLine() (lib.namedpipe.NamedPipe method)</a>
+</li>
       <li><a href="mdbapi/lycra.html#lib.db.lycradb.LycraDatabase.WriteLyricsToCache">WriteLyricsToCache() (lib.db.lycradb.LycraDatabase method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.WriteSong">WriteSong() (lib.db.musicdb.MusicDatabase method)</a>
@@ -1655,7 +1689,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.1.0',
+            VERSION:'2.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.database &mdash; MusicDB 1.1.0 documentation</title>
+  <title>mdbapi.database &mdash; MusicDB 2.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 1.1.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 2.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.1
+                2.0
               </div>
             
           
@@ -209,19 +209,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage/music.html">Music</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#naming">Naming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#artist-directory">Artist Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#album-directory">Album Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#song-file">Song File</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#itunes">iTunes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#bandcamp">Bandcamp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#song-file-name">Song File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-database-module">Using the database module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-add-module">Using the add module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#updating-songs">Updating Songs</a></li>
@@ -412,6 +408,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/pidfile.html">PID File Handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/websockets.html#module-lib.ws.server">Websocket Server</a></li>
@@ -559,6 +559,7 @@
 <span class="kn">from</span> <span class="nn">lib.filesystem</span>     <span class="k">import</span> <span class="n">Filesystem</span>
 <span class="kn">from</span> <span class="nn">lib.metatags</span>       <span class="k">import</span> <span class="n">MetaTags</span>
 <span class="kn">from</span> <span class="nn">lib.pidfile</span>        <span class="k">import</span> <span class="o">*</span>                    <span class="c1"># Check PID File…</span>
+<span class="kn">from</span> <span class="nn">lib.namedpipe</span>      <span class="k">import</span> <span class="n">NamedPipe</span>
 <span class="kn">from</span> <span class="nn">lib.cfg.musicdb</span>    <span class="k">import</span> <span class="n">MusicDBConfig</span>
 <span class="kn">from</span> <span class="nn">lib.db.musicdb</span>     <span class="k">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">lib.db.trackerdb</span>   <span class="k">import</span> <span class="n">TrackerDatabase</span>      <span class="c1"># To update when a song gets removed</span>
@@ -1417,6 +1418,64 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
+<div class="viewcode-block" id="MusicDBDatabase.RemoveAlbum"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.RemoveAlbum">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveAlbum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method removes an album from the database.</span>
+<span class="sd">        The files gets not touched, and so it does not matter if they even exists.</span>
+<span class="sd">        All related information will also be removed.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            For all songs in this album, the :meth:`~RemoveSong` method gets called!</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This is not a *&quot;set the deleted flag&quot;* method.</span>
+<span class="sd">            The data gets actually removed from the database.</span>
+<span class="sd">            No recovery possible!</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            albumid (int): ID of the album that shall be removed from database</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            ``None``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">songs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetSongsByAlbumId</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">song</span> <span class="ow">in</span> <span class="n">songs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">RemoveSong</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">RemoveAlbum</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="MusicDBDatabase.RemoveArtist"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.RemoveArtist">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveArtist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artistid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method removes an artist from the database.</span>
+<span class="sd">        The files gets not touched, and so it does not matter if they even exists.</span>
+<span class="sd">        All related information will also be removed.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            For all artists albums, the :meth:`~RemoveAlbum` method gets called!</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This is not a *&quot;set the deleted flag&quot;* method.</span>
+<span class="sd">            The data gets actually removed from the database.</span>
+<span class="sd">            No recovery possible!</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            artistid (int): ID of the artist that shall be removed from database</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            ``None``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">albums</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAlbumsByArtistId</span><span class="p">(</span><span class="n">artistid</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">album</span> <span class="ow">in</span> <span class="n">albums</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">RemoveAlbum</span><span class="p">(</span><span class="n">album</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">RemoveArtist</span><span class="p">(</span><span class="n">artistid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
 
 <div class="viewcode-block" id="MusicDBDatabase.AddLyricsFromFile"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddLyricsFromFile">[docs]</a>    <span class="k">def</span> <span class="nf">AddLyricsFromFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songpath</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1608,21 +1667,14 @@
 
 <div class="viewcode-block" id="MusicDBDatabase.UpdateServerCache"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateServerCache">[docs]</a>    <span class="k">def</span> <span class="nf">UpdateServerCache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method signals the MusicDB Websocket Server to update its caches.</span>
-<span class="sd">        This should always be done when there are new artists, albums or songs added to the database.</span>
+<span class="sd">        This method signals the MusicDB Websocket Server to update its caches by writing ``refresh`` into its named pipe.</span>
+<span class="sd">        This should always be called when there are new artists, albums or songs added to the database.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            *Nothing*</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">serverpid</span> <span class="o">=</span> <span class="n">CheckPIDFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">pidfile</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">serverpid</span><span class="p">:</span>
-            <span class="k">return</span>  <span class="c1"># server not running, so no cacheupdate needed</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">serverpid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGUSR1</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33mWARNING:</span><span class="se">\033</span><span class="s2">[0m Updating servercache failed with exception:&quot;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;34mTry to update manually: </span><span class="se">\033</span><span class="s2">[1;36mkill -USR1 &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">pidfile</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span></div></div>
+        <span class="n">pipe</span> <span class="o">=</span> <span class="n">NamedPipe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">fifofile</span><span class="p">)</span>
+        <span class="n">pipe</span><span class="o">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s2">&quot;refresh&quot;</span><span class="p">)</span></div></div>
 
 
 <span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
@@ -1663,7 +1715,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.1.0',
+            VERSION:'2.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

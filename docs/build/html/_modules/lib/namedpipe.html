@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.tags &mdash; MusicDB 2.0.0 documentation</title>
+  <title>lib.namedpipe &mdash; MusicDB 2.0.0 documentation</title>
   
 
   
@@ -517,7 +517,7 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-      <li>mdbapi.tags</li>
+      <li>lib.namedpipe</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -532,7 +532,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for mdbapi.tags</h1><div class="highlight"><pre>
+  <h1>Source code for lib.namedpipe</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
 <span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
@@ -548,293 +548,178 @@
 <span class="c1"># </span>
 <span class="c1"># You should have received a copy of the GNU General Public License</span>
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This class handles the different tags for songs and albums.</span>
-<span class="sd">Details about the concept of tags can be found here in the :mod:`lib.db.musicdb` documentation.</span>
 
-<span class="sd">Example:</span>
-
-<span class="sd">    .. code-block:: python</span>
-
-<span class="sd">        database = MusicDatabase(&quot;./music.db&quot;)</span>
-<span class="sd">        config   = MusicDBConfig(&quot;./musicdb.ini&quot;)</span>
-<span class="sd">        tags     = MusicDBTags(config, database)</span>
-
-<span class="sd">        tags.CreateGenre(&quot;Metal&quot;)                   # Create a genre &quot;Metal&quot;</span>
-<span class="sd">        tags.CreateSubgenre(&quot;Dark Metal&quot;, &quot;Metal&quot;)  # Create a subgenre of &quot;Metal&quot; and name it &quot;Dark Metal&quot;</span>
-
-
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">from</span> <span class="nn">lib.cfg.musicdb</span>    <span class="k">import</span> <span class="n">MusicDBConfig</span>
-<span class="kn">from</span> <span class="nn">lib.db.musicdb</span>     <span class="k">import</span> <span class="n">MusicDatabase</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">stat</span>
+<span class="kn">import</span> <span class="nn">errno</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
-<div class="viewcode-block" id="MusicDBTags"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags">[docs]</a><span class="k">class</span> <span class="nc">MusicDBTags</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="viewcode-block" id="NamedPipe"><a class="viewcode-back" href="../../lib/namedpipe.html#lib.namedpipe.NamedPipe">[docs]</a><span class="k">class</span> <span class="nc">NamedPipe</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This module provides a class for getting command from a named pipe (FIFO).</span>
+<span class="sd">    All methods are non-blocking!</span>
+
+<span class="sd">    It Creates a FIFO file if it does not exist by calling :meth:`~Create`</span>
+
 <span class="sd">    Args:</span>
-<span class="sd">        config: MusicDB configuration object</span>
-<span class="sd">        database: MusicDB database</span>
+<span class="sd">        path (str): absolute path where the FIFO is, or shall be created</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        TypeError: when *config* or *database* not of type :class:`~lib.cfg.musicdb.MusicDBConfig` or :class:`~lib.db.musicdb.MusicDatabase`</span>
+<span class="sd">        TypeError: when ``path`` is not of type ``str``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDBConfig</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31mFATAL ERROR: Config-class of unknown type!</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;config argument not of type MusicDBConfig&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">database</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDatabase</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31mFATAL ERROR: Database-class of unknown type!</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;database argument not of type MusicDatabase&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;FIFO path must be of type string!&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">db</span>     <span class="o">=</span> <span class="n">database</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span>    <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Create</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="MusicDBTags.DeriveAlbumTags"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeriveAlbumTags">[docs]</a>    <span class="k">def</span> <span class="nf">DeriveAlbumTags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">):</span>
+
+<div class="viewcode-block" id="NamedPipe.Create"><a class="viewcode-back" href="../../lib/namedpipe.html#lib.namedpipe.NamedPipe.Create">[docs]</a>    <span class="k">def</span> <span class="nf">Create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method derives album tags from its song tags.</span>
-<span class="sd">        It looks for all songs of the album and their specific genre and sub genre tags.</span>
-<span class="sd">        Tags with a confidence level greater or equal to 1.0 will be collected and set as genres for the album.</span>
-<span class="sd">        The set genres have a confidence of the average appearance of the tag over all the album&#39;s songs.</span>
+<span class="sd">        Creates the FIFO file if if does not exist.</span>
+
+<span class="sd">        The access permissions are Read/Write for all (``0666``)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            OSError: Except when the FIFO already exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkfifo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mo">0o666</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="mo">0o666</span><span class="p">)</span>          <span class="c1"># mkfifos mode-argument seems to be ignored.</span>
+        <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span><span class="p">:</span>
+                <span class="k">raise</span></div>
+
+
+
+<div class="viewcode-block" id="NamedPipe.ReadLine"><a class="viewcode-back" href="../../lib/namedpipe.html#lib.namedpipe.NamedPipe.ReadLine">[docs]</a>    <span class="k">def</span> <span class="nf">ReadLine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method reads a line from the FIFO, if there is a line.</span>
+<span class="sd">        If nothing got written to the FIFO, ``None`` gets returned.</span>
+<span class="sd">        The line does not have a trailing ``\n``.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                pipe = NamedPipe(&quot;/tmp/test.fifo&quot;)</span>
+<span class="sd">                </span>
+<span class="sd">                while True:</span>
+<span class="sd">                    line = pipe.ReadLine()</span>
+<span class="sd">                    if line == &quot;refresh&quot;:</span>
+<span class="sd">                        UpdateCaches()</span>
+
+<span class="sd">                    time.sleep(1)</span>
+
+<span class="sd">        The file gets opened with ``O_NONBLOCK`` flag (non blocking read) and line buffering strategy.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A line from the pipe or ``None``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">opener</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">O_RDONLY</span> <span class="o">|</span> <span class="n">os</span><span class="o">.</span><span class="n">O_NONBLOCK</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">buffering</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">opener</span><span class="o">=</span><span class="n">opener</span><span class="p">)</span> <span class="k">as</span> <span class="n">fifo</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">fifo</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EAGAIN</span> <span class="ow">or</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EWOULDBLOCK</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Reading from FIFO failed with error </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Reading from FIFO failed with exception </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>    <span class="c1"># remove trailing \n</span>
+        <span class="k">return</span> <span class="n">line</span></div>
+
+
+
+<div class="viewcode-block" id="NamedPipe.WriteLine"><a class="viewcode-back" href="../../lib/namedpipe.html#lib.namedpipe.NamedPipe.WriteLine">[docs]</a>    <span class="k">def</span> <span class="nf">WriteLine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write a line into the named pipe.</span>
+<span class="sd">        This method checks if the FIFO exists and rejects the line if not.</span>
+<span class="sd">        If line is ``None`` or an empty string, nothing will be done.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                pipe = NamedPipe(&quot;/tmp/test.fifo&quot;)</span>
+<span class="sd">                pipe.WriteLine(&quot;refresh&quot;)</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            albumid (int): ID of the album that tags shall be updated</span>
+<span class="sd">            line (str): Line to write into the named pipe (Without ``\n``!)</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            *Nothing*</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">songs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetSongsByAlbumId</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span>
-
-        <span class="n">histogram</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="c1"># Get genres of all songs on the album</span>
-        <span class="k">for</span> <span class="n">song</span> <span class="ow">in</span> <span class="n">songs</span><span class="p">:</span>
-            <span class="n">tags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetTargetTags</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">tags</span><span class="p">:</span>
-                <span class="k">continue</span>
-
-            <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
-                <span class="c1"># Skill every tag that is not a genre or sub genre</span>
-                <span class="k">if</span> <span class="n">tag</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span> <span class="ow">and</span> <span class="n">tag</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_SUBGENRE</span><span class="p">:</span>
-                    <span class="k">continue</span>
-
-                <span class="c1"># Ignore tags set by the AI</span>
-                <span class="k">if</span> <span class="n">tag</span><span class="p">[</span><span class="s2">&quot;approval&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="k">continue</span>
-
-                <span class="c1"># Consider tag in histogram</span>
-                <span class="n">key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">histogram</span><span class="p">:</span>
-                    <span class="n">histogram</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>  <span class="o">=</span> <span class="mi">1</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">histogram</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-
-        <span class="c1"># Set new tags</span>
-        <span class="n">numofsongs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">songs</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">histogram</span><span class="p">:</span>
-            <span class="n">tagid</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-            <span class="n">count</span> <span class="o">=</span> <span class="n">histogram</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-            <span class="n">confidence</span> <span class="o">=</span> <span class="n">count</span> <span class="o">/</span> <span class="n">numofsongs</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">SetTargetTag</span><span class="p">(</span><span class="s2">&quot;album&quot;</span><span class="p">,</span> <span class="n">albumid</span><span class="p">,</span> <span class="n">tagid</span><span class="p">,</span> <span class="n">approval</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="n">confidence</span><span class="p">)</span></div>
-            
-
-
-<div class="viewcode-block" id="MusicDBTags.GetAllGenres"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags.GetAllGenres">[docs]</a>    <span class="k">def</span> <span class="nf">GetAllGenres</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`lib.db.musicdb.MusicDatabase.GetAllTags`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAllTags</span><span class="p">(</span><span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">)</span></div>
-    
-<div class="viewcode-block" id="MusicDBTags.GetAllSubgenres"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags.GetAllSubgenres">[docs]</a>    <span class="k">def</span> <span class="nf">GetAllSubgenres</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`lib.db.musicdb.MusicDatabase.GetAllTags`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAllTags</span><span class="p">(</span><span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_SUBGENRE</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="MusicDBTags.GetAllMoods"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags.GetAllMoods">[docs]</a>    <span class="k">def</span> <span class="nf">GetAllMoods</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`lib.db.musicdb.MusicDatabase.GetAllTags`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAllTags</span><span class="p">(</span><span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_MOOD</span><span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="MusicDBTags.CreateGenre"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags.CreateGenre">[docs]</a>    <span class="k">def</span> <span class="nf">CreateGenre</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`lib.db.musicdb.MusicDatabase.CreateTag`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">CreateTag</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
-
-<div class="viewcode-block" id="MusicDBTags.CreateSubgenre"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags.CreateSubgenre">[docs]</a>    <span class="k">def</span> <span class="nf">CreateSubgenre</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parentname</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The parent name gets translated to its genre id.</span>
-<span class="sd">        As mentioned in the tag concept (see :mod:`~lib.db.musicdb`), only subgenre can have parents.</span>
-<span class="sd">        And those parents must be of class genre.</span>
-
-<span class="sd">        For further details see :meth:`lib.db.musicdb.MusicDatabase.CreateTag`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">parenttag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetTagByName</span><span class="p">(</span><span class="n">parentname</span><span class="p">,</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">CreateTag</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_SUBGENRE</span><span class="p">,</span> <span class="n">parenttag</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
-
-<div class="viewcode-block" id="MusicDBTags.CreateMood"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags.CreateMood">[docs]</a>    <span class="k">def</span> <span class="nf">CreateMood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`lib.db.musicdb.MusicDatabase.CreateTag`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">CreateTag</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_MOOD</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
-
-
-
-<div class="viewcode-block" id="MusicDBTags.DeleteGenre"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeleteGenre">[docs]</a>    <span class="k">def</span> <span class="nf">DeleteGenre</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`lib.db.musicdb.MusicDatabase.DeleteTag`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">DeleteTag</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">);</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
-
-<div class="viewcode-block" id="MusicDBTags.DeleteSubgenre"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeleteSubgenre">[docs]</a>    <span class="k">def</span> <span class="nf">DeleteSubgenre</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`lib.db.musicdb.MusicDatabase.DeleteTag`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">DeleteTag</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_SUBGENRE</span><span class="p">);</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
-
-<div class="viewcode-block" id="MusicDBTags.DeleteMood"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeleteMood">[docs]</a>    <span class="k">def</span> <span class="nf">DeleteMood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`lib.db.musicdb.MusicDatabase.DeleteTag`</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">DeleteTag</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_MOOD</span><span class="p">);</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
-
-
-
-<div class="viewcode-block" id="MusicDBTags.ModifyGenre"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags.ModifyGenre">[docs]</a>    <span class="k">def</span> <span class="nf">ModifyGenre</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tagname</span><span class="p">,</span> <span class="n">newname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">newicon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">newcolor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">newposx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">newposy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`~mdbapi.tags.MusicDBTags.ModifyTag`.</span>
-
-<span class="sd">        All arguments can also be ``None``</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            tagname (str): Name of the tag that shall be modified</span>
-<span class="sd">            newname (str): New name of the tag</span>
-<span class="sd">            newicon (str): New icon for the tag - the icon-type gets detected automatically</span>
-<span class="sd">            newcolor (str): New color for the tag</span>
-<span class="sd">            newposx (int): New position</span>
-<span class="sd">            newposy (int): New position</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ModifyTag</span><span class="p">(</span><span class="n">tagname</span><span class="p">,</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">,</span> 
-                <span class="n">newname</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">newicon</span><span class="p">,</span> <span class="n">newcolor</span><span class="p">,</span> <span class="n">newposx</span><span class="p">,</span> <span class="n">newposy</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="MusicDBTags.ModifySubgenre"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags.ModifySubgenre">[docs]</a>    <span class="k">def</span> <span class="nf">ModifySubgenre</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tagname</span><span class="p">,</span> <span class="n">newname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">newparent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">newicon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">newcolor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">newposx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">newposy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`~mdbapi.tags.MusicDBTags.ModifyTag`.</span>
-
-<span class="sd">        All arguments can also be ``None``</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            tagname (str): Name of the tag that shall be modified</span>
-<span class="sd">            newname (str): New name of the tag</span>
-<span class="sd">            newparent (str): Name of the new parent tag</span>
-<span class="sd">            newicon (str): New icon for the tag - the icon-type gets detected automatically</span>
-<span class="sd">            newcolor (str): New color for the tag</span>
-<span class="sd">            newposx (int): New position</span>
-<span class="sd">            newposy (int): New position</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ModifyTag</span><span class="p">(</span><span class="n">tagname</span><span class="p">,</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_SUBGENRE</span><span class="p">,</span> 
-                <span class="n">newname</span><span class="p">,</span> <span class="n">newparent</span><span class="p">,</span> <span class="n">newicon</span><span class="p">,</span> <span class="n">newcolor</span><span class="p">,</span> <span class="n">newposx</span><span class="p">,</span> <span class="n">newposy</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="MusicDBTags.ModifyMood"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags.ModifyMood">[docs]</a>    <span class="k">def</span> <span class="nf">ModifyMood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tagname</span><span class="p">,</span> <span class="n">newname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">newicon</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">newcolor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">newposx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">newposy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`~mdbapi.tags.MusicDBTags.ModifyTag`.</span>
-
-<span class="sd">        All arguments can also be ``None``</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            tagname (str): Name of the tag that shall be modified</span>
-<span class="sd">            newname (str): New name of the tag</span>
-<span class="sd">            newicon (str): New icon for the tag - the icon-type gets detected automatically</span>
-<span class="sd">            newcolor (str): New color for the tag</span>
-<span class="sd">            newposx (int): New position</span>
-<span class="sd">            newposy (int): New position</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ModifyTag</span><span class="p">(</span><span class="n">tagname</span><span class="p">,</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_MOOD</span><span class="p">,</span> 
-                <span class="n">newname</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">newicon</span><span class="p">,</span> <span class="n">newcolor</span><span class="p">,</span> <span class="n">newposx</span><span class="p">,</span> <span class="n">newposy</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="MusicDBTags.ModifyTag"><a class="viewcode-back" href="../../mdbapi/tags.html#mdbapi.tags.MusicDBTags.ModifyTag">[docs]</a>    <span class="k">def</span> <span class="nf">ModifyTag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tagname</span><span class="p">,</span> <span class="n">tagclass</span><span class="p">,</span> <span class="n">newname</span><span class="p">,</span> <span class="n">newparent</span><span class="p">,</span> <span class="n">newicon</span><span class="p">,</span> <span class="n">newcolor</span><span class="p">,</span> <span class="n">newposx</span><span class="p">,</span> <span class="n">newposy</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`lib.db.musicdb.MusicDatabase.ModifyTag`</span>
-
-<span class="sd">        The icontype gets determined by the *newicon*-value if not ``None``.</span>
-
-<span class="sd">        The parentid gets determined by the *newparent*-name.</span>
-
-<span class="sd">        returns:</span>
-<span class="sd">            ``True``: On success</span>
-<span class="sd">            ``False``: in case something fails</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            AssertionError: Whenever this method does not find wrong values but the database implementation does.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">newname</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">ModifyTag</span><span class="p">(</span><span class="n">tagname</span><span class="p">,</span> <span class="n">tagclass</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">newname</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">newparent</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">tagclass</span> <span class="o">!=</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_SUBGENRE</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Cannot change the parant of a non-subgenre tag!&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="kc">False</span>
-            
-            <span class="n">parenttag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTagByName</span><span class="p">(</span><span class="n">newparent</span><span class="p">,</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">ModifyTag</span><span class="p">(</span><span class="n">tagname</span><span class="p">,</span> <span class="n">tagclass</span><span class="p">,</span> <span class="s2">&quot;parentid&quot;</span><span class="p">,</span> <span class="n">parenttag</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
-
-        <span class="k">if</span> <span class="n">newicon</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">newicontype</span><span class="p">,</span> <span class="n">newicon</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AnalyseIcon</span><span class="p">(</span><span class="n">newicon</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">newicontype</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">newicon</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unable to detect icontype!&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="kc">False</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">ModifyTag</span><span class="p">(</span><span class="n">tagname</span><span class="p">,</span> <span class="n">tagclass</span><span class="p">,</span> <span class="s2">&quot;icontype&quot;</span><span class="p">,</span> <span class="n">newicontype</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">ModifyTag</span><span class="p">(</span><span class="n">tagname</span><span class="p">,</span> <span class="n">tagclass</span><span class="p">,</span> <span class="s2">&quot;icon&quot;</span><span class="p">,</span>     <span class="n">newicon</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">newcolor</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">newcolor</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;#&quot;</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">newcolor</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">7</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Color-Format is not #RRGGBB! - </span><span class="si">%c</span><span class="s2"> != #; len(</span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">) != 7&quot;</span><span class="p">,</span> <span class="n">newcolor</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">newcolor</span><span class="p">)</span>
-                <span class="k">return</span> <span class="kc">False</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">ModifyTag</span><span class="p">(</span><span class="n">tagname</span><span class="p">,</span> <span class="n">tagclass</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="n">newcolor</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">newposx</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">ModifyTag</span><span class="p">(</span><span class="n">tagname</span><span class="p">,</span> <span class="n">tagclass</span><span class="p">,</span> <span class="s2">&quot;posx&quot;</span><span class="p">,</span> <span class="n">newposx</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">newposy</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">ModifyTag</span><span class="p">(</span><span class="n">tagname</span><span class="p">,</span> <span class="n">tagclass</span><span class="p">,</span> <span class="s2">&quot;posy&quot;</span><span class="p">,</span> <span class="n">newposy</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="kc">True</span></div>
-
-
-
-    <span class="k">def</span> <span class="nf">AnalyseIcon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">icon</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
-
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Invalid datatype of icon! </span><span class="se">\033</span><span class="s2">[1;30m(Setting Icon and Type to None)&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+            <span class="k">return</span>
         
-        <span class="c1">#if len(icon) == 1:</span>
-        <span class="c1">#    return MusicDatabase.TAG_ICONTYPE_UNICODE, icon</span>
-        <span class="c1"># !! len(&quot;☺︎&quot;) == 2 !! - Do not trust len!!</span>
-        
-        <span class="k">if</span> <span class="n">icon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&lt;&quot;</span> <span class="ow">and</span> <span class="n">icon</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_ICONTYPE_HTML</span><span class="p">,</span> <span class="n">icon</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">Exists</span><span class="p">():</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;FIFO </span><span class="se">\033</span><span class="s2">[0;33m</span><span class="si">%s</span><span class="se">\033</span><span class="s2">[1;33m does not exist! </span><span class="se">\033</span><span class="s2">[1;30m(Command </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> will not be send)&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+            <span class="k">return</span>
 
-        <span class="c1">#logging.error(&quot;Unable to determin the icontype! icon: \&quot;%s\&quot;; type: %s; len: %i \033[1;30m(Setting Icon and Type to None)&quot;, str(icon), str(type(icon)), len(icon))</span>
+        <span class="n">line</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
 
-        <span class="c1"># default assumtion is, that the icon is unicode</span>
-        <span class="k">return</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_ICONTYPE_UNICODE</span><span class="p">,</span> <span class="n">icon</span></div>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">O_WRONLY</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Open FIFO failed with error </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Writing to FIFO failed with exception </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="NamedPipe.Exists"><a class="viewcode-back" href="../../lib/namedpipe.html#lib.namedpipe.NamedPipe.Exists">[docs]</a>    <span class="k">def</span> <span class="nf">Exists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method checks if the FIFO file for the named pipe exists.</span>
+<span class="sd">        It not only checks the existence of the file but also if the file is a FIFO.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` When the FIFO exists (and is a valid FIFO), otherwise ``False``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_ISFIFO</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">st_mode</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="NamedPipe.Delete"><a class="viewcode-back" href="../../lib/namedpipe.html#lib.namedpipe.NamedPipe.Delete">[docs]</a>    <span class="k">def</span> <span class="nf">Delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function removes the named FIFO.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pidfile (str): Absolute path of a file to remove</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Exists</span><span class="p">():</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Removing FIFO </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span></div></div>
+
 
 
 <span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.ws.mdbwsi &mdash; MusicDB 1.1.0 documentation</title>
+  <title>lib.ws.mdbwsi &mdash; MusicDB 2.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 1.1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 2.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.1
+                2.0
               </div>
             
           
@@ -209,19 +209,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage/music.html">Music</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#naming">Naming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#artist-directory">Artist Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#album-directory">Album Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#song-file">Song File</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#itunes">iTunes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#bandcamp">Bandcamp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#song-file-name">Song File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#using-the-database-module">Using the database module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#using-the-add-module">Using the add module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#updating-songs">Updating Songs</a></li>
@@ -410,6 +406,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/pidfile.html">PID File Handling</a></li>
@@ -757,7 +757,10 @@
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;AddAlbumToQueue&quot;</span><span class="p">:</span>
             <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddAlbumToQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;AddRandomSongToQueue&quot;</span><span class="p">:</span>
-            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddRandomSongToQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s2">&quot;albumid&quot;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+                <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddRandomSongToQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddRandomSongToQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;MoveSongInQueue&quot;</span><span class="p">:</span>
             <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MoveSongInQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;srcpos&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;dstpos&quot;</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;RemoveSongFromQueue&quot;</span><span class="p">:</span>
@@ -1706,16 +1709,20 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="MusicDBWebSocketInterface.AddRandomSongToQueue"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue">[docs]</a>    <span class="k">def</span> <span class="nf">AddRandomSongToQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+<div class="viewcode-block" id="MusicDBWebSocketInterface.AddRandomSongToQueue"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue">[docs]</a>    <span class="k">def</span> <span class="nf">AddRandomSongToQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">albumid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Similar to :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue`.</span>
-<span class="sd">        Instead of a specific song, a random song gets chosen by the randomizer.</span>
+<span class="sd">        Instead of a specific song, a random song gets chosen by the random-song manager *Randy*.</span>
 <span class="sd">        This is done using :meth:`mdbapi.randy.Randy.AddSong`.</span>
 
-<span class="sd">        The randomizer also increments the *rndadds* statistics for the song that gets added to the queue.</span>
+<span class="sd">        If an album ID is given, the new song will be added from that album</span>
+<span class="sd">        using :meth:`mdbapi.randy.Randy.AddSongFromAlbum`.</span>
+
+<span class="sd">        The random-song manager also increments the *rndadds* statistics for the song that gets added to the queue.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            position (str): ``&quot;next&quot;`` or ``&quot;last&quot;`` - Determines where the song gets added</span>
+<span class="sd">            albumid (int): Optional album ID from that the song shall be</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ``None``</span>
@@ -1724,15 +1731,21 @@
 <span class="sd">            .. code-block:: javascript</span>
 
 <span class="sd">                MusicDB_Call(&quot;AddRandomSongToQueue&quot;, {position:&quot;last&quot;});</span>
+<span class="sd">                MusicDB_Call(&quot;AddRandomSongToQueue&quot;, {albumid:&quot;42&quot;, position:&quot;next&quot;});</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Check if the Randy Interface was created. This is not done in the constructor!</span>
-        <span class="c1"># The interface to Randy gets instatioated in the onWSConnect callback funktion.</span>
-        <span class="c1"># This is save as long as this (AddRandomSongToQueue) method gets only called by the websocket interface!</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># The interface to Randy gets instantiated in the onWSConnect callback function.</span>
+        <span class="c1"># This is save as long as this (AddRandomSongToQueue) method gets only called by the WebSocket interface!</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No Randy interface created. </span><span class="se">\033</span><span class="s2">[0:33m(This may not be intentional!) </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">albumid</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">AddSongFromAlbum</span><span class="p">(</span><span class="n">albumid</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
@@ -2217,7 +2230,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.1.0',
+            VERSION:'2.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

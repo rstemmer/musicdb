@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>database - Music DB Management &mdash; MusicDB 1.1.0 documentation</title>
+  <title>database - Music DB Management &mdash; MusicDB 2.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 1.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 2.0.0 documentation" href="../index.html"/>
         <link rel="next" title="extern - Music File Uploader" href="extern.html"/>
         <link rel="prev" title="artwork - Artwork Management" href="artwork.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.1
+                2.0
               </div>
             
           
@@ -210,19 +210,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#naming">Naming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory">Artist Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory">Album Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file">Song File</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#itunes">iTunes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#bandcamp">Bandcamp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-database-module">Using the database module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-add-module">Using the add module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
@@ -413,6 +409,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/pidfile.html">PID File Handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/websockets.html#module-lib.ws.server">Websocket Server</a></li>
@@ -539,7 +539,9 @@
 <span id="database-music-db-management"></span><h1>database - Music DB Management<a class="headerlink" href="#module-mod.database" title="Permalink to this headline">¶</a></h1>
 <p>This module manages the music database.
 Its main task is to add new albums or artist to the Music Database.</p>
-<p>This command line interface expects three positional parameters. A subcommand, a target, and a path to the target: <code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">database</span> <span class="pre">$SUBCOMMAND</span> <span class="pre">$TARGET</span> <span class="pre">$PATH</span></code></p>
+<p>This command line interface expects two positional arguments.
+A subcommand and a path to the target (artist, album, song): <code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">database</span> <span class="pre">$SUBCOMMAND</span> <span class="pre">$PATH</span></code>.
+The target gets determined by its path.</p>
 <p>The following subcommands are provided:</p>
 <blockquote>
 <div><dl class="docutils">
@@ -548,14 +550,16 @@ Its main task is to add new albums or artist to the Music Database.</p>
 Direct interface to:</p>
 <blockquote class="last">
 <div><ul class="simple">
-<li>if target is <code class="docutils literal"><span class="pre">song</span></code>: <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddSong" title="mdbapi.database.MusicDBDatabase.AddSong"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.database.MusicDBDatabase.AddSong()</span></code></a></li>
-<li>if target is <code class="docutils literal"><span class="pre">album</span></code>: <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddAlbum" title="mdbapi.database.MusicDBDatabase.AddAlbum"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.database.MusicDBDatabase.AddAlbum()</span></code></a></li>
-<li>if target is <code class="docutils literal"><span class="pre">artist</span></code>: <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddArtist" title="mdbapi.database.MusicDBDatabase.AddArtist"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.database.MusicDBDatabase.AddArtist()</span></code></a></li>
+<li>If the path addresses a song: <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddSong" title="mdbapi.database.MusicDBDatabase.AddSong"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.database.MusicDBDatabase.AddSong()</span></code></a></li>
+<li>If the path addresses a album: <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddAlbum" title="mdbapi.database.MusicDBDatabase.AddAlbum"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.database.MusicDBDatabase.AddAlbum()</span></code></a></li>
+<li>If the path addresses a artist: <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddArtist" title="mdbapi.database.MusicDBDatabase.AddArtist"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.database.MusicDBDatabase.AddArtist()</span></code></a></li>
 </ul>
 </div></blockquote>
 </dd>
-<dt><code class="docutils literal"><span class="pre">update</span></code>:</dt>
-<dd>Update a song file via :<a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateSong" title="mdbapi.database.MusicDBDatabase.UpdateSong"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.database.MusicDBDatabase.UpdateSong()</span></code></a></dd>
+<dt><code class="docutils literal"><span class="pre">remove</span></code>:</dt>
+<dd>Removes an artist, album or song from the database.
+Only the database entries get removed.
+The files will not be touched.</dd>
 <dt><code class="docutils literal"><span class="pre">getlyrics</span></code>:</dt>
 <dd>Search in song files for lyrics.
 This is done by calling for each song file <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddLyricsFromFile" title="mdbapi.database.MusicDBDatabase.AddLyricsFromFile"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.database.MusicDBDatabase.AddLyricsFromFile()</span></code></a></dd>
@@ -566,17 +570,15 @@ This is done by calling <a class="reference internal" href="../mdbapi/database.h
 </div></blockquote>
 <div class="admonition attention">
 <p class="first admonition-title">Attention</p>
-<p class="last">While adding a new artist, album or song to the database, the file and directory attributes and ownerrship gets changed to the configured one in the MusicDB Configuration.
-And after adding the new data, a signal (USR1) gets send to the server to update its cache.
-Therefore, root permissions are necessary.</p>
+<p>While adding a new artist, album or song to the database, the file and directory attributes
+and ownership gets changed to the configured one in the MusicDB Configuration.</p>
+<p class="last">And after adding the new data, the command (<code class="docutils literal"><span class="pre">refresh</span></code>) gets written into the servers named pipe
+to update its cache.</p>
 </div>
 <p class="rubric">Examples</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>musicdb database add album /data/music/Artist/2000<span class="se">\ </span>-<span class="se">\ </span>New<span class="se">\ </span>Album
-</pre></div>
-</div>
-<p>Update an existing song</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>musicdb database update song /tmp/01<span class="se">\ </span>newsong.flac /data/music/Artist/2000<span class="se">\ </span>-<span class="se">\ </span>Album/01<span class="se">\ </span>oldsong.mp3
-<span class="c1"># only the song number must be identical!</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>musicdb database add /data/music/Artist/2000<span class="se">\ </span>-<span class="se">\ </span>New<span class="se">\ </span>Album
+
+musicdb database remove /data/music/Bad<span class="se">\ </span>Artist
 </pre></div>
 </div>
 </div>
@@ -616,7 +618,7 @@ Therefore, root permissions are necessary.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.1.0',
+            VERSION:'2.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
