@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Changelog &mdash; MusicDB 1.0.0 alpha documentation</title>
+  <title>NamedPipe &mdash; MusicDB 2.0.0 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 1.0.0 alpha documentation" href="../index.html"/>
-        <link rel="next" title="Comparison to Other Tools" href="comparison.html"/>
-        <link rel="prev" title="Welcome to MusicDB’s documentation!" href="../index.html"/> 
+    <link rel="top" title="MusicDB 2.0.0 documentation" href="../index.html"/>
+        <link rel="next" title="PID File Handling" href="pidfile.html"/>
+        <link rel="prev" title="MusicDatabase" href="musicdb.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -91,96 +91,92 @@
             
             
               <p class="caption"><span class="caption-text">Concepts</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">1.0.0 - 31.12.2017</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#comparison">Comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="comparison.html">Comparison to Other Tools</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="comparison.html#introducing-other-tools">Introducing other tools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="comparison.html#metrics">Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="comparison.html#comparison">Comparison</a></li>
-<li class="toctree-l2"><a class="reference internal" href="comparison.html#conclusion">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#server">server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#websocket">websocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tls">TLS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#database">database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#music">music</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="concept.html">Basic Rules for MusicDB</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">MusicDB Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="config.html#server">server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#websocket">websocket</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#tls">TLS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#database">database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#music">music</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#artwork">artwork</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#extern">extern</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#tracker">tracker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#lycra">lycra</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#mpd">MPD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#musicai">MusicAI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#randy">Randy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#log">log</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#debug">debug</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/logging.html">Handling log-files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/mods.html">MusicDB Commandline Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#loading-of-modules">Loading of Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="logging.html">Handling log-files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mods.html">MusicDB Commandline Modules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mods.html#loading-of-modules">Loading of Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mods.html#creation-of-new-modules">Creation of new Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#qemu-installation">qemu Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#basic-setup">Basic Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#disk-images">Disk Images</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="testvm.html">MusicDB Test VMs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="testvm.html#qemu-installation">qemu Installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="testvm.html#basic-setup">Basic Setup</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testvm.html#disk-images">Disk Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#system-setup">System Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#installing-updating-musicdb-test-environment">Installing/Updating MusicDB Test Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#create-dummy-files">Create Dummy Files</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="testvm.html#system-setup">System Setup</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="testvm.html#installing-updating-musicdb-test-environment">Installing/Updating MusicDB Test Environment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testvm.html#create-dummy-files">Create Dummy Files</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="testvm.html#test-systems">Test Systems</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="testvm.html#debian">Debian</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testvm.html#raspian">Raspian</a></li>
-<li class="toctree-l3"><a class="reference internal" href="testvm.html#arch-linux">Arch Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#test-systems">Test Systems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#debian">Debian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#raspian">Raspian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#arch-linux">Arch Linux</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="webapi.html">MusicDB Websocket API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="webapi.html#communication">Communication</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#packet-format">Packet format</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#methods">Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/webapi.html">MusicDB Websocket API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#communication">Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#packet-format">Packet format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#methods">Methods</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="webapi.html#client-side-interface">Client side interface</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#callback-functions">Callback functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#send-data-to-the-server">Send data to the server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#client-side-interface">Client side interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#callback-functions">Callback functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#artists">Artists</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#albums">Albums</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#songs">Songs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#queue">Queue</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#tag-related">Tag related</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#lyrics">Lyrics</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webapi.html#other">Other</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#queue">Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#tag-related">Tag related</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="workflow.html">Workflow for development</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="workflow.html#working-on-code">Working on code</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="workflow.html#rebuilding-the-documentation">Rebuilding the Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/workflow.html">Workflow for development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#working-on-code">Working on code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#rebuilding-the-documentation">Rebuilding the Documentation</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="workflow.html#using-git">Using git</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="workflow.html#micro-commits">Micro Commits</a></li>
-<li class="toctree-l3"><a class="reference internal" href="workflow.html#createing-a-hotfix">Createing a Hotfix</a></li>
-<li class="toctree-l3"><a class="reference internal" href="workflow.html#merging-develop-to-master">Merging Develop to Master</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#using-git">Using git</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#micro-commits">Micro Commits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#createing-a-hotfix">Createing a Hotfix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#merging-develop-to-master">Merging Develop to Master</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="workflow.html#releasing-a-new-version">Releasing a New Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#releasing-a-new-version">Releasing a New Version</a></li>
 </ul>
 </li>
 </ul>
@@ -214,19 +210,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#naming">Naming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory">Artist Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory">Album Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file">Song File</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#itunes">iTunes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#bandcamp">Bandcamp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-database-module">Using the database module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-add-module">Using the add module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
@@ -243,6 +235,7 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
@@ -360,66 +353,70 @@
 </li>
 </ul>
 <p class="caption"><span class="caption-text">Libraries</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.frame">Frame</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.pane">Pane</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.buttonview">ButtonView</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.listview">ListView</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.dialog">Dialog</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.textinput">TextInput</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.boolinput">BoolInput</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clui.html">Command Line User Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.text">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.frame">Frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.pane">Pane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.buttonview">ButtonView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.listview">ListView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.dialog">Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.textinput">TextInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.boolinput">BoolInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../lib/config.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.config">Base Class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../lib/database.html">Database</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/database.html#database-class">Database Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="database.html#database-class">Database Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../lib/filesystem.html">Filesystem Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem.html">Filesystem Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../lib/hdf5storage.html">HDF5Storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hdf5storage.html">HDF5Storage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../lib/metatags.html">Meta Tags</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/metatags.html#metatags-class">MetaTags Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metatags.html">Meta Tags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metatags.html#metatags-class">MetaTags Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#albums">Albums</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#artworks">Artworks</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#origin">Origin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#adding-a-column">Adding a Column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#albums">Albums</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#album-related-methods">Album Related Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#artworks">Artworks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#origin">Origin</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#artists">Artists</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#lyrics">Lyrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#tags">Tags</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#database-api">Database API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#artists">Artists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#lyrics">Lyrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#tags">Tags</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-definition-table">Tag Definition Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#database-api">Database API</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../lib/pidfile.html">PID File Handling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/websockets.html#module-lib.ws.server">Websocket Server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/websockets.html#module-lib.ws.websocket">Websocket Protocol</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#namedpipe-class">NamedPipe Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pidfile.html">PID File Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="websockets.html">MusicDB Websocket Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="websockets.html#module-lib.ws.server">Websocket Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="websockets.html#module-lib.ws.websocket">Websocket Protocol</a></li>
 </ul>
 </li>
 </ul>
@@ -519,13 +516,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Changelog</li>
+      <li>NamedPipe</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/basics/changelog.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/lib/namedpipe.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -538,13 +535,127 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="changelog">
-<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
-<p>This is a documentation of all changes in detail.
-An overview of the changes can be found in the <em>CHANGELOG</em> file in the sources root directory.</p>
-<div class="section" id="id1">
-<h2>1.0.0 - 31.12.2017<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>This is the first release, so everything is new. :)</p>
+  <div class="section" id="module-lib.namedpipe">
+<span id="namedpipe"></span><h1>NamedPipe<a class="headerlink" href="#module-lib.namedpipe" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="namedpipe-class">
+<h2>NamedPipe Class<a class="headerlink" href="#namedpipe-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lib.namedpipe.NamedPipe">
+<em class="property">class </em><code class="descclassname">lib.namedpipe.</code><code class="descname">NamedPipe</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe" title="Permalink to this definition">¶</a></dt>
+<dd><p>This module provides a class for getting command from a named pipe (FIFO).
+All methods are non-blocking!</p>
+<p>It Creates a FIFO file if it does not exist by calling <a class="reference internal" href="#lib.namedpipe.NamedPipe.Create" title="lib.namedpipe.NamedPipe.Create"><code class="xref py py-meth docutils literal"><span class="pre">Create()</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – absolute path where the FIFO is, or shall be created</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – when <code class="docutils literal"><span class="pre">path</span></code> is not of type <code class="docutils literal"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lib.namedpipe.NamedPipe.Create">
+<code class="descname">Create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the FIFO file if if does not exist.</p>
+<p>The access permissions are Read/Write for all (<code class="docutils literal"><span class="pre">0666</span></code>)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">OSError</span></code> – Except when the FIFO already exists.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.namedpipe.NamedPipe.Delete">
+<code class="descname">Delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function removes the named FIFO.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pidfile</strong> (<em>str</em>) – Absolute path of a file to remove</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.namedpipe.NamedPipe.Exists">
+<code class="descname">Exists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method checks if the FIFO file for the named pipe exists.
+It not only checks the existence of the file but also if the file is a FIFO.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> When the FIFO exists (and is a valid FIFO), otherwise <code class="docutils literal"><span class="pre">False</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.namedpipe.NamedPipe.ReadLine">
+<code class="descname">ReadLine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.ReadLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.ReadLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method reads a line from the FIFO, if there is a line.
+If nothing got written to the FIFO, <code class="docutils literal"><span class="pre">None</span></code> gets returned.
+The line does not have a trailing <code class="docutils literal"><span class="pre">\n</span></code>.</p>
+<p class="rubric">Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">NamedPipe</span><span class="p">(</span><span class="s2">&quot;/tmp/test.fifo&quot;</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">ReadLine</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s2">&quot;refresh&quot;</span><span class="p">:</span>
+        <span class="n">UpdateCaches</span><span class="p">()</span>
+
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The file gets opened with <code class="docutils literal"><span class="pre">O_NONBLOCK</span></code> flag (non blocking read) and line buffering strategy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A line from the pipe or <code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.namedpipe.NamedPipe.WriteLine">
+<code class="descname">WriteLine</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.WriteLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.WriteLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a line into the named pipe.
+This method checks if the FIFO exists and rejects the line if not.
+If line is <code class="docutils literal"><span class="pre">None</span></code> or an empty string, nothing will be done.</p>
+<p class="rubric">Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">NamedPipe</span><span class="p">(</span><span class="s2">&quot;/tmp/test.fifo&quot;</span><span class="p">)</span>
+<span class="n">pipe</span><span class="o">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s2">&quot;refresh&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>line</strong> (<em>str</em>) – Line to write into the named pipe (Without <code class="docutils literal"><span class="pre">\n</span></code>!)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -583,7 +694,7 @@ An overview of the changes can be found in the <em>CHANGELOG</em> file in the so
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.0 alpha',
+            VERSION:'2.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

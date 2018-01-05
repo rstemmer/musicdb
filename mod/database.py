@@ -17,7 +17,9 @@
 This module manages the music database.
 Its main task is to add new albums or artist to the Music Database.
 
-This command line interface expects three positional parameters. A subcommand, a target, and a path to the target: ``musicdb database $SUBCOMMAND $TARGET $PATH``
+This command line interface expects two positional arguments. 
+A subcommand and a path to the target (artist, album, song): ``musicdb database $SUBCOMMAND $PATH``.
+The target gets determined by its path.
 
 The following subcommands are provided:
 
@@ -25,12 +27,14 @@ The following subcommands are provided:
         Add new artist, album or song to the database.
         Direct interface to:
 
-            * if target is ``song``: :meth:`mdbapi.database.MusicDBDatabase.AddSong`
-            * if target is ``album``: :meth:`mdbapi.database.MusicDBDatabase.AddAlbum`
-            * if target is ``artist``: :meth:`mdbapi.database.MusicDBDatabase.AddArtist`
+            * If the path addresses a song: :meth:`mdbapi.database.MusicDBDatabase.AddSong`
+            * If the path addresses a album: :meth:`mdbapi.database.MusicDBDatabase.AddAlbum`
+            * If the path addresses a artist: :meth:`mdbapi.database.MusicDBDatabase.AddArtist`
 
-    ``update``:
-        Update a song file via ::meth:`mdbapi.database.MusicDBDatabase.UpdateSong`
+    ``remove``:
+        Removes an artist, album or song from the database.
+        Only the database entries get removed.
+        The files will not be touched.
 
     ``getlyrics``: 
         Search in song files for lyrics.
@@ -42,23 +46,21 @@ The following subcommands are provided:
 
 .. attention::
 
-    While adding a new artist, album or song to the database, the file and directory attributes and ownerrship gets changed to the configured one in the MusicDB Configuration.
-    And after adding the new data, a signal (USR1) gets send to the server to update its cache.
-    Therefore, root permissions are necessary.
+    While adding a new artist, album or song to the database, the file and directory attributes 
+    and ownership gets changed to the configured one in the MusicDB Configuration.
+
+    And after adding the new data, the command (``refresh``) gets written into the servers named pipe
+    to update its cache.
 
 
 Examples:
 
     .. code-block:: bash
 
-        musicdb database add album /data/music/Artist/2000\ -\ New\ Album
+        musicdb database add /data/music/Artist/2000\ -\ New\ Album
 
-    Update an existing song
+        musicdb database remove /data/music/Bad\ Artist
 
-    .. code-block:: bash
-
-        musicdb database update song /tmp/01\ newsong.flac /data/music/Artist/2000\ -\ Album/01\ oldsong.mp3
-        # only the song number must be identical!
 
 """
 
@@ -66,6 +68,7 @@ import argparse
 import os
 from lib.modapi         import MDBModule
 from mdbapi.database    import MusicDBDatabase
+from tqdm               import tqdm
 import traceback
 
 class database(MDBModule, MusicDBDatabase):
@@ -74,44 +77,51 @@ class database(MDBModule, MusicDBDatabase):
 
 
     def CMD_Add(self, target, path):
-        print("\033[1;34m - Adding following \033[1;36m" + target + "\033[1;34m to database:\033[0;36m " + path)
-        try:
-            if target == "artist":
-                self.AddArtist(path)
-            elif target == "album":
-                self.AddAlbum(path)
-            elif target == "song":
-                self.AddSong(path)
-            else:
-                print("\033[1;31mInvalid target!")
-                return None
-            print("\033[1;32mdone")
-        except Exception as e:
-            print("\033[1;31mFAILED with error: %s"%(str(e)))
+        print("\033[1;34mAdding following \033[1;36m" + target + "\033[1;34m to database:\033[0;36m %s \033[1;34m… "%(path), end="")
+        if target == "artist":
+            self.AddArtist(path)
+        elif target == "album":
+            self.AddAlbum(path)
+        elif target == "song":
+            self.AddSong(path)
+        else:
+            raise ValueError("Invalid target! Target must be \"artist\", \"album\" or \"song\".")
+        print("\033[1;32mdone")
 
-
-        # propergate changes
-        print("\033[1;34m - Trying to signal \033[1;36mMusicDB-Server\033[1;34m to update his cache…\033[1;31m")
+        # propagate changes
+        print("\033[1;34mTrying to signal \033[1;36mMusicDB-Server\033[1;34m to update its cache … \033[1;31m", end="")
         self.UpdateServerCache()
         print("\033[1;32mdone")
         return None
 
 
 
-    def CMD_Update(self, target, srcpath, dstpath):
-        print("\033[1;34m - Updating \033[1;36m" + target + "\033[1;34m:\033[0;36m " + dstpath)
-        if target == "song":
-            if not self.UpdateSongPath(srcpath, dstpath):
-                print("\033[1;31mUpdate failed! - See log file and check " + dstpath)
-            else:
-                print("\033[1;32mdone")
+    def CMD_Remove(self, target, abspath):
 
-        else:
-            print("\033[1;31mInvalid target!")
+        try:
+            path = self.fs.RemoveRoot(abspath)
+        except ValueError:
+            print("\033[1;31mERROR: Path %s is not part of the music collection!\033[0m"%(abspath))
             return None
+        
+        print("\033[1;34mRemoving following \033[1;36m" + target + "\033[1;34m from database:\033[0;36m %s \033[1;34m… "%(path), end="")
 
-        # propergate changes
-        print("\033[1;34m - Trying to signal \033[1;36mMusicDB-Server\033[1;34m to update his cache…\033[1;31m")
+        if target == "artist":
+            artist = self.db.GetArtistByPath(path)
+            self.RemoveArtist(artist["id"])
+
+        elif target == "album":
+            album = self.db.GetAlbumByPath(path)
+            self.RemoveAlbum(album["id"])
+        elif target == "song":
+            song = self.db.GetSongByPath(path)
+            self.RemoveSong(song["id"])
+        else:
+            raise ValueError("Invalid target! Target must be \"artist\", \"album\" or \"song\".")
+        print("\033[1;32mdone")
+
+        # propagate changes
+        print("\033[1;34mTrying to signal \033[1;36mMusicDB-Server\033[1;34m to update its cache … \033[1;31m", end="")
         self.UpdateServerCache()
         print("\033[1;32mdone")
         return None
@@ -119,12 +129,12 @@ class database(MDBModule, MusicDBDatabase):
 
 
     def CMD_GetLyrics(self, target, path):
-        print("\033[1;34mAdding lyrics to following \033[1;36m" + target + "\033[1;34m:\033[0;36m" + path)
+        print("\033[1;34mAdding lyrics to following \033[1;36m" + target + "\033[1;34m:\033[0;36m %s \033[1;34m… "%(path), end="")
         if target == "song":
             self.AddLyricsFromFile(path)
 
         elif target == "album":
-            path  = self.fs.RemoveRoot(path) # remove the path to the musicdirectory
+            path  = self.fs.RemoveRoot(path) # remove the path to the music directory
             album = self.db.GetAlbumByPath(path)
             songs = self.db.GetSongsByAlbumId(album["id"])
             
@@ -132,26 +142,47 @@ class database(MDBModule, MusicDBDatabase):
                 self.AddLyricsFromFile(song["path"])
 
         elif target == "artist":
-            path   = self.fs.RemoveRoot(path) # remove the path to the musicdirectory
+            path   = self.fs.RemoveRoot(path) # remove the path to the music directory
             artist = self.db.GetArtistByPath(path)
             songs  = self.db.GetSongsByArtistId(artist["id"])
             
             for song in tqdm(songs, unit="songs"):
                 self.AddLyricsFromFile(song["path"])
 
+        else:
+            raise ValueError("Invalid target! Target must be \"artist\", \"album\" or \"song\".")
+
         print("\033[1;32mdone")
         return None
 
 
 
+    def GetTargetByPath(self, abspath):
+        # returns "album", "artist" or "song" or None if path is invalid
 
-    def CMD_CheckPath(self, target, path):
-        print("\033[1;34mChecking following \033[1;36m" + target + "\033[1;34m path:\033[0;36m" + path)
-        if self.TryAnalysePathFor(target, path):
-            print("\033[1;34m Path is \033[1;32mOK\033[0m")
+        try:
+            path = self.fs.RemoveRoot(abspath)
+        except ValueError:
+            print("\033[1;31mERROR: Path %s is not part of the music collection!\033[0m"%(abspath))
+            return None
+
+        print("\033[1;34mDetermin target by path \"\033[0;36m%s\033[1;34m\" …"%(path))
+
+        if self.fs.IsArtistPath(path, self.cfg.music.ignorealbums, self.cfg.music.ignoresongs):
+            print("\033[1;34mWorking on Artist-path\033[0m")
+            return "artist"
+
+        elif self.fs.IsAlbumPath(path, self.cfg.music.ignoresongs):
+            print("\033[1;34mWorking on Album-path")
+            return "album"
+
+        elif self.fs.IsSongPath(path):
+            print("\033[1;34mWorking on Song-path")
+            return "song"
+
         else:
-            print("\033[1;34m Path is \033[1;31minvalid\033[0m")
-        return None
+            print("\033[1;31mERROR: Path does not address a Song, Album or Artist\033[0m")
+            return None
 
 
 
@@ -163,23 +194,18 @@ class database(MDBModule, MusicDBDatabase):
         subp   = parser.add_subparsers(title="Commands", metavar="command", help="database commands")
         
         addparser = subp.add_parser("add", help="add target to database")
-        addparser.add_argument("target", action="store", choices=["artist","album","song"], help="target table")
         addparser.add_argument("path", help="path to an artist, album or song")
         addparser.set_defaults(command="Add")
 
-        addparser = subp.add_parser("update", help="update targets file and database entry")
-        addparser.add_argument("target", action="store", choices=["song"], help="target table")
-        addparser.add_argument("source", help="path to the new song file")
-        addparser.add_argument("path", help="path to the song that shall be updated")
-        addparser.set_defaults(command="Update")
+        addparser = subp.add_parser("remove", help="remove target from database")
+        addparser.add_argument("path", help="path to an artist, album or song")
+        addparser.set_defaults(command="Remove")
 
         getparser = subp.add_parser("getlyrics", help="read lyrics from file(s) and store them in the database")
-        getparser.add_argument("target", action="store", choices=["artist","album","song"], help="target table")
         getparser.add_argument("path", help="path to an artist, album or song directory")
         getparser.set_defaults(command="GetLyrics")
 
         chkparser = subp.add_parser("check", help="check if the path is in a correct format")
-        chkparser.add_argument("target", action="store", choices=["artist","album","song","all"], help="target table")
         chkparser.add_argument("path", help="path to an artist, album, song or root music directory")
         chkparser.set_defaults(command="CheckPath")
 
@@ -194,30 +220,41 @@ class database(MDBModule, MusicDBDatabase):
 
         command = args.command
 
+        # Determine absolute path by relative path
         try:
-            target = args.target
-            path   = os.path.abspath(args.path)
+            path = os.path.abspath(args.path)
         except Exception as e:
-            print("\033[1;31mInvalid command line parameter!\033[0m")
-            print(e)
+            print("\033[1;31mDetermine absolute path failed with exception \"%s\"!\033[0m"%(str(e)))
             return 1
 
+        # Determine target by path
+        try:
+            target = self.GetTargetByPath(args.path)
+        except Exception as e:
+            print("\033[1;31mDetermine target by path failed with exception \"%s\"!\033[0m"%(str(e)))
+            return 1
+
+        if not target:
+            return 1
+
+        # Check if path is valid for target (GetTargetByPath is too error tolerant)
         if not self.TryAnalysePathFor(target, path):
-            print("\033[1;31mERROR:\033[0m Invalid path or target")
-            print("\t%s does not exist or does not fit to target %s" % (path, target))
+            print("\033[1;31mInvalid path or target! Path \"%s\" does not match %s-naming scheme!\033[0m" % (path, target))
             return 1
 
-        # execte command
+        # Execute command
         try:
             if command == "Add":
                 exitcode = self.CMD_Add(target, path)
-            elif command == "Update":
-                source = os.path.abspath(args.source)
-                exitcode = self.CMD_Update(target, source, path)
+            elif command == "Remove":
+                exitcode = self.CMD_Remove(target, path)
             elif command == "GetLyrics":
                 exitcode = self.CMD_GetLyrics(target, path)
             elif command == "CheckPath":
-                exitcode = self.CMD_CheckPath(target, path)
+                # Nothing to do.
+                # When it comes to execute a command, the path got already checked.
+                print("\033[1;34mPath \033[0;36m%s\033[1;34m is a \033[1;32mvalid %s \033[1;34mpath.\033[0m"%(path,target))
+                exitcode = 0
             return exitcode
         except Exception as e:
             print("\033[1;31mFATAL ERROR:");

@@ -42,7 +42,7 @@ Adding a Column
 
 When a new column shall be added, the following steps are necessary.
 
-    #. Kill the server: ``kill $( cat /srv/data/musicdb/musicdb.pid )``
+    #. Shutdown the server: ``echo "shutdown" > /data/musicdb/musicdb.fifo )``
     #. Backup the database: ``sqlite3 music.db .dump > backup/music.db.bak``
     #. Update this file.
     #. Update the SQL file *sql/music.sql*
@@ -110,6 +110,7 @@ Album Related Methods
     * :meth:`~lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetAlbums`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetAllAlbumIds`
+    * :meth:`~lib.db.musicdb.MusicDatabase.RemoveAlbum`
 
 Artworks
 ^^^^^^^^
@@ -141,6 +142,7 @@ Database structure:
     * :meth:`~lib.db.musicdb.MusicDatabase.GetAllArtists`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetArtistByPath`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetArtistById`
+    * :meth:`~lib.db.musicdb.MusicDatabase.RemoveArtist`
 
 Lyrics
 ------
@@ -725,6 +727,33 @@ class MusicDatabase(Database):
         return retval
 
 
+    def RemoveArtist(self, artistid):
+        """
+        This method removes an artist entry and all related data from all tables.
+
+        The removed data are:
+
+            * The complete row in the artist-table for this artist
+
+        Args:
+            artistid (int): ID of the artist
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: When *artistid* is not an integer or string
+        """
+        if type(artistid) != str and type(artistid) != int:
+            raise TypeError("artistid must be a decimal number of type integer or string")
+
+        with MusicDatabaseLock:
+            sql = "DELETE FROM albums WHERE artistid = ?"
+            self.Execute(sql, artistid)
+
+        return None
+
+
 
 
     ##########################################################################
@@ -911,6 +940,36 @@ class MusicDatabase(Database):
             albumids = self.GetFromDatabase(sql)
         retval = [x[0] for x in albumids] # do not use tuples
         return retval
+
+
+    def RemoveAlbum(self, albumid):
+        """
+        This method removes an album entry and all related data from all tables.
+
+        The removed data are:
+
+            * The complete row in the album-table for this album
+            * All tags of this album (not the tag definition)
+
+        Args:
+            albumid (int): ID of the album
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: When *albumid* is not an integer or string
+        """
+        if type(albumid) != str and type(albumid) != int:
+            raise TypeError("albumid must be a decimal number of type integer or string")
+
+        with MusicDatabaseLock:
+            sql = "DELETE FROM albums WHERE albumid = ?"
+            self.Execute(sql, albumid)
+            sql = "DELETE FROM albumtags WHERE albumid = ?"
+            self.Execute(sql, albumid)
+
+        return None
 
 
     #------------------------------------------------------------------------#
@@ -1206,13 +1265,19 @@ class MusicDatabase(Database):
         return songs
 
 
-    def GetRandomSong(self, filterlist=[], nodisabled=True, nohated=False, minlen=None):
-        """
+    def GetRandomSong(self, filterlist=None, nodisabled=True, nohated=False, minlen=None, albumid=None):
+        r"""
         This method returns a random song that fulfills several constraints.
 
-        The *filterlist* can be either a set of genre tag IDs or a set of genre names.
+        The ``filterlist`` can be either a set of genre tag IDs or a set of genre names.
+        When ``filterlist`` is ``None`` no filter gets applied.
+        Otherwise only albums of the genres in the list will be considered.
 
-        Filtering is done by the following steps:
+        When ``albumid`` is not ``None``, then the process of getting valid albums will be skipped.
+        Instead the predefined album will be used.
+        In that case ``filterlist`` gets ignored.
+
+        Getting a random song is done by the following steps, visualized in the flow chart below:
 
             #. Get album IDs of all albums in the database
             #. Translate *filterlist* into a list of tag IDs
@@ -1220,11 +1285,42 @@ class MusicDatabase(Database):
             #. Get all song IDs that are related to the filtered album IDs by calling :meth:`~lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds`
             #. Select a random song ID and get its song entry from the database
 
+        .. graphviz::
+
+            digraph hierarchy {
+                size="5,8"
+                start           [label="Start"];
+                hasalbumid      [shape=diamond, label="albumid == None"];
+                getallalbums    [shape=box,     label="Get all Album IDs"]
+                getalltags      [shape=box,     label="Get list of Tag IDs\nfrom filterlist"]
+                hasfilterlist   [shape=diamond, label="Is there a filter list"];
+                removealbums    [shape=box,     label="Remove albums without\ntags of filter"]
+                getallsongs     [shape=box,     label="Get all songs of selected albums"]
+                selectsong      [shape=box,     label="Select random song"]
+
+
+                start           -> hasalbumid;
+
+                hasalbumid      -> getallsongs      [label="No"];
+                hasalbumid      -> getallalbums     [label="Yes"];
+                getallalbums    -> getalltags
+
+                getalltags      -> hasfilterlist
+                hasfilterlist   -> removealbums     [label="Yes"];
+                hasfilterlist   -> getallsongs      [label="No"];
+
+                removealbums    -> removealbums     [label="For each album"]
+                removealbums    -> getallsongs
+
+                getallsongs     -> selectsong
+            }
+
         Args:
             filterlist: Optional, default value is ``[]``. A list of genre names or genre tag IDs that limits the search set. The tags have *OR* relations.
             nodisabled (bool): If ``True`` no disables songs will be selected
             nohated (bool): If ``True`` no hated songs will be selected
             minlen (int): If set, no songs with less than *minlen* seconds will be selected
+            albumid (int): Use album with ID ``albumid`` instead of a random album
 
         Returns:
             A random MusicDB Song dictionary that fulfills the constraints,
@@ -1233,7 +1329,7 @@ class MusicDatabase(Database):
         Raises:
             TypeError: When *nodisabled* or *nohated* are not of type ``bool``
             TypeError: When *minlen* is not ``None`` and not of type integer
-            TypeError: When *filterlist* is not a list
+            TypeError: When *filterlist* is not a list and not ``None``
         """
         if type(nodisabled) != bool:
             raise TypeError("nodisabled must be of type bool")
@@ -1244,50 +1340,61 @@ class MusicDatabase(Database):
         if minlen != None and type(minlen) != int:
             raise TypeError("minlen must be None or of type integer")
 
+        if filterlist == None:
+            filterlist = []
         if type(filterlist) != list:
             raise TypeError("filterlist must be of type list")
 
+        if albumid and filterlist:
+            logging.warning("Ignoring tag filter because there was an Album ID given. \033[1;30m(This may be a symptom of a bug!)")
+
 
         # Create a list of tagids that limits the set of albums
+        if albumid == None:
+            with MusicDatabaseLock:
+                tagids = []
+                if len(filterlist) > 0:
+                    for filterentry in filterlist:
+                        if type(filterentry) == str:
+                            tag   = self.GetTagByName(filterentry, self.TAG_CLASS_GENRE)
+                            tagid = tag["id"]
+                        else:
+                            tagid = filterentry
+
+                        tagids.append(tagid)
+
+                # create a set from the list to compare it with a set of albumtags
+                tagids = set(tagids)
+
+                # Get IDs of all albums existing in the database
+                sql      = "SELECT albumid FROM albums"
+                retval   = self.GetFromDatabase(sql, None)
+                albumids = [entry[self.ALBUM_ID] for entry in retval]
+
+                # Only select albums that have a tag listed in the tagids list
+                selectedalbumids = []
+                if len(tagids) > 0:
+                    for albumid in albumids:
+                        # Get tags of the album
+                        albumtags = self.GetTargetTags("album", albumid, self.TAG_CLASS_GENRE)
+                        if not albumtags:
+                            continue
+
+                        # Check if one tag matches the filter
+                        albumtagids = { albumtag["id"] for albumtag in albumtags }
+                        if not tagids & albumtagids:
+                            continue
+
+                        selectedalbumids.append(albumid)
+                else:
+                    selectedalbumids = albumids
+
+        else:
+            # use the predefined album ID
+            selectedalbumids = [albumid]
+
+        # Get all Songs that may be candidate
         with MusicDatabaseLock:
-            tagids = []
-            if len(filterlist) > 0:
-                for filterentry in filterlist:
-                    if type(filterentry) == str:
-                        tag   = self.GetTagByName(filterentry, self.TAG_CLASS_GENRE)
-                        tagid = tag["id"]
-                    else:
-                        tagid = filterentry
-
-                    tagids.append(tagid)
-
-            # create a set from the list to compare it with a set of albumtags
-            tagids = set(tagids)
-
-            # Get IDs of all albums existing in the database
-            sql      = "SELECT albumid FROM albums"
-            retval   = self.GetFromDatabase(sql, None)
-            albumids = [entry[self.ALBUM_ID] for entry in retval]
-
-            # Only select albums that have a tag listed in the tagids list
-            selectedalbumids = []
-            if len(tagids) > 0:
-                for albumid in albumids:
-                    # Get tags of the album
-                    albumtags = self.GetTargetTags("album", albumid, self.TAG_CLASS_GENRE)
-                    if not albumtags:
-                        continue
-
-                    # Check if one tag matches the filter
-                    albumtagids = { albumtag["id"] for albumtag in albumtags }
-                    if not tagids & albumtagids:
-                        continue
-
-                    selectedalbumids.append(albumid)
-            else:
-                selectedalbumids = albumids
-
-            # Get all Songs that may be candidate
             songids = self.GetSongIdsByAlbumIds(selectedalbumids, nodisabled, nohated, minlen)
 
         if len(songids) == 0:

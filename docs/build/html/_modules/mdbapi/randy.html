@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.randy &mdash; MusicDB 1.1.0 documentation</title>
+  <title>mdbapi.randy &mdash; MusicDB 2.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 1.1.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 2.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.1
+                2.0
               </div>
             
           
@@ -209,19 +209,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage/music.html">Music</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#naming">Naming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#artist-directory">Artist Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#album-directory">Album Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#song-file">Song File</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#itunes">iTunes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#bandcamp">Bandcamp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#song-file-name">Song File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-database-module">Using the database module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-add-module">Using the add module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#updating-songs">Updating Songs</a></li>
@@ -412,6 +408,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/pidfile.html">PID File Handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/websockets.html#module-lib.ws.server">Websocket Server</a></li>
@@ -590,7 +590,9 @@
 <span class="n">RUN</span>    <span class="o">=</span> <span class="kc">False</span>
 <span class="n">THREAD</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">CMDQUEUE</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">CMD_ADDSONG</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">CMD_ADDSONG</span>             <span class="o">=</span> <span class="mi">1</span>
+<span class="n">CMD_ADDSONGFROMALBUM</span>    <span class="o">=</span> <span class="mi">2</span>
+<span class="n">CMD_PRINTBLACKLIST</span>      <span class="o">=</span> <span class="mi">10</span>
 
 <div class="viewcode-block" id="StartRandy"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.StartRandy">[docs]</a><span class="k">def</span> <span class="nf">StartRandy</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -703,8 +705,51 @@
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
             <span class="k">continue</span>
 
-        <span class="c1"># currently, there is just one command</span>
-        <span class="k">if</span> <span class="n">cmd</span> <span class="o">==</span> <span class="n">CMD_ADDSONG</span><span class="p">:</span>
+        <span class="c1"># execute commands</span>
+        <span class="k">if</span> <span class="n">cmd</span> <span class="o">==</span> <span class="n">CMD_PRINTBLACKLIST</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;36mRandy&#39;s Blacklists:&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;34m</span><span class="se">\t</span><span class="s2">Songs:&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">songblacklist</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31m</span><span class="se">\t</span><span class="s2"> - </span><span class="se">\033</span><span class="s2">[0;36m</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">)))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;34m</span><span class="se">\t</span><span class="s2">Albums:&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">albumblacklist</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31m</span><span class="se">\t</span><span class="s2"> - </span><span class="se">\033</span><span class="s2">[0;36m</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">)))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;34m</span><span class="se">\t</span><span class="s2">Artists:&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">artistblacklist</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31m</span><span class="se">\t</span><span class="s2"> - </span><span class="se">\033</span><span class="s2">[0;36m</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">)))</span>
+
+
+        <span class="k">elif</span> <span class="n">cmd</span> <span class="o">==</span> <span class="n">CMD_ADDSONGFROMALBUM</span><span class="p">:</span>
+            <span class="c1"># Get parameters</span>
+            <span class="n">position</span>   <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">albumid</span>    <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">song</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetRandomSong</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">nodisabled</span><span class="p">,</span> <span class="n">nohated</span><span class="p">,</span> <span class="n">minlen</span><span class="p">,</span> <span class="n">albumid</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Getting random song failed with error: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># maintain blacklists</span>
+            <span class="n">artistblacklist</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">artistblacklist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
+            <span class="n">albumblacklist</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">albumblacklist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
+            <span class="n">songblacklist</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">songblacklist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+
+            <span class="c1"># Add song to queue</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Randy adds the following song: </span><span class="se">\033</span><span class="s2">[0;36m&quot;</span> <span class="o">+</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+            <span class="n">success</span> <span class="o">=</span> <span class="n">mpd</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span>
+
+            <span class="c1"># Update statistics</span>
+            <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">disablestats</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Updating song statistics disabled. </span><span class="se">\033</span><span class="s2">[1;33m!!&quot;</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="n">musicdb</span><span class="o">.</span><span class="n">UpdateSongStatistic</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="s2">&quot;qrndadds&quot;</span><span class="p">,</span> <span class="s2">&quot;inc&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">cmd</span> <span class="o">==</span> <span class="n">CMD_ADDSONG</span><span class="p">:</span>
             <span class="c1"># Get parameters</span>
             <span class="n">position</span>   <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -815,9 +860,37 @@
 <span class="sd">            ``None``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">CMDQUEUE</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">CMD_ADDSONG</span><span class="p">,</span> <span class="p">[</span><span class="n">position</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="RandyInterface.AddSongFromAlbum"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.RandyInterface.AddSongFromAlbum">[docs]</a>    <span class="k">def</span> <span class="nf">AddSongFromAlbum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Triggers Randy to add a random song from a specific album into the song-queue</span>
+
+<span class="sd">        It gets not checked if the song is listed on the black list.</span>
+<span class="sd">        But the song gets added to the black list for songs, as well as the album and artist gets added.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            albumid (int): ID of the album the song shall come from</span>
+<span class="sd">            position (str): Determines where the song gets added. ``&quot;next&quot;``: after the current playing song, or ``&quot;last&quot;`` at the end of the queue.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">CMDQUEUE</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">CMD_ADDSONGFROMALBUM</span><span class="p">,</span> <span class="p">[</span><span class="n">position</span><span class="p">,</span> <span class="n">albumid</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="RandyInterface.PrintBlacklist"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.RandyInterface.PrintBlacklist">[docs]</a>    <span class="k">def</span> <span class="nf">PrintBlacklist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Triggers Randy to print the blacklists to *stdout*.</span>
+<span class="sd">        This can be useful for debugging. </span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">CMDQUEUE</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">CMD_PRINTBLACKLIST</span><span class="p">,</span> <span class="p">[]))</span>
         <span class="k">return</span> <span class="kc">None</span></div></div>
-
-
 
 
 <span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
@@ -858,7 +931,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.1.0',
+            VERSION:'2.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

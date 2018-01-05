@@ -8,14 +8,14 @@ if [ $EUID -ne 0 ] ; then
 fi
 
 
-SERVER_PIDFILE=$(awk -F "=" '/pidfile/ {print $2}' /etc/musicdb.ini)
-if [ ! -f "$SERVER_PIDFILE" ] ; then
-    echo -e "\e[1;31mCannot find \e[1;36m$SERVERPIDFILE\e[1;31m! \e[0;31m(Server not running?)\e[0m"
+SERVER_PIPE=$(awk -F "=" '/fifofile/ {print $2}' /etc/musicdb.ini)
+if [ ! -p "$SERVER_PIPE" ] ; then
+    echo -e "\e[1;31mCannot find \e[1;36m$SERVER_PIPE\e[1;31m! \e[0;31m(Server not running?)\e[0m"
     exit 1
 fi
 
 # stop musicdb
-kill $( cat $SERVER_PIDFILE )
+echo "shutdown" > $SERVER_PIPE
 echo -e "\e[1;34mMusicDB server shutdown initiated\e[0m"
 
 

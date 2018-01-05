@@ -33,8 +33,7 @@ Example:
 
     .. code-block:: bash
 
-        musicdb -q add
-        # -q: do not show logs on stdout
+        musicdb add
 """
 
 import argparse
@@ -65,7 +64,7 @@ class FileNameInput(TextInput):
     def HandleKey(self, key):
         # Replace slash with DIVISION SLASH
         if key == "/":
-            key = "⁄"
+            key = "∕"
         TextInput.HandleKey(self, key)
     
 
@@ -708,6 +707,7 @@ class add(MDBModule, MusicDBDatabase):
             
         if data:
             self.RunImportProcess(data)
+            self.UpdateServerCache()
         else:
             self.cli.ClearScreen()
             self.cli.SetCursor(0,0)

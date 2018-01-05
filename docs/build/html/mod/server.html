@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>server - MusicDB Websocket Server &mdash; MusicDB 1.1.0 documentation</title>
+  <title>server - MusicDB Websocket Server &mdash; MusicDB 2.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 1.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 2.0.0 documentation" href="../index.html"/>
         <link rel="next" title="stats - MusicDB Song Statistic" href="stats.html"/>
         <link rel="prev" title="repair - Repair Database Entries" href="repair.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.1
+                2.0
               </div>
             
           
@@ -210,19 +210,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#naming">Naming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory">Artist Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory">Album Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file">Song File</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#itunes">iTunes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#bandcamp">Bandcamp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-database-module">Using the database module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-add-module">Using the add module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
@@ -413,6 +409,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/pidfile.html">PID File Handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/websockets.html#module-lib.ws.server">Websocket Server</a></li>
@@ -544,9 +544,11 @@
 <li>Create PID file (this will be deleted at exit)</li>
 <li>Initialize the server by calling <code class="xref py py-meth docutils literal"><span class="pre">mdbapi.Initialize()</span></code></li>
 <li>Start the websocket server by calling <code class="xref py py-meth docutils literal"><span class="pre">mdbapi.StartWebSocketServer()</span></code></li>
+<li>Create a named pipe (this will be deleted at exit)</li>
 <li>Enter the event loop by running <code class="xref py py-meth docutils literal"><span class="pre">mdbapi.Run()</span></code></li>
 </ol>
 </div></blockquote>
+<p>Read <a class="reference internal" href="../mdbapi/server.html"><span class="doc">MusicDB Websocket Server</span></a> for details</p>
 <p class="rubric">Example</p>
 <p>This example shows the easiest way to start musicdb.
 The following commands must be called as root.
@@ -559,8 +561,8 @@ There will appear warnings and errors if <code class="docutils literal"><span cl
 su -l -c <span class="s2">&quot;musicdb --config /data/musicdb/musicdb.ini server&quot;</span> musicdb
 </pre></div>
 </div>
-<p>To stop the server, use the TERM-System signal:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">kill</span> -TERM <span class="k">$(</span> cat /data/musicdb/musicdb.pid <span class="k">)</span>
+<p>To stop the server, use the named pipe (this can also be done as user):</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">echo</span> shutdown &gt; /data/musicdb/musicdb.fifo
 </pre></div>
 </div>
 </div>
@@ -600,7 +602,7 @@ su -l -c <span class="s2">&quot;musicdb --config /data/musicdb/musicdb.ini serve
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.1.0',
+            VERSION:'2.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

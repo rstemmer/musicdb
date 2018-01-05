@@ -24,6 +24,7 @@ import signal
 from lib.filesystem     import Filesystem
 from lib.metatags       import MetaTags
 from lib.pidfile        import *                    # Check PID File…
+from lib.namedpipe      import NamedPipe
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import *
 from lib.db.trackerdb   import TrackerDatabase      # To update when a song gets removed
@@ -882,6 +883,64 @@ class MusicDBDatabase(object):
         return None
 
 
+    def RemoveAlbum(self, albumid):
+        """
+        This method removes an album from the database.
+        The files gets not touched, and so it does not matter if they even exists.
+        All related information will also be removed.
+
+        .. warning::
+
+            For all songs in this album, the :meth:`~RemoveSong` method gets called!
+
+        .. warning::
+
+            This is not a *"set the deleted flag"* method.
+            The data gets actually removed from the database.
+            No recovery possible!
+
+        Args:
+            albumid (int): ID of the album that shall be removed from database
+
+        Return:
+            ``None``
+        """
+        songs = self.db.GetSongsByAlbumId(albumid)
+        for song in songs:
+            self.RemoveSong(song["id"])
+        self.db.RemoveAlbum(albumid)
+        return None
+
+
+    def RemoveArtist(self, artistid):
+        """
+        This method removes an artist from the database.
+        The files gets not touched, and so it does not matter if they even exists.
+        All related information will also be removed.
+
+        .. warning::
+
+            For all artists albums, the :meth:`~RemoveAlbum` method gets called!
+
+        .. warning::
+
+            This is not a *"set the deleted flag"* method.
+            The data gets actually removed from the database.
+            No recovery possible!
+
+        Args:
+            artistid (int): ID of the artist that shall be removed from database
+
+        Return:
+            ``None``
+        """
+        albums = self.db.GetAlbumsByArtistId(artistid)
+        for album in albums:
+            self.RemoveAlbum(album["id"])
+        self.db.RemoveArtist(artistid)
+        return None
+
+
 
     def AddLyricsFromFile(self, songpath):
         """
@@ -1073,21 +1132,14 @@ class MusicDBDatabase(object):
 
     def UpdateServerCache(self):
         """
-        This method signals the MusicDB Websocket Server to update its caches.
-        This should always be done when there are new artists, albums or songs added to the database.
+        This method signals the MusicDB Websocket Server to update its caches by writing ``refresh`` into its named pipe.
+        This should always be called when there are new artists, albums or songs added to the database.
 
         Returns:
             *Nothing*
         """
-        serverpid = CheckPIDFile(self.cfg.server.pidfile)
-        if not serverpid:
-            return  # server not running, so no cacheupdate needed
-        try:
-            os.kill(serverpid, signal.SIGUSR1)
-        except Exception as e:
-            print("\033[1;33mWARNING:\033[0m Updating servercache failed with exception:")
-            print(e)
-            print("\033[1;34mTry to update manually: \033[1;36mkill -USR1 "+str(self.cfg.server.pidfile)+"\033[0m")
+        pipe = NamedPipe(self.cfg.server.fifofile)
+        pipe.WriteLine("refresh")
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

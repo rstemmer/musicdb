@@ -21,14 +21,14 @@ Example:
 
     .. code-block:: bash
 
-        musicdb -q moods
-        # -q: do not show logs on stdout
+        musicdb moods
 """
 
 import argparse
 from lib.modapi         import MDBModule
 from lib.db.musicdb     import MusicDatabase
 from lib.filesystem     import Filesystem
+from lib.namedpipe      import NamedPipe
 from mdbapi.tags        import MusicDBTags
 from lib.clui.listview  import ListView
 from lib.clui.text      import Text
@@ -628,6 +628,11 @@ class moods(MDBModule):
     def MDBM_Main(self, args):
 
         self.ShowUI()
+
+        # Update caches with the new tags
+        pipe = NamedPipe(self.cfg.server.fifofile)
+        pipe.WriteLine("refresh")
+
         return 0
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

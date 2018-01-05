@@ -35,7 +35,7 @@ function ShowAlbum(parentID, MDBArtist, MDBAlbum, MDBCDs, MDBAlbumTags, currents
     html += "</div>";
 
     // Add-Button
-    html += "<div id=ABVToolbar class=\"hlcolor hovpacity\" title=\"Add whole album to queue\">";
+    html += "<div id=ABVToolbar class=\"hlcolor hovpacity\">";
     html += Button_AddAlbumToQueue(MDBAlbum.id);
     html += "</div>";
 
@@ -105,7 +105,7 @@ function _ABV_CreateCover(MDBAlbum)
 {
     var html = "";
     html += "<div id=ABVArtworkBox>";
-    var imgpath = EncodeArtworkPath(MDBAlbum.artworkpath);
+    var imgpath = EncodeArtworkPath(MDBAlbum.artworkpath, "500x500");
     html += "<img id=ABVArtworkImage src=\"" + imgpath + "\">";
     html += "</div>";
     return html;
@@ -353,6 +353,9 @@ function Albumview_UpdateSong(MDBAlbum, MDBSong, MDBSongTags)
 
     // Update Style
     UpdateStyle(MDBAlbum.bgcolor, MDBAlbum.fgcolor, MDBAlbum.hlcolor);
+
+    // Update album tag inputs - with new song genres, they get also updated
+    MusicDB_Request("GetAlbum", "UpdateTagInput", {albumid: MDBAlbum.id});
 }
 
 function _ABV_CreateSongEntryNumber(songnumber)

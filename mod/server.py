@@ -21,7 +21,10 @@ The start is done in the following steps:
     #. Create PID file (this will be deleted at exit)
     #. Initialize the server by calling :meth:`mdbapi.Initialize`
     #. Start the websocket server by calling :meth:`mdbapi.StartWebSocketServer`
+    #. Create a named pipe (this will be deleted at exit)
     #. Enter the event loop by running :meth:`mdbapi.Run`
+
+Read :doc:`/mdbapi/server` for details
 
 Example:
 
@@ -40,11 +43,11 @@ Example:
         mpd /data/musicdb/mpd/mpd.conf
         su -l -c "musicdb --config /data/musicdb/musicdb.ini server" musicdb
 
-    To stop the server, use the TERM-System signal:
+    To stop the server, use the named pipe (this can also be done as user):
 
     .. code-block:: bash
 
-        kill -TERM $( cat /data/musicdb/musicdb.pid )
+        echo shutdown > /data/musicdb/musicdb.fifo
 """
 
 import traceback

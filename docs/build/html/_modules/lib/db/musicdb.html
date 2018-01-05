@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.db.musicdb &mdash; MusicDB 1.1.0 documentation</title>
+  <title>lib.db.musicdb &mdash; MusicDB 2.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 1.1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 2.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                1.1
+                2.0
               </div>
             
           
@@ -209,19 +209,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage/music.html">Music</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#naming">Naming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#artist-directory">Artist Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#album-directory">Album Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#song-file">Song File</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#itunes">iTunes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#bandcamp">Bandcamp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#song-file-name">Song File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#using-the-database-module">Using the database module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#using-the-add-module">Using the add module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#updating-songs">Updating Songs</a></li>
@@ -412,6 +408,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/pidfile.html">PID File Handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/websockets.html#module-lib.ws.server">Websocket Server</a></li>
@@ -577,7 +577,7 @@
 
 <span class="sd">When a new column shall be added, the following steps are necessary.</span>
 
-<span class="sd">    #. Kill the server: ``kill $( cat /srv/data/musicdb/musicdb.pid )``</span>
+<span class="sd">    #. Shutdown the server: ``echo &quot;shutdown&quot; &gt; /data/musicdb/musicdb.fifo )``</span>
 <span class="sd">    #. Backup the database: ``sqlite3 music.db .dump &gt; backup/music.db.bak``</span>
 <span class="sd">    #. Update this file.</span>
 <span class="sd">    #. Update the SQL file *sql/music.sql*</span>
@@ -645,6 +645,7 @@
 <span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId`</span>
 <span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.GetAlbums`</span>
 <span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.GetAllAlbumIds`</span>
+<span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.RemoveAlbum`</span>
 
 <span class="sd">Artworks</span>
 <span class="sd">^^^^^^^^</span>
@@ -676,6 +677,7 @@
 <span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.GetAllArtists`</span>
 <span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.GetArtistByPath`</span>
 <span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.GetArtistById`</span>
+<span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.RemoveArtist`</span>
 
 <span class="sd">Lyrics</span>
 <span class="sd">------</span>
@@ -1260,6 +1262,33 @@
         <span class="k">return</span> <span class="n">retval</span></div>
 
 
+<div class="viewcode-block" id="MusicDatabase.RemoveArtist"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.RemoveArtist">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveArtist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artistid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method removes an artist entry and all related data from all tables.</span>
+
+<span class="sd">        The removed data are:</span>
+
+<span class="sd">            * The complete row in the artist-table for this artist</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            artistid (int): ID of the artist</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: When *artistid* is not an integer or string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">artistid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">artistid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;artistid must be a decimal number of type integer or string&quot;</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;DELETE FROM albums WHERE artistid = ?&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">artistid</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
 
 
     <span class="c1">##########################################################################</span>
@@ -1446,6 +1475,36 @@
             <span class="n">albumids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
         <span class="n">retval</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">albumids</span><span class="p">]</span> <span class="c1"># do not use tuples</span>
         <span class="k">return</span> <span class="n">retval</span></div>
+
+
+<div class="viewcode-block" id="MusicDatabase.RemoveAlbum"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.RemoveAlbum">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveAlbum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method removes an album entry and all related data from all tables.</span>
+
+<span class="sd">        The removed data are:</span>
+
+<span class="sd">            * The complete row in the album-table for this album</span>
+<span class="sd">            * All tags of this album (not the tag definition)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            albumid (int): ID of the album</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: When *albumid* is not an integer or string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;albumid must be a decimal number of type integer or string&quot;</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;DELETE FROM albums WHERE albumid = ?&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">albumid</span><span class="p">)</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;DELETE FROM albumtags WHERE albumid = ?&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">albumid</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
 
 
     <span class="c1">#------------------------------------------------------------------------#</span>
@@ -1741,13 +1800,19 @@
         <span class="k">return</span> <span class="n">songs</span></div>
 
 
-<div class="viewcode-block" id="MusicDatabase.GetRandomSong"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetRandomSong">[docs]</a>    <span class="k">def</span> <span class="nf">GetRandomSong</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filterlist</span><span class="o">=</span><span class="p">[],</span> <span class="n">nodisabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nohated</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">minlen</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MusicDatabase.GetRandomSong"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetRandomSong">[docs]</a>    <span class="k">def</span> <span class="nf">GetRandomSong</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filterlist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nodisabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nohated</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">minlen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">albumid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method returns a random song that fulfills several constraints.</span>
 
-<span class="sd">        The *filterlist* can be either a set of genre tag IDs or a set of genre names.</span>
+<span class="sd">        The ``filterlist`` can be either a set of genre tag IDs or a set of genre names.</span>
+<span class="sd">        When ``filterlist`` is ``None`` no filter gets applied.</span>
+<span class="sd">        Otherwise only albums of the genres in the list will be considered.</span>
 
-<span class="sd">        Filtering is done by the following steps:</span>
+<span class="sd">        When ``albumid`` is not ``None``, then the process of getting valid albums will be skipped.</span>
+<span class="sd">        Instead the predefined album will be used.</span>
+<span class="sd">        In that case ``filterlist`` gets ignored.</span>
+
+<span class="sd">        Getting a random song is done by the following steps, visualized in the flow chart below:</span>
 
 <span class="sd">            #. Get album IDs of all albums in the database</span>
 <span class="sd">            #. Translate *filterlist* into a list of tag IDs</span>
@@ -1755,11 +1820,42 @@
 <span class="sd">            #. Get all song IDs that are related to the filtered album IDs by calling :meth:`~lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds`</span>
 <span class="sd">            #. Select a random song ID and get its song entry from the database</span>
 
+<span class="sd">        .. graphviz::</span>
+
+<span class="sd">            digraph hierarchy {</span>
+<span class="sd">                size=&quot;5,8&quot;</span>
+<span class="sd">                start           [label=&quot;Start&quot;];</span>
+<span class="sd">                hasalbumid      [shape=diamond, label=&quot;albumid == None&quot;];</span>
+<span class="sd">                getallalbums    [shape=box,     label=&quot;Get all Album IDs&quot;]</span>
+<span class="sd">                getalltags      [shape=box,     label=&quot;Get list of Tag IDs\nfrom filterlist&quot;]</span>
+<span class="sd">                hasfilterlist   [shape=diamond, label=&quot;Is there a filter list&quot;];</span>
+<span class="sd">                removealbums    [shape=box,     label=&quot;Remove albums without\ntags of filter&quot;]</span>
+<span class="sd">                getallsongs     [shape=box,     label=&quot;Get all songs of selected albums&quot;]</span>
+<span class="sd">                selectsong      [shape=box,     label=&quot;Select random song&quot;]</span>
+
+
+<span class="sd">                start           -&gt; hasalbumid;</span>
+
+<span class="sd">                hasalbumid      -&gt; getallsongs      [label=&quot;No&quot;];</span>
+<span class="sd">                hasalbumid      -&gt; getallalbums     [label=&quot;Yes&quot;];</span>
+<span class="sd">                getallalbums    -&gt; getalltags</span>
+
+<span class="sd">                getalltags      -&gt; hasfilterlist</span>
+<span class="sd">                hasfilterlist   -&gt; removealbums     [label=&quot;Yes&quot;];</span>
+<span class="sd">                hasfilterlist   -&gt; getallsongs      [label=&quot;No&quot;];</span>
+
+<span class="sd">                removealbums    -&gt; removealbums     [label=&quot;For each album&quot;]</span>
+<span class="sd">                removealbums    -&gt; getallsongs</span>
+
+<span class="sd">                getallsongs     -&gt; selectsong</span>
+<span class="sd">            }</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            filterlist: Optional, default value is ``[]``. A list of genre names or genre tag IDs that limits the search set. The tags have *OR* relations.</span>
 <span class="sd">            nodisabled (bool): If ``True`` no disables songs will be selected</span>
 <span class="sd">            nohated (bool): If ``True`` no hated songs will be selected</span>
 <span class="sd">            minlen (int): If set, no songs with less than *minlen* seconds will be selected</span>
+<span class="sd">            albumid (int): Use album with ID ``albumid`` instead of a random album</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            A random MusicDB Song dictionary that fulfills the constraints,</span>
@@ -1768,7 +1864,7 @@
 <span class="sd">        Raises:</span>
 <span class="sd">            TypeError: When *nodisabled* or *nohated* are not of type ``bool``</span>
 <span class="sd">            TypeError: When *minlen* is not ``None`` and not of type integer</span>
-<span class="sd">            TypeError: When *filterlist* is not a list</span>
+<span class="sd">            TypeError: When *filterlist* is not a list and not ``None``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">nodisabled</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">bool</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;nodisabled must be of type bool&quot;</span><span class="p">)</span>
@@ -1779,50 +1875,61 @@
         <span class="k">if</span> <span class="n">minlen</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">minlen</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;minlen must be None or of type integer&quot;</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="n">filterlist</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filterlist</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">filterlist</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;filterlist must be of type list&quot;</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="n">albumid</span> <span class="ow">and</span> <span class="n">filterlist</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Ignoring tag filter because there was an Album ID given. </span><span class="se">\033</span><span class="s2">[1;30m(This may be a symptom of a bug!)&quot;</span><span class="p">)</span>
+
 
         <span class="c1"># Create a list of tagids that limits the set of albums</span>
+        <span class="k">if</span> <span class="n">albumid</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+                <span class="n">tagids</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filterlist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">filterentry</span> <span class="ow">in</span> <span class="n">filterlist</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">filterentry</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+                            <span class="n">tag</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTagByName</span><span class="p">(</span><span class="n">filterentry</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">)</span>
+                            <span class="n">tagid</span> <span class="o">=</span> <span class="n">tag</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">tagid</span> <span class="o">=</span> <span class="n">filterentry</span>
+
+                        <span class="n">tagids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tagid</span><span class="p">)</span>
+
+                <span class="c1"># create a set from the list to compare it with a set of albumtags</span>
+                <span class="n">tagids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">tagids</span><span class="p">)</span>
+
+                <span class="c1"># Get IDs of all albums existing in the database</span>
+                <span class="n">sql</span>      <span class="o">=</span> <span class="s2">&quot;SELECT albumid FROM albums&quot;</span>
+                <span class="n">retval</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">albumids</span> <span class="o">=</span> <span class="p">[</span><span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ALBUM_ID</span><span class="p">]</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">retval</span><span class="p">]</span>
+
+                <span class="c1"># Only select albums that have a tag listed in the tagids list</span>
+                <span class="n">selectedalbumids</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tagids</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">albumid</span> <span class="ow">in</span> <span class="n">albumids</span><span class="p">:</span>
+                        <span class="c1"># Get tags of the album</span>
+                        <span class="n">albumtags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTargetTags</span><span class="p">(</span><span class="s2">&quot;album&quot;</span><span class="p">,</span> <span class="n">albumid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">albumtags</span><span class="p">:</span>
+                            <span class="k">continue</span>
+
+                        <span class="c1"># Check if one tag matches the filter</span>
+                        <span class="n">albumtagids</span> <span class="o">=</span> <span class="p">{</span> <span class="n">albumtag</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">albumtag</span> <span class="ow">in</span> <span class="n">albumtags</span> <span class="p">}</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">tagids</span> <span class="o">&amp;</span> <span class="n">albumtagids</span><span class="p">:</span>
+                            <span class="k">continue</span>
+
+                        <span class="n">selectedalbumids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">selectedalbumids</span> <span class="o">=</span> <span class="n">albumids</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># use the predefined album ID</span>
+            <span class="n">selectedalbumids</span> <span class="o">=</span> <span class="p">[</span><span class="n">albumid</span><span class="p">]</span>
+
+        <span class="c1"># Get all Songs that may be candidate</span>
         <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
-            <span class="n">tagids</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filterlist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">filterentry</span> <span class="ow">in</span> <span class="n">filterlist</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">filterentry</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
-                        <span class="n">tag</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTagByName</span><span class="p">(</span><span class="n">filterentry</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">)</span>
-                        <span class="n">tagid</span> <span class="o">=</span> <span class="n">tag</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">tagid</span> <span class="o">=</span> <span class="n">filterentry</span>
-
-                    <span class="n">tagids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tagid</span><span class="p">)</span>
-
-            <span class="c1"># create a set from the list to compare it with a set of albumtags</span>
-            <span class="n">tagids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">tagids</span><span class="p">)</span>
-
-            <span class="c1"># Get IDs of all albums existing in the database</span>
-            <span class="n">sql</span>      <span class="o">=</span> <span class="s2">&quot;SELECT albumid FROM albums&quot;</span>
-            <span class="n">retval</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">albumids</span> <span class="o">=</span> <span class="p">[</span><span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ALBUM_ID</span><span class="p">]</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">retval</span><span class="p">]</span>
-
-            <span class="c1"># Only select albums that have a tag listed in the tagids list</span>
-            <span class="n">selectedalbumids</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tagids</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">albumid</span> <span class="ow">in</span> <span class="n">albumids</span><span class="p">:</span>
-                    <span class="c1"># Get tags of the album</span>
-                    <span class="n">albumtags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTargetTags</span><span class="p">(</span><span class="s2">&quot;album&quot;</span><span class="p">,</span> <span class="n">albumid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">albumtags</span><span class="p">:</span>
-                        <span class="k">continue</span>
-
-                    <span class="c1"># Check if one tag matches the filter</span>
-                    <span class="n">albumtagids</span> <span class="o">=</span> <span class="p">{</span> <span class="n">albumtag</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">albumtag</span> <span class="ow">in</span> <span class="n">albumtags</span> <span class="p">}</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">tagids</span> <span class="o">&amp;</span> <span class="n">albumtagids</span><span class="p">:</span>
-                        <span class="k">continue</span>
-
-                    <span class="n">selectedalbumids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">selectedalbumids</span> <span class="o">=</span> <span class="n">albumids</span>
-
-            <span class="c1"># Get all Songs that may be candidate</span>
             <span class="n">songids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSongIdsByAlbumIds</span><span class="p">(</span><span class="n">selectedalbumids</span><span class="p">,</span> <span class="n">nodisabled</span><span class="p">,</span> <span class="n">nohated</span><span class="p">,</span> <span class="n">minlen</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">songids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -2586,7 +2693,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.1.0',
+            VERSION:'2.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

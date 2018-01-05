@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Websocket Server &mdash; MusicDB 1.1.0 documentation</title>
+  <title>MusicDB Websocket Server &mdash; MusicDB 2.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 1.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 2.0.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDBTags" href="tags.html"/>
         <link rel="prev" title="Randomizer" href="randy.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.1
+                2.0
               </div>
             
           
@@ -210,19 +210,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#naming">Naming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory">Artist Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory">Album Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file">Song File</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#itunes">iTunes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#bandcamp">Bandcamp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-database-module">Using the database module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-add-module">Using the add module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
@@ -413,6 +409,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/pidfile.html">PID File Handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/websockets.html#module-lib.ws.server">Websocket Server</a></li>
@@ -546,11 +546,12 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>MusicDB Server handles the following system signals:</p>
+<p>MusicDB Server handles the following commands when written into its named pipe:</p>
 <blockquote>
 <div><ul class="simple">
-<li>USR1: <a class="reference internal" href="#mdbapi.server.SIGUSR1_Handler" title="mdbapi.server.SIGUSR1_Handler"><code class="xref py py-meth docutils literal"><span class="pre">SIGUSR1_Handler()</span></code></a> - Update server caches and inform clients to update their caches</li>
-<li>TERM: <a class="reference internal" href="#mdbapi.server.SIGTERM_Handler" title="mdbapi.server.SIGTERM_Handler"><code class="xref py py-meth docutils literal"><span class="pre">SIGTERM_Handler()</span></code></a> - Shut down the server</li>
+<li>refresh:  <a class="reference internal" href="#mdbapi.server.UpdateCaches" title="mdbapi.server.UpdateCaches"><code class="xref py py-meth docutils literal"><span class="pre">UpdateCaches()</span></code></a> - Update server caches and inform clients to update their caches</li>
+<li>shutdown: <a class="reference internal" href="#mdbapi.server.Shutdown" title="mdbapi.server.Shutdown"><code class="xref py py-meth docutils literal"><span class="pre">Shutdown()</span></code></a> - Shut down the server</li>
+<li>blacklist: Show the blacklists maintained by <a class="reference internal" href="randy.html#module-mdbapi.randy" title="mdbapi.randy"><code class="xref py py-mod docutils literal"><span class="pre">randy</span></code></a></li>
 </ul>
 </div></blockquote>
 <p>Further more does this module maintain global instances of the following classes.
@@ -566,13 +567,13 @@ If the server is not started, the objects are all <code class="docutils literal"
 <li><a class="reference internal" href="../lib/config.html#lib.cfg.mdbstate.MDBState" title="lib.cfg.mdbstate.MDBState"><code class="xref py py-class docutils literal"><span class="pre">lib.cfg.mdbstate.MDBState</span></code></a> as <code class="docutils literal"><span class="pre">mdbstate</span></code></li>
 </ul>
 </div></blockquote>
-<p>The signals can be triggered using <code class="docutils literal"><span class="pre">kill</span></code>:</p>
+<p>The following example shows hot to use the pipe interface:</p>
 <blockquote>
 <div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># Update caches</span>
-<span class="nb">kill</span> -USR1 <span class="k">$(</span> cat /data/musicdb/musicdb.pid <span class="k">)</span>
+<span class="nb">echo</span> <span class="s2">&quot;refresh&quot;</span> &gt; /data/musicdb/musicdb.fifo
 
 <span class="c1"># Terminate server</span>
-<span class="nb">kill</span> -TERM <span class="k">$(</span> cat /data/musicdb/musicdb.pid <span class="k">)</span>
+<span class="nb">echo</span> <span class="s2">&quot;shutdown&quot;</span> &gt; /data/musicdb/musicdb.fifo
 </pre></div>
 </div>
 </div></blockquote>
@@ -594,21 +595,6 @@ This function reacts on system signals and calls the handler of a specific signa
 </tbody>
 </table>
 <p>Returns: Nothing</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="mdbapi.server.SIGUSR1_Handler">
-<code class="descclassname">mdbapi.server.</code><code class="descname">SIGUSR1_Handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#SIGUSR1_Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.SIGUSR1_Handler" title="Permalink to this definition">¶</a></dt>
-<dd><p>The USR1 signal handler handles the USR1 system signal.
-Its task is to trigger updating the servers cache and to inform the clients to update.</p>
-<p>On server side:</p>
-<blockquote>
-<div><ul class="simple">
-<li>The MiSE Cache gets updated by calling <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache()</span></code></a></li>
-<li>The MPD database gets updated by calling <a class="reference internal" href="mpd.html#mdbapi.mpd.Update" title="mdbapi.mpd.Update"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mpd.Update()</span></code></a></li>
-</ul>
-</div></blockquote>
-<p>To inform the clients a broadcast packet get sent with the following content: <code class="docutils literal"><span class="pre">{method:&quot;broadcast&quot;,</span> <span class="pre">fncname:&quot;SIGUSR1&quot;,</span> <span class="pre">fncsig:&quot;UpdateCaches&quot;,</span> <span class="pre">arguments:null,</span> <span class="pre">pass:null}</span></code></p>
 </dd></dl>
 
 <dl class="function">
@@ -634,7 +620,7 @@ It initializes lots of global objects that get shared between multiple connectio
 <li>Connect to MPD (Music Playing Daemon) and start Observer thread (see <a class="reference internal" href="mpd.html"><span class="doc">mpd / Music Playing Daemon Interface</span></a> and <a class="reference internal" href="tracker.html"><span class="doc">Song Tracker</span></a>)</li>
 <li>Update MiSE cache via <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache()</span></code></a></li>
 <li>Start the randomizer Randy via <code class="xref py py-meth docutils literal"><span class="pre">mdbapi.Randy.StartRandy()</span></code></li>
-<li>Register the signals USR1 and TERM</li>
+<li>Create FIFO file for named pipe</li>
 </ol>
 </div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -675,6 +661,28 @@ It initializes lots of global objects that get shared between multiple connectio
 </dd></dl>
 
 <dl class="function">
+<dt id="mdbapi.server.UpdateCaches">
+<code class="descclassname">mdbapi.server.</code><code class="descname">UpdateCaches</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#UpdateCaches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.UpdateCaches" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function handles the <em>refresh</em> command from the named pipe.
+Its task is to trigger updating the servers cache and to inform the clients to update.</p>
+<p>On server side:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The MiSE Cache gets updated by calling <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache()</span></code></a></li>
+<li>The MPD database gets updated by calling <a class="reference internal" href="mpd.html#mdbapi.mpd.Update" title="mdbapi.mpd.Update"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mpd.Update()</span></code></a></li>
+</ul>
+</div></blockquote>
+<p>To inform the clients a broadcast packet get sent with the following content: <code class="docutils literal"><span class="pre">{method:&quot;broadcast&quot;,</span> <span class="pre">fncname:&quot;sys:refresh&quot;,</span> <span class="pre">fncsig:&quot;UpdateCaches&quot;,</span> <span class="pre">arguments:null,</span> <span class="pre">pass:null}</span></code></p>
+<p class="rubric">Example</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="k">if</span><span class="p">(</span><span class="nx">fnc</span> <span class="o">==</span> <span class="s2">&quot;sys:refresh&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">sig</span> <span class="o">==</span> <span class="s2">&quot;UpdateCaches&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetTags&quot;</span><span class="p">,</span> <span class="s2">&quot;UpdateTagsCache&quot;</span><span class="p">);</span>                  <span class="c1">// Update tag cache</span>
+    <span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetFilteredArtistsWithAlbums&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowArtists&quot;</span><span class="p">);</span> <span class="c1">// Update artist view</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
 <dt id="mdbapi.server.Shutdown">
 <code class="descclassname">mdbapi.server.</code><code class="descname">Shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#Shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.Shutdown" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function stops the server and all its dependent threads.</p>
@@ -684,6 +692,7 @@ It initializes lots of global objects that get shared between multiple connectio
 <li>Stop the randomizer Randy via <a class="reference internal" href="randy.html#mdbapi.randy.StopRandy" title="mdbapi.randy.StopRandy"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.randy.StopRandy()</span></code></a></li>
 <li>Stop the song Tracker via <a class="reference internal" href="tracker.html#mdbapi.tracker.StopTracker" title="mdbapi.tracker.StopTracker"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.tracker.StopTracker()</span></code></a></li>
 <li>Disconnect from MPD and stop the observer Thread via <a class="reference internal" href="mpd.html#mdbapi.mpd.StopObserver" title="mdbapi.mpd.StopObserver"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mpd.StopObserver()</span></code></a></li>
+<li>Removing FIFO file for named pipe</li>
 <li>Stop the websocket server</li>
 </ol>
 </div></blockquote>
@@ -740,7 +749,7 @@ When a shutdown gets triggered the <a class="reference internal" href="#mdbapi.s
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.1.0',
+            VERSION:'2.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

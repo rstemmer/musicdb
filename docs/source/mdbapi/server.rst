@@ -6,6 +6,7 @@ MusicDB Websocket Server
    :members: SignalHandler, SIGUSR1_Handler, SIGTERM_Handler,
       Initialize,
       StartWebSocketServer,
+      UpdateCaches,
       Shutdown,
       Run
 

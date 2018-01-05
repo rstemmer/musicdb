@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Music &mdash; MusicDB 1.1.0 documentation</title>
+  <title>Music &mdash; MusicDB 2.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 1.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 2.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Scripts" href="scripts.html"/>
         <link rel="prev" title="Installation &amp; Update" href="install.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.1
+                2.0
               </div>
             
           
@@ -210,19 +210,15 @@
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Music</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#naming">Naming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#artist-directory">Artist Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#album-directory">Album Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#song-file">Song File</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#itunes">iTunes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#bandcamp">Bandcamp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#song-file-name">Song File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#using-the-database-module">Using the database module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-the-add-module">Using the add module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#updating-songs">Updating Songs</a></li>
@@ -413,6 +409,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/pidfile.html">PID File Handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/websockets.html#module-lib.ws.server">Websocket Server</a></li>
@@ -537,75 +537,41 @@
             
   <div class="section" id="music">
 <h1>Music<a class="headerlink" href="#music" title="Permalink to this headline">¶</a></h1>
-<p>This chapter explains how to handle music for MusicDB.</p>
+<p>This chapter explains how to handle music files for and with MusicDB.</p>
 <div class="section" id="naming">
 <h2>Naming<a class="headerlink" href="#naming" title="Permalink to this headline">¶</a></h2>
-<p>The path to a song follows the scheme “artist directory/album directory/song file”.
-The names of the artist and album director and the song files must follow a specific scheme.
-All characters are allowed.
-Obviously, the file system that contains your music collection must be Unicode compatible.</p>
-<div class="section" id="artist-directory">
-<h3>Artist Directory<a class="headerlink" href="#artist-directory" title="Permalink to this headline">¶</a></h3>
+<p>The path to a song follows the scheme <code class="docutils literal"><span class="pre">artist</span> <span class="pre">directory/album</span> <span class="pre">directory/song</span> <span class="pre">file</span></code>.
+The names of the artist and album director and the song files must follow a specific scheme.</p>
+<p>All characters are allowed for the names.
+Obviously, the file system that contains your music collection must be Unicode compatible.
+Name containing a slash (/) will be problematic due to the fact that this character is reserved for separating
+directories inside a path.
+Therefore the character DIVISION SLASH (U+2215 - ∕ ) must be used.
+Do <em>not</em> use FRACTION SLASH because it influences how numbers around that character are displayed.</p>
+<p>When using the <code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">database</span> <span class="pre">add</span></code> command, you have to rename the files and directories before.
+When using <code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">add</span></code> MusicDB provides a user interface that supports you by renaming the files
+and checks if the names are following the scheme.</p>
+<div class="section" id="artist-directory-name">
+<h3>Artist Directory Name<a class="headerlink" href="#artist-directory-name" title="Permalink to this headline">¶</a></h3>
 <p>The name of the artist directory is the name of the artist.</p>
 </div>
-<div class="section" id="album-directory">
-<h3>Album Directory<a class="headerlink" href="#album-directory" title="Permalink to this headline">¶</a></h3>
-<p>The album directory name consists of the release date of the album and the album name itself, separated by a space surrounded dash: <code class="docutils literal"><span class="pre">$Release</span> <span class="pre">-</span> <span class="pre">$Albumname</span></code>.</p>
+<div class="section" id="album-directory-name">
+<h3>Album Directory Name<a class="headerlink" href="#album-directory-name" title="Permalink to this headline">¶</a></h3>
+<p>The album directory name consists of the release date of the album and the album name itself, separated by a space surrounded dash: <code class="docutils literal"><span class="pre">$Release</span> <span class="pre">-</span> <span class="pre">$Albumname</span></code>.
+The release date is the year using 4 digits.
+For example: <code class="docutils literal"><span class="pre">2016</span> <span class="pre">-</span> <span class="pre">Ærdenbrand</span></code></p>
 </div>
-<div class="section" id="song-file">
-<h3>Song File<a class="headerlink" href="#song-file" title="Permalink to this headline">¶</a></h3>
-<p>For song files two slightly different schemes exists, depending if the album is split into multiple disks or not.
-For single disk albums the filename is constructed out of the song number and the song name separated by a space: <code class="docutils literal"><span class="pre">$Songnumber</span> <span class="pre">$Songname.$Fileextension</span></code>.
+<div class="section" id="song-file-name">
+<h3>Song File Name<a class="headerlink" href="#song-file-name" title="Permalink to this headline">¶</a></h3>
+<p>For song files two slightly different schemes exists, depending if the album is split into multiple CDs or not.
+For single CD albums the file name is constructed out of the song number and the song name separated by a space: <code class="docutils literal"><span class="pre">$Songnumber</span> <span class="pre">$Songname.$Fileextension</span></code>.
 In case the album has multiple dist, the disk number is set in front of the song number separated by a dash: <code class="docutils literal"><span class="pre">$CDNumber-$Songnumber</span> <span class="pre">$Songname.$Fileextension</span></code>.</p>
-<p>A complete path to a song file would be: <code class="docutils literal"><span class="pre">$Artistname/$Release</span> <span class="pre">-</span> <span class="pre">$Albumname/$Songnumber</span> <span class="pre">$Songname.$Fileextension</span></code>. For example: “Rammstein/2005 - Rosenrot/01 Benzin.flac”</p>
-</div>
-</div>
-<div class="section" id="importing-albums-to-the-collection">
-<h2>Importing Albums to the Collection<a class="headerlink" href="#importing-albums-to-the-collection" title="Permalink to this headline">¶</a></h2>
-<p>This section also describes the manual import of songs.
-If you do not use the semi-automatic method (<code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">add</span></code>) you have to rename the your files manually,
-so that they fit to MusicDB’s naming scheme.</p>
-<div class="section" id="itunes">
-<h3>iTunes<a class="headerlink" href="#itunes" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><ol class="arabic simple">
-<li>Copy music to the collection</li>
-<li>Rename album directory from <code class="docutils literal"><span class="pre">$Albumname</span></code> to <code class="docutils literal"><span class="pre">$Release</span> <span class="pre">-</span> <span class="pre">$Albumname</span></code></li>
-<li>Check Unicodes and names of all copied files and directories</li>
-</ol>
-</div></blockquote>
-</div>
-<div class="section" id="bandcamp">
-<h3>Bandcamp<a class="headerlink" href="#bandcamp" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><ol class="arabic simple">
-<li>Create directories for artist and album</li>
-<li>Download the album and the albumcover from the shop (flac format recommended).</li>
-<li>Unzip download in album directory and rename files</li>
-</ol>
-</div></blockquote>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># Install User-Artwork because they are not included in the Metadata</span>
-<span class="c1"># Sometimes they are included in the zip-archive, in this case copy</span>
-<span class="c1">#  just that file</span>
-<span class="nb">cd</span> <span class="nv">$ArtworkPath</span>/<span class="nv">$UserDir</span>
-wget -O <span class="s2">&quot;</span><span class="nv">$ArtistName</span><span class="s2"> - </span><span class="nv">$AlbumName</span><span class="s2">.jpg&quot;</span> https://<span class="nv">$IMAGE</span>.jpg
-
-<span class="c1"># Unzip download</span>
-<span class="nb">cd</span> <span class="nv">$MusicPath</span>
-mkdir -p <span class="s2">&quot;</span><span class="nv">$ArtistName</span><span class="s2">/</span><span class="nv">$AlbumRelease</span><span class="s2"> - </span><span class="nv">$AlbumName</span><span class="s2">&quot;</span>
-<span class="nb">cd</span> <span class="s2">&quot;</span><span class="nv">$ArtistName</span><span class="s2">/</span><span class="nv">$AlbumRelease</span><span class="s2"> - </span><span class="nv">$AlbumName</span><span class="s2">&quot;</span>
-wget https://<span class="nv">$ALBUM</span>
-unzip <span class="nv">$Download</span>.zip
-rm <span class="nv">$Download</span>.zip
-
-<span class="c1"># Rename all files to the &quot;$SongNumber $SongName.flac&quot; scheme</span>
-</pre></div>
-</div>
+<p>A complete path to a song file would be: <code class="docutils literal"><span class="pre">$Artistname/$Release</span> <span class="pre">-</span> <span class="pre">$Albumname/$Songnumber</span> <span class="pre">$Songname.$Fileextension</span></code>. For example: <code class="docutils literal"><span class="pre">Rammstein/2005</span> <span class="pre">-</span> <span class="pre">Rosenrot/01</span> <span class="pre">Benzin.flac</span></code></p>
 </div>
 </div>
 <div class="section" id="importing-albums-to-musicdb">
 <h2>Importing Albums to MusicDB<a class="headerlink" href="#importing-albums-to-musicdb" title="Permalink to this headline">¶</a></h2>
-<p>There are two ways to import music:</p>
+<p>There are three ways to import music:</p>
 <blockquote>
 <div><ul class="simple">
 <li>The <code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">add</span></code> command: <a class="reference internal" href="../mod/add.html"><span class="doc">add - Add New Album to MusicDB</span></a> (the semi-automatic way)</li>
@@ -614,16 +580,27 @@ rm <span class="nv">$Download</span>.zip
 </ul>
 </div></blockquote>
 <p>After adding the music via <code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">database</span></code> or <code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">repair</span></code>,
-the artwork must be imported using <code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">artwork</span></code> (<a class="reference internal" href="../mod/artwork.html"><span class="doc">artwork - Artwork Management</span></a>).</p>
-<p>Because the import methods update the access permissions of the files, <code class="docutils literal"><span class="pre">musicdb</span></code> should be run as <em>root</em>.</p>
+the artwork must be imported using <code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">artwork</span></code> (<a class="reference internal" href="../mod/artwork.html"><span class="doc">artwork - Artwork Management</span></a>).
+It can happen that the automatic import of the artwork does not work.
+This is usually the case when there is no artwork embedded in the audio files.
+In this case the artwork file path must be given to <code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">artwork</span></code> explicitly.
+See the <a class="reference internal" href="../mod/artwork.html"><span class="doc">artwork - Artwork Management</span></a> documentation where this step is described.</p>
+<p>Usually the import methods trigger the server to update its caches, when the server is running.
+Sometimes this fails.
+If you do not see the new added album in the WebUI, trigger the server again by writing <code class="docutils literal"><span class="pre">refresh</span></code> into the servers FIFO file:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;refresh&quot;</span> &gt; <span class="nv">$DATADIR</span>/musicdb.fifo
+</pre></div>
+</div>
 <div class="section" id="using-the-database-module">
 <h3>Using the database module<a class="headerlink" href="#using-the-database-module" title="Permalink to this headline">¶</a></h3>
+<p>The following example shows how to add artists and albums using the <code class="docutils literal"><span class="pre">database</span></code> module.
+For details see <a class="reference internal" href="../mod/database.html"><span class="doc">database - Music DB Management</span></a>.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># add an artist (and all albums and songs)</span>
 musicdb database add artist <span class="nv">$MusicPath</span>/<span class="nv">$ArtistName</span>
 musicdb artwork -u
 
 <span class="c1"># add an album (and all songs)</span>
-musicdb database add artist <span class="nv">$MusicPath</span>/<span class="nv">$ArtistName</span>/<span class="nv">$Release</span><span class="se">\ </span>-<span class="se">\ </span><span class="nv">$AlbumName</span>
+musicdb database add album <span class="nv">$MusicPath</span>/<span class="nv">$ArtistName</span>/<span class="nv">$Release</span><span class="se">\ </span>-<span class="se">\ </span><span class="nv">$AlbumName</span>
 musicdb artwork -u
 
 <span class="c1"># oprional you can run the AI to predict the genre tags for the new songs</span>
@@ -633,7 +610,9 @@ musicdb musicai -f -p store <span class="nv">$MusicPath</span>/<span class="nv">
 </div>
 <div class="section" id="using-the-repair-module">
 <h3>Using the repair module<a class="headerlink" href="#using-the-repair-module" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>musicdb -q repair
+<p>The following example shows how to add artists and albums using the <code class="docutils literal"><span class="pre">repair</span></code> module.
+For details see <a class="reference internal" href="../mod/repair.html"><span class="doc">repair - Repair Database Entries</span></a>.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>musicdb repair
 <span class="c1"># select the &quot;Orphan Album/Artist&quot;</span>
 <span class="c1"># and press ``a`` to add it to the album.</span>
 
@@ -644,12 +623,24 @@ musicdb musicai -f -p store <span class="nv">$MusicPath</span>/<span class="nv">
 </pre></div>
 </div>
 </div>
+<div class="section" id="using-the-add-module">
+<h3>Using the add module<a class="headerlink" href="#using-the-add-module" title="Permalink to this headline">¶</a></h3>
+<p>The following example shows how to add artists and albums using the <code class="docutils literal"><span class="pre">add</span></code> module.
+For details see <a class="reference internal" href="../mod/add.html"><span class="doc">add - Add New Album to MusicDB</span></a>.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>musicdb add
+<span class="c1"># select the Album to add</span>
+<span class="c1"># repair the names</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="updating-songs">
 <h2>Updating Songs<a class="headerlink" href="#updating-songs" title="Permalink to this headline">¶</a></h2>
-<p>When updating a song file, or when renaming it, call the <code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">-q</span> <span class="pre">repair</span></code> command: <a class="reference internal" href="../mod/repair.html"><span class="doc">repair - Repair Database Entries</span></a>
-Select the “Orpanh File” in the left list, press <code class="docutils literal"><span class="pre">tab</span></code> to switch to the right list and select the “Orphan DB Entry”.
-Then press <code class="docutils literal"><span class="pre">u</span></code> to update the database entry with the new file.</p>
+<p>When updating a song file, or when renaming it, MusicDB won’t find it anymore because of the changed path.
+Call the <code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">repair</span></code> module to repair the connection between file and database entry.
+Select the “Orphan File” in the left list, press <code class="docutils literal"><span class="pre">tab</span></code> to switch to the right list and select the “Orphan DB Entry”.
+Then press <code class="docutils literal"><span class="pre">u</span></code> to update the database entry with the new file.
+For further details see <a class="reference internal" href="../mod/repair.html"><span class="doc">repair - Repair Database Entries</span></a>.</p>
 </div>
 </div>
 
@@ -688,7 +679,7 @@ Then press <code class="docutils literal"><span class="pre">u</span></code> to u
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.1.0',
+            VERSION:'2.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

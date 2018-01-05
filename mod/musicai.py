@@ -304,7 +304,7 @@ class musicai(MDBModule):
         for mdbsong in tqdm(mdbsongs, unit="Songs"):
             prediction = musicai.PerformPrediction(mdbsong["id"])
             if prediction == None:
-                print("\033[1;31mNo featureset available!\033[0m")
+                print("\033[1;31mNo feature set available!\033[0;36m")
                 continue
             predictionset.append((mdbsong["id"], prediction))
 
@@ -380,9 +380,12 @@ class musicai(MDBModule):
                     print("%s%.2f"%(color, probability), end=" ")
                 mean += probability
 
-            mean /= len(predictionset)
-            color = Colormapper(mean)
-            print("\033[1;34m| %s%.3f\033[0m"%(color, mean))
+            if predictionset:
+                mean /= len(predictionset)
+                color = Colormapper(mean)
+                print("\033[1;34m| %s%.3f\033[0m"%(color, mean))
+            else:
+                print("\033[1;34m| \033[0;33mNo feature set found\033[0m")
 
 
     def StorePrediction(self, predictionset):
