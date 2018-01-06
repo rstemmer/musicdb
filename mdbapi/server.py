@@ -249,6 +249,7 @@ def Initialize(configobj, databaseobj):
     logging.info("\t\033[1;36mrefresh\033[1;34m: Update Caches\033[0m")
     logging.info("\t\033[1;36mshutdown\033[1;34m: Shutdown Server\033[0m")
     pipe = NamedPipe(cfg.server.fifofile)
+    pipe.Create()
 
     return None
 

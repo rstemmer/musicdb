@@ -23,9 +23,6 @@ import logging
 class NamedPipe(object):
     """
     This module provides a class for getting command from a named pipe (FIFO).
-    All methods are non-blocking!
-
-    It Creates a FIFO file if it does not exist by calling :meth:`~Create`
 
     Args:
         path (str): absolute path where the FIFO is, or shall be created
@@ -38,8 +35,6 @@ class NamedPipe(object):
             raise TypeError("FIFO path must be of type string!")
 
         self.path = path
-
-        self.Create()
 
 
 
@@ -70,6 +65,8 @@ class NamedPipe(object):
         This method reads a line from the FIFO, if there is a line.
         If nothing got written to the FIFO, ``None`` gets returned.
         The line does not have a trailing ``\n``.
+
+        This method is non-blocking
 
         Example:
 
@@ -115,6 +112,8 @@ class NamedPipe(object):
         Write a line into the named pipe.
         This method checks if the FIFO exists and rejects the line if not.
         If line is ``None`` or an empty string, nothing will be done.
+
+        This method is blocking!
 
         Example:
 
