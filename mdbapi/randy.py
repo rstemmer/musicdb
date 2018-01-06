@@ -196,12 +196,15 @@ def RandyThread(config):
                 continue
 
             # maintain blacklists
-            artistblacklist.pop(0)
-            artistblacklist.append(song["artistid"])
-            albumblacklist.pop(0)
-            albumblacklist.append(song["albumid"])
-            songblacklist.pop(0)
-            songblacklist.append(song["id"])
+            if artistbllen > 0:
+                artistblacklist.pop(0)
+                artistblacklist.append(song["artistid"])
+            if albumbllen > 0:
+                albumblacklist.pop(0)
+                albumblacklist.append(song["albumid"])
+            if songbllen > 0:
+                songblacklist.pop(0)
+                songblacklist.append(song["id"])
 
             # Add song to queue
             logging.debug("Randy adds the following song: \033[0;36m" + song["path"])
@@ -284,12 +287,15 @@ def RandyThread(config):
                 continue
 
             # maintain blacklists
-            artistblacklist.pop(0)
-            artistblacklist.append(song["artistid"])
-            albumblacklist.pop(0)
-            albumblacklist.append(song["albumid"])
-            songblacklist.pop(0)
-            songblacklist.append(song["id"])
+            if artistbllen > 0:
+                artistblacklist.pop(0)
+                artistblacklist.append(song["artistid"])
+            if albumbllen > 0:
+                albumblacklist.pop(0)
+                albumblacklist.append(song["albumid"])
+            if songbllen > 0:
+                songblacklist.pop(0)
+                songblacklist.append(song["id"])
 
             # Add song to queue
             t_stop = datetime.datetime.now()
