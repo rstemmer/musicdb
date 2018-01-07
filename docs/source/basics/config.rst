@@ -22,6 +22,10 @@ statefile (path to file):
    In this file the current global state of MusicDB is stored.
    More details can be found in the documentation for the state-file: :mod:`~lib.cfg.mdbstate`
 
+fifofile (path to file):
+   This file will be used to communicate with the WebSocket servers internals.
+   Read :doc:`/mod/server` for details.
+
 websocket
 ---------
 

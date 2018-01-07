@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDBDatabase &mdash; MusicDB 1.1.0 documentation</title>
+  <title>MusicDBDatabase &mdash; MusicDB 2.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 1.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 2.0.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDBExtern" href="extern.html"/>
         <link rel="prev" title="Artwork Management" href="artwork.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.1
+                2.0
               </div>
             
           
@@ -210,19 +210,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#naming">Naming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory">Artist Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory">Album Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file">Song File</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#itunes">iTunes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#bandcamp">Bandcamp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-database-module">Using the database module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-add-module">Using the add module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
@@ -411,6 +407,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/pidfile.html">PID File Handling</a></li>
@@ -803,6 +803,62 @@ Only the addressed files or directory’s permissions gets changed, not their pa
 </dd></dl>
 
 <dl class="method">
+<dt id="mdbapi.database.MusicDBDatabase.RemoveAlbum">
+<code class="descname">RemoveAlbum</code><span class="sig-paren">(</span><em>albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveAlbum" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method removes an album from the database.
+The files gets not touched, and so it does not matter if they even exists.
+All related information will also be removed.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">For all songs in this album, the <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.RemoveSong" title="mdbapi.database.MusicDBDatabase.RemoveSong"><code class="xref py py-meth docutils literal"><span class="pre">RemoveSong()</span></code></a> method gets called!</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This is not a <em>“set the deleted flag”</em> method.
+The data gets actually removed from the database.
+No recovery possible!</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>albumid</strong> (<em>int</em>) – ID of the album that shall be removed from database</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdbapi.database.MusicDBDatabase.RemoveArtist">
+<code class="descname">RemoveArtist</code><span class="sig-paren">(</span><em>artistid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveArtist" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method removes an artist from the database.
+The files gets not touched, and so it does not matter if they even exists.
+All related information will also be removed.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">For all artists albums, the <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.RemoveAlbum" title="mdbapi.database.MusicDBDatabase.RemoveAlbum"><code class="xref py py-meth docutils literal"><span class="pre">RemoveAlbum()</span></code></a> method gets called!</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This is not a <em>“set the deleted flag”</em> method.
+The data gets actually removed from the database.
+No recovery possible!</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>artistid</strong> (<em>int</em>) – ID of the artist that shall be removed from database</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.RemoveSong">
 <code class="descname">RemoveSong</code><span class="sig-paren">(</span><em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removed a song from the database.
@@ -936,8 +992,8 @@ The following steps will be done to do this:</p>
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.UpdateServerCache">
 <code class="descname">UpdateServerCache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateServerCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateServerCache" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method signals the MusicDB Websocket Server to update its caches.
-This should always be done when there are new artists, albums or songs added to the database.</p>
+<dd><p>This method signals the MusicDB Websocket Server to update its caches by writing <code class="docutils literal"><span class="pre">refresh</span></code> into its named pipe.
+This should always be called when there are new artists, albums or songs added to the database.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1092,7 +1148,7 @@ The database is still consistent.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.1.0',
+            VERSION:'2.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

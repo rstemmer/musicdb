@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>tags - MusicDB Tag Manager &mdash; MusicDB 1.1.0 documentation</title>
+  <title>tags - MusicDB Tag Manager &mdash; MusicDB 2.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 1.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 2.0.0 documentation" href="../index.html"/>
         <link rel="next" title="tracker - Song Tracker" href="tracker.html"/>
         <link rel="prev" title="stats - MusicDB Song Statistic" href="stats.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.1
+                2.0
               </div>
             
           
@@ -210,19 +210,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#naming">Naming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory">Artist Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory">Album Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file">Song File</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#itunes">iTunes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#bandcamp">Bandcamp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-database-module">Using the database module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-add-module">Using the add module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
@@ -413,6 +409,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/pidfile.html">PID File Handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/websockets.html#module-lib.ws.server">Websocket Server</a></li>
@@ -581,8 +581,8 @@ In case a subgenre gets created, the <code class="docutils literal"><span class=
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>After changing something, the server or clients my need to update cached tag lists.
-This can be done sending the signal <code class="docutils literal"><span class="pre">USR1</span></code> via <code class="docutils literal"><span class="pre">kill</span></code> to the server.</p>
-<div class="last highlight-bash"><div class="highlight"><pre><span></span>sudo <span class="nb">kill</span> -USR1 <span class="k">$(</span> cat /data/musicdb/musicdb.pid <span class="k">)</span>
+This can be done sending the command <code class="docutils literal"><span class="pre">refresh</span></code> via named pipe to the server.</p>
+<div class="last highlight-bash"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;refresh&quot;</span> &gt; /data/musicdb/musicdb.fifo
 </pre></div>
 </div>
 </div>
@@ -609,7 +609,7 @@ musicdb tags -c genre --set-name Metal
 musicdb tags -c subgenre --set-parent Metal --set-name <span class="s2">&quot;Dark Metal&quot;</span>
 
 <span class="c1"># Signal server to force cache updates on server and clients</span>
-sudo <span class="nb">kill</span> -USR1 <span class="k">$(</span> cat /data/musicdb/musicdb.pid <span class="k">)</span>
+<span class="nb">echo</span> <span class="s2">&quot;refresh&quot;</span> &gt; /data/musicdb/musicdb.fifo
 </pre></div>
 </div>
 <p>Modify a tag (<code class="docutils literal"><span class="pre">-m</span> <span class="pre">$CLASS</span></code>)</p>
@@ -676,7 +676,7 @@ musicdb -q --logfile <span class="nv">$LOGFILE</span> tags -c mood --set-name Sa
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.1.0',
+            VERSION:'2.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

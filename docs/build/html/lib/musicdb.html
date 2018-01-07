@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDatabase &mdash; MusicDB 1.1.0 documentation</title>
+  <title>MusicDatabase &mdash; MusicDB 2.0.0 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 1.1.0 documentation" href="../index.html"/>
-        <link rel="next" title="PID File Handling" href="pidfile.html"/>
+    <link rel="top" title="MusicDB 2.0.0 documentation" href="../index.html"/>
+        <link rel="next" title="NamedPipe" href="namedpipe.html"/>
         <link rel="prev" title="Meta Tags" href="metatags.html"/> 
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.1
+                2.0
               </div>
             
           
@@ -210,19 +210,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#naming">Naming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory">Artist Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory">Album Directory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file">Song File</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-the-collection">Importing Albums to the Collection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#itunes">iTunes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#bandcamp">Bandcamp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-database-module">Using the database module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-add-module">Using the add module</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
@@ -413,6 +409,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#musicdatabase-class">MusicDatabase Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pidfile.html">PID File Handling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="websockets.html">MusicDB Websocket Protocol</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="websockets.html#module-lib.ws.server">Websocket Server</a></li>
@@ -568,7 +568,7 @@ The preferred way to change any data is using the related method described in th
 <p>When a new column shall be added, the following steps are necessary.</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Kill the server: <code class="docutils literal"><span class="pre">kill</span> <span class="pre">$(</span> <span class="pre">cat</span> <span class="pre">/srv/data/musicdb/musicdb.pid</span> <span class="pre">)</span></code></li>
+<li>Shutdown the server: <code class="docutils literal"><span class="pre">echo</span> <span class="pre">&quot;shutdown&quot;</span> <span class="pre">&gt;</span> <span class="pre">/data/musicdb/musicdb.fifo</span> <span class="pre">)</span></code></li>
 <li>Backup the database: <code class="docutils literal"><span class="pre">sqlite3</span> <span class="pre">music.db</span> <span class="pre">.dump</span> <span class="pre">&gt;</span> <span class="pre">backup/music.db.bak</span></code></li>
 <li>Update this file.</li>
 <li>Update the SQL file <em>sql/music.sql</em></li>
@@ -721,6 +721,7 @@ For example, methods creating a new entry in the modified row may be adopted.</p
 <li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId" title="lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId"><code class="xref py py-meth docutils literal"><span class="pre">GetAlbumsByArtistId()</span></code></a></li>
 <li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="lib.db.musicdb.MusicDatabase.GetAlbums"><code class="xref py py-meth docutils literal"><span class="pre">GetAlbums()</span></code></a></li>
 <li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAllAlbumIds" title="lib.db.musicdb.MusicDatabase.GetAllAlbumIds"><code class="xref py py-meth docutils literal"><span class="pre">GetAllAlbumIds()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.RemoveAlbum" title="lib.db.musicdb.MusicDatabase.RemoveAlbum"><code class="xref py py-meth docutils literal"><span class="pre">RemoveAlbum()</span></code></a></li>
 </ul>
 </div></blockquote>
 </div>
@@ -771,6 +772,7 @@ For example, methods creating a new entry in the modified row may be adopted.</p
 <li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAllArtists" title="lib.db.musicdb.MusicDatabase.GetAllArtists"><code class="xref py py-meth docutils literal"><span class="pre">GetAllArtists()</span></code></a></li>
 <li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetArtistByPath" title="lib.db.musicdb.MusicDatabase.GetArtistByPath"><code class="xref py py-meth docutils literal"><span class="pre">GetArtistByPath()</span></code></a></li>
 <li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetArtistById" title="lib.db.musicdb.MusicDatabase.GetArtistById"><code class="xref py py-meth docutils literal"><span class="pre">GetArtistById()</span></code></a></li>
+<li><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.RemoveArtist" title="lib.db.musicdb.MusicDatabase.RemoveArtist"><code class="xref py py-meth docutils literal"><span class="pre">RemoveArtist()</span></code></a></li>
 </ul>
 </div></blockquote>
 </div>
@@ -1422,10 +1424,15 @@ This is usually only a directroy name.</p>
 
 <dl class="method">
 <dt id="lib.db.musicdb.MusicDatabase.GetRandomSong">
-<code class="descname">GetRandomSong</code><span class="sig-paren">(</span><em>filterlist=[]</em>, <em>nodisabled=True</em>, <em>nohated=False</em>, <em>minlen=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetRandomSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetRandomSong" title="Permalink to this definition">¶</a></dt>
+<code class="descname">GetRandomSong</code><span class="sig-paren">(</span><em>filterlist=None</em>, <em>nodisabled=True</em>, <em>nohated=False</em>, <em>minlen=None</em>, <em>albumid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetRandomSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetRandomSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a random song that fulfills several constraints.</p>
-<p>The <em>filterlist</em> can be either a set of genre tag IDs or a set of genre names.</p>
-<p>Filtering is done by the following steps:</p>
+<p>The <code class="docutils literal"><span class="pre">filterlist</span></code> can be either a set of genre tag IDs or a set of genre names.
+When <code class="docutils literal"><span class="pre">filterlist</span></code> is <code class="docutils literal"><span class="pre">None</span></code> no filter gets applied.
+Otherwise only albums of the genres in the list will be considered.</p>
+<p>When <code class="docutils literal"><span class="pre">albumid</span></code> is not <code class="docutils literal"><span class="pre">None</span></code>, then the process of getting valid albums will be skipped.
+Instead the predefined album will be used.
+In that case <code class="docutils literal"><span class="pre">filterlist</span></code> gets ignored.</p>
+<p>Getting a random song is done by the following steps, visualized in the flow chart below:</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li>Get album IDs of all albums in the database</li>
@@ -1435,6 +1442,34 @@ This is usually only a directroy name.</p>
 <li>Select a random song ID and get its song entry from the database</li>
 </ol>
 </div></blockquote>
+<object data="../_images/graphviz-d1cc92caf04b42cad6faf8574e7be71a5de52de6.svg" type="image/svg+xml">
+            <p class="warning">digraph hierarchy {
+    size=&quot;5,8&quot;
+    start           [label=&quot;Start&quot;];
+    hasalbumid      [shape=diamond, label=&quot;albumid == None&quot;];
+    getallalbums    [shape=box,     label=&quot;Get all Album IDs&quot;]
+    getalltags      [shape=box,     label=&quot;Get list of Tag IDs\nfrom filterlist&quot;]
+    hasfilterlist   [shape=diamond, label=&quot;Is there a filter list&quot;];
+    removealbums    [shape=box,     label=&quot;Remove albums without\ntags of filter&quot;]
+    getallsongs     [shape=box,     label=&quot;Get all songs of selected albums&quot;]
+    selectsong      [shape=box,     label=&quot;Select random song&quot;]
+
+
+    start           -&gt; hasalbumid;
+
+    hasalbumid      -&gt; getallsongs      [label=&quot;No&quot;];
+    hasalbumid      -&gt; getallalbums     [label=&quot;Yes&quot;];
+    getallalbums    -&gt; getalltags
+
+    getalltags      -&gt; hasfilterlist
+    hasfilterlist   -&gt; removealbums     [label=&quot;Yes&quot;];
+    hasfilterlist   -&gt; getallsongs      [label=&quot;No&quot;];
+
+    removealbums    -&gt; removealbums     [label=&quot;For each album&quot;]
+    removealbums    -&gt; getallsongs
+
+    getallsongs     -&gt; selectsong
+}</p></object>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1444,6 +1479,7 @@ This is usually only a directroy name.</p>
 <li><strong>nodisabled</strong> (<em>bool</em>) – If <code class="docutils literal"><span class="pre">True</span></code> no disables songs will be selected</li>
 <li><strong>nohated</strong> (<em>bool</em>) – If <code class="docutils literal"><span class="pre">True</span></code> no hated songs will be selected</li>
 <li><strong>minlen</strong> (<em>int</em>) – If set, no songs with less than <em>minlen</em> seconds will be selected</li>
+<li><strong>albumid</strong> (<em>int</em>) – Use album with ID <code class="docutils literal"><span class="pre">albumid</span></code> instead of a random album</li>
 </ul>
 </td>
 </tr>
@@ -1454,7 +1490,7 @@ or <code class="docutils literal"><span class="pre">None</span></code> when ther
 <tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
 <li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>nodisabled</em> or <em>nohated</em> are not of type <code class="docutils literal"><span class="pre">bool</span></code></li>
 <li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>minlen</em> is not <code class="docutils literal"><span class="pre">None</span></code> and not of type integer</li>
-<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>filterlist</em> is not a list</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>filterlist</em> is not a list and not <code class="docutils literal"><span class="pre">None</span></code></li>
 </ul>
 </td>
 </tr>
@@ -1683,6 +1719,55 @@ The <em>tagname</em> and <em>tagclass</em> addresses the tag, <em>columnname</em
 <li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If columnname is “icontype” and <em>newvalue</em> is not valid</li>
 </ul>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.RemoveAlbum">
+<code class="descname">RemoveAlbum</code><span class="sig-paren">(</span><em>albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.RemoveAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.RemoveAlbum" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method removes an album entry and all related data from all tables.</p>
+<p>The removed data are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The complete row in the album-table for this album</li>
+<li>All tags of this album (not the tag definition)</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>albumid</strong> (<em>int</em>) – ID of the album</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>albumid</em> is not an integer or string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.db.musicdb.MusicDatabase.RemoveArtist">
+<code class="descname">RemoveArtist</code><span class="sig-paren">(</span><em>artistid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.RemoveArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.RemoveArtist" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method removes an artist entry and all related data from all tables.</p>
+<p>The removed data are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The complete row in the artist-table for this artist</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>artistid</strong> (<em>int</em>) – ID of the artist</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>artistid</em> is not an integer or string</td>
 </tr>
 </tbody>
 </table>
@@ -2012,7 +2097,7 @@ But only if the new approval level is greater or equal to the already set one.</
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.1.0',
+            VERSION:'2.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

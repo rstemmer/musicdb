@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-echo -e "\033[1;31mMusicDB-Boot [\033[1;34m1.0.0\033[1;31m]\033[0m"
+echo -e "\033[1;31mMusicDB-Boot [\033[1;34m1.0.1\033[1;31m]\033[0m"
 
 if [ $EUID -ne 0 ] ; then
-    echo "\e[1;31mYou need to have root permissions!\e[0m"
+    echo -e "\e[1;31mYou need to have root permissions!\e[0m"
     exit 1
 fi
 

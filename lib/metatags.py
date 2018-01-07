@@ -86,7 +86,7 @@ class MetaTags(object):
             self.ftype = "mp3"
         else:
             self.path = None
-            raise ValueError("Unsupported file-extension \"%s\" of \"%s\""%(self.extension, self.path))
+            raise ValueError("Unsupported file-extension \"%s\" of \"%s\""%(self.extension, path))
 
         logging.debug("Loading file of type %s from \"%s\"", self.ftype, self.path)
 

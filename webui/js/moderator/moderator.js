@@ -94,7 +94,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetMDBState" && sig == "UpdateMDBState") {
         Artistloader_UpdateState(args);
     }
-    else if(fnc=="SIGUSR1" && sig == "UpdateCaches") {
+    else if(fnc=="sys:refresh" && sig == "UpdateCaches") {
         MusicDB_Request("GetTags", "UpdateTagsCache");                  // Update tag cache
         MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists"); // Update artist view
     }
@@ -110,6 +110,12 @@ function onMusicDBMessage(fnc, sig, args, pass)
             Taginput_Show("GenreHUD",    "MainSongGenreView",    args.song.id, args.tags, "Genre",    "Song");
             Taginput_Show("SubgenreHUD", "MainSongSubgenreView", args.song.id, args.tags, "Subgenre", "Song");
             UpdateStyle();    // Update new tags
+        }
+
+        // Update rest if a tag input element must be updated
+        if(sig == "UpdateTagInput")
+        {
+            UpdateRelationshipTileTags(pass.taginputid, args.tags);
         }
     }
     else if(fnc == "GetQueue" && sig == "ShowQueue")

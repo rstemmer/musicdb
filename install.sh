@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="1.1.0"
+SCRIPTVERSION="1.1.1"
 echo -e "\e[1;31mMusicDB-Install [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
@@ -117,7 +117,7 @@ function InstallMusicDBConfiguration {
     echo -e -n "\e[1;34mInstalling \e[0;36mmusicdb.ini\e[1;34m: \e[1;31m"
     if [ ! -f "$DATADIR/musicdb.ini" ] ; then
         # Install file
-        install -m 644 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/musicdb.ini -D $DATADIR/.
+        install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/musicdb.ini -D $DATADIR/.
 
         # Update configuration to the real setup
         sed -i -e "s;DATADIR;$DATADIR;g"       $DATADIR/musicdb.ini
@@ -138,7 +138,7 @@ function InstallMusicDBConfiguration {
     echo -e -n "\e[1;34mInstalling \e[0;36mmdbstate.ini\e[1;34m: \e[1;31m"
     if [ ! -f "$DATADIR/mdbstate.ini" ] ; then
         # Install the MusicDB state file
-        install -m 644 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/mdbstate.ini  -D $DATADIR/.
+        install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/mdbstate.ini  -D $DATADIR/.
         echo -e "\e[1;32mdone"
     else
         echo -e "\e[1;37malready done!"
@@ -166,6 +166,10 @@ function InstallMusicDBDatabases {
         sqlite3 $DATADIR/music.db   < $SOURCEDIR/sql/music.db.sql
         sqlite3 $DATADIR/lycra.db   < $SOURCEDIR/sql/lycra.db.sql
         sqlite3 $DATADIR/tracker.db < $SOURCEDIR/sql/tracker.db.sql
+        chmod 664 $DATADIR/music.db
+        chmod 664 $DATADIR/lycra.db
+        chmod 664 $DATADIR/tracker.db
+
         echo -e "\e[1;32mdone"
     else
         echo -e "\e[1;37malready done!"
@@ -174,12 +178,14 @@ function InstallMusicDBDatabases {
     if [ ! -f "$DATADIR/lycra.db" ] ; then
         echo -e -n "\t\e[1;33mLyCra database missing.\e[1;34m Recreating: \e[1;31m"
         sqlite3 $DATADIR/lycra.db   < $SOURCEDIR/sql/lycra.db.sql
+        chmod 664 $DATADIR/lycra.db
         echo -e "\e[1;32mdone!"
     fi
 
     if [ ! -f "$DATADIR/tracker.db" ] ; then
         echo -e -n "\t\e[1;33mTracker database missing.\e[1;34m Recreating: \e[1;31m"
         sqlite3 $DATADIR/tracker.db < $SOURCEDIR/sql/tracker.db.sql
+        chmod 664 $DATADIR/tracker.db
         echo -e "\e[1;32mdone!"
     fi
 
@@ -195,7 +201,7 @@ function InstallArtwork {
         mkdir $DATADIR/artwork
         chown -R $USER:$MDBGROUP $DATADIR/artwork
         chmod -R g+w $DATADIR/artwork
-        install -m 644 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/default.jpg -D $DATADIR/artwork/.
+        install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/default.jpg -D $DATADIR/artwork/.
         echo -e "\e[1;32mdone"
     else
         echo -e "\e[1;37malready done!"
@@ -228,7 +234,7 @@ function InstallMPDEnvironment {
         mkdir -p $DATADIR/mpd/playlists
         install -m 664 -g $MDBGROUP -o $MPDUSER $SOURCEDIR/share/mpd.conf    -D $DATADIR/mpd/.
         install -m 644 -g $MDBGROUP -o $MPDUSER $SOURCEDIR/share/mpdstate    -D $DATADIR/mpd/state
-        install -m 644 -g $MDBGROUP -o $MPDUSER $SOURCEDIR/share/mpddatabase -D $DATADIR/mpd/database
+        install -m 664 -g $MDBGROUP -o $MPDUSER $SOURCEDIR/share/mpddatabase -D $DATADIR/mpd/database
         
         sed -i -e "s;DATADIR;$DATADIR;g"       $DATADIR/mpd/mpd.conf
         sed -i -e "s;MUSICDIR;$MUSICDIR;g"     $DATADIR/mpd/mpd.conf

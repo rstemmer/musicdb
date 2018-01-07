@@ -111,42 +111,30 @@
                 <div class="container text-center" style="width: 800px;">
                     <h4 class="header-text">Introduction</h4>
                     <p>
-                        MusicDB is a music manager, server and player that focus is on music, not the software itself. 
-                        It manages music on a server following the concept 
+                        <b>MusicDB</b> is a music manager, server and player that focus is on music, not the software itself. 
+                        It manages your music collection on a server following the concept
                         <i>The Filesystem is Always Right; the Database is Just for Augmentation.</i>
-                        So, the tidiness of you music is not just inside MusicDB but on all devices 
+                        The <b>tidiness of your music collection</b> is not just inside MusicDB but on all devices 
                         like your portable music-player or your car.
                     </p>
                     <p>
-                        You can stream your music by 
-                        <a href="https://www.musicpd.org/" target="_blank">Music Playing Daemon (MPD)</a>.
+                        You can also stream your music with
+                        <a href="https://www.musicpd.org/" target="_blank">Music Player Daemon (MPD)</a>.
                         This stream and can be received by all kind of players like 
                         iTunes, VLC or by 
                         <a href="https://icecast.org/" target="_blank">Icecast</a> to encrypt the stream 
                         and send it out into the internet.
-                        So your music is <i>in the cloud</i> but your files stay at home.
+                        So <b>your music is <i>in the cloud</i> but your files stay at home.</b>
                     </p>
                     <p>
-                        The stream gets controlled by a WebUI that hides the uglyness of software behind a nice, 
-                        music-oriented and music-presenting frontend. 
+                        The stream gets controlled by a WebUI that hides the ugliness of software behind a <b>nice, 
+                        music-oriented and music-presenting web frontend.</b>
                         Your music gets presented and is not just a database entry in a boring list of artists and albums.
                     </p>
                     <p>
                         Album covers blurred for copyright reasons!<br>
-                        Screenshots are from version 1.0.0 alpha and won't be updated.
+                        Screenshots may be from different versions and won't be updated.
                     </p>
-                    <!--
-                    <div class="logos">
-                        <ul class="list-unstyled">
-                            <li ><img src="landingpage/img/logos/adobe.png"/></li>
-                            <li ><img src="landingpage/img/logos/zendesk.png"/></li>
-                            <li ><img src="landingpage/img/logos/ebay.png"/></i>
-                            <li ><img src="landingpage/img/logos/evernote.png"/></li>
-                            <li ><img src="landingpage/img/logos/airbnb.png"/></li>
-                            <li ><img src="landingpage/img/logos/zappos.png"/></li>
-                        </ul>
-                    </div>
-                    -->
                 </div>
             </div>
 
@@ -159,20 +147,24 @@
                                 <p>
                                     The WebUI presents the music, mostly represented by their album artwork.
                                     Instead of most other music manager and player, the management part of the music is totally hidden.
-                                    This UI is made to enjoy listening to music, not to work on managing it.
-                                    It adopts it colors to the color theme of the album artwork and allows making excessive use of Unicode.
+                                    This UI is <b>made to enjoy listening to music, not to work on managing it.</b>
+                                    It allows using the colors of the artwork as individual color theme for each album and making excessive use of Unicode.
                                 </p>
                                 <p>There are four important panes in the WebUI:</p>
                                 <ol>
-                                    <li><i>HUD (top):</i> Showing the current playing song and allows to quick access flags.</li>
-                                    <li><i>Artist List (left):</i> A list of artists and their albums</li>
-                                    <li><i>Album View (middle):</i> Album of the current playing song, or selected from the list on the left.</li>
-                                    <li><i>Queue View (right):</i> The current queue of songs that will be played.</li>
+                                    <li><i>HUD (top):</i> 
+                                        Showing the current playing song and allows to quick access flags and tags.</li>
+                                    <li><i>Artist List (left):</i> 
+                                        A list of artists and their albums filtered by genre</li>
+                                    <li><i>Album View (middle):</i> 
+                                        The album of the current playing song, or selected from the list on the left.
+                                        This album defines the color theme for the whole WebUI.</li>
+                                    <li><i>Queue View (right):</i>
+                                        The current queue of songs that will be played.</li>
                                 </ol>
                             </div>
                         </div>
                         <div class="col-md-6 ">
-                            <!--<img src="landingpage/img/showcases/showcase-2/mac2.png" style="margin-top:-50px"/>-->
                             <a href="landingpage/img/screenshots/WebUI.png" target="_blank">
                             <img src="landingpage/img/screenshots/WebUI.jpg">
                             </a>
@@ -187,7 +179,6 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="demo-image">
-                                <!--<img src="landingpage/img/showcases/showcase-2/examples/home_4.jpg" alt="">-->
                                 <a href="landingpage/img/screenshots/HUD.png" target="_blank">
                                 <img src="landingpage/img/screenshots/HUD.png">
                                 </a>
@@ -197,8 +188,8 @@
                             <h4 class="header-text">Head-up Display</h4>
                             <p>
                                 The head-up display presents the current playing song.
-                                It also shows its tags and mood-flags.
-                                The mood-flags represent different moods the user/listener as associates with this song.
+                                It also shows its genre tags and mood-flags.
+                                The <b>mood-flags represent different moods the user/listener has associates with this song.</b>
                                 Furthermore there are buttons to mark this song as favorite or hated.
                                 On the right side, the current time and the time when the queue runs empty is shown.
                                 So, you can see when you can sleep, or if it is worth adding some more songs to the queue.
@@ -211,7 +202,8 @@
                         <div class="col-md-5">
                             <h4 class="header-text">Artist List</h4>
                             <p>
-                                The artist list shows all albums that are in the genres that are selected in the genre filter box above.
+                                The artist list <b>shows all albums that are in the selected genres</b>
+                                of the genre filter box above.
                                 The albums are grouped by their artists and sorted by release date.
                                 By clicking on the album, it gets presented in the Album View.
                             </p>
@@ -225,7 +217,7 @@
                             <h5>Fuzzy Search</h5>
                             <p>
                                 Beside selecting an album from Artist List and then choose a song, 
-                                you can use a search to find and add a certain song directly.
+                                you can use a <b>typo tolerant search</b> to find and add a certain song directly.
                                 The search finds all songs, albums and artists that matches the enters string to a
                                 certain probability.
                                 While typing the name, a preview of the results with the five most probable hits gets shown in real time. 
@@ -262,7 +254,8 @@
                             <h5>Lyrics Management</h5>
                             <p>
                                 Beside the audio and artwork, lyrics are the third part of a music collection.
-                                MusicDB comes with a simple lyrics management allowing you to annotate lyrics to songs.
+                                MusicDB comes with a simple <b>lyrics management allowing you to annotate lyrics to songs</b>.
+                                If there are lyrics included in the meta data of a song file, MusicDB imports those.
                             </p>
                             <p>
                                 <center>
@@ -279,9 +272,9 @@
                             <h4 class="header-text">Album View</h4>
                             <p>
                                 The Album View show the current playing album or a selected album from the Artist List.
-                                In this view, all songs of an album get presented.
+                                In this view, all <b>songs of an album get presented.</b>
                                 Beside the song name, their mood flags are displayed.
-                                The diamantes on the screenshot show that these songs are favorite songs.
+                                The diamonds on the screenshot show that these songs are favorite songs.
                                 Furthermore on the very right of each song entry, a "likes/dislikes-bar" is shown.
                                 These information help choosing songs from albums you haven't listen to for a long time.
                             </p>
@@ -303,11 +296,11 @@
                             <h5>Artwork management</h5>
                             <p>
                                 Album artwork is an important part of music.
-                                So, the management does not only concentrates on the music but also on the artwork.
+                                The management does not only concentrates on the music but also on the artwork.
                             </p>
                             <p>
                                 For each album are three colors defined that will be used for the whole WebUI.
-                                So, the whole UIs style fits to the design of the album artwork.
+                                <b>The style of the UI fits to the design of the album artwork.</b>
                             </p>
 
                         </div>
@@ -318,7 +311,7 @@
                         <div class="col-md-5">
                             <h4 class="header-text">Queue</h4>
                             <p>
-                                MusicDB does not use playlists, it uses a queue.
+                                <b>MusicDB does not use playlists, it uses a queue.</b>
                                 Songs can be added at the end of the queue, or on top right after the current playing song.
                                 The queue view also allows to remove songs from the queue or change their position
                                 by moving them via drag 'n' drop.
@@ -326,13 +319,14 @@
                                 So, the music never stops playing and the is no repeating playlist annoying you.
                             </p>
 
-                            <h5>Subjective Randomizer</h5>
+                            <h5>Subjective-Random Songs</h5>
                             <p>
-                                While real randomness allows to play the same song of thousands several times in succession,
+                                While real randomness allows to play the same song several times in succession,
                                 the configurable random song selector from MusicDB
                                 does not add songs to the queue that are too short,
                                 flagged as <i>hated</i> 
                                 or when another song of the same album or artist was recently played.
+                                <b>The selected song order is not mathematical random, that's why they feel random.</b>
                             </p>
                         </div>
                         <div class="col-md-6 col-md-offset-1">
@@ -362,11 +356,11 @@
                                     <h4>Manage - Present - Listen</h4>
                                     <p>
                                         Most of the music management takes place on command line
-                                        using MusicDBs command line modules.
+                                        using MusicDB's command line modules.
                                     </p>
                                     <p>
                                         Managing the queue of the songs that shall be streamed 
-                                        will be done using MusicDBs Web UI that presents the music collection.
+                                        will be done using MusicDB's Web UI that presents the music collection.
                                     </p>
                                     <p>
                                         Listening to the stream can be done by any player that supports streams, 
@@ -420,7 +414,8 @@
                                 <div class="text">
                                     <h4>Powerful export</h4>
                                     <p>
-                                        MusicDB provides a powerful export functionality that allows you 
+                                        MusicDB provides a powerful <a href="build/html/mod/extern.html">export</a>
+                                        functionality that allows you 
                                         to listen to your music in your car that only supports mp3 encoded files,
                                         or to pre-scale the artworks so that your portable audio player 
                                         scrolls smoother through your albums.
@@ -446,15 +441,16 @@
                                     <p>
                                         MusicDB comes with the capability to use a Convolutional Deep Neural Network 
                                         to classify (tag) your music.
-                                        The AI can "listen" to a song and sets one or more genre tags for the song.
+                                        The <a href="build/html/mod/musicai.html">MusicAI</a>
+                                        can "listen" to a song and sets one or more genre tags for the song.
                                         This tag can be confirmed or rejected by the user when it gets displayed in the WebUI.
-                                        On the screenshots above, you will notice those AI set tags by their "probability-bar"
+                                        On the screenshots, you will notice those AI set tags by their "probability-bar"
                                     </p>
                                     <p>
                                         Because each music collection is different, there comes no pre-trained model.
-                                        In case you do not want to spend the effort to train a model, the AI functionality
+                                        In case you don't want to spend the effort to train a model, the AI functionality
                                         can be ignored.
-                                        The AI is disabled by default. <i>This is a Crazy-Nerd Feature</i>
+                                        The AI is disabled by default. <i>This is a Crazy Nerd feature.</i>
                                     </p>
                                     <p>
                                         <a  href="landingpage/img/screenshots/MusicAI-Schlagwetter.png" target="_blank">
@@ -472,11 +468,13 @@
                                 <div class="text">
                                     <h4>Well Documented</h4>
                                     <p>
-                                        This does not sound relevant, but it is a very important featured.
+                                        This does not sound relevant, but it is a very important feature.
                                         The whole server code is well documented including all interfaces.
                                         That makes it very easy to develop own frontends that fits perfect
                                         to your music listening behavior.
-                                        And if there is a feature missing it is easy to add.
+                                        If there is a feature missing it is easy to add.
+                                        You can also easy add new command line modules to make MusicDB fit better
+                                        into your environment.
                                     </p>
                                     <p>
                                         Some interesting examples on different abstraction layers:

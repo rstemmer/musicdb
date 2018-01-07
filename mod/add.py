@@ -33,8 +33,7 @@ Example:
 
     .. code-block:: bash
 
-        musicdb -q add
-        # -q: do not show logs on stdout
+        musicdb add
 """
 
 import argparse
@@ -65,7 +64,7 @@ class FileNameInput(TextInput):
     def HandleKey(self, key):
         # Replace slash with DIVISION SLASH
         if key == "/":
-            key = "⁄"
+            key = "∕"
         TextInput.HandleKey(self, key)
     
 
@@ -304,8 +303,18 @@ class add(MDBModule, MusicDBDatabase):
         # get all songs from the albums
         songpaths = self.fs.GetFiles(albumpath, self.cfg.music.ignoresongs) # ignores also all directories
         metatags  = MetaTags(self.cfg.music.path)
-        metatags.Load(songpaths[0])
-        metadata  = metatags.GetAllMetadata()
+
+        # Try to load a file
+        for songpath in songpaths:
+            try:
+                metatags.Load(songpath)
+            except ValueError:
+                continue
+            break
+        else:
+            return None
+
+        metadata = metatags.GetAllMetadata()
         return metadata
 
 
@@ -522,14 +531,20 @@ class add(MDBModule, MusicDBDatabase):
         albumdirname = os.path.split(albumpath)[1]
         artistdirname= os.path.split(albumpath)[0]
         metadata     = self.GetAlbumMetadata(albumpath)
-        origin       = str(metadata["origin"])
+        if metadata:
+            origin   = str(metadata["origin"])
+        else:
+            origin   = "Internet"
         analresult   = self.fs.AnalyseAlbumDirectoryName(albumdirname)
         if analresult:
             release   = str(analresult["release"])
             albumname = analresult["name"]
         else:
             # suggest the release date from meta data - the user can change when it's wrong
-            release   = str(metadata["releaseyear"])
+            if metadata:
+                release = str(metadata["releaseyear"])
+            else:
+                release = "20??"
             albumname = albumdirname
 
         artistinput.SetData(artistdirname)
@@ -708,6 +723,7 @@ class add(MDBModule, MusicDBDatabase):
             
         if data:
             self.RunImportProcess(data)
+            self.UpdateServerCache()
         else:
             self.cli.ClearScreen()
             self.cli.SetCursor(0,0)

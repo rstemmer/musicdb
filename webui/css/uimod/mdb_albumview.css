@@ -19,9 +19,15 @@ div#ABVMetaBox
 
 div#AlbumGenreBox
 {
+    margin-top:     20px;
     display:        flex;
     flex-direction: column;
     align-items:    flex-end;
+}
+
+div#AlbumSubgenreView_tags
+{
+    flex-direction: column;
 }
 
 /******************/
