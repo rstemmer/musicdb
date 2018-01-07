@@ -302,7 +302,7 @@ The web server must provide the following virtual directories:
    * ``/musicdb/music/`` pointing to the music collection
    * ``/musicdb/docs/`` pointing to the documentation directory (``$SERVERDIR/docs``)
 
-An example `Apache <https://httpd.apache.org/>` configuration can look like this:
+An example `Apache <https://httpd.apache.org/>`_ configuration can look like this:
 
 .. code-block:: apache
 
