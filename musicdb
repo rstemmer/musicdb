@@ -26,9 +26,23 @@ from lib.db.musicdb     import MusicDatabase
 from lib.logging        import MusicDBLogger
 
 
-VERSION = "2.0.4"
+VERSION = None
 
 DEFAULTCONFIGFILE = "/etc/musicdb.ini"
+
+
+def ReadVersion():
+    global VERSION
+    versionpath = os.path.join(os.path.dirname(sys.argv[0]), "VERSION")
+
+    try:
+        with open(versionpath, "r") as versionfile:
+            firstline = versionfile.readline()
+
+        VERSION = firstline.split("-")[0].strip()
+    except:
+        VERSION = "x.x.x"
+
 
 
 def LoadAllModules():
@@ -61,6 +75,7 @@ def LoadAllModules():
 
 
 if __name__ == "__main__":
+    ReadVersion()
     print("\033[1;31mMusicDB [\033[1;34m" + VERSION + "\033[1;31m]\033[0m")
 
     # Generate argument parser

@@ -5,6 +5,15 @@
 │ ∗ Other                                │
 └────────────────────────────────────────┘
 
+┍━━━━┫ 2018-01-07 ┣━━━━┫ 2.1.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ ∗ Better file permissions and default configuration (better for root-less access)
+│ ∗ Introducing the VERSION file for better tracking of bugfixes
+│
+┝━ MINOR CHANGES
+│ ∗ Better installation instructions
+└───────────────────────────────────────╌╌
+
 ┍━━━━┫ 2018-01-05 ┣━━━━┫ 2.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ - Signals (SIGUSR1, SIGTERM) will no longer be used for refreshing the cache or shutting down the server.
