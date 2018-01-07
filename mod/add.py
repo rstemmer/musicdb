@@ -699,8 +699,8 @@ class add(MDBModule, MusicDBDatabase):
                 return
             
             musicai.GenerateFeatureset(mdbsongs)
-            prediction = self.PerformPrediction(mdbsongs)
-            self.StorePrediction(prediction)
+            prediction = musicai.PerformPrediction(mdbsongs)
+            musicai.StorePrediction(prediction)
 
     # return exit-code
     def MDBM_Main(self, args):
