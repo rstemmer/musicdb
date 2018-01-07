@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.namedpipe &mdash; MusicDB 2.0.0 documentation</title>
+  <title>lib.namedpipe &mdash; MusicDB 2.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 2.0.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 2.1.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.0
+                2.1
               </div>
             
           
@@ -194,7 +194,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#apache-http-server">Apache HTTP-Server</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id3edit">id3edit</a></li>
@@ -558,9 +557,6 @@
 <div class="viewcode-block" id="NamedPipe"><a class="viewcode-back" href="../../lib/namedpipe.html#lib.namedpipe.NamedPipe">[docs]</a><span class="k">class</span> <span class="nc">NamedPipe</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This module provides a class for getting command from a named pipe (FIFO).</span>
-<span class="sd">    All methods are non-blocking!</span>
-
-<span class="sd">    It Creates a FIFO file if it does not exist by calling :meth:`~Create`</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path (str): absolute path where the FIFO is, or shall be created</span>
@@ -573,8 +569,6 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;FIFO path must be of type string!&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">Create</span><span class="p">()</span>
 
 
 
@@ -605,6 +599,8 @@
 <span class="sd">        This method reads a line from the FIFO, if there is a line.</span>
 <span class="sd">        If nothing got written to the FIFO, ``None`` gets returned.</span>
 <span class="sd">        The line does not have a trailing ``\n``.</span>
+
+<span class="sd">        This method is non-blocking</span>
 
 <span class="sd">        Example:</span>
 
@@ -650,6 +646,8 @@
 <span class="sd">        Write a line into the named pipe.</span>
 <span class="sd">        This method checks if the FIFO exists and rejects the line if not.</span>
 <span class="sd">        If line is ``None`` or an empty string, nothing will be done.</span>
+
+<span class="sd">        This method is blocking!</span>
 
 <span class="sd">        Example:</span>
 
@@ -760,7 +758,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'2.0.0',
+            VERSION:'2.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

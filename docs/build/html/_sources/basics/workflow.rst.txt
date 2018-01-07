@@ -114,10 +114,10 @@ Releasing a New Version
 The following things need to be updated for a new release:
 
    * CHANGELOG file must be up to date
+   * VERSION file must be up to date
    * docs/source/conf.py: update ``version`` and ``release`` variable
-   * musicdb: update ``VERSION`` variable
-   * build the new documentation
    * merge branch to master
+   * build the new documentation
 
 Further more, the *develop* and *master* branch must be merged and tagged when it is not just a bugfix.
 

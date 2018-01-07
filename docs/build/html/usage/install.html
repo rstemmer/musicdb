@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &amp; Update &mdash; MusicDB 2.0.0 documentation</title>
+  <title>Installation &amp; Update &mdash; MusicDB 2.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 2.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 2.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Music" href="music.html"/>
         <link rel="prev" title="Workflow for development" href="../basics/workflow.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.0
+                2.1
               </div>
             
           
@@ -195,7 +195,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#apache-http-server">Apache HTTP-Server</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3edit">id3edit</a></li>
@@ -720,82 +719,7 @@ mpc -p <span class="m">9999</span> <span class="nb">enable</span> <span class="m
 mpc -p <span class="m">9999</span> consume <span class="m">1</span>
 </pre></div>
 </div>
-<p>The configuration can look like this:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>music_directory         <span class="s2">&quot;/data/music&quot;</span>
-playlist_directory      <span class="s2">&quot;~/playlists&quot;</span>
-db_file                 <span class="s2">&quot;~/database&quot;</span>
-log_file                <span class="s2">&quot;~/log.txt&quot;</span>
-pid_file                <span class="s2">&quot;/run/mpd/mpd.pid&quot;</span>
-state_file              <span class="s2">&quot;~/state&quot;</span>
-sticker_file            <span class="s2">&quot;~/sticker.db&quot;</span>
-
-user                    <span class="s2">&quot;mpd&quot;</span>
-group                   <span class="s2">&quot;musicdb&quot;</span>
-bind_to_address         <span class="s2">&quot;127.0.0.1&quot;</span>
-bind_to_address         <span class="s2">&quot;~/socket&quot;</span>
-port                    <span class="s2">&quot;9999&quot;</span>
-metadata_to_use         <span class="s2">&quot;artist,album,title,track,name,genre,date,composer,performer,disc&quot;</span>
-filesystem_charset      <span class="s2">&quot;UTF-8&quot;</span>
-auto_update             <span class="s2">&quot;yes&quot;</span>
-follow_outside_symlinks <span class="s2">&quot;yes&quot;</span>
-follow_inside_symlinks  <span class="s2">&quot;yes&quot;</span>
-
-default_permissions     <span class="s2">&quot;read,add,control,admin&quot;</span>
-
-decoder <span class="o">{</span>
-   plugin <span class="s2">&quot;mad&quot;</span>
-   enabled <span class="s2">&quot;no&quot;</span>
-<span class="o">}</span>
-decoder <span class="o">{</span>
-   plugin <span class="s2">&quot;ffmpeg&quot;</span>
-   enabled <span class="s2">&quot;yes&quot;</span>
-<span class="o">}</span>
-
-audio_output <span class="o">{</span>
-   <span class="nb">type</span>            <span class="s2">&quot;httpd&quot;</span>
-   name            <span class="s2">&quot;M45ch1n3::mpd::stream&quot;</span>
-   encoder         <span class="s2">&quot;lame&quot;</span>
-   port            <span class="s2">&quot;6666&quot;</span>
-   bind_to_address <span class="s2">&quot;127.0.0.1&quot;</span>
-   bitrate         <span class="s2">&quot;320&quot;</span>
-   format          <span class="s2">&quot;44100:16:2&quot;</span>
-   max_clients     <span class="s2">&quot;0&quot;</span>             <span class="c1"># 0=no limit</span>
-<span class="o">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="apache-http-server">
-<h3>Apache HTTP-Server<a class="headerlink" href="#apache-http-server" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> /etc/httpd/conf
-vim apps/musicdb.conf
-vim httpd.conf
-<span class="c1">#&gt; Include conf/apps/musicdb.conf</span>
-</pre></div>
-</div>
-<p>The musicdb.conf file can look like this:</p>
-<div class="highlight-apache"><div class="highlight"><pre><span></span><span class="nb">Alias</span> <span class="sx">/musicdb/artwork/</span> <span class="s2">&quot;/data/musicdb/artwork/&quot;</span>
-<span class="nt">&lt;Directory</span> <span class="s">&quot;/data/musicdb/artwork&quot;</span><span class="nt">&gt;</span>
-   <span class="nb">AllowOverride</span> <span class="k">None</span>
-   <span class="nb">Options</span> +FollowSymLinks
-   <span class="nb">Require</span> <span class="k">all</span> granted
-<span class="nt">&lt;/Directory&gt;</span>
-
-<span class="nb">Alias</span> <span class="sx">/musicdb/music/</span> <span class="s2">&quot;/data/music/&quot;</span>
-<span class="nt">&lt;Directory</span> <span class="s">&quot;/data/music&quot;</span><span class="nt">&gt;</span>
-   <span class="nb">AllowOverride</span> <span class="k">None</span>
-   <span class="nb">Options</span> +FollowSymLinks
-   <span class="nb">Require</span> <span class="k">all</span> granted
-<span class="nt">&lt;/Directory&gt;</span>
-
-<span class="nb">Alias</span> <span class="sx">/musicdb/</span> <span class="s2">&quot;/srv/musicdb/&quot;</span>
-<span class="nt">&lt;Directory</span> <span class="s">&quot;/srv/musicdb&quot;</span><span class="nt">&gt;</span>
-   <span class="nb">AllowOverride</span> <span class="k">None</span>
-   <span class="nb">Options</span> +ExecCGI +FollowSymLinks
-   <span class="nb">Require</span> <span class="k">all</span> granted
-   <span class="nb">AddType</span> text/cache-manifest .iOSmanifest
-<span class="nt">&lt;/Directory&gt;</span>
-</pre></div>
-</div>
+<p>An example configuration can be found in the <em>share</em> directory of MusicDB</p>
 </div>
 <div class="section" id="download-musicdb">
 <h3>Download MusicDB<a class="headerlink" href="#download-musicdb" title="Permalink to this headline">¶</a></h3>
@@ -883,30 +807,30 @@ The update process saves the lines with the configuration and restores them afte
 <li><code class="docutils literal"><span class="pre">/musicdb/docs/</span></code> pointing to the documentation directory (<code class="docutils literal"><span class="pre">$SERVERDIR/docs</span></code>)</li>
 </ul>
 </div></blockquote>
-<p>An example <cite>Apache &lt;https://httpd.apache.org/&gt;</cite> configuration can look like this:</p>
-<div class="highlight-apache"><div class="highlight"><pre><span></span><span class="nb">Alias</span> <span class="sx">/musicdb/artwork/</span> <span class="s2">&quot;/data/musicdb/artwork/&quot;</span>
-<span class="nt">&lt;Directory</span> <span class="s">&quot;/data/musicdb/artwork&quot;</span><span class="nt">&gt;</span>
+<p>An example <a class="reference external" href="https://httpd.apache.org/">Apache</a> configuration can look like this:</p>
+<div class="highlight-apache"><div class="highlight"><pre><span></span><span class="nb">Alias</span> <span class="sx">/musicdb/webui/artwork/</span> <span class="s2">&quot;/opt/musicdb/data/artwork/&quot;</span>
+<span class="nt">&lt;Directory</span> <span class="s">&quot;/opt/musicdb/data/artwork&quot;</span><span class="nt">&gt;</span>
    <span class="nb">AllowOverride</span> <span class="k">None</span>
    <span class="nb">Options</span> +FollowSymLinks
    <span class="nb">Require</span> <span class="k">all</span> granted
 <span class="nt">&lt;/Directory&gt;</span>
 
-<span class="nb">Alias</span> <span class="sx">/musicdb/music/</span> <span class="s2">&quot;/data/music/&quot;</span>
-<span class="nt">&lt;Directory</span> <span class="s">&quot;/data/music&quot;</span><span class="nt">&gt;</span>
+<span class="nb">Alias</span> <span class="sx">/musicdb/music/</span> <span class="s2">&quot;/var/music/&quot;</span>
+<span class="nt">&lt;Directory</span> <span class="s">&quot;/var/music&quot;</span><span class="nt">&gt;</span>
    <span class="nb">AllowOverride</span> <span class="k">None</span>
    <span class="nb">Options</span> +FollowSymLinks
    <span class="nb">Require</span> <span class="k">all</span> granted
 <span class="nt">&lt;/Directory&gt;</span>
 
-<span class="nb">Alias</span> <span class="sx">/musicdb/docs/</span> <span class="s2">&quot;/srv/musicdb/docs/&quot;</span>
-<span class="nt">&lt;Directory</span> <span class="s">&quot;/srv/musicdb/docs&quot;</span><span class="nt">&gt;</span>
+<span class="nb">Alias</span> <span class="sx">/musicdb/docs/</span> <span class="s2">&quot;/opt/musicdb/server/docs/&quot;</span>
+<span class="nt">&lt;Directory</span> <span class="s">&quot;/opt/musicdb/server/docs&quot;</span><span class="nt">&gt;</span>
     <span class="nb">AllowOverride</span> <span class="k">None</span>
     <span class="nb">Options</span> +FollowSymLinks
     <span class="nb">Require</span> <span class="k">all</span> granted
 <span class="nt">&lt;/Directory&gt;</span>
 
-<span class="nb">Alias</span> <span class="sx">/musicdb/</span> <span class="s2">&quot;/srv/musicdb/&quot;</span>
-<span class="nt">&lt;Directory</span> <span class="s">&quot;/srv/musicdb&quot;</span><span class="nt">&gt;</span>
+<span class="nb">Alias</span> <span class="sx">/musicdb/</span> <span class="s2">&quot;/opt/musicdb/server/&quot;</span>
+<span class="nt">&lt;Directory</span> <span class="s">&quot;/opt/musicdb/server&quot;</span><span class="nt">&gt;</span>
    <span class="nb">AllowOverride</span> <span class="k">None</span>
    <span class="nb">Options</span> +ExecCGI +FollowSymLinks
    <span class="nb">Require</span> <span class="k">all</span> granted
@@ -952,8 +876,8 @@ If you only want to check the installation and setup, you can run the server and
 <p>For starting and stopping the MusicDB WebSocket Server and its dependent processes,
 the scripts described in <a class="reference internal" href="scripts.html"><span class="doc">Scripts</span></a> are recommended.</p>
 <p>For details of the configuration, see <a class="reference internal" href="../basics/config.html"><span class="doc">MusicDB Configuration</span></a>.</p>
-<p>You can access the WebUI by opening the file <code class="docutils literal"><span class="pre">webui/moderator.html</span></code> in Firefox.</p>
-<p>The first time you want to connect to the WebSocket server you have to tell Firefox that your SSL
+<p>You can access the WebUI by opening the file <code class="docutils literal"><span class="pre">webui/moderator.html</span></code> in your web browser.</p>
+<p>The first time you want to connect to the WebSocket server you have to tell the browser that your SSL
 certificates are “good”.
 Open the WebSocket URL in the browser with <code class="docutils literal"><span class="pre">https</span></code> instead of <code class="docutils literal"><span class="pre">wss</span></code> and create an exception.
 So if your WebSocket address is <code class="docutils literal"><span class="pre">wss://localhost:9000</span></code> visit <cite>https://localhost:9000</cite>.</p>
@@ -1019,7 +943,7 @@ su                   <span class="c1"># you must be root for the updating proces
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.0.0',
+            VERSION:'2.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

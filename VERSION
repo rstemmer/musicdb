@@ -1,0 +1,9 @@
+2.1.0 - SEE CHANGELOG
+2.0.4 - Fixes crash when using MusicAI in add-module
+2.0.3 - Fixes an IndexError when blacklists have length of zero
+2.0.2 - Makes named pipes more explicit 
+2.0.1 - Fixes a bug that made the add command try to analyse metadata from cover artworks
+2.0.0 - SEE CHANGELOG
+1.1.0 - SEE CHANGELOG
+1.0.0 - SEE CHANGELOG
+

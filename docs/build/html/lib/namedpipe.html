@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>NamedPipe &mdash; MusicDB 2.0.0 documentation</title>
+  <title>NamedPipe &mdash; MusicDB 2.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 2.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 2.1.0 documentation" href="../index.html"/>
         <link rel="next" title="PID File Handling" href="pidfile.html"/>
         <link rel="prev" title="MusicDatabase" href="musicdb.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.0
+                2.1
               </div>
             
           
@@ -195,7 +195,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#apache-http-server">Apache HTTP-Server</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
@@ -542,9 +541,7 @@
 <dl class="class">
 <dt id="lib.namedpipe.NamedPipe">
 <em class="property">class </em><code class="descclassname">lib.namedpipe.</code><code class="descname">NamedPipe</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe" title="Permalink to this definition">¶</a></dt>
-<dd><p>This module provides a class for getting command from a named pipe (FIFO).
-All methods are non-blocking!</p>
-<p>It Creates a FIFO file if it does not exist by calling <a class="reference internal" href="#lib.namedpipe.NamedPipe.Create" title="lib.namedpipe.NamedPipe.Create"><code class="xref py py-meth docutils literal"><span class="pre">Create()</span></code></a></p>
+<dd><p>This module provides a class for getting command from a named pipe (FIFO).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -609,6 +606,7 @@ It not only checks the existence of the file but also if the file is a FIFO.</p>
 <dd><p>This method reads a line from the FIFO, if there is a line.
 If nothing got written to the FIFO, <code class="docutils literal"><span class="pre">None</span></code> gets returned.
 The line does not have a trailing <code class="docutils literal"><span class="pre">\n</span></code>.</p>
+<p>This method is non-blocking</p>
 <p class="rubric">Example</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">NamedPipe</span><span class="p">(</span><span class="s2">&quot;/tmp/test.fifo&quot;</span><span class="p">)</span>
 
@@ -637,6 +635,7 @@ The line does not have a trailing <code class="docutils literal"><span class="pr
 <dd><p>Write a line into the named pipe.
 This method checks if the FIFO exists and rejects the line if not.
 If line is <code class="docutils literal"><span class="pre">None</span></code> or an empty string, nothing will be done.</p>
+<p>This method is blocking!</p>
 <p class="rubric">Example</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">NamedPipe</span><span class="p">(</span><span class="s2">&quot;/tmp/test.fifo&quot;</span><span class="p">)</span>
 <span class="n">pipe</span><span class="o">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s2">&quot;refresh&quot;</span><span class="p">)</span>
@@ -694,7 +693,7 @@ If line is <code class="docutils literal"><span class="pre">None</span></code> o
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.0.0',
+            VERSION:'2.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
