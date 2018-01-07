@@ -1,3 +1,4 @@
+2.1.1 - Makes WebUI more tolerant for missing MPD connection
 2.1.0 - SEE CHANGELOG
 2.0.4 - Fixes crash when using MusicAI in add-module
 2.0.3 - Fixes an IndexError when blacklists have length of zero

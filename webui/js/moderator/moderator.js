@@ -63,9 +63,15 @@ function onMusicDBMessage(fnc, sig, args, pass)
     if(fnc == "GetMPDState")
     {
         if(args.isconnected)
+        {
             SetMusicDBOnlineState("yes", "yes");        // MDB, MPD
+            MDB_EnableWatchdog();
+        }
         else
+        {
             SetMusicDBOnlineState("yes", "no");         // MDB, MPD
+            MDB_DisableWatchdog();                      // Stop watchdog when MPD cannot trigger updates
+        }
 
         if(args.isplaying)
             SetMusicDBPlayingState("playing", null);    // Stream, Client
@@ -78,6 +84,8 @@ function onMusicDBMessage(fnc, sig, args, pass)
 
     // Handle Messages form the server
     if(fnc == "GetMPDState" && sig == "UpdateMPDState") {
+        if(args.isconnected == false)
+            return; // Nothing to do when MPD is not able to provide its state
         UpdateMusicDBHUD(args.song, args.album, args.artist);
         Songtags_UpdateMoodControl("MainMoodControl", args.songtags);
         Songproperties_UpdateControl("MainPropertyControl", args.song, true); // reset like/dislike state

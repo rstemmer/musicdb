@@ -108,7 +108,28 @@ function ConnectToMusicDB()
 ///////////////////////////////////////////////////////////////////////////////
 // Websocket Watchdog /////////////////////////////////////////////////////////
 
-var timeouthandler = null;
+let timeouthandler = null;
+let disablewd      = false; // To temporary disable the watchdog (for example when MPD is not running)
+
+/**
+ * This function can be used to temporary disable the watchdog.
+ * For example when MPD is disconnected and cannot provide the clients with the current state every second.
+ */
+function MDB_DisableWatchdog()
+{
+    disablewd = true;
+    MDB_ResetWebsocketWatchdog();
+}
+
+
+/**
+ * This function can be used to enable the watchdog after it was disabled.
+ */
+function MDB_EnableWatchdog()
+{
+    disablewd = true;
+    MDB_StopWebsocketWatchdog();
+}
 
 /**
  * This is the callback funtion of the timer.
@@ -151,7 +172,7 @@ function MDB_StopWebsocketWatchdog()
  */
 function MDB_ResetWebsocketWatchdog()
 {
-    if(WATCHDOG_RUN === true)
+    if(WATCHDOG_RUN === true && disablewd === false)
     {
         MDB_StopWebsocketWatchdog();
         timeouthandler = setTimeout("MDB_WebsocketWatchdog()", WATCHDOG_INTERVAL);
