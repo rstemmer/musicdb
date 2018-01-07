@@ -201,88 +201,8 @@ The following setup binds MPD to MusicDB as close as possible.
    mpc -p 9999 enable 1
    mpc -p 9999 consume 1
 
-The configuration can look like this:
 
-.. code-block:: bash
-
-   music_directory         "/data/music"
-   playlist_directory      "~/playlists"
-   db_file                 "~/database"
-   log_file                "~/log.txt"
-   pid_file                "/run/mpd/mpd.pid"
-   state_file              "~/state"
-   sticker_file            "~/sticker.db"
-    
-   user                    "mpd"
-   group                   "musicdb"
-   bind_to_address         "127.0.0.1"
-   bind_to_address         "~/socket"
-   port                    "9999"
-   metadata_to_use         "artist,album,title,track,name,genre,date,composer,performer,disc"
-   filesystem_charset      "UTF-8"
-   auto_update             "yes"
-   follow_outside_symlinks "yes"
-   follow_inside_symlinks  "yes"
-    
-   default_permissions     "read,add,control,admin"
-    
-   decoder {
-      plugin "mad"
-      enabled "no"
-   }
-   decoder {
-      plugin "ffmpeg"
-      enabled "yes"
-   }
-
-   audio_output {
-      type            "httpd"
-      name            "M45ch1n3::mpd::stream"
-      encoder         "lame"
-      port            "6666"
-      bind_to_address "127.0.0.1"
-      bitrate         "320"
-      format          "44100:16:2"
-      max_clients     "0"             # 0=no limit
-   }
-
-
-
-Apache HTTP-Server
-^^^^^^^^^^^^^^^^^^
-
-.. code-block:: bash
-
-   cd /etc/httpd/conf
-   vim apps/musicdb.conf
-   vim httpd.conf
-   #> Include conf/apps/musicdb.conf
-
-The musicdb.conf file can look like this:
-
-.. code-block:: apache
-
-   Alias /musicdb/artwork/ "/data/musicdb/artwork/"
-   <Directory "/data/musicdb/artwork">
-      AllowOverride None
-      Options +FollowSymLinks
-      Require all granted
-   </Directory>
-
-   Alias /musicdb/music/ "/data/music/"
-   <Directory "/data/music">
-      AllowOverride None
-      Options +FollowSymLinks
-      Require all granted
-   </Directory>
-
-   Alias /musicdb/ "/srv/musicdb/"
-   <Directory "/srv/musicdb">
-      AllowOverride None
-      Options +ExecCGI +FollowSymLinks
-      Require all granted
-      AddType text/cache-manifest .iOSmanifest  
-   </Directory>
+An example configuration can be found in the *share* directory of MusicDB
 
 
 Download MusicDB
@@ -382,39 +302,39 @@ The web server must provide the following virtual directories:
    * ``/musicdb/music/`` pointing to the music collection
    * ``/musicdb/docs/`` pointing to the documentation directory (``$SERVERDIR/docs``)
 
-An example `Apache <https://httpd.apache.org/>` configuration can look like this:
+An example `Apache <https://httpd.apache.org/>`_ configuration can look like this:
 
 .. code-block:: apache
 
-   Alias /musicdb/artwork/ "/data/musicdb/artwork/"
-   <Directory "/data/musicdb/artwork">
+   Alias /musicdb/webui/artwork/ "/opt/musicdb/data/artwork/"
+   <Directory "/opt/musicdb/data/artwork">
       AllowOverride None
       Options +FollowSymLinks
       Require all granted
    </Directory>
 
-   Alias /musicdb/music/ "/data/music/"
-   <Directory "/data/music">
+   Alias /musicdb/music/ "/var/music/"
+   <Directory "/var/music">
       AllowOverride None
       Options +FollowSymLinks
       Require all granted
    </Directory>
- 
-   Alias /musicdb/docs/ "/srv/musicdb/docs/"
-   <Directory "/srv/musicdb/docs">
+
+   Alias /musicdb/docs/ "/opt/musicdb/server/docs/"
+   <Directory "/opt/musicdb/server/docs">
        AllowOverride None
        Options +FollowSymLinks
        Require all granted
    </Directory>
 
-   Alias /musicdb/ "/srv/musicdb/"
-   <Directory "/srv/musicdb">
+   Alias /musicdb/ "/opt/musicdb/server/"
+   <Directory "/opt/musicdb/server">
       AllowOverride None
       Options +ExecCGI +FollowSymLinks
       Require all granted
-      AddType text/cache-manifest .iOSmanifest  
+      AddType text/cache-manifest .iOSmanifest
    </Directory>
-
+                              
 
 When everything is correct, and the server running, the WebUI can be reached via `http://localhost/musicdb/webui/moderator.html`
 
@@ -468,9 +388,9 @@ the scripts described in :doc:`/usage/scripts` are recommended.
 
 For details of the configuration, see :doc:`/basics/config`.
 
-You can access the WebUI by opening the file ``webui/moderator.html`` in Firefox.
+You can access the WebUI by opening the file ``webui/moderator.html`` in your web browser.
 
-The first time you want to connect to the WebSocket server you have to tell Firefox that your SSL
+The first time you want to connect to the WebSocket server you have to tell the browser that your SSL
 certificates are "good".
 Open the WebSocket URL in the browser with ``https`` instead of ``wss`` and create an exception.
 So if your WebSocket address is ``wss://localhost:9000`` visit `https://localhost:9000`.
