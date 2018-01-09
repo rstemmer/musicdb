@@ -54,28 +54,28 @@ Path structure
 
 The artwork root directory can be configured in the MusicDB Configuration file.
 Everything related to artwork takes place in this directory.
-To use the artwork inside a web frontend, the https server needs access to this directory.
+To use the artwork inside a web frontend, the HTTPS server needs access to this directory.
 
 Relative to the artwork root directory are the artwork paths stored in the database.
 Source-Artworks, those who are not scaled, are in this directory.
-All scaled artworks are in subdirectories named by the resolution of the images.
+All scaled artworks are in sub-directories named by the resolution of the images.
 
 The name of an image, scaled and non-scaled, consists of the artist name and album name.
 The file format is JPEG. So a name looks like this: ``$Artistname - $Albumname.jpg``.
-This guarantees unique filenames that are human readable at the same time.
+This guarantees unique file names that are human readable at the same time.
 To get the 100x100 scaled version of this artwork just prepend ``100x100/`` to the path set in the database: ``100x100/$Artistname - $Albumname.jpg``
 
 The file name gets created by the method :meth:`~mdbapi.artwork.MusicDBArtwork.CreateArtworkName`.
-This method replaces "/" by an unicode division slash to avoid problems with the filesystem.
+This method replaces "/" by an Unicode division slash to avoid problems with the filesystem.
 
 In case there is no artwork given for an album, the default artwork is ``default.jpg``.
 
 All new creates files were set to the ownership ``[music]->owner:[music]->group`` and gets the permission ``rw-rw-r--``
 
-Webbrowsers
-^^^^^^^^^^^
+Web Browsers
+^^^^^^^^^^^^
 
-Webbrowsers have to prefix the path with ``artwork/``.
+Web browsers have to prefix the path with ``artwork/``.
 So, the server must be configured.
 
 Scaling
@@ -101,9 +101,9 @@ Configuration
 Manifest
 --------
 
-To make a webbrowser cache all the artworks that can end up in hundreds of megabytes of data a cache manifest file is needed.
+To make a web browser cache all the artworks that can end up in hundreds of megabytes of data a cache manifest file is needed.
 Further more, these files are available if the client is offline.
-This is mandatory to "store" the webui as iOS app on the iOS home screen.
+This is mandatory to "store" the WebUI as iOS app on the iOS home screen.
 The manifest gets generated in :meth:`~mdbapi.artwork.GenerateAppCacheManifest`.
 
 Algorithm
@@ -121,7 +121,6 @@ To update the album artwork cache the following steps are done:
 
 import os
 import stat
-import shutil
 from lib.filesystem     import Filesystem
 from lib.metatags       import MetaTags
 from lib.cache          import ArtworkCache
@@ -151,11 +150,11 @@ class MusicDBArtwork(object):
         self.musicroot   = Filesystem(self.cfg.music.path)
         self.artworkroot = Filesystem(self.cfg.artwork.path)
 
-        # Define the prefix that must be used by the webUI and server to access the artwork files
+        # Define the prefix that must be used by the WebUI and server to access the artwork files
         # -> $PREFIX/$Artworkname.jpg
         self.manifestawprefix = "artwork"
 
-        # Check if all pathes exist that have to exist
+        # Check if all paths exist that have to exist
         pathlist = []
         pathlist.append(self.cfg.music.path)
         pathlist.append(self.cfg.artwork.path)
@@ -165,7 +164,7 @@ class MusicDBArtwork(object):
             if not self.fs.Exists(path):
                 raise ValueError("Path \""+ path +"\" does not exist.")
 
-        # Instantiate dependend classes
+        # Instantiate dependent classes
         self.meta    = MetaTags(self.cfg.music.path)
         self.awcache = ArtworkCache(self.cfg.artwork.path)
 
@@ -231,7 +230,7 @@ class MusicDBArtwork(object):
 
             # Copy file
             logging.debug("Copying file from \"%s\" to \"%s\"", abssrcpath, absdstpath)
-            shutil.copy(abssrcpath, absdstpath)
+            self.artworkroot.CopyFile(abssrcpath, absdstpath)
 
             # Set permissions to -rw-rw-r--
             try:
