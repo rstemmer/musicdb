@@ -1,0 +1,7 @@
+python-mpd2 
+mutagenx
+python-Levenshtein
+fuzzywuzzy
+autobahn
+tqdm
+pillow

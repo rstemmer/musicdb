@@ -676,7 +676,7 @@ class add(MDBModule, MusicDBDatabase):
         if data["runlyrics"]:
             self.cli.PrintText("\033[1;37mRun Lyrics Import\n")
             metadata = MetaTags(self.cfg.music.path)
-            metadata = MetaTags()
+
             for songtuple in data["songs"]:
                 songpath = songtuple[1]
                 song     = self.db.GetSongByPath(songpath)
