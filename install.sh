@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="1.1.1"
+SCRIPTVERSION="1.1.2"
 echo -e "\e[1;31mMusicDB-Install [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
@@ -291,6 +291,10 @@ function InstallShellProfile {
 
 function InstallMusicDBFiles {
     echo -e -n "\e[1;34mInstalling MusicDB files to \e[0;36m$SERVERDIR\e[1;34m: "
+    if ! type rsync 2> /dev/null > /dev/null ; then
+        echo -e "\e[1;31mThe mandatory tool \e[1;35mrsync\e[1;31m is missing! \e[1;30m(No rsync installed?)\e[0m"
+        exit 1
+    fi
 
     WSCLIENTFILE=$SERVERDIR/webui/js/musicdb.js
     if [ -f "$WSCLIENTFILE" ] ; then
