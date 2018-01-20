@@ -71,7 +71,6 @@ class MetaTags(object):
         # do some filename-management
         self.path = self.fs.AbsolutePath(path)
         if not self.fs.IsFile(self.path):
-            self.path = None
             raise ValueError("File \"%s\" does not exist"%(self.path))
         
         # remenber the path for debugging
