@@ -14,14 +14,52 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+Execute ``musicdb genres`` to execute this module.
 This command runs a command line "GUI" to manage genre tags.
+Every change gets write to the database immediately.
 Press ``Ctrl-D`` to exit the tag manager.
 
-Example:
+Managing Genres
+---------------
+
+.. figure:: ../images/genres.png
+
+After calling the *genres* module, the form shown on the screenshot above appears.
+There you can add, edit or remove main and sub genres.
+On the left side, a list of all available main genres gets shown.
+You can move through the list using the arrow keys (← and →).
+On the right side, you see a list of sub genres that are associated to the main genre selected in the left list.
+You can switch between those lists using the tab key (↹).
+
+Pressing the a-key opens a dialog where you can enter the name of the new genre.
+Pressing e opens the same dialog for the selected genre where you can edit its name.
+When removing a genre, all relations to songs and that genre gets removed as well.
+Be careful removing genres.
+
+Beside the name, you can enter a position as well.
+For main genres, the position gets printed in gray color right to the name.
+
+This position indicates where the genre shall appear in lists in the WebUI.
+For main genres, it is the *Genre Select* box show in the screenshot below.
+Those positions are not mandatory and will be ignored for sub genres anyway.
+
+.. figure:: ../images/genres-box.png
+
+
+Updating Caches
+---------------
+
+Even if with each change the database gets updated, the WebSocket server and client many have outdated caches.
+To to propagate the changes on the genres to the server and clients, force an cache update writing ``"refresh"`` into MusicDBs fifo file.
+This file can be found in MusicDB's data directory.
+The following command line shows how to do this with a default installation setup.
 
     .. code-block:: bash
 
-        musicdb genres
+        echo "refresh" > /opt/musicdb/data/musicdb.fifo
+
+
+
 """
 
 import argparse
