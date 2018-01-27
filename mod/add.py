@@ -27,13 +27,105 @@ It does the following steps:
     #. Import lyrics (if there are some in the files meta data)
     #. Run MusicAI to determine the music genres
 
-Press ``Ctrl-D`` to exit the tool and reject non-saved changes.
+Press ``Ctrl-D`` to exit the tool and reject changes.
 
-Example:
+The following sections describe how to use the Unicode based UI to import new albums to MusicDB.
 
-    .. code-block:: bash
+Select Album
+------------
 
-        musicdb add
+.. figure:: ../images/add-select.png
+
+After calling ``musicdb add`` a list of all albums in the music collection will be shown (see screenshot above).
+These albums are not registered in the database yet.
+In case the list is empty, no new albums got found.
+In this example, a new album of the band *Megaherz* shall be added to the database.
+The albums song files are stored at ``/data/music/Megaherz/Zombieland/.mp3``.
+The music root directory (the path of the music collection) is ``/data/music``.
+
+You can only import one album at a time.
+If the artist on an album does not exist yet, it will be created with importing its first album.
+Select the album you want to add to the database using the arrow keys (↓ and ↑) and press enter (↵).
+
+
+Repair File Names
+-----------------
+
+.. figure:: ../images/add-dirty.png
+
+After selecting an album, the form shown on the screenshot above will be shown.
+There you can change the file names of the artist and album directory as well as the name of the song files.
+The name of all directories and files must match the naming scheme of MusicDB.
+The scheme is shown in the comment section on top of the form.
+
+Below the comment section, there are two sub forms *Album Import* and *New Songs*.
+You can switch between those forms using the tab key (↹).
+
+
+Album Import Form
+^^^^^^^^^^^^^^^^^
+
+The artist and album directory names gets generated out of the artist name, album name and release year.
+Those names and values can be changed in the *Album Import* form list.
+Furthermore the can be selected if the artwork shall be imported as well, the lyrics if available and if the genres shall be predicted by the MusicAI.
+If there is an artwork file embedded in the song files, the import artwork checkbox gets set automatically.
+In case there are lyrics in the file, the checkbox gets set as well.
+
+You can select the row of that form using the arrow keys ↓ and ↑.
+To toggle the checkboxes, use the space key.
+For entering text in the text areas, select the row and just type.
+You can move the cursor using ← and →.
+
+
+New Songs Form
+^^^^^^^^^^^^^^
+
+Below the form for the directory names, a form for the song file exists.
+Each file name gets analyzed by the *add*-module and checked if the name matches the naming scheme.
+Parts of the name that does not fit gets printed in red.
+Pressing the c-key removes all red printed parts from the file names.
+
+.. figure:: ../images/add-clean.png
+
+Pressing the e-key on a selected song entry, a dialog appears (see screenshot above) that allows you to fine tune the file name.
+There you can set the song name and the song number.
+Pressing enter (↵) confirms the changes and the *add*-module generates the new file name regarding the changes.
+If there are no multiple CDs for an album, do not type anything into the *CD number* input box.
+To reject the changes of that song, press escape (␛) twice.
+
+
+Online Check
+^^^^^^^^^^^^
+
+While changing names and values, they get checked immediately.
+If the entered values are correct gets displayed by a green ✔ marker.
+If there are any values wrong, they get marked with a red ✘.
+
+Those markers are in front of each song file entry, showing for each file name if it matches the naming scheme.
+Furthermore there are two lines at the bottom of the import form showing the artist and album names.
+There you can see if the entered values in the *Album Import* text areas are valid.
+It gets also checked if the artist already exists in the database or if it does not yet.
+A none existing artist may indicate a typo in the artists name, so the comment after the artist name gets printed in yellow.
+If this is the first album of an artist you import, it is correct that the artist is not yet available in the database.
+
+
+Import Process
+--------------
+
+If all changes are done and all values are correct, press capital W to rename the files and directories,
+and import the album to the database.
+If you press Ctrl-d instead, the import process gets canceled and nothing will be changed.
+
+Depending on the checkboxes you set in the *Album Import* form, the following things will now happen:
+
+    #. Renaming the files and directory.
+    #. Importing the album artwork.
+    #. Importing the lyrics from each file into the database
+    #. Determine the genres of each song using MusicAI
+
+It may happen that there is no artwork inside the song files.
+In that case, you have to import an artwork manually using the :doc:`/mod/artwork` module.
+
 """
 
 import argparse
