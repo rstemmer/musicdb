@@ -123,6 +123,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/overview.html">Overview of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#qemu-installation">qemu Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#basic-setup">Basic Setup</a></li>
@@ -234,7 +246,17 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/add.html#repair-file-names">Repair File Names</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mod/add.html#album-import-form">Album Import Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mod/add.html#new-songs-form">New Songs Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mod/add.html#online-check">Online Check</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/add.html#import-process">Import Process</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
@@ -245,13 +267,22 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/genres.html">genres - Genre Manager with CLUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/genres.html">genres - Genre Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/genres.html#managing-genres">Managing Genres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/genres.html#updating-caches">Updating Caches</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/mise.html#class">class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/moods.html">moods - Mood Tag Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-list">Mood List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-grid">Mood Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#style-guide">Style Guide</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
@@ -277,7 +308,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#path-structure">Path structure</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/artwork.html#webbrowsers">Webbrowsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/artwork.html#web-browsers">Web Browsers</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#scaling">Scaling</a></li>
@@ -1487,8 +1518,10 @@ It is supposed to get passed to the selected control element.</p>
 <code class="descname">onDrawElement</code><span class="sig-paren">(</span><em>element</em>, <em>number</em>, <em>maxwidth</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/dialog.html#Dialog.onDrawElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.dialog.Dialog.onDrawElement" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets called when an element gets printed into the dialog view.
 Keep in mind that the dialog element is not able to scroll.</p>
-<p>The number of printable character should not exceed the maximum width <code class="docutils literal"><span class="pre">maxwidth</span></code>.
-The <code class="docutils literal"><span class="pre">element</span></code> is a tuple containing the label, the control element and the hint.</p>
+<p>The <code class="docutils literal"><span class="pre">element</span></code> is a tuple containing the label, the control element and the hint.
+If the number of characters is too high, the hints will not be printed.
+The number of printable characters gets calculated by the with of the label and hint of each row.
+It should be at least 10 characters be left for the control, and 2 for spaces around the control.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1496,11 +1529,14 @@ The <code class="docutils literal"><span class="pre">element</span></code> is a 
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>element</strong> – The element that shall be printed.</li>
 <li><strong>number</strong> (<em>int</em>) – The index of the element in the list of all elements and at the same time the y coordinate</li>
-<li><strong>maxwidth</strong> (<em>int</em>) – The maximum number of characters that can be printed in one line of the list view</li>
+<li><strong>maxwidth</strong> (<em>int</em>) – <em>Will be ignored</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>Nothing</em></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><em>Nothing</em></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – In case the with of the dialog is to small to print at least the label and the input control</p>
 </td>
 </tr>
 </tbody>

@@ -125,6 +125,7 @@ Quick Development Start
 
 Here are some links to places worth reading before starting improving MusicDB:
 
+   * An overview of the whole MusicDB Environment: :doc:`/basics/overview`
    * Adding a new column into the music database: :mod:`lib.db.musicdb`
    * Creating a new command line module: :doc:`/basics/mods`
    * Creating a new MusicDB API module: Place the file at ``mdbapi/*.py`` and follow :doc:`/basics/concept`

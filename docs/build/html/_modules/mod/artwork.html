@@ -122,6 +122,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/overview.html">Overview of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#music-database">Music Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../basics/testvm.html">MusicDB Test VMs</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/testvm.html#qemu-installation">qemu Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#basic-setup">Basic Setup</a></li>
@@ -233,7 +245,17 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/add.html">add - Add New Album to MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/add.html">add - Add New Album to MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/add.html#select-album">Select Album</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/add.html#repair-file-names">Repair File Names</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mod/add.html#album-import-form">Album Import Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mod/add.html#new-songs-form">New Songs Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mod/add.html#online-check">Online Check</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/add.html#import-process">Import Process</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/artwork.html#class">class</a></li>
 </ul>
@@ -244,13 +266,22 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mod/extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/genres.html">genres - Genre Manager with CLUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/genres.html">genres - Genre Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/genres.html#managing-genres">Managing Genres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/genres.html#updating-caches">Updating Caches</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/mise.html#class">class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/moods.html">moods - Mood Tag Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#mood-list">Mood List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#mood-grid">Mood Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#style-guide">Style Guide</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#class-description">Class Description</a></li>
@@ -276,7 +307,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#database">Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#path-structure">Path structure</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/artwork.html#webbrowsers">Webbrowsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/artwork.html#web-browsers">Web Browsers</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#scaling">Scaling</a></li>
@@ -592,6 +623,7 @@
 <span class="kn">from</span> <span class="nn">lib.modapi</span>     <span class="k">import</span> <span class="n">MDBModule</span>
 <span class="kn">from</span> <span class="nn">mdbapi.artwork</span> <span class="k">import</span> <span class="n">MusicDBArtwork</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">tqdm</span>           <span class="k">import</span> <span class="n">tqdm</span>
 
 <div class="viewcode-block" id="artwork"><a class="viewcode-back" href="../../mod/artwork.html#mod.artwork.artwork">[docs]</a><span class="k">class</span> <span class="nc">artwork</span><span class="p">(</span><span class="n">MDBModule</span><span class="p">,</span> <span class="n">MusicDBArtwork</span><span class="p">):</span>
@@ -670,6 +702,12 @@
 
 
     <span class="k">def</span> <span class="nf">MDBM_Main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+
+        <span class="c1"># Make paths absolute when they were given</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">album</span><span class="p">:</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">album</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">album</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">artwork</span><span class="p">:</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">artwork</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">artwork</span><span class="p">)</span>
 
         <span class="c1"># Update Cache and Manifest</span>
         <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">update</span><span class="p">:</span>

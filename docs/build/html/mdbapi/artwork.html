@@ -123,6 +123,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/overview.html">Overview of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#qemu-installation">qemu Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#basic-setup">Basic Setup</a></li>
@@ -234,7 +246,17 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/add.html#repair-file-names">Repair File Names</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mod/add.html#album-import-form">Album Import Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mod/add.html#new-songs-form">New Songs Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mod/add.html#online-check">Online Check</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/add.html#import-process">Import Process</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
@@ -245,13 +267,22 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/genres.html">genres - Genre Manager with CLUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/genres.html">genres - Genre Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/genres.html#managing-genres">Managing Genres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/genres.html#updating-caches">Updating Caches</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/mise.html#class">class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/moods.html">moods - Mood Tag Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-list">Mood List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-grid">Mood Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#style-guide">Style Guide</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
@@ -277,7 +308,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#database">Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#path-structure">Path structure</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#webbrowsers">Webbrowsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#web-browsers">Web Browsers</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#scaling">Scaling</a></li>
@@ -583,21 +614,21 @@ Keep in mind that the user may set all three colors to the same hue so that a mo
 <h2>Path structure<a class="headerlink" href="#path-structure" title="Permalink to this headline">¶</a></h2>
 <p>The artwork root directory can be configured in the MusicDB Configuration file.
 Everything related to artwork takes place in this directory.
-To use the artwork inside a web frontend, the https server needs access to this directory.</p>
+To use the artwork inside a web frontend, the HTTPS server needs access to this directory.</p>
 <p>Relative to the artwork root directory are the artwork paths stored in the database.
 Source-Artworks, those who are not scaled, are in this directory.
-All scaled artworks are in subdirectories named by the resolution of the images.</p>
+All scaled artworks are in sub-directories named by the resolution of the images.</p>
 <p>The name of an image, scaled and non-scaled, consists of the artist name and album name.
 The file format is JPEG. So a name looks like this: <code class="docutils literal"><span class="pre">$Artistname</span> <span class="pre">-</span> <span class="pre">$Albumname.jpg</span></code>.
-This guarantees unique filenames that are human readable at the same time.
+This guarantees unique file names that are human readable at the same time.
 To get the 100x100 scaled version of this artwork just prepend <code class="docutils literal"><span class="pre">100x100/</span></code> to the path set in the database: <code class="docutils literal"><span class="pre">100x100/$Artistname</span> <span class="pre">-</span> <span class="pre">$Albumname.jpg</span></code></p>
 <p>The file name gets created by the method <a class="reference internal" href="#mdbapi.artwork.MusicDBArtwork.CreateArtworkName" title="mdbapi.artwork.MusicDBArtwork.CreateArtworkName"><code class="xref py py-meth docutils literal"><span class="pre">CreateArtworkName()</span></code></a>.
-This method replaces “/” by an unicode division slash to avoid problems with the filesystem.</p>
+This method replaces “/” by an Unicode division slash to avoid problems with the filesystem.</p>
 <p>In case there is no artwork given for an album, the default artwork is <code class="docutils literal"><span class="pre">default.jpg</span></code>.</p>
 <p>All new creates files were set to the ownership <code class="docutils literal"><span class="pre">[music]-&gt;owner:[music]-&gt;group</span></code> and gets the permission <code class="docutils literal"><span class="pre">rw-rw-r--</span></code></p>
-<div class="section" id="webbrowsers">
-<h3>Webbrowsers<a class="headerlink" href="#webbrowsers" title="Permalink to this headline">¶</a></h3>
-<p>Webbrowsers have to prefix the path with <code class="docutils literal"><span class="pre">artwork/</span></code>.
+<div class="section" id="web-browsers">
+<h3>Web Browsers<a class="headerlink" href="#web-browsers" title="Permalink to this headline">¶</a></h3>
+<p>Web browsers have to prefix the path with <code class="docutils literal"><span class="pre">artwork/</span></code>.
 So, the server must be configured.</p>
 </div>
 </div>
@@ -619,9 +650,9 @@ The <strong>scaled artwork gets stored as progressive JPEGs</strong> to get a be
 </div>
 <div class="section" id="manifest">
 <h2>Manifest<a class="headerlink" href="#manifest" title="Permalink to this headline">¶</a></h2>
-<p>To make a webbrowser cache all the artworks that can end up in hundreds of megabytes of data a cache manifest file is needed.
+<p>To make a web browser cache all the artworks that can end up in hundreds of megabytes of data a cache manifest file is needed.
 Further more, these files are available if the client is offline.
-This is mandatory to “store” the webui as iOS app on the iOS home screen.
+This is mandatory to “store” the WebUI as iOS app on the iOS home screen.
 The manifest gets generated in <code class="xref py py-meth docutils literal"><span class="pre">GenerateAppCacheManifest()</span></code>.</p>
 </div>
 <div class="section" id="algorithm">
