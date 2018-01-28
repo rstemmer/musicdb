@@ -123,6 +123,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/overview.html">Overview of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#qemu-installation">qemu Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#basic-setup">Basic Setup</a></li>
@@ -234,7 +246,17 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="add.html">add - Add New Album to MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="add.html">add - Add New Album to MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="add.html#select-album">Select Album</a></li>
+<li class="toctree-l2"><a class="reference internal" href="add.html#repair-file-names">Repair File Names</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="add.html#album-import-form">Album Import Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="add.html#new-songs-form">New Songs Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="add.html#online-check">Online Check</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="add.html#import-process">Import Process</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#class">class</a></li>
 </ul>
@@ -245,13 +267,22 @@
 <li class="toctree-l2"><a class="reference internal" href="extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="genres.html">genres - Genre Manager with CLUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genres.html">genres - Genre Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="genres.html#managing-genres">Managing Genres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genres.html#updating-caches">Updating Caches</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mise.html#class">class</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">moods - Mood Tag Manager with CLUI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">moods - Mood Tag Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mood-list">Mood List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mood-grid">Mood Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#style-guide">Style Guide</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#class-description">Class Description</a></li>
@@ -277,7 +308,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#path-structure">Path structure</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/artwork.html#webbrowsers">Webbrowsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/artwork.html#web-browsers">Web Browsers</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#scaling">Scaling</a></li>
@@ -536,11 +567,103 @@
             
   <div class="section" id="module-mod.moods">
 <span id="moods-mood-tag-manager-with-clui"></span><h1>moods - Mood Tag Manager with CLUI<a class="headerlink" href="#module-mod.moods" title="Permalink to this headline">¶</a></h1>
-<p>This command runs a command line “GUI” to manage mood-tags.
+<p>The command <code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">moods</span></code> runs a command line “GUI” to manage mood-tags.
+Every change gets write to the database immediately.
 Press <code class="docutils literal"><span class="pre">Ctrl-D</span></code> to exit the tag manager.</p>
-<p class="rubric">Example</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>musicdb moods
-</pre></div>
+<p>Moods are tags that are designed to annotate moods and feelings to songs.
+The implementation is pretty general so that they can be used to annotate any kind of information to a song.
+Only restriction is, that they can be represented with “one single” (after rendering) Unicode character.</p>
+<p>After executing <code class="docutils literal"><span class="pre">musicdb</span> <span class="pre">moods</span></code> the UI shown on the following screenshot appears:</p>
+<div class="figure">
+<img alt="../_images/moods.png" src="../_images/moods.png" />
+</div>
+<p>In that form, Mood flags are represented as
+list (explained in the <a class="reference internal" href="#mood-list">Mood List</a> section) and as
+grid (explained in the <a class="reference internal" href="#mood-grid">Mood Grid</a> section).
+You can switch between those representations using the tab key (↹).</p>
+<div class="section" id="mood-list">
+<h2>Mood List<a class="headerlink" href="#mood-list" title="Permalink to this headline">¶</a></h2>
+<p>The Mood List show all moods in the database.
+The first column is the icon and color assigned to the mood.
+Next column is the name of that mood.
+On the right side are the coordinates of the moods in the <a class="reference internal" href="#mood-grid">Mood Grid</a> and the type of the icon.
+Currently, only Unicode icons (txt) are implemented.</p>
+<p>In the Mood List pane you can add, edit or remove mood tag.
+When you add or edit a flag, the dialog shown on the next screenshot appears.</p>
+<div class="figure">
+<img alt="../_images/moods-edit.png" src="../_images/moods-edit.png" />
+</div>
+<p>The input forms can be accessed using the arrow keys ↑ and ↓.
+The inputs have the following meanings:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>Name:</dt>
+<dd>Name of the tag. This will be visible to the user via tool tips.
+This name should be short but meaningful.</dd>
+<dt>Icon:</dt>
+<dd>An Unicode icon.
+This can be any printable Unicode character.
+It can also be extended with combining characters.
+This value gets stored as string.
+As long as it will be rendered as a single character, everything is fine.</dd>
+<dt>U+FE0E:</dt>
+<dd>If this checkbox is set, the Unicode character <em>VARIATION SELECTOR-15</em> gets append to the icon.
+This forces the software that displays the icon (In this case the web browser or shell) to use the
+text representation of the Unicode character and not replace it with a “fancy” image.
+Set this flag in case a browser or shell you use does this.
+The problem with replacing the character by an Image is, that it destroys the color scheme of the Web UI.</dd>
+<dt>Color:</dt>
+<dd>Here you can specify a color to highlight an Icon.
+This should only be done in exceptional cases.
+To color must start with a hash (#) followed by a two hexadecimal number for the red value, then the green value, then blue.
+For example (“#0080FF”) is 0% red, 50% green and 100% blue.
+Most color wheels have a HTML color representation.
+So for choosing a color you can use for example <em>GIMP</em>.
+Forcing an icon to not follow the color scheme of the Web UI can lead to ugly side effects.
+Just imagine you have a red heart icon on a red background.
+The excessive use of explicit colors in the example shown on the screenshot is how <em>not</em> to use this feature ;)</dd>
+<dt>X/Y:</dt>
+<dd>This is the position in the <a class="reference internal" href="#mood-grid">Mood Grid</a>. Details are explained below.
+When you add a new Icon, you must give it some initial values.
+They can be anywhere in the grid where no other icon is.
+You should not exceed 2 lines (so only <code class="docutils literal"><span class="pre">y=0</span></code> and <code class="docutils literal"><span class="pre">y=1</span></code> should be used).</dd>
+</dl>
+</div></blockquote>
+<p>Pressing enter (↵) writes the changes to the database.
+Pressing escape twice rejects the changes.</p>
+</div>
+<div class="section" id="mood-grid">
+<h2>Mood Grid<a class="headerlink" href="#mood-grid" title="Permalink to this headline">¶</a></h2>
+<p>The Mood Grid helps you to arrange the mood tags in a grid.
+This is the same grid used in the WebUI to show the tags in the HUD as shown on the screenshot below, upper part.
+Furthermore you can see, that in the WebUI, the color gets not used inside the mood grid in the HUD.
+When a mood gets assigned to a song, than the icon is visible on the right part of the song entry in the Album View (bottom part of the screenshot).
+There, the icons color will be used to highlight special flags.</p>
+<div class="figure">
+<img alt="../_images/moods-webui.png" src="../_images/moods-webui.png" />
+</div>
+<p>You can use the arrow keys (↑↓←→) to move the rectangle around the icons in the Mood Gird.
+When pressing space, the rectangle changes to arrows and + signs (See following screenshot) and you can mode the icon itself.</p>
+<div class="figure">
+<img alt="../_images/mood-grid.png" src="../_images/mood-grid.png" />
+</div>
+<p>As you can see on the screenshot, you can exchange the positions of the sun with the heart by pressing ← or snow flake by pressing ↑.
+When you press → a new column gets added to the grid.
+The sun icon will then be placed in the next column.
+When there are columns on the left or right that are not used, they get removed automatically.
+Not each cell of the grid needs to have an icon.
+Feel free to place the icons to intuitive places.</p>
+</div>
+<div class="section" id="style-guide">
+<h2>Style Guide<a class="headerlink" href="#style-guide" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Only use colors in exceptional cases.</li>
+<li>Give meaningful but short names.</li>
+<li>Arrange icons to intuitive places.</li>
+<li>Do not add too much mood tags. (It should not exceed 8 or 10 max)</li>
+</ul>
+</div></blockquote>
 </div>
 </div>
 

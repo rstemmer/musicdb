@@ -46,7 +46,7 @@ function Songtags_ShowMoodControl(parentid, controlname)
         posx  = mood.posx;
         posy  = mood.posy;
         name  = mood.name;
-        btnid = controlname + "_" + name; // control name + name of mood
+        btnid = controlname + "_" + name.replace(/\s+/g, ''); // control name + name of mood
 
         // Create cell content
         let html = "";
@@ -88,7 +88,7 @@ function Songtags_UpdateMoodControl(controlname, MDBSongTags)
     for(let mood of moods)
     {
         let buttonid;
-        buttonid = "#" + controlname + "_" + mood.name; // control name + name of mood
+        buttonid = "#" + controlname + "_" + mood.name.replace(/\s+/g, ''); // control name + name of mood
 
         let buttonstate;
         if(taglist.indexOf(mood.id) >= 0)

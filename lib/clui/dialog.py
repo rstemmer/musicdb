@@ -96,16 +96,21 @@ class Dialog(ListView, ButtonView):
         This method gets called when an element gets printed into the dialog view.
         Keep in mind that the dialog element is not able to scroll.
 
-        The number of printable character should not exceed the maximum width ``maxwidth``.
         The ``element`` is a tuple containing the label, the control element and the hint.
+        If the number of characters is too high, the hints will not be printed.
+        The number of printable characters gets calculated by the with of the label and hint of each row.
+        It should be at least 10 characters be left for the control, and 2 for spaces around the control.
 
         Args:
             element: The element that shall be printed.
             number (int): The index of the element in the list of all elements and at the same time the y coordinate
-            maxwidth (int): The maximum number of characters that can be printed in one line of the list view
+            maxwidth (int): *Will be ignored*
 
         Returns:
             *Nothing*
+
+        Raises:
+            ValueError: In case the with of the dialog is to small to print at least the label and the input control
         """
         label   = element[0]
         control = element[1]
@@ -125,6 +130,14 @@ class Dialog(ListView, ButtonView):
         control.x = x + self.maxlabellength + 1
         control.y = y
         control.w = w - (self.maxlabellength + self.maxhintlength + 2) # +2 for spaces between the elements
+        if control.w <= 10:
+            # when the control gets too small, reject the hint and only print the control
+            control.w = w - (self.maxlabellength + 1) # +1 for spaces between the elements
+            if control.w <= 10:
+                raise ValueError("The width of this dialog is too small!")
+            control.Draw()
+            return
+
         control.Draw()
 
         # Draw hint

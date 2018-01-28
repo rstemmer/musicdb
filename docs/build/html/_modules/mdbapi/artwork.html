@@ -122,6 +122,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/overview.html">Overview of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#music-database">Music Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../basics/testvm.html">MusicDB Test VMs</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/testvm.html#qemu-installation">qemu Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#basic-setup">Basic Setup</a></li>
@@ -233,7 +245,17 @@
 </ul>
 <p class="caption"><span class="caption-text">CLI Modules</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/add.html">add - Add New Album to MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/add.html">add - Add New Album to MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/add.html#select-album">Select Album</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/add.html#repair-file-names">Repair File Names</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mod/add.html#album-import-form">Album Import Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mod/add.html#new-songs-form">New Songs Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mod/add.html#online-check">Online Check</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/add.html#import-process">Import Process</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/artwork.html">artwork - Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/artwork.html#class">class</a></li>
 </ul>
@@ -244,13 +266,22 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mod/extern.html#automatization">Automatization</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/genres.html">genres - Genre Manager with CLUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/genres.html">genres - Genre Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/genres.html#managing-genres">Managing Genres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/genres.html#updating-caches">Updating Caches</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/metadata.html">metadata - Metadata Reader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/mise.html">mise - Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/mise.html#class">class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/moods.html">moods - Mood Tag Manager with CLUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/moods.html">moods - Mood Tag Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#mood-list">Mood List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#mood-grid">Mood Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#style-guide">Style Guide</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/musicai.html">musicai - MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#module-mod.musicai">Module Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#class-description">Class Description</a></li>
@@ -276,7 +307,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#database">Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#path-structure">Path structure</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/artwork.html#webbrowsers">Webbrowsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/artwork.html#web-browsers">Web Browsers</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#scaling">Scaling</a></li>
@@ -588,28 +619,28 @@
 
 <span class="sd">The artwork root directory can be configured in the MusicDB Configuration file.</span>
 <span class="sd">Everything related to artwork takes place in this directory.</span>
-<span class="sd">To use the artwork inside a web frontend, the https server needs access to this directory.</span>
+<span class="sd">To use the artwork inside a web frontend, the HTTPS server needs access to this directory.</span>
 
 <span class="sd">Relative to the artwork root directory are the artwork paths stored in the database.</span>
 <span class="sd">Source-Artworks, those who are not scaled, are in this directory.</span>
-<span class="sd">All scaled artworks are in subdirectories named by the resolution of the images.</span>
+<span class="sd">All scaled artworks are in sub-directories named by the resolution of the images.</span>
 
 <span class="sd">The name of an image, scaled and non-scaled, consists of the artist name and album name.</span>
 <span class="sd">The file format is JPEG. So a name looks like this: ``$Artistname - $Albumname.jpg``.</span>
-<span class="sd">This guarantees unique filenames that are human readable at the same time.</span>
+<span class="sd">This guarantees unique file names that are human readable at the same time.</span>
 <span class="sd">To get the 100x100 scaled version of this artwork just prepend ``100x100/`` to the path set in the database: ``100x100/$Artistname - $Albumname.jpg``</span>
 
 <span class="sd">The file name gets created by the method :meth:`~mdbapi.artwork.MusicDBArtwork.CreateArtworkName`.</span>
-<span class="sd">This method replaces &quot;/&quot; by an unicode division slash to avoid problems with the filesystem.</span>
+<span class="sd">This method replaces &quot;/&quot; by an Unicode division slash to avoid problems with the filesystem.</span>
 
 <span class="sd">In case there is no artwork given for an album, the default artwork is ``default.jpg``.</span>
 
 <span class="sd">All new creates files were set to the ownership ``[music]-&gt;owner:[music]-&gt;group`` and gets the permission ``rw-rw-r--``</span>
 
-<span class="sd">Webbrowsers</span>
-<span class="sd">^^^^^^^^^^^</span>
+<span class="sd">Web Browsers</span>
+<span class="sd">^^^^^^^^^^^^</span>
 
-<span class="sd">Webbrowsers have to prefix the path with ``artwork/``.</span>
+<span class="sd">Web browsers have to prefix the path with ``artwork/``.</span>
 <span class="sd">So, the server must be configured.</span>
 
 <span class="sd">Scaling</span>
@@ -635,9 +666,9 @@
 <span class="sd">Manifest</span>
 <span class="sd">--------</span>
 
-<span class="sd">To make a webbrowser cache all the artworks that can end up in hundreds of megabytes of data a cache manifest file is needed.</span>
+<span class="sd">To make a web browser cache all the artworks that can end up in hundreds of megabytes of data a cache manifest file is needed.</span>
 <span class="sd">Further more, these files are available if the client is offline.</span>
-<span class="sd">This is mandatory to &quot;store&quot; the webui as iOS app on the iOS home screen.</span>
+<span class="sd">This is mandatory to &quot;store&quot; the WebUI as iOS app on the iOS home screen.</span>
 <span class="sd">The manifest gets generated in :meth:`~mdbapi.artwork.GenerateAppCacheManifest`.</span>
 
 <span class="sd">Algorithm</span>
@@ -655,7 +686,6 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">stat</span>
-<span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">from</span> <span class="nn">lib.filesystem</span>     <span class="k">import</span> <span class="n">Filesystem</span>
 <span class="kn">from</span> <span class="nn">lib.metatags</span>       <span class="k">import</span> <span class="n">MetaTags</span>
 <span class="kn">from</span> <span class="nn">lib.cache</span>          <span class="k">import</span> <span class="n">ArtworkCache</span>
@@ -685,11 +715,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">musicroot</span>   <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">artworkroot</span> <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">artwork</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
 
-        <span class="c1"># Define the prefix that must be used by the webUI and server to access the artwork files</span>
+        <span class="c1"># Define the prefix that must be used by the WebUI and server to access the artwork files</span>
         <span class="c1"># -&gt; $PREFIX/$Artworkname.jpg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">manifestawprefix</span> <span class="o">=</span> <span class="s2">&quot;artwork&quot;</span>
 
-        <span class="c1"># Check if all pathes exist that have to exist</span>
+        <span class="c1"># Check if all paths exist that have to exist</span>
         <span class="n">pathlist</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">pathlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="n">pathlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">artwork</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
@@ -699,7 +729,7 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Path </span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">+</span> <span class="n">path</span> <span class="o">+</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> does not exist.&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Instantiate dependend classes</span>
+        <span class="c1"># Instantiate dependent classes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta</span>    <span class="o">=</span> <span class="n">MetaTags</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">awcache</span> <span class="o">=</span> <span class="n">ArtworkCache</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">artwork</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
 
@@ -765,7 +795,7 @@
 
             <span class="c1"># Copy file</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Copying file from </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> to </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
-            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">artworkroot</span><span class="o">.</span><span class="n">CopyFile</span><span class="p">(</span><span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
 
             <span class="c1"># Set permissions to -rw-rw-r--</span>
             <span class="k">try</span><span class="p">:</span>
