@@ -1,0 +1,6 @@
+This directory contains the build apk files of the MusicDB Android App.
+Only release version will be kept in the repository.
+Files ending with "debug.apk" will be ignored (via .gitignore)
+
+Pull request should not contain any apks.
+

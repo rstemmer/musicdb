@@ -1,0 +1,17 @@
+[
+    {
+        "type": "string",
+        "title": "HTTP server",
+        "desc": "URL of the MusicDB server\nhttps://localhost/musicdb",
+        "section": "Network",
+        "key": "httpserver"
+    },
+    {
+        "type": "string",
+        "title": "WebSocket server",
+        "desc": "URL of the WebSocket server\nwss://localhost:9000",
+        "section": "Network",
+        "key": "websocketserver"
+    }
+]
+

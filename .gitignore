@@ -6,3 +6,5 @@
 tmp/*
 id3edit/id3edit
 docs/build/doctrees
+android/.buildozer
+android/bin/*debug.apk
