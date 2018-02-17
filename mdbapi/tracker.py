@@ -298,7 +298,7 @@ class TrackerInterface(object):
 
         If the time between this song, and the previous one exceeds 30 minutes, it gets ignored and the internal state gets reset.
         So the chain of songs get cut if the time between playing them is too long.
-        The chain of songs gets also cut, if *songpath* is ``None``.
+        The chain of songs gets also cut, if *songpath* is ``None`` or ``""``.
 
         Args:
             songpath: relative song path of the song that gets currently played.
@@ -307,7 +307,7 @@ class TrackerInterface(object):
             ``True`` on success. ``False`` in case an error occurred.
         """
         # Check argument (A situation where songpath was None leads to chaos.)
-        if type(songpath) == None:
+        if not songpath:
             self.PushCMD(CMD_CLEAR)    # avoid tracking wrong relations
             logging.warning("Songpath of new song is of type None! \033[0;33m(Ignoring the NewSong-Call)")
             return False
