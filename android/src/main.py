@@ -54,9 +54,9 @@ except ImportError:
     logging.error("importing lib.httpclient failed!")
 
 try:
-    from ui.settings import SettingsView
-except ImportError:
-    logging.error("importing ui.settings failed!")
+    from mdb.localdb import LocalDatabase
+except ImportError as e:
+    logging.error("importing mdb.localdb failed! %s"%str(e))
 
 
 class MyApp(App):
@@ -99,6 +99,9 @@ class MyApp(App):
         
         self.textwidget = TextInput(text="Initializing …\n%s\n%s\n\n"%(str(sys.version_info), str(files)))
         screen.add_widget(self.textwidget)
+
+        # Open Database
+        self.db = LocalDatabase(os.path.join(self.directory, "music.db"))
 
         # Create Music Player instance
         self.mplayer = MusicPlayer()

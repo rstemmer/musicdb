@@ -16,7 +16,7 @@ source.dir = src/.
 source.include_exts = py,json
 
 # (list) List of inclusions using pattern matching
-source.include_patterns = src/lib/*, src/ui/*
+source.include_patterns = src/lib/*, src/ui/*, src/mdb/*
 
 # (list) Source files to exclude (let empty to not exclude anything)
 #source.exclude_exts = spec
@@ -36,7 +36,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma seperated e.g. requirements = sqlite3,kivy
-requirements = kivy, requests, openssl, pyopenssl, backports.ssl-match-hostname, websocket-client, websocket_client
+requirements = kivy, requests, openssl, pyopenssl, backports.ssl-match-hostname, websocket-client, websocket_client, sqlite3
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -109,6 +109,7 @@ android.sdk = 23
 
 # (list) Pattern to whitelist for the whole project
 #android.whitelist =
+android.p4a_whitelist = sqlite3/*,lib-dynload/_sqlite3.so
 
 # (str) Path to a custom whitelist file
 #android.whitelist_src =
