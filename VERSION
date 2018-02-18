@@ -1,3 +1,4 @@
+2.2.0 - Adds a new WebSocket API function: GetTables
 2.1.5 - Fixes a bug that leads to chaos when the queue runs empty
 2.1.4 - The dialog CLUI is now more tolerant for small terminal sizes
 2.1.3 - Fixes a bug in the add module that makes importing lyrics crash
