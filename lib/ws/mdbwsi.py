@@ -79,6 +79,7 @@ Other
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTables`
 
 """
 import random
@@ -164,6 +165,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetSongTags(args["songid"])
         elif fncname == "GetAlbumTags":
             retval = self.GetAlbumTags(args["albumid"])
+        elif fncname == "GetTables":
+            retval = self.GetTables(args["tables"])
         elif fncname == "GetMDBState":
             retval = self.GetMDBState()
         elif fncname == "GetMPDState":
@@ -748,6 +751,57 @@ class MusicDBWebSocketInterface(object):
         tags["subgenres"] = subgenres
         tags["moods"]     = moods
         return tags
+
+
+    def GetTables(self, tablenames):
+        """
+        Returns a dictionary that contains for each requested table a key.
+        Behind this key is a list of dictionaries representing the rows of the requested table.
+
+        If ``tablenames`` is ``None``, the result is an empty dictionary.
+
+        The following list shows all valid names and links to the database calls that returned lists will be returned by this method.:
+
+            * ``"songs"``: :meth:`lib.db.musicdb.MusicDatabase.GetAllSongs`
+            * ``"albums"``: :meth:`lib.db.musicdb.MusicDatabase.GetAllAlbums`
+            * ``"artists"``: :meth:`lib.db.musicdb.MusicDatabase.GetAllArtists`
+            * ``"tags"``: :meth:`lib.db.musicdb.MusicDatabase.GetAllTags`
+
+        Args:
+            tablenames (list of strings): A list of table names.
+
+        Returns:
+            A dict of lists of database entries
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Request("GetTables", "ShowTables", {position:["songs", "albums"]});
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "GetTables" && sig == "ShowTables")
+                    {
+                        console.log("Tags of the song with the ID " + args.songid);
+                        for(let song of args.songs)
+                            console.log(song.name);
+                        for(let album of args.albumss)
+                            console.log(album.name);
+                    }
+                }
+        """
+        retval = {}
+        if "songs" in tablenames:
+            retval["songs"] = self.database.GetAllSongs()
+        if "albums" in tablenames:
+            retval["albums"] = self.database.GetAllAlbums()
+        if "artists" in tablenames:
+            retval["artists"] = self.database.GetAllArtists()
+        if "tags" in tablenames:
+            retval["tags"] = self.database.GetAllTags()
+        return retval
 
 
     # THIS METHOD IS THREADSAFE
