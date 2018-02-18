@@ -58,6 +58,11 @@ try:
 except ImportError as e:
     logging.error("importing mdb.localdb failed! %s"%str(e))
 
+try:
+    from mdb.musicdb import MusicDB
+except ImportError as e:
+    logging.error("importing mdb.localdb failed! %s"%str(e))
+
 
 class MyApp(App):
     def build(self):
@@ -86,11 +91,16 @@ class MyApp(App):
 
         self.settingsbutton = Button(text="Settings")
         self.settingsbutton.bind(on_press=self.onSettingsPressed)
+        self.testbutton = Button(text="Test")
+        self.testbutton.bind(on_press=self.onTestPressed)
+        testbox = BoxLayout(orientation="vertical")
+        testbox.add_widget(self.settingsbutton)
+        testbox.add_widget(self.testbutton)
 
         buttonbox = BoxLayout(orientation="horizontal")
         buttonbox.add_widget(actionbox)
         buttonbox.add_widget(wsbox)
-        buttonbox.add_widget(self.settingsbutton)
+        buttonbox.add_widget(testbox)
 
         screen.add_widget(buttonbox)
 
@@ -100,6 +110,8 @@ class MyApp(App):
         self.textwidget = TextInput(text="Initializing …\n%s\n%s\n\n"%(str(sys.version_info), str(files)))
         screen.add_widget(self.textwidget)
 
+        self.wsurl   = self.config.get("Network", "websocketserver")
+        self.httpurl = self.config.get("Network", "httpserver")
         # Open Database
         self.db = LocalDatabase(os.path.join(self.directory, "music.db"))
 
@@ -108,14 +120,30 @@ class MyApp(App):
 
         # Create HTTP Client instance 
         self.httpclient = HTTPClient(
-                url         = self.config.get("Network", "httpserver"),
-                rootdir     = self.user_data_dir,
+                url         = self.httpurl,
                 certificate = None)
 
         # Create WebSocket Client instance
-        self.wsclient = WebSocketClient(url = self.config.get("Network", "websocketserver"))
+        self.wsclient = WebSocketClient(url = self.wsurl)
 
         return screen
+
+
+    def onTestPressed(self, button):
+        self.Print("Starting test: ")
+        try:
+            self.mdb = MusicDB(self.wsurl, self.httpurl, self.user_data_dir)
+            tables = self.mdb.GetDatabaseEntries()
+            numsongs   = len(tables["songs"])
+            numalbums  = len(tables["albums"])
+            numartists = len(tables["artists"])
+        except Exception as e:
+            self.Print("failed!\n%s\n"%(str(e)))
+            logging.exception("")
+            return
+
+        self.Print("[%s/%s/%s] "%(str(numartists),str(numalbums),str(numsongs)))
+        self.Print("done\n")
     
 
     def build_config(self, config):
@@ -182,8 +210,9 @@ class MyApp(App):
 
     def onDownloadPressed(self, button):
         self.Print("Downloading from HTTP server: ")
+        dstpath = os.path.join(self.user_data_dir, "03 Sonne.m4a")
         try:
-            self.httpclient.DownloadFile("music/Rammstein/2001 - Mutter/03 Sonne.m4a", "03 Sonne.m4a")
+            self.httpclient.DownloadFile("music/Rammstein/2001 - Mutter/03 Sonne.m4a", dstpath)
         except Exception as e:
             self.Print("failed!\n%s\n"%(str(e)))
         else:

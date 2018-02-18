@@ -37,12 +37,10 @@ class HTTPClient(object):
 
     Args:
         url (str): Address of the server.
-        rootdir (str): Path to store the downloaded files at.
         certificate (str): Path to the certificate for authentication (A .pem file)
     """
-    def __init__(self, url, rootdir, certificate):
+    def __init__(self, url, certificate=None):
         self.httpurl = url
-        self.rootdir = rootdir
         if certificate:
             self.cert = os.path.join(".", certificate)
 
@@ -55,14 +53,12 @@ class HTTPClient(object):
         
         Args:
             source (str): is the path of the file to download, relative to the URL of the server.
-            destination (str): is the path to store the file, relative to the root-directory given to the constructor of this class.
+            destination (str): is the path to store the file
 
         Returns:
             ``True`` on success. If the certificate cannot be found or an SSL error occurs ``False`` gets returned.
         """
-        # Create paths
-        dstpath = os.path.join(self.rootdir, destination)
-        url     = self.httpurl + "/" + source
+        url = self.httpurl + "/" + source
 
         # Check if certificate exists
         if not os.path.exists(self.cert):
@@ -82,7 +78,7 @@ class HTTPClient(object):
             return False
 
         # Store file
-        with open(dstpath, "wb") as f:
+        with open(destination, "wb") as f:
             for chunk in response.iter_content(chunk_size=1024):
                 if chunk:
                     f.write(chunk)
