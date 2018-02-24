@@ -17,6 +17,7 @@
 
 from lib.websocketclient import WebSocketClient
 from lib.httpclient      import HTTPClient
+import os
 
 
 class MusicDBInterface(WebSocketClient, HTTPClient):
@@ -31,16 +32,79 @@ class MusicDBInterface(WebSocketClient, HTTPClient):
     def __init__(self, wsurl, httpurl, datadir):
         WebSocketClient.__init__(self, wsurl)
         HTTPClient.__init__(self, httpurl)
+        
+        self.datadir    = datadir
+        self.musicdir   = os.path.join(self.datadir, "muscic")
+        self.artworkdir = os.path.join(self.datadir, "artwork")
+
+        # Check if $datadir/music and $datadir/artwork exists. Create when not.
+        if not os.path.isdir(self.musicdir):
+            os.makedirs(self.musicdir)
+        if not os.path.isdir(self.artworkdir):
+            os.makedirs(self.artworkdir)
 
 
 
     def GetSongFile(self, mdbsongpath, destination):
-        pass
+        """
+        This method downloads a song file from the MusicDB HTTP server.
+        The url that will be used consist of three parts:
+        
+            #. The server URL given to the constructor (``httpurl``)
+            #. The music root directory alias: ``music/``
+            #. The path to the song file relative to the music root directory. So, the path as it will be provided by the MusicDB WebSocket Server. This path is what must be given to the ``mdbsongpath`` parameter.
+
+        So the final URL will be ``$httpurl + "/music/" + $mdbsongpath``
+
+        The downloaded file will be stored at the give destination inside the local music root directory.
+        This root directory is inside the user data directory.
+        So the final place the downloaded song will be stored is ``$datadir + /music/ + $destination``
+        The destination parameter also contains the file name.
+
+        Example:
+
+            .. code-block:: python
+
+                mdbi = MusicDBInterface(wsurl, "https://server.org", android_user_dir)
+
+                # download a song from the sever
+                # and store it in the local music directory with its artist, album and song ids as names
+                srcpath = song["path"] # for example "NimphaioN/2013 - Flame Of Faith/01 Dark Age Begins.mp3"
+                dstpath = song["artistid"] + "/" + song["albumid"] + "/" + song["id"] + ".mp3"
+
+                success = mdbi.GetSong(srcpath, dstpath)
+
+        Args:
+            mdbsongpath (str): Song path relative to the music root directory, that shall be downloaded.
+            destination (str): Path the song will be stored at. This path includes the songs file name.
+
+        Returns:
+            ``True`` on success. Otherwise ``False``.
+        """
+        dstpath = os.path.join(self.musicdir, destination)
+        success = self.DownloadFile("music/" + mdbsongpath, dstpath)
+        return success
 
 
 
     def GetArtworkFile(self, mdbawpath, destination):
-        pass
+        """
+        This method is very similar to :meth:`~GetSongFile`.
+        It just downloads an album artwork instead of a song file.
+
+        The final URL will be ``$httpurl + "/webui/artwork/" + $mdbawpath``.
+        The downloaded file will be stored at ``$datadir + /artwork/ + $destination``
+
+        Args:
+            mdbawpath (str): Artwork path relative to the artwork directory provided by the server.
+            destination (str): Path the artwork will be stored at. This path includes the file name.
+
+        Returns:
+            ``True`` on success. Otherwise ``False``.
+        """
+        dstpath = os.path.join(self.artworkdir, destination)
+        success = self.DownloadFile("webui/artwork/" + mdbsongpath, dstpath)
+        return success
 
 
 
