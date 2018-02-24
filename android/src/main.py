@@ -91,10 +91,13 @@ class MyApp(App):
 
         self.settingsbutton = Button(text="Settings")
         self.settingsbutton.bind(on_press=self.onSettingsPressed)
+        self.resetbutton = Button(text="Reset")
+        self.resetbutton.bind(on_press=self.onResetPressed)
         self.testbutton = Button(text="Test")
         self.testbutton.bind(on_press=self.onTestPressed)
         testbox = BoxLayout(orientation="vertical")
         testbox.add_widget(self.settingsbutton)
+        testbox.add_widget(self.resetbutton)
         testbox.add_widget(self.testbutton)
 
         buttonbox = BoxLayout(orientation="horizontal")
@@ -105,7 +108,8 @@ class MyApp(App):
         screen.add_widget(buttonbox)
 
         import os
-        files = os.listdir(".")
+        files  = str(os.listdir(".")) + "\n"
+        files += str(os.listdir(self.user_data_dir))
         
         self.textwidget = TextInput(text="Initializing …\n%s\n%s\n\n"%(str(sys.version_info), str(files)))
         screen.add_widget(self.textwidget)
@@ -133,16 +137,24 @@ class MyApp(App):
         self.Print("Starting test: ")
         try:
             self.mdb = MusicDB(self.wsurl, self.httpurl, self.user_data_dir)
-            tables = self.mdb.GetDatabaseEntries()
-            numsongs   = len(tables["songs"])
-            numalbums  = len(tables["albums"])
-            numartists = len(tables["artists"])
+            self.mdb.Synchronize()
         except Exception as e:
             self.Print("failed!\n%s\n"%(str(e)))
             logging.exception("")
             return
 
-        self.Print("[%s/%s/%s] "%(str(numartists),str(numalbums),str(numsongs)))
+        self.Print("done\n")
+
+
+    def onResetPressed(self, button):
+        self.Print("Resetting: ")
+        try:
+            self.db.DeleteDatabase()
+        except Exception as e:
+            self.Print("failed!\n%s\n"%(str(e)))
+            logging.exception("")
+            return
+
         self.Print("done\n")
     
 
@@ -170,8 +182,10 @@ class MyApp(App):
 
         if section == "Network" and key == "httpserver":
             self.httpclient.httpurl = value
+            self.httpurl            = value
         elif section == "Network" and key == "websocketserver":
             self.wsclient.wsurl = value
+            self.wsurl          = value
 
     def close_settings(self, settings=None):
         """
