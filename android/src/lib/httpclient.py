@@ -33,6 +33,9 @@ class HTTPClient(object):
     The URL includes the protocol, port and path-offset to the MusicDB's directories.
     For example: ``"https://localhost/musicdb"``
 
+    This method allows none-secured connections (set *certificate* to ``None``).
+    But you really should use this only when the server is not accessible from the internet.
+
     All methods are blocking!
 
     Args:
@@ -43,6 +46,8 @@ class HTTPClient(object):
         self.httpurl = url
         if certificate:
             self.cert = os.path.join(".", certificate)
+        else:
+            self.cert = None
 
 
 
@@ -61,13 +66,15 @@ class HTTPClient(object):
         url = self.httpurl + "/" + source
 
         # Check if certificate exists
-        if not os.path.exists(self.cert):
-            logging.error("Certificate " + cert + " does not exist!\n")
-            return False
+        if self.cert:
+            if not os.path.exists(self.cert):
+                logging.error("Certificate " + cert + " does not exist!\n")
+                return False
 
         # Open HTTPS session
         httpsession = requests.Session()
-        httpsession.cert = self.cert
+        if self.cert:
+            httpsession.cert = self.cert
 
         # Download file
         try:
