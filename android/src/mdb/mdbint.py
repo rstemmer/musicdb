@@ -45,7 +45,7 @@ class MusicDBInterface(WebSocketClient, HTTPClient):
 
 
 
-    def GetSongFile(self, mdbsongpath, destination):
+    def DownloadSongFile(self, mdbsongpath, destination):
         """
         This method downloads a song file from the MusicDB HTTP server.
         The url that will be used consist of three parts:
@@ -87,9 +87,9 @@ class MusicDBInterface(WebSocketClient, HTTPClient):
 
 
 
-    def GetArtworkFile(self, mdbawpath, destination):
+    def DownloadArtworkFile(self, mdbawpath, destination):
         """
-        This method is very similar to :meth:`~GetSongFile`.
+        This method is very similar to :meth:`~DownloadSongFile`.
         It just downloads an album artwork instead of a song file.
 
         The final URL will be ``$httpurl + "/webui/artwork/" + $mdbawpath``.
@@ -103,7 +103,7 @@ class MusicDBInterface(WebSocketClient, HTTPClient):
             ``True`` on success. Otherwise ``False``.
         """
         dstpath = os.path.join(self.artworkdir, destination)
-        success = self.DownloadFile("webui/artwork/" + mdbsongpath, dstpath)
+        success = self.DownloadFile("webui/artwork/" + mdbawpath, dstpath)
         return success
 
 
