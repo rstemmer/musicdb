@@ -414,7 +414,7 @@ function _ABV_CreateSongEntryButtonbox(MDBSong)
     html += "<div id=\"" + boxid + "\" class=\"ABV_buttonbox hlcolor\">";
 
     if(MDBSong.favorite > 0)
-        html += _ABV_CreateFlag("favorite", "<i class=\"fa fa-diamond\"></i>", "#A8A623");
+        html += _ABV_CreateFlag("favorite", "<i class=\"fa fa-star-o\"></i>", "#A8A623");
 
     // Lyrics-button
     html += Button_Lyrics(MDBSong.lyricsstate,
