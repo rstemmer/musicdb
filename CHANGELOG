@@ -5,6 +5,21 @@
 │ ∗ Other                                │
 └────────────────────────────────────────┘
 
+Run  git log --oneline  for more details
+
+
+┍━━━━┫ 2018-02-18 ┣━━━━┫ 2.2.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ ∗ Adds a new WebSocket API function: GetTables
+│
+┝━ MINOR CHANGES
+│ * Fixes a bug that leads to chaos when the queue runs empty
+│ * The dialog CLUI is now more tolerant for small terminal sizes
+│ * Fixes a bug in the add module that makes importing lyrics crash
+│ * Fixes sloppy path handling in artwork manager
+│ * Makes WebUI more tolerant for missing MPD connection
+└───────────────────────────────────────╌╌
+
 ┍━━━━┫ 2018-01-07 ┣━━━━┫ 2.1.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ ∗ Better file permissions and default configuration (better for root-less access)

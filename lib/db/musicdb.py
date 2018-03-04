@@ -376,13 +376,6 @@ class MusicDatabase(Database):
     SONG_LYRICSSTATE = 17
     # Q* : Queue statistics
 
-    ARTWORK_ID               = 0
-    ARTWORK_ALBUMID          = 1
-    ARTWORK_PATH             = 2
-    ARTWORK_COLOR_BACKGROUND = 3
-    ARTWORK_COLOR_FOREGROUND = 4
-    ARTWORK_COLOR_HIGHLIGHT  = 5
-
     TAG_ID          = 0
     TAG_NAME        = 1
     TAG_CLASS       = 2
@@ -459,16 +452,6 @@ class MusicDatabase(Database):
         song["favorite"] = entry[self.SONG_FAVORITE]
         song["qrndadds"] = entry[self.SONG_QRNDADDS]
         song["lyricsstate"] = entry[self.SONG_LYRICSSTATE]
-        return song
-
-    def __ArtworkEntryToDict(self, entry):
-        song = {}
-        song["id"]       = entry[self.ARTWORK_ID]
-        song["albumid"]  = entry[self.ARTWORK_ALBUMID]
-        song["path"]     = entry[self.ARTWORK_PATH]
-        song["bgcolor"]  = entry[self.ARTWORK_COLOR_BACKGROUND]
-        song["fgcolor"]  = entry[self.ARTWORK_COLOR_FOREGROUND]
-        song["hlcolor"]  = entry[self.ARTWORK_COLOR_HIGHLIGHT]
         return song
 
     def __TagEntryToDict(self, entry):

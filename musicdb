@@ -20,6 +20,7 @@ import argparse
 import imp
 import os
 import sys
+import grp
 from lib.filesystem     import Filesystem
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
@@ -136,6 +137,15 @@ if __name__ == "__main__":
         print("\033[1;31mFATAL ERROR: Opening config-file failed!\033[0m (" + args.config + ")")
         print(e)
         exit(1)
+
+
+    # Check for effective group and print a warning when it is not MusicDB
+    gid   = os.getegid()
+    group = grp.getgrgid(gid)
+    gname = group[0]
+    if gname != config.music.group:
+        print("\033[1;33mMusicDB runs in UNIX group \033[1;31m%s\033[1;33m but expects group \033[1;37m%s\033[1;33m."%(gname, config.music.group))
+        print("\033[1;30m\tTo change the group, run \033[0;37mnewgrp %s\033[1;30m before executing MusicDB\033[0m"%(config.music.group))
 
 
     # reconfigure logger
