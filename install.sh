@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="1.1.2"
+SCRIPTVERSION="1.1.3"
 echo -e "\e[1;31mMusicDB-Install [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
@@ -242,6 +242,13 @@ function InstallMPDEnvironment {
         sed -i -e "s;MPDUSER;$MPDUSER;g"       $DATADIR/mpd/mpd.conf
 
         chown -R $MPDUSER:$MDBGROUP $DATADIR/mpd
+        echo -e "\e[1;32mdone"
+    else
+        echo -e "\e[1;37malready done!"
+    fi
+
+    echo -e -n "\e[1;34mSetting MPD home directory to \e[0;36m$DATADIR/mpd\e[1;34m: \e[1;31m"
+    if [ "$(getent passwd someuser | cut -f6 -d:)" != "$DATADIR/mpd" ]; then
         usermod -d $DATADIR/mpd $MPDUSER
         echo -e "\e[1;32mdone"
     else
