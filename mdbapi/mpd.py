@@ -366,7 +366,7 @@ def Connect():
     logging.debug("Connecting to MPD at %s:%s", host, port)
     try:
         Interface.connect(host, port)
-    except IOError as e:
+    except (ConnectionError, IOError) as e:
         logging.error("Connecting to MPD (%s:%s) failed with error: %s", host, port, str(e))
         return False
 
