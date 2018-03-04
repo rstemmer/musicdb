@@ -121,7 +121,7 @@ class musicai(MDBModule):
             , action="store"
             , type=str
             , metavar="action"
-            , help="let the AI predict the genre of PATH")
+            , help="let the AI predict the genre of PATH. Actions are \"show\" or \"store\"")
         parser.add_argument("-g", "--genre"
             , action="store"
             , type=str
