@@ -34,7 +34,7 @@ class MusicDBInterface(WebSocketClient, HTTPClient):
         HTTPClient.__init__(self, httpurl)
         
         self.datadir    = datadir
-        self.musicdir   = os.path.join(self.datadir, "muscic")
+        self.musicdir   = os.path.join(self.datadir, "music")
         self.artworkdir = os.path.join(self.datadir, "artwork")
 
         # Check if $datadir/music and $datadir/artwork exists. Create when not.

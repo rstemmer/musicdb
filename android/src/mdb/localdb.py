@@ -192,8 +192,8 @@ class LocalDatabase(Database):
         Returns:
             ``None``
         """
-        # set all sync-flags to 2
-        sql = "UPDATE songs SET syncstate = %i"%(self.SYNCSTATE_OLD)
+        # set all sync-flags to outdated
+        sql = "UPDATE songs SET syncstate = 2"
         self.Execute(sql)
         return None
 
@@ -239,6 +239,9 @@ class LocalDatabase(Database):
         If the song does not exist, a new entry will be created with sync-state ``1`` (new entry, download file).
         In this case, the *path* value corresponds to the path on the server, not on the client.
         This information can be used to download the song file.
+
+        The song gets identified by its ID.
+        Changed file endings will not be detected!
 
         Example:
             .. code-block:: python
@@ -296,7 +299,7 @@ class LocalDatabase(Database):
                 disabled = :disabled, 
                 likes    = :likes, 
                 dislikes = :dislikes,
-                favorite = :favorite
+                favorite = :favorite,
                 syncstate= 0
             WHERE 
                 songid = :id
@@ -313,14 +316,14 @@ class LocalDatabase(Database):
         These entries can be used to delete the related files.
 
         Returns:
-            A list of song dictionaries or ``None`` if there are no song outdated songs
+            A list of song dictionaries or ``[]`` if there are no song outdated songs
         """
 
         sql    = "SELECT * FROM songs WHERE syncstate = 2"
         result = self.GetFromDatabase(sql)
 
         if not result:
-            return None
+            return []
 
         songs = []
         for entry in result:
@@ -337,14 +340,14 @@ class LocalDatabase(Database):
         These entries can be used to download the related files.
 
         Returns:
-            A list of song dictionaries or ``None`` if there are no song new song entries
+            A list of song dictionaries or ``[]`` if there are no song new song entries
         """
 
         sql    = "SELECT * FROM songs WHERE syncstate = 1"
         result = self.GetFromDatabase(sql)
 
         if not result:
-            return None
+            return []
 
         songs = []
         for entry in result:
@@ -356,8 +359,15 @@ class LocalDatabase(Database):
 
 
     def DeleteAllOldSongs(self):
+        """
+        This method deletes all outdated song entries.
+
+        Returns:
+            ``None``
+        """
+        # Delete entries
         sql = "DELETE FROM songs WHERE syncstate = 2"
-        self.Execute(sql, albumid)
+        self.Execute(sql)
         return None
 
 
@@ -379,7 +389,7 @@ class LocalDatabase(Database):
         if type(songid) != int:
             raise TypeError("songid must be an integer!")
         if type(path) != str:
-            raise TypeError("path must be a string!")
+            raise TypeError("path must be a string, not %s!"%(type(path)))
 
         sql = "UPDATE songs SET path = ?, syncstate = 0 WHERE songid = ?"
         self.Execute(sql, (path, songid))
