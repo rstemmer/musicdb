@@ -45,6 +45,7 @@ class MusicDB(MusicDBInterface):
         # Synchronize database
         self.UpdateArtists(servertables["artists"])
         self.UpdateAlbums(servertables["albums"])
+        self.UpdateSongs(servertables["songs"])
 
 
 
@@ -99,6 +100,8 @@ class MusicDB(MusicDBInterface):
 
         When one of the steps fails, the other steps gets ignored and the next album will be checked.
 
+        The album path is ``$ARTISTID/$ALBUMID/.``
+
         Args:
             serveralbums: A list of all rows of the servers album table
 
@@ -119,6 +122,7 @@ class MusicDB(MusicDBInterface):
             clientartworkpath = str(album["id"]) + ".jpg"
             success = self.DownloadArtworkFile(serverartworkpath, clientartworkpath)
             if not success:
+                logging.error("Downloading artwork \"%s\" failed!", serverartworkpath)
                 continue
             album["artworkpath"] = clientartworkpath
 
@@ -126,6 +130,7 @@ class MusicDB(MusicDBInterface):
             album["path"] = os.path.join(str(artistid), str(albumid))
             success = self.localdb.CreateAlbumEntry(album)
             if not success:
+                logging.error("Creating album entry for \"%s\" failed!", album["name"])
                 continue
 
             # Create album directory
@@ -135,6 +140,59 @@ class MusicDB(MusicDBInterface):
             except OSError:
                 continue
 
+
+
+    def UpdateSongs(self, serversongs):
+        """
+        This method compares the local songs with the songs from the server.
+        If a song does not exist, it will be downloaded from the server.
+        
+        The update process will be done in the following steps:
+
+            #. Mark all local songs as Outdated
+            #. For all server song entries, check if they exist in the database
+            #. Downloading new Songs
+            #. Removing old songs
+
+        When one of the steps fails, the other steps gets ignored and the next song will be checked.
+
+        Args:
+            serversongs: A list of all rows of the servers song table
+
+        Returns:
+            *Nothing*
+        """
+        # Mark all songs as old
+        self.localdb.SetAllSongsAsOutdated()
+
+        # Create new entry for new songs, and mark already existing songs as Up To Date
+        for song in serversongs:
+            self.localdb.CreateOrUpdateSongEntry(song)
+
+        # Download new songs
+        newsongs = self.localdb.GetAllNewSongs()
+        for newsong in newsongs:
+            serversongpath  = newsong["path"]    # For new songs, the path still contains the server side path
+            clientsongpath  = os.path.join(str(newsong["artistid"]), str(newsong["albumid"]))
+            clientsongpath  = os.path.join(clientsongpath, str(newsong["id"]))
+            clientsongpath += os.path.splitext(newsong["path"])[1]
+            success = self.DownloadSongFile(serversongpath, clientsongpath)
+            if not success:
+                logging.error("Downloading song \"%s\" failed!", serversongpath)
+                continue
+
+            self.localdb.SetSongAsDownloaded(newsong["id"], clientsongpath)
+
+        # Remove old songs
+        oldsongs = self.localdb.GetAllOldSongs()
+        for oldsong in oldsongs:
+            abssongpath = os.path.join(self.musicdir, oldsong["path"])
+            try:
+                os.remove(abssongpath)
+            except Exception:
+                continue
+
+        self.localdb.DeleteAllOldSongs()
 
 
 
