@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2018  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,6 +33,9 @@ from kivy.uix.button    import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.settings  import Settings, SettingsWithSidebar, SettingsWithSpinner, SettingsWithTabbedPanel
 
+from jnius import autoclass
+from jnius import cast
+
 
 # When there is a syntax error in a module, buildozer does not inform the developer.
 # It just does not add that module to the APK.
@@ -62,6 +65,11 @@ try:
     from mdb.musicdb import MusicDB
 except ImportError as e:
     logging.error("importing mdb.localdb failed! %s"%str(e))
+
+try:
+    from ui.artistview import ArtistViewTest
+except ImportError as e:
+    logging.error("importing ui.artistview failed! %s"%str(e))
 
 
 class MyApp(App):
@@ -93,11 +101,14 @@ class MyApp(App):
         self.settingsbutton.bind(on_press=self.onSettingsPressed)
         self.resetbutton = Button(text="Reset")
         self.resetbutton.bind(on_press=self.onResetPressed)
+        self.intentbutton = Button(text="Send Intent")
+        self.intentbutton.bind(on_press=self.onIntentPressed)
         self.testbutton = Button(text="Test")
         self.testbutton.bind(on_press=self.onTestPressed)
         testbox = BoxLayout(orientation="vertical")
         testbox.add_widget(self.settingsbutton)
         testbox.add_widget(self.resetbutton)
+        testbox.add_widget(self.intentbutton)
         testbox.add_widget(self.testbutton)
 
         buttonbox = BoxLayout(orientation="horizontal")
@@ -138,6 +149,31 @@ class MyApp(App):
         try:
             self.mdb = MusicDB(self.wsurl, self.httpurl, self.user_data_dir)
             self.mdb.Synchronize()
+        except Exception as e:
+            self.Print("failed!\n%s\n"%(str(e)))
+            logging.exception("")
+            return
+
+        self.Print("done\n")
+
+
+    def onIntentPressed(self, button):
+        self.Print("Media Scan: ")
+        try:
+            # import the needed Java class
+            PythonActivity = autoclass('org.kivy.android.PythonActivity')
+            Intent = autoclass('android.content.Intent')
+            Uri = autoclass('android.net.Uri')
+            FileClass = autoclass("java.io.File")
+
+            # create the intent
+            f = FileClass(self.user_data_dir+"/music/1/1/1.m4a")
+            intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(f))
+
+            # broadcast intent
+            currentActivity = cast('android.app.Activity', PythonActivity.mActivity)
+            currentActivity.sendBroadcast(intent)
+
         except Exception as e:
             self.Print("failed!\n%s\n"%(str(e)))
             logging.exception("")
@@ -298,6 +334,7 @@ class MyApp(App):
 
 if __name__ == "__main__":
     MyApp().run()
+    #ArtistViewTest().run()
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
