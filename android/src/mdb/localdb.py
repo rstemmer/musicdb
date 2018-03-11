@@ -388,7 +388,7 @@ class LocalDatabase(Database):
         """
         if type(songid) != int:
             raise TypeError("songid must be an integer!")
-        if type(path) != str:
+        if type(path) != str and type(path) != unicode:
             raise TypeError("path must be a string, not %s!"%(type(path)))
 
         sql = "UPDATE songs SET path = ?, syncstate = 0 WHERE songid = ?"
