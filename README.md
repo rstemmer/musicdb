@@ -13,7 +13,7 @@ Instead you explore your music collection.
 
 ---
 
-Until now I spent more than 6 years for developing this awesome software.
+Until now I spent over 6 years for developing this awesome software.
 Since I finished a first test version, I use it nearly every day.
 Time to share it with the world. :smiley:
 
@@ -48,7 +48,7 @@ Providing and maintaining open source software comes with some downsides.
 I'd like to know if anyone is using this software, and what you are doing with it. :smiley:
 
 So feel free to follow my project account [@MusicDBProject](https://twitter.com/MusicDBProject) on Twitter
-or e-mail me.
+and share some screenshots :wink:
 
 In case you find any bugs, please create an Issue.
 Feature requests are welcome as well.
@@ -67,7 +67,7 @@ In case MusicDB does not run on outdated operating systems, update your system ;
 * A Linux operating system. Tested with:
   * [Arch Linux](https://www.archlinux.org/) for x86-64 (primary test and development system)
   * [Debian](https://www.debian.org/distrib/) for x86-64 (not recommended because it comes with lots of ~~old~~ "stable" software)
-  * [Arch Linux ARM](https://archlinuxarm.org/) for Aarch64 with [ODROID-C2](https://wiki.odroid.com/odroid-c2/odroid-c2)
+  * [Arch Linux ARM](https://archlinuxarm.org/) for AArch64 with [ODROID-C2](https://wiki.odroid.com/odroid-c2/odroid-c2)
   * [Arch Linux ARM](https://archlinuxarm.org/) for ARMv7 with [Raspberry Pi 3](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
 * [Python3](https://www.python.org/)
 * [Music Player Daemon (MPD)](https://musicpd.org/)
@@ -81,7 +81,7 @@ In case MusicDB does not run on outdated operating systems, update your system ;
 
 The `install.sh` script checks for tools needed to install MusicDB.
 Furthermore `musicdb-check.sh` list all tools and Python modules needed by MusicDB.
-You can run the check-script at any time. But before working with MusicDB you should install the none-optional dependencies.
+You can run the check-script at any time. 
 
 Execute `pip install -r requirements.txt` to install a basic set of Python modules needed for MusicDB.
 
@@ -103,15 +103,15 @@ To install MusicDB, read [:notebook: How to Install MusicDB](https://rstemmer.gi
 For updating, you can also execute the `install.sh` script.
 Read the *Breaking News* for manual steps to do before updating to a new major release.
 
-Updating to the next minor version, simply run `git pull && ./quickupdate.sh` (Be sure you are on the master branch).
+Updating to the next minor version can be done by simply executing `git pull && ./quickupdate.sh` (Be sure you are on the master branch).
 
 
 ## Usage
 
 The start page of [:notebook: MusicDB's Documentation](https://rstemmer.github.io/musicdb/build/html/index.html)
 should give you the help you need to start - or at least the links to the chapters they do
-(The [:notebook: CLI MODULES chapters)](https://m45ch1n3.de/musicdb/docs/build/html/index.html#musicdb-cli).
-The documentation is also made for developers, not only users. So there is much more information than you will need to use MusicDB.
+(like the [:notebook: CLI MODULES chapters)](https://m45ch1n3.de/musicdb/docs/build/html/index.html#musicdb-cli).
+The documentation is made for developers, not only users. So there is much more information than you will need to use MusicDB.
 
 
 In general, the first steps are the following, after you have done the [:notebook: First Run](https://rstemmer.github.io/musicdb/build/html/usage/install.html#first-run):
@@ -122,9 +122,9 @@ In general, the first steps are the following, after you have done the [:noteboo
 4. Open the WebUI in your browser and tag the albums with the genres you created. (Right click on the albums title in the Album View). Then the random song selection process can start working and stops printing warnings.
 
 
-Finally some helpful hints:
+Some helpful hints:
 
-* For security reasons, MusicDB and MPD only accepts connections from localhost by default. Change the [:notebook: WebSocket address configuration](https://rstemmer.github.io/musicdb/build/html/basics/config.html#websocket) and MPDs `bind_to_address` configuration from `127.0.0.1` to `0.0.0.0` to access your music from anywhere.
+* For security reasons, MusicDB and MPD only accepts connections from localhost by default. Change the [:notebook: WebSocket address configuration](https://rstemmer.github.io/musicdb/build/html/basics/config.html#websocket) and MPD's `bind_to_address` configuration from `127.0.0.1` to `0.0.0.0` to access your music from anywhere.
 * Don't be to specific with the genre tags. Tag albums beforehand and songs only when they are currently playing.
 * Set mood-flags only for the current playing song.
 * Check the [:notebook: Configuration of Randy](https://rstemmer.github.io/musicdb/build/html/basics/config.html#randy) to make sure the random song selection can work with your music collection. When you have a small music collection, decrease the blacklist sizes.
@@ -157,6 +157,7 @@ Every help is welcome.
 * Improve the documentation.
 * Suggesting features via Issue.
 * See if there is an Issue you are able to fix, or to give hints on how to fix it.
+* Fix bugs or add features.
 
 
 ### Before you change code
@@ -164,7 +165,7 @@ Every help is welcome.
 * Read [:notebook: Working on MusicDB's Code](https://rstemmer.github.io/musicdb/build/html/basics/workflow.html)
 * … and [:notebook: Basic Rules for MusicDB](https://rstemmer.github.io/musicdb/build/html/basics/concept.html)
 * Branch from *master*.
-* Please don't commit *docs/build* for pull requests.
+* Please don't commit *docs/build*,
 
 
 # Versioning and Branches
@@ -180,6 +181,33 @@ A reliable change log can be generated by calling `git log --oneline`. :wink:
 It is also recommended to update whenever there are changes on *master*.
 You better not use any other branch than *master*. :wink:
 
+**Best dates for updating MusicDB are end of January, end of May and end of September.**
+
 Major "releases" are not compatible with the previous version of MusicDB.
 How to update to a next major version will be described in the *Breaking News* section at the beginning of this README.
+
+The following subsections describe the branches the MusicDB git repository contains.
+
+## master branch
+
+This is the main branch and contains the latest stable version of MusicDB.
+This is the version you should install.
+If you want to do some changes to the code, you should branch from this branch.
+
+## develop branch
+
+This branch is the branch I'm working on. It may contain incomplete features and untested code.
+If there you have trouble with the master branch, and the git log promises a solution to that problem, 
+you can try using this branch.
+
+When there are lots of commits that are not yet merges with master, you should be very careful.
+I also do not guarantee that this branch is compatible with the current master branch.
+Make a backup of your MusicDB data directory before using installing MusicDB from this branch.
+
+## mobileapp branch
+
+I'm working on a mobile app that downloads your whole music collection via WLAN onto your smartphone.
+It is still very experimental and not ready to use.
+For the app, I use the [kivy](https://kivy.org/#home) framework.
+Target will only be Android smartphones due to the storage limitation of iOS based devices.
 

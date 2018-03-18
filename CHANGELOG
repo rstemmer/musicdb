@@ -2,7 +2,7 @@
 ┍━━━━┫ Explanation ┣━━━━━━━━━━━━━━━━━━━━━┑
 │ + Added                                │
 │ - Removed                              │
-│ ∗ Other                                │
+│ * Other                                │
 └────────────────────────────────────────┘
 
 Run  git log --oneline  for more details
@@ -10,7 +10,7 @@ Run  git log --oneline  for more details
 
 ┍━━━━┫ 2018-02-18 ┣━━━━┫ 2.2.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
-│ ∗ Adds a new WebSocket API function: GetTables
+│ + Adds a new WebSocket API function: GetTables
 │
 ┝━ MINOR CHANGES
 │ * Fixes a bug that leads to chaos when the queue runs empty
@@ -22,11 +22,11 @@ Run  git log --oneline  for more details
 
 ┍━━━━┫ 2018-01-07 ┣━━━━┫ 2.1.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
-│ ∗ Better file permissions and default configuration (better for root-less access)
-│ ∗ Introducing the VERSION file for better tracking of bugfixes
+│ * Better file permissions and default configuration (better for root-less access)
+│ * Introducing the VERSION file for better tracking of bugfixes
 │
 ┝━ MINOR CHANGES
-│ ∗ Better installation instructions
+│ * Better installation instructions
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2018-01-05 ┣━━━━┫ 2.0.0 ┣━━━━━━━━╍╍
@@ -34,19 +34,19 @@ Run  git log --oneline  for more details
 │ - Signals (SIGUSR1, SIGTERM) will no longer be used for refreshing the cache or shutting down the server.
 │   + … instead, named pipe are used. Write "shutdown" or "refresh" into the servers FIFO file.
 │   + … Therefore a new configuration exists: [server]->fifofile
-│ ∗ database CLI-Module updated.
+│ * database CLI-Module updated.
 │   - target parameter removed. Gets determined by the paths.
 │   - "update" sub-command removed.
 │   + "remove" sub-command added.
 │ + Adding random song from specific album to queue possible
 │
 ┝━ MINOR CHANGES
-│ ∗ --quiet behavior improved by adding --verbose
+│ * --quiet behavior improved by adding --verbose
 │   * By default, MusicDB writes logs into the debug-file but not to the screen
 │ + Repair-Module now allows removing albums and artists
-│ ∗ Bugfix: Uses progressive JPEG in Album View
-│ ∗ Bugfix: Fullscreen button now works in Chrome
-│ ∗ Bugfixes at WebUI regarding Tag-Input updates
+│ * Bugfix: Uses progressive JPEG in Album View
+│ * Bugfix: Fullscreen button now works in Chrome
+│ * Bugfixes at WebUI regarding Tag-Input updates
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2017-12-30 ┣━━━━┫ 1.1.0 ┣━━━━━━━━╍╍
@@ -57,23 +57,23 @@ Run  git log --oneline  for more details
 │
 ┝━ MINOR CHANGES
 │ + WebAPI GetSongRelationship adds the tags of a related song to the returned list
-│ ∗ Some annoying bugs fixed
+│ * Some annoying bugs fixed
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2017-12-27 ┣━━━━┫ 1.0.0 beta ┣━━━╍╍
 ┝━ MAJOR CHANGES
 │ + genres mod added
 │ + moods mod added
-│ ∗ CLUI library finalized
-│ ∗ On installation, the user gets added to the musicdb group
-│ ∗ On installation, the data directories group rights get set to writable
+│ * CLUI library finalized
+│ * On installation, the user gets added to the musicdb group
+│ * On installation, the data directories group rights get set to writable
 │
 ┝━ MINOR CHANGES
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2017-12-25 ┣━━━━┫ 1.0.0 alpha ┣━━╍╍
 ┝━ MAJOR CHANGES
-│ ∗ first public release
+│ * first public release
 │
 ┝━ MINOR CHANGES
 └───────────────────────────────────────╌╌
