@@ -698,22 +698,24 @@ class MusicDBDatabase(object):
         # Collect all data needed for the song-entry (except the song ID)
         # Remember! The filesystem is always right
         song = {}
-        song["artistid"] = artistid # \_ In case they are None yet, they will be updated later in the code
-        song["albumid"]  = albumid  # /
-        song["path"]     = songpath
-        song["number"]   = fsmeta["songnumber"]
-        song["cd"]       = fsmeta["cdnumber"]
-        song["disabled"] = 0
-        song["playtime"] = tagmeta["playtime"]
-        song["bitrate"]  = tagmeta["bitrate"]
-        song["likes"]    = 0
-        song["dislikes"] = 0
-        song["qskips"]   = 0
-        song["qadds"]    = 0
-        song["qremoves"] = 0
-        song["favorite"] = 0
-        song["qrndadds"] = 0
+        song["artistid"]    = artistid # \_ In case they are None yet, they will be updated later in the code
+        song["albumid"]     = albumid  # /
+        song["path"]        = songpath
+        song["number"]      = fsmeta["songnumber"]
+        song["cd"]          = fsmeta["cdnumber"]
+        song["disabled"]    = 0
+        song["playtime"]    = tagmeta["playtime"]
+        song["bitrate"]     = tagmeta["bitrate"]
+        song["likes"]       = 0
+        song["dislikes"]    = 0
+        song["qskips"]      = 0
+        song["qadds"]       = 0
+        song["qremoves"]    = 0
+        song["favorite"]    = 0
+        song["qrndadds"]    = 0
         song["lyricsstate"] = SONG_LYRICSSTATE_EMPTY
+        song["checksum"]    = self.fs.Checksum(songpath)
+        song["lastplayed"]  = 0
 
         # FIX: THE FILESYSTEM IS _ALWAYS_ RIGHT! - WHAT THE FUCK!
         song["name"] = fsmeta["song"] 
@@ -794,6 +796,7 @@ class MusicDBDatabase(object):
             * cd number
             * playtime
             * bitrate
+            * checksum
 
         Further more the following album information get updted:
 
@@ -837,6 +840,7 @@ class MusicDBDatabase(object):
         song["cd"]       = fsmeta["cdnumber"]
         song["playtime"] = tagmeta["playtime"]
         song["bitrate"]  = tagmeta["bitrate"]
+        song["checksum"] = self.fs.Checksum(songpath)
 
         self.db.WriteSong(song)
 

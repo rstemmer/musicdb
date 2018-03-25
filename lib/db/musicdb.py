@@ -42,7 +42,7 @@ Adding a Column
 
 When a new column shall be added, the following steps are necessary.
 
-    #. Shutdown the server: ``echo "shutdown" > /data/musicdb/musicdb.fifo )``
+    #. Shutdown the server: ``echo "shutdown" > /data/musicdb/musicdb.fifo``
     #. Backup the database: ``sqlite3 music.db .dump > backup/music.db.bak``
     #. Update this file.
     #. Update the SQL file *sql/music.sql*
@@ -52,7 +52,7 @@ When a new column shall be added, the following steps are necessary.
         #. Quit: ``.quit``
 
 Furthermore be sure that all command line modules and API modules handle the new added column, and so new added feature correct.
-For example, methods creating a new entry in the modified row may be adopted.
+For example, methods creating a new entry in the modified table may be adopted.
 
 Songs
 -----
@@ -67,9 +67,42 @@ The columns of the songs table are the following:
     | number | cd | disabled | playtime | bitrate |
     +--------+----+----------+----------+---------+
     
-    +-------+----------+--------+-------+----------+----------+----------+-------------+
-    | likes | dislikes | qskips | qadds | qremoves | favorite | qrndadds | lyricsstate |
-    +-------+----------+--------+-------+----------+----------+----------+-------------+
+    +-------+----------+--------+-------+----------+----------+----------+
+    | likes | dislikes | qskips | qadds | qremoves | favorite | qrndadds |
+    +-------+----------+--------+-------+----------+----------+----------+
+
+    +-------------+----------+------------+
+    | lyricsstate | checksum | lastplayed |
+    +-------------+----------+------------+
+
+checksum (Text)
+    This is the *sha256* hash value of the file addressed by ``path``.
+    The checksum will be calculated like shown in the following example:
+
+    .. code-block:: python
+
+        songpath = song["path"]
+        songfile = open(songpath, "rb")
+        
+        with open(songpath, "rb") as songfile:
+            checksum = hashlib.sha256(songfile.read()).hexdigest()
+
+        song["checksum"] = checksum
+
+    The hash function will not be changed in future.
+    This is OK as long as the hash value will not be used for security related things!
+
+    It can happen, that the value is empty (``""``).
+    This only means that the checksum of the song was not calculated yet.
+    In this case, just calculate it, and write it into the database.
+
+lastplayed (Integer)
+    This value holds the information, when the song was played the last time.
+    The thime gets represented as an integer (unixtime).
+
+
+Song Relates Methods
+^^^^^^^^^^^^^^^^^^^^
 
 The following methods exist to handle song entries in the database:
 
@@ -85,6 +118,8 @@ The following methods exist to handle song entries in the database:
     * :meth:`~lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds`
     * :meth:`~lib.db.musicdb.MusicDatabase.UpdateSongStatistic`
     * :meth:`~lib.db.musicdb.MusicDatabase.RemoveSong`
+
+
 
 
 Albums
@@ -374,6 +409,8 @@ class MusicDatabase(Database):
     SONG_FAVORITE   = 15
     SONG_QRNDADDS   = 16
     SONG_LYRICSSTATE = 17
+    SONG_CHECKSUM   = 18
+    SONG_LASTPLAYED = 19
     # Q* : Queue statistics
 
     TAG_ID          = 0
@@ -434,37 +471,39 @@ class MusicDatabase(Database):
 
     def __SongEntryToDict(self, entry):
         song = {}
-        song["id"]       = entry[self.SONG_ID]
-        song["albumid"]  = entry[self.SONG_ALBUMID]
-        song["artistid"] = entry[self.SONG_ARTISTID]
-        song["name"]     = entry[self.SONG_NAME]
-        song["path"]     = entry[self.SONG_PATH]
-        song["number"]   = entry[self.SONG_NUMBER]
-        song["cd"]       = entry[self.SONG_CD]
-        song["disabled"] = entry[self.SONG_DISABLED]
-        song["playtime"] = entry[self.SONG_PLAYTIME]
-        song["bitrate"]  = entry[self.SONG_BITRATE]
-        song["likes"]    = entry[self.SONG_LIKES]
-        song["dislikes"] = entry[self.SONG_DISLIKES]
-        song["qskips"]   = entry[self.SONG_QSKIPS]
-        song["qadds"]    = entry[self.SONG_QADDS]
-        song["qremoves"] = entry[self.SONG_QREMOVES]
-        song["favorite"] = entry[self.SONG_FAVORITE]
-        song["qrndadds"] = entry[self.SONG_QRNDADDS]
+        song["id"]          = entry[self.SONG_ID]
+        song["albumid"]     = entry[self.SONG_ALBUMID]
+        song["artistid"]    = entry[self.SONG_ARTISTID]
+        song["name"]        = entry[self.SONG_NAME]
+        song["path"]        = entry[self.SONG_PATH]
+        song["number"]      = entry[self.SONG_NUMBER]
+        song["cd"]          = entry[self.SONG_CD]
+        song["disabled"]    = entry[self.SONG_DISABLED]
+        song["playtime"]    = entry[self.SONG_PLAYTIME]
+        song["bitrate"]     = entry[self.SONG_BITRATE]
+        song["likes"]       = entry[self.SONG_LIKES]
+        song["dislikes"]    = entry[self.SONG_DISLIKES]
+        song["qskips"]      = entry[self.SONG_QSKIPS]
+        song["qadds"]       = entry[self.SONG_QADDS]
+        song["qremoves"]    = entry[self.SONG_QREMOVES]
+        song["favorite"]    = entry[self.SONG_FAVORITE]
+        song["qrndadds"]    = entry[self.SONG_QRNDADDS]
         song["lyricsstate"] = entry[self.SONG_LYRICSSTATE]
+        song["checksum"]    = entry[self.SONG_CHECKSUM]
+        song["lastplayed"]  = entry[self.SONG_LASTPLAYED]
         return song
 
     def __TagEntryToDict(self, entry):
         tag = {}
-        tag["id"]       = entry[self.TAG_ID]
-        tag["name"]     = entry[self.TAG_NAME]
-        tag["class"]    = entry[self.TAG_CLASS]
-        tag["parentid"] = entry[self.TAG_PARENTID]
-        tag["icontype"] = entry[self.TAG_ICONTYPE]
-        tag["icon"]     = entry[self.TAG_ICON]
-        tag["color"]    = entry[self.TAG_COLOR]
-        tag["posx"]     = entry[self.TAG_POSX]
-        tag["posy"]     = entry[self.TAG_POSY]
+        tag["id"]           = entry[self.TAG_ID]
+        tag["name"]         = entry[self.TAG_NAME]
+        tag["class"]        = entry[self.TAG_CLASS]
+        tag["parentid"]     = entry[self.TAG_PARENTID]
+        tag["icontype"]     = entry[self.TAG_ICONTYPE]
+        tag["icon"]         = entry[self.TAG_ICON]
+        tag["color"]        = entry[self.TAG_COLOR]
+        tag["posx"]         = entry[self.TAG_POSX]
+        tag["posy"]         = entry[self.TAG_POSY]
         return tag
 
     def __AlbumTagEntryToDict(self, entry):
@@ -551,6 +590,8 @@ class MusicDatabase(Database):
             favorite=:favorite,
             qrndadds=:qrndadds,
             lyricsstate=:lyricsstate
+            checksum=:checksum,
+            lastplayed=:lastplayed,
         WHERE
             songid=:id
         """
@@ -1084,7 +1125,7 @@ class MusicDatabase(Database):
         When the song was added a new song ID is generated by the database engine.
         The new entry gets read from the database.
         Then, the new ID is set as song ID to the dictionary given as argument.
-        After that, the whole song dictionary gest written to the database via :meth:`~lib.db.musicdb.MusicDatabase.WriteSong`
+        After that, the whole song dictionary gets written to the database via :meth:`~lib.db.musicdb.MusicDatabase.WriteSong`
 
         In case adding the song fails on half the way, the new added entry gets deleted.
         As long as nothing references the song entry, it is no problem to remove it.
@@ -1104,7 +1145,7 @@ class MusicDatabase(Database):
                 song["id"] = entry["id"]
                 self.WriteSong(song)
             except Exception as e:
-                logging.critical("The following Exception occured: \"%s\". Trying to delete the half added song \"%s\" from database as long as this is save.", str(e), song["path"] )
+                logging.critical("The following Exception occurred: \"%s\". Trying to delete the half added song \"%s\" from database as long as this is save.", str(e), song["path"] )
             
                 # At this point, it is better to only rely on the path
                 sql = "DELETE FROM songs WHERE path = ?"

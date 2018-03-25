@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="1.1.3"
+SCRIPTVERSION="1.2.0"
 echo -e "\e[1;31mMusicDB-Install [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
@@ -193,7 +193,50 @@ function InstallMusicDBDatabases {
 
 }
 
+function UpdateMusicDBDatabases {
+    echo -e "\e[1;34mChecking databases in \e[0;36m$DATADIR\e[1;34m\e[1;31m"
+    if ! type sqlite3 2> /dev/null > /dev/null ; then
+        echo -e "\e[1;31mThe mandatory tool \e[1;35msqlite3\e[1;31m missing! \e[1;30m(No sqlite3 installed?)\e[0m"
+        exit 1
+    fi
 
+    local MUSICDB="$DATADIR/music.db"
+    if [ ! -f "$MUSICDB" ] ; then
+        echo -e "\e[1;31m ! The database $MUSICDB is missing!\033[0m"
+        exit 1
+    fi
+
+    # allow errors, because then I know if a column exists or not
+    set +e
+    # !! Order matters !!
+
+    # checksum column
+    sqlite3 "$MUSICDB" "PRAGMA table_info(\"songs\");" | grep "checksum" > /dev/null
+    if [ $? -ne 0 ]; then
+        echo -e -n "\t\e[1;32m + \e[1;34mAdding \e[0;36mchecksum\e[1;34m column: \e[0m"
+        sqlite3 "$MUSICDB" 'ALTER TABLE songs ADD COLUMN checksum TEXT DEFAULT "";'
+        if [ $? -eq 0 ]; then
+            echo -e "\e[1;32mdone"
+        else
+            echo -e "\e[1;31mfailed! Database is broken!\e[0m"
+        fi
+    fi
+
+    # lastplayed column
+    sqlite3 "$MUSICDB" "PRAGMA table_info(\"songs\");" | grep "lastplayed" > /dev/null
+    if [ $? -ne 0 ]; then
+        echo -e -n "\t\e[1;32m + \e[1;34mAdding \e[0;36mlastplayed\e[1;34m column: \e[0m"
+        sqlite3 "$MUSICDB" 'ALTER TABLE songs ADD COLUMN lastplayed INTEGER DEFAULT 0;'
+        if [ $? -eq 0 ]; then
+            echo -e "\e[1;32mdone"
+        else
+            echo -e "\e[1;31mfailed! Database is broken!\e[0m"
+        fi
+    fi
+    
+    # turn exit-in-error back on
+    set -e
+}
 
 function InstallArtwork {
     echo -e -n "\e[1;34mSetup artwork directory \e[0;36m$DATADIR/artwork\e[1;34m: "
@@ -582,6 +625,9 @@ InstallShellProfile
 # TODO: Setup apache - debians apache installation is inacceptable messed up. No script for this.
 InstallID3Edit
 InstallMusicDBFiles
+
+# Check if the database must be updated
+UpdateMusicDBDatabases
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
