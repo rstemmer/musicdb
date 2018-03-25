@@ -7,6 +7,14 @@
 
 Run  git log --oneline  for more details
 
+┍━━━━┫ 2018-xx-xx ┣━━━━┫ 3.0.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ * {In Development}
+│
+┝━ MINOR CHANGES
+│ * {In Development}
+└───────────────────────────────────────╌╌
+
 
 ┍━━━━┫ 2018-02-18 ┣━━━━┫ 2.2.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
