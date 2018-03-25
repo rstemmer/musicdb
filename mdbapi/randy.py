@@ -188,11 +188,27 @@ def RandyThread(config):
             # Get parameters
             position   = args[0]
             albumid    = args[1]
-            try:
-                song = musicdb.GetRandomSong(None, nodisabled, nohated, minlen, albumid)
-            except Exception as e:
-                logging.error("Getting random song failed with error: \"%s\"!", str(e))
-                song = None
+            song       = None
+            tries      = 0  # there is just a very limited set of possible songs. Avoid infinite loop when all songs are on the blacklist
+            while not song and RUN and tries <= 10:
+                tries += 1
+                # get song
+                try:
+                    song = musicdb.GetRandomSong(None, nodisabled, nohated, minlen, albumid)
+                except Exception as e:
+                    logging.error("Getting random song failed with error: \"%s\"!", str(e))
+                    song = None
+                    continue
+                logging.debug("Candidate for next song: \033[0;35m" + song["path"])
+                
+                # only check, if that song is in the blacklist. Artist and album is forced by the user
+                if songbllen > 0 and song["id"] in songblacklist:
+                    logging.debug("song on blacklist")
+                    song = None
+                    continue 
+
+            if not song:
+                logging.warning("The loop that should find a new random song did not deliver a song! \033[1;30m(This can happen if the server got shut down or all possible songs are on the blacklist)")
                 continue
 
             # maintain blacklists
@@ -216,6 +232,7 @@ def RandyThread(config):
                     logging.info("Updating song statistics disabled. \033[1;33m!!")
                     continue
                 musicdb.UpdateSongStatistic(song["id"], "qrndadds", "inc")
+
 
         elif cmd == CMD_ADDSONG:
             # Get parameters
@@ -338,8 +355,9 @@ class RandyInterface(object):
         """
         Triggers Randy to add a random song from a specific album into the song-queue
 
-        It gets not checked if the song is listed on the black list.
-        But the song gets added to the black list for songs, as well as the album and artist gets added.
+        If the selected song is listed in the blacklist for songs, a new one will be selected.
+        Entries in the album and artist blacklist will be ignored because the artist and album is forced by the user.
+        But the song gets added to the blacklist for songs, as well as the album and artist gets added.
 
         Args:
             albumid (int): ID of the album the song shall come from

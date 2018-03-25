@@ -1232,10 +1232,10 @@ class MusicDBWebSocketInterface(object):
         """
         Similar to :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue`.
         Instead of a specific song, a random song gets chosen by the random-song manager *Randy*.
-        This is done using :meth:`mdbapi.randy.Randy.AddSong`.
+        This is done using :meth:`mdbapi.randy.RandyInterface.AddSong`.
 
         If an album ID is given, the new song will be added from that album
-        using :meth:`mdbapi.randy.Randy.AddSongFromAlbum`.
+        using :meth:`mdbapi.randy.RandyInterface.AddSongFromAlbum`.
 
         The random-song manager also increments the *rndadds* statistics for the song that gets added to the queue.
 
