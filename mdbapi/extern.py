@@ -124,9 +124,9 @@ They can be activated in the config file that will be generated when the storage
 The following methods will be applied if activated in the config:
 
     * :meth:`~mdbapi.extern.MusicDBExtern.ReducePathLength` if the pathlength is limited
-    * :meth:`~mdbapi.extern.MusicDBExtern.ConvertToMP3` if only mp3-files are allowed
-    * :meth:`~mdbapi.extern.MusicDBExtern.OptimizeMP3Tags` to scale artwork and make proper ID3 tags
-    * :meth:`~mdbapi.extern.MusicDBExtern.OptimizeM4ATags` make proper meta tags for m4a files
+    * :meth:`lib.fileprocessing.Fileprocessing.ConvertToMP3` if only mp3-files are allowed
+    * :meth:`lib.fileprocessing.Fileprocessing.OptimizeMP3Tags` to scale artwork and make proper ID3 tags
+    * :meth:`lib.fileprocessing.Fileprocessing.OptimizeM4ATags` make proper meta tags for m4a files
     * :meth:`~mdbapi.extern.MusicDBExtern.FixPath` to handle unicode in paths
 
     .. warning::
@@ -144,6 +144,7 @@ from lib.cfg.extern     import ExternConfig
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
 from lib.filesystem     import Filesystem
+from lib.fileprocessing import Fileprocessing
 from lib.cache          import ArtworkCache
 from tqdm               import tqdm
 import logging
@@ -169,6 +170,8 @@ class MusicDBExtern(object):
         self.cfg    = config
         self.mp     = None
         self.fs     = Filesystem("/")
+        self.fileprocessor = Fileprocessing("/")
+        self.artworkcache  = ArtworkCache(self.cfg.artwork.path)
         self.SetMountpoint("/mnt")    # initialize self.mp with the default mount point /mnt
 
 
@@ -341,253 +344,6 @@ class MusicDBExtern(object):
 
         return fixed
 
-
-    def ConvertToMP3(self, abssrcpath, absdstpath):
-        """
-        This method converts any filetype to an mp3 file using ``ffmpeg``.
-        All paths must be absolute!
-
-        The encoder is *libmp3lame* and the bitrate is esoteric 320kbit/s.
-        If the destination file exists, it will be overwritten.
-
-        This method corresponds to the following command line:
-
-        .. code-block:: bash
-
-            ffmpeg -v quiet -y -i $abssrcpath -acodec libmp3lame -ab 320k $absdstpath < /dev/null > /dev/null 2>&1
-        
-        .. warning::
-
-            Call ``os.sync`` if the generated file will be further processed.
-            In the past, there were lots of trouble with "incomplete" files.
-
-        Args:
-            abssrcpath (str): absolute source path of a song file with any encoding
-            absdstpath (str): absolute destination path of the new generated song file with mp3 encoding.
-
-        Returns:
-            ``True`` on success, otherwise ``False``
-        """
-        logging.debug("Converting %s to %s …", abssrcpath, absdstpath)
-        process =[
-            "ffmpeg",
-            "-v", "quiet",  # do not be verbose
-            "-y",           # overwrite (exit would return exitcode 1 :( )
-            "-i", abssrcpath,
-            "-acodec", "libmp3lame", "-ab", "320k",
-            absdstpath]
-
-        try:
-            self.fs.Execute(process)
-        except Exception as e:
-            logging.error("Error \"%s\" while executing: %s", str(e), str(process))
-            return False
-
-        return True
-
-
-    # src and dst may be the same path/file
-    def OptimizeMP3Tags(self, mdbsong, abssrcpath, absdstpath, artwork=True, prescale=None, forceID3v230=False):
-        """
-        This method fixed the ID3 tags of an mp3 file and scales its artwork.
-        The data for the ID3 tags come from the MusicDBDatabase.
-        For writing the new ID3 tags, ``id3edit`` is used.
-        The call of ``id3edit`` corresponds to the following command line, reduced to just setting the songname.
-
-            .. code-block:: bash
-
-                id3edit --clear --create --set-name "Name of the Song" --outfile $absdstpath $abssrcpath < /dev/null > /dev/null 2>&1
-
-        The following tags will be set. All other will be removed.
-
-            * Song name
-            * Album name
-            * Artist name
-            * Release date
-            * Track number
-            * CD number
-            * Artwork
-
-        .. warning::
-
-            All other tags will not be copied to the new file.
-            The ``id3edit`` call creates a totaly new *ID3v2* header for the mp3 file.
-
-        Args:
-            mdbsong: The corresponding song-object from the MusicDB Database
-            abssrcpath (str): absolute source path of the mp3-file (must be mp3!)
-            absdstpath (str): absolute destination path for the new mp3-file. (Can be the same as the source path)
-            artwork (bool): if ``True`` the album artwork will be stored inside the ID3 tags. Otherwise it will be removed.
-            prescale (str): if not ``None`` the artwork will be scaled to ``"${resX}x${resY}"``. An example value for *prescale* can be ``"256x256"``.
-            forceID3v230 (bool): use old ID3v2.3.0 tags instead of modern 2.4.0. Some player don't like a version number other than 2.3.0.
-
-        Returns:
-            ``True`` on success, otherwise ``False``
-        """
-        logging.debug("Optimize %s to %s for songid=%d, artwork=%s, prescale=%s, forceID3v230=%s", 
-                abssrcpath, absdstpath, int(mdbsong["id"]), str(artwork), str(prescale), str(forceID3v230))
-
-        # Check if paths are mp3-files! - caused a crash at least one times
-        if os.path.splitext(abssrcpath)[1] != ".mp3":
-            logging.error("%s is not a mp3-file and cannot be optimized by id3edit"%(str(abssrcpath)))
-            return False
-
-        # Get information from database
-        dbsong    = mdbsong
-        dbalbum   = self.db.GetAlbumById(dbsong["albumid"])
-        dbartist  = self.db.GetArtistById(dbsong["artistid"])
-
-        # Create tags
-        songname    = dbsong["name"]
-        albumname   = dbalbum["name"]
-        artistname  = dbartist["name"]
-        release     = str(dbalbum["release"])
-        track       = "%02d/%02d" % (dbsong["number"], dbalbum["numofsongs"])
-        cd          = "%1d/%1d"   % (dbsong["cd"],     dbalbum["numofcds"])
-
-        if prescale and artwork:
-            if type(prescale) != str:
-                logging.error("prescale must be a sing of format ${resX}x${resY}")
-                return False
-
-            try:
-                artworkcache= ArtworkCache(self.cfg.artwork.path)
-                artworkpath = artworkcache.GetArtwork(dbalbum["artworkpath"], prescale)
-            except Exception as e:
-                logging.error("ERROR: Getting artwork from cache failed with an exception %s!"%(str(e)))
-                logging.error("   Artwork: %s" % dbalbum["artworkpath"])
-                return False
-
-            # retval of GetArtwork is relative
-            absartworkpath = os.path.join(self.cfg.artwork.path, artworkpath)
-
-        else:   # do not prescale
-            absartworkpath = os.path.join(self.cfg.artwork.path, dbalbum["artworkpath"])
-            
-        if not os.path.exists(absartworkpath):
-            logging.error("ERROR: Artwork \"%s\" does not exist but was expected to exist!" % artworkpath)
-            return False
-
-        # start optimizing the tags - at the same time the file gets copied to the new place
-        process = ["id3edit", "--clear", "--create"]
-        
-        if forceID3v230:
-            process += ["--force230"]
-
-        process += [
-            "--set-name",    songname,
-            "--set-album",   albumname,
-            "--set-artist",  artistname,
-            "--set-release", release,
-            "--set-track",   track,
-            "--set-cd",      cd
-            ]
-        
-        if artwork:
-            process += ["--set-artwork", absartworkpath]
-
-        process += ["--outfile", absdstpath, abssrcpath]
-
-        try:
-            self.fs.Execute(process)
-        except Exception as e:
-            logging.error("Error \"%s\" while executing: %s", str(e), str(process))
-            return False
-
-        return True
-                    
-
-    # src and dst must be differen
-    def OptimizeM4ATags(self, mdbsong, abssrcpath, absdstpath):
-        """
-        This method fixes the Tags of an m4a file.
-        The data for the Tags come from the MusicDBDatabase.
-        For writing the new tags, ``ffmpeg`` is used.
-        The call of ``ffmpeg`` corresponds to the following command line that got condensed to just setting the songname.
-
-            .. code-block:: bash
-
-                ffmpeg -v quiet -y -i $abssrcpath -vn -acodec copy -metadata title="Name of the Song" $absdstpath < /dev/null > /dev/null 2>&1
-
-        The following tags will be set:
-
-            * Song name
-            * Album name
-            * Artist name
-            * Release date
-            * Track number
-            * CD number
-
-        .. warning::
-
-            Other tags could be removed - I don't care about them. 
-            If ``ffmpeg`` also doesn't care, they are lost.
-            This will definitely happen with iTunes related tags like the Apple ID and purchase-date.
-
-            **Artwork will be removed, too** :( - This is considered as a bug. I just have no solution to fix it right now.
-
-            The following code should preserve the artwork but throws an error:
-            ``ffmpeg -y -i src.m4a -map 0:0 -map 0:1 -vcodec copy -acodec copy -metadata "title=Title" dst.m4a``
-
-        Source and destination file must be different.
-        The source file must have the file extension ``.m4a`` or ``.mp4``.
-
-        Args:
-            mdbsong: The corresponding song-object from the MusicDB Database
-            abssrcpath (str): absolute source path of the m4a-file (must be m4a!)
-            absdstpath (str): absolute destination path for the new m4a-file. (Must be different from the source path)
-
-        Returns:
-            ``True`` on success, otherwise ``False``
-        """
-        logging.debug("Optimize %s to %s for songid=%d", 
-                abssrcpath, absdstpath, int(mdbsong["id"]))
-
-        # Check if paths are valid
-        if self.fs.GetFileExtension(abssrcpath) not in ["m4a","mp4"]:
-            logging.error("%s is not a m4a-file and cannot be optimized by this function - Check said song is of type %s", str(abssrcpath), str(os.path.splitext(abssrcpath)[1]))
-            return False
-        if abssrcpath == absdstpath:
-            logging.error("source and destination paths are the same. This is not supported by this function.")
-            return False
-
-        # Get information from database
-        dbsong    = mdbsong
-        dbalbum   = self.db.GetAlbumById(dbsong["albumid"])
-        dbartist  = self.db.GetArtistById(dbsong["artistid"])
-
-        # Create tags
-        songname    = dbsong["name"]
-        albumname   = dbalbum["name"]
-        artistname  = dbartist["name"]
-        release     = str(dbalbum["release"])
-        track       = "%02d/%02d" % (dbsong["number"], dbalbum["numofsongs"])
-        cd          = "%1d"       % (dbsong["cd"])
-
-        # start optimizing the tags - at the same time the file gets copied to the new place
-        process = [
-            "ffmpeg", "-v", "quiet",
-            "-y",
-            "-i", abssrcpath,
-            "-vn",
-            "-acodec", "copy",
-            "-metadata", "title="  + songname  ,
-            "-metadata", "album="  + albumname ,
-            "-metadata", "author=" + artistname,
-            "-metadata", "year="   + release   ,
-            "-metadata", "track="  + track     ,
-            "-metadata", "disc="   + cd        ,
-            absdstpath
-            ]
-        
-        try:
-            self.fs.Execute(process)
-        except Exception as e:
-            logging.error("Error \"%s\" while executing: %s", str(e), str(process))
-            return False
-
-        return True
-                    
 
 
     # UPDATE METHODS
@@ -804,7 +560,7 @@ class MusicDBExtern(object):
         forceid3v230= extconfig.mp3tags.forceid3v230
         optimizem4a = extconfig.m4atags.optimize
 
-        # handle pathes
+        # handle paths
         srcextension = os.path.splitext(relsrcpath)[1]
         if forcemp3 and srcextension != ".mp3":
             reldstpath = os.path.splitext(reldstpath)[0] + ".mp3"
@@ -838,47 +594,64 @@ class MusicDBExtern(object):
         # Sadly the Optimization methods for the tags also access self.db.
         # No chance for multithreading in near future
 
+        mdbsong   = musicdb.GetSongByPath(relsrcpath)
+        mdbalbum  = musicdb.GetAlbumById(mdbsong["albumid"])
+        mdbartist = musicdb.GetArtistById(mdbsong["artistid"])
+
+        # handle artwork if wanted
+        if noartwork:
+            absartworkpath = None
+        else:
+            # Remember: paths of artworks are handled relative to the artwork cache
+            if prescale:
+                try:
+                    relartworkpath = self.artworkcache.GetArtwork(mdbalbum["artworkpath"], prescale)
+                except Exception as e:
+                    logging.error("Getting artwork from cache failed with exception: %s!", str(e))
+                    logging.error("   Artwork: %s", mdbalbum["artworkpath"])
+                    return False
+
+                absartworkpath = os.path.join(self.cfg.artwork.path, relartworkpath)
+
+            else:
+                absartworkpath = os.path.join(self.cfg.artwork.path, mdbalbum["artworkpath"])
+
         # copy the file
         if forcemp3 and srcextension != ".mp3":
-            songid = musicdb.GetSongByPath(relsrcpath)
-
-            if not self.ConvertToMP3(abssrcpath, absdstpath):
+            retval = self.fileprocessor.ConvertToMP3(abssrcpath, absdstpath)
+            if retval == False:
                 logging.error("\033[1;30m(skipping song due to previous error)")
                 return None
 
             os.sync()   # This may help to avoid corrupt files. Conversion and optimization look right
 
-            retval = self.OptimizeMP3Tags(
-                    songid,
+            retval = self.fileprocessor.OptimizeMP3Tags(
+                    mdbsong, mdbalbum, mdbartist,
                     absdstpath, absdstpath, 
-                    not noartwork, 
-                    prescale,
+                    absartworkpath, 
                     forceid3v230)
             if retval == False:
                 logging.error("\033[1;30m(skipping song due to previous error)")
                 return None
 
         elif optimizemp3 and srcextension == ".mp3":
-            mdbsong= musicdb.GetSongByPath(relsrcpath)
-            retval = self.OptimizeMP3Tags(
-                    mdbsong,
+            retval = self.fileprocessor.OptimizeMP3Tags(
+                    mdbsong, mdbalbum, mdbartist,
                     abssrcpath, absdstpath,
-                    not noartwork, 
-                    prescale,
+                    absartworkpath, 
                     forceid3v230)
             if retval == False:
                 logging.error("\033[1;30m(skipping song due to previous error)")
                 return None
 
         elif optimizem4a and srcextension == ".m4a":
-            mdbsong= musicdb.GetSongByPath(relsrcpath)
-            retval = self.OptimizeM4ATags(mdbsong, abssrcpath, absdstpath)
+            retval = self.fileprocessor.OptimizeM4ATags(mdbsong, mdbalbum, mdbartist, abssrcpath, absdstpath)
             if retval == False:
                 logging.error("\033[1;30m(skipping song due to previous error)")
                 return None
 
         else:
-            shutil.copy(abssrcpath, absdstpath)
+            self.fileprocessor.CopyFile(abssrcpath, absdstpath)
 
         # return updated relative destination path for the songmap
         return reldstpath
