@@ -570,6 +570,12 @@ class MusicDatabase(Database):
     def WriteSong(self, song):
         """
         Updates the whole row for a song.
+
+        Args:
+            song: A dictionary representing a whole row in the songs table
+
+        Returns:
+            ``None``
         """
         sql = """
         UPDATE songs SET
@@ -589,9 +595,9 @@ class MusicDatabase(Database):
             qremoves=:qremoves,
             favorite=:favorite,
             qrndadds=:qrndadds,
-            lyricsstate=:lyricsstate
+            lyricsstate=:lyricsstate,
             checksum=:checksum,
-            lastplayed=:lastplayed,
+            lastplayed=:lastplayed
         WHERE
             songid=:id
         """
