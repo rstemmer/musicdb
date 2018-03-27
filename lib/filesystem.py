@@ -299,20 +299,24 @@ class Filesystem(object):
 
     
 
-    def CreateSubdirectory(self, xnewpath):
+    def CreateSubdirectory(self, xnewpath, mode=0o775):
         """
         This method creates a subdirectory.
-        The directories are not made recursively.
-        So *xnewpath* must address the new directory with its parents existing.
+        The directories are made recursively.
+        So *xnewpath* can address the last directory of a path that will be created.
+
+        The permissions of the directory are ``drwxrwxr-x`` if not other specified in the optional ``mode`` parameter (as integer).
+        The mode of already existing directories will not be changed.
 
         Args:
             xnewpath: A path that addresses a new directory
+            mode: Optional access mode of the new created directories. Default is ``0o775``
 
         Returns:
             ``True``
         """
         absnewpath = self.AbsolutePath(xnewpath)
-        os.makedirs(absnewpath)
+        os.makedirs(absnewpath, mode=mode, exist_ok=True)
         return True
 
 
