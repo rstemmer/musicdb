@@ -81,6 +81,9 @@ owner (UNIX user name):
 
 group (UNIX group name):
    Name of the group that shall be the owner of the music files
+
+cache (path to directory):
+   This is the place where MusicDB caches all songs as clean tagged mp3 files.
    
 artwork
 -------

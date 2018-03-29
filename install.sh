@@ -238,6 +238,38 @@ function UpdateMusicDBDatabases {
     set -e
 }
 
+function UpdateMusicDBConfiguration {
+    echo -e "\e[1;34mChecking configuration \e[0;36m$DATADIR/musicdb.ini\e[1;34m \e[1;31m"
+    local MUSICCFG="$DATADIR/musicdb.ini"
+    if [ ! -f "$MUSICCFG" ] ; then
+        echo -e "\e[1;31m ! The configuration $MUSICCFG is missing!\033[0m"
+        exit 1
+    fi
+
+    # The following if statements check if an entry in the musicdb.ini exists.
+    # If not, it will be created and set with a good default value
+    # [music] -> cache
+    if [ -z "$(sed -nr '/\[music\]/,/\[/{/cache/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
+        echo -e "\t\e[1;32m + \e[1;34mAdding \e[0;36m[music] -> cache\e[0m"
+        sed -i -e "s;\[music];&\ncache=$DATADIR/mp3cache;" $MUSICCFG
+    fi
+
+}
+
+
+function InstallMP3Cache {
+    echo -e -n "\e[1;34mSetup mp3 cache directory \e[0;36m$DATADIR/mp3cache\e[1;34m: "
+    if [ ! -d "$DATADIR/mp3cache" ] ; then
+        mkdir $DATADIR/mp3cache
+        chown -R $MDBUSER:$MDBGROUP $DATADIR/mp3cache
+        chmod -R g+w $DATADIR/mp3cache
+        echo -e "\e[1;32mdone"
+    else
+        echo -e "\e[1;37malready done!"
+    fi
+}
+
+
 function InstallArtwork {
     echo -e -n "\e[1;34mSetup artwork directory \e[0;36m$DATADIR/artwork\e[1;34m: "
     if [ ! -d "$DATADIR/artwork" ] ; then
@@ -616,6 +648,7 @@ CreateBaseDirectories
 InstallMusicDBConfiguration
 InstallMusicDBDatabases
 InstallArtwork
+InstallMP3Cache
 InstallMusicAI
 
 InstallMPDEnvironment
@@ -626,8 +659,9 @@ InstallShellProfile
 InstallID3Edit
 InstallMusicDBFiles
 
-# Check if the database must be updated
+# Check if things must be updated
 UpdateMusicDBDatabases
+UpdateMusicDBConfiguration
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

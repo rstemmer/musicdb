@@ -28,6 +28,34 @@ Furthermore those changes may break scripts you wrote around MusicDB.
 
 Lines starting with "**:wrench: Change:**" are steps you have to do *before* updating via `install.sh` script.
 
+### xx.04.18: 2.x.x → 3.0.0+
+
+* Two new columns added to the database: `checksum` and `lastplayed`
+  * **:wrench: Change:** After *installing via install.sh* execute [:notebook: repair](https://rstemmer.github.io/musicdb/build/html/mod/repair.html) with `--checksums` option (`musicdb repair --checksums`) to fill the new added checksum column.
+* [:notebook: mp3 cache](https://rstemmer.github.io/musicdb/build/html/mdbapi/musiccache.html) added
+  * New configuration: `[music] -> cache=DATADIR/mp3cache`
+  * New CLI module [:notebook: cache](https://rstemmer.github.io/musicdb/build/html/mod/cache.html) for managing the cache added.
+  * **:wrench: Change:** After installation execute `musicdb cache update` to cache all songs as mp3 files in the mp3cache. 
+  * Creating the cache my take some hours. After the initial build the cache gets quickly updated when adding new albums.
+  * It is safe to use MusicDB while the cache gets still built. So have fun listening to music until the `cache update` process is completed :wink:
+
+**:wrench: Update:**
+```
+# Download latest version of MusicDB
+git checkout master
+git pull
+
+# Install latest version of MusicDB
+sudo ./install.sh
+
+# Read the linked documentation of the repair and cache command
+
+# Update old data
+newgrp musicdb
+musicdb repair --checksums
+musicdb cache update
+```
+
 ### 05.01.18: 1.x.x → 2.0.0+
 
 * Signals got replaced by a named pipe

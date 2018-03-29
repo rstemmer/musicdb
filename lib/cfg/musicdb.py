@@ -119,7 +119,6 @@ class MusicDBConfig(Config):
         self.websocket.url          = self.Get(str, "websocket","url",          "wss://localhost:443")
         self.websocket.opentimeout  = self.Get(int, "websocket","opentimeout",  10)
         self.websocket.closetimeout = self.Get(int, "websocket","closetimeout",  5)
-        #self.websocket.portoffset   = self.Get(int, "websocket","MDB_P2_portoffset", 10)
 
 
         # [TLS]
@@ -139,6 +138,7 @@ class MusicDBConfig(Config):
         self.music.owner            = self.Get(str, "music",    "owner",        "user")
         self.music.group            = self.Get(str, "music",    "group",        "musicdb")
         # TODO: Check if user or group exist
+        self.music.cache            = self.GetDirectory("music",    "cache",    "/data/mp3cache")
 
         ignorelist = self.Get(str, "music",    "ignoreartists","gemisch / youtube")
         ignorelist = ignorelist.split("/")

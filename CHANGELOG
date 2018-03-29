@@ -11,6 +11,8 @@ Run  git log --oneline  for more details
 ┝━ MAJOR CHANGES
 │ + New Columns in songs table: checksum, lastplayed
 │ + Tracing the checksum of a song file 
+│ + mp3 cache added. This will be used for streaming and optimized export
+│ + New CLI Module: cache
 │ * {In Development}
 │
 ┝━ MINOR CHANGES
