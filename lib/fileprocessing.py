@@ -192,7 +192,7 @@ class Fileprocessing(Filesystem):
         absdstpath = self.AbsolutePath(dstpath)
 
         logging.debug("Optimize %s to %s for songid=%d, artwork=%s, prescale=%s, forceID3v230=%s", 
-                abssrcpath, absdstpath, int(mdbsong["id"]), str(artwork), str(prescale), str(forceID3v230))
+                abssrcpath, absdstpath, int(mdbsong["id"]), str(absartworkpath), str("500x500"), str(forceID3v230))
 
         # Check if paths are mp3-files! - caused a crash at least one times
         if self.GetFileExtension(abssrcpath) != "mp3":
@@ -235,7 +235,7 @@ class Fileprocessing(Filesystem):
         process += ["--outfile", absdstpath, abssrcpath]
 
         try:
-            self.fs.Execute(process)
+            self.Execute(process)
         except Exception as e:
             logging.error("Error \"%s\" while executing: %s", str(e), str(process))
             return False
@@ -302,7 +302,7 @@ class Fileprocessing(Filesystem):
                 abssrcpath, absdstpath, int(mdbsong["id"]))
 
         # Check if paths are valid
-        if self.fs.GetFileExtension(abssrcpath) not in ["m4a","mp4"]:
+        if self.GetFileExtension(abssrcpath) not in ["m4a","mp4"]:
             logging.error("%s is not a m4a-file and cannot be optimized by this function - Check said song is of type %s", str(abssrcpath), str(os.path.splitext(abssrcpath)[1]))
             return False
         if abssrcpath == absdstpath:
@@ -334,7 +334,7 @@ class Fileprocessing(Filesystem):
             ]
         
         try:
-            self.fs.Execute(process)
+            self.Execute(process)
         except Exception as e:
             logging.error("Error \"%s\" while executing: %s", str(e), str(process))
             return False
