@@ -38,6 +38,8 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* upd
   * **:wrench: Change:** After installation execute `musicdb cache update` to cache all songs as mp3 files in the mp3cache. 
   * Creating the cache my take some hours. After the initial build the cache gets quickly updated when adding new albums.
   * It is safe to use MusicDB while the cache gets still built. So have fun listening to music until the `cache update` process is completed :wink:
+* Using Icecast instead of MPD possible
+  * **:wrench: Change:** The install script creates a new directory in the MusicDB data directory called `icecast`. Make sure that such a directory does not exist before running `install.sh`. If it does, rename it, and merge your setup after the installation.
 
 **:wrench: Update:**
 ```

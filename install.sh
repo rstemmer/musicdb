@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="1.2.0"
+SCRIPTVERSION="1.3.0"
 echo -e "\e[1;31mMusicDB-Install [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
@@ -248,10 +248,27 @@ function UpdateMusicDBConfiguration {
 
     # The following if statements check if an entry in the musicdb.ini exists.
     # If not, it will be created and set with a good default value
+
     # [music] -> cache
     if [ -z "$(sed -nr '/\[music\]/,/\[/{/cache/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
         echo -e "\t\e[1;32m + \e[1;34mAdding \e[0;36m[music] -> cache\e[0m"
-        sed -i -e "s;\[music];&\ncache=$DATADIR/mp3cache;" $MUSICCFG
+        sed -i -e "s;\[music];&\ncache=$DATADIR/mp3cache;" "$MUSICCFG"
+    fi
+
+    # [Icecast] -> *
+    if [ -z "$(sed -nr '/\[Icecast\]/,/\[/{/port/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
+        echo -e "\t\e[1;32m + \e[1;34mAdding \e[0;36m[Icecast] section\e[0m"
+        echo "[Icecast]" >> "$MUSICCFG"
+        sed -i -e "s;\[Icecast];&\nmountname=/stream;" "$MUSICCFG"
+        sed -i -e "s;\[Icecast];&\npassword=ICECASTSOURCEPASSWORD$;" "$MUSICCFG"    # Will be updated later in this script
+        sed -i -e "s;\[Icecast];&\nuser=source;" "$MUSICCFG"
+        sed -i -e "s;\[Icecast];&\nport=6666;" "$MUSICCFG"
+    fi
+
+    # [debug] -> streambackend
+    if [ -z "$(sed -nr '/\[debug\]/,/\[/{/streambackend/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
+        echo -e "\t\e[1;32m + \e[1;34mAdding \e[0;36m[debug] -> streambackend\e[0m"
+        sed -i -e "s;\[debug];&\nstreambackend=mpd;" "$MUSICCFG"
     fi
 
 }
@@ -325,6 +342,61 @@ function InstallMPDEnvironment {
     echo -e -n "\e[1;34mSetting MPD home directory to \e[0;36m$DATADIR/mpd\e[1;34m: \e[1;31m"
     if [ "$(getent passwd someuser | cut -f6 -d:)" != "$DATADIR/mpd" ]; then
         usermod -d $DATADIR/mpd $MPDUSER
+        echo -e "\e[1;32mdone"
+    else
+        echo -e "\e[1;37malready done!"
+    fi
+}
+
+
+
+function InstallIcecastEnvironment {
+    echo -e -n "\e[1;34mSetup Icecast environment in \e[0;36m$DATADIR/icecast\e[1;34m: \e[1;31m"
+
+    local ICECAST=""
+
+    if type "icecast" 2> /dev/null > /dev/null ; then
+        ICECAST=icecast
+    elif type "icecast2" 2> /dev/null > /dev/null ; then
+        # Debian based distributions have a different name for the icecast binary
+        ICECAST=icecast2
+    else
+        echo -e    "\t\e[1;33micecast binary missing! \e[1;30m(icecast not yet installed?)"
+        echo -e -n "\t\e[1;34mInstalling configuration anyway: \e[1;31m"
+    fi
+
+    if ! type openssl 2> /dev/null > /dev/null ; then
+        echo -e "\e[1;31mThe mandatory tool \e[1;35mopenssl\e[1;31m missing! \e[1;30m(No openssl installed?)\e[0m"
+        exit 1
+    fi
+
+    # Check user
+    if [ -z "$(getent passwd icecast)" ]; then
+        echo -e -n "\e[1;32m(icecast user created)\e[1;31m "
+        groupadd -r icecast
+        useradd -d "$DATADIR/icecast" -s /usr/bin/false -g icecast -r -N -M icecast
+    fi
+
+    # Install icecast setup
+    if [ ! -d "$DATADIR/icecast" ] ; then
+        mkdir -p "$DATADIR/icecast/log"
+        touch    "$DATADIR/icecast/users"
+        chown -R icecast:$MDBGROUP "$DATADIR/icecast"
+        chmod o-r "$DATADIR/icecast/users"
+
+        install -m 664 -g $MDBGROUP -o icecast "$SOURCEDIR/share/config.xml" -D "$DATADIR/icecast/."
+        install -m 400 -g $MDBGROUP -o icecast "$SSLCRT"                     -D "$DATADIR/icecast/certificate.pem"
+
+        # Create some secure default passwords
+        local SOURCEPW="$(openssl rand -base64 32)"
+        local ADMINPW="$( openssl rand -base64 32)"
+        
+        sed -i -e "s;DATADIR;$DATADIR;g"       $DATADIR/icecast/config.xml
+        sed -i -e "s;MUSICDBGROUP;$MDBGROUP;g" $DATADIR/icecast/config.xml
+        sed -i -e "s;ICECASTSOURCEPASSWORD;$SOURCEPW;g" $DATADIR/icecast/config.xml
+        sed -i -e "s;ICECASTADMINPASSWORD;$ADMINPW;g"   $DATADIR/icecast/config.xml
+        sed -i -e "s;ICECASTSOURCEPASSWORD;$SOURCEPW;g" $DATADIR/musicdb.ini
+
         echo -e "\e[1;32mdone"
     else
         echo -e "\e[1;37malready done!"
@@ -646,22 +718,21 @@ CreateMusicDBSSLKeys
 CreateBaseDirectories
 
 InstallMusicDBConfiguration
+UpdateMusicDBConfiguration  # Check if things must be updated
 InstallMusicDBDatabases
+UpdateMusicDBDatabases      # Check if things must be updated
 InstallArtwork
 InstallMP3Cache
 InstallMusicAI
 
 InstallMPDEnvironment
+InstallIcecastEnvironment
 InstallLogrotateConfiguration
 InstallShellProfile
 
 # TODO: Setup apache - debians apache installation is inacceptable messed up. No script for this.
 InstallID3Edit
 InstallMusicDBFiles
-
-# Check if things must be updated
-UpdateMusicDBDatabases
-UpdateMusicDBConfiguration
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

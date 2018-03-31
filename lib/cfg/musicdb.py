@@ -80,6 +80,8 @@ class LYCRA:
     pass
 class MPD:
     pass
+class ICECAST:
+    pass
 class LOG:
     pass
 class DEBUG:
@@ -202,6 +204,14 @@ class MusicDBConfig(Config):
             logging.warning("Value of [mpd]->interval may be too big. It should be less than 30.")
 
 
+        # [Icecast]
+        self.icecast    = ICECAST()
+        self.icecast.port           = self.Get(int, "Icecast",  "port",     "6666")
+        self.icecast.user           = self.Get(str, "Icecast",  "user",     "source")
+        self.icecast.password       = self.Get(str, "Icecast",  "password", "hackme")
+        self.icecast.mountname      = self.Get(str, "Icecast",  "mountname","/stream")
+
+
         # [MusicAI]
         self.musicai    = MUSICAI()
         self.musicai.modelpath      = self.GetDirectory("MusicAI",  "modelpath",        "/data/musicdb/musicai/models")
@@ -251,6 +261,10 @@ class MusicDBConfig(Config):
         self.debug.disabletracker   = self.Get(int, "debug",    "disabletracker",0)
         self.debug.disableai        = self.Get(int, "debug",    "disableai",    0)
         self.debug.disabletagging   = self.Get(int, "debug",    "disabletagging",0)
+        self.debug.streambackend    = self.Get(str, "debug",    "streambackend",    "mpd")
+        self.debug.streambackend    = self.debug.streambackend.lower()
+        if not self.debug.streambackend in ["mpd", "icecast"]:
+            logging.error("Invalid backend for [debug]->streambackend. Backend must be one of the following: mpd, icecast")
 
         logging.info("\033[1;32mdone")
 

@@ -148,6 +148,29 @@ interval (number ∈ ℕ):
    The interval MusicDB polls for the current state of MPD
 
 
+Icecast
+-------
+
+The default values all match the default Icecast configuration provided by MusicDB.
+The password got generated during the installation process and can be considered as secure.
+The only reason to change something in this section is, that the Icecast server gets shared with multiple sources.
+
+port (number ∈ ℕ):
+   Port where Icecast is listening at.
+   This is the none SSL secured port.
+
+user (string):
+   This is the *source user* MusicDB uses to connect to Icecast.
+   By default, ``source`` is the user name.
+
+password (string):
+   The password MusicDB needs to authenticate as a valid source for the Icecast server.
+   The default password was generated during the installation process of MusicDB and is secure.
+
+mountname (string starting with ``/``):
+   This is the name of the mount MusicDB uses.
+
+
 MusicAI
 -------
 
