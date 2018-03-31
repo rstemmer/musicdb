@@ -278,7 +278,7 @@ class TrackerInterface(object):
             argument: Optional argument for a command
 
         Returns:
-            ``None``
+            ``True`` on success, ``False`` when the Tracker thread is not running.
         """
         global CMDQUEUE
         global RUN
