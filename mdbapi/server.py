@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-This is the main module to run the MusicDB Websocket Server.
+This is the main module to run the MusicDB Server.
 
 To start and run the server, the following sequence of function calls is necessary:
 
@@ -24,6 +24,7 @@ To start and run the server, the following sequence of function calls is necessa
         StartWebSocketServer()
         Run()
 
+When starting the server, a named pipe gets created at the path set in the configuration file.
 MusicDB Server handles the following commands when written into its named pipe:
 
     * refresh:  :meth:`~mdbapi.server.UpdateCaches` - Update server caches and inform clients to update their caches
@@ -41,7 +42,7 @@ If the server is not started, the objects are all ``None``.
     * :class:`lib.cfg.musicdb.MusicDBConfig` as ``cfg``
     * :class:`lib.cfg.mdbstate.MDBState` as ``mdbstate``
 
-The following example shows hot to use the pipe interface:
+The following example shows how to use the pipe interface:
 
     .. code-block:: bash
 
@@ -71,15 +72,13 @@ import mdbapi.mpd as mpd
 import logging
 
 # Global objects
-# This is the server environment that needs to be accessed by many objects like the RPC-Server instances
+# This is the server environment that needs to be accessed by many objects
 # Instances
 database    = None  # music.db object
-mise        = None  # micre searche engine object
+mise        = None  # micro search engine object
 cfg         = None  # overall configuration file
 mdbstate    = None  # ini file holding the state like selected genres and EoQ-Event
 pipe        = None  # Named pipe for server commands
-# Threadhandler
-mpdthread   = None
 # WS Server
 tlswsserver = None
 shutdown    = False
@@ -226,7 +225,7 @@ def Initialize(configobj, databaseobj):
     logging.debug("Starting Tracker…")
     StartTracker(cfg)
     
-    logging.debug("Starting MDP Client")
+    logging.debug("Starting MPD Client…")
     mpd.StartMPDClient(cfg)
     
     logging.debug("Updateing MiSE Cache…")
