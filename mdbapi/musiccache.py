@@ -245,16 +245,17 @@ class MusicCache(object):
 
 
 
-    def GetSongPath(self, mdbsong):
+    def GetSongPath(self, mdbsong, absolute=False):
         """
         This method returns a path following the naming scheme for cached songs (``ArtistID/AlbumID/SongID:Checksum.mp3``).
         It is not guaranteed that the file actually exists.
 
         Args:
             mdbsong: Dictionary representing a song entry form the Music Database
+            absolute: Optional argument that can be set to ``True`` to get an absolute path, not relative to the cache directory.
 
         Returns:
-            A (possible) path to the cached song (relative to the cache directory).
+            A (possible) path to the cached song (relative to the cache directory, ``absolute`` got not set to ``True``).
             ``None`` when there is no checksum available. The checksum is part of the file name.
         """
         # It can happen, that there is no checksum for a song.
@@ -268,6 +269,9 @@ class MusicCache(object):
         path  = os.path.join(str(mdbsong["artistid"]), str(mdbsong["albumid"])) # ArtistID/AlbumID
         path  = os.path.join(path, str(mdbsong["id"]))                          # ArtistID/AlbumID/SongID
         path += ":" + mdbsong["checksum"] + ".mp3"                              # ArtistID/AlbumID/SongID:Checksum.mp3
+
+        if absolute:
+            pate = self.fs.AbsolutePath(path)
 
         return path
 
