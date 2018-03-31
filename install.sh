@@ -265,12 +265,6 @@ function UpdateMusicDBConfiguration {
         sed -i -e "s;\[Icecast];&\nport=6666;" "$MUSICCFG"
     fi
 
-    # [debug] -> streambackend
-    if [ -z "$(sed -nr '/\[debug\]/,/\[/{/streambackend/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
-        echo -e "\t\e[1;32m + \e[1;34mAdding \e[0;36m[debug] -> streambackend\e[0m"
-        sed -i -e "s;\[debug];&\nstreambackend=mpd;" "$MUSICCFG"
-    fi
-
 }
 
 
