@@ -93,7 +93,7 @@ function Button_ShowSettings(containerid)
     return html;
 }
 
-function Button_QueueEntryControls(songid, qposition)
+function Button_QueueEntryControls(songid, entryid, qposition)
 {
     var html = "";
     html += "<div class=\"BTN_box\">";
@@ -108,7 +108,7 @@ function Button_QueueEntryControls(songid, qposition)
         html += BTN_CreateSeparator();
         html += BTN_CreateIconButton(
             "<i class=\"fa fa-times-circle\" title=\"Remove this song from the queue\"></i>",
-            "MusicDB_Call(\'RemoveSongFromQueue\', {songid:"+songid+", position:"+qposition+"});");
+            "MusicDB_Call(\'RemoveSongFromQueue\', {songid:"+entryid+"});");
     }
 
     html += "</div>";
