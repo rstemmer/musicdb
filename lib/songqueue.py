@@ -199,7 +199,7 @@ class SongQueue(object):
 
         Raises:
             TypeError: When ``songid`` is not of type ``int``
-            ValueError: When position is not ``"first"`` or ``"last"``
+            ValueError: When position is not ``"next"`` or ``"last"``
         """
         if type(songid) != int:
             raise TypeError("Song ID must be an integer!")
@@ -207,12 +207,12 @@ class SongQueue(object):
         entryid = self.GenerateID()
 
         with self.lock:
-            if position == "first":
+            if position == "next":
                 self.queue.insert(1, (entryid, songid))
             elif position == "last":
                 self.queue.append((entryid, songid))
             else:
-                raise ValueError("Position must have the value \"first\" or \"last\". Given was \"%s\".", str(position))
+                raise ValueError("Position must have the value \"next\" or \"last\". Given was \"%s\".", str(position))
 
 
 
