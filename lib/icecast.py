@@ -171,7 +171,7 @@ class IcecastInterface(object):
         self.icecast = shouty.connection.Connection()
         self.icecast.set_params(
                 host     = "localhost",
-                port     = port
+                port     = port,
                 user     = user,
                 password = password,
                 protocol = shouty.Protocol.HTTP,
@@ -314,7 +314,7 @@ class IcecastInterface(object):
             path (str): Absolute path to the mp3 file to stream. The encoding must be the same for all files!
 
         Returns:
-            A tuple ``(size, offset)``
+            Returns a generator that generates tuple ``(size, offset)`` of the streaming progress
 
         Example:
 
@@ -325,9 +325,13 @@ class IcecastInterface(object):
         """
 
         offset = 0
-        filesize = os.path.getsize(path)
+        try:
+            filesize = os.path.getsize(path)
+        except FileNotFoundError as e:
+            logging.error("File \"%s\" does not exist!", str(path))
+            return
 
-        with open(path) as mp3:
+        with open(path, "rb") as mp3:
 
             # Process file chunk-wise
             while True:
