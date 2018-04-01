@@ -16,12 +16,11 @@ Randy Module
 ------------
 
 .. automodule:: mdbapi.randy
-   :members: StartRandy, StopRandy, RandyThread
 
 
-RandyInterface Class
---------------------
+Randy Class
+-----------
 
-.. autoclass:: mdbapi.randy.RandyInterface
+.. autoclass:: mdbapi.randy.Randy
    :members:
 
