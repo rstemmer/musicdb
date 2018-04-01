@@ -934,9 +934,10 @@ class MusicDBWebSocketInterface(object):
         """
         state = {}
 
-        state["isconnected"] = self.stream.GetConnectionState()
-        state["isplaying"]   = self.stream.GetPlayingState()
-        songid               = self.stream.GetCurrentSongId()
+        streamstate = self.stream.GetStreamState()
+        songid      = self.stream.GetCurrentSongId()
+        state["isconnected"] = streamstate["isconnected"]
+        state["isplaying"]   = streamstate["isplaying"]
 
         # if no file is given, the queue is empty - or "there is no queue"
         if songid:

@@ -60,6 +60,14 @@ The :class:`~StreamManager` communicates with the :meth:`~StreamingThread` with 
 
 More details are in the :meth:`~StreamingThread` description.
 
+The thread maintains a global dictionary that holds the state of the thread - The **Stream State**.
+It can be accessed via :meth:`mdbapi.stream.StreamManager.GetStreamState`.
+This will only be updated by the StreamingThread.
+It contains the following information:
+
+    * ``isconnected``: ``True`` when connected to Icecast, otherwise ``False``
+    * ``isplaying``: ``True`` when streaming, otherwise ``False``
+
 
 Command Queue
 -------------
@@ -149,6 +157,7 @@ Callbacks       = []
 Songs           = None
 RunThread       = False
 CommandQueue    = []
+State           = {}
 
 
 
@@ -178,6 +187,7 @@ def StartStreamingThread(config):
     global Songs
     global Callbacks
     global CommandQueue
+    global State
 
     if Thread != None:
         logging.warning("Streaming Thread already running")
@@ -188,6 +198,7 @@ def StartStreamingThread(config):
     Songs        = SongQueue()
     Callbacks    = []
     CommandQueue = []
+    State        = {"isconnected": False, "isplaying": False}
 
     logging.debug("Starting Streaming Thread")
     RunThread = True
@@ -244,6 +255,7 @@ def StreamingThread():
     global RunThread
     global CommandQueue
     global Songs
+    global State
 
     # Create all interfaces that are needed by this Thread
     tracker = TrackerInterface()
@@ -258,15 +270,23 @@ def StreamingThread():
             )
 
     while RunThread:
-        time.sleep(0.1) # in case something went wrong, the thread should not block the whole CPU
+        # Sleep a bit to reduce the load on the CPU. If disconnected, sleep a bit longer
+        if State["isconnected"]:
+            time.sleep(0.1)
+        else:
+            time.sleep(1)
 
         # Check connection to Icecast, and connect if disconnected.
-        if not icecast.IsConnected():
+        isconnected = icecast.IsConnected()
+        if not isconnected:
             success = icecast.Connect()
-            if not success:
-                time.sleep(1)
-                continue
-        # TODO: Event_StatusChanged should take care about the connection state
+            if success:
+                isconnected = True
+
+        # Check if the connection status changed
+        if State["isconnected"] != isconnected:
+            State["isconnected"] = isconnected
+            Event_StatusChanged()
 
         # Check if the queue has enough entries. If not, add a random song.
         if len(Songs.GetQueue()) < 2:
@@ -277,6 +297,7 @@ def StreamingThread():
                 continue
             # TODO: qstats? ggf ein flag israndom=True and AddSong übergeben.
             Songs.AddSong(randomsong["id"])
+            Event_QueueChanged()
 
         # Get current song that shall be streamed.
         entryid, songid = Songs.CurrentSong()
@@ -294,6 +315,10 @@ def StreamingThread():
             timeplayed = (offset / size) * mdbsong["playtime"]
             #Event_TimeChanged(timeplayed)   # TODO: This spams! - Only call every n times.
 
+            # Check if the thread shall be exit
+            if not RunThread:
+                break
+
             # read and handle queue commands if there is one
             if len(CommandQueue) == 0:
                 continue
@@ -302,9 +327,9 @@ def StreamingThread():
             if command == "PlayNextSong":
                 # Stop streaming current song, and start the next one
                 break
-            elif comman == "Play":
+            elif command == "Play":
+                State["isplaying"] = not State["isplaying"]
                 Event_StatusChanged()
-                logging.error("Not Implemented Yet!")   # TODO
 
         # Current song completely streamed.
         # Get next song
@@ -446,13 +471,26 @@ class StreamManager(object):
 
 
 
+    def GetStreamState(self): # TODO: implementieren
+        """
+        This method returns the current state of the Streaming Thread as a dictionary.
+
+        Returns:
+            A copy of the Stream state. See the top of the documentation for details of the Stream State.
+        """
+        global State
+        return dict(State)
+
+
+
+
     #####################################################################
     # Callback Function Management                                      #
     #####################################################################
 
 
 
-    def RegisterCallback(function):
+    def RegisterCallback(self, function):
         """
         Register a callback function that reacts on Song Queue or Streaming related events.
         For more details see the module description at the top of this document.
@@ -468,7 +506,7 @@ class StreamManager(object):
 
 
 
-    def RemoveCallback(function):
+    def RemoveCallback(self, function):
         """
         Removes a function from the list of callback functions.
 
