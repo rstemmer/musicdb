@@ -1615,6 +1615,12 @@ class MusicDatabase(Database):
             * ``"dec"``, ``"hate"``: Decrement value
             * ``"reset"``, ``"none"``, ``"no"``: Set value to ``0``
 
+        ``favorite`` can have three states:
+
+            * ``-1``: Hated song
+            * ``0``: Normal song
+            * ``1``: Loved song
+
         Args:
             songid (int): ID of the song
             stat (str): Name of the statistics to update
