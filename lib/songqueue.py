@@ -51,7 +51,7 @@ class SongQueue(object):
     """
     def __init__(self):
         self.queue = []
-        self.lock  = theading.Lock()
+        self.lock  = threading.Lock()
 
 
 
@@ -202,7 +202,7 @@ class SongQueue(object):
             ValueError: When position is not ``"first"`` or ``"last"``
         """
         if type(songid) != int:
-            raise TypeError("Song must be an integer!")
+            raise TypeError("Song ID must be an integer!")
 
         entryid = self.GenerateID()
 
@@ -213,6 +213,31 @@ class SongQueue(object):
                 self.queue.append((entryid, songid))
             else:
                 raise ValueError("Position must have the value \"first\" or \"last\". Given was \"%s\".", str(position))
+
+
+
+    def GetSong(self, entryid):
+        """
+        Returns the song ID of the entry addressed by the entry ID
+
+        Args:
+            entryid (int): ID of the entry that song ID shall be returnd
+
+        Returns:
+            The song ID of the entry, or ``None`` if the entry does not exists
+
+        Raises:
+            TypeError: When ``entryid`` is not of type ``int``
+        """
+        if type(entryid) != int:
+            raise TypeError("Song must be an integer!")
+
+        with self.lock:
+            for songid, eid in self.queue:
+                if eid == entryid:
+                    return songid
+
+        return None
 
 
 
