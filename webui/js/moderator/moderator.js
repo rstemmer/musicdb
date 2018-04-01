@@ -8,7 +8,7 @@ function onMusicDBConnectionOpen()
     window.console && console.log("[MDB] Open");
 
     MusicDB_Request("GetTags",      "UpdateTagsCache");
-    MusicDB_Request("GetMPDState",  "UpdateMPDState");
+    MusicDB_Request("GetStreamState",  "UpdateStreamState");
     MusicDB_Request("GetQueue",     "ShowQueue");
     MusicDB_Request("GetMDBState",  "UpdateMDBState");
     MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
@@ -52,7 +52,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
         }
         else if(sig == "onSongChanged" || sig == "onStatusChanged")
         {
-            MusicDB_Request("GetMPDState", "UpdateMPDState");
+            MusicDB_Request("GetStreamState", "UpdateStreamState");
         }
 
     }
@@ -60,7 +60,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
 function onMusicDBMessage(fnc, sig, args, pass)
 {
     // Update state-indicators if some indication passes
-    if(fnc == "GetMPDState")
+    if(fnc == "GetStreamState")
     {
         if(args.isconnected)
         {
@@ -71,6 +71,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
         {
             SetMusicDBOnlineState("yes", "no");         // MDB, MPD
             MDB_DisableWatchdog();                      // Stop watchdog when MPD cannot trigger updates
+            // TODO: behavior changed with the new Icecast backend.
         }
 
         if(args.isplaying)
@@ -83,9 +84,13 @@ function onMusicDBMessage(fnc, sig, args, pass)
 
 
     // Handle Messages form the server
-    if(fnc == "GetMPDState" && sig == "UpdateMPDState") {
-        if(args.isconnected == false)
-            return; // Nothing to do when MPD is not able to provide its state
+    if(fnc == "GetStreamState" && sig == "UpdateStreamState") {
+        if(!args.hasqueue)
+        {
+            window.console && console.log("There is no queue and no current song!")
+            return
+        }
+
         UpdateMusicDBHUD(args.song, args.album, args.artist);
         Songtags_UpdateMoodControl("MainMoodControl", args.songtags);
         Songproperties_UpdateControl("MainPropertyControl", args.song, true); // reset like/dislike state

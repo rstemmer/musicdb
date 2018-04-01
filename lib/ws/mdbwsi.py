@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ Lyrics
 
 Other
 ^^^^^
-* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMPDState`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMPDState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState`
@@ -111,7 +111,7 @@ class MusicDBWebSocketInterface(object):
         self.tags       = MusicDBTags(self.cfg, self.database)
         self.mdbstate   = mdbstate
         self.randy      = None  # Randy will be created onWSConnect # TODO: WHY???
-        self.stream     = StreamManager()
+        self.stream     = StreamManager(self.cfg, self.database)
 
         self.MaxCallThreads     = self.cfg.server.maxcallthreads
         self.CallThreadList     = [None] * self.MaxCallThreads
@@ -171,8 +171,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetTables(args["tables"])
         elif fncname == "GetMDBState":
             retval = self.GetMDBState()
-        elif fncname == "GetMPDState":
-            retval = self.GetMPDState()
+        elif fncname == "GetStreamState":
+            retval = self.GetStreamState()
         elif fncname == "GetQueue":
             retval = self.GetQueue()
         elif fncname == "Find":
@@ -886,6 +886,10 @@ class MusicDBWebSocketInterface(object):
 
     # TODO: Remove MPD style and add Icecast style - Let's just trigger an event?
     def GetMPDState(self):
+        state = {}
+        logging.error("GetMPDState is DEPRECATED - The new method is called GetStreamState")
+        return state
+    def GetStreamState(self):
         """
         This method returns the state of the Streaming Thread. (See :doc:`/mdbapi/stream`)
 
@@ -893,14 +897,9 @@ class MusicDBWebSocketInterface(object):
 
             * **isconnected:** ``True`` if MusicDB is connected to Icecast, otherwise ``False``
             * **isplaying:** ``True`` if the Streaming Thread is in *playing*-mode, otherwise ``False``
+            * **hasqueue:** ``True`` when there is at least one song in the queue. When ``False``, the following song information are *not* included!
 
-        If MusicDB is connected, there are further information about MPDs state:
-
-            * **mpdstatus:** as returned by :meth:`mdbapi.mpd.GetStatus`
-            * **hasqueue:** ``True`` If there are songs in MPDs playing-Queue, otherwise ``False``
-
-        In case there is a at least one song in the queue, that song gets played by MPD if ``isplaying`` is ``True``.
-        In this case, there are also information about the current song:
+        In case there is a at least one song in the queue, this current streamed song gets returned with the following information:
 
             * **song:** The song entry from the database for the song that is currently playing
             * **album:** The related album entry from the database
@@ -909,56 +908,52 @@ class MusicDBWebSocketInterface(object):
             * **albumtags:** a list of tags as returned by :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags`
 
         Returns:
-            The current state of MPD
+            The current state of the streaming thread
 
         Example:
             .. code-block:: javascript
 
-                MusicDB_Request("GetMPDState", "ShowMPDState");
+                MusicDB_Request("GetStreamState", "ShowStreamState");
 
                 // …
 
                 function onMusicDBMessage(fnc, sig, args, pass)
                 {
-                    if(fnc == "GetMPDState" && sig == "ShowMPDState")
+                    if(fnc == "GetStreamState" && sig == "ShowStreamtate")
                     {
                         if(args.isconnected == true)
                         {
-                            if(args.hasqueue == true)
-                            {
-                                console.log("Current playing song: " + args.song.name);
-                            }
+                            console.log("Connection to Icecast established");
+                        }
+                        if(args.hasqueue == true)
+                        {
+                            console.log("Current playing song: " + args.song.name);
                         }
                     }
                 }
         """
         state = {}
-        state["isconnected"] = mpd.GetConnectionState()
-        state["isplaying"]   = mpd.GetPlayingState()
 
-        # if not connected, there will be no more information
-        if state["isconnected"] == True:
-            # BE CAREFUL! The structure of mpds song-infos are different from the one used in the database
-            mpdsong = mpd.GetCurrentSong()
+        state["isconnected"] = self.stream.GetConnectionState()
+        state["isplaying"]   = self.stream.GetPlayingState()
+        songid               = self.stream.GetCurrentSongId()
 
-            # if no file is given, the queue is empty - or "there is no queue"
-            if mpdsong and "file" in mpdsong:
-                song      = self.database.GetSongByPath(mpdsong["file"])
-                album     = self.database.GetAlbumById(song["albumid"])
-                artist    = self.database.GetArtistById(song["artistid"])
-                songtags  = self.GetSongTags(song["id"])
-                albumtags = self.GetAlbumTags(album["id"])
+        # if no file is given, the queue is empty - or "there is no queue"
+        if songid:
+            song      = self.database.GetSongById(songid)
+            album     = self.database.GetAlbumById(song["albumid"])
+            artist    = self.database.GetArtistById(song["artistid"])
+            songtags  = self.GetSongTags(song["id"])
+            albumtags = self.GetAlbumTags(album["id"])
 
-                state["song"]       = song
-                state["album"]      = album
-                state["artist"]     = artist
-                state["songtags"]   = songtags
-                state["albumtags"]  = albumtags
-                state["hasqueue"]   = True
-            else:
-                state["hasqueue"]   = False
-
-            state["mpdstatus"] = mpd.GetStatus()
+            state["song"]       = song
+            state["album"]      = album
+            state["artist"]     = artist
+            state["songtags"]   = songtags
+            state["albumtags"]  = albumtags
+            state["hasqueue"]   = True
+        else:
+            state["hasqueue"]   = False
 
         return state
 
@@ -1003,7 +998,7 @@ class MusicDBWebSocketInterface(object):
             return []
 
         queue = []
-        for entryid, songid in enrties:
+        for entryid, songid in entries:
             song    = self.database.GetSongById(songid)
             album   = self.database.GetAlbumById(song["albumid"])
             artist  = self.database.GetArtistById(song["artistid"])
@@ -1221,7 +1216,7 @@ class MusicDBWebSocketInterface(object):
             return None
 
         if position not in ["next", "last"]:
-            logging.warning("Position must have the value \"first\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
+            logging.warning("Position must have the value \"next\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
             return None
 
         # Add song to the queue and update statistics
@@ -1264,15 +1259,15 @@ class MusicDBWebSocketInterface(object):
             return None
 
         if position not in ["next", "last"]:
-            logging.warning("Position must have the value \"first\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
+            logging.warning("Position must have the value \"next\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
             return None
 
         if albumid:
             song = self.randy.GetSongFromAlbum(albumid)
         else:
-            song = self.randy.GetSong(position)
+            song = self.randy.GetSong()
 
-        self.queue.AddSong(song["id"], position)
+        self.stream.AddSong(song["id"], position)
 
         return None
 
@@ -1323,13 +1318,13 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                MusicDB_Call("RemoveSongFromQueue", {songid:1337, entryid:82390194629402649});
+                MusicDB_Call("RemoveSongFromQueue", {entryid:82390194629402649});
 
         """
         # Get song ID (and check if entry ID is valid)
         songid  = self.stream.GetSongIdFromEntryId(entryid)
         if not songid:
-            logging.warning("There is no entry in the Queue with the requested ID. \033[1;30m(ignoring command)")
+            logging.warning("There is no entry in the Queue with the requested ID:\033[0;33m \"%s\" \033[1;30m(ignoring command)", str(entryid))
             return None
 
         # Remove song and update statistic
