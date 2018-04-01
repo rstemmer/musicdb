@@ -271,7 +271,7 @@ class MusicCache(object):
         path += ":" + mdbsong["checksum"] + ".mp3"                              # ArtistID/AlbumID/SongID:Checksum.mp3
 
         if absolute:
-            pate = self.fs.AbsolutePath(path)
+            path = self.fs.AbsolutePath(path)
 
         return path
 
