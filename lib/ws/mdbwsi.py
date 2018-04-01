@@ -91,10 +91,10 @@ from lib.filesystem     import Filesystem
 import os
 from mdbapi.lycra       import Lycra
 from mdbapi.database    import MusicDBDatabase
-from mdbapi.randy       import RandyInterface
+from mdbapi.randy       import Randy
 from mdbapi.mise        import MusicDBMicroSearchEngine
 from mdbapi.tags        import MusicDBTags
-import mdbapi.mpd as mpd
+from mdbapi.stream      import StreamManager
 import logging
 from threading          import Thread
 import traceback
@@ -110,7 +110,8 @@ class MusicDBWebSocketInterface(object):
         self.fs         = Filesystem(self.cfg.music.path)
         self.tags       = MusicDBTags(self.cfg, self.database)
         self.mdbstate   = mdbstate
-        self.randy      = None  # RandyInterface will be created onWSConnect
+        self.randy      = None  # Randy will be created onWSConnect # TODO: WHY???
+        self.stream     = StreamManager()
 
         self.MaxCallThreads     = self.cfg.server.maxcallthreads
         self.CallThreadList     = [None] * self.MaxCallThreads
@@ -118,17 +119,18 @@ class MusicDBWebSocketInterface(object):
 
 
     def onWSConnect(self):
-        self.randy = RandyInterface()
-        mpd.RegisterCallback(self.onMPDEvent)
+        self.randy = Randy(self.cfg, self.database)
+        self.stream.RegisterCallback(self.onStreamEvent)
         return None
         
 
     def onWSDisconnect(self, wasClean, code, reason):
-        mpd.RemoveCallback(self.onMPDEvent)
+        self.stream.RemoveCallback(self.onStreamEvent)
         return None
 
 
-    def onMPDEvent(self, event, data):
+    def onStreamEvent(self, event, data):
+        # TODO: Port from old MPD style to new Icecast style
         # This function is called from a different thread. Therefore NO sqlite3-access is allowed.
         # So there will be just a notification so that the clients can request an MPDStateUpdate.
         response    = {}
@@ -882,14 +884,15 @@ class MusicDBWebSocketInterface(object):
         return state
 
 
+    # TODO: Remove MPD style and add Icecast style - Let's just trigger an event?
     def GetMPDState(self):
         """
-        This method returns the state of MPD (Music Playing Daemon).
+        This method returns the state of the Streaming Thread. (See :doc:`/mdbapi/stream`)
 
         The state is a dictionary that has always the following information:
 
-            * **isconnected:** ``True`` if MusicDB is connected to MPD, otherwise ``False``
-            * **isplaying:** ``True`` if MPD is in *playing*-mode, otherwise ``False``
+            * **isconnected:** ``True`` if MusicDB is connected to Icecast, otherwise ``False``
+            * **isplaying:** ``True`` if the Streaming Thread is in *playing*-mode, otherwise ``False``
 
         If MusicDB is connected, there are further information about MPDs state:
 
@@ -962,17 +965,18 @@ class MusicDBWebSocketInterface(object):
 
     def GetQueue(self):
         """
-        This method returns a list of songs, albums and artists for each song in the MPD queue.
-        If there are not songs in the queue, an empty list gets returned.
+        This method returns a list of songs, albums and artists for each song in the song queue.
+        If there are no songs in the queue, an empty list gets returned.
 
         Each entry of the list contains the following information:
 
+            * **entryid:** A unique ID to identify the entry in the queue
             * **song:** The song entry from the database
             * **album:** The related album entry from the database
             * **artist:** The related artist entry from the database
 
         Returns:
-            A list of song, album and artist information for each song in the MPD queue
+            A list of song, album and artist information for each song in the song queue
 
         Example:
             .. code-block:: javascript
@@ -992,25 +996,20 @@ class MusicDBWebSocketInterface(object):
                     }
                 }
         """
-        paths = mpd.GetQueue()
+        entries = self.stream.GetQueue()
 
         # return empty list if there is no queue
-        if type(paths) != list:
+        if not entries:
             return []
 
         queue = []
-        for path in paths:
-            song = self.database.GetSongByPath(path)
-
-            # it may happen that other tools add songs to mpd that are not handled by the database
-            if not song:
-                logging.warning("The song behind the path \"%s\" does not exist in the MusicDB database!", str(path))
-                continue
-
+        for entryid, songid in enrties:
+            song    = self.database.GetSongById(songid)
             album   = self.database.GetAlbumById(song["albumid"])
             artist  = self.database.GetArtistById(song["artistid"])
 
             entry = {}
+            entry["entryid"] = entryid
             entry["song"]    = song
             entry["album"]   = album
             entry["artist"]  = artist
@@ -1117,6 +1116,7 @@ class MusicDBWebSocketInterface(object):
 
 
     # THIS METHOD IS THREADSAFE
+    # TODO: Whatever must be done to make this Icecast conform - maybe just moving to "SetPlayState"
     def SetMPDState(self, mpdstate):
         """
         This Method can be used to set the  *playing*-state of MPD (Music Playing Daemon)
@@ -1174,29 +1174,25 @@ class MusicDBWebSocketInterface(object):
                 MusicDB_Call("PlayNextSong");
 
         """
-        # First, get the current song
-        # BE CAREFUL! The structure of mpds song-infos are different from the one used in the database
-        mpdsong = mpd.GetCurrentSong()
-        if mpdsong and "file" in mpdsong:
-            song    = self.database.GetSongByPath(mpdsong["file"])
-            songid  = song["id"]
-        else:
-            logging.warning("Unexpected Behaviour: There is no current song in the MPD-Queue to skip. \033[1;30m(ignoring PlayNextSong command)")
+        # First, get the current song to update its qskips statistic
+        songid = self.stream.GetCurrentSongId()
+        if not songid:
+            logging.warning("There is no current song in the Queue to skip. \033[1;30m(ignoring PlayNextSong command)")
             return None
 
-        # Give MPD the command to play the next song
-        success = mpd.PlayNextSong()
+        # Now change to the next song
+        success = self.stream.PlayNextSong()
 
-        # if skipping was successfull, update stats
+        # if skipping was successful, update stats
         if success:
-            self.UpdateSongStatistic(songid, "qskips", "inc")
+            self.UpdateSongStatistic(songid, "qskips", "inc") # TODO: Do this in the StreamManager
 
         return None
 
 
     def AddSongToQueue(self, songid, position):
         """
-        This method adds a new song to the queue of songs MPD (Music Playing Daemon) will play.
+        This method adds a new song to the queue of songs that will be streamed.
 
         The song gets address by its ID.
         The position can be ``"next"`` if the song shall be places behind the current playing song.
@@ -1218,26 +1214,33 @@ class MusicDBWebSocketInterface(object):
                 MusicDB_Call("AddSongToQueue", {songid:1000, position:"next"});
 
         """
+        # Check if the song ID is valid
         song = self.database.GetSongById(songid)
         if not song:
+            logging.warning("Invalid song ID: %s! \033[1;30m(ignoring AddSongToQueue command)", str(songid))
             return None
 
-        success = mpd.AddSong(song["path"], position) # position: "last" or "next"
+        if position not in ["next", "last"]:
+            logging.warning("Position must have the value \"first\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
+            return None
+
+        # Add song to the queue and update statistics
+        success = self.stream.AddSong(songid, position)
         if success:
-            self.UpdateSongStatistic(songid, "qadds", "inc")
+            self.UpdateSongStatistic(songid, "qadds", "inc") # TODO: Do this in the StreamManager or better in the songQueue
         return None
 
 
     def AddRandomSongToQueue(self, position, albumid=None):
         """
         Similar to :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue`.
-        Instead of a specific song, a random song gets chosen by the random-song manager *Randy*.
-        This is done using :meth:`mdbapi.randy.RandyInterface.AddSong`.
+        Instead of a specific song, a random song gets chosen by the random-song manager *Randy* (See :doc:`/mdbapi/randy`).
+        This is done using :meth:`mdbapi.randy.Randy.GetSong`.
 
         If an album ID is given, the new song will be added from that album
-        using :meth:`mdbapi.randy.RandyInterface.AddSongFromAlbum`.
+        using :meth:`mdbapi.randy.Randy.GetSongFromAlbum`.
 
-        The random-song manager also increments the *rndadds* statistics for the song that gets added to the queue.
+        The *rndadds* statistic for the song that gets added to the queue gets incremented.
 
         Args:
             position (str): ``"next"`` or ``"last"`` - Determines where the song gets added
@@ -1260,19 +1263,27 @@ class MusicDBWebSocketInterface(object):
             logging.warning("No Randy interface created. \033[0:33m(This may not be intentional!) \033[1;30m(Doing nothing)")
             return None
 
+        if position not in ["next", "last"]:
+            logging.warning("Position must have the value \"first\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
+            return None
+
         if albumid:
-            self.randy.AddSongFromAlbum(albumid, position)
+            song = self.randy.GetSongFromAlbum(albumid)
         else:
-            self.randy.AddSong(position)
+            song = self.randy.GetSong(position)
+
+        self.queue.AddSong(song["id"], position)
 
         return None
 
 
     def AddAlbumToQueue(self, albumid):
         """
-        This method adds all songs of an album (from all CDs) at the end of the MPD queue.
+        This method adds all songs of an album (from all CDs) at the end of the queue.
 
         The *adds*-statistic gets **not** incremented when a whole album gets add to the queue.
+
+        If a song is flagged as "hated" or disabled, than it gets discarded.
 
         Args:
             albumid (int): ID of the album that shall be added
@@ -1290,20 +1301,21 @@ class MusicDBWebSocketInterface(object):
         for cd in sortedcds:
             for entry in cd:
                 song = entry["song"]
-                mpd.AddSong(song["path"], "last")
+                if song["disabled"] == 1 or song["favorite"] == -1:
+                    continue
+                self.queue.AddSong(song["id"])
         return None
     
         
-    def RemoveSongFromQueue(self, songid, position):
+    def RemoveSongFromQueue(self, entryid):
         """
-        This method removes a song from MPDs queue.
-        The position is the index of the song in the queue and must be an integer.
+        This method removes a song from song queue.
+        The song gets identified by the entry ID of the queue entry.
 
         The *removes*-statistic of this song gets incremented.
 
         Args:
-            songid (int): The ID of the song that shall be removed
-            position (int): Position of the song in the MPD queue
+            entryid (int/str) Queue entry ID of the song
 
         Returns:
             ``None``
@@ -1311,29 +1323,79 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                MusicDB_Call("RemoveSongFromQueue", {songid:1337, position:3});
+                MusicDB_Call("RemoveSongFromQueue", {songid:1337, entryid:82390194629402649});
 
         """
-        success = mpd.RemoveSong(position)
+        # Get song ID (and check if entry ID is valid)
+        songid  = self.stream.GetSongIdFromEntryId(entryid)
+        if not songid:
+            logging.warning("There is no entry in the Queue with the requested ID. \033[1;30m(ignoring command)")
+            return None
+
+        # Remove song and update statistic
+        success = self.stream.RemoveSong(entryid)
         if success:
             self.UpdateSongStatistic(songid, "qremoves", "inc")
         return None
     
     
-    def MoveSongInQueue(self, songid, srcpos, dstpos):
+    def MoveSongInQueue(self, entryid, afterid):
         """
-        This is a direct interface to :meth:`mdbapi.mpd.MoveSong`.
+        This is a direct interface to :meth:`mdbapi.stream.StreamManager.MoveSong`.
         It moves a song from one position in the queue to another one.
 
+        It is not allowed to move the current playing song (index 0).
+        When this is tried, nothing happens.
+
         Args:
-            songid (int): ID of the song that shall be removed.
-            srcpos (int): Position of the song
-            dstpos (int): The position the song shall be moved to
+            entryid (int): Position of the song
+            afterid (int): The position the song shall be moved to
 
         Return:
             ``None``
+
+        Example:
+
+            Assuming the following queue:
+
+            +----------+---------+
+            | entry ID | song ID |
+            +==========+=========+
+            | 1337     | 1       |
+            +----------+---------+
+            | 7357     | 2       |
+            +----------+---------+
+            | 2323     | 3       |
+            +----------+---------+
+            | 4242     | 4       |
+            +----------+---------+
+
+            Then the two calls will be applied.
+            The first one is invalid, because entry ID ``1337`` addresses the current playing song at the top of the queue.
+            So that one will be ignored.
+            The next one moves song 2 to the end of the queue.
+
+            .. code-block:: javascript
+
+                MusicDB_Call("MoveSongInQueue", {entryid:1337, afterid:2323});
+                MusicDB_Call("MoveSongInQueue", {entryid:7357, afterid:4242});
+
+            So after processing the two calls, the queue looks like this:
+
+            +----------+---------+
+            | entry ID | song ID |
+            +==========+=========+
+            | 1337     | 1       |
+            +----------+---------+
+            | 2323     | 3       |
+            +----------+---------+
+            | 4242     | 4       |
+            +----------+---------+
+            | 7357     | 2       |
+            +----------+---------+
+
         """
-        mpd.MoveSong(srcpos, dstpos)
+        self.stream.MoveSong(entryid, afterid)
         return None
 
 
