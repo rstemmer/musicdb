@@ -1607,7 +1607,12 @@ class MusicDatabase(Database):
         """
         This method updates the song statistics.
 
-        Statistics are: ``"likes"``, ``"dislikes"``, ``"qskips"``, ``"qadds"``, ``"qrndadds"``, ``"qremoves"``, ``"favorite"``, ``"disabled"``
+        Statistics are:
+
+            * **Valid:** ``"likes"``, ``"dislikes"``, ``"favorite"``, ``"disabled"``
+            * **Deprecated:** ``"qskips"``, ``"qadds"``, ``"qrndadds"``, ``"qremoves"``
+
+        Deprecated statistics will be ignored.
 
         Values are:
             
@@ -1631,7 +1636,7 @@ class MusicDatabase(Database):
 
         Raises:
             TypeError: When *songid* is not an integer or string
-            ValueError: if stats or value have an invalid value
+            ValueError: if stats or value have an invalid value. Deprecated statistics do not raise an exception.
         """
         if type(songid) != str and type(songid) != int:
             raise TypeError("songid must be a decimal number of type integer or string")
@@ -1641,6 +1646,10 @@ class MusicDatabase(Database):
             raise ValueError("stat has an invalid value \"%s\"", str(stat))
         if value not in ["inc", "dec", "reset", "love", "hate", "none", "yes", "no"]:
             raise ValueError("value has an invalid value \"%s\"", str(value))
+
+        if stat in ["qskips", "qadds", "qrndadds", "qremoves"]:
+            logging.warning("The statistic \"%s\" is deprecated! It will be removed in April 2019.") # DEPRECATED
+            return
 
         # Get song entry
         with MusicDatabaseLock:
