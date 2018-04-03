@@ -306,7 +306,7 @@ def StreamingThread():
                 time.sleep(1)
                 continue
             queue.AddSong(randomsong["id"])
-            Event_QueueChanged()
+            #Event_QueueChanged() gets fired anyway
 
         # Get current song that shall be streamed.
         entryid, songid = queue.CurrentSong()
@@ -315,6 +315,7 @@ def StreamingThread():
 
         # Stream song
         Event_SongChanged()
+        Event_QueueChanged()
         timeplayed    = 0
         lasttimestamp = time.time()
         for frameinfo in icecast.StreamFile(songpath):
