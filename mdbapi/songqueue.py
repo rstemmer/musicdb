@@ -41,6 +41,7 @@ import uuid
 import logging
 import threading    # for RLock
 from lib.cfg.musicdb    import MusicDBConfig
+from lib.cfg.mdbstate   import MDBState
 from lib.db.musicdb     import MusicDatabase
 
 Queue     = []
@@ -71,9 +72,31 @@ class SongQueue(object):
         if type(database) != MusicDatabase:
             raise TypeError("database argument not of type MusicDatabase")
 
-        self.db    = database
-        self.cfg   = config
-        self.lock  = threading.Lock()
+        self.db         = database
+        self.cfg        = config
+        self.mdbstate   = MDBState(self.cfg.server.statedir, self.db)
+        self.lock       = threading.Lock()
+
+
+
+    def Save(self):
+        """
+        Save the current queue into a csv file in the MusicDB State Directory.
+        """
+        global Queue
+        global QueueLock
+
+        with QueueLock:
+            self.mdbstate.SaveSongQueue(Queue)
+
+    def Load(self):
+        """
+        """
+        global Queue
+        global QueueLock
+
+        with QueueLock:
+            Queue = self.mdbstate.LoadSongQueue()
 
 
 

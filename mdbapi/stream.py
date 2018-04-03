@@ -276,6 +276,9 @@ def StreamingThread():
             mountname = Config.icecast.mountname
             )
 
+    logging.debug("Loading Song Queue…")
+    queue.Load()
+
     while RunThread:
         # Sleep a bit to reduce the load on the CPU. If disconnected, sleep a bit longer
         if State["isconnected"]:
@@ -346,6 +349,10 @@ def StreamingThread():
         # When the song was stopped to shutdown the server, do not skip to the next one
         if RunThread:
             queue.NextSong()
+
+    logging.debug("Saving Song Queue…")
+    queue.Save()
+
 
 
 

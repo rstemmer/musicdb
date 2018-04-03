@@ -57,7 +57,7 @@ class CSVFile(object):
                     delimiter  = self.delimiter,
                     escapechar = self.escapechar,
                     quotechar  = self.quotechar,
-                    quoting    = self.quiting)
+                    quoting    = self.quoting)
 
             # Format of the lines: rel. source-path, rel. destination-path
             rows = list(rows) # Transform csv-readers internal iterateable object to a python list.
@@ -73,7 +73,7 @@ class CSVFile(object):
                     delimiter  = self.delimiter,
                     escapechar = self.escapechar,
                     quotechar  = self.quotechar,
-                    quoting    = self.quiting)
+                    quoting    = self.quoting)
             csvwriter.writerows(rows)
         return None
 

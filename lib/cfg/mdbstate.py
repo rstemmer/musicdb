@@ -27,24 +27,24 @@ class MDBState(Config, object):
     """
     This class holds the MusicDB internal state.
 
-    +-----------------------+-----------------------+-----------------------+
-    | file name             | read method           | write method          |
-    +=======================+=======================+=======================+
-    | songqueue.csv         | :meth:`~GetSongQueue` |                       |
-    +-----------------------+-----------------------+-----------------------+
-    | artistblacklist.csv   | :meth:`~GetBlacklist` |                       |
-    +-----------------------+-----------------------+-----------------------+
-    | albumblacklist.csv    | :meth:`~GetBlacklist` |                       |
-    +-----------------------+-----------------------+-----------------------+
-    | songblacklist.csv     | :meth:`~GetBlacklist` |                       |
-    +-----------------------+-----------------------+-----------------------+
+    +------------------------+------------------------+------------------------+
+    | File Name              | Read Method            | Write Method           |
+    +========================+========================+========================+
+    | songqueue.csv          | :meth:`~LoadSongQueue` | :meth:`~SaveSongQueue` |
+    +------------------------+------------------------+------------------------+
+    | artistblacklist.csv    | :meth:`~LoadBlacklist` |                        |
+    +------------------------+------------------------+------------------------+
+    | albumblacklist.csv     | :meth:`~LoadBlacklist` |                        |
+    +------------------------+------------------------+------------------------+
+    | songblacklist.csv      | :meth:`~LoadBlacklist` |                        |
+    +------------------------+------------------------+------------------------+
 
     Args:
         path: Absolute path to the MusicDB state directory
-        musicdb: instance of the MusicDB Database
+        musicdb: instance of the MusicDB Database (can be None)
     """
 
-    def __init__(self, path, musicdb):
+    def __init__(self, path, musicdb=None):
 
         Config.__init__(self, os.path.join(path, "state.ini"))
         self.musicdb = musicdb;
@@ -66,13 +66,35 @@ class MDBState(Config, object):
         return rows
 
 
-    def GetSongQueue(self):
+    def WriteList(self, listname, rows):
+        """
+        """
+        path = os.path.join(self.path, listname + ".csv")
+        csv  = CSVFile(path)
+        csv.Write(rows)
+
+
+    def LoadSongQueue(self):
         """
         This method reads the song queue from the state directory
         """
-        return self.ReadList("songqueue")
+        rows  = self.ReadList("songqueue")
+        queue = []
+        for row in rows:
+            entryid = int(row[0])
+            songid  = int(row[1])
+            queue.append((entryid, songid))
+        return queue
 
-    def GetBlacklists(self):
+
+    def SaveSongQueue(self, queue):
+        """
+        """
+        self.WriteList("songqueue", queue)
+        return
+
+
+    def LoadBlacklists(self):
         """
         Returns:
             (artistblacklist, albumblacklist, songblacklist)
@@ -90,6 +112,8 @@ class MDBState(Config, object):
         Returns:
             A list of main genre names that are activated
         """
+        if not self.musicdb:
+            raise ValueError("Music Database object required but it is None.")
         filterlist = []
         genretags   = self.musicdb.GetAllTags(MusicDatabase.TAG_CLASS_GENRE)
         
