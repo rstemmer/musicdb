@@ -219,10 +219,6 @@ usegpu (boolean):
 Randy
 -----
 
-interval (number ∈ ℕ):
-   Randy uses a message queue to get request from several threads.
-   This is the interval for polling if new requests exist.
-
 nodisabled (boolean):
    If ``true`` no disabled songs will be chosen
 

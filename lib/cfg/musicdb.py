@@ -228,7 +228,6 @@ class MusicDBConfig(Config):
         
         # [Randy]
         self.randy      = RANDY()
-        self.randy.interval         = self.Get(int,  "Randy",   "interval",     1)
         self.randy.nodisabled       = self.Get(bool, "Randy",   "nodisabled",   True)
         self.randy.nohated          = self.Get(bool, "Randy",   "nohated",      True)
         self.randy.minsonglen       = self.Get(int,  "Randy",   "minsonglen",   120)

@@ -274,8 +274,15 @@ function UpdateMusicDBConfiguration {
     # [server] -> statedir
     if [ -z "$(sed -nr '/\[server\]/,/\[/{/statedir/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
         echo -e "\t\e[1;32m + \e[1;34mAdding \e[0;36m[server] -> statedir\e[0m"
-        echo -e "\t\e[1;33m ! \e[1;34mThe following key can be removed: \e[0;36m[server] -> statedir\e[0m"
         sed -i -e "s;\[server];&\nstatedir=$DATADIR/mdbstate;" "$MUSICCFG"
+        echo -e "\t\e[1;31m - \e[1;34mRemoving \e[0;36m[server] -> statefile\e[0m"
+        sed -i '/\[server\]/,/\[/{/statefile/d}' "$MUSICCFG"
+    fi
+
+    # [rany] -> interval
+    if [ ! -z "$(sed -nr '/\[randy\]/,/\[/{/interval/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
+        echo -e "\t\e[1;31m - \e[1;34mRemoving \e[0;36m[randy] -> interval\e[0m"
+        sed -i '/\[randy\]/,/\[/{/interval/d}' "$MUSICCFG"
     fi
 
 }

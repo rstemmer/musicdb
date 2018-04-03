@@ -13,6 +13,9 @@ Run  git log --oneline  for more details
 │ + Tracing the checksum of a song file 
 │ + mp3 cache added. This will be used for streaming and optimized export
 │ + New CLI Module: cache
+│ * Changes in the configuration:
+│   - [server]->statefile will no longer be used, instead the following:
+│   + [server]->statedir a director holding MusicDBs state. The old state got moved into it as state.ini
 │ + All new streaming: MPD interface removed and Icecast interface added
 │ + Randy refactored. Interface changed.
 │   - PrintBlacklist removed
