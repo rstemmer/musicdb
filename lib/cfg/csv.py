@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2018  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ class CSVFile(object):
 
 
     Args:
-        path (str): Name of the csv file the class works with
+        path (str): Absolute path of the csv file the class works with
     """
 
     def __init__(self, path):
@@ -51,6 +51,9 @@ class CSVFile(object):
     def Read(self):
         """
         Reads the file an returns its rows as a list.
+
+        Returns:
+            A list of rows
         """
         with open(self.path) as csvfile:
             rows = csv.reader(csvfile, 
@@ -59,15 +62,23 @@ class CSVFile(object):
                     quotechar  = self.quotechar,
                     quoting    = self.quoting)
 
-            # Format of the lines: rel. source-path, rel. destination-path
-            rows = list(rows) # Transform csv-readers internal iterateable object to a python list.
+            rows = list(rows) # Transform csv-readers internal object to a python list.
         return rows
   
 
     def Write(self, rows):
         """
         Write rows into the csv file
+
+        Args:
+            rows (list): A list of rows
+
+        Raises:
+            TypeError: when ``rows`` is not a list
         """
+        if type(rows) != list:
+            raise TypeError("The rows argument must be of type list!")
+
         with open(self.path, "w") as csvfile:
             csvwriter = csv.writer(csvfile, 
                     delimiter  = self.delimiter,

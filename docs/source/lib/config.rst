@@ -13,6 +13,7 @@ For a list of all methods see the related documentation of the class.
          node[shape=record,style=filled,fillcolor=gray95]
          edge[dir=back, arrowtail=empty]
 
+         csv      [label = "{CSVFile||+ Read()\l+ Write()\l}"]
          config   [label = "{Config||+ Load()\l+ Reload()\l+ Save()\l+ OptionAvailable()\l+ Get()\l+ Set()\l}"]
          musicdb  [label = "{MusicDBConfig||- GetDirectory()\l- GetFile()\l}"]
          extern   [label = "{ExternConfig||}"]
@@ -21,16 +22,30 @@ For a list of all methods see the related documentation of the class.
          config -> musicdb
          config -> extern
          config -> mdbstate
+         csv    -> mdbstate
       }
 
 
-Base Class
-----------
+Base Classes
+------------
+
+Config
+^^^^^^
 
 .. automodule:: lib.cfg.config
 
 .. autoclass:: lib.cfg.config.Config
    :members:
+
+
+CSVFile
+^^^^^^^
+
+.. automodule:: lib.cfg.csv
+
+.. autoclass:: lib.cfg.csv.CSVFile
+   :members:
+
 
 MusicDB Configuration
 ---------------------

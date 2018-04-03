@@ -18,8 +18,8 @@ maxcallthreads (number ∈ ℕ):
    The number of threads that are used to handle websocket-API-Calls.
    For a single user a number equal to the number of clients used or at least 2 is a good value.
 
-statefile (path to file):
-   In this file the current global state of MusicDB is stored.
+statedir (path to a directory):
+   In this directory the current global state of MusicDB is stored.
    More details can be found in the documentation for the state-file: :mod:`~lib.cfg.mdbstate`
 
 fifofile (path to file):

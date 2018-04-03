@@ -342,7 +342,11 @@ class IcecastInterface(object):
             .. code-block:: python
 
                 for frameinfo in icecast.StreamFile(path):
-                    print("%i. frame of %i frames sent."%(frameinfo["count"], frameinfo["total"]))
+                    print("%i. frame of %i frames sent. Length: %s ms"%(
+                            frameinfo["count"], 
+                            frameinfo["total"],
+                            frameinfo["header"]["frametime"]
+                            ))
         """
 
         try:

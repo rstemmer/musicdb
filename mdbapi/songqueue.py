@@ -82,6 +82,10 @@ class SongQueue(object):
     def Save(self):
         """
         Save the current queue into a csv file in the MusicDB State Directory.
+        Therefor the :meth:`lib.cfg.mdbstate.MDBState.SaveSongQueue` gets used.
+
+        Returns:
+            *Nothing*
         """
         global Queue
         global QueueLock
@@ -91,6 +95,11 @@ class SongQueue(object):
 
     def Load(self):
         """
+        This method loads the last stored song queue for the MusicDB State Directory
+        via :meth:`lib.cfg.mdbstate.MDBState.LoadSongQueue`.
+
+        Returns:
+            *Nothing*
         """
         global Queue
         global QueueLock
