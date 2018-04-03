@@ -13,6 +13,19 @@ Run  git log --oneline  for more details
 │ + Tracing the checksum of a song file 
 │ + mp3 cache added. This will be used for streaming and optimized export
 │ + New CLI Module: cache
+│ + All new streaming: MPD interface removed and Icecast interface added
+│ + Randy refactored. Interface changed.
+│   - PrintBlacklist removed
+│ + Major changes in the Web API. Changed functions are:
+│   - GetMPDState replaced with GetStreamState (they are not compatible!)
+│   - SetMPDState replaced with SetStreamState (they are not compatible!)
+│   * GetQueue API changed: entryid added
+│   * AddAlbumToQueue improved: Does not add hated or disabled songs to the queue
+│   * RemoveSongFromQueue API changed: Song gets identified by the entry ID
+│   * MoveSongInQueue API changed: Songs gets identified by the entry ID
+│   *
+│   *
+│   *
 │ * {In Development}
 │
 ┝━ MINOR CHANGES

@@ -75,7 +75,7 @@ Lyrics
 Other
 ^^^^^
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState`
-* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMPDState`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState`
@@ -240,8 +240,8 @@ class MusicDBWebSocketInterface(object):
             if method == "request":
                 retval = self.GetSongRelationship(args["songid"])
                 fncname= "GetSongRelationship"
-        elif fncname == "SetMPDState":
-            retval = self.SetMPDState(args["mpdstate"])
+        elif fncname == "SetStreamState":
+            retval = self.SetStreamState(args["state"])
         elif fncname == "PlayNextSong":
             retval = self.PlayNextSong()
         else:
@@ -884,7 +884,6 @@ class MusicDBWebSocketInterface(object):
         return state
 
 
-    # TODO: Remove MPD style and add Icecast style - Let's just trigger an event?
     def GetMPDState(self):
         state = {}
         logging.error("GetMPDState is DEPRECATED - The new method is called GetStreamState")
@@ -1113,18 +1112,22 @@ class MusicDBWebSocketInterface(object):
 
     # THIS METHOD IS THREADSAFE
     # TODO: Whatever must be done to make this Icecast conform - maybe just moving to "SetPlayState"
-    def SetMPDState(self, mpdstate):
+    def SetMPDState(self):
+        state = {}
+        logging.error("SetMPDState is DEPRECATED - The new method is called SetStreamState")
+        return None
+    def SetStreamState(self, state):
         """
-        This Method can be used to set the  *playing*-state of MPD (Music Playing Daemon)
+        This method can be used to set the  *playing*-state of the stream (see :doc:`/mdbapi/stream`)
 
         The following arguments are possible:
 
-            * ``"play"``: Set state to *playing*. If there are songs in the queue, MPD start streaming.
+            * ``"play"``: Set state to *playing*. If there are songs in the queue, MusicDB starts streaming.
             * ``"pause"``: Set state to *pause*.
             * ``"playpause"``: Toggle between *playing* and *pause*
 
         Args:
-            mpdstate (str): New playing-state for MPD. *mpdstate* must be one of the following strings: playpause, play or pause.
+            state (str): New playing-state for the Streamin Thread. *state* must be one of the following strings: ``"playpause"``, ``"play"`` or ``"pause"``.
 
         Returns:
             ``None``
@@ -1132,24 +1135,23 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                MusicDB_Call("SetMPDState", {mpdstate:"playpause"});
+                MusicDB_Call("SetStreamState", {state:"playpause"});
 
         """
-        isplaying = mpd.GetPlayingState()
+        currentstate = self.stream.GetStreamState()
+        isplaying    = currentstate["isplaying"]
 
-        if mpdstate == "playpause":
+        if state == "playpause":
             if isplaying:
-                mpd.Play(False)
-                logging.debug("Setting Play-State to False")
+                self.stream.Play(False)
             else:
-                mpd.Play(True)
-                logging.debug("Setting Play-State to True")
-        elif mpdstate == "pause":
-            mpd.Play(False)
-        elif mpdstate == "play":
-            mpd.Play(True)
+                self.stream.Play(True)
+        elif state == "pause":
+            self.stream.Play(False)
+        elif state == "play":
+            self.stream.Play(True)
         else:
-            logging.warning("Unexpected mpdstate  \"%s\" will not be set!" % str(mpdstate))
+            logging.warning("Unexpected state \"%s\" will not be set! \033[1;30m(State must be play, pause or playpause)" % str(mpdstate))
 
         return None
 
