@@ -65,8 +65,8 @@ It can be accessed via :meth:`mdbapi.stream.StreamManager.GetStreamState`.
 This will only be updated by the StreamingThread.
 It contains the following information:
 
-    * ``isconnected``: ``True`` when connected to Icecast, otherwise ``False``
-    * ``isplaying``: ``True`` when streaming, otherwise ``False``
+    * ``isconnected`` (bool): ``True`` when connected to Icecast, otherwise ``False``
+    * ``isplaying`` (bool): ``True`` when streaming, otherwise ``False``
 
 
 Command Queue
@@ -198,7 +198,7 @@ def StartStreamingThread(config):
     Songs        = SongQueue()
     Callbacks    = []
     CommandQueue = []
-    State        = {"isconnected": False, "isplaying": False}
+    State        = {"isconnected": False, "isplaying": True}
 
     logging.debug("Starting Streaming Thread")
     RunThread = True
@@ -239,6 +239,11 @@ def StreamingThread():
     """
     This thread manages the streaming of the songs from the Song Queue to the Icecast server.
 
+    Silence is generated as follows:
+
+        .. code-block:: bash
+
+            # todo
 
     The thread tiggers the following events:
 
@@ -304,15 +309,12 @@ def StreamingThread():
         mdbsong  = musicdb.GetSongById(songid)
         songpath = cache.GetSongPath(mdbsong, absolute=True)
 
-        # Notify that a new song gets streamed
-        Event_SongChanged()
-
         # Stream song
-        for size, offset in icecast.StreamFile(songpath):
+        for frameinfo in icecast.StreamFile(songpath):
 
             # Send estimated time position of the song.
             # It's just how much of the file got read multiplied by total play time
-            timeplayed = (offset / size) * mdbsong["playtime"]
+            #timeplayed = (offset / size) * mdbsong["playtime"]
             #Event_TimeChanged(timeplayed)   # TODO: This spams! - Only call every n times.
 
             # Check if the thread shall be exit
@@ -325,15 +327,21 @@ def StreamingThread():
 
             command, argument = CommandQueue.pop(0)
             if command == "PlayNextSong":
-                # Stop streaming current song, and start the next one
-                break
+                logging.debug("Playing next song")
+                break   # Stop streaming current song, and start the next one
+
             elif command == "Play":
-                State["isplaying"] = not State["isplaying"]
+                logging.debug("Setting Play-State to %s", str(argument))
+                State["isplaying"] = argument
+                icecast.Mute(not State["isplaying"])    # Mute stream, when not playing
                 Event_StatusChanged()
+                
 
         # Current song completely streamed.
-        # Get next song
+        # Get next song and notify that a new song gets streamed
         Songs.NextSong()
+        Event_SongChanged()
+
 
 
 
@@ -471,7 +479,7 @@ class StreamManager(object):
 
 
 
-    def GetStreamState(self): # TODO: implementieren
+    def GetStreamState(self):
         """
         This method returns the current state of the Streaming Thread as a dictionary.
 
