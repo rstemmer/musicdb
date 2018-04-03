@@ -1159,9 +1159,7 @@ class MusicDBWebSocketInterface(object):
     def PlayNextSong(self):
         """
         This method skips the current playing song.
-        If there is no song that can be skipped, nothing will be done.
-
-        When a song got skipped, its statistics for being skipped gets incremented.
+        If there is no song that can be skipped, the Song Queue or Streaming Thread will handle this properly.
 
         Returns:
             ``None``
@@ -1172,19 +1170,7 @@ class MusicDBWebSocketInterface(object):
                 MusicDB_Call("PlayNextSong");
 
         """
-        # First, get the current song to update its qskips statistic
-        songid = self.stream.GetCurrentSongId()
-        if not songid:
-            logging.warning("There is no current song in the Queue to skip. \033[1;30m(ignoring PlayNextSong command)")
-            return None
-
-        # Now change to the next song
-        success = self.stream.PlayNextSong()
-
-        # if skipping was successful, update stats
-        if success:
-            self.UpdateSongStatistic(songid, "qskips", "inc") # TODO: Do this in the StreamManager
-
+        self.stream.PlayNextSong()
         return None
 
 
@@ -1196,8 +1182,6 @@ class MusicDBWebSocketInterface(object):
         The position can be ``"next"`` if the song shall be places behind the current playing song.
         So, the new added song will be played next.
         Alternative ``"last"`` can be used to place the song at the end of the queue.
-
-        If a song got add, the *adds*-statistic value gets incremented.
 
         Args:
             songid (int): ID of the song that shall be added
@@ -1223,9 +1207,7 @@ class MusicDBWebSocketInterface(object):
             return None
 
         # Add song to the queue and update statistics
-        success = self.stream.AddSong(songid, position)
-        if success:
-            self.UpdateSongStatistic(songid, "qadds", "inc") # TODO: Do this in the StreamManager or better in the songQueue
+        self.stream.AddSong(songid, position)
         return None
 
 
@@ -1237,8 +1219,6 @@ class MusicDBWebSocketInterface(object):
 
         If an album ID is given, the new song will be added from that album
         using :meth:`mdbapi.randy.Randy.GetSongFromAlbum`.
-
-        The *rndadds* statistic for the song that gets added to the queue gets incremented.
 
         Args:
             position (str): ``"next"`` or ``"last"`` - Determines where the song gets added
@@ -1271,7 +1251,6 @@ class MusicDBWebSocketInterface(object):
             song = self.randy.GetSong()
 
         self.stream.AddSong(song["id"], position)
-
         return None
 
 
@@ -1310,8 +1289,6 @@ class MusicDBWebSocketInterface(object):
         This method removes a song from song queue.
         The song gets identified by the entry ID of the queue entry.
 
-        The *removes*-statistic of this song gets incremented.
-
         Args:
             entryid (int/str) Queue entry ID of the song
 
@@ -1331,9 +1308,7 @@ class MusicDBWebSocketInterface(object):
             return None
 
         # Remove song and update statistic
-        success = self.stream.RemoveSong(entryid)
-        if success:
-            self.UpdateSongStatistic(songid, "qremoves", "inc")
+        self.stream.RemoveSong(entryid)
         return None
     
     

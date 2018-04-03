@@ -1,21 +1,26 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
-# 
+# Copyright (C) 2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 This module implements the Song Queue.
-The song queue consists of a FIFO organized list.
+The song queue consists of a global FIFO organized list.
+
+    .. warning::
+
+        When calling this method, the :meth:`mdbapi.stream.StreamingThread` will never know that the current song changed!
+        In context of the stream, always use the :class:`mdbapi.stream.StreamManager` methods!
 
 Example:
 
@@ -34,7 +39,12 @@ Example:
 
 import uuid
 import logging
-import threading    # for Lock
+import threading    # for RLock
+from lib.cfg.musicdb    import MusicDBConfig
+from lib.db.musicdb     import MusicDatabase
+
+Queue     = []
+QueueLock = threading.RLock() # RLock allows nested calls. It locks only different threads.
 
 class SongQueue(object):
     """
@@ -48,9 +58,21 @@ class SongQueue(object):
         * The current playing song is at index 0.
         * This class is thread safe. So each method of the same instance can be called from different threads.
 
+    Args:
+        config: :class:`~lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration
+        database: A :class:`~lib.db.musicdb.MusicDatabase` instance
+
+    Raises:
+        TypeError: When the arguments are not of the correct type.
     """
-    def __init__(self):
-        self.queue = []
+    def __init__(self, config, database):
+        if type(config) != MusicDBConfig:
+            raise TypeError("config argument not of type MusicDBConfig")
+        if type(database) != MusicDatabase:
+            raise TypeError("database argument not of type MusicDatabase")
+
+        self.db    = database
+        self.cfg   = config
         self.lock  = threading.Lock()
 
 
@@ -107,9 +129,12 @@ class SongQueue(object):
                 print("SongID: %s" % (str(songid))) # 7357
 
         """
-        with self.lock:
-            if len(self.queue) > 0:
-                entry = self.queue[0]
+        global Queue
+        global QueueLock
+
+        with QueueLock:
+            if len(Queue) > 0:
+                entry = Queue[0]
             else:
                 entry = (None, None)
 
@@ -148,15 +173,20 @@ class SongQueue(object):
                 print("SongID: %s" % (str(songid))) # 1337
 
         """
-        with self.lock:
-            if len(self.queue) > 1:
-                self.queue.pop(0)
-                entry = self.queue[0]
-            elif len(self.queue) == 1:
-                self.queue.pop(0)
+        global Queue
+        global QueueLock
+
+        with QueueLock:
+            if len(Queue) == 0:
+                return (None, None)
+
+            # Get next song
+            if len(Queue) == 1:
+                Queue.pop(0)
                 entry = (None, None)
-            else:
-                entry = (None, None)
+            else:   # > 1
+                Queue.pop(0)
+                entry = Queue[0]
 
         return entry
 
@@ -179,11 +209,12 @@ class SongQueue(object):
                     print("%i: %i" % (entryid, songid))
 
         """
-        return list(self.queue)
+        global Queue
+        return list(Queue)
 
 
 
-    def AddSong(self, songid, position="last"):
+    def AddSong(self, songid, position="last", randomsong=False):
         """
         Adds a song at the end of the queue (``position="last"``) or to the beginning of the queue (``position="next"``).
 
@@ -199,20 +230,23 @@ class SongQueue(object):
 
         Raises:
             TypeError: When ``songid`` is not of type ``int``
-            ValueError: When position is not ``"next"`` or ``"last"``
         """
         if type(songid) != int:
             raise TypeError("Song ID must be an integer!")
 
         entryid = self.GenerateID()
 
-        with self.lock:
+        global Queue
+        global QueueLock
+
+        with QueueLock:
             if position == "next":
-                self.queue.insert(1, (entryid, songid))
+                Queue.insert(1, (entryid, songid))
             elif position == "last":
-                self.queue.append((entryid, songid))
+                Queue.append((entryid, songid))
             else:
-                raise ValueError("Position must have the value \"next\" or \"last\". Given was \"%s\".", str(position))
+                logging.warning("Position must have the value \"next\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
+                return
 
 
 
@@ -232,8 +266,11 @@ class SongQueue(object):
         if type(entryid) != int:
             raise TypeError("Song must be an integer!")
 
-        with self.lock:
-            for songid, eid in self.queue:
+        global Queue
+        global QueueLock
+
+        with QueueLock:
+            for songid, eid in Queue:
                 if eid == entryid:
                     return songid
 
@@ -258,20 +295,23 @@ class SongQueue(object):
 
         Raises:
             TypeError: When ``entryid`` is not of type ``int``
-            IndexError: When the length of the queue is less than 2. So there is no entry that can be removed
-            ValueError: When ``entryid`` addresses the first element of the queue.
         """
         if type(entryid) != int:
             raise TypeError("Song must be an integer!")
 
-        with self.lock:
+        global Queue
+        global QueueLock
 
-            if len(self.queue) < 2:
-                raise IndexError("The queue has only %i element. There must be at least 2 entries to be able to remove one.", len(self.queue))
-            if self.queue[0][0] == entryid:
-                raise ValueError("The entry ID addresses the current song. This entry cannot be removed!")
-            self.queue = [entry for entry in self.queue if entry[0] != entryid]
+        with QueueLock:
+            if len(Queue) < 2:
+                logging.warning("The queue has only %i element. There must be at least 2 entries to be able to remove one.", len(Queue))
+                return
 
+            if Queue[0][0] == entryid:
+                logging.warning("The entry ID addresses the current song. This entry cannot be removed!")
+                return
+
+            Queue = [entry for entry in Queue if entry[0] != entryid]
 
 
 
@@ -290,8 +330,6 @@ class SongQueue(object):
 
         Raises:
             TypeError: When ``entryid`` or ``afterid`` is not of type int
-            ValueError: When there is no element with ``entryid`` or ``afterid`` in the queue
-            ValueError: When ``entryid`` addresses the current song
         """
         if entryid == afterid:
             return
@@ -300,26 +338,32 @@ class SongQueue(object):
         if type(entryid) != int or type(afterid) != int:
             raise TypeError("Queue entry IDs must be of type int!")
 
-        with self.lock:
-            if self.queue[0][0] == entryid:
-                raise ValueError("The entry ID addresses the current song. This entry cannot be removed!")
+        global Queue
+        global QueueLock
+
+        with QueueLock:
+            if Queue[0][0] == entryid:
+                logging.warning("The entry ID addresses the current song. This entry cannot be moved!")
+                return
 
             # Get Positions
-            frompos = [pos for pos, entry in enumerate(self.queue) if entry[0] == entryid]
-            topos   = [pos for pos, entry in enumerate(self.queue) if entry[0] == afterid]
+            frompos = [pos for pos, entry in enumerate(Queue) if entry[0] == entryid]
+            topos   = [pos for pos, entry in enumerate(Queue) if entry[0] == afterid]
 
             if not frompos:
-                raise ValueError("Cannot find element with entryid in the queue!")
+                logging.warning("Cannot find element with entryid %i in the queue!\033[1;30m (Doning nothing)", entryid)
+                return
             if not topos:
-                raise ValueError("Cannot find element with afterid in the queue!")
+                logging.warning("Cannot find element with afterid %i in the queue!\033[1;30m (Doning nothing)", afterid)
+                return
 
             # When topos is behind frompos, decrement topos because if shifts one entry down due to popping the frompos-element from the list
             if topos > frompos:
                 topos -= 1
 
             # Move element
-            entry = self.queue.pop(position)
-            self.queue.insert(afterid, entry)
+            entry = Queue.pop(position)
+            Queue.insert(afterid, entry)
 
 
 

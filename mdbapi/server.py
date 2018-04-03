@@ -217,7 +217,7 @@ def Initialize(configobj, databaseobj):
     StartTracker(cfg)
     
     logging.debug("Starting Streaming Thread…")
-    StartStreamingThread(cfg)
+    StartStreamingThread(cfg, database)
     
     logging.debug("Updateing MiSE Cache…")
     mise.UpdateCache()
