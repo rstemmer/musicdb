@@ -19,6 +19,7 @@ Run  git log --oneline  for more details
 │ + Major changes in the Web API. Changed functions are:
 │   - GetMPDState replaced with GetStreamState (they are not compatible!)
 │   - SetMPDState replaced with SetStreamState (they are not compatible!)
+│   - SetMDBState simplified - Does not allow creating new settings (they could not be read anyway)
 │   * GetQueue API changed: entryid added
 │   * AddAlbumToQueue improved: Does not add hated or disabled songs to the queue
 │   * RemoveSongFromQueue API changed: Song gets identified by the entry ID
@@ -29,7 +30,8 @@ Run  git log --oneline  for more details
 │ * {In Development}
 │
 ┝━ MINOR CHANGES
-│ * {In Development}
+│ - The following song statistics got removed: qadds, qrndadds, qskips, qremoves. They got NEVER used.
+│ - End of Queue option removed from mdbstate.ini->[queue] -> EoQEvent. It was not used for years.
 └───────────────────────────────────────╌╌
 
 

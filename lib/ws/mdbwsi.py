@@ -103,13 +103,13 @@ class MusicDBWebSocketInterface(object):
 
     def __init__(self):
         # Import global variables from the server
-        from mdbapi.server import database, mise, cfg, mdbstate
+        from mdbapi.server import database, mise, cfg
         self.database   = database
         self.mise       = mise
         self.cfg        = cfg
         self.fs         = Filesystem(self.cfg.music.path)
         self.tags       = MusicDBTags(self.cfg, self.database)
-        self.mdbstate   = mdbstate
+        self.mdbstate   = MDBState(self.cfg.server.statefile, self.database)
         self.randy      = None  # Randy will be created onWSConnect # TODO: WHY???
         self.stream     = StreamManager(self.cfg, self.database)
 
@@ -806,19 +806,20 @@ class MusicDBWebSocketInterface(object):
         return retval
 
 
-    # THIS METHOD IS THREADSAFE
     def SetMDBState(self, category, name, value):
         """
         This method sets the global state of MDB clients
 
         If the state is not available in the global state settings, it will be created.
 
-        Currently, *category* must always be ``"albumfilter"``. 
-        Then, *name* is a Genre-Name and *value* is ``True`` or ``False``.
+        When the *category* is ``"albumfilter"``,
+        then *name* must be a Genre-Name and *value* is ``True`` or ``False``.
         If a genre gets set to true, all albums for that genre are included in the list of returned albums by methods that use the filter.
 
         After executing this method, the MusicDB server broadcasts the result of :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState`. (``method = "broadcast", fncname = "GetMDBState"``)
         So each client gets informed about the new state.
+
+        The category must be ``"albumfilter"``!
 
         Args:
             category (str): Category of the state
@@ -834,13 +835,13 @@ class MusicDBWebSocketInterface(object):
                 MusicDB_Call("SetMDBState", {category:"albumfilter", name:"Metal", value:true});
         """
         if not self.mdbstate.OptionAvailable(category, name):
-            logging.warning("Unknown state-settings " + str(category) + ">" + str(name) + "! \033[1;30m(Will be created)")
+            logging.warning("Unknown state-settings " + str(category) + ">" + str(name) + "! \033[1;30m(Will be ignored)")
+            return
 
         self.mdbstate.Set(category, name, value)
         return None
 
 
-    # THIS METHOD IS THREADSAFE
     def GetMDBState(self):
         """
         This method returns the current global state of the MusicDB WebUIs
@@ -850,7 +851,6 @@ class MusicDBWebSocketInterface(object):
         The state is a dictionary with the following information:
 
             * **albumfilter:** a list of tag-names of class Genre
-            * **queue:** a further dictionary related to the music-queue. Currently, only the *eoqevent* entry exists.
 
         Returns:
             Current global MusicDB WebUI state
@@ -875,9 +875,6 @@ class MusicDBWebSocketInterface(object):
         """
         albumfilter = self.mdbstate.GetFilterList()
 
-        queue = {}
-        queue["eoqevent"] = self.mdbstate.queue.eoqevent
-
         state = {}
         state["albumfilter"] = albumfilter
         state["queue"]       = queue
@@ -885,6 +882,7 @@ class MusicDBWebSocketInterface(object):
 
 
     def GetMPDState(self):
+        # DEPRECATED: Remove in April 2019
         state = {}
         logging.error("GetMPDState is DEPRECATED - The new method is called GetStreamState")
         return state

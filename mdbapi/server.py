@@ -39,7 +39,6 @@ If the server is not started, the objects are all ``None``.
     * :class:`lib.db.musicdb.MusicDatabase` as ``database``
     * :class:`mdbapi.mise.MusicDBMicroSearchEngine` as ``mise``
     * :class:`lib.cfg.musicdb.MusicDBConfig` as ``cfg``
-    * :class:`lib.cfg.mdbstate.MDBState` as ``mdbstate``
 
 The following example shows how to use the pipe interface:
 
@@ -59,7 +58,6 @@ import time
 import signal
 from threading          import Thread
 from lib.cfg.musicdb    import MusicDBConfig
-from lib.cfg.mdbstate   import MDBState
 from lib.db.musicdb     import MusicDatabase
 from lib.pidfile        import *
 from lib.namedpipe      import NamedPipe
@@ -75,7 +73,6 @@ import logging
 database    = None  # music.db object
 mise        = None  # micro search engine object
 cfg         = None  # overall configuration file
-mdbstate    = None  # ini file holding the state like selected genres and EoQ-Event
 pipe        = None  # Named pipe for server commands
 # WS Server
 tlswsserver = None
@@ -170,7 +167,6 @@ def Initialize(configobj, databaseobj):
 
         #. Assign the *configobj* and *databaseobj* to global variables ``cfg`` and ``database`` to share them between multiple connections
         #. Seed Python's random number generator
-        #. Load the last state of MusicDB via :meth:`lib.cfg.mdbstate.MDBState` class
         #. Instantiate a global :meth:`mdbapi.mise.MusicDBMicroSearchEngine` object
         #. Start the song Tracker via :meth:`mdbapi.Tracker.StartTracker`
         #. Start the Streaming Thread via :meth:`mdbapi.stream.StartStreamingThread` (see :doc:`/mdbapi/stream` for details)
@@ -202,10 +198,6 @@ def Initialize(configobj, databaseobj):
     database = databaseobj
 
     random.seed()
-
-    # load MusicDBState file
-    global mdbstate
-    mdbstate    = MDBState(cfg.server.statefile, database)
 
     # Initialize all interfaces
     logging.debug("Initializing MicroSearchEngine…")
