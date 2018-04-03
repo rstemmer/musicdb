@@ -163,7 +163,7 @@ State           = {}
 #####################################################################
 
 
-# TODO: store queue in mdbstate or in a special file
+# TODO: store queue in a special file
 def StartStreamingThread(config, musicdb):
     """
     This function starts the Streaming Thread :mod:`~StreamingThread`.
@@ -256,7 +256,6 @@ def StreamingThread():
     """
     # TODO: add details like what happens with the Tracker, are there any conditions or side effects?
     from lib.icecast        import IcecastInterface
-    from mdbapi.server      import mdbstate
     from mdbapi.tracker     import TrackerInterface
 
     global Config

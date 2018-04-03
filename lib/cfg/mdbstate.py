@@ -15,8 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from lib.cfg.config import Config
+from lib.cfg.csv    import CSVFile
 from lib.db.musicdb import MusicDatabase
 import logging
+import os
 
 class QUEUE:
     pass
@@ -25,15 +27,60 @@ class MDBState(Config, object):
     """
     This class holds the MusicDB internal state.
 
+    +-----------------------+-----------------------+-----------------------+
+    | file name             | read method           | write method          |
+    +=======================+=======================+=======================+
+    | songqueue.csv         | :meth:`~GetSongQueue` |                       |
+    +-----------------------+-----------------------+-----------------------+
+    | artistblacklist.csv   | :meth:`~GetBlacklist` |                       |
+    +-----------------------+-----------------------+-----------------------+
+    | albumblacklist.csv    | :meth:`~GetBlacklist` |                       |
+    +-----------------------+-----------------------+-----------------------+
+    | songblacklist.csv     | :meth:`~GetBlacklist` |                       |
+    +-----------------------+-----------------------+-----------------------+
+
     Args:
-        filename: Absolute path to the MusicDB state file
+        path: Absolute path to the MusicDB state directory
         musicdb: instance of the MusicDB Database
     """
 
-    def __init__(self, filename, musicdb):
-        Config.__init__(self, filename)
+    def __init__(self, path, musicdb):
+
+        Config.__init__(self, os.path.join(path, "state.ini"))
         self.musicdb = musicdb;
+        self.path    = path;
         self.queue   = QUEUE()
+
+
+    def ReadList(self, listname):
+        """
+        Reads a list from the mdbstate directory.
+        The name is ``config.server.statedir/listname.csv``
+
+        Args:
+            listname (str): Name of the list to read without trailing .csv
+        """
+        path = os.path.join(self.path, listname + ".csv")
+        csv  = CSVFile(path)
+        rows = csv.Read()
+        return rows
+
+
+    def GetSongQueue(self):
+        """
+        This method reads the song queue from the state directory
+        """
+        return self.ReadList("songqueue")
+
+    def GetBlacklists(self):
+        """
+        Returns:
+            (artistblacklist, albumblacklist, songblacklist)
+        """
+        artists = self.ReadList("artistblacklist")
+        albums  = self.ReadList("albumblacklist")
+        songs   = self.ReadList("songblacklist")
+        return artists, albums, songs
 
 
     def GetFilterList(self):

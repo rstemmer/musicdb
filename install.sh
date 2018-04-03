@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="1.3.0"
+SCRIPTVERSION="1.3.1"
 echo -e "\e[1;31mMusicDB-Install [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
@@ -136,9 +136,15 @@ function InstallMusicDBConfiguration {
     fi
 
     echo -e -n "\e[1;34mInstalling \e[0;36mmdbstate.ini\e[1;34m: \e[1;31m"
-    if [ ! -f "$DATADIR/mdbstate.ini" ] ; then
+    if [ ! -f "$DATADIR/mdbstate/state.ini" ] ; then
         # Install the MusicDB state file
-        install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/mdbstate.ini  -D $DATADIR/.
+        install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/mdbstate.ini  -D $DATADIR/mdbstate/state.ini
+        chown $MDBUSER:$MDBGROUP $DATADIR/mdbstate
+
+        if [ -f "$DATADIR/mdbstate.ini" ] ; then # REMOVE IN NEXT VERSION (v4)
+            mv "$DATADIR/mdbstate.ini" "$DATADIR/mdbstate/state.ini"
+            echo -e -n "\e[1;33m(moving old state file to new directory)"
+        fi
         echo -e "\e[1;32mdone"
     else
         echo -e "\e[1;37malready done!"
@@ -263,6 +269,13 @@ function UpdateMusicDBConfiguration {
         sed -i -e "s;\[Icecast];&\npassword=ICECASTSOURCEPASSWORD$;" "$MUSICCFG"    # Will be updated later in this script
         sed -i -e "s;\[Icecast];&\nuser=source;" "$MUSICCFG"
         sed -i -e "s;\[Icecast];&\nport=6666;" "$MUSICCFG"
+    fi
+
+    # [server] -> statedir
+    if [ -z "$(sed -nr '/\[server\]/,/\[/{/statedir/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
+        echo -e "\t\e[1;32m + \e[1;34mAdding \e[0;36m[server] -> statedir\e[0m"
+        echo -e "\t\e[1;33m ! \e[1;34mThe following key can be removed: \e[0;36m[server] -> statedir\e[0m"
+        sed -i -e "s;\[server];&\nstatedir=$DATADIR/mdbstate;" "$MUSICCFG"
     fi
 
 }

@@ -139,7 +139,7 @@ class Randy(object):
 
         self.db         = database
         self.cfg        = config
-        self.mdbstate   = MDBState(self.cfg.server.statefile, self.db)
+        self.mdbstate   = MDBState(self.cfg.server.statedir, self.db)
 
         # Load most important keys
         self.nodisabled  = self.cfg.randy.nodisabled

@@ -32,6 +32,7 @@ Run  git log --oneline  for more details
 ┝━ MINOR CHANGES
 │ - The following song statistics got removed: qadds, qrndadds, qskips, qremoves. They got NEVER used.
 │ - End of Queue option removed from mdbstate.ini->[queue] -> EoQEvent. It was not used for years.
+│ - The MusicDB state gets now saved in an own directory. The state file is at DATADIR/mdbstate/state.ini
 └───────────────────────────────────────╌╌
 
 

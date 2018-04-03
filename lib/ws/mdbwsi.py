@@ -87,6 +87,7 @@ from lib.db.musicdb     import *
 from lib.db.trackerdb   import TrackerDatabase
 from lib.db.musicdb     import MusicDatabase
 from lib.cfg.musicdb    import MusicDBConfig
+from lib.cfg.mdbstate   import MDBState
 from lib.filesystem     import Filesystem
 import os
 from mdbapi.lycra       import Lycra
@@ -107,11 +108,17 @@ class MusicDBWebSocketInterface(object):
         self.database   = database
         self.mise       = mise
         self.cfg        = cfg
-        self.fs         = Filesystem(self.cfg.music.path)
-        self.tags       = MusicDBTags(self.cfg, self.database)
-        self.mdbstate   = MDBState(self.cfg.server.statefile, self.database)
-        self.randy      = None  # Randy will be created onWSConnect # TODO: WHY???
-        self.stream     = StreamManager(self.cfg, self.database)
+
+        # The autobahn framework silently hides all exceptions - that sucks
+        try:
+            self.fs         = Filesystem(self.cfg.music.path)
+            self.tags       = MusicDBTags(self.cfg, self.database)
+            self.mdbstate   = MDBState(self.cfg.server.statedir, self.database)
+            self.randy      = None  # Randy will be created onWSConnect # TODO: WHY???
+            self.stream     = StreamManager(self.cfg, self.database)
+        except Exception as e:
+            logging.exception(e)
+            raise e
 
         self.MaxCallThreads     = self.cfg.server.maxcallthreads
         self.CallThreadList     = [None] * self.MaxCallThreads
@@ -877,7 +884,6 @@ class MusicDBWebSocketInterface(object):
 
         state = {}
         state["albumfilter"] = albumfilter
-        state["queue"]       = queue
         return state
 
 

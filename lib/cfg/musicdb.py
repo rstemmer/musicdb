@@ -110,7 +110,7 @@ class MusicDBConfig(Config):
             logging.error("Value of [server]->maxcallthreads is too small. It must be at least 1.")
         elif self.server.maxcallthreads > 12:
             logging.warning("Value of [server]->maxcallthreads looks too big.")
-        self.server.statefile       = self.Get(str, "server",   "statefile",        "/data/musicdb/state.ini")
+        self.server.statedir        = self.Get(str, "server",   "statedir",         "/data/musicdb/mdbstate")
         self.server.fifofile        = self.Get(str, "server",   "fifofile",         "/data/musicdb/musicdb.fifo")
 
 
