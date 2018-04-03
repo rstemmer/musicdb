@@ -135,7 +135,7 @@ class MusicDBWebSocketInterface(object):
         # So there will be just a notification so that the clients can request an MPDStateUpdate.
         response    = {}
         response["method"]      = "notification"
-        response["fncname"]     = "mpd"
+        response["fncname"]     = "MusicDB:Stream"
         response["fncsig"]      = "on"+event
         response["arguments"]   = data
         response["pass"]        = None

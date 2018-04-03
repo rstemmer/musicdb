@@ -23,7 +23,7 @@ Run  git log --oneline  for more details
 │   * AddAlbumToQueue improved: Does not add hated or disabled songs to the queue
 │   * RemoveSongFromQueue API changed: Song gets identified by the entry ID
 │   * MoveSongInQueue API changed: Songs gets identified by the entry ID
-│   *
+│   * Stream event have now the fncname "MuscDB:Stream" instead of "mpd"
 │   *
 │   *
 │ * {In Development}

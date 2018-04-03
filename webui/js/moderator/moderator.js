@@ -31,11 +31,11 @@ function onMusicDBConnectionClosed()
 
 function onMusicDBNotification(fnc, sig, rawdata)
 {
-    if(fnc == "mpd")
+    window.console && console.log(sig);
+    if(fnc == "MusicDB:Stream")
     {
         // Update state indicator.
-        // If mpd sends notifications, it must be online
-        // And MDP too. 
+        // TODO: This is now different - updates also come when Icecast connection lost
         SetMusicDBOnlineState("yes", "yes"); // MDB, MPD
         
         // Handle notifications

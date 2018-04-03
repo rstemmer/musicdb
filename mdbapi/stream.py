@@ -120,8 +120,7 @@ The following events exist:
 
     TimeChanged:
         The time of the current playing position of a song changed.
-        Argument is the current playtime of the song.
-        It is a rough estimation calculated from the position of the data in the file that gets streamed.
+        Argument is the current playtime of the song in seconds.
 
 Example:
 
@@ -310,12 +309,17 @@ def StreamingThread():
         songpath = cache.GetSongPath(mdbsong, absolute=True)
 
         # Stream song
+        Event_SongChanged()
+        timeplayed    = 0
+        lasttimestamp = time.time()
         for frameinfo in icecast.StreamFile(songpath):
-
-            # Send estimated time position of the song.
-            # It's just how much of the file got read multiplied by total play time
-            #timeplayed = (offset / size) * mdbsong["playtime"]
-            #Event_TimeChanged(timeplayed)   # TODO: This spams! - Only call every n times.
+            # Send every second the estimated time position of the song.
+            timeplayed += frameinfo["header"]["frametime"]
+            timestamp   = time.time()
+            timediff    = timestamp - lasttimestamp;
+            if timediff >= 1.0:
+                Event_TimeChanged(timeplayed/1000)
+                lasttimestamp = timestamp
 
             # Check if the thread shall be exit
             if not RunThread:
@@ -337,12 +341,8 @@ def StreamingThread():
                 Event_StatusChanged()
                 
 
-        # Current song completely streamed.
-        # Get next song and notify that a new song gets streamed
+        # Current song completely streamed. Get next one.
         Songs.NextSong()
-        Event_SongChanged()
-
-
 
 
 
