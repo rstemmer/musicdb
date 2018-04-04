@@ -740,7 +740,7 @@ class StreamManager(object):
         try:
             self.songqueue.MoveSong(int(entryid), int(afterid))
         except Exception as e:
-            logging.warning("Removing song from the queue failed with error: %s", str(e))
+            logging.warning("Moving song from the queue failed with error: %s", str(e))
             return False
 
         Event_QueueChanged()

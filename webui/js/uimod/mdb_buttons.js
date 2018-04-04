@@ -108,7 +108,7 @@ function Button_QueueEntryControls(songid, entryid, qposition)
         html += BTN_CreateSeparator();
         html += BTN_CreateIconButton(
             "<i class=\"fa fa-times-circle\" title=\"Remove this song from the queue\"></i>",
-            "MusicDB_Call(\'RemoveSongFromQueue\', {songid:"+entryid+"});");
+            "MusicDB_Call(\'RemoveSongFromQueue\', {entryid:\'"+entryid+"\'});");
     }
 
     html += "</div>";

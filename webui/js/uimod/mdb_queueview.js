@@ -54,7 +54,7 @@ function ShowQueue(parentID, MDBQueue)
         html += "<div";
         html += " id=Q_drop_" + pos;
         html += " class=\"Q_separator\"";
-        html += " data-pos=\"" + pos + "\"";
+        html += " data-entryid=\"" + entryid + "\"";
         html += "></div>";
     }
     
@@ -86,8 +86,8 @@ function ShowQueue(parentID, MDBQueue)
         e.preventDefault();
         $(this).removeClass("Q_hldropzone");
 
-        var entryid = "#" + e.target.id;
-        var dstpos  = $(entryid).attr("data-entryid");
+        var attrid = "#" + e.target.id;
+        var dstpos  = $(attrid).attr("data-entryid");
         var srcpos  = e.originalEvent.dataTransfer.getData("srcpos");
         var songid  = e.originalEvent.dataTransfer.getData("songid");
 
@@ -99,10 +99,10 @@ function ShowQueue(parentID, MDBQueue)
         e.target.style.opacity = "0.5";
 
         // get data needed vor queue-move and set it as dataTransfer
-        var entryid = "#" + e.originalEvent.originalTarget.id;
+        var attrid = "#" + e.originalEvent.originalTarget.id;
 
-        var entryid = $(entryid).attr("data-entryid");
-        var songid  = $(entryid).attr("data-songid");
+        var entryid = $(attrid).attr("data-entryid");
+        var songid  = $(attrid).attr("data-songid");
 
         // Set data that will be transferred (mandatory to make DnD work)
         e.originalEvent.dataTransfer.setData("srcpos", entryid);

@@ -302,10 +302,11 @@ class SongQueue(object):
         global QueueLock
 
         with QueueLock:
-            for songid, eid in Queue:
+            for eid, songid in Queue:
                 if eid == entryid:
                     return songid
 
+        logging.debug("Cannot find the requested entry %s! \033[1;30m(Returning None)", str(entryid))
         return None
 
 
@@ -389,13 +390,16 @@ class SongQueue(object):
                 logging.warning("Cannot find element with afterid %i in the queue!\033[1;30m (Doning nothing)", afterid)
                 return
 
+            frompos = frompos[0]
+            topos   = topos[0]
+
             # When topos is behind frompos, decrement topos because if shifts one entry down due to popping the frompos-element from the list
-            if topos > frompos:
-                topos -= 1
+            if topos < frompos:
+                topos += 1
 
             # Move element
-            entry = Queue.pop(position)
-            Queue.insert(afterid, entry)
+            entry = Queue.pop(frompos)
+            Queue.insert(topos, entry)
 
 
 

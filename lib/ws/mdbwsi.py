@@ -239,9 +239,9 @@ class MusicDBWebSocketInterface(object):
             else:
                 retval = self.AddRandomSongToQueue(args["position"])
         elif fncname == "MoveSongInQueue":
-            retval = self.MoveSongInQueue(args["songid"], args["srcpos"], args["dstpos"])
+            retval = self.MoveSongInQueue(args["entryid"], args["afterid"])
         elif fncname == "RemoveSongFromQueue":
-            retval = self.RemoveSongFromQueue(args["songid"], args["position"])
+            retval = self.RemoveSongFromQueue(args["entryid"])
         elif fncname == "CutSongRelationship":
             retval = self.CutSongRelationship(args["songid"], args["relatedsongid"])
             if method == "request":
@@ -969,7 +969,7 @@ class MusicDBWebSocketInterface(object):
 
         Each entry of the list contains the following information:
 
-            * **entryid:** A unique ID to identify the entry in the queue
+            * **entryid:** A unique ID to identify the entry in the queue (as string because it is a 128 integer that blows JavaScripts mind)
             * **song:** The song entry from the database
             * **album:** The related album entry from the database
             * **artist:** The related artist entry from the database
@@ -1008,7 +1008,7 @@ class MusicDBWebSocketInterface(object):
             artist  = self.database.GetArtistById(song["artistid"])
 
             entry = {}
-            entry["entryid"] = entryid
+            entry["entryid"] = str(entryid)
             entry["song"]    = song
             entry["album"]   = album
             entry["artist"]  = artist
@@ -1294,7 +1294,7 @@ class MusicDBWebSocketInterface(object):
         The song gets identified by the entry ID of the queue entry.
 
         Args:
-            entryid (int/str) Queue entry ID of the song
+            entryid (str) Queue entry ID of the song
 
         Returns:
             ``None``
@@ -1302,7 +1302,7 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                MusicDB_Call("RemoveSongFromQueue", {entryid:82390194629402649});
+                MusicDB_Call("RemoveSongFromQueue", {entryid:"82390194629402649"});
 
         """
         # Get song ID (and check if entry ID is valid)
@@ -1325,8 +1325,8 @@ class MusicDBWebSocketInterface(object):
         When this is tried, nothing happens.
 
         Args:
-            entryid (int): Position of the song
-            afterid (int): The position the song shall be moved to
+            entryid (str): Position of the song
+            afterid (str): The position the song shall be moved to
 
         Return:
             ``None``
@@ -1348,14 +1348,14 @@ class MusicDBWebSocketInterface(object):
             +----------+---------+
 
             Then the two calls will be applied.
-            The first one is invalid, because entry ID ``1337`` addresses the current playing song at the top of the queue.
+            The first one is invalid, because entry ID ``"1337"`` addresses the current playing song at the top of the queue.
             So that one will be ignored.
             The next one moves song 2 to the end of the queue.
 
             .. code-block:: javascript
 
-                MusicDB_Call("MoveSongInQueue", {entryid:1337, afterid:2323});
-                MusicDB_Call("MoveSongInQueue", {entryid:7357, afterid:4242});
+                MusicDB_Call("MoveSongInQueue", {entryid:"1337", afterid:"2323"});
+                MusicDB_Call("MoveSongInQueue", {entryid:"7357", afterid:"4242"});
 
             So after processing the two calls, the queue looks like this:
 
