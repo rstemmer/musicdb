@@ -123,10 +123,6 @@ tracker
 dbpath (path to file):
    Path to the tracker database
 
-interval (number ∈ ℕ):
-   Tracker uses a message queue to get request from several threads.
-   This is the interval for polling if new requests exist.
-
 
 lycra
 -----

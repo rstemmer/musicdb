@@ -177,13 +177,6 @@ class MusicDBConfig(Config):
         # [tracker]
         self.tracker = TRACKER()
         self.tracker.dbpath         = self.GetFile( "tracker",  "dbpath",       "/data/musicdb/tracker.db")
-        self.tracker.interval       = self.Get(int, "tracker",  "interval",     1)
-        if self.tracker.interval < 0:
-            logging.error("Value of [tracker]->interval is negative. It must be at least 1.")
-        elif self.tracker.interval < 1:
-            logging.warning("Value of [tracker]->interval is too low. It should be at least 1.")
-        elif self.tracker.interval > 30:
-            logging.warning("Value of [tracker]->interval may be too big. It should be less than 30.")
         
 
         # [lycra]

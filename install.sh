@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="1.3.1"
+SCRIPTVERSION="1.3.2"
 echo -e "\e[1;31mMusicDB-Install [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
@@ -279,10 +279,16 @@ function UpdateMusicDBConfiguration {
         sed -i '/\[server\]/,/\[/{/statefile/d}' "$MUSICCFG"
     fi
 
-    # [rany] -> interval
+    # [randy] -> interval
     if [ ! -z "$(sed -nr '/\[randy\]/,/\[/{/interval/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
         echo -e "\t\e[1;31m - \e[1;34mRemoving \e[0;36m[randy] -> interval\e[0m"
         sed -i '/\[randy\]/,/\[/{/interval/d}' "$MUSICCFG"
+    fi
+
+    # [tracker] -> interval
+    if [ ! -z "$(sed -nr '/\[tracker\]/,/\[/{/interval/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
+        echo -e "\t\e[1;31m - \e[1;34mRemoving \e[0;36m[tracker] -> interval\e[0m"
+        sed -i '/\[tracker\]/,/\[/{/interval/d}' "$MUSICCFG"
     fi
 
 }
