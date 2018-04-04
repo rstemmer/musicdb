@@ -234,12 +234,6 @@ class MusicDBConfig(Config):
         self.randy.songbllen        = self.Get(int,  "Randy",   "songbllen",    50)
         self.randy.albumbllen       = self.Get(int,  "Randy",   "albumbllen",   20)
         self.randy.artistbllen      = self.Get(int,  "Randy",   "artistbllen",  10)
-        if self.randy.interval < 0:
-            logging.error("Value of [randy]->interval is negative. It must be at least 1.")
-        elif self.randy.interval < 1:
-            logging.warning("Value of [randy]->interval is too low. It should be at least 1.")
-        elif self.randy.interval > 30:
-            logging.warning("Value of [randy]->interval may be too big. It should be less than 30.")
 
 
         # [log]
