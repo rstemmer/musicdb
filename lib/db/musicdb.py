@@ -75,6 +75,11 @@ The columns of the songs table are the following:
     | lyricsstate | checksum | lastplayed |
     +-------------+----------+------------+
 
+.. warning::
+
+    qskips, qadds, qrndadds and qremoves are deprecated.
+    I never used those values, now I will remove them in one of the next major released!
+
 checksum (Text)
     This is the *sha256* hash value of the file addressed by ``path``.
     The checksum will be calculated like shown in the following example:
