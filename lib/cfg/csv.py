@@ -52,17 +52,25 @@ class CSVFile(object):
         """
         Reads the file an returns its rows as a list.
 
+        If there is only a single column, than the returned list contains values.
+        If there are multiple columns, the returned list contains tuple
+
         Returns:
             A list of rows
         """
         with open(self.path) as csvfile:
-            rows = csv.reader(csvfile, 
+            reader = csv.reader(csvfile, 
                     delimiter  = self.delimiter,
                     escapechar = self.escapechar,
                     quotechar  = self.quotechar,
                     quoting    = self.quoting)
 
-            rows = list(rows) # Transform csv-readers internal object to a python list.
+            rows = []
+            for row in reader:
+                if len(row) == 1:
+                    rows.append(row[0])
+                else:
+                    rows.append(tuple(row))
         return rows
   
 
@@ -85,7 +93,15 @@ class CSVFile(object):
                     escapechar = self.escapechar,
                     quotechar  = self.quotechar,
                     quoting    = self.quoting)
-            csvwriter.writerows(rows)
+
+            # check if there are columns or not. The csv module cannot handle single columns lists
+            for row in rows:
+                if type(row) != list and type(row) != tuple:
+                    csvwriter.writerow([row])
+                elif len(row) == 0:
+                    csvwriter.writerow([None])
+                else:
+                    csvwriter.writerow(list(row))
         return None
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

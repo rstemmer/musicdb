@@ -150,16 +150,64 @@ class Randy(object):
         self.artistbllen = self.cfg.randy.artistbllen
 
         # Check blacklist and create new one if there is none yet
-        # TODO: load last state from file?
         global Blacklist
         global BlacklistLock
 
         with BlacklistLock:
             if not Blacklist:
+                # try to load the blacklist from MusicDB State
+                loadedlists = self.mdbstate.LoadBlacklists()
+
+                # First, create a clean blacklist
                 Blacklist = {}
                 Blacklist["songs"]   = [None] * self.songbllen
                 Blacklist["albums"]  = [None] * self.albumbllen
                 Blacklist["artists"] = [None] * self.artistbllen
+                
+                # Now fill the blacklist considering changes in their size
+                for key in loadedlists:
+                    if key not in ["songs", "albums", "artists"]:
+                        logging.error("Unexpected key \"%s\" in loaded blacklist dictionary! \033[1;30(Will be discard)", str(key))
+                        continue
+
+                    dst = Blacklist[key]
+                    src = loadedlists[key]
+
+                    # The following python magic inserts as much of src at the end of dst, as fits.
+                    # if src must be cut, the first elements get removed
+                    # So, case 1: len(dst) > len(src)
+                    #   dst = [None, None, None, None, None]
+                    #   src = [1, 2, 3]
+                    #   Results in [None, None, 1, 2, 3]
+                    #
+                    # Case 2: len(dst) < len(src)
+                    #   dst = [None, None]
+                    #   src = [1, 2, 3]
+                    #   Results in [2, 3]
+                    #
+                    # >>> l = [1,2,3]
+                    # >>> d = [0]*3
+                    # >>> d[-len(l):] = l[-len(d):]
+                    # >>> l
+                    # [1, 2, 3]
+                    # >>> d
+                    # [1, 2, 3]
+                    # >>> d = [0]*2
+                    # >>> d[-len(l):] = l[-len(d):]
+                    # >>> l
+                    # [1, 2, 3]
+                    # >>> d
+                    # [2, 3]
+                    # >>> d = [0]*4
+                    # >>> d[-len(l):] = l[-len(d):]
+                    # >>> l
+                    # [1, 2, 3]
+                    # >>> d
+                    # [0, 1, 2, 3]
+                    # >>> 
+                    dst = dst[-len(src):] = src[-len(dst):]
+
+                    Blacklist[key] = dst
 
 
 
@@ -167,6 +215,9 @@ class Randy(object):
         """
         This method pushes a song onto the blacklists.
         If the song is ``None`` nothing happens.
+
+        This method should be the only place where the blacklist gets changed.
+        After adding a song, the lists get stored in the MusicDB State Directory to be persistent
 
         Args:
             song (dict): A song from the :class:`~lib.db.musicdb.MusicDatabase`
@@ -190,6 +241,9 @@ class Randy(object):
             if self.songbllen > 0:
                 Blacklist["songs"].pop(0)
                 Blacklist["songs"].append(song["id"])
+
+            # Save blacklists to files 
+            self.mdbstate.SaveBlacklists(Blacklist)
 
 
 

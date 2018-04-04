@@ -689,7 +689,7 @@ class StreamManager(object):
             return False
 
         song = self.db.GetSongById(songid)
-        self.randy.AddSongToBlacklist(song)
+        # self.randy.AddSongToBlacklist(song) # FIXME: The Web API uses this method to add random songs
 
         Event_QueueChanged()
         return True

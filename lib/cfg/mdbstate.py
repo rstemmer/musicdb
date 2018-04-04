@@ -44,7 +44,7 @@ class MDBState(Config, object):
         +========================+========================+========================+
         | songqueue.csv          | :meth:`~LoadSongQueue` | :meth:`~SaveSongQueue` |
         +------------------------+------------------------+------------------------+
-        | artistblacklist.csv    | :meth:`~LoadBlacklist` |                        |
+        | artistblacklist.csv    | :meth:`~LoadBlacklist` | :meth:`~SaveBlacklist` |
         +------------------------+------------------------+------------------------+
         | albumblacklist.csv     | :meth:`~LoadBlacklist` |                        |
         +------------------------+------------------------+------------------------+
@@ -70,16 +70,24 @@ class MDBState(Config, object):
         The ``listname`` argument defines which file gets read: ``config.server.statedir/listname.csv``.
 
         This method should only be used by class internal methods.
+        When a file can not be accessed, an empty list gets returned.
+        So deleting a file is an option to reset an internal state of MusicDB.
 
         Args:
             listname (str): Name of the list to read without trailing .csv
 
         Returns:
-            A list of rows from the file.
+            A list of rows from the file. When reading the list fails, an empty list gets returned.
         """
         path = os.path.join(self.path, listname + ".csv")
-        csv  = CSVFile(path)
-        rows = csv.Read()
+
+        try:
+            csv  = CSVFile(path)
+            rows = csv.Read()
+        except Exception as e:
+            logging.warning("Accessing file \"%s\" failed with error %s", str(path), str(e))
+            return []
+
         return rows
 
 
@@ -95,12 +103,22 @@ class MDBState(Config, object):
             rows(list): The list that shall be stored
 
         Returns:
-            ``None``
+            ``True`` on success, otherwise ``False``
         """
         path = os.path.join(self.path, listname + ".csv")
-        csv  = CSVFile(path)
-        csv.Write(rows)
-        return None
+
+        if type(rows) != list:
+            logging.warning("Expected a list to write into the csv file at \"%s\". Got type \"$s\" instead. \033[1;30m(Will not change the file)", path, str(type(rows)))
+            return False
+
+        try:
+            csv  = CSVFile(path)
+            csv.Write(rows)
+        except Exception as e:
+            logging.warning("Accessing file \"%s\" failed with error %s", str(path), str(e))
+            logging.debug("Data: %s", str(rows))
+            return False
+        return True
 
 
     def LoadSongQueue(self):
@@ -118,9 +136,13 @@ class MDBState(Config, object):
         rows  = self.ReadList("songqueue")
         queue = []
         for row in rows:
-            entryid = int(row[0])
-            songid  = int(row[1])
-            queue.append((entryid, songid))
+            try:
+                entryid = int(row[0])
+                songid  = int(row[1])
+                queue.append((entryid, songid))
+            except Exception as e:
+                logging.warning("Invalid entry in stored Song Queue: \"%s\"! \033[1;30m(Entry will be ignored)", str(row))
+
         return queue
 
 
@@ -135,19 +157,42 @@ class MDBState(Config, object):
         Returns:
             *Nothing*
         """
-        self.WriteList("songqueue", queue)
+        # transform data to a structure that can be handled by the csv module
+        # save entry ID as string, csv cannot handle 128bit integer
+        rows = []
+        for entry in queue:
+            rows.append([str(entry[0]), int(entry[1])])
+        self.WriteList("songqueue", rows)
         return
 
 
     def LoadBlacklists(self):
         """
+        This method returns a dictionary with the blacklist managed by :class:`mdbapi.randy.Randy`
         Returns:
-            (artistblacklist, albumblacklist, songblacklist)
+            A dictionary with the blacklists as expected by :class:`mdbapi.randy.Randy`
         """
-        artists = self.ReadList("artistblacklist")
-        albums  = self.ReadList("albumblacklist")
-        songs   = self.ReadList("songblacklist")
-        return artists, albums, songs
+        blacklist = {}
+        blacklist["artists"] = [ None if x == "" else int(x) for x in self.ReadList("artistblacklist") ]
+        blacklist["albums"]  = [ None if x == "" else int(x) for x in self.ReadList("albumblacklist")  ]
+        blacklist["songs"]   = [ None if x == "" else int(x) for x in self.ReadList("songblacklist")   ]
+        return blacklist
+
+
+    def SaveBlacklists(self, blacklist):
+        """
+        This method stores the blacklist in the related CSV files.
+        The data structure of the dictionary is expected to be the same, :class:`mdbapi.randy.Randy` uses.
+
+        Args:
+            blacklist (dict): A dictionary of blacklists.
+
+        Returns:
+            *Nothing*
+        """
+        self.WriteList("songblacklist",   blacklist["songs"])
+        self.WriteList("albumblacklist",  blacklist["albums"])
+        self.WriteList("artistblacklist", blacklist["artists"])
 
 
     def GetFilterList(self):
