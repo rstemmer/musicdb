@@ -362,7 +362,9 @@ class IcecastInterface(object):
                 break
 
             while self.mutestate == True:
-                self.StreamChunk(self.silentframe*10) # ~ 261ms silence
+                retval = self.StreamChunk(self.silentframe*10) # ~ 261ms silence
+                if retval == False:
+                    break
                 yield frame
 
             yield frame

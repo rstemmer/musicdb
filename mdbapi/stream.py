@@ -243,11 +243,10 @@ def StreamingThread():
     """
     This thread manages the streaming of the songs from the Song Queue to the Icecast server.
 
-    Silence is generated as follows:
-
-        .. code-block:: bash
-
-            # todo
+    The tread tracks the played song using the :doc:`/mdbapi/tracker` module.
+    It also tracks randomly added songs assuming the user skips or removes songs that don't fit.
+    Only completely played songs will be considered.
+    Skipped songs will be ignored.
 
     The thread tiggers the following events:
 
@@ -309,8 +308,8 @@ def StreamingThread():
             #Event_QueueChanged() gets fired anyway
 
         # Get current song that shall be streamed.
-        entryid, songid = queue.CurrentSong()
-        mdbsong  = musicdb.GetSongById(songid)
+        currententryid, currentsongid = queue.CurrentSong()
+        mdbsong  = musicdb.GetSongById(currentsongid)
         songpath = cache.GetSongPath(mdbsong, absolute=True)
 
         # Stream song
@@ -345,6 +344,13 @@ def StreamingThread():
                 State["isplaying"] = argument
                 icecast.Mute(not State["isplaying"])    # Mute stream, when not playing
                 Event_StatusChanged()
+        else:
+            # when the for loop streaming the current song gets not left via break,
+            # then the whole song was streamed. So add that song to the trackers list
+            tracker.AddSong(currentsongid)
+            # TODO: This is the place to update the lasttimeplayed column in the MusicDatabase
+            # IDEA: This is a good place to count how often a song was played.
+            # Is this information interesting?
                 
         # Current song completely streamed. Get next one.
         # When the song was stopped to shutdown the server, do not skip to the next one

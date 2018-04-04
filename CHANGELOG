@@ -17,7 +17,8 @@ Run  git log --oneline  for more details
 │   - [server]->statefile will no longer be used, instead the following:
 │   + [server]->statedir a director holding MusicDBs state. The old state got moved into it as state.ini
 │ + All new streaming: MPD interface removed and Icecast interface added
-│ + Randy refactored. Interface changed.
+│ * Tracker refactored. Interface changed.
+│ * Randy refactored. Interface changed.
 │   - PrintBlacklist removed
 │ + Major changes in the Web API. Changed functions are:
 │   - GetMPDState replaced with GetStreamState (they are not compatible!)
