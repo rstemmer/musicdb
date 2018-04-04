@@ -256,7 +256,7 @@ def StreamingThread():
     """
     # TODO: add details like what happens with the Tracker, are there any conditions or side effects?
     from lib.icecast        import IcecastInterface
-    from mdbapi.tracker     import TrackerInterface
+    from mdbapi.tracker     import Tracker
 
     global Config
     global RunThread
@@ -264,8 +264,8 @@ def StreamingThread():
     global State
 
     # Create all interfaces that are needed by this Thread
-    tracker = TrackerInterface()
     musicdb = MusicDatabase(Config.database.path)
+    tracker = Tracker(Config, musicdb)
     cache   = MusicCache(Config, musicdb)
     queue   = SongQueue(Config, musicdb)
     randy   = Randy(Config, musicdb)

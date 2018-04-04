@@ -63,7 +63,6 @@ from lib.pidfile        import *
 from lib.namedpipe      import NamedPipe
 from lib.ws.server      import MusicDBWebSocketServer
 from mdbapi.mise        import MusicDBMicroSearchEngine
-from mdbapi.tracker     import StartTracker, StopTracker
 from mdbapi.stream      import StartStreamingThread, StopStreamingThread
 import logging
 
@@ -168,7 +167,6 @@ def Initialize(configobj, databaseobj):
         #. Assign the *configobj* and *databaseobj* to global variables ``cfg`` and ``database`` to share them between multiple connections
         #. Seed Python's random number generator
         #. Instantiate a global :meth:`mdbapi.mise.MusicDBMicroSearchEngine` object
-        #. Start the song Tracker via :meth:`mdbapi.Tracker.StartTracker`
         #. Start the Streaming Thread via :meth:`mdbapi.stream.StartStreamingThread` (see :doc:`/mdbapi/stream` for details)
         #. Update MiSE cache via :meth:`mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache`
         #. Create FIFO file for named pipe
@@ -205,9 +203,6 @@ def Initialize(configobj, databaseobj):
     mise   = MusicDBMicroSearchEngine(database)
 
     # Start/Connect all interfaces
-    logging.debug("Starting Tracker…")
-    StartTracker(cfg)
-    
     logging.debug("Starting Streaming Thread…")
     StartStreamingThread(cfg, database)
     
@@ -265,7 +260,6 @@ def Shutdown():
 
     The following things happen when this function gets called:
 
-        #. Stop the song Tracker via :meth:`mdbapi.tracker.StopTracker`
         #. Stop the Streaming Thread via :meth:`mdbapi.stream.StopStreamingThread`
         #. Removing FIFO file for named pipe
         #. Stop the websocket server
@@ -284,9 +278,6 @@ def Shutdown():
         logging.debug("Disconnect from clients…")
         tlswsserver.factory.CloseConnections()
     
-    logging.debug("Stopping Tracker…")
-    StopTracker()
-
     logging.debug("Stopping Streaming Thread…")
     StopStreamingThread()
     
