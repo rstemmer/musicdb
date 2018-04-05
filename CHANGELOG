@@ -29,6 +29,7 @@ Run  git log --oneline  for more details
 │   * RemoveSongFromQueue API changed: Song gets identified by the entry ID
 │   * MoveSongInQueue API changed: Songs gets identified by the entry ID
 │   * Stream event have now the fncname "MuscDB:Stream" instead of "mpd"
+│ * Song-preview in WebUI now uses the mp3-cache instead of the source files.
 │
 ┝━ MINOR CHANGES
 │ - The following song statistics got removed: qadds, qrndadds, qskips, qremoves. They got NEVER used.

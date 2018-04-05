@@ -44,6 +44,7 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* upd
 * MusicDB's state now gets stored with the blacklists and song queue in an extra directory.
   * The directory can be configured: `[server] -> statedir`
 * **:wrench: Change:** New dependency: [shouty](https://github.com/edne/shouty). Execute `pip install shouty`.
+* **:wrench: Change:** Song-"preview" in Web UI now uses the MP3-Cache instead of the source audio files. This requires updating your HTTP daemon configuration.
 
 **:wrench: Update:**
 ```
