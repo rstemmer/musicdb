@@ -78,8 +78,6 @@ class TRACKER:
     pass
 class LYCRA:
     pass
-class MPD:
-    pass
 class ICECAST:
     pass
 class LOG:
@@ -182,19 +180,6 @@ class MusicDBConfig(Config):
         # [lycra]
         self.lycra = LYCRA()
         self.lycra.dbpath           = self.GetFile( "lycra",    "dbpath",       "/data/musicdb/lycra.db")
-
-
-        # [MPD]
-        self.mpd        = MPD()
-        self.mpd.address            = self.Get(str, "MPD",      "address",      "localhost")
-        self.mpd.port               = self.Get(str, "MPD",      "port",         "999")
-        self.mpd.interval           = self.Get(int, "MPD",      "interval",     1)
-        if self.mpd.interval < 0:
-            logging.error("Value of [mpd]->interval is negative. It must be at least 1.")
-        elif self.mpd.interval < 1:
-            logging.warning("Value of [mpd]->interval is too low. It should be at least 1.")
-        elif self.mpd.interval > 30:
-            logging.warning("Value of [mpd]->interval may be too big. It should be less than 30.")
 
 
         # [Icecast]
