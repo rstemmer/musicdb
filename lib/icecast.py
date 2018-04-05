@@ -88,20 +88,7 @@ The ports will be configured in the ``icecast`` section of the configuration fil
         It must be the same like the one set in MusicDB's configuration: ``[icecast]->mountname``
         Further more it must be equal to the name definded in the detailed mount specification: ``icecast/mount/mount-name``.
 
-
-User Management
-^^^^^^^^^^^^^^^
-
-TODO:
-
-How to remove access validation.
-
-How to create a new user
-
-
 """
-
-# TODO: scan for "TODO" and check if the configuration hints are still valid
 
 import os
 import logging
