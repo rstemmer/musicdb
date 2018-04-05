@@ -26,19 +26,19 @@ function ShowMusicDBStateView(parentID)
 
     html += "<div id=MDBStateView class=\"hlcolor smallfont\">";
 
-    // MPD
+    // Icecast
     html += "<span id=MPDState class=\"onlinestate\" data-online=\"unknown\">";
-    html += "mpd";
+    html += "Icecast";
     html += "</span><br>";
 
-    // MDB
+    // MusicDB
     html += "<span id=MDBReconnectBtn data-online=\"unknown\""; 
     html += " title=\"Reconnect to MusicDB server\"";
     html += " onclick=\"ConnectToMusicDB();\">";
     html += "&#xf021;";
     html += "</span>";
     html += "<span id=MDBState class=\"onlinestate\" data-online=\"unknown\">";
-    html += "mdb";
+    html += "MusicDB";
     html += "</span><br>";
 
     // Playtime

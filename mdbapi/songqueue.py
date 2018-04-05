@@ -100,7 +100,7 @@ from lib.cfg.mdbstate   import MDBState
 from lib.db.musicdb     import MusicDatabase
 from mdbapi.randy       import Randy
 
-Queue     = []
+Queue     = None
 QueueLock = threading.RLock() # RLock allows nested calls. It locks only different threads.
 Callbacks = []  # For events like QueueChanged or SongChanged
 
@@ -109,7 +109,11 @@ Callbacks = []  # For events like QueueChanged or SongChanged
 class SongQueue(object):
     """
     This class implements a queue to manage songs to play.
+    Whenever the queue changes, it gets stored in the MusicDB State Directory
 
+    When the constructor detects that there is no queue yet (not even an empty one),
+    it tries to load the stored queue.
+    If this fails, a new empty queue gets created.
 
     Args:
         config: :class:`~lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration
@@ -128,6 +132,18 @@ class SongQueue(object):
         self.cfg        = config
         self.mdbstate   = MDBState(self.cfg.server.statedir, self.db)
         self.randy      = Randy(self.cfg, self.db)
+
+        global Queue
+        global QueueLock
+
+        with QueueLock:
+            if Queue == None:
+                logging.debug("Loading Song Queue…")
+                try:
+                    self.Load()
+                except Exception as e:
+                    logging.warning("Loading song queue failed with error: %s. \033[1;30m(Creating an empty one)", str(e))
+                    Queue = []
 
 
 
@@ -202,7 +218,13 @@ class SongQueue(object):
         """
         See :meth:`~TriggerEvent` with event name ``"QueueChanged"``.
         More details in the module description at the top of this document.
+
+        This method also tries to save the queue into the MusicDB State Directory.
         """
+        try:
+            self.Save()
+        except Exception as e:
+            logging.warning("Saving the current song queue failed with error: %s. \033[1;30m(Continuing without saving)", str(e))
         self.TriggerEvent("QueueChanged")
 
     def Event_SongChanged(self):

@@ -264,33 +264,31 @@ def StreamingThread():
             )
     icecast.Mute()
 
-    # TODO: Do this when initializing the server
-    logging.debug("Loading Song Queue…")
-    queue.Load()
-
     while RunThread:
         # Sleep a bit to reduce the load on the CPU. If disconnected, sleep a bit longer
         if State["isconnected"]:
             time.sleep(0.1)
         else:
-            time.sleep(1)
+            time.sleep(2)
 
         # Check connection to Icecast, and connect if disconnected.
         isconnected = icecast.IsConnected()
-        if not isconnected:
-            success = icecast.Connect()
-            if success:
-                isconnected = True
-
-        # Check if the connection status changed
         if State["isconnected"] != isconnected:
             State["isconnected"] = isconnected
             Event_StatusChanged()
+
+        if not isconnected:
+            # Try to connect, and check if connection succeeded in the next turn of the main loop
+            logging.info("Trying to reconnect to Icecast…")
+            icecast.Connect()
+            continue
+
 
         # Get current song that shall be streamed.
         currententryid, currentsongid = queue.CurrentSong()
         mdbsong  = musicdb.GetSongById(currentsongid)
         songpath = cache.GetSongPath(mdbsong, absolute=True)
+
 
         # Stream song
         timeplayed    = 0
@@ -326,21 +324,20 @@ def StreamingThread():
         else:
             # when the for loop streaming the current song gets not left via break,
             # then the whole song was streamed. So add that song to the trackers list
-            tracker.AddSong(currentsongid)
-            # TODO: This is the place to update the lasttimeplayed column in the MusicDatabase
-            # IDEA: This is a good place to count how often a song was played.
-            # Is this information interesting?
-                
+            # In case the loop ended because Icecast failed, update the Status
+            if icecast.IsConnected():
+                tracker.AddSong(currentsongid)
+            else:
+                icecast.Mute()
+                State["isplaying"]   = False
+                State["isconnected"] = False
+                Event_StatusChanged()
+
         # Current song completely streamed. Get next one.
         # When the song was stopped to shutdown the server, do not skip to the next one
-        if RunThread:
+        # In case the loop stopped because of an Icecast error, stay at the last song.
+        if RunThread and icecast.IsConnected():
             queue.NextSong()
-
-    # TODO: Do this when shutting down the server
-    logging.debug("Saving Song Queue…")
-    queue.Save()
-
-
 
 
 

@@ -218,7 +218,7 @@ class IcecastInterface(object):
         Returns:
             ``True`` on success, otherwise ``False``
         """
-        logging.debug("Connecting to Icecast server.")
+        logging.debug("Trying to connect to Icecast server.")
         if self.connectionstate == True:
             logging.warning("Connection to Icecast already open! \033[1;30m(Will not be opened again)")
             return True
@@ -267,6 +267,9 @@ class IcecastInterface(object):
         This method send a chunk of a file to the Icecast server.
         The method synchronizes with Icecast before sending the data.
         This is a blocking process!
+
+        When sending a chunk of data to Icecast fails,
+        the method disconnects from the Server.
         
         Args:
             chunk (bytes): A chunk of a file to stream to Icecast
@@ -304,7 +307,8 @@ class IcecastInterface(object):
             self.icecast.sync()         # libshout doc recommends to call sync before send.
             self.icecast.send(chunk)
         except Exception as e:
-            logging.error("Sending chunk to Icecast failed with error %s", str(e))
+            logging.error("Sending chunk to Icecast failed with error %s! - Disconnecting from Icecast", str(e))
+            self.Disconnect()
             return False
         return True
 
