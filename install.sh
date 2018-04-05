@@ -335,41 +335,6 @@ function InstallMusicAI {
 
 
 
-function InstallMPDEnvironment {
-    echo -e -n "\e[1;34mSetup MPD environment in \e[0;36m$DATADIR/mpd\e[1;34m: \e[1;31m"
-    if ! type mpd 2> /dev/null > /dev/null ; then
-        echo -e    "\t\e[1;33mmpd binary missing! \e[1;30m(mpd not yet installed?)"
-        echo -e -n "\t\e[1;34mInstalling configuration anyway: \e[1;31m"
-    fi
-
-    if [ ! -d "$DATADIR/mpd" ] ; then
-        mkdir -p $DATADIR/mpd/playlists
-        install -m 664 -g $MDBGROUP -o $MPDUSER $SOURCEDIR/share/mpd.conf    -D $DATADIR/mpd/.
-        install -m 644 -g $MDBGROUP -o $MPDUSER $SOURCEDIR/share/mpdstate    -D $DATADIR/mpd/state
-        install -m 664 -g $MDBGROUP -o $MPDUSER $SOURCEDIR/share/mpddatabase -D $DATADIR/mpd/database
-        
-        sed -i -e "s;DATADIR;$DATADIR;g"       $DATADIR/mpd/mpd.conf
-        sed -i -e "s;MUSICDIR;$MUSICDIR;g"     $DATADIR/mpd/mpd.conf
-        sed -i -e "s;MUSICDBGROUP;$MDBGROUP;g" $DATADIR/mpd/mpd.conf
-        sed -i -e "s;MPDUSER;$MPDUSER;g"       $DATADIR/mpd/mpd.conf
-
-        chown -R $MPDUSER:$MDBGROUP $DATADIR/mpd
-        echo -e "\e[1;32mdone"
-    else
-        echo -e "\e[1;37malready done!"
-    fi
-
-    echo -e -n "\e[1;34mSetting MPD home directory to \e[0;36m$DATADIR/mpd\e[1;34m: \e[1;31m"
-    if [ "$(getent passwd someuser | cut -f6 -d:)" != "$DATADIR/mpd" ]; then
-        usermod -d $DATADIR/mpd $MPDUSER
-        echo -e "\e[1;32mdone"
-    else
-        echo -e "\e[1;37malready done!"
-    fi
-}
-
-
-
 function InstallIcecastEnvironment {
     echo -e -n "\e[1;34mSetup Icecast environment in \e[0;36m$DATADIR/icecast\e[1;34m: \e[1;31m"
 
@@ -615,15 +580,6 @@ else
     exit 1
 fi
 
-# Figure out, how the MPD user is called
-if [ ! -z "$(getent passwd mpd)" ]; then
-    MPDUSER="mpd"
-else
-    echo -e "\t\e[1;31mUnable to figure out how the MPD user is called! \e[1;30m(No MPD installed?)\e[0m"
-    exit 1
-fi
-
-
 # Check if pwd is the source directory
 SOURCEDIR="$(pwd)"
 if [ ! -d "$SOURCEDIR/.git" ] ; then
@@ -693,9 +649,8 @@ dialog --backtitle "$FORMTITLE" --title "Installation Setup" \
     "MusicDB group:"    5 1 "$MDBGROUP"     5 20 45 0 \
     "MusicDB user:"     6 1 "$MDBUSER"      6 20 45 0 \
     "HTTP group:"       7 1 "$HTTPGROUP"    7 20 45 0 \
-    "MPD user:"         8 1 "$MPDUSER"      8 20 45 0 \
-    "SSL key file:"     9 1 "$SSLKEY"       9 20 45 0 \
-    "SSL certificate"  10 1 "$SSLCRT"     10 20 45 0 \
+    "SSL key file:"     8 1 "$SSLKEY"       8 20 45 0 \
+    "SSL certificate"   9 1 "$SSLCRT"       9 20 45 0 \
     2> $FORMFILE
 
 # the form file exists anyway, but only when pressed OK it holds the new setting
@@ -707,9 +662,8 @@ if [ -s $FORMFILE ] ; then
     MDBGROUP="$( sed  "5q;d" $FORMFILE)"
     MDBUSER="$(  sed  "6q;d" $FORMFILE)"
     HTTPGROUP="$(sed  "7q;d" $FORMFILE)"
-    MPDUSER="$(  sed  "8q;d" $FORMFILE)"
-    SSLKEY="$(   sed  "9q;d" $FORMFILE)"
-    SSLCRT="$(   sed "10q;d" $FORMFILE)"
+    SSLKEY="$(   sed  "8q;d" $FORMFILE)"
+    SSLCRT="$(   sed  "9q;d" $FORMFILE)"
 fi
 
 rm $FORMFILE
@@ -725,7 +679,6 @@ echo -e "\t\e[1;34mMusic directory:  \e[0;36m$MUSICDIR"
 echo -e "\t\e[1;34mMusicDB group:    \e[0;36m$MDBGROUP"
 echo -e "\t\e[1;34mMusicDB user:     \e[0;36m$MDBUSER"
 echo -e "\t\e[1;34mHTTP group:       \e[0;36m$HTTPGROUP"
-echo -e "\t\e[1;34mMPD user:         \e[0;36m$MPDUSER"
 echo -e "\t\e[1;34mSSL key file:     \e[0;36m$SSLKEY"
 echo -e "\t\e[1;34mSSL certificate:  \e[0;36m$SSLCRT"
 
@@ -745,7 +698,6 @@ InstallArtwork
 InstallMP3Cache
 InstallMusicAI
 
-InstallMPDEnvironment
 InstallIcecastEnvironment
 InstallLogrotateConfiguration
 InstallShellProfile

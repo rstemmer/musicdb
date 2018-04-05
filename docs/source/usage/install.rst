@@ -28,7 +28,7 @@ First, you need to install some dependencies using your systems package manager:
    * sqlite3
    * sed
    * git
-   * mpd
+   * icecast
    * dialog
    * gcc/clang
 
@@ -71,9 +71,6 @@ The following settings must be configured for the installation (and will be reco
 
    HTTP group:
       The Unix group for HTTP documents necessary to access the WebUI
-
-   MPD user:
-      The user name the Music Playing Daemon (MPD) uses
 
    SSL Certificate:
       Certificate file for the SSL encryption of the WebSocket communication
@@ -155,7 +152,6 @@ The following list gives you some details about the listed modules.
    * ``icecast`` won't be detected on Debian because there it is called ``icecast2`` (This has no impact).
    * ``apachectl`` my be not found if it is only available for root user. Or you simply use another HTTP server.
    * ``jsdoc`` can be installed via ``npm install -g jsdoc``.
-   * ``mpd`` comes with the ``python-mpd2`` module.
    * The following modules are optional in case you don't want to use the AI infrastructure: ``numpy``, ``h5py``, ``tensorflow``, ``tflearn``
 
 Basic packages
@@ -167,43 +163,6 @@ You can use the ``musicdb-check.sh`` script to see what packages are missing.
 
 The missing ``id3edit`` tool is part of MusicDB.
 It's installation is described in this documentation later on.
-
-MPD - Music Player Daemon
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-MPD needs a working directory and some configuration.
-The following setup binds MPD to MusicDB as close as possible.
-
-   - Create a working directory relative to MusicDB's data directory: ``/data/musicdb/mpd``
-   - Set permissions so that all users in group ``musicdb`` have access to the files
-   - Change the home directory of ``mpd`` to ``/data/musicdb/mpd``
-
-.. code-block:: bash
-
-   # as root
-   cd /data/musicdb
-
-   # create MPD working directory
-   mkdir -p mpd/playlists
-   touch mpd/state
-   touch mpd/mpd.conf
-   chown -R mpd:musicdb mpd
-   chmod g+w            mpd/mpd.conf
-    
-   # configure
-   vim mpd/mpd.conf
-    
-   # set /data/musicdb/mpd as home dir for user mpd
-   vim /etc/passwd
-
-   # final test and setup
-   mpd --no-daemon /data/musicdb/mpd/mpd.conf
-   mpc -p 9999 enable 1
-   mpc -p 9999 consume 1
-
-
-An example configuration can be found in the *share* directory of MusicDB
-
 
 Download MusicDB
 ^^^^^^^^^^^^^^^^
@@ -376,12 +335,6 @@ To download them you need a `NVidia Developer Account <https://developer.nvidia.
 
 First Run
 ---------
-
-If you start MusicDB Server right after installation, lots of warnings will appear periodically.
-The reason is, that there are no songs in MPDs playlist and that the random song selector(Randy) does not know what songs to add.
-
-So before starting the server, it is recommended to add some music to MusicDB and so, indirectly to MPD.
-If you only want to check the installation and setup, you can run the server and ignore the warning.
 
 For starting and stopping the MusicDB WebSocket Server and its dependent processes, 
 the scripts described in :doc:`/usage/scripts` are recommended.

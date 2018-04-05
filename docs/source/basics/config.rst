@@ -131,19 +131,6 @@ dbpath (path to file):
    Path to the database the lyrics will be cached at
 
 
-MPD
----
-
-address (URL):
-   Address where MPD (Music Playing Daemon) is listening at
-
-port (number ∈ ℕ):
-   Address where MPD (Music Playing Daemon) is listening at
-
-interval (number ∈ ℕ):
-   The interval MusicDB polls for the current state of MPD
-
-
 Icecast
 -------
 
@@ -249,7 +236,7 @@ debugfile (path to file):
 
 ignore (list of python module names):
    List of modules to ignore in the logs.
-   At least ``mpd, requests, urllib3, PIL, tensorflow`` is recommended
+   At least ``requests, urllib3, PIL, tensorflow`` is recommended
 
 
 debug

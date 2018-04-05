@@ -9,24 +9,14 @@ fi
 
 
 # Define the binaries to execute
-if type "mpd" 2> /dev/null > /dev/null ; then
-    MPD=mpd
-else
-    echo -e "\e[1;31mCannot find \e[1;36mMPD\e[1;31m!\e[0m"
-    exit 1
-fi
-
 if type "icecast" 2> /dev/null > /dev/null ; then
     ICECAST=icecast
 elif type "icecast2" 2> /dev/null > /dev/null ; then
     ICECAST=icecast2
+else
+    echo -e "\e[1;31mCannot find \e[1;36mMPD\e[1;31m!\e[0m"
+    exit 1
 fi
-
-
-# stop mpd
-echo -e -n "\e[1;34mStop MPD \e[0m"
-$MPD --kill > /dev/null 2>&1
-echo -e "\e[1;32mdone\e[0m"
 
 
 # stop icecast if it exists
