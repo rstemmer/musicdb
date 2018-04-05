@@ -46,15 +46,21 @@ function onMusicDBNotification(fnc, sig, rawdata)
             SetTimePlayed(rawdata);
             // This also updated the Timer-View
         }
+        else if(sig == "onStatusChanged")
+        {
+            MusicDB_Request("GetStreamState", "UpdateStreamState");
+        }
+    }
+    else if (fnc == "MusicDB:Queue")
+    {
+        if(sig == "onSongChanged")
+        {
+            MusicDB_Request("GetStreamState", "UpdateStreamState");
+        }
         else if(sig == "onQueueChanged")
         {
             MusicDB_Request("GetQueue", "ShowQueue");
         }
-        else if(sig == "onSongChanged" || sig == "onStatusChanged")
-        {
-            MusicDB_Request("GetStreamState", "UpdateStreamState");
-        }
-
     }
 }
 function onMusicDBMessage(fnc, sig, args, pass)

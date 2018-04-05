@@ -14,16 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-This module implements the Song Queue management and stream. The soul of MusicDB.
-This module provides a thread that takes the songs from a :class:`lib.songqueue.SongQueue` to stream them via Icecast.
+This module implements the stream that streams the music.
+This module provides a thread that takes the songs from a :class:`mdbapi.songqueue.SongQueue` to stream them via Icecast.
 It manages the connection to the Icecast server using the :mod:`lib.icecast` module.
-Further more this module provides some callback interfaces to inform the rest of MusicDB about the state of the Song Queue.
+Further more this module provides some callback interfaces to inform the rest of MusicDB about the state of the stream.
 
 So this module consist of the following parts:
 
     * The `Streaming Thread`_ that manages the Song Stream.
     * An `Event Management`_ that provides a callback interface to get updated about what's going on in the Streaming Thread.
-    * The :class:`~StreamManager` that provides an interface to the Song Queue, and the management behind streaming the queue.
+    * The :class:`~StreamManager` that does management behind streaming.
 
 
 Interface
@@ -32,7 +32,7 @@ Interface
 This module maintains a global state!
 All functions work on the settings in the :class:`~lib.cfg.musicdb.MusicDBConfig` configuration object and the internal state of this module.
 
-There are two functions and one class that are available to manage the Song Queue and Stream:
+There are two functions and one class that are available to manage the Stream:
 
     .. code-block:: python
 
@@ -41,9 +41,7 @@ There are two functions and one class that are available to manage the Song Queu
 
     * :meth:`~StartStreamingThread` starts the Streaming Thread that manages the streaming. It also establishes a connection to the Icecast server.
     * :meth:`~StopStreamingThread` disconnects MusicDB from Icecast and stops the Streaming Thread
-    * :class:`~StreamManager` is the class to manage the Stream and the Song Queue.
-
-Furthermore this module cooperates the Randy module (see: :doc:`/mdbapi/randy`)
+    * :class:`~StreamManager` is the class to manage the Stream.
 
 
 Streaming Thread
@@ -51,10 +49,6 @@ Streaming Thread
 
 The Streaming Thread mainly manages sending mp3-file chunks to the Icecast server.
 This thread is the point where the music managed by MusicDB gets handed over to Icecast so the user can listen to it.
-
-Furthermore this thread does some Song Queue management like adding new random songs the queue when it runs empty.
-Therefore the Randy module (see: :doc:`/mdbapi/randy`) gets used.
-A new random song gets selected using the :meth:`mdbapi.randy.Randy.GetSong` method.
 
 The :class:`~StreamManager` communicates with the :meth:`~StreamingThread` with a `Command Queue`_.
 
@@ -108,14 +102,8 @@ A return value gets not handled.
 
 The following events exist:
 
-    QueueChanged:
-        Gets triggered when the Song Queue changes
-
     StatusChanged:
         Gets triggered when the connection status to Icecast or the play status changed.
-
-    SongChanged:
-        When the current playing song changes.
 
     TimeChanged:
         The time of the current playing position of a song changed.
@@ -159,18 +147,17 @@ State           = {}
 
 
 #####################################################################
-# Song Queue Management                                             #
+# Streaming Thread                                                  #
 #####################################################################
 
 
-# TODO: store queue in a special file
 def StartStreamingThread(config, musicdb):
     """
     This function starts the Streaming Thread :mod:`~StreamingThread`.
     You should use this function instead of calling the Streaming Thread function directly.
 
     By calling this function, the global state of this module gets reset.
-    This included removing all commands from the Command Queue and creating a new Song Queue.
+    This included removing all commands from the Command Queue.
 
     Args:
         config: :class:`~lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration
@@ -250,10 +237,9 @@ def StreamingThread():
 
     The thread tiggers the following events:
 
-        * ``SongChanged``: When a new song got selected from the queue
         * ``StatusChanged``: When the play-state
+        * ``TimeChanged``: To update the current streaming progress of a song
     """
-    # TODO: add details like what happens with the Tracker, are there any conditions or side effects?
     from lib.icecast        import IcecastInterface
     from mdbapi.tracker     import Tracker
 
@@ -275,6 +261,7 @@ def StreamingThread():
             mountname = Config.icecast.mountname
             )
 
+    # TODO: Do this when initializing the server
     logging.debug("Loading Song Queue…")
     queue.Load()
 
@@ -297,24 +284,12 @@ def StreamingThread():
             State["isconnected"] = isconnected
             Event_StatusChanged()
 
-        # Check if the queue has enough entries. If not, add a random song.
-        if len(queue.GetQueue()) < 2:
-            randomsong = randy.GetSong()
-            if not randomsong:
-                logging.critical("Song Queue runs empty and getting a random song failed! \033[1;30m(Trying again in a second)")
-                time.sleep(1)
-                continue
-            queue.AddSong(randomsong["id"])
-            #Event_QueueChanged() gets fired anyway
-
         # Get current song that shall be streamed.
         currententryid, currentsongid = queue.CurrentSong()
         mdbsong  = musicdb.GetSongById(currentsongid)
         songpath = cache.GetSongPath(mdbsong, absolute=True)
 
         # Stream song
-        Event_SongChanged()
-        Event_QueueChanged()
         timeplayed    = 0
         lasttimestamp = time.time()
         for frameinfo in icecast.StreamFile(songpath):
@@ -357,6 +332,7 @@ def StreamingThread():
         if RunThread:
             queue.NextSong()
 
+    # TODO: Do this when shutting down the server
     logging.debug("Saving Song Queue…")
     queue.Save()
 
@@ -370,26 +346,12 @@ def StreamingThread():
 
 
 
-def Event_QueueChanged():
-    """
-    See :meth:`~TriggerEvent` with event name ``"QueueChanged"``.
-    More details in the module description at the top of this document.
-    """
-    TriggerEvent("QueueChanged")
-
 def Event_StatusChanged():
     """
     See :meth:`~TriggerEvent` with event name ``"StatusChanged"``
     More details in the module description at the top of this document.
     """
     TriggerEvent("StatusChanged")
-
-def Event_SongChanged():
-    """
-    See :meth:`~TriggerEvent` with event name ``"SongChanged"``
-    More details in the module description at the top of this document.
-    """
-    TriggerEvent("SongChanged")
 
 def Event_TimeChanged(playtime):
     """
@@ -420,12 +382,12 @@ def TriggerEvent(name, arg=None):
         try:
             callback(name, arg)
         except Exception as e:
-            logging.exception("A Song Queue event callback function crashed!")
+            logging.exception("A Stream Thread event callback function crashed!")
 
 
 
 #####################################################################
-# Song Queue Interface Class                                        #
+# Stream Manager Class                                              #
 #####################################################################
 
 
@@ -464,7 +426,6 @@ class StreamManager(object):
 
         self.db         = database
         self.cfg        = config
-        self.randy      = Randy(self.cfg, self.db)
         self.songqueue  = SongQueue(self.cfg, self.db)
 
 
@@ -472,15 +433,15 @@ class StreamManager(object):
     def PushCommand(self, command, argument=None):
         """
         Class internal interface to the `Command Queue`_ used to communicate with the :meth:`StreamingThread`.
-        You should not access the queue directly, because the Song Queue Thread expects valid data inside the queue.
+        You should not access the queue directly, because the Streaming Thread expects valid data inside the queue.
         This is guaranteed by the methods that use this method.
 
         Args:
-            command (str): A command to the Song Queue Thread. Valid commands are listed in the :meth:`StreamingThread` section of the documentation.
+            command (str): A command to the Streaming Thread. Valid commands are listed in the :meth:`StreamingThread` section of the documentation.
             argument: An argument to the command.
 
         Returns:
-            ``True`` on success, ``False`` when the Song Queue Thread is not running.
+            ``True`` on success, ``False`` when the Streaming Thread is not running.
         """
         global RunThread
         global CommandQueue
@@ -518,7 +479,7 @@ class StreamManager(object):
 
     def RegisterCallback(self, function):
         """
-        Register a callback function that reacts on Song Queue or Streaming related events.
+        Register a callback function that reacts on Streaming related events.
         For more details see the module description at the top of this document.
 
         Args:
@@ -546,7 +507,7 @@ class StreamManager(object):
 
         # Not registered? Then do nothing.
         if not function in Callbacks:
-            logging.warning("A Song Queue callback function should be removed, but did not exist in the list of callback functions!")
+            logging.warning("A Streaming Thread callback function should be removed, but did not exist in the list of callback functions!")
             return
 
         Callbacks.remove(function)
@@ -589,162 +550,10 @@ class StreamManager(object):
         """
         This function triggers the Streaming Thread to play the next song in the queue.
 
-        On success, the :meth:`~mdbapi.stream.StreamingThread` will trigger the ``SongChanged`` event.
-        The ``QueueChanged`` Event will not be triggered.
-        The fact that the last song got removed from the queue got implied by the ``SongChanged`` event.
-
         Returns:
             ``True`` on success, otherwise ``False``
         """
         return self.PushCommand("PlayNextSong")
-
-
-
-    def GetQueue(self):
-        """
-        This method returns the song queue.
-
-        The queue is a list of tuple.
-        The tuple holds the entry ID of the queue element, and song ID
-        The entry ID is a `Version 4 Universally Unique Identifier (UUID)<https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)>`_ .
-
-        Returns:
-            The current song queue. ``None`` if there is no queue yet.
-
-        Example:
-
-            .. code-block::
-
-                queue = manager.GetQueue()
-
-                if not queue:
-                    print("There are no songs in the queue")
-                else:
-                    for element in queue:
-                        print("Element with ID %i holds the song with ID %i" % (element[0], element[1]))
-
-        """
-        queue = self.songqueue.GetQueue()
-        return queue
-
-
-
-    def GetCurrentSongId(self):
-        """
-        Returns the Song ID of the current playing song.
-
-        Returns:
-            The Song ID of the current playing song. ``None`` if there is no manage queue, or the queue is empty.
-        """
-        songid = self.songqueue.CurrentSong()[1]
-        return songid
-
-
-
-    def GetSongIdFromEntryId(self, entryid):
-        """
-        Returns the song ID of an entry from the Song Queue.
-
-        Args:
-            entryid (int/str): ID of the entry that song ID shall be returnd
-
-        Returns:
-            The song ID of the entry, or ``None`` if the entry does not exists
-        """
-        try:
-            songid = self.songqueue.GetSong(int(entryid))
-        except Exception as e:
-            logging.warning("Getting song from the queue failed with error: %s", str(e))
-            return None
-
-        return songid
-
-
-
-    def AddSong(self, songid, position="last"):
-        """
-        With this method, a new song can be insert into the queue.
-
-        The position in the queue, where the song gets insert can be changed by setting the ``position`` argument:
-
-            * ``"last"`` (default): Appends the song at the end of the queue
-            * ``"next"``: Inserts the song right after the current playing song.
-
-        On success, this method triggers the ``QueueChanged`` event.
-
-        This method also calls :meth:`mdbapi.randy.Randy.AddSongToBlacklist` to add the new song to the blacklist for new random songs.
-
-        Args:
-            songid (int): The song that shall be inserted into the queue
-            position (str): Position where the song will be inserted
-
-        Returns:
-            ``True`` on success, ``False`` otherwise.
-
-        """
-        try:
-            self.songqueue.AddSong(songid, position)
-        except Exception as e:
-            logging.error("Adding song to the queue failed with error: %s!", str(e))
-            return False
-
-        song = self.db.GetSongById(songid)
-        # self.randy.AddSongToBlacklist(song) # FIXME: The Web API uses this method to add random songs
-
-        Event_QueueChanged()
-        return True
-
-
-
-    def RemoveSong(self, entryid):
-        """
-        Removes the entry with the ID ``entryid`` from the queue.
-        Removing the current song is not allowed!
-        Call :meth:`PlayNextSong` instead.
-
-        On success, this method triggers the ``QueueChanged`` event.
-
-        Args:
-            entryid (int/str): ID of the entry that shall be removed.
-
-        Returns:
-            ``True`` on success, ``False`` otherwise.
-        """
-        try:
-            self.songqueue.RemoveSong(int(entryid))
-        except Exception as e:
-            logging.warning("Removing song from the queue failed with error: %s", str(e))
-            return False
-
-        Event_QueueChanged()
-        return True
-
-
-
-    def MoveSong(self, entryid, afterid):
-        """
-        This method allows to move an entry to another position in the queue.
-        The entry with the ID ``entryid`` gets moved behind an entry with the ID ``afterid``.
-
-        Moving the first song is not allowed!
-
-        On success, this method triggers the ``QueueChanged`` event.
-
-        Args:
-            entryid (int/str): ID of the element to move
-            afterid (int/str): The ID of the element, the moved element gets placed behind.
-
-        Returns:
-            ``True`` on success, ``False`` otherwise.
-        """
-        try:
-            self.songqueue.MoveSong(int(entryid), int(afterid))
-        except Exception as e:
-            logging.warning("Moving song from the queue failed with error: %s", str(e))
-            return False
-
-        Event_QueueChanged()
-        return True
 
 
 

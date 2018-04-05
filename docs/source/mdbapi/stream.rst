@@ -1,11 +1,11 @@
-Randomizer
-==========
+Streaming Server
+================
 
 .. automodule:: mdbapi.stream
    :members: StartStreamingThread, StopStreamingThread, StreamingThread
 
 
-RandyInterface Class
+Stream Manager Class
 --------------------
 
 .. autoclass:: mdbapi.stream.StreamManager

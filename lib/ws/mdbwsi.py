@@ -92,10 +92,10 @@ from lib.filesystem     import Filesystem
 import os
 from mdbapi.lycra       import Lycra
 from mdbapi.database    import MusicDBDatabase
-from mdbapi.randy       import Randy
 from mdbapi.mise        import MusicDBMicroSearchEngine
 from mdbapi.tags        import MusicDBTags
 from mdbapi.stream      import StreamManager
+from mdbapi.songqueue   import SongQueue
 import logging
 from threading          import Thread
 import traceback
@@ -114,8 +114,8 @@ class MusicDBWebSocketInterface(object):
             self.fs         = Filesystem(self.cfg.music.path)
             self.tags       = MusicDBTags(self.cfg, self.database)
             self.mdbstate   = MDBState(self.cfg.server.statedir, self.database)
-            self.randy      = None  # Randy will be created onWSConnect # TODO: WHY???
             self.stream     = StreamManager(self.cfg, self.database)
+            self.queue      = SongQueue(self.cfg, self.database)
         except Exception as e:
             logging.exception(e)
             raise e
@@ -126,23 +126,35 @@ class MusicDBWebSocketInterface(object):
 
 
     def onWSConnect(self):
-        self.randy = Randy(self.cfg, self.database)
         self.stream.RegisterCallback(self.onStreamEvent)
+        self.queue.RegisterCallback(self.onQueueEvent)
         return None
         
 
     def onWSDisconnect(self, wasClean, code, reason):
         self.stream.RemoveCallback(self.onStreamEvent)
+        self.queue.RemoveCallback(self.onQueueEvent)
         return None
 
 
     def onStreamEvent(self, event, data):
-        # TODO: Port from old MPD style to new Icecast style
         # This function is called from a different thread. Therefore NO sqlite3-access is allowed.
-        # So there will be just a notification so that the clients can request an MPDStateUpdate.
+        # So there will be just a notification so that the clients can request GetStreamState.
         response    = {}
         response["method"]      = "notification"
         response["fncname"]     = "MusicDB:Stream"
+        response["fncsig"]      = "on"+event
+        response["arguments"]   = data
+        response["pass"]        = None
+        success = self.SendPacket(response)
+        return success
+
+    def onQueueEvent(self, event, data):
+        # This function is called from a different thread. Therefore NO sqlite3-access is allowed.
+        # So there will be just a notification so that the clients can request related functions.
+        response    = {}
+        response["method"]      = "notification"
+        response["fncname"]     = "MusicDB:Queue"
         response["fncsig"]      = "on"+event
         response["arguments"]   = data
         response["pass"]        = None
@@ -938,7 +950,8 @@ class MusicDBWebSocketInterface(object):
         state = {}
 
         streamstate = self.stream.GetStreamState()
-        songid      = self.stream.GetCurrentSongId()
+        queueentry  = self.queue.CurrentSong()   # returns (entryid, songid)
+        songid      = queueentry[1]
         state["isconnected"] = streamstate["isconnected"]
         state["isplaying"]   = streamstate["isplaying"]
 
@@ -995,7 +1008,7 @@ class MusicDBWebSocketInterface(object):
                     }
                 }
         """
-        entries = self.stream.GetQueue()
+        entries = self.queue.GetQueue()
 
         # return empty list if there is no queue
         if not entries:
@@ -1114,9 +1127,7 @@ class MusicDBWebSocketInterface(object):
         return results
 
 
-    # THIS METHOD IS THREADSAFE
-    # TODO: Whatever must be done to make this Icecast conform - maybe just moving to "SetPlayState"
-    def SetMPDState(self):
+    def SetMPDState(self): # REMOVE/DEPRECATED: Remove in April 2019
         state = {}
         logging.error("SetMPDState is DEPRECATED - The new method is called SetStreamState")
         return None
@@ -1211,7 +1222,7 @@ class MusicDBWebSocketInterface(object):
             return None
 
         # Add song to the queue and update statistics
-        self.stream.AddSong(songid, position)
+        self.queue.AddSong(songid, position)
         return None
 
 
@@ -1219,7 +1230,7 @@ class MusicDBWebSocketInterface(object):
         """
         Similar to :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue`.
         Instead of a specific song, a random song gets chosen by the random-song manager *Randy* (See :doc:`/mdbapi/randy`).
-        This is done using :meth:`mdbapi.randy.Randy.GetSong`.
+        This is done using the :meth:`mdbapi.randy.Randy.GetSong` method.
 
         If an album ID is given, the new song will be added from that album
         using :meth:`mdbapi.randy.Randy.GetSongFromAlbum`.
@@ -1238,23 +1249,13 @@ class MusicDBWebSocketInterface(object):
                 MusicDB_Call("AddRandomSongToQueue", {albumid:"42", position:"next"});
 
         """
-        # Check if the Randy Interface was created. This is not done in the constructor!
-        # The interface to Randy gets instantiated in the onWSConnect callback function.
-        # This is save as long as this (AddRandomSongToQueue) method gets only called by the WebSocket interface!
-        if not self.randy:
-            logging.warning("No Randy interface created. \033[0:33m(This may not be intentional!) \033[1;30m(Doing nothing)")
-            return None
-
         if position not in ["next", "last"]:
             logging.warning("Position must have the value \"next\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
             return None
 
-        if albumid:
-            song = self.randy.GetSongFromAlbum(albumid)
-        else:
-            song = self.randy.GetSong()
-
-        self.stream.AddSong(song["id"], position)
+        if albumid != None:
+            albumid = int(albumid)
+        self.queue.AddRandomSong(position, albumid)
         return None
 
 
@@ -1305,20 +1306,17 @@ class MusicDBWebSocketInterface(object):
                 MusicDB_Call("RemoveSongFromQueue", {entryid:"82390194629402649"});
 
         """
-        # Get song ID (and check if entry ID is valid)
-        songid  = self.stream.GetSongIdFromEntryId(entryid)
-        if not songid:
-            logging.warning("There is no entry in the Queue with the requested ID:\033[0;33m \"%s\" \033[1;30m(ignoring command)", str(entryid))
+        if type(entryid) != str:
+            logging.warning("entryid must be of type string! Actual type was %s. \033[1;30m(RemoveSongFromQueue will be ignored)", str(type(entryid)))
             return None
 
-        # Remove song and update statistic
-        self.stream.RemoveSong(entryid)
+        self.queue.RemoveSong(int(entryid))
         return None
     
     
     def MoveSongInQueue(self, entryid, afterid):
         """
-        This is a direct interface to :meth:`mdbapi.stream.StreamManager.MoveSong`.
+        This is a direct interface to :meth:`mdbapi.songqueue.SongQueue.MoveSong`.
         It moves a song from one position in the queue to another one.
 
         It is not allowed to move the current playing song (index 0).
@@ -1372,7 +1370,14 @@ class MusicDBWebSocketInterface(object):
             +----------+---------+
 
         """
-        self.stream.MoveSong(entryid, afterid)
+        if type(entryid) != str:
+            logging.warning("entryid must be of type string! Actual type was %s. \033[1;30m(MoveSongInQueue will be ignored)", str(type(entryid)))
+            return None
+        if type(afterid) != str:
+            logging.warning("afterid must be of type string! Actual type was %s. \033[1;30m(MoveSongInQueue will be ignored)", str(type(afterid)))
+            return None
+
+        self.queue.MoveSong(int(entryid), int(afterid))
         return None
 
 

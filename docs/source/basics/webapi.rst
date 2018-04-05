@@ -203,12 +203,17 @@ The Streaming Thread generates events that get broadcast to all clients via noti
 The package has the following information:
 
    * **method:** notification
-   * **fncname:** ``"MusicDB:Stream"``
-   * **fncsig:** ``"onQueueChanged"``, ``"onStatusChanged"``, ``"onSongChanged"`` or ``"onTimeChanged"``
-   * **argument:** The playtime of the current song in seconds, when the *fncsig* is ``"onTimeChanged"``
    * **pass:** ``null``
+   * Event triggered by :doc:`/mdbapi/stream`
+      * **fncname:** ``"MusicDB:Stream"``
+      * **fncsig:** ``"onStatusChanged"`` or ``"onTimeChanged"``
+      * **argument:** The playtime of the current song in seconds, when the *fncsig* is ``"onTimeChanged"``
+   * Event triggered by :doc:`/mdbapi/songqueue`
+      * **fncname:** ``"MusicDB:Queue"``
+      * **fncsig:** ``"onQueueChanged"`` or ``"onSongChanged"``
+      * **argument:** ``None``
 
-For more details of the events see the Streaming Thread documentation: :doc:`/mdbapi/stream`
+See the related documentation of the event sources for more details
 
 
 Server side API
