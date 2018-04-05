@@ -239,6 +239,8 @@ def StreamingThread():
 
         * ``StatusChanged``: When the play-state
         * ``TimeChanged``: To update the current streaming progress of a song
+
+    The ``TimeChanged`` event gets triggered approximately every second.
     """
     from lib.icecast        import IcecastInterface
     from mdbapi.tracker     import Tracker
@@ -294,7 +296,8 @@ def StreamingThread():
         lasttimestamp = time.time()
         for frameinfo in icecast.StreamFile(songpath):
             # Send every second the estimated time position of the song.
-            timeplayed += frameinfo["header"]["frametime"]
+            if not frameinfo["muted"]:
+                timeplayed += frameinfo["header"]["frametime"]
             timestamp   = time.time()
             timediff    = timestamp - lasttimestamp;
             if timediff >= 1.0:
