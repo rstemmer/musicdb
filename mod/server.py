@@ -28,19 +28,19 @@ Read :doc:`/mdbapi/server` for details
 
 Example:
 
-    This example shows the easiest way to start musicdb.
+    This example shows the easiest way to start MusicDB Server.
     The following commands must be called as root. 
-    There will appear warnings and errors if ``mpd`` is not running.
+    There will appear warnings and errors when ``icecast`` is not running.
 
     .. code-block:: bash
 
         musicdb server
 
-    A typical call to start the server as user *musicdb* and to run ``mpd`` is shown in the following example:
+    A typical call to start the server as user *musicdb* and to run ``icecast`` is shown in the following example:
 
     .. code-block:: bash
 
-        mpd /data/musicdb/mpd/mpd.conf
+        icecast -b -c /data/musicdb/icecast/config.xml > /dev/null
         su -l -c "musicdb --config /data/musicdb/musicdb.ini server" musicdb
 
     To stop the server, use the named pipe (this can also be done as user):
