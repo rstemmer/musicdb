@@ -107,7 +107,7 @@ class Tracker(object):
         This is the case when there was previously a song added.
 
         If there is a relation to track then the songs get loaded from the :class:`lib.db.musicdb.MusicDatabase` to get the artist IDs.
-        The relation gets added to the tracker database by calling :meth:`lib.db.tracker.TrackerDatabase.AddEdge`
+        The relation gets added to the tracker database by calling :meth:`lib.db.trackerdb.TrackerDatabase.AddRelation`
 
         Args:
             songid: song ID of the song that gets currently played, ``None`` to cut the chain of consecutive songs.

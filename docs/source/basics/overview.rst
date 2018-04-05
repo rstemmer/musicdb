@@ -48,7 +48,7 @@ MusicDB will not work correctly when using a MPD process that does not use the c
 So by using a configuration separated from the operating systems default configuration allows the user to use this instance of MPD in parallel to another instance you may already use.
 The MPD process gets controlled by the MusicDB WebSocket Server and should not be influenced by other clients like *mpc*.
 
-The documentation of how MusicDB accesses MPD can be found here: :doc:`/mdbapi/mpd`.
+The documentation of how MusicDB accesses MPD can be found here: **MPD is no longer supported**.
 
 **Conclusion:**
 

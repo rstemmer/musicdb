@@ -22,7 +22,7 @@ For a list of all methods see the related documentation of the class.
          config -> musicdb
          config -> extern
          config -> mdbstate
-         csv    -> mdbstate
+         csv    -> mdbstate [arrowtail=open]
       }
 
 

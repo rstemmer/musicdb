@@ -38,7 +38,7 @@ Configuration
 Most features of the cache are strict and cannot be configured.
 Only the place where the cached files will be stored can be defined in the *musicdb.ini* file:
 
-    .. block-code:: ini
+    .. code-block:: ini
         
         ; Example of the mp3 cache configuration
         [music]

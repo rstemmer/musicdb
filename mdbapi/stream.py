@@ -111,6 +111,8 @@ The following events exist:
 
 Example:
 
+    This example shows how to use the callback interface:
+
     .. code-block:: python
 
         def callback(name, arg):
@@ -534,7 +536,7 @@ class StreamManager(object):
         the :meth:`~mdbapi.stream.StreamingThread` will trigger the ``StatusChanged`` event.
 
         Args:
-            play (bool): Playstate MPD shall be set to
+            play (bool): Playstate the Streaming Thread shall get
 
         Returns:
             ``True`` on success. When ``play`` is not a Boolean, ``False`` gets returned.

@@ -96,11 +96,45 @@ class MP3File(object):
 
 
     def Load(self, path):
-        """
+        r"""
         This method loads a new mp3 file.
         All information from the previous file will be discard.
 
         The method reads the whole file, analyzes each frame, and stores them in memory.
+        The ID3 Tag gets also read, but not further processed.
+
+        The following diagram shows how this method loads and processes the mp3 file:
+
+        .. graphviz::
+
+            digraph hierarchy {
+                size="5,8"
+                start           [label="Start"];
+
+                readid3header   [shape=box,     label="Read ID3 Header"]
+                decodeid3size   [shape=box,     label="Decode the length\nof the ID3 Tag"]
+                readid3tag      [shape=box,     label="Read ID3 Tag"]
+
+                readmp3header   [shape=box,     label="Read MP3 Frame Header"]
+                analyzeheader   [shape=box,     label="Analyze MP3 Frame Header"]
+                readmp3frame    [shape=box,     label="Read MP3 Frame"]
+                savemp3frame    [shape=box,     label="Store MP3 Frame\nin internal list"]
+
+                end             [label="End"];
+
+                start           -> readid3header
+                readid3header   -> decodeid3size
+                decodeid3size   -> readid3tag
+                readid3tag      -> readmp3header
+
+                readmp3header   -> analyzeheader
+                analyzeheader   -> readmp3frame
+                readmp3frame    -> savemp3frame
+                savemp3frame    -> readmp3header
+
+                readmp3header   -> end              [label="No further data"]
+            }
+
 
         Args:
             path (str): An absolute path to a valid mp3 file
@@ -142,7 +176,7 @@ class MP3File(object):
 
                 # Read MP3 Header … done (magic already has all 4 bytes of the header
                 infos    = self.AnalyzeHeader(mp3header) # Analyze header
-                datasize = infos["framesize"] - 4         # 4 bytes MP3 Frame Header already read, rest are MP3 Frame Data
+                datasize = infos["framesize"] - 4        # 4 bytes MP3 Frame Header already read, rest are MP3 Frame Data
 
                 # Drop Frame Tag
                 mp3frame = mp3header + mp3.read(datasize)
@@ -191,7 +225,7 @@ class MP3File(object):
         This method analyzes a MP3 Frame Header and returns all information that are implicit included in these 4 bytes.
         It is build for the internal use inside this class.
 
-        Primary source for analyzing the header is `mpgedit.org (no HTTPS)<http://mpgedit.org/mpgedit/mpeg_format/MP3Format.html>`_
+        Primary source for analyzing the header is `mpgedit.org (no HTTPS) <http://mpgedit.org/mpgedit/mpeg_format/MP3Format.html>`_
         Another important source is `Wikipedia <https://en.wikipedia.org/wiki/MP3#Design>`_
 
         Base of the implementation of this method is from `a python script from Vivake Gupta (vivake AT lab49.com) <https://www.w3.org/2000/10/swap/pim/mp3/mp3info.py>`_
@@ -206,7 +240,6 @@ class MP3File(object):
                 * ``"frametime"`` (float): The playtime of the audio in milliseconds that is encoded in one frame
                 * ``"layer"`` (int): MPEG layer. For MP3 it should be ``3``
                 * ``"mpeg version"`` (int): MPEG version. For MP3, it should be ``1``
-        infos["bitrate"]    = BitrateTable[mpeg_version & 1][infos["layer"] - 1][bitrateindex] * 1000
             * Further information (I have no idea what some of the information mean. They are simply not relevant anyway.):
                 * ``"protection"`` (bool): When ``True`` the header has a CRC16 checksum
                 * ``"padding"`` (bool): When ``True`` the frame is padded with an extra slot. (The slot size is given in ``"slotsize"``)

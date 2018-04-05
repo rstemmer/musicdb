@@ -72,7 +72,7 @@ class Fileprocessing(Filesystem):
 
         Example:
 
-            .. code-bloack:: python
+            .. code-block:: python
 
                 checksum = fs.Checksum(song["path"])
                 print("Checksum: %s" % (checksum))

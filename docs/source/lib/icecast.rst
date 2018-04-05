@@ -7,6 +7,6 @@ Icecast Interface
 Icecast Class
 -------------
 
-.. autoclass:: lib.icecast.Icecast
+.. autoclass:: lib.icecast.IcecastInterface
    :members:
 

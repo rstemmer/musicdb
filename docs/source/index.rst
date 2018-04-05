@@ -43,7 +43,7 @@ MusicDB has several abstraction layers shown in the following table:
 | Python            | Linux Tools       |
 +-------------------+-------------------+
 
-*Linux Tools*  are tools like ``mpd``, ``ffmpeg`` or ``id3edit``.
+*Linux Tools*  are tools like ``icecast``, ``ffmpeg`` or ``id3edit``.
 Some those tools and libraries are side projects of the MusicDB project and also documented.
 A list of these side projects can be found in the subsection `Other tools and Libraries`_.
 

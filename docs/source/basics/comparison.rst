@@ -60,7 +60,7 @@ Metrics
    Streaming:
       Does the tool stream the music into the internet, and how does it do that.
       With streaming, a broadcast is meant. Not only accessing a file from the web browser.
-      Using Music Playing Daemon (MPD) for streaming is OK.
+      Using Music Player Daemon (MPD) for streaming is OK.
 
    User Interface:
       What user interfaces does the tool provide.
@@ -117,7 +117,7 @@ Comparison
    *Modipy* also supports `MPD Clients <https://docs.mopidy.com/en/latest/clients/mpd/>`_.
 
 (2):
-   There exist also `Music Playing Daemon Clients <https://www.musicpd.org/clients/>`_
+   There exist also `Music Player Daemon Clients <https://www.musicpd.org/clients/>`_
 
 Conclusion
 ----------
@@ -129,7 +129,7 @@ and `CherryMusic <http://www.fomori.org/cherrymusic/index.html>`_ are a good cho
 When you have a totally messed up collection of files you want to organize, the `Beets <http://beets.io/>`_ is the tool you need and you should start with.
 **MusicDB** is for those who manage their files by himself and want to have music centric WebUI and streaming solution.
 If you cannot live with any of those tools and you want to develop your own solution, 
-`Music Playing Daemon <https://musicpd.org/>`_ is the streaming backend you want to use.
+`Music Player Daemon <https://musicpd.org/>`_ is the streaming backend you want to use.
 If *MPD* is a level to low, try `Modipy <https://www.mopidy.com/>`_. It provides the possibility for extensions on server side as well as on client side.
 In fact *Modipy* is very similar to *MusicDB*.
 It just follows the common concepts of audio file management and audio players while *MusicDB* introduces different concepts and approaches.

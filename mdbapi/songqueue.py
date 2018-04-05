@@ -29,7 +29,7 @@ An entry this queue is a tuple of an entry ID and a song ID as maintained by the
 
 Some features of this queue are:
 
-    * The entry ID is a `Version 4 Universally Unique Identifier (UUID)<https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)>`_ .
+    * The entry ID is a `Version 4 Universally Unique Identifier (UUID) <https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)>`_ .
     * The current playing song is at index 0.
     * The songs remain in the queue until they got completely streamed.
     * This class is thread safe. So each method of the same instance can be called from different threads.
@@ -66,6 +66,8 @@ The following events exist:
 Examples
 --------
 
+    The following example shows how the :meth:`~SongQueue.NextSong` method works:
+
     .. code-block:: python
 
         queue = SongQueue(mdbconfig, musicdatabase)
@@ -78,18 +80,6 @@ Examples
         print(queue.NextSong())     # (*UUID*, 1337)
         print(queue.CurrentSong())  # (*UUID*, 1337)
 
-
-    .. code-block:: python
-
-        def callback(name, arg):
-            print("Event \"%s\" occurred with argument \"%s\"." % (name, str(arg)))
-
-        sq = SongQueue(mdbconfig, musicdatabase)
-        sq.RegisterCallback(callback)
-
-        # …
-
-        sq.RemoveCallback(callback)
 """
 
 import uuid
@@ -275,7 +265,7 @@ class SongQueue(object):
     def GenerateID(self):
         """
         This method generate a unique ID.
-        In detail, it is a `Version 4 Universally Unique Identifier (UUID)<https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)>`_ .
+        In detail, it is a `Version 4 Universally Unique Identifier (UUID) <https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)>`_ .
         It will be returned as an integer.
 
         This method is build for the internal use in this class.
@@ -369,6 +359,7 @@ class SongQueue(object):
         Example:
 
             .. code-block:: python
+
                 queue = SongQueue()
 
                 # Adds two new song with ID 7357 and 1337. 
@@ -415,14 +406,14 @@ class SongQueue(object):
 
         The queue is a list of tuple.
         The tuple holds the entry ID of the queue element, and song ID
-        The entry ID is a `Version 4 Universally Unique Identifier (UUID)<https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)>`_ .
+        The entry ID is a `Version 4 Universally Unique Identifier (UUID) <https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)>`_ .
 
         Returns:
             The current song queue. ``None`` if there is no queue yet.
 
         Example:
 
-            .. code-block::
+            .. code-block:: python
 
                 queue = songqueue.GetQueue()
 
