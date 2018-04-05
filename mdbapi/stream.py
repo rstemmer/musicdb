@@ -189,7 +189,7 @@ def StartStreamingThread(config, musicdb):
     Config       = config
     Callbacks    = []
     CommandQueue = []
-    State        = {"isconnected": False, "isplaying": True}
+    State        = {"isconnected": False, "isplaying": False}
 
     logging.debug("Starting Streaming Thread")
     RunThread = True
@@ -262,6 +262,7 @@ def StreamingThread():
             password  = Config.icecast.password,
             mountname = Config.icecast.mountname
             )
+    icecast.Mute()
 
     # TODO: Do this when initializing the server
     logging.debug("Loading Song Queue…")
