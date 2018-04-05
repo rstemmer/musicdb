@@ -40,14 +40,21 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* upd
   * It is safe to use MusicDB while the cache gets still built. So have fun listening to music until the `cache update` process is completed :wink:
 * Using Icecast instead of MPD possible
   * **:wrench: Change:** The install script creates a new directory in the MusicDB data directory called `icecast`. Make sure that such a directory does not exist before running `install.sh`. If it does, rename it, and merge your setup after the installation.
+  * **:wrench: Change:** The `[mpd]` section can be removed from the MusicDB Configuration
+* MusicDB's state now gets stored with the blacklists and song queue in an extra directory.
+  * The directory can be configured: `[server] -> statedir`
+* **:wrench: Change:** New dependency: [shouty](https://github.com/edne/shouty). Execute `pip install shouty`.
 
 **:wrench: Update:**
 ```
+# Backup the MusicDB Data directory!
+
 # Download latest version of MusicDB
 git checkout master
 git pull
 
 # Install latest version of MusicDB
+sudo pip install shouty
 sudo ./install.sh
 
 # Read the linked documentation of the repair and cache command
