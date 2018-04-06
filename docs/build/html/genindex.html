@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; MusicDB 2.1.0 documentation</title>
+  <title>Index &mdash; MusicDB 3.0.0 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MusicDB 2.1.0 documentation" href="index.html"/> 
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.1
+                3.0
               </div>
             
           
@@ -98,7 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="basics/comparison.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basics/config.html">MusicDB Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#websocket">websocket</a></li>
@@ -109,7 +109,7 @@
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#lycra">lycra</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/config.html#icecast">Icecast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#log">log</a></li>
@@ -124,14 +124,25 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basics/overview.html">Overview of MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="basics/overview.html#music-database">Music Database</a></li>
-<li class="toctree-l3"><a class="reference internal" href="basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/overview.html#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/overview.html#mp3-cache">MP3 Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basics/overview.html#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/overview.html#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -164,6 +175,7 @@
 <li class="toctree-l3"><a class="reference internal" href="basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/webapi.html#albums">Albums</a></li>
@@ -205,7 +217,6 @@
 <li class="toctree-l3"><a class="reference internal" href="usage/install.html#system-preparation">System Preparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/install.html#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/install.html#basic-packages">Basic packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/install.html#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/install.html#id3edit">id3edit</a></li>
@@ -260,6 +271,10 @@
 <li class="toctree-l2"><a class="reference internal" href="mod/artwork.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mod/cache.html#class">class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mod/extern.html#class">class</a></li>
@@ -287,7 +302,11 @@
 <li class="toctree-l2"><a class="reference internal" href="mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="mod/server.html">server - MusicDB Websocket Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/stats.html">stats - MusicDB Song Statistic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mod/tags.html">tags - MusicDB Tag Manager</a><ul>
@@ -343,14 +362,6 @@
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mdbapi/mpd.html">mpd / Music Playing Daemon Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mdbapi/mpd.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mdbapi/mpd.html#observer-thread">Observer Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mdbapi/mpd.html#callbacks">Callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mdbapi/mpd.html#managing-mpd">Managing MPD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mdbapi/mpd.html#queue-management">Queue management</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="mdbapi/musicai.html">MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/musicai.html#training-time">Training Time</a></li>
@@ -364,18 +375,51 @@
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="mdbapi/musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="mdbapi/randy.html">Randomizer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mdbapi/randy.html#module-mdbapi.randy">Randy Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mdbapi/randy.html#randyinterface-class">RandyInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mdbapi/randy.html#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mdbapi/randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/randy.html#randy-class">Randy Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdbapi/stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mdbapi/tracker.html">Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mdbapi/tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
 </ul>
@@ -396,7 +440,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lib/config.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="lib/config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/config.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lib/config.html#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lib/config.html#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
@@ -404,6 +452,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lib/database.html">Database</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lib/database.html#database-class">Database Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lib/filesystem.html">Filesystem Interface</a><ul>
@@ -414,13 +466,28 @@
 <li class="toctree-l2"><a class="reference internal" href="lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="lib/metatags.html">Meta Tags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lib/metatags.html#metatags-class">MetaTags Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="lib/mp3file.html">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="lib/musicdb.html">MusicDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lib/musicdb.html#adding-a-column">Adding a Column</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lib/musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="lib/musicdb.html#albums">Albums</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lib/musicdb.html#artworks">Artworks</a></li>
@@ -592,6 +659,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.AbsolutePath">AbsolutePath() (lib.filesystem.Filesystem method)</a>
 </li>
+      <li><a href="mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.Add">Add() (mdbapi.musiccache.MusicCache method)</a>
+</li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.AddAlbum">AddAlbum() (lib.db.musicdb.MusicDatabase method)</a>
 
       <ul>
@@ -616,23 +685,25 @@
 </li>
       <li><a href="lib/clui.html#lib.clui.tabgroup.TabGroup.AddPane">AddPane() (lib.clui.tabgroup.TabGroup method)</a>
 </li>
+      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.AddRandomSong">AddRandomSong() (mdbapi.songqueue.SongQueue method)</a>
+</li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue">AddRandomSongToQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.AddRelation">AddRelation() (lib.db.trackerdb.TrackerDatabase method)</a>
 </li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.AddSong">AddSong() (in module mdbapi.mpd)</a>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.AddSong">AddSong() (lib.db.musicdb.MusicDatabase method)</a>
 
       <ul>
-        <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.AddSong">(lib.db.musicdb.MusicDatabase method)</a>
-</li>
         <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddSong">(mdbapi.database.MusicDBDatabase method)</a>
 </li>
-        <li><a href="mdbapi/randy.html#mdbapi.randy.RandyInterface.AddSong">(mdbapi.randy.RandyInterface method)</a>
+        <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.AddSong">(mdbapi.songqueue.SongQueue method)</a>
+</li>
+        <li><a href="mdbapi/tracker.html#mdbapi.tracker.Tracker.AddSong">(mdbapi.tracker.Tracker method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mdbapi/randy.html#mdbapi.randy.RandyInterface.AddSongFromAlbum">AddSongFromAlbum() (mdbapi.randy.RandyInterface method)</a>
+      <li><a href="mdbapi/randy.html#mdbapi.randy.Randy.AddSongToBlacklist">AddSongToBlacklist() (mdbapi.randy.Randy method)</a>
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue">AddSongToQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
@@ -653,6 +724,8 @@
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.AnalyseSongFileName">AnalyseSongFileName() (lib.filesystem.Filesystem method)</a>
 </li>
       <li><a href="mod/musicai.html#mod.musicai.musicai.AnalysisThread">AnalysisThread() (mod.musicai.musicai method)</a>
+</li>
+      <li><a href="lib/mp3file.html#lib.mp3file.MP3File.AnalyzeHeader">AnalyzeHeader() (lib.mp3file.MP3File method)</a>
 </li>
       <li><a href="mod/artwork.html#mod.artwork.artwork">artwork (class in mod.artwork)</a>
 </li>
@@ -686,7 +759,11 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mod/cache.html#mod.cache.cache">cache (class in mod.cache)</a>
+</li>
       <li><a href="lib/pidfile.html#lib.pidfile.CheckPIDFile">CheckPIDFile() (in module lib.pidfile)</a>
+</li>
+      <li><a href="lib/fileprocessing.html#lib.fileprocessing.Fileprocessing.Checksum">Checksum() (lib.fileprocessing.Fileprocessing method)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.text.Text.ClearScreen">ClearScreen() (lib.clui.text.Text method)</a>
 </li>
@@ -698,11 +775,11 @@
 </li>
       <li><a href="lib/config.html#lib.cfg.config.Config">Config (class in lib.cfg.config)</a>
 </li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.Connect">Connect() (in module mdbapi.mpd)</a>
+      <li><a href="lib/icecast.html#lib.icecast.IcecastInterface.Connect">Connect() (lib.icecast.IcecastInterface method)</a>
 </li>
       <li><a href="webui/websockets.html#ConnectToMusicDB">ConnectToMusicDB() (built-in function)</a>
 </li>
-      <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.ConvertToMP3">ConvertToMP3() (mdbapi.extern.MusicDBExtern method)</a>
+      <li><a href="lib/fileprocessing.html#lib.fileprocessing.Fileprocessing.ConvertToMP3">ConvertToMP3() (lib.fileprocessing.Fileprocessing method)</a>
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.CopyFile">CopyFile() (lib.filesystem.Filesystem method)</a>
 </li>
@@ -738,6 +815,10 @@
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.CreateTag">CreateTag() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
+      <li><a href="lib/config.html#lib.cfg.csv.CSVFile">CSVFile (class in lib.cfg.csv)</a>
+</li>
+      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.CurrentSong">CurrentSong() (mdbapi.songqueue.SongQueue method)</a>
+</li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship">CutSongRelationship() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
   </ul></td>
@@ -768,7 +849,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/clui.html#lib.clui.dialog.Dialog">Dialog (class in lib.clui.dialog)</a>
 </li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.Disconnect">Disconnect() (in module mdbapi.mpd)</a>
+      <li><a href="lib/icecast.html#lib.icecast.IcecastInterface.Disconnect">Disconnect() (lib.icecast.IcecastInterface method)</a>
 </li>
       <li><a href="mdbapi/lycra.html#lib.crawlerapi.LycraCrawler.DoCrawl">DoCrawl() (lib.crawlerapi.LycraCrawler method)</a>
 </li>
@@ -794,13 +875,9 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.Event_QueueChanged">Event_QueueChanged() (in module mdbapi.mpd)</a>
+      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.Event_QueueChanged">Event_QueueChanged() (mdbapi.songqueue.SongQueue method)</a>
 </li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.Event_SongChanged">Event_SongChanged() (in module mdbapi.mpd)</a>
-</li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.Event_StatusChanged">Event_StatusChanged() (in module mdbapi.mpd)</a>
-</li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.Event_TimeChanged">Event_TimeChanged() (in module mdbapi.mpd)</a>
+      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.Event_SongChanged">Event_SongChanged() (mdbapi.songqueue.SongQueue method)</a>
 </li>
       <li><a href="lib/database.html#lib.db.database.Database.Execute">Execute() (lib.db.database.Database method)</a>
 
@@ -826,6 +903,8 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="lib/fileprocessing.html#lib.fileprocessing.Fileprocessing">Fileprocessing (class in lib.fileprocessing)</a>
+</li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem">Filesystem (class in lib.filesystem)</a>
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.Find">Find() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
@@ -848,6 +927,8 @@
 </li>
       <li><a href="lib/clui.html#lib.clui.frame.Frame">Frame (class in lib.clui.frame)</a>
 </li>
+      <li><a href="lib/mp3file.html#lib.mp3file.MP3File.Frames">Frames() (lib.mp3file.MP3File method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -859,6 +940,8 @@
       <li><a href="mod/tracker.html#mod.tracker.tracker.GenerateDotFile">GenerateDotFile() (mod.tracker.tracker method)</a>
 </li>
       <li><a href="mod/musicai.html#mod.musicai.musicai.GenerateFeatureset">GenerateFeatureset() (mod.musicai.musicai method)</a>
+</li>
+      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.GenerateID">GenerateID() (mdbapi.songqueue.SongQueue method)</a>
 </li>
       <li><a href="mod/musicai.html#mod.musicai.musicai.GenerateTrainingset">GenerateTrainingset() (mod.musicai.musicai method)</a>
 </li>
@@ -887,6 +970,8 @@
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetAllAlbums">GetAllAlbums() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetAllArtists">GetAllArtists() (lib.db.musicdb.MusicDatabase method)</a>
+</li>
+      <li><a href="mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.GetAllCachedFiles">GetAllCachedFiles() (mdbapi.musiccache.MusicCache method)</a>
 </li>
       <li><a href="mdbapi/tags.html#mdbapi.tags.MusicDBTags.GetAllGenres">GetAllGenres() (mdbapi.tags.MusicDBTags method)</a>
 </li>
@@ -918,10 +1003,6 @@
 </li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetCDNumber">GetCDNumber() (lib.metatags.MetaTags method)</a>
 </li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.GetConnectionState">GetConnectionState() (in module mdbapi.mpd)</a>
-</li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.GetCurrentSong">GetCurrentSong() (in module mdbapi.mpd)</a>
-</li>
       <li><a href="lib/clui.html#lib.clui.boolinput.BoolInput.GetData">GetData() (lib.clui.boolinput.BoolInput method)</a>
 
       <ul>
@@ -944,10 +1025,10 @@
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.GetFiles">GetFiles() (lib.filesystem.Filesystem method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.GetFilterList">GetFilterList() (lib.cfg.mdbstate.MDBState method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/database.html#lib.db.database.Database.GetFromDatabase">GetFromDatabase() (lib.db.database.Database method)</a>
 </li>
       <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI.GetGenreMatrix">GetGenreMatrix() (mdbapi.musicai.MusicAI method)</a>
@@ -968,18 +1049,14 @@
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState">GetMDBState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
-      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMPDState">GetMPDState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
-</li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetOrigin">GetOrigin() (lib.metatags.MetaTags method)</a>
-</li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.GetPlayingState">GetPlayingState() (in module mdbapi.mpd)</a>
 </li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetPlaytime">GetPlaytime() (lib.metatags.MetaTags method)</a>
 </li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.GetQueue">GetQueue() (in module mdbapi.mpd)</a>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue">GetQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 
       <ul>
-        <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue">(lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+        <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.GetQueue">(mdbapi.songqueue.SongQueue method)</a>
 </li>
       </ul></li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetRandomSong">GetRandomSong() (lib.db.musicdb.MusicDatabase method)</a>
@@ -999,14 +1076,24 @@
 </li>
       </ul></li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong">GetSong() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+
+      <ul>
+        <li><a href="mdbapi/randy.html#mdbapi.randy.Randy.GetSong">(mdbapi.randy.Randy method)</a>
 </li>
+        <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.GetSong">(mdbapi.songqueue.SongQueue method)</a>
+</li>
+      </ul></li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetSongById">GetSongById() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetSongByPath">GetSongByPath() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
+      <li><a href="mdbapi/randy.html#mdbapi.randy.Randy.GetSongFromAlbum">GetSongFromAlbum() (mdbapi.randy.Randy method)</a>
+</li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds">GetSongIdsByAlbumIds() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetSongname">GetSongname() (lib.metatags.MetaTags method)</a>
+</li>
+      <li><a href="mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.GetSongPath">GetSongPath() (mdbapi.musiccache.MusicCache method)</a>
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship">GetSongRelationship() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
@@ -1024,8 +1111,12 @@
 </li>
       <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI.GetStatistics">GetStatistics() (mdbapi.musicai.MusicAI method)</a>
 </li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.GetStatus">GetStatus() (in module mdbapi.mpd)</a>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState">GetStreamState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+
+      <ul>
+        <li><a href="mdbapi/stream.html#mdbapi.stream.StreamManager.GetStreamState">(mdbapi.stream.StreamManager method)</a>
 </li>
+      </ul></li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.GetSubdirectories">GetSubdirectories() (lib.filesystem.Filesystem method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetTagByName">GetTagByName() (lib.db.musicdb.MusicDatabase method)</a>
@@ -1070,12 +1161,16 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="lib/icecast.html#lib.icecast.IcecastInterface">IcecastInterface (class in lib.icecast)</a>
+</li>
       <li><a href="mdbapi/server.html#mdbapi.server.Initialize">Initialize() (in module mdbapi.server)</a>
 </li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.InitializeStorage">InitializeStorage() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="lib/icecast.html#lib.icecast.IcecastInterface.IsConnected">IsConnected() (lib.icecast.IcecastInterface method)</a>
+</li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.IsDirectory">IsDirectory() (lib.filesystem.Filesystem method)</a>
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.IsFile">IsFile() (lib.filesystem.Filesystem method)</a>
@@ -1091,6 +1186,8 @@
       <li><a href="mdbapi/artwork.html#module-lib.cache">lib.cache (module)</a>
 </li>
       <li><a href="lib/config.html#module-lib.cfg.config">lib.cfg.config (module)</a>
+</li>
+      <li><a href="lib/config.html#module-lib.cfg.csv">lib.cfg.csv (module)</a>
 </li>
       <li><a href="lib/config.html#module-lib.cfg.extern">lib.cfg.extern (module)</a>
 </li>
@@ -1122,15 +1219,21 @@
 </li>
       <li><a href="lib/musicdb.html#module-lib.db.musicdb">lib.db.musicdb (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/tracker.html#module-lib.db.trackerdb">lib.db.trackerdb (module)</a>
+</li>
+      <li><a href="lib/fileprocessing.html#module-lib.fileprocessing">lib.fileprocessing (module)</a>
 </li>
       <li><a href="lib/filesystem.html#module-lib.filesystem">lib.filesystem (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/hdf5storage.html#module-lib.hdf5storage">lib.hdf5storage (module)</a>
 </li>
+      <li><a href="lib/icecast.html#module-lib.icecast">lib.icecast (module)</a>
+</li>
       <li><a href="lib/metatags.html#module-lib.metatags">lib.metatags (module)</a>
+</li>
+      <li><a href="lib/mp3file.html#module-lib.mp3file">lib.mp3file (module)</a>
 </li>
       <li><a href="lib/namedpipe.html#module-lib.namedpipe">lib.namedpipe (module)</a>
 </li>
@@ -1151,10 +1254,18 @@
       <ul>
         <li><a href="lib/metatags.html#lib.metatags.MetaTags.Load">(lib.metatags.MetaTags method)</a>
 </li>
+        <li><a href="lib/mp3file.html#lib.mp3file.MP3File.Load">(lib.mp3file.MP3File method)</a>
+</li>
+        <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.Load">(mdbapi.songqueue.SongQueue method)</a>
+</li>
       </ul></li>
+      <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.LoadBlacklists">LoadBlacklists() (lib.cfg.mdbstate.MDBState method)</a>
+</li>
       <li><a href="mdbapi/lycra.html#mdbapi.lycra.Lycra.LoadCrawlers">LoadCrawlers() (mdbapi.lycra.Lycra method)</a>
 </li>
       <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI.LoadModel">LoadModel() (mdbapi.musicai.MusicAI method)</a>
+</li>
+      <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.LoadSongQueue">LoadSongQueue() (lib.cfg.mdbstate.MDBState method)</a>
 </li>
       <li><a href="mdbapi/lycra.html#mdbapi.lycra.Lycra">Lycra (class in mdbapi.lycra)</a>
 </li>
@@ -1186,13 +1297,17 @@
 </li>
       <li><a href="mdbapi/mise.html#module-mdbapi.mise">mdbapi.mise (module)</a>
 </li>
-      <li><a href="mdbapi/mpd.html#module-mdbapi.mpd">mdbapi.mpd (module)</a>
-</li>
       <li><a href="mdbapi/musicai.html#module-mdbapi.musicai">mdbapi.musicai (module)</a>
+</li>
+      <li><a href="mdbapi/musiccache.html#module-mdbapi.musiccache">mdbapi.musiccache (module)</a>
 </li>
       <li><a href="mdbapi/randy.html#module-mdbapi.randy">mdbapi.randy (module)</a>
 </li>
       <li><a href="mdbapi/server.html#module-mdbapi.server">mdbapi.server (module)</a>
+</li>
+      <li><a href="mdbapi/songqueue.html#module-mdbapi.songqueue">mdbapi.songqueue (module)</a>
+</li>
+      <li><a href="mdbapi/stream.html#module-mdbapi.stream">mdbapi.stream (module)</a>
 </li>
       <li><a href="mdbapi/tags.html#module-mdbapi.tags">mdbapi.tags (module)</a>
 </li>
@@ -1207,6 +1322,8 @@
       <li><a href="mod/add.html#module-mod.add">mod.add (module)</a>
 </li>
       <li><a href="mod/artwork.html#module-mod.artwork">mod.artwork (module)</a>
+</li>
+      <li><a href="mod/cache.html#module-mod.cache">mod.cache (module)</a>
 </li>
       <li><a href="mod/database.html#module-mod.database">mod.database (module)</a>
 </li>
@@ -1250,13 +1367,17 @@
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.MoveFile">MoveFile() (lib.filesystem.Filesystem method)</a>
 </li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.MoveSong">MoveSong() (in module mdbapi.mpd)</a>
+      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.MoveSong">MoveSong() (mdbapi.songqueue.SongQueue method)</a>
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue">MoveSongInQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="lib/mp3file.html#lib.mp3file.MP3File">MP3File (class in lib.mp3file)</a>
 </li>
       <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI">MusicAI (class in mdbapi.musicai)</a>
 </li>
       <li><a href="mod/musicai.html#mod.musicai.musicai">musicai (class in mod.musicai)</a>
+</li>
+      <li><a href="mdbapi/musiccache.html#mdbapi.musiccache.MusicCache">MusicCache (class in mdbapi.musiccache)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase">MusicDatabase (class in lib.db.musicdb)</a>
 </li>
@@ -1286,6 +1407,8 @@
 </li>
       <li><a href="lib/websockets.html#lib.ws.server.MusicDBWebSocketServer">MusicDBWebSocketServer (class in lib.ws.server)</a>
 </li>
+      <li><a href="lib/icecast.html#lib.icecast.IcecastInterface.Mute">Mute() (lib.icecast.IcecastInterface method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -1296,7 +1419,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mdbapi/tracker.html#mdbapi.tracker.TrackerInterface.NewSong">NewSong() (mdbapi.tracker.TrackerInterface method)</a>
+      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.NextSong">NextSong() (mdbapi.songqueue.SongQueue method)</a>
 </li>
       <li><a href="mdbapi/mise.html#mdbapi.mise.MusicDBMicroSearchEngine.NormalizeString">NormalizeString() (mdbapi.mise.MusicDBMicroSearchEngine method)</a>
 </li>
@@ -1306,8 +1429,6 @@
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.ObserverThread">ObserverThread() (in module mdbapi.mpd)</a>
-</li>
       <li><a href="lib/clui.html#lib.clui.dialog.Dialog.onAction">onAction() (lib.clui.dialog.Dialog method)</a>
 
       <ul>
@@ -1328,9 +1449,9 @@
 </li>
       <li><a href="lib/websockets.html#lib.ws.websocket.WebSocket.onOpen">onOpen() (lib.ws.websocket.WebSocket method)</a>
 </li>
-      <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.OptimizeM4ATags">OptimizeM4ATags() (mdbapi.extern.MusicDBExtern method)</a>
+      <li><a href="lib/fileprocessing.html#lib.fileprocessing.Fileprocessing.OptimizeM4ATags">OptimizeM4ATags() (lib.fileprocessing.Fileprocessing method)</a>
 </li>
-      <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.OptimizeMP3Tags">OptimizeMP3Tags() (mdbapi.extern.MusicDBExtern method)</a>
+      <li><a href="lib/fileprocessing.html#lib.fileprocessing.Fileprocessing.OptimizeMP3Tags">OptimizeMP3Tags() (lib.fileprocessing.Fileprocessing method)</a>
 </li>
       <li><a href="lib/config.html#lib.cfg.config.Config.OptionAvailable">OptionAvailable() (lib.cfg.config.Config method)</a>
 </li>
@@ -1354,25 +1475,23 @@
         <li><a href="mod/musicai.html#mod.musicai.musicai.PerformTraining">(mod.musicai.musicai method)</a>
 </li>
       </ul></li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.Play">Play() (in module mdbapi.mpd)</a>
+      <li><a href="mdbapi/stream.html#mdbapi.stream.StreamManager.Play">Play() (mdbapi.stream.StreamManager method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.PlayNextSong">PlayNextSong() (in module mdbapi.mpd)</a>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong">PlayNextSong() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 
       <ul>
-        <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong">(lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+        <li><a href="mdbapi/stream.html#mdbapi.stream.StreamManager.PlayNextSong">(mdbapi.stream.StreamManager method)</a>
 </li>
       </ul></li>
-      <li><a href="mdbapi/randy.html#mdbapi.randy.RandyInterface.PrintBlacklist">PrintBlacklist() (mdbapi.randy.RandyInterface method)</a>
-</li>
       <li><a href="mod/mise.html#mod.mise.mise.PrintResults_ID">PrintResults_ID() (mod.mise.mise method)</a>
 </li>
       <li><a href="mod/mise.html#mod.mise.mise.PrintResults_Short">PrintResults_Short() (mod.mise.mise method)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.text.Text.PrintText">PrintText() (lib.clui.text.Text method)</a>
 </li>
-      <li><a href="mdbapi/tracker.html#mdbapi.tracker.TrackerInterface.PushCMD">PushCMD() (mdbapi.tracker.TrackerInterface method)</a>
+      <li><a href="mdbapi/stream.html#mdbapi.stream.StreamManager.PushCommand">PushCommand() (mdbapi.stream.StreamManager method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1380,22 +1499,26 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mdbapi/randy.html#mdbapi.randy.RandyInterface">RandyInterface (class in mdbapi.randy)</a>
+      <li><a href="mdbapi/randy.html#mdbapi.randy.Randy">Randy (class in mdbapi.randy)</a>
 </li>
-      <li><a href="mdbapi/randy.html#mdbapi.randy.RandyThread">RandyThread() (in module mdbapi.randy)</a>
+      <li><a href="lib/config.html#lib.cfg.csv.CSVFile.Read">Read() (lib.cfg.csv.CSVFile method)</a>
 </li>
       <li><a href="lib/hdf5storage.html#lib.hdf5storage.HDF5Storage.ReadDataset">ReadDataset() (lib.hdf5storage.HDF5Storage method)</a>
 </li>
       <li><a href="lib/namedpipe.html#lib.namedpipe.NamedPipe.ReadLine">ReadLine() (lib.namedpipe.NamedPipe method)</a>
 </li>
-      <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.ReadSongmap">ReadSongmap() (mdbapi.extern.MusicDBExtern method)</a>
+      <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.ReadList">ReadList() (lib.cfg.mdbstate.MDBState method)</a>
 </li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.Reconnect">Reconnect() (in module mdbapi.mpd)</a>
+      <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.ReadSongmap">ReadSongmap() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.ReducePathLength">ReducePathLength() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.RegisterCallback">RegisterCallback() (in module mdbapi.mpd)</a>
+      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.RegisterCallback">RegisterCallback() (mdbapi.songqueue.SongQueue method)</a>
+
+      <ul>
+        <li><a href="mdbapi/stream.html#mdbapi.stream.StreamManager.RegisterCallback">(mdbapi.stream.StreamManager method)</a>
 </li>
+      </ul></li>
       <li><a href="lib/config.html#lib.cfg.config.Config.Reload">Reload() (lib.cfg.config.Config method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.RemoveAlbum">RemoveAlbum() (lib.db.musicdb.MusicDatabase method)</a>
@@ -1418,28 +1541,42 @@
 </li>
       <li><a href="lib/clui.html#lib.clui.buttonview.ButtonView.RemoveButton">RemoveButton() (lib.clui.buttonview.ButtonView method)</a>
 </li>
+      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.RemoveCallback">RemoveCallback() (mdbapi.songqueue.SongQueue method)</a>
+
+      <ul>
+        <li><a href="mdbapi/stream.html#mdbapi.stream.StreamManager.RemoveCallback">(mdbapi.stream.StreamManager method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.RemoveCallback">RemoveCallback() (in module mdbapi.mpd)</a>
+      <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.RemoveDirectory">RemoveDirectory() (lib.filesystem.Filesystem method)</a>
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.RemoveFile">RemoveFile() (lib.filesystem.Filesystem method)</a>
 </li>
       <li><a href="lib/websockets.html#lib.ws.websocket.MusicDBWebSocketFactory.RemoveFromBroadcast">RemoveFromBroadcast() (lib.ws.websocket.MusicDBWebSocketFactory method)</a>
 </li>
-      <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.RemoveOldSongs">RemoveOldSongs() (mdbapi.extern.MusicDBExtern method)</a>
+      <li><a href="mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.RemoveOldAlbums">RemoveOldAlbums() (mdbapi.musiccache.MusicCache method)</a>
 </li>
+      <li><a href="mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.RemoveOldArtists">RemoveOldArtists() (mdbapi.musiccache.MusicCache method)</a>
+</li>
+      <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.RemoveOldSongs">RemoveOldSongs() (mdbapi.extern.MusicDBExtern method)</a>
+
+      <ul>
+        <li><a href="mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.RemoveOldSongs">(mdbapi.musiccache.MusicCache method)</a>
+</li>
+      </ul></li>
       <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveRelation">RemoveRelation() (lib.db.trackerdb.TrackerDatabase method)</a>
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.RemoveRoot">RemoveRoot() (lib.filesystem.Filesystem method)</a>
 </li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.RemoveSong">RemoveSong() (in module mdbapi.mpd)</a>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.RemoveSong">RemoveSong() (lib.db.musicdb.MusicDatabase method)</a>
 
       <ul>
-        <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.RemoveSong">(lib.db.musicdb.MusicDatabase method)</a>
-</li>
         <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveSong">(lib.db.trackerdb.TrackerDatabase method)</a>
 </li>
         <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.RemoveSong">(mdbapi.database.MusicDBDatabase method)</a>
+</li>
+        <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.RemoveSong">(mdbapi.songqueue.SongQueue method)</a>
 </li>
       </ul></li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue">RemoveSongFromQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
@@ -1463,8 +1600,16 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/config.html#lib.cfg.config.Config.Save">Save() (lib.cfg.config.Config method)</a>
+
+      <ul>
+        <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.Save">(mdbapi.songqueue.SongQueue method)</a>
+</li>
+      </ul></li>
+      <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.SaveBlacklists">SaveBlacklists() (lib.cfg.mdbstate.MDBState method)</a>
 </li>
       <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI.SaveModel">SaveModel() (mdbapi.musicai.MusicAI method)</a>
+</li>
+      <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.SaveSongQueue">SaveSongQueue() (lib.cfg.mdbstate.MDBState method)</a>
 </li>
       <li><a href="lib/websockets.html#lib.ws.websocket.WebSocket.SendPacket">SendPacket() (lib.ws.websocket.WebSocket method)</a>
 </li>
@@ -1508,19 +1653,19 @@
 </li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.SetMountpoint">SetMountpoint() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
-      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMPDState">SetMPDState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
-</li>
       <li><a href="lib/clui.html#lib.clui.boolinput.BoolInput.SetRepresentation">SetRepresentation() (lib.clui.boolinput.BoolInput method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/clui.html#lib.clui.dialog.Dialog.SetSelectedData">SetSelectedData() (lib.clui.dialog.Dialog method)</a>
 
       <ul>
         <li><a href="lib/clui.html#lib.clui.listview.ListView.SetSelectedData">(lib.clui.listview.ListView method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag">SetSongTag() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState">SetStreamState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.SetTargetTag">SetTargetTag() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
@@ -1540,33 +1685,31 @@
 </li>
       <li><a href="mdbapi/server.html#mdbapi.server.SIGTERM_Handler">SIGTERM_Handler() (in module mdbapi.server)</a>
 </li>
-      <li><a href="mdbapi/tracker.html#mdbapi.tracker.TrackerInterface.SongSkipped">SongSkipped() (mdbapi.tracker.TrackerInterface method)</a>
+      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue">SongQueue (class in mdbapi.songqueue)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.SplitTagsByClass">SplitTagsByClass() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
       <li><a href="lib/websockets.html#lib.ws.server.MusicDBWebSocketServer.Start">Start() (lib.ws.server.MusicDBWebSocketServer method)</a>
 </li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.StartMPDClient">StartMPDClient() (in module mdbapi.mpd)</a>
-</li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.StartObserver">StartObserver() (in module mdbapi.mpd)</a>
-</li>
-      <li><a href="mdbapi/randy.html#mdbapi.randy.StartRandy">StartRandy() (in module mdbapi.randy)</a>
-</li>
-      <li><a href="mdbapi/tracker.html#mdbapi.tracker.StartTracker">StartTracker() (in module mdbapi.tracker)</a>
+      <li><a href="mdbapi/stream.html#mdbapi.stream.StartStreamingThread">StartStreamingThread() (in module mdbapi.stream)</a>
 </li>
       <li><a href="mdbapi/server.html#mdbapi.server.StartWebSocketServer">StartWebSocketServer() (in module mdbapi.server)</a>
 </li>
       <li><a href="lib/websockets.html#lib.ws.server.MusicDBWebSocketServer.Stop">Stop() (lib.ws.server.MusicDBWebSocketServer method)</a>
 </li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.StopObserver">StopObserver() (in module mdbapi.mpd)</a>
-</li>
-      <li><a href="mdbapi/randy.html#mdbapi.randy.StopRandy">StopRandy() (in module mdbapi.randy)</a>
-</li>
-      <li><a href="mdbapi/tracker.html#mdbapi.tracker.StopTracker">StopTracker() (in module mdbapi.tracker)</a>
+      <li><a href="mdbapi/stream.html#mdbapi.stream.StopStreamingThread">StopStreamingThread() (in module mdbapi.stream)</a>
 </li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.StoreArtwork">StoreArtwork() (lib.metatags.MetaTags method)</a>
 </li>
       <li><a href="mod/musicai.html#mod.musicai.musicai.StorePrediction">StorePrediction() (mod.musicai.musicai method)</a>
+</li>
+      <li><a href="lib/icecast.html#lib.icecast.IcecastInterface.StreamChunk">StreamChunk() (lib.icecast.IcecastInterface method)</a>
+</li>
+      <li><a href="lib/icecast.html#lib.icecast.IcecastInterface.StreamFile">StreamFile() (lib.icecast.IcecastInterface method)</a>
+</li>
+      <li><a href="mdbapi/stream.html#mdbapi.stream.StreamingThread">StreamingThread() (in module mdbapi.stream)</a>
+</li>
+      <li><a href="mdbapi/stream.html#mdbapi.stream.StreamManager">StreamManager (class in mdbapi.stream)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1598,15 +1741,13 @@
 </li>
       <li><a href="lib/clui.html#lib.clui.textinput.TextInput">TextInput (class in lib.clui.textinput)</a>
 </li>
+      <li><a href="mdbapi/tracker.html#mdbapi.tracker.Tracker">Tracker (class in mdbapi.tracker)</a>
+</li>
       <li><a href="mod/tracker.html#mod.tracker.tracker">tracker (class in mod.tracker)</a>
 </li>
       <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase">TrackerDatabase (class in lib.db.trackerdb)</a>
 </li>
-      <li><a href="mdbapi/tracker.html#mdbapi.tracker.TrackerInterface">TrackerInterface (class in mdbapi.tracker)</a>
-</li>
-      <li><a href="mdbapi/tracker.html#mdbapi.tracker.TrackerThread">TrackerThread() (in module mdbapi.tracker)</a>
-</li>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.TriggerEvent">TriggerEvent() (in module mdbapi.mpd)</a>
+      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.TriggerEvent">TriggerEvent() (mdbapi.songqueue.SongQueue method)</a>
 </li>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.TryAnalysePathFor">TryAnalysePathFor() (mdbapi.database.MusicDBDatabase method)</a>
 </li>
@@ -1616,8 +1757,6 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mdbapi/mpd.html#mdbapi.mpd.Update">Update() (in module mdbapi.mpd)</a>
-</li>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateAlbum">UpdateAlbum() (mdbapi.database.MusicDBDatabase method)</a>
 
       <ul>
@@ -1633,10 +1772,16 @@
 </li>
       </ul></li>
       <li><a href="mdbapi/mise.html#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache">UpdateCache() (mdbapi.mise.MusicDBMicroSearchEngine method)</a>
+
+      <ul>
+        <li><a href="mod/cache.html#mod.cache.cache.UpdateCache">(mod.cache.cache method)</a>
+</li>
+      </ul></li>
+      <li><a href="mdbapi/server.html#mdbapi.server.UpdateCaches">UpdateCaches() (in module mdbapi.server)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mdbapi/server.html#mdbapi.server.UpdateCaches">UpdateCaches() (in module mdbapi.server)</a>
+      <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateChecksum">UpdateChecksum() (mdbapi.database.MusicDBDatabase method)</a>
 </li>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateServerCache">UpdateServerCache() (mdbapi.database.MusicDBDatabase method)</a>
 </li>
@@ -1662,6 +1807,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/websockets.html#lib.ws.websocket.WebSocket">WebSocket (class in lib.ws.websocket)</a>
 </li>
+      <li><a href="lib/config.html#lib.cfg.csv.CSVFile.Write">Write() (lib.cfg.csv.CSVFile method)</a>
+</li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.WriteAlbum">WriteAlbum() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.WriteArtist">WriteArtist() (lib.db.musicdb.MusicDatabase method)</a>
@@ -1671,6 +1818,8 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/namedpipe.html#lib.namedpipe.NamedPipe.WriteLine">WriteLine() (lib.namedpipe.NamedPipe method)</a>
+</li>
+      <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.WriteList">WriteList() (lib.cfg.mdbstate.MDBState method)</a>
 </li>
       <li><a href="mdbapi/lycra.html#lib.db.lycradb.LycraDatabase.WriteLyricsToCache">WriteLyricsToCache() (lib.db.lycradb.LycraDatabase method)</a>
 </li>
@@ -1697,7 +1846,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ralf Stemmer.
+        &copy; Copyright 2018, Ralf Stemmer.
 
     </p>
   </div>
@@ -1719,7 +1868,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1.0',
+            VERSION:'3.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

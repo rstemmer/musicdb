@@ -3,12 +3,11 @@ Song Tracker
 ============
 
 .. automodule:: mdbapi.tracker
-   :members: StartTracker, StopTracker, TrackerThread
 
-TrackerInterface Class
-----------------------
+Tracker Class
+-------------
 
-.. autoclass:: mdbapi.tracker.TrackerInterface
+.. autoclass:: mdbapi.tracker.Tracker
    :members:
 
 Tracker Database

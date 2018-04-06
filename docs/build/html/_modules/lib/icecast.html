@@ -1,0 +1,1122 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>lib.icecast &mdash; MusicDB 3.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> MusicDB
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/comparison.html">Comparison to Other Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#comparison">Comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/concept.html">Philosophy of MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#server">server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#websocket">websocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tls">TLS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#database">database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#music">music</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#extern">extern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tracker">tracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#lycra">lycra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#icecast">Icecast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#musicai">MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#randy">Randy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#log">log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/logging.html">Handling log-files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/mods.html">MusicDB Commandline Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/mods.html#loading-of-modules">Loading of Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/overview.html">Overview of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#music-database">Music Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#mp3-cache">MP3 Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/testvm.html">MusicDB Test VMs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/testvm.html#qemu-installation">qemu Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#basic-setup">Basic Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#disk-images">Disk Images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/testvm.html#system-setup">System Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#installing-updating-musicdb-test-environment">Installing/Updating MusicDB Test Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#create-dummy-files">Create Dummy Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/testvm.html#test-systems">Test Systems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#debian">Debian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#raspian">Raspian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#arch-linux">Arch Linux</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/webapi.html">MusicDB Websocket API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#communication">Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#packet-format">Packet format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#client-side-interface">Client side interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#callback-functions">Callback functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#events">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#artists">Artists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#albums">Albums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#queue">Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#tag-related">Tag related</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#other">Other</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/workflow.html">Workflow for development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/workflow.html#working-on-code">Working on code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#rebuilding-the-documentation">Rebuilding the Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/workflow.html#using-git">Using git</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#micro-commits">Micro Commits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#createing-a-hotfix">Createing a Hotfix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#merging-develop-to-master">Merging Develop to Master</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/workflow.html#releasing-a-new-version">Releasing a New Version</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/install.html">Installation &amp; Update</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-all-dependencies">Install all Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#configureing-musicdb">Configureing MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-manually">Installation (Manually)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#system-preparation">System Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#basic-packages">Basic packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#download-musicdb">Download MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#libprinthex">libprinthex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#musicdb">musicdb</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#cuda-for-musicai">CUDA for MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#update">Update</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/music.html">Music</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#naming">Naming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#song-file-name">Song File Name</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-database-module">Using the database module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-add-module">Using the add module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#updating-songs">Updating Songs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/scripts.html">Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-boot">musicdb-boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-start">musicdb-start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#quickupdate">quickupdate</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/add.html">add - Add New Album to MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/add.html#select-album">Select Album</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/add.html#repair-file-names">Repair File Names</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mod/add.html#album-import-form">Album Import Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mod/add.html#new-songs-form">New Songs Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mod/add.html#online-check">Online Check</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/add.html#import-process">Import Process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/artwork.html">artwork - Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/artwork.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/cache.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/database.html">database - Music DB Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/extern.html">extern - Music File Uploader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/extern.html#class">class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/extern.html#automatization">Automatization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/genres.html">genres - Genre Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/genres.html#managing-genres">Managing Genres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/genres.html#updating-caches">Updating Caches</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/metadata.html">metadata - Metadata Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/mise.html">mise - Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/mise.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/moods.html">moods - Mood Tag Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#mood-list">Mood List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#mood-grid">Mood Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#style-guide">Style Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/musicai.html">musicai - MusicAI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#module-mod.musicai">Module Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#class-description">Class Description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/server.html">server - MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/stats.html">stats - MusicDB Song Statistic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#main-commands">Main commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#style-guide">Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#example-calls">Example calls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/tracker.html">tracker - Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tracker.html#module-mod.tracker">Module Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tracker.html#class-description">Class Description</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/artwork.html">Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#path-structure">Path structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/artwork.html#web-browsers">Web Browsers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#manifest">Manifest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/database.html">MusicDBDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/extern.html">MusicDBExtern</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#initializing-a-storage">Initializing a Storage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/extern.html#storage-configuration">Storage Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/extern.html#the-state-file">The State-File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#updating-a-storage">Updating a Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#handling-toxic-environments">Handling Toxic Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#musicdbextern-class">MusicDBExtern Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/lycra.html">LyCra - Lyrics Crawler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/lycra.html#module-mdbapi.lycra">Lycra API Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/lycra.html#crawler-base-class">Crawler Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/lycra.html#module-lib.db.lycradb">Lycra Database</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/mise.html">Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/musicai.html">MusicAI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#training-time">Training Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#featureset">Featureset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/randy.html">Randomizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#randy-class">Randy Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tags.html">MusicDBTags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tracker.html">Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/clui.html">Command Line User Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.text">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.frame">Frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.pane">Pane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.buttonview">ButtonView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.listview">ListView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.dialog">Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.textinput">TextInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.boolinput">BoolInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/config.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/database.html">Database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/database.html#database-class">Database Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/filesystem.html">Filesystem Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/hdf5storage.html">HDF5Storage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/metatags.html">Meta Tags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/metatags.html#metatags-class">MetaTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/mp3file.html">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#albums">Albums</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#artworks">Artworks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#origin">Origin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#artists">Artists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#lyrics">Lyrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#tags">Tags</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#database-api">Database API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/pidfile.html">PID File Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/websockets.html#module-lib.ws.server">Websocket Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/websockets.html#module-lib.ws.websocket">Websocket Protocol</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../webui/taginput.html">Tag Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/taginput.html#taginput-js">taginput.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id1">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id2">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id3">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../webui/websockets.html">Websocket Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#connection-process">Connection Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#watchdog">Watchdog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/websockets.html#sending-data">Sending Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/websockets.html#receiving-data">Receiving Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#minimal-usage">Minimal usage</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/impressum.html">Impressum</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#kontakt">Kontakt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#verantwortlich-fur-den-inhalt-nach-55-abs-2-rstv">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#haftung-fur-inhalte">Haftung für Inhalte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#haftung-fur-links">Haftung für Links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#urheberrecht">Urheberrecht</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/impressum.html#datenschutzerklarung">Datenschutzerklärung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#datenschutz">Datenschutz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#cookies">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#server-log-files">Server-Log-Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#facebook-plugins-like-button">Facebook-Plugins (Like-Button)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#twitter">Twitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#google">Google+</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#youtube">YouTube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#ssl-verschlusselung">SSL-Verschlüsselung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#widerspruch-werbe-mails">Widerspruch Werbe-Mails</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MusicDB</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>lib.icecast</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for lib.icecast</h1><div class="highlight"><pre>
+<span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
+<span class="c1"># Copyright (C) 2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># </span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1"># </span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1"># </span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module implements the interface to `Icecast &lt;https://icecast.org/&gt;`_.</span>
+
+<span class="sd">The stream uses the python interface `Shouty &lt;https://github.com/edne/shouty&gt;`_ </span>
+<span class="sd">to `libshout &lt;https://github.com/xiph/Icecast-libshout&gt;`_ </span>
+<span class="sd">from the `Icecast &lt;https://icecast.org/&gt;`_ project.</span>
+
+
+<span class="sd">Introduction to Icecast</span>
+<span class="sd">-----------------------</span>
+
+<span class="sd">A setup using Icecast consist of three components. Using Icecast&#39;s terms, the are the following:</span>
+
+<span class="sd">    Source Client:</span>
+<span class="sd">        This the software that provides the music. In this setup, it is *MusicDB*.</span>
+<span class="sd">        It is called client, because it connects to Icecast that can manage multiple source clients.</span>
+
+<span class="sd">    Icecast Server:</span>
+<span class="sd">        This is *Icecast* itself. It servers the audio stream to the world.</span>
+
+<span class="sd">    Listener:</span>
+<span class="sd">        The listener is the receiver of the stream. For example VLC.</span>
+
+<span class="sd">Icecast can handle multiple sources.</span>
+<span class="sd">Each source is used for the input of a *Mountpoint*.</span>
+<span class="sd">All *Listeners* that want to access the audio stream receives the data from this Mountpoint&#39;s output.</span>
+
+<span class="sd">For more details see the `Icecast Documentation &lt;https://icecast.org/docs/icecast-trunk/basic_setup/&gt;`_.</span>
+
+
+<span class="sd">Icecast Configuration</span>
+<span class="sd">^^^^^^^^^^^^^^^^^^^^^</span>
+
+<span class="sd">The Icecast configuration defines the *Source Client* and how the data from the Source Clients gets served to the listeners.</span>
+
+<span class="sd">In this section, I only point out the more important settings of the whole Icecast configuration.</span>
+<span class="sd">There is a good example configuration provided by MusicDB.</span>
+<span class="sd">The following list addresses the settings in the XML file for the Icecast configration.</span>
+
+<span class="sd">    icecast/authentication/source-password:</span>
+<span class="sd">        This is the password *MusicDB* needs to know to connect to Icecast.</span>
+<span class="sd">        So this password must be the same as in MusicDB Configuration ``[icecast]-&gt;password``.</span>
+
+<span class="sd">There are two ports needed for the MusicDB/Icecast setup.</span>
+<span class="sd">One port to connect MusicDB to Icecast, and one to provide the stream to Listeners.</span>
+<span class="sd">The MusicDB connection (Port 6666) is bound to localhost and not encrypted.</span>
+<span class="sd">The other port (666) can be open to the world because it will be encrypted and protected against unwanted access.</span>
+
+<span class="sd">The ports will be configured in the ``icecast`` section of the configuration file by adding ``listen-socket`` sections:</span>
+
+<span class="sd">    .. code-block:: xml</span>
+
+<span class="sd">        &lt;!-- Extern --&gt;</span>
+<span class="sd">        &lt;listen-socket&gt;</span>
+<span class="sd">            &lt;port&gt;666&lt;/port&gt;</span>
+<span class="sd">            &lt;ssl&gt;1&lt;/ssl&gt;</span>
+<span class="sd">        &lt;/listen-socket&gt;</span>
+
+<span class="sd">        &lt;!-- Intern --&gt;</span>
+<span class="sd">        &lt;listen-socket&gt;</span>
+<span class="sd">            &lt;port&gt;6666&lt;/port&gt;</span>
+<span class="sd">            &lt;ssl&gt;0&lt;/ssl&gt;</span>
+<span class="sd">            &lt;shoutcast-mount&gt;/stream&lt;/shoutcast-mount&gt;</span>
+<span class="sd">        &lt;/listen-socket&gt;</span>
+
+
+<span class="sd">    icecast/listen-socket/shoutcast-mount:</span>
+<span class="sd">        This setting defines the *Mountpoint* name (starting with &quot;/&quot;).</span>
+<span class="sd">        It must be the same like the one set in MusicDB&#39;s configuration: ``[icecast]-&gt;mountname``</span>
+<span class="sd">        Further more it must be equal to the name definded in the detailed mount specification: ``icecast/mount/mount-name``.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">shouty</span>
+<span class="kn">from</span> <span class="nn">lib.mp3file</span> <span class="k">import</span> <span class="n">MP3File</span>
+
+
+<div class="viewcode-block" id="IcecastInterface"><a class="viewcode-back" href="../../lib/icecast.html#lib.icecast.IcecastInterface">[docs]</a><span class="k">class</span> <span class="nc">IcecastInterface</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This Icecast interface manages the connection to the Icecast server </span>
+<span class="sd">    and provides the server with the mp3 files cached in the MusicDB mp3 Cache (:mod:`mod.cache`, :mod:`mdbapi:musiccache`).</span>
+<span class="sd">    </span>
+<span class="sd">    The following values for setting up the connection via libshout are hard coded.</span>
+<span class="sd">    They can easily be changed in the Icecast configuration in the ``icecast/mount`` section.</span>
+
+<span class="sd">        +-------------+-------------------------+------------------------------------------------------------------------+</span>
+<span class="sd">        | Parameter   | Value                   | Comment                                                                |</span>
+<span class="sd">        +=============+=========================+========================================================================+</span>
+<span class="sd">        | protocol    | ``SHOUT_PROTOCOL_HTTP`` | The native and recommended format for Icecast 2                        |</span>
+<span class="sd">        +-------------+-------------------------+------------------------------------------------------------------------+</span>
+<span class="sd">        | format      | ``SHOUT_FORMAT_MP3``    | Obvious. MusicDB streams mp3 files                                     |</span>
+<span class="sd">        +-------------+-------------------------+------------------------------------------------------------------------+</span>
+<span class="sd">        | public      | ``0``                   | For security and privacy reasons                                       |</span>
+<span class="sd">        +-------------+-------------------------+------------------------------------------------------------------------+</span>
+<span class="sd">        | host        | ``&quot;localhost&quot;``         | For security reasons MusicDB and Icecast must run on the same computer |</span>
+<span class="sd">        +-------------+-------------------------+------------------------------------------------------------------------+</span>
+<span class="sd">        | name        | ``&quot;MusicDB Stream&quot;``    |                                                                        |</span>
+<span class="sd">        +-------------+-------------------------+------------------------------------------------------------------------+</span>
+<span class="sd">        | dumpfile    | ``None``                | Storing the stream does not make sense for non-moderated streams       | </span>
+<span class="sd">        +-------------+-------------------------+------------------------------------------------------------------------+</span>
+<span class="sd">        | url         | ``None``                | There is no website for the stream, because it is a private stream     |</span>
+<span class="sd">        +-------------+-------------------------+------------------------------------------------------------------------+</span>
+<span class="sd">        | genre       | ``None``                | Not relevant for private streams                                       |</span>
+<span class="sd">        +-------------+-------------------------+------------------------------------------------------------------------+</span>
+<span class="sd">        | description | ``None``                | Not relevant for private streams                                       |</span>
+<span class="sd">        +-------------+-------------------------+------------------------------------------------------------------------+</span>
+<span class="sd">        | agent       | ``None``                | Not relevant                                                           |</span>
+<span class="sd">        +-------------+-------------------------+------------------------------------------------------------------------+</span>
+<span class="sd">        | audio_info  | ``None``                | Not relevant                                                           |</span>
+<span class="sd">        +-------------+-------------------------+------------------------------------------------------------------------+</span>
+<span class="sd">    </span>
+<span class="sd">    The Icecast Interface class can stream any data to the Icecast Server via :meth:`~StreamChunk`.</span>
+<span class="sd">    In general this should be not necessary!</span>
+<span class="sd">    Instead only use the :meth:`~StreamFile` method that streams a mp3 file addressed by its path.</span>
+<span class="sd">    Advantage of the :meth:`~StreamFile` is, beside a clean frame wise transfer of the data to the server,</span>
+<span class="sd">    that the stream can be muted via :meth:`~Mute`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        port (int): port number for the *Source Client* connection</span>
+<span class="sd">        user (str): Name of the source user</span>
+<span class="sd">        password (str): The password of the source user</span>
+<span class="sd">        mountname (str): Name of the mountpoint to use.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            # Create IcecastInterface object</span>
+<span class="sd">            icecast = IcecastInterface(666, &quot;source&quot;, &quot;hackme&quot;, &quot;/stream&quot;)</span>
+
+<span class="sd">            # Connect to the Icecast server</span>
+<span class="sd">            icecast.Connect()</span>
+
+<span class="sd">            # Stream one file</span>
+<span class="sd">            for size, offset in icecast.StreamFile(&quot;/tmp/test.mp3&quot;):</span>
+<span class="sd">                print(&quot;%i of %i bytes sent&quot;%(offset, size))</span>
+
+<span class="sd">            # Disconnect from the Icecast server</span>
+<span class="sd">            icecast.Disconnect()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">mountname</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">icecast</span> <span class="o">=</span> <span class="n">shouty</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">Connection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icecast</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span>
+                <span class="n">host</span>     <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span>
+                <span class="n">port</span>     <span class="o">=</span> <span class="n">port</span><span class="p">,</span>
+                <span class="n">user</span>     <span class="o">=</span> <span class="n">user</span><span class="p">,</span>
+                <span class="n">password</span> <span class="o">=</span> <span class="n">password</span><span class="p">,</span>
+                <span class="n">protocol</span> <span class="o">=</span> <span class="n">shouty</span><span class="o">.</span><span class="n">Protocol</span><span class="o">.</span><span class="n">HTTP</span><span class="p">,</span>
+                <span class="nb">format</span>   <span class="o">=</span> <span class="n">shouty</span><span class="o">.</span><span class="n">Format</span><span class="o">.</span><span class="n">MP3</span><span class="p">,</span>
+                <span class="n">mount</span>    <span class="o">=</span> <span class="n">mountname</span><span class="p">,</span>
+                <span class="n">dumpfile</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">agent</span>    <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">public</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="n">name</span>     <span class="o">=</span> <span class="s2">&quot;MusicDB Stream&quot;</span><span class="p">,</span>
+                <span class="n">url</span>      <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">genre</span>    <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">description</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">audio_info</span>  <span class="o">=</span> <span class="kc">None</span>
+                <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">connectionstate</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mutestate</span>       <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">silentframe</span>     <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xff\xfb\xe0\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s2">Info</span><span class="se">\x00\x00\x00\x0f\x00\x00\x00</span><span class="s2">(</span><span class="se">\x00\x00\xa7</span><span class="s2">X</span><span class="se">\x00\x0c\x0c\x12\x12\x18\x18\x18\x1f\x1f</span><span class="si">%%</span><span class="s2">%++11188&gt;&gt;&gt;DDJJJQQWWW]]cccjjpppvv|||</span><span class="se">\x83\x83\x89\x89\x89\x8f\x8f\x95\x95\x95\x9c\x9c\xa2\xa2\xa2\xa8\xa8\xae\xae\xae\xb5\xb5\xbb\xbb\xbb\xc1\xc1\xc7\xc7\xc7\xce\xce\xd4\xd4\xd4\xda\xda\xe0\xe0\xe0\xe7\xe7\xed\xed\xed\xf3\xf3\xf9\xf9\xf9\xff\xff\x00\x00\x00\x00</span><span class="s2">Lavc57.10</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s2">$</span><span class="se">\x05</span><span class="s2">|</span><span class="se">\x00\x00\x00\x00\x00\x00\xa7</span><span class="s2">X</span><span class="se">\xa4\xd9\xdf</span><span class="s2">&amp;</span><span class="se">\x00\x00</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\x00</span><span class="s2">&quot;</span><span class="o">*</span><span class="mi">850</span>
+
+
+
+<div class="viewcode-block" id="IcecastInterface.IsConnected"><a class="viewcode-back" href="../../lib/icecast.html#lib.icecast.IcecastInterface.IsConnected">[docs]</a>    <span class="k">def</span> <span class="nf">IsConnected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` if connected to Icecase. ``False`` of not connected.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">connectionstate</span></div>
+
+
+
+<div class="viewcode-block" id="IcecastInterface.Connect"><a class="viewcode-back" href="../../lib/icecast.html#lib.icecast.IcecastInterface.Connect">[docs]</a>    <span class="k">def</span> <span class="nf">Connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tries to connect to Icecast.</span>
+
+<span class="sd">        If already connected, only ``True`` gets returned with out opening again.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` on success, otherwise ``False``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Trying to connect to Icecast server.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">connectionstate</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Connection to Icecast already open! </span><span class="se">\033</span><span class="s2">[1;30m(Will not be opened again)&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">icecast</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Connecting to Icecast failed with the following exception: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connectionstate</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">connectionstate</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="IcecastInterface.Disconnect"><a class="viewcode-back" href="../../lib/icecast.html#lib.icecast.IcecastInterface.Disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">Disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tries to close the Icecast connection.</span>
+
+<span class="sd">        If already disconnected, only ``True`` gets returned with out disconnecting again.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` on success, otherwise ``False``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">connectionstate</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Not connected to Icecast! </span><span class="se">\033</span><span class="s2">[1;30m(So closing is not needed)&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Disconnecting from Icecast server.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connectionstate</span> <span class="o">=</span> <span class="kc">False</span>    <span class="c1"># whatever happens, we are disconnected.</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">icecast</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="c1">#self.icecast.free()    # Do not free, to be able to reconnect.</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Disconnecting from Icecast failed with the following exception: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="IcecastInterface.StreamChunk"><a class="viewcode-back" href="../../lib/icecast.html#lib.icecast.IcecastInterface.StreamChunk">[docs]</a>    <span class="k">def</span> <span class="nf">StreamChunk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chunk</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method send a chunk of a file to the Icecast server.</span>
+<span class="sd">        The method synchronizes with Icecast before sending the data.</span>
+<span class="sd">        This is a blocking process!</span>
+
+<span class="sd">        When sending a chunk of data to Icecast fails,</span>
+<span class="sd">        the method disconnects from the Server.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            chunk (bytes): A chunk of a file to stream to Icecast</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` on success, ``False`` otherwise</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: When ``chunk`` is not of type bytes</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                with open(path) as mp3:</span>
+<span class="sd">                    while True:</span>
+<span class="sd">                        chunk = mp3.read(4096)</span>
+<span class="sd">                        if not chunk:</span>
+<span class="sd">                            print(&quot;File sent.&quot;)</span>
+<span class="sd">                            break</span>
+
+<span class="sd">                        retval = icecast.StreamChunk(chunk)</span>
+<span class="sd">                        if retval == False:</span>
+<span class="sd">                            print(&quot;ERROR&quot;)</span>
+<span class="sd">                            break</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">bytes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Chunks must be of type bytes!&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">connectionstate</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Not connected to Icecast! </span><span class="se">\033</span><span class="s2">[1;30m(No data sent)&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">icecast</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>         <span class="c1"># libshout doc recommends to call sync before send.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">icecast</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Sending chunk to Icecast failed with error </span><span class="si">%s</span><span class="s2">! - Disconnecting from Icecast&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Disconnect</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="IcecastInterface.StreamFile"><a class="viewcode-back" href="../../lib/icecast.html#lib.icecast.IcecastInterface.StreamFile">[docs]</a>    <span class="k">def</span> <span class="nf">StreamFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is a generator that sends a mp3 file to the Icecast server.</span>
+<span class="sd">        The mp3 file gets split into its frames, and sent frame wise.</span>
+
+<span class="sd">        After sending one chunk, the generator returns a dictionary with exact the keys and values</span>
+<span class="sd">        that gets returned by :meth:`lib.mp3file.MP3File.Frames` and  :meth:`lib.mp3file.MP3File.AnalyzeHeader`</span>
+
+<span class="sd">        This frame dictionary gets extended by one further key: ``muted``.</span>
+<span class="sd">        When this value is ``True``, then a silent frame got sent.</span>
+<span class="sd">        In this case, all information in the dictionary relate to the next frame from the mp3 file that will be send when the stream continues.</span>
+<span class="sd">        When ``False`` then the information are related to the actual sent frame.</span>
+
+<span class="sd">        Streaming of the file using this method allows to pause the audio stream by calling the :meth:`~Mute` method.</span>
+<span class="sd">        Then instead of the frames from the file, a hard coded frame of pure silence gets streamed as long as the mute-state persists.</span>
+<span class="sd">        Instead of one silent frame, 10 frames will be streamed at once.</span>
+<span class="sd">        This is about 261ms of silence.</span>
+
+<span class="sd">        The control flow is visualized in the following image:</span>
+
+<span class="sd">        .. graphviz::</span>
+
+<span class="sd">            digraph hierarchy {</span>
+<span class="sd">                size=&quot;5,8&quot;</span>
+<span class="sd">                start           [label=&quot;Start&quot;];</span>
+<span class="sd">                loadmp3         [shape=box,     label=&quot;Load mp3 file&quot;]</span>
+<span class="sd">                getframe        [shape=box,     label=&quot;Get next frame&quot;]</span>
+<span class="sd">                ismuted         [shape=diamond, label=&quot;state == muted ?&quot;]</span>
+<span class="sd">                streamsilence   [shape=box,     label=&quot;Stream silence&quot;]</span>
+<span class="sd">                yieldnextframe  [shape=box,     label=&quot;Return frame&quot;]</span>
+<span class="sd">                streamframe     [shape=box,     label=&quot;Stream frame&quot;]</span>
+<span class="sd">                yieldframe      [shape=box,     label=&quot;Return frame&quot;]</span>
+<span class="sd">                end             [label=&quot;Stop generator&quot;];</span>
+
+<span class="sd">                start           -&gt; loadmp3</span>
+<span class="sd">                loadmp3         -&gt; getframe</span>
+<span class="sd">                getframe        -&gt; ismuted          [label=&quot;Frame available&quot;]</span>
+<span class="sd">                ismuted         -&gt; streamsilence    [label=&quot;Yes&quot;]</span>
+<span class="sd">                ismuted         -&gt; streamframe      [label=&quot;No&quot;]</span>
+<span class="sd">                streamsilence   -&gt; yieldnextframe</span>
+<span class="sd">                streamframe     -&gt; yieldframe</span>
+<span class="sd">                yieldnextframe  -&gt; ismuted</span>
+<span class="sd">                yieldframe      -&gt; getframe</span>
+<span class="sd">                getframe        -&gt; end              [label=&quot;No further frames&quot;]</span>
+
+<span class="sd">                streamsilence   -&gt; end              [label=&quot;On error&quot;]</span>
+<span class="sd">                streamframe     -&gt; end              [label=&quot;On error&quot;]</span>
+<span class="sd">            }</span>
+
+<span class="sd">        The silent frame is optimized to be injected in the mp3-files generated by MusicDB for the MP3 Cache.</span>
+<span class="sd">        The mp3 file was generated as shown in the script example below.</span>
+<span class="sd">        Then the first frame was captured via the :meth:`lib.mp3file.MP3File.Frames` method.</span>
+
+<span class="sd">            .. code-block:: bash</span>
+
+<span class="sd">                ffmpeg -filter_complex aevalsrc=0 -acodec libmp3lame -ab 320k -t 1 monosilence.mp3</span>
+<span class="sd">                ffmpeg -i monosilence.mp3 -ab 320k -ac 2 stereosilence.mp3</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path (str): Absolute path to the mp3 file to stream. The encoding must be the same for all files!</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Returns a generator that returns the currently streamed frame.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                for frameinfo in icecast.StreamFile(path):</span>
+<span class="sd">                    if frameinfo[&quot;muted&quot;] == True:</span>
+<span class="sd">                        print(&quot;Stream is muted.&quot;)</span>
+<span class="sd">                        continue</span>
+
+<span class="sd">                    print(&quot;%i. frame of %i frames sent. Length: %s ms&quot;%(</span>
+<span class="sd">                            frameinfo[&quot;count&quot;], </span>
+<span class="sd">                            frameinfo[&quot;total&quot;],</span>
+<span class="sd">                            frameinfo[&quot;header&quot;][&quot;frametime&quot;]</span>
+<span class="sd">                            ))</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">mp3</span> <span class="o">=</span> <span class="n">MP3File</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Loading </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed with error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">mp3</span><span class="o">.</span><span class="n">Frames</span><span class="p">():</span>
+            <span class="c1"># Muted -&gt; stream silence</span>
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutestate</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">StreamChunk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">silentframe</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># ~ 261ms silence</span>
+                <span class="k">if</span> <span class="n">retval</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+                <span class="n">frame</span><span class="p">[</span><span class="s2">&quot;muted&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">yield</span> <span class="n">frame</span>
+
+            <span class="c1"># stream mp3 frame</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">StreamChunk</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;frame&quot;</span><span class="p">])</span>   <span class="c1"># Stream whole mp3 frame</span>
+            <span class="k">if</span> <span class="n">retval</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="k">break</span>
+
+            <span class="n">frame</span><span class="p">[</span><span class="s2">&quot;muted&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">yield</span> <span class="n">frame</span></div>
+
+
+
+
+<div class="viewcode-block" id="IcecastInterface.Mute"><a class="viewcode-back" href="../../lib/icecast.html#lib.icecast.IcecastInterface.Mute">[docs]</a>    <span class="k">def</span> <span class="nf">Mute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method sets the Icecast Interface into a mute state (when ``state == True``).</span>
+<span class="sd">        Then, the method :meth:`~StreamFile` streams silence instead of the file content.</span>
+<span class="sd">        After leaving the mute state, the file streaming continues at the position it got muted (=paused)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state (bool): Mute stream when ``True``, otherwise continue streaming audio</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mutestate</span> <span class="o">=</span> <span class="n">state</span></div></div>
+
+
+<span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
+
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Ralf Stemmer.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'3.0.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

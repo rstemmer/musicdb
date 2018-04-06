@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &amp; Update &mdash; MusicDB 2.1.0 documentation</title>
+  <title>Installation &amp; Update &mdash; MusicDB 3.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 2.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Music" href="music.html"/>
         <link rel="prev" title="Workflow for development" href="../basics/workflow.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.1
+                3.0
               </div>
             
           
@@ -99,7 +99,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/config.html">MusicDB Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#websocket">websocket</a></li>
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#icecast">Icecast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
@@ -125,14 +125,25 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/overview.html">Overview of MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#mp3-cache">MP3 Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -165,6 +176,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
@@ -206,7 +218,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#system-preparation">System Preparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#basic-packages">Basic packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3edit">id3edit</a></li>
@@ -261,6 +272,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
@@ -288,7 +303,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/server.html">server - MusicDB Websocket Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/stats.html">stats - MusicDB Song Statistic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
@@ -344,14 +363,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/mpd.html">mpd / Music Playing Daemon Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#observer-thread">Observer Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#callbacks">Callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#managing-mpd">Managing MPD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#queue-management">Queue management</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicai.html">MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#training-time">Training Time</a></li>
@@ -365,18 +376,51 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randyinterface-class">RandyInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randy-class">Randy Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tracker.html">Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
 </ul>
@@ -397,7 +441,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/config.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
@@ -405,6 +453,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/database.html">Database</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/database.html#database-class">Database Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/filesystem.html">Filesystem Interface</a><ul>
@@ -415,13 +467,28 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/metatags.html">Meta Tags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/metatags.html#metatags-class">MetaTags Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3file.html">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#albums">Albums</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#artworks">Artworks</a></li>
@@ -578,6 +645,13 @@
 </ul>
 <p class="last">I guess everyone reads this part of the documentation, so hopefully this is the most read text of the whole project.</p>
 </div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Before installing or updating MusicDB, <strong>update your system</strong>.
+MusicDB does not support outdated dependencies.</p>
+<p class="last">Before updating MusicDB <strong>backup the MusicDB Data directory</strong>.
+Major updates change the configuration file and the database scheme.</p>
+</div>
 <div class="section" id="installation-automatic">
 <h2>Installation (Automatic)<a class="headerlink" href="#installation-automatic" title="Permalink to this headline">¶</a></h2>
 <p>To install MusicDB, there is a script <code class="docutils literal"><span class="pre">install.sh</span></code> that will help you.
@@ -591,7 +665,7 @@ The following subsections explain how to install MusicDB using this script.</p>
 <li>sqlite3</li>
 <li>sed</li>
 <li>git</li>
-<li>mpd</li>
+<li>icecast</li>
 <li>dialog</li>
 <li>gcc/clang</li>
 </ul>
@@ -599,7 +673,7 @@ The following subsections explain how to install MusicDB using this script.</p>
 </div>
 <div class="section" id="executing-the-install-sh-script">
 <h3>Executing the install.sh Script<a class="headerlink" href="#executing-the-install-sh-script" title="Permalink to this headline">¶</a></h3>
-<p>Now you can simply execute the script from the source directory, after you have cloned the <a class="reference external" href="https://github.com/rstemmer/musicdb">git</a> repository from GitHub.</p>
+<p>Now you can simply execute the <code class="docutils literal"><span class="pre">install.sh</span></code> script from the source directory, after you have cloned the <a class="reference external" href="https://github.com/rstemmer/musicdb">git</a> repository from GitHub.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># cd to a place where the source repository shall be downloaded</span>
 <span class="nb">cd</span> /src
 
@@ -629,8 +703,6 @@ Then it opens a dialog where these variables can be confirmed or modified.</p>
 <dd>The music collection following the <a class="reference internal" href="music.html"><span class="doc">Music</span></a> naming scheme</dd>
 <dt>HTTP group:</dt>
 <dd>The Unix group for HTTP documents necessary to access the WebUI</dd>
-<dt>MPD user:</dt>
-<dd>The user name the Music Playing Daemon (MPD) uses</dd>
 <dt>SSL Certificate:</dt>
 <dd>Certificate file for the SSL encryption of the WebSocket communication</dd>
 <dt>SSL Key:</dt>
@@ -639,7 +711,7 @@ Then it opens a dialog where these variables can be confirmed or modified.</p>
 </div></blockquote>
 <p>During the installation process, SSL certificates gets generated for the WebSocket connection.
 The following files will be generated during installation: <code class="docutils literal"><span class="pre">musicdb.key</span></code>, <code class="docutils literal"><span class="pre">musicdb.crt</span></code>, <code class="docutils literal"><span class="pre">musicdb.pfx</span></code> and <code class="docutils literal"><span class="pre">musicdb.pem</span></code>.
-At least the <em>.key</em> and <em>.crt</em> files are needed to start the MusicDB server.
+At least the <em>.key</em>, <em>.crt</em> and <em>.pem</em> files are needed to start the MusicDB server and Icecast.
 If you want to use your own already available files, you can set in the settings mentioned above.
 For details on how the files are created, search inside the <code class="docutils literal"><span class="pre">install.sh</span></code> file for <code class="docutils literal"><span class="pre">CreateMusicDBSSLKeys</span></code>.</p>
 <p>Whenever there is a problem, the installation process stops with an error message.
@@ -651,13 +723,14 @@ The script always tries to determine the state of a single installation step and
 <h3>Install all Dependencies<a class="headerlink" href="#install-all-dependencies" title="Permalink to this headline">¶</a></h3>
 <p>Execute the <code class="docutils literal"><span class="pre">musicdb-check.sh</span></code> script to see what dependencies are missing.
 In context of the install.sh script, the name of this script is a bit misleading.
-It only checks for dependencies. It does not check the installation.</p>
+It only checks for dependencies needed by MusicDB to run. It does not check the installation.</p>
 <p>Install at least all mandatory (none optional) dependencies.
 You can use your system package manager or pythons package manager <code class="docutils literal"><span class="pre">pip</span></code> (<code class="docutils literal"><span class="pre">pip3</span></code> on Debian) to install them.</p>
 </div>
 <div class="section" id="configureing-musicdb">
 <h3>Configureing MusicDB<a class="headerlink" href="#configureing-musicdb" title="Permalink to this headline">¶</a></h3>
-<p>To configure MusicDB edit the <code class="docutils literal"><span class="pre">musicdb.ini</span></code> file in the data directory (that is also linked to /etc/musicdb.ini)</p>
+<p>To configure MusicDB edit the <code class="docutils literal"><span class="pre">musicdb.ini</span></code> file in the data directory (that is also linked to /etc/musicdb.ini).
+Furthermore you should check <code class="docutils literal"><span class="pre">icecast/config.xml</span></code> (also in MusicDB’s data directory) if those settings are what you want.</p>
 </div>
 </div>
 <div class="section" id="installation-manually">
@@ -704,7 +777,6 @@ The following list gives you some details about the listed modules.</p>
 <li><code class="docutils literal"><span class="pre">icecast</span></code> won’t be detected on Debian because there it is called <code class="docutils literal"><span class="pre">icecast2</span></code> (This has no impact).</li>
 <li><code class="docutils literal"><span class="pre">apachectl</span></code> my be not found if it is only available for root user. Or you simply use another HTTP server.</li>
 <li><code class="docutils literal"><span class="pre">jsdoc</span></code> can be installed via <code class="docutils literal"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">-g</span> <span class="pre">jsdoc</span></code>.</li>
-<li><code class="docutils literal"><span class="pre">mpd</span></code> comes with the <code class="docutils literal"><span class="pre">python-mpd2</span></code> module.</li>
 <li>The following modules are optional in case you don’t want to use the AI infrastructure: <code class="docutils literal"><span class="pre">numpy</span></code>, <code class="docutils literal"><span class="pre">h5py</span></code>, <code class="docutils literal"><span class="pre">tensorflow</span></code>, <code class="docutils literal"><span class="pre">tflearn</span></code></li>
 </ul>
 </div></blockquote>
@@ -716,41 +788,6 @@ Furthermore there are lots of python packages needed.
 You can use the <code class="docutils literal"><span class="pre">musicdb-check.sh</span></code> script to see what packages are missing.</p>
 <p>The missing <code class="docutils literal"><span class="pre">id3edit</span></code> tool is part of MusicDB.
 It’s installation is described in this documentation later on.</p>
-</div>
-<div class="section" id="mpd-music-player-daemon">
-<h3>MPD - Music Player Daemon<a class="headerlink" href="#mpd-music-player-daemon" title="Permalink to this headline">¶</a></h3>
-<p>MPD needs a working directory and some configuration.
-The following setup binds MPD to MusicDB as close as possible.</p>
-<blockquote>
-<div><ul class="simple">
-<li>Create a working directory relative to MusicDB’s data directory: <code class="docutils literal"><span class="pre">/data/musicdb/mpd</span></code></li>
-<li>Set permissions so that all users in group <code class="docutils literal"><span class="pre">musicdb</span></code> have access to the files</li>
-<li>Change the home directory of <code class="docutils literal"><span class="pre">mpd</span></code> to <code class="docutils literal"><span class="pre">/data/musicdb/mpd</span></code></li>
-</ul>
-</div></blockquote>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># as root</span>
-<span class="nb">cd</span> /data/musicdb
-
-<span class="c1"># create MPD working directory</span>
-mkdir -p mpd/playlists
-touch mpd/state
-touch mpd/mpd.conf
-chown -R mpd:musicdb mpd
-chmod g+w            mpd/mpd.conf
-
-<span class="c1"># configure</span>
-vim mpd/mpd.conf
-
-<span class="c1"># set /data/musicdb/mpd as home dir for user mpd</span>
-vim /etc/passwd
-
-<span class="c1"># final test and setup</span>
-mpd --no-daemon /data/musicdb/mpd/mpd.conf
-mpc -p <span class="m">9999</span> <span class="nb">enable</span> <span class="m">1</span>
-mpc -p <span class="m">9999</span> consume <span class="m">1</span>
-</pre></div>
-</div>
-<p>An example configuration can be found in the <em>share</em> directory of MusicDB</p>
 </div>
 <div class="section" id="download-musicdb">
 <h3>Download MusicDB<a class="headerlink" href="#download-musicdb" title="Permalink to this headline">¶</a></h3>
@@ -822,9 +859,9 @@ cp ~/projects/musicdb/share/logrotate.conf /etc/logrotate.d/musicdb
 <div class="section" id="configureing-musicdb-webui">
 <h2>Configureing MusicDB WebUI<a class="headerlink" href="#configureing-musicdb-webui" title="Permalink to this headline">¶</a></h2>
 <p>The WebUI configuration must be done inside the file <code class="docutils literal"><span class="pre">webui/js/musicdb.js</span></code></p>
-<p>At the begin of that file, the variable <code class="docutils literal"><span class="pre">WEBSOCKET_URL</span></code> must be configured.
+<p>At the begin of this file, the variable <code class="docutils literal"><span class="pre">WEBSOCKET_URL</span></code> must be configured.
 In particular the port number must match the one set in the MusicDB Configuration file /etc/musicdb.ini.
-An example variable is <code class="docutils literal"><span class="pre">WEBSOCKET_URL</span> <span class="pre">=</span> <span class="pre">&quot;wss://testserver.org:9000&quot;</span></code>.</p>
+An example variable is <code class="docutils literal"><span class="pre">WEBSOCKET_URL</span> <span class="pre">=</span> <span class="pre">&quot;wss://localhost:9000&quot;</span></code>.</p>
 <p>For further details, read the <a class="reference internal" href="../webui/websockets.html"><span class="doc">Websocket Connection</span></a> documentation
 See the sections for the watchdog and the communication to the server.</p>
 <p>This configuration will be persistent when updating.
@@ -834,7 +871,7 @@ The update process saves the lines with the configuration and restores them afte
 <div><ul class="simple">
 <li><code class="docutils literal"><span class="pre">/musicdb/</span></code> pointing to the WebUI directory (<code class="docutils literal"><span class="pre">$SERVERDIR/webui</span></code>)</li>
 <li><code class="docutils literal"><span class="pre">/musicdb/artwork/</span></code> pointing to the artwork directory (<code class="docutils literal"><span class="pre">$DATADIR/artwork</span></code>)</li>
-<li><code class="docutils literal"><span class="pre">/musicdb/music/</span></code> pointing to the music collection</li>
+<li><code class="docutils literal"><span class="pre">/musicdb/music/</span></code> pointing to the MusicDB mp3 Cache (<code class="docutils literal"><span class="pre">$DATADIR/mp3cache</span></code>)</li>
 <li><code class="docutils literal"><span class="pre">/musicdb/docs/</span></code> pointing to the documentation directory (<code class="docutils literal"><span class="pre">$SERVERDIR/docs</span></code>)</li>
 </ul>
 </div></blockquote>
@@ -846,8 +883,8 @@ The update process saves the lines with the configuration and restores them afte
    <span class="nb">Require</span> <span class="k">all</span> granted
 <span class="nt">&lt;/Directory&gt;</span>
 
-<span class="nb">Alias</span> <span class="sx">/musicdb/music/</span> <span class="s2">&quot;/var/music/&quot;</span>
-<span class="nt">&lt;Directory</span> <span class="s">&quot;/var/music&quot;</span><span class="nt">&gt;</span>
+<span class="nb">Alias</span> <span class="sx">/musicdb/music/</span> <span class="s2">&quot;/opt/musicdb/data/mp3cache/&quot;</span>
+<span class="nt">&lt;Directory</span> <span class="s">&quot;/opt/musicdb/data/mp3cache&quot;</span><span class="nt">&gt;</span>
    <span class="nb">AllowOverride</span> <span class="k">None</span>
    <span class="nb">Options</span> +FollowSymLinks
    <span class="nb">Require</span> <span class="k">all</span> granted
@@ -869,7 +906,7 @@ The update process saves the lines with the configuration and restores them afte
 <span class="nt">&lt;/Directory&gt;</span>
 </pre></div>
 </div>
-<p>When everything is correct, and the server running, the WebUI can be reached via <cite>http://localhost/musicdb/webui/moderator.html</cite></p>
+<p>When everything is correct, and the server is running, the WebUI can be reached via <code class="docutils literal"><span class="pre">http://localhost/musicdb/webui/moderator.html</span></code></p>
 </div>
 <div class="section" id="cuda-for-musicai">
 <h2>CUDA for MusicAI<a class="headerlink" href="#cuda-for-musicai" title="Permalink to this headline">¶</a></h2>
@@ -882,11 +919,14 @@ You should first read the <a class="reference internal" href="../mdbapi/musicai.
 If you still think working with a Convolutional Deep Neural Network is a good idea, then you should give it a try.
 For me it works well and it has a coolness level over 9000.</p>
 </div>
-<p>When you want to use MusicAI you need a working <a class="reference external" href="https://www.tensorflow.org/">TensorFlow</a> environment
-with <a class="reference external" href="https://developer.nvidia.com/cuda-zone">CUDA</a> support.</p>
+<p>When you want to use <a class="reference internal" href="../mdbapi/musicai.html"><span class="doc">MusicAI</span></a> you need a working <a class="reference external" href="https://www.tensorflow.org/">TensorFlow</a> environment
+with <a class="reference external" href="https://developer.nvidia.com/cuda-zone">CUDA</a> support:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>pacman -S nvidia
 shutdown -r now
 pacman -S opencl-nvidia opencl-headers cuda
+
+pip install tensorflow
+pip install tflearn
 </pre></div>
 </div>
 <p>The <a class="reference external" href="https://developer.nvidia.com/cudnn">CuDNN</a> libraries are needed by <em>TensorFlow</em>.
@@ -900,10 +940,6 @@ tar xf cudnn-8.0-linux-x64-v6.0.tgz
 </div>
 <div class="section" id="first-run">
 <h2>First Run<a class="headerlink" href="#first-run" title="Permalink to this headline">¶</a></h2>
-<p>If you start MusicDB Server right after installation, lots of warnings will appear periodically.
-The reason is, that there are no songs in MPDs playlist and that the random song selector(Randy) does not know what songs to add.</p>
-<p>So before starting the server, it is recommended to add some music to MusicDB and so, indirectly to MPD.
-If you only want to check the installation and setup, you can run the server and ignore the warning.</p>
 <p>For starting and stopping the MusicDB WebSocket Server and its dependent processes,
 the scripts described in <a class="reference internal" href="scripts.html"><span class="doc">Scripts</span></a> are recommended.</p>
 <p>For details of the configuration, see <a class="reference internal" href="../basics/config.html"><span class="doc">MusicDB Configuration</span></a>.</p>
@@ -928,7 +964,8 @@ pip install --upgrade tflearn
 </pre></div>
 </div>
 <p>If you want to update MusicDB, pull the latest version from GitHub, and execute the <code class="docutils literal"><span class="pre">install.sh</span></code> script.
-Make sure the detected settings that are displayed in the dialog are correct.</p>
+Make sure the detected settings that are displayed in the dialog are correct.
+For minor release updates, the <code class="docutils literal"><span class="pre">quickupdate.sh</span></code> is also OK (It just updates MusicDB without checking the environment).</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> /src/musicdb      <span class="c1"># go to MusicDB&#39;s source directory</span>
 git pull             <span class="c1"># get the latest source code</span>
 git checkout master  <span class="c1"># make sure you are in the master branch</span>
@@ -952,7 +989,7 @@ su                   <span class="c1"># you must be root for the updating proces
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ralf Stemmer.
+        &copy; Copyright 2018, Ralf Stemmer.
 
     </p>
   </div>
@@ -974,7 +1011,7 @@ su                   <span class="c1"># you must be root for the updating proces
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.1.0',
+            VERSION:'3.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

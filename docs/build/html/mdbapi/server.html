@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Websocket Server &mdash; MusicDB 2.1.0 documentation</title>
+  <title>MusicDB Websocket Server &mdash; MusicDB 3.0.0 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 2.1.0 documentation" href="../index.html"/>
-        <link rel="next" title="MusicDBTags" href="tags.html"/>
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="../index.html"/>
+        <link rel="next" title="MusicDB Song Queue" href="songqueue.html"/>
         <link rel="prev" title="Randomizer" href="randy.html"/> 
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.1
+                3.0
               </div>
             
           
@@ -99,7 +99,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/config.html">MusicDB Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#websocket">websocket</a></li>
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#icecast">Icecast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
@@ -125,14 +125,25 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/overview.html">Overview of MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#mp3-cache">MP3 Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -165,6 +176,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
@@ -206,7 +218,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#system-preparation">System Preparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
@@ -261,6 +272,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
@@ -288,7 +303,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/server.html">server - MusicDB Websocket Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/stats.html">stats - MusicDB Song Statistic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
@@ -344,14 +363,6 @@
 <li class="toctree-l2"><a class="reference internal" href="mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mpd.html">mpd / Music Playing Daemon Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#observer-thread">Observer Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#callbacks">Callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#managing-mpd">Managing MPD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#queue-management">Queue management</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="musicai.html">MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#external-dependencies">External Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#training-time">Training Time</a></li>
@@ -365,18 +376,51 @@
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="randy.html">Randomizer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="randy.html#module-mdbapi.randy">Randy Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="randy.html#randyinterface-class">RandyInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="randy.html#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="randy.html#randy-class">Randy Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tracker.html">Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
 </ul>
@@ -397,7 +441,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/config.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
@@ -405,6 +453,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/database.html">Database</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/database.html#database-class">Database Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/filesystem.html">Filesystem Interface</a><ul>
@@ -415,13 +467,28 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/metatags.html">Meta Tags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/metatags.html#metatags-class">MetaTags Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3file.html">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#albums">Albums</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#artworks">Artworks</a></li>
@@ -567,7 +634,7 @@
             
   <div class="section" id="module-mdbapi.server">
 <span id="musicdb-websocket-server"></span><h1>MusicDB Websocket Server<a class="headerlink" href="#module-mdbapi.server" title="Permalink to this headline">¶</a></h1>
-<p>This is the main module to run the MusicDB Websocket Server.</p>
+<p>This is the main module to run the MusicDB Server.</p>
 <p>To start and run the server, the following sequence of function calls is necessary:</p>
 <blockquote>
 <div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Initialize</span><span class="p">(</span><span class="n">mdbconfig</span><span class="p">,</span> <span class="n">musicdatabase</span><span class="p">)</span>
@@ -576,12 +643,12 @@
 </pre></div>
 </div>
 </div></blockquote>
-<p>MusicDB Server handles the following commands when written into its named pipe:</p>
+<p>When starting the server, a named pipe gets created at the path set in the configuration file.
+MusicDB Server handles the following commands when written into its named pipe:</p>
 <blockquote>
 <div><ul class="simple">
 <li>refresh:  <a class="reference internal" href="#mdbapi.server.UpdateCaches" title="mdbapi.server.UpdateCaches"><code class="xref py py-meth docutils literal"><span class="pre">UpdateCaches()</span></code></a> - Update server caches and inform clients to update their caches</li>
 <li>shutdown: <a class="reference internal" href="#mdbapi.server.Shutdown" title="mdbapi.server.Shutdown"><code class="xref py py-meth docutils literal"><span class="pre">Shutdown()</span></code></a> - Shut down the server</li>
-<li>blacklist: Show the blacklists maintained by <a class="reference internal" href="randy.html#module-mdbapi.randy" title="mdbapi.randy"><code class="xref py py-mod docutils literal"><span class="pre">randy</span></code></a></li>
 </ul>
 </div></blockquote>
 <p>Further more does this module maintain global instances of the following classes.
@@ -594,10 +661,9 @@ If the server is not started, the objects are all <code class="docutils literal"
 <li><a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal"><span class="pre">lib.db.musicdb.MusicDatabase</span></code></a> as <code class="docutils literal"><span class="pre">database</span></code></li>
 <li><a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine" title="mdbapi.mise.MusicDBMicroSearchEngine"><code class="xref py py-class docutils literal"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine</span></code></a> as <code class="docutils literal"><span class="pre">mise</span></code></li>
 <li><a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal"><span class="pre">lib.cfg.musicdb.MusicDBConfig</span></code></a> as <code class="docutils literal"><span class="pre">cfg</span></code></li>
-<li><a class="reference internal" href="../lib/config.html#lib.cfg.mdbstate.MDBState" title="lib.cfg.mdbstate.MDBState"><code class="xref py py-class docutils literal"><span class="pre">lib.cfg.mdbstate.MDBState</span></code></a> as <code class="docutils literal"><span class="pre">mdbstate</span></code></li>
 </ul>
 </div></blockquote>
-<p>The following example shows hot to use the pipe interface:</p>
+<p>The following example shows how to use the pipe interface:</p>
 <blockquote>
 <div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># Update caches</span>
 <span class="nb">echo</span> <span class="s2">&quot;refresh&quot;</span> &gt; /data/musicdb/musicdb.fifo
@@ -643,13 +709,10 @@ It initializes lots of global objects that get shared between multiple connectio
 <blockquote>
 <div><ol class="arabic simple">
 <li>Assign the <em>configobj</em> and <em>databaseobj</em> to global variables <code class="docutils literal"><span class="pre">cfg</span></code> and <code class="docutils literal"><span class="pre">database</span></code> to share them between multiple connections</li>
-<li>Seed Python’s randomizer <em>Randy</em> (See MDBAPI documentation <a class="reference internal" href="randy.html"><span class="doc">Randomizer</span></a>)</li>
-<li>Load the last state of MusicDB via <a class="reference internal" href="../lib/config.html#lib.cfg.mdbstate.MDBState" title="lib.cfg.mdbstate.MDBState"><code class="xref py py-meth docutils literal"><span class="pre">lib.cfg.mdbstate.MDBState()</span></code></a> class</li>
+<li>Seed Python’s random number generator</li>
 <li>Instantiate a global <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine" title="mdbapi.mise.MusicDBMicroSearchEngine"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine()</span></code></a> object</li>
-<li>Start the song Tracker via <code class="xref py py-meth docutils literal"><span class="pre">mdbapi.Tracker.StartTracker()</span></code></li>
-<li>Connect to MPD (Music Playing Daemon) and start Observer thread (see <a class="reference internal" href="mpd.html"><span class="doc">mpd / Music Playing Daemon Interface</span></a> and <a class="reference internal" href="tracker.html"><span class="doc">Song Tracker</span></a>)</li>
+<li>Start the Streaming Thread via <a class="reference internal" href="stream.html#mdbapi.stream.StartStreamingThread" title="mdbapi.stream.StartStreamingThread"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.stream.StartStreamingThread()</span></code></a> (see <a class="reference internal" href="stream.html"><span class="doc">Streaming Server</span></a> for details)</li>
 <li>Update MiSE cache via <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache()</span></code></a></li>
-<li>Start the randomizer Randy via <code class="xref py py-meth docutils literal"><span class="pre">mdbapi.Randy.StartRandy()</span></code></li>
 <li>Create FIFO file for named pipe</li>
 </ol>
 </div></blockquote>
@@ -699,7 +762,6 @@ Its task is to trigger updating the servers cache and to inform the clients to u
 <blockquote>
 <div><ul class="simple">
 <li>The MiSE Cache gets updated by calling <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache()</span></code></a></li>
-<li>The MPD database gets updated by calling <a class="reference internal" href="mpd.html#mdbapi.mpd.Update" title="mdbapi.mpd.Update"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mpd.Update()</span></code></a></li>
 </ul>
 </div></blockquote>
 <p>To inform the clients a broadcast packet get sent with the following content: <code class="docutils literal"><span class="pre">{method:&quot;broadcast&quot;,</span> <span class="pre">fncname:&quot;sys:refresh&quot;,</span> <span class="pre">fncsig:&quot;UpdateCaches&quot;,</span> <span class="pre">arguments:null,</span> <span class="pre">pass:null}</span></code></p>
@@ -719,9 +781,7 @@ Its task is to trigger updating the servers cache and to inform the clients to u
 <p>The following things happen when this function gets called:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Stop the randomizer Randy via <a class="reference internal" href="randy.html#mdbapi.randy.StopRandy" title="mdbapi.randy.StopRandy"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.randy.StopRandy()</span></code></a></li>
-<li>Stop the song Tracker via <a class="reference internal" href="tracker.html#mdbapi.tracker.StopTracker" title="mdbapi.tracker.StopTracker"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.tracker.StopTracker()</span></code></a></li>
-<li>Disconnect from MPD and stop the observer Thread via <a class="reference internal" href="mpd.html#mdbapi.mpd.StopObserver" title="mdbapi.mpd.StopObserver"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mpd.StopObserver()</span></code></a></li>
+<li>Stop the Streaming Thread via <a class="reference internal" href="stream.html#mdbapi.stream.StopStreamingThread" title="mdbapi.stream.StopStreamingThread"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.stream.StopStreamingThread()</span></code></a></li>
 <li>Removing FIFO file for named pipe</li>
 <li>Stop the websocket server</li>
 </ol>
@@ -757,7 +817,7 @@ When a shutdown gets triggered the <a class="reference internal" href="#mdbapi.s
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ralf Stemmer.
+        &copy; Copyright 2018, Ralf Stemmer.
 
     </p>
   </div>
@@ -779,7 +839,7 @@ When a shutdown gets triggered the <a class="reference internal" href="#mdbapi.s
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.1.0',
+            VERSION:'3.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

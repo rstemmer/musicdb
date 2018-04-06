@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Song Tracker &mdash; MusicDB 2.1.0 documentation</title>
+  <title>Song Tracker &mdash; MusicDB 3.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 2.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Command Line User Interface" href="../lib/clui.html"/>
         <link rel="prev" title="MusicDBTags" href="tags.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.1
+                3.0
               </div>
             
           
@@ -99,7 +99,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/config.html">MusicDB Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#websocket">websocket</a></li>
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#icecast">Icecast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
@@ -125,14 +125,25 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/overview.html">Overview of MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#mp3-cache">MP3 Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -165,6 +176,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
@@ -206,7 +218,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#system-preparation">System Preparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
@@ -261,6 +272,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
@@ -288,7 +303,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/server.html">server - MusicDB Websocket Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/stats.html">stats - MusicDB Song Statistic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
@@ -344,14 +363,6 @@
 <li class="toctree-l2"><a class="reference internal" href="mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mpd.html">mpd / Music Playing Daemon Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#observer-thread">Observer Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#callbacks">Callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#managing-mpd">Managing MPD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#queue-management">Queue management</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="musicai.html">MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#external-dependencies">External Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#training-time">Training Time</a></li>
@@ -365,18 +376,51 @@
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="randy.html">Randomizer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="randy.html#module-mdbapi.randy">Randy Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="randy.html#randyinterface-class">RandyInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="randy.html#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="randy.html#randy-class">Randy Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#trackerdatabase-class">TrackerDatabase Class</a></li>
 </ul>
@@ -397,7 +441,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/config.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
@@ -405,6 +453,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/database.html">Database</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/database.html#database-class">Database Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/filesystem.html">Filesystem Interface</a><ul>
@@ -415,13 +467,28 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/metatags.html">Meta Tags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/metatags.html#metatags-class">MetaTags Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3file.html">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#albums">Albums</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#artworks">Artworks</a></li>
@@ -567,193 +634,81 @@
             
   <div class="section" id="module-mdbapi.tracker">
 <span id="song-tracker"></span><h1>Song Tracker<a class="headerlink" href="#module-mdbapi.tracker" title="Permalink to this headline">¶</a></h1>
-<p>This module provides a tracker to track songs that were played by MusicDBs backend MPD (Music Playing Daemon).
+<p>This module provides a tracker to track songs that were streamed.
 The goal of the tracker is to collect information which songs can be played in series.
-So the relation between two songs gets stored in a database.
-The user can than get the information which song were played after (or before) a specific song.</p>
-<p>The Tracker consists of three parts:</p>
+So the relation between two songs gets stored in a database - the Tracker Database.
+The user can then get the information which song were played after (or before) a specific song.
+Beside the songs, also the artist relations are tracked.</p>
+<p>The Tracker consists of two parts:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The <strong>Tracker Thread</strong> (<a class="reference internal" href="#mdbapi.tracker.TrackerThread" title="mdbapi.tracker.TrackerThread"><code class="xref py py-meth docutils literal"><span class="pre">TrackerThread()</span></code></a>) and its environment <a class="reference internal" href="#mdbapi.tracker.StartTracker" title="mdbapi.tracker.StartTracker"><code class="xref py py-meth docutils literal"><span class="pre">StartTracker()</span></code></a> and  <a class="reference internal" href="#mdbapi.tracker.StopTracker" title="mdbapi.tracker.StopTracker"><code class="xref py py-meth docutils literal"><span class="pre">StopTracker()</span></code></a>.</li>
-<li>The <strong>Tracker Interface</strong> class (<a class="reference internal" href="#mdbapi.tracker.TrackerInterface" title="mdbapi.tracker.TrackerInterface"><code class="xref py py-class docutils literal"><span class="pre">TrackerInterface</span></code></a>) providing an interface to interact with the Tracker thread. The interaction with the thread can happen in several threads simultaneously.</li>
+<li>The <strong>Tracker</strong> class (<a class="reference internal" href="#mdbapi.tracker.Tracker" title="mdbapi.tracker.Tracker"><code class="xref py py-class docutils literal"><span class="pre">Tracker</span></code></a>) tracking songs with an internal queue that holds the last played songs.</li>
 <li>The <strong>Tracker Database</strong> (<a class="reference internal" href="#lib.db.trackerdb.TrackerDatabase" title="lib.db.trackerdb.TrackerDatabase"><code class="xref py py-class docutils literal"><span class="pre">TrackerDatabase</span></code></a>) that stores the tracked song relations.</li>
 </ul>
 </div></blockquote>
-<p>To use the tracker, start the Tracker Thread by calling <a class="reference internal" href="#mdbapi.tracker.StartTracker" title="mdbapi.tracker.StartTracker"><code class="xref py py-meth docutils literal"><span class="pre">StartTracker()</span></code></a> once.
-Now it is possible to access the randomizer using the <a class="reference internal" href="#mdbapi.tracker.TrackerInterface" title="mdbapi.tracker.TrackerInterface"><code class="xref py py-class docutils literal"><span class="pre">TrackerInterface</span></code></a> class.
-This can be done from multiple different threads.
-When the tracker is not needed anymore, it can be stopped by calling <a class="reference internal" href="#mdbapi.tracker.StopTracker" title="mdbapi.tracker.StopTracker"><code class="xref py py-meth docutils literal"><span class="pre">StopTracker()</span></code></a>.</p>
 <p class="rubric">Example</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Dependencies</span>
 <span class="n">cfg</span> <span class="o">=</span> <span class="n">MusicDBConfig</span><span class="p">(</span><span class="s2">&quot;./musicdb.ini&quot;</span><span class="p">)</span>
 
-<span class="c1"># Start the Tracker</span>
-<span class="n">StartTracker</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
-
-<span class="c1"># Use Tracker (Can be anywhere in the code)</span>
-<span class="n">tracker</span> <span class="o">=</span> <span class="n">TrackerInterface</span><span class="p">()</span>
-<span class="n">tracker</span><span class="o">.</span><span class="n">NewSong</span><span class="p">(</span><span class="s2">&quot;Unicorn/2000 - Honey Horn/13 Rainbow Song.mp3&quot;</span><span class="p">)</span>
-<span class="n">tracker</span><span class="o">.</span><span class="n">NewSong</span><span class="p">(</span><span class="s2">&quot;Truther/2013 - Real Album/23 Illuminati.mp3&quot;</span><span class="p">)</span>
-<span class="n">tracker</span><span class="o">.</span><span class="n">SongSkipped</span><span class="p">()</span>
-
-<span class="c1"># Stop Tracker</span>
-<span class="n">StopTracker</span><span class="p">()</span>
+<span class="c1"># Create a new tracker</span>
+<span class="n">tracker</span> <span class="o">=</span> <span class="n">Tracker</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+<span class="n">tracker</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="s2">&quot;Unicorn/2000 - Honey Horn/13 Rainbow Song.mp3&quot;</span><span class="p">)</span>
+<span class="n">tracker</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="s2">&quot;Truther/2013 - Real Album/23 Illuminati.mp3&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="function">
-<dt id="mdbapi.tracker.StartTracker">
-<code class="descclassname">mdbapi.tracker.</code><code class="descname">StartTracker</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#StartTracker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.StartTracker" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start the Tracker thread.
-You should use this function instead of calling the TrackerThread directly.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> – a MusicDB config object</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code> if something went wrong, otherwise the thread-handler will be returned</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="mdbapi.tracker.StopTracker">
-<code class="descclassname">mdbapi.tracker.</code><code class="descname">StopTracker</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#StopTracker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.StopTracker" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stops the Tracker thread.
-This function is blocking and waits until the thread is closed.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="mdbapi.tracker.TrackerThread">
-<code class="descclassname">mdbapi.tracker.</code><code class="descname">TrackerThread</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#TrackerThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.TrackerThread" title="Permalink to this definition">¶</a></dt>
-<dd><div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This function should not be called directly. Use <a class="reference internal" href="#mdbapi.tracker.StartTracker" title="mdbapi.tracker.StartTracker"><code class="xref py py-meth docutils literal"><span class="pre">StartTracker()</span></code></a> to execute the Thread!</p>
-</div>
-<p>This thread tracks songs that were played after each other.
-So it gets tracked what songs the user put together into the queue because their style fit to each other.
-It will also track randomly added songs assuming the user skips songs that don’t fit.
-Only completely played songs were considered.
-Skipped songs get ignored.</p>
-<p>The thread runs in three stages until <a class="reference internal" href="#mdbapi.tracker.StopTracker" title="mdbapi.tracker.StopTracker"><code class="xref py py-meth docutils literal"><span class="pre">StopTracker()</span></code></a> gets called.</p>
-<p><strong>Check for new command</strong></p>
-<p>First a new command gets popped from the command queue.
-An entry in the command queue is a tuple of the command itself and one argument.
-If there is no new command, the thread sleeps for a configured time and checks again.</p>
-<p><strong>Check for a relationship</strong></p>
-<p>If there was a command in the queue it gets executed.
-The command influences the state of the tracker internal playlist.</p>
-<p>The intern playlist holds up to three entries. Each is a relative path to a played or playing song.
-So the first and second (index 0 and index 1) have a connection that will be tracked.
-As list:</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li>The song that was fully played before the last song</li>
-<li>The last song that was played completely</li>
-<li>The current playing song</li>
-</ol>
-</div></blockquote>
-<p>The following commands exist:</p>
-<dl class="docutils">
-<dt>CMD_NEWSONG:</dt>
-<dd>Set by the method <a class="reference internal" href="#mdbapi.tracker.TrackerInterface.NewSong" title="mdbapi.tracker.TrackerInterface.NewSong"><code class="xref py py-meth docutils literal"><span class="pre">NewSong()</span></code></a>.
-This signals that MPD (Music Playing Daemon) started playing a new file.
-The path to the file is the argument to this command.
-If the last song added to the playlist already exist, it gets ignored.</dd>
-<dt>CMD_SONGSKIPPED:</dt>
-<dd>Set by the method <a class="reference internal" href="#mdbapi.tracker.TrackerInterface.SongSkipped" title="mdbapi.tracker.TrackerInterface.SongSkipped"><code class="xref py py-meth docutils literal"><span class="pre">SongSkipped()</span></code></a>.
-This command signals that the current song was skipped and so the first entry (index 0)
-gets removed from the internal playlist.</dd>
-<dt>CMD_CLEAR:</dt>
-<dd>Set by the method <a class="reference internal" href="#mdbapi.tracker.TrackerInterface.NewSong" title="mdbapi.tracker.TrackerInterface.NewSong"><code class="xref py py-meth docutils literal"><span class="pre">NewSong()</span></code></a>.
-If the time between two songs more than 30 minutes, the relation gets rejected.
-The internal playlist gets emptied and a new “session” can start.</dd>
-</dl>
-<p><strong>Store relationship into database</strong></p>
-<p>The third step is to check for a new relation between two songs.
-This is the case if there are three entries in the internal playlist.
-If there are less, or if the tracker was disabled by the configuration,
-nothing will be done and the control flow goes back to the first step - reading a new command.</p>
-<p>If there are three entries in the queue, the song IDs get determined.
-Then the relation gets added to the tracker database by calling <code class="xref py py-meth docutils literal"><span class="pre">lib.db.tracker.TrackerDatabase.AddEdge()</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> – MusicDB Configuration</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<div class="section" id="trackerinterface-class">
-<h2>TrackerInterface Class<a class="headerlink" href="#trackerinterface-class" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tracker-class">
+<h2>Tracker Class<a class="headerlink" href="#tracker-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="mdbapi.tracker.TrackerInterface">
-<em class="property">class </em><code class="descclassname">mdbapi.tracker.</code><code class="descname">TrackerInterface</code><a class="reference internal" href="../_modules/mdbapi/tracker.html#TrackerInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.TrackerInterface" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface to the <a class="reference internal" href="#mdbapi.tracker.TrackerThread" title="mdbapi.tracker.TrackerThread"><code class="xref py py-meth docutils literal"><span class="pre">TrackerThread()</span></code></a>.
-This class is made to access the thread form all over the code simultaneously.</p>
-<dl class="method">
-<dt id="mdbapi.tracker.TrackerInterface.NewSong">
-<code class="descname">NewSong</code><span class="sig-paren">(</span><em>songpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#TrackerInterface.NewSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.TrackerInterface.NewSong" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method adds a new song to the list of song tracked.</p>
-<p>If the time between this song, and the previous one exceeds 30 minutes, it gets ignored and the internal state gets reset.
-So the chain of songs get cut if the time between playing them is too long.
-The chain of songs gets also cut, if <em>songpath</em> is <code class="docutils literal"><span class="pre">None</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songpath</strong> – relative song path of the song that gets currently played.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> on success. <code class="docutils literal"><span class="pre">False</span></code> in case an error occurred.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="mdbapi.tracker.TrackerInterface.PushCMD">
-<code class="descname">PushCMD</code><span class="sig-paren">(</span><em>command</em>, <em>argument=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#TrackerInterface.PushCMD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.TrackerInterface.PushCMD" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method pushes a new command into the command queue that gets processed by the Tracker thread.
-This method is supposed to be only called from a method inside the Tracker class.
-You should not call this method directly.</p>
-<p>If the Tracker is not running, nothing happens and <code class="docutils literal"><span class="pre">False</span></code> gets returned</p>
+<dt id="mdbapi.tracker.Tracker">
+<em class="property">class </em><code class="descclassname">mdbapi.tracker.</code><code class="descname">Tracker</code><span class="sig-paren">(</span><em>config</em>, <em>musicdb</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#Tracker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.Tracker" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class tracks songs that were played after each other.
+So it gets tracked what songs the user put together into the queue because their style fit to each other.
+It should also track randomly added songs assuming the user skips or removes songs that don’t fit.
+Only completely played songs should considered.
+Skipped songs should be ignored.
+Beside the songs, also the artist relations get tracked.
+The artist relation gets derived from the song relations.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">It tracks the played songs using a local state.
+Creating a new instance of this class also creates a further independent tracker.
+This could mess up the database with relations that were counted twice!</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>command</strong> – One of the commands that can be processed by the Tracker</li>
-<li><strong>argument</strong> – Optional argument for a command</li>
+<li><strong>config</strong> – <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal"><span class="pre">MusicDBConfig</span></code></a> object holding the MusicDB Configuration</li>
+<li><strong>musicdb</strong> – Optional a <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal"><span class="pre">MusicDatabase</span></code></a> instance. When <code class="docutils literal"><span class="pre">None</span></code> a new instance will be created</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">None</span></code></p>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When the arguments are not of the correct type.</p>
 </td>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
 <dl class="method">
-<dt id="mdbapi.tracker.TrackerInterface.SongSkipped">
-<code class="descname">SongSkipped</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#TrackerInterface.SongSkipped"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.TrackerInterface.SongSkipped" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method signals the tracker that the last added song (via <a class="reference internal" href="#mdbapi.tracker.TrackerInterface.NewSong" title="mdbapi.tracker.TrackerInterface.NewSong"><code class="xref py py-meth docutils literal"><span class="pre">NewSong()</span></code></a>) was skipped.</p>
+<dt id="mdbapi.tracker.Tracker.AddSong">
+<code class="descname">AddSong</code><span class="sig-paren">(</span><em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#Tracker.AddSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.Tracker.AddSong" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method tracks the relation to the given song with the last added song.
+This new song should be a song that was recently and completely played.</p>
+<p>If the time between this song, and the previous one exceeds 30 minutes, it gets ignored and the internal state gets reset.
+So the chain of songs get cut if the time between playing them is too long.
+The chain of songs gets also cut, if <em>songid</em> is <code class="docutils literal"><span class="pre">None</span></code> or invalid.</p>
+<p>If the given song is the same as the last song, then it gets ignored.</p>
+<p>After adding a song, the method checks for a new relation between two songs.
+This is the case when there was previously a song added.</p>
+<p>If there is a relation to track then the songs get loaded from the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal"><span class="pre">lib.db.musicdb.MusicDatabase</span></code></a> to get the artist IDs.
+The relation gets added to the tracker database by calling <a class="reference internal" href="#lib.db.trackerdb.TrackerDatabase.AddRelation" title="lib.db.trackerdb.TrackerDatabase.AddRelation"><code class="xref py py-meth docutils literal"><span class="pre">lib.db.trackerdb.TrackerDatabase.AddRelation()</span></code></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songid</strong> – song ID of the song that gets currently played, <code class="docutils literal"><span class="pre">None</span></code> to cut the chain of consecutive songs.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> on success. <code class="docutils literal"><span class="pre">False</span></code> in case an error occurred.</td>
 </tr>
 </tbody>
 </table>
@@ -1081,7 +1036,7 @@ This object must be given as argument.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ralf Stemmer.
+        &copy; Copyright 2018, Ralf Stemmer.
 
     </p>
   </div>
@@ -1103,7 +1058,7 @@ This object must be given as argument.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.1.0',
+            VERSION:'3.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

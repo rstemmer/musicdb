@@ -195,6 +195,26 @@ Example:
    // Request an album with ID 1000 and signal the client that the response shall be used to show it.
    MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: 1000});
 
+Events
+------
+
+The Streaming Thread generates events that get broadcast to all clients via notifications.
+
+The package has the following information:
+
+   * **method:** notification
+   * **pass:** ``null``
+   * Event triggered by :doc:`/mdbapi/stream`
+      * **fncname:** ``"MusicDB:Stream"``
+      * **fncsig:** ``"onStatusChanged"`` or ``"onTimeChanged"``
+      * **argument:** The playtime of the current song in seconds, when the *fncsig* is ``"onTimeChanged"``
+   * Event triggered by :doc:`/mdbapi/songqueue`
+      * **fncname:** ``"MusicDB:Queue"``
+      * **fncsig:** ``"onQueueChanged"`` or ``"onSongChanged"``
+      * **argument:** ``None``
+
+See the related documentation of the event sources for more details
+
 
 Server side API
 ---------------
@@ -211,8 +231,8 @@ Server side API
       GetTags, 
       GetSongTags, 
       GetAlbumTags, 
-      GetMPDState, 
-      SetMPDState, 
+      GetStreamState, 
+      SetStreamState, 
       GetQueue, 
       Find, 
       PlayNextSong, 

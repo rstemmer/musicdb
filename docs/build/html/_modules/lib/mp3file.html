@@ -1,0 +1,1077 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>lib.mp3file &mdash; MusicDB 3.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> MusicDB
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/comparison.html">Comparison to Other Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#comparison">Comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/concept.html">Philosophy of MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#server">server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#websocket">websocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tls">TLS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#database">database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#music">music</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#extern">extern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tracker">tracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#lycra">lycra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#icecast">Icecast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#musicai">MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#randy">Randy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#log">log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/logging.html">Handling log-files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/mods.html">MusicDB Commandline Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/mods.html#loading-of-modules">Loading of Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/overview.html">Overview of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#music-database">Music Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#mp3-cache">MP3 Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/testvm.html">MusicDB Test VMs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/testvm.html#qemu-installation">qemu Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#basic-setup">Basic Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#disk-images">Disk Images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/testvm.html#system-setup">System Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#installing-updating-musicdb-test-environment">Installing/Updating MusicDB Test Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#create-dummy-files">Create Dummy Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/testvm.html#test-systems">Test Systems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#debian">Debian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#raspian">Raspian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/testvm.html#arch-linux">Arch Linux</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/webapi.html">MusicDB Websocket API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#communication">Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#packet-format">Packet format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#client-side-interface">Client side interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#callback-functions">Callback functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#events">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#artists">Artists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#albums">Albums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#queue">Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#tag-related">Tag related</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#other">Other</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/workflow.html">Workflow for development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/workflow.html#working-on-code">Working on code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#rebuilding-the-documentation">Rebuilding the Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/workflow.html#using-git">Using git</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#micro-commits">Micro Commits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#createing-a-hotfix">Createing a Hotfix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/workflow.html#merging-develop-to-master">Merging Develop to Master</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/workflow.html#releasing-a-new-version">Releasing a New Version</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/install.html">Installation &amp; Update</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-all-dependencies">Install all Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#configureing-musicdb">Configureing MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-manually">Installation (Manually)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#system-preparation">System Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#basic-packages">Basic packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#download-musicdb">Download MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#libprinthex">libprinthex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#musicdb">musicdb</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#cuda-for-musicai">CUDA for MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#update">Update</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/music.html">Music</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#naming">Naming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#song-file-name">Song File Name</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-database-module">Using the database module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#using-the-add-module">Using the add module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#updating-songs">Updating Songs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/scripts.html">Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-boot">musicdb-boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-start">musicdb-start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/scripts.html#quickupdate">quickupdate</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/add.html">add - Add New Album to MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/add.html#select-album">Select Album</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/add.html#repair-file-names">Repair File Names</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mod/add.html#album-import-form">Album Import Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mod/add.html#new-songs-form">New Songs Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mod/add.html#online-check">Online Check</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/add.html#import-process">Import Process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/artwork.html">artwork - Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/artwork.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/cache.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/database.html">database - Music DB Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/extern.html">extern - Music File Uploader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/extern.html#class">class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/extern.html#automatization">Automatization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/genres.html">genres - Genre Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/genres.html#managing-genres">Managing Genres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/genres.html#updating-caches">Updating Caches</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/metadata.html">metadata - Metadata Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/mise.html">mise - Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/mise.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/moods.html">moods - Mood Tag Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#mood-list">Mood List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#mood-grid">Mood Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#style-guide">Style Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/musicai.html">musicai - MusicAI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#module-mod.musicai">Module Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#class-description">Class Description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/server.html">server - MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/stats.html">stats - MusicDB Song Statistic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#main-commands">Main commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#style-guide">Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#example-calls">Example calls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/tracker.html">tracker - Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tracker.html#module-mod.tracker">Module Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/tracker.html#class-description">Class Description</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/artwork.html">Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#path-structure">Path structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/artwork.html#web-browsers">Web Browsers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#manifest">Manifest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/database.html">MusicDBDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/extern.html">MusicDBExtern</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#initializing-a-storage">Initializing a Storage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/extern.html#storage-configuration">Storage Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/extern.html#the-state-file">The State-File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#updating-a-storage">Updating a Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#handling-toxic-environments">Handling Toxic Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/extern.html#musicdbextern-class">MusicDBExtern Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/lycra.html">LyCra - Lyrics Crawler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/lycra.html#module-mdbapi.lycra">Lycra API Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/lycra.html#crawler-base-class">Crawler Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/lycra.html#module-lib.db.lycradb">Lycra Database</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/mise.html">Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/musicai.html">MusicAI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#training-time">Training Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#featureset">Featureset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/randy.html">Randomizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#randy-class">Randy Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tags.html">MusicDBTags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tracker.html">Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/clui.html">Command Line User Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.text">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.frame">Frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.pane">Pane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.buttonview">ButtonView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.listview">ListView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.dialog">Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.textinput">TextInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.boolinput">BoolInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/config.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/database.html">Database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/database.html#database-class">Database Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/filesystem.html">Filesystem Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/hdf5storage.html">HDF5Storage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/metatags.html">Meta Tags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/metatags.html#metatags-class">MetaTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/mp3file.html">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#albums">Albums</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#artworks">Artworks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#origin">Origin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#artists">Artists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#lyrics">Lyrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#tags">Tags</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#database-api">Database API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/pidfile.html">PID File Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/websockets.html">MusicDB Websocket Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/websockets.html#module-lib.ws.server">Websocket Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/websockets.html#module-lib.ws.websocket">Websocket Protocol</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../webui/taginput.html">Tag Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/taginput.html#taginput-js">taginput.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id1">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id2">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id3">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../webui/websockets.html">Websocket Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#connection-process">Connection Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#watchdog">Watchdog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/websockets.html#sending-data">Sending Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../webui/websockets.html#receiving-data">Receiving Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#minimal-usage">Minimal usage</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../other/impressum.html">Impressum</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#kontakt">Kontakt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#verantwortlich-fur-den-inhalt-nach-55-abs-2-rstv">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#haftung-fur-inhalte">Haftung für Inhalte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#haftung-fur-links">Haftung für Links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#urheberrecht">Urheberrecht</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/impressum.html#datenschutzerklarung">Datenschutzerklärung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#datenschutz">Datenschutz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#cookies">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#server-log-files">Server-Log-Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#facebook-plugins-like-button">Facebook-Plugins (Like-Button)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#twitter">Twitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#google">Google+</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#youtube">YouTube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#ssl-verschlusselung">SSL-Verschlüsselung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../other/impressum.html#widerspruch-werbe-mails">Widerspruch Werbe-Mails</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MusicDB</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>lib.mp3file</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for lib.mp3file</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
+<span class="c1"># Copyright (C) 2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module provides a class to read mp3 files frame wise.</span>
+<span class="sd">Decoding is not part of it.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">BitrateTable</span> <span class="o">=</span> <span class="p">[</span> <span class="c1"># in kilo</span>
+            <span class="p">[</span> <span class="c1"># MPEG-2 &amp; 2.5</span>
+                <span class="p">[</span>   <span class="mi">0</span><span class="p">,</span>  <span class="mi">32</span><span class="p">,</span>  <span class="mi">48</span><span class="p">,</span>  <span class="mi">56</span><span class="p">,</span>  <span class="mi">64</span><span class="p">,</span>  <span class="mi">80</span><span class="p">,</span>  <span class="mi">96</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">144</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">176</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="kc">None</span> <span class="p">],</span> <span class="c1"># Layer 1</span>
+                <span class="p">[</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">8</span><span class="p">,</span>  <span class="mi">16</span><span class="p">,</span>  <span class="mi">24</span><span class="p">,</span>  <span class="mi">32</span><span class="p">,</span>  <span class="mi">40</span><span class="p">,</span>  <span class="mi">48</span><span class="p">,</span>  <span class="mi">56</span><span class="p">,</span>  <span class="mi">64</span><span class="p">,</span>  <span class="mi">80</span><span class="p">,</span>  <span class="mi">96</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">144</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="kc">None</span> <span class="p">],</span> <span class="c1"># Layer 2</span>
+                <span class="p">[</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">8</span><span class="p">,</span>  <span class="mi">16</span><span class="p">,</span>  <span class="mi">24</span><span class="p">,</span>  <span class="mi">32</span><span class="p">,</span>  <span class="mi">40</span><span class="p">,</span>  <span class="mi">48</span><span class="p">,</span>  <span class="mi">56</span><span class="p">,</span>  <span class="mi">64</span><span class="p">,</span>  <span class="mi">80</span><span class="p">,</span>  <span class="mi">96</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">144</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="kc">None</span> <span class="p">]</span>  <span class="c1"># Layer 3</span>
+            <span class="p">],</span>                                                                               
+                                                                                             
+            <span class="p">[</span> <span class="c1"># MPEG-1                                                                  </span>
+                <span class="p">[</span>   <span class="mi">0</span><span class="p">,</span>  <span class="mi">32</span><span class="p">,</span>  <span class="mi">64</span><span class="p">,</span>  <span class="mi">96</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">288</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">352</span><span class="p">,</span> <span class="mi">384</span><span class="p">,</span> <span class="mi">416</span><span class="p">,</span> <span class="mi">448</span><span class="p">,</span> <span class="kc">None</span> <span class="p">],</span> <span class="c1"># Layer 1</span>
+                <span class="p">[</span>   <span class="mi">0</span><span class="p">,</span>  <span class="mi">32</span><span class="p">,</span>  <span class="mi">48</span><span class="p">,</span>  <span class="mi">56</span><span class="p">,</span>  <span class="mi">64</span><span class="p">,</span>  <span class="mi">80</span><span class="p">,</span>  <span class="mi">96</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">384</span><span class="p">,</span> <span class="kc">None</span> <span class="p">],</span> <span class="c1"># Layer 2</span>
+                <span class="p">[</span>   <span class="mi">0</span><span class="p">,</span>  <span class="mi">32</span><span class="p">,</span>  <span class="mi">40</span><span class="p">,</span>  <span class="mi">48</span><span class="p">,</span>  <span class="mi">56</span><span class="p">,</span>  <span class="mi">64</span><span class="p">,</span>  <span class="mi">80</span><span class="p">,</span>  <span class="mi">96</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="kc">None</span> <span class="p">]</span>  <span class="c1"># Layer 3</span>
+            <span class="p">]</span>
+        <span class="p">]</span>
+
+<span class="n">SamplerateTable</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span> <span class="mi">11025</span><span class="p">,</span> <span class="mi">12000</span><span class="p">,</span>  <span class="mi">8000</span><span class="p">,</span> <span class="kc">None</span> <span class="p">],</span> <span class="c1"># MPEG-2.5</span>
+            <span class="p">[</span>  <span class="kc">None</span><span class="p">,</span>  <span class="kc">None</span><span class="p">,</span>  <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span> <span class="p">],</span> <span class="c1"># reserved</span>
+            <span class="p">[</span> <span class="mi">22050</span><span class="p">,</span> <span class="mi">24000</span><span class="p">,</span> <span class="mi">16000</span><span class="p">,</span> <span class="kc">None</span> <span class="p">],</span> <span class="c1"># MPEG-2</span>
+            <span class="p">[</span> <span class="mi">44100</span><span class="p">,</span> <span class="mi">48000</span><span class="p">,</span> <span class="mi">32000</span><span class="p">,</span> <span class="kc">None</span> <span class="p">],</span> <span class="c1"># MPEG-1</span>
+        <span class="p">]</span>
+
+<span class="n">FrameSamplesTable</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span>  <span class="mi">384</span><span class="p">,</span> <span class="mi">1152</span><span class="p">,</span>  <span class="mi">576</span><span class="p">,</span> <span class="kc">None</span> <span class="p">],</span> <span class="c1"># MPEG-2.5</span>
+            <span class="p">[</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span> <span class="p">],</span> <span class="c1"># reserved</span>
+            <span class="p">[</span>  <span class="mi">384</span><span class="p">,</span> <span class="mi">1152</span><span class="p">,</span>  <span class="mi">576</span><span class="p">,</span> <span class="kc">None</span> <span class="p">],</span> <span class="c1"># MPEG-2</span>
+            <span class="p">[</span>  <span class="mi">384</span><span class="p">,</span> <span class="mi">1152</span><span class="p">,</span> <span class="mi">1152</span><span class="p">,</span> <span class="kc">None</span> <span class="p">]</span>  <span class="c1"># MPEG-1</span>
+        <span class="p">]</span>
+
+<span class="n">ModeTable</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;stereo&quot;</span><span class="p">,</span> <span class="s2">&quot;joint stereo&quot;</span><span class="p">,</span> <span class="s2">&quot;dual channel&quot;</span><span class="p">,</span> <span class="s2">&quot;mono&quot;</span> <span class="p">]</span>
+
+<span class="n">ModeExtensionTable</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span> <span class="s2">&quot;4-31&quot;</span><span class="p">,</span> <span class="s2">&quot;8-31&quot;</span><span class="p">,</span> <span class="s2">&quot;12-31&quot;</span><span class="p">,</span> <span class="s2">&quot;16-31&quot;</span> <span class="p">],</span> <span class="c1"># Layer 1</span>
+            <span class="p">[</span> <span class="s2">&quot;4-31&quot;</span><span class="p">,</span> <span class="s2">&quot;8-31&quot;</span><span class="p">,</span> <span class="s2">&quot;12-31&quot;</span><span class="p">,</span> <span class="s2">&quot;16-31&quot;</span> <span class="p">],</span> <span class="c1"># Layer 2</span>
+            <span class="p">[</span>     <span class="s2">&quot;&quot;</span><span class="p">,</span>   <span class="s2">&quot;IS&quot;</span><span class="p">,</span>    <span class="s2">&quot;MS&quot;</span><span class="p">,</span> <span class="s2">&quot;IS+MS&quot;</span> <span class="p">]</span>  <span class="c1"># Layer 3</span>
+        <span class="p">]</span>
+
+<span class="n">EmphaseTable</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;50/15 ms&quot;</span><span class="p">,</span> <span class="s2">&quot;reserved&quot;</span><span class="p">,</span> <span class="s2">&quot;CCIT J.17&quot;</span> <span class="p">]</span>
+
+<span class="n">SlotsizeTable</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">None</span> <span class="p">]</span>
+
+
+<div class="viewcode-block" id="MP3File"><a class="viewcode-back" href="../../lib/mp3file.html#lib.mp3file.MP3File">[docs]</a><span class="k">class</span> <span class="nc">MP3File</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class allows frame wise reading of an mp3 file.</span>
+<span class="sd">    This is done by the :meth:`~Frames` generator.</span>
+<span class="sd">    Beside the mp3 frames the generator returns lots of information extracted from the mp3 Frame Header.    </span>
+
+<span class="sd">    The class expects a valid mp3 file (MPEG Layer III) with an valid ID3 Tag (ID3v2.3.0 or ID3v2.4.0).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (str):</span>
+<span class="sd">            An absolute path to a valid mp3 file</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        </span>
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            # ffmpeg -filter_complex aevalsrc=0 -acodec libmp3lame -ab 320k -t 1 silence.mp3</span>
+
+<span class="sd">            mp3file = MP3File(&quot;./silence.mp3&quot;)</span>
+<span class="sd">            for frame in mp3file.Frames():</span>
+<span class="sd">                print(&quot;=== %5i / %5i ===&quot;%(frame[&quot;count&quot;], frame[&quot;total&quot;]))</span>
+<span class="sd">                print(frame[&quot;header&quot;])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id3tag</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span>   <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">path</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+
+
+<div class="viewcode-block" id="MP3File.Load"><a class="viewcode-back" href="../../lib/mp3file.html#lib.mp3file.MP3File.Load">[docs]</a>    <span class="k">def</span> <span class="nf">Load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method loads a new mp3 file.</span>
+<span class="sd">        All information from the previous file will be discard.</span>
+
+<span class="sd">        The method reads the whole file, analyzes each frame, and stores them in memory.</span>
+<span class="sd">        The ID3 Tag gets also read, but not further processed.</span>
+
+<span class="sd">        The following diagram shows how this method loads and processes the mp3 file:</span>
+
+<span class="sd">        .. graphviz::</span>
+
+<span class="sd">            digraph hierarchy {</span>
+<span class="sd">                size=&quot;5,8&quot;</span>
+<span class="sd">                start           [label=&quot;Start&quot;];</span>
+
+<span class="sd">                readid3header   [shape=box,     label=&quot;Read ID3 Header&quot;]</span>
+<span class="sd">                decodeid3size   [shape=box,     label=&quot;Decode the length\nof the ID3 Tag&quot;]</span>
+<span class="sd">                readid3tag      [shape=box,     label=&quot;Read ID3 Tag&quot;]</span>
+
+<span class="sd">                readmp3header   [shape=box,     label=&quot;Read MP3 Frame Header&quot;]</span>
+<span class="sd">                analyzeheader   [shape=box,     label=&quot;Analyze MP3 Frame Header&quot;]</span>
+<span class="sd">                readmp3frame    [shape=box,     label=&quot;Read MP3 Frame&quot;]</span>
+<span class="sd">                savemp3frame    [shape=box,     label=&quot;Store MP3 Frame\nin internal list&quot;]</span>
+
+<span class="sd">                end             [label=&quot;End&quot;];</span>
+
+<span class="sd">                start           -&gt; readid3header</span>
+<span class="sd">                readid3header   -&gt; decodeid3size</span>
+<span class="sd">                decodeid3size   -&gt; readid3tag</span>
+<span class="sd">                readid3tag      -&gt; readmp3header</span>
+
+<span class="sd">                readmp3header   -&gt; analyzeheader</span>
+<span class="sd">                analyzeheader   -&gt; readmp3frame</span>
+<span class="sd">                readmp3frame    -&gt; savemp3frame</span>
+<span class="sd">                savemp3frame    -&gt; readmp3header</span>
+
+<span class="sd">                readmp3header   -&gt; end              [label=&quot;No further data&quot;]</span>
+<span class="sd">            }</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            path (str): An absolute path to a valid mp3 file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: When there are unexpected for invalid information in the given file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># a normal and valid ID3 Tag is expected! - there MUST be a Tag!</span>
+        <span class="c1"># same with mp3 files - this method is made for the cached mp3 files!</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span>   <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id3tag</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mp3</span><span class="p">:</span>
+
+            <span class="c1"># first, read the ID3 tag</span>
+            <span class="n">id3header</span> <span class="o">=</span> <span class="n">mp3</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">id3header</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Failed reading the first 10 bytes if the ID3Tag (the ID3 Header)&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">id3header</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;ID3&quot;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;ID3Tag expected but missing. First three bytes of the file should be </span><span class="se">\&quot;</span><span class="s2">ID3</span><span class="se">\&quot;</span><span class="s2">, not </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">id3header</span><span class="p">[:</span><span class="mi">3</span><span class="p">])))</span>
+
+            <span class="n">id3tagsize</span>  <span class="o">=</span> <span class="n">id3header</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="mi">21</span> <span class="o">|</span> <span class="n">id3header</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="mi">14</span> <span class="o">|</span> <span class="n">id3header</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="mi">7</span> <span class="o">|</span> <span class="n">id3header</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>    <span class="c1"># decode ID3 size (7bit/byte, LE). Header not count.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id3tag</span> <span class="o">=</span> <span class="n">id3header</span> <span class="o">+</span> <span class="n">mp3</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">id3tagsize</span><span class="p">)</span>  <span class="c1"># the header is not included in the Tag size!</span>
+                
+            <span class="c1"># Now, read all frames</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="c1"># read the next frame header (4 bytes)</span>
+                <span class="n">mp3header</span> <span class="o">=</span> <span class="n">mp3</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">mp3header</span><span class="p">:</span>
+                    <span class="k">break</span>   <span class="c1"># end of file</span>
+
+                <span class="k">if</span> <span class="n">mp3header</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xFF\xFB</span><span class="s2">&quot;</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Expected Frame Sync Bits missing. First two bytes of the MP3 Frame Header should be </span><span class="se">\&quot;</span><span class="s2">0xFF 0xFB</span><span class="se">\&quot;</span><span class="s2">, not </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">mp3header</span><span class="p">[:</span><span class="mi">2</span><span class="p">])))</span>
+
+                <span class="c1"># Read MP3 Header … done (magic already has all 4 bytes of the header</span>
+                <span class="n">infos</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AnalyzeHeader</span><span class="p">(</span><span class="n">mp3header</span><span class="p">)</span> <span class="c1"># Analyze header</span>
+                <span class="n">datasize</span> <span class="o">=</span> <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;framesize&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">4</span>        <span class="c1"># 4 bytes MP3 Frame Header already read, rest are MP3 Frame Data</span>
+
+                <span class="c1"># Drop Frame Tag</span>
+                <span class="n">mp3frame</span> <span class="o">=</span> <span class="n">mp3header</span> <span class="o">+</span> <span class="n">mp3</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">datasize</span><span class="p">)</span>
+                <span class="n">frame</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">frame</span><span class="p">[</span><span class="s2">&quot;frame&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mp3frame</span>
+                <span class="n">frame</span><span class="p">[</span><span class="s2">&quot;header&quot;</span><span class="p">]</span><span class="o">=</span> <span class="n">infos</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="MP3File.Frames"><a class="viewcode-back" href="../../lib/mp3file.html#lib.mp3file.MP3File.Frames">[docs]</a>    <span class="k">def</span> <span class="nf">Frames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is a generator that returns a frame from the loaded mp3 file and information about that frame.</span>
+<span class="sd">        </span>
+<span class="sd">        The returned dictionary contains the following information:</span>
+
+<span class="sd">            * ``&quot;frame&quot;`` (bytes): A complete MP3 Frame including the Frame Header and the Frame Data</span>
+<span class="sd">            * ``&quot;header&quot;`` (dict): The interpretation of the MP3 Frame Header as returned by :meth:`AnalyzeHeader`</span>
+<span class="sd">            * ``&quot;total&quot;`` (int): The total number of frames in the mp3 file</span>
+<span class="sd">            * ``&quot;count&quot;`` (int): The number of this frame between ``1`` and ``total``</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A generator that returns a dictionary including a mp3 frame</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                mp3file = MP3File(&quot;./silence.mp3&quot;)</span>
+<span class="sd">                for frame in mp3file.Frames():</span>
+<span class="sd">                    print(&quot;=== %5i / %5i ===&quot;%(frame[&quot;count&quot;], frame[&quot;total&quot;]))</span>
+<span class="sd">                    print(frame[&quot;header&quot;])</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frames</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frames</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">frame</span><span class="p">[</span><span class="s2">&quot;total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">total</span>
+            <span class="n">frame</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+            <span class="k">yield</span> <span class="n">frame</span></div>
+
+
+
+<div class="viewcode-block" id="MP3File.AnalyzeHeader"><a class="viewcode-back" href="../../lib/mp3file.html#lib.mp3file.MP3File.AnalyzeHeader">[docs]</a>    <span class="k">def</span> <span class="nf">AnalyzeHeader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">header</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method analyzes a MP3 Frame Header and returns all information that are implicit included in these 4 bytes.</span>
+<span class="sd">        It is build for the internal use inside this class.</span>
+
+<span class="sd">        Primary source for analyzing the header is `mpgedit.org (no HTTPS) &lt;http://mpgedit.org/mpgedit/mpeg_format/MP3Format.html&gt;`_</span>
+<span class="sd">        Another important source is `Wikipedia &lt;https://en.wikipedia.org/wiki/MP3#Design&gt;`_</span>
+
+<span class="sd">        Base of the implementation of this method is from `a python script from Vivake Gupta (vivake AT lab49.com) &lt;https://www.w3.org/2000/10/swap/pim/mp3/mp3info.py&gt;`_</span>
+<span class="sd">        A further helpful code example comes from `SirNickity from the hydrogenaud.io community &lt;https://hydrogenaud.io/index.php?topic=85125.msg747716#msg747716&gt;`_</span>
+
+<span class="sd">        Those codes were improved by me to get information I need.</span>
+<span class="sd">        These information (and more) are returned as dictionary.</span>
+<span class="sd">        The returned dictionary contains the following keys:</span>
+
+<span class="sd">            * Relevant information:</span>
+<span class="sd">                * ``&quot;framesize&quot;`` (int): Size of a frame in the MP3 file. This includes the 4 bytes of the MP3 Frame Header.</span>
+<span class="sd">                * ``&quot;frametime&quot;`` (float): The playtime of the audio in milliseconds that is encoded in one frame</span>
+<span class="sd">                * ``&quot;layer&quot;`` (int): MPEG layer. For MP3 it should be ``3``</span>
+<span class="sd">                * ``&quot;mpeg version&quot;`` (int): MPEG version. For MP3, it should be ``1``</span>
+<span class="sd">            * Further information (I have no idea what some of the information mean. They are simply not relevant anyway.):</span>
+<span class="sd">                * ``&quot;protection&quot;`` (bool): When ``True`` the header has a CRC16 checksum</span>
+<span class="sd">                * ``&quot;padding&quot;`` (bool): When ``True`` the frame is padded with an extra slot. (The slot size is given in ``&quot;slotsize&quot;``)</span>
+<span class="sd">                * ``&quot;private&quot;`` (bool): *free to use*</span>
+<span class="sd">                * ``&quot;mode&quot;`` (str): Channel mode: ``&quot;stereo&quot;``, ``&quot;joint stereo&quot;``, ``&quot;dual channel&quot;`` or ``&quot;mono&quot;``</span>
+<span class="sd">                * ``&quot;modeextension&quot;`` (str): For MPEG Layer 1 and 2: ``&quot;4-31&quot;``, ``&quot;8-31&quot;``, ``&quot;12-31&quot;`` or ``&quot;16-31&quot;``. For MPEG Layer 3: ``&quot;&quot;`` (empty), ``&quot;IS&quot;``, ``&quot;MS&quot;`` or ``&quot;IS+MS&quot;``. ``&quot;IS&quot;`` stands for *Intensity Stereo Mode*, ``&quot;MS&quot;`` for *MS Stereo Mode*</span>
+<span class="sd">                * ``&quot;copyright&quot;`` (bool): Copyrighted data</span>
+<span class="sd">                * ``&quot;original&quot;`` (bool): Original data</span>
+<span class="sd">                * ``&quot;emphasis&quot;`` (str): One of the following strings: ``&quot;none&quot;``, ``&quot;50/15 ms&quot;``, ``&quot;reserved&quot;`` or ``&quot;CCIT J.17&quot;``</span>
+<span class="sd">                * ``&quot;samples&quot;`` (int): Samples per frame</span>
+<span class="sd">                * ``&quot;slotsize&quot;`` (int): The size of one slot</span>
+<span class="sd">                * ``&quot;bitspersample&quot;`` (int): Bit per sample</span>
+<span class="sd">                * ``&quot;samplerate&quot;`` (int): Samplerate</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            header (int/bytes): The 4 byte MP3 Frame Header in bytes, or as integer (unsigned, big endian!)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary with all information encoded in the header</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: When ``header`` is not of type bytes or int.</span>
+<span class="sd">            ValueError: When there are invalid information encoded in the header.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                # ...</span>
+<span class="sd">                header = mp3.read(4)</span>
+
+<span class="sd">                if header[:2] != b&quot;\xFF\xFB&quot;:</span>
+<span class="sd">                    raise ValueError(&quot;Expected Frame Sync Bits missing&quot;)</span>
+<span class="sd">                try:</span>
+<span class="sd">                    infos = self.AnalyzeHeader(header)</span>
+<span class="sd">                except ValueError as e:</span>
+<span class="sd">                    print(&quot;Invalid header! Problem: %s&quot;%(str(e)))</span>
+<span class="sd">                    </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">header</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bytes</span><span class="p">:</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="s1">&#39;big&#39;</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">header</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;The argument must be of type bytes, or an integer! Actual type is </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">header</span><span class="p">))))</span>
+
+        <span class="c1"># The comments relate to this article: http://mpgedit.org/mpgedit/mpeg_format/MP3Format.html</span>
+        <span class="n">mpeg_version</span> <span class="o">=</span>    <span class="p">(</span><span class="n">header</span> <span class="o">&gt;&gt;</span> <span class="mi">19</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">3</span>  <span class="c1"># BB   00 = MPEG2.5, 01 = res, 10 = MPEG2, 11 = MPEG1  </span>
+        <span class="n">layer</span> <span class="o">=</span>           <span class="p">(</span><span class="n">header</span> <span class="o">&gt;&gt;</span> <span class="mi">17</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">3</span>  <span class="c1"># CC   00 = res, 01 = Layer 3, 10 = Layer 2, 11 = Layer 1</span>
+        <span class="n">protection_bit</span> <span class="o">=</span>  <span class="p">(</span><span class="n">header</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span>  <span class="c1"># D    0 = protected, 1 = not protected</span>
+        <span class="n">bitrateindex</span> <span class="o">=</span>    <span class="p">(</span><span class="n">header</span> <span class="o">&gt;&gt;</span> <span class="mi">12</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">15</span> <span class="c1"># EEEE 0000 = free, 1111 = bad</span>
+        <span class="n">samplerateindex</span> <span class="o">=</span> <span class="p">(</span><span class="n">header</span> <span class="o">&gt;&gt;</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">3</span>  <span class="c1"># F    11 = res</span>
+        <span class="n">padding_bit</span> <span class="o">=</span>     <span class="p">(</span><span class="n">header</span> <span class="o">&gt;&gt;</span> <span class="mi">9</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mi">1</span>  <span class="c1"># G    0 = not padded, 1 = padded</span>
+        <span class="n">private_bit</span> <span class="o">=</span>     <span class="p">(</span><span class="n">header</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mi">1</span>  <span class="c1"># H</span>
+        <span class="n">mode</span> <span class="o">=</span>            <span class="p">(</span><span class="n">header</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mi">3</span>  <span class="c1"># II   00 = stereo, 01 = joint stereo, 10 = dual channel, 11 = mono</span>
+        <span class="n">mode_extension</span> <span class="o">=</span>  <span class="p">(</span><span class="n">header</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mi">3</span>  <span class="c1"># JJ</span>
+        <span class="n">copyright</span> <span class="o">=</span>       <span class="p">(</span><span class="n">header</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mi">1</span>  <span class="c1"># K    00 = not copyrighted, 01 = copyrighted                            </span>
+        <span class="n">original</span> <span class="o">=</span>        <span class="p">(</span><span class="n">header</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mi">1</span>  <span class="c1"># L    00 = copy, 01 = original                                          </span>
+        <span class="n">emphasis</span> <span class="o">=</span>        <span class="p">(</span><span class="n">header</span> <span class="o">&gt;&gt;</span> <span class="mi">0</span><span class="p">)</span>  <span class="o">&amp;</span> <span class="mi">3</span>  <span class="c1"># MM   00 = none, 01 = 50/15 ms, 10 = res, 11 = CCIT J.17 </span>
+
+        <span class="n">infos</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Uncomment to get intermediate values</span>
+        <span class="c1">#infos[&quot;dbg_mpeg_version&quot;]   = mpeg_version</span>
+        <span class="c1">#infos[&quot;dbg_layer&quot;]          = layer</span>
+        <span class="c1">#infos[&quot;dbg_protection_bit&quot;] = protection_bit</span>
+        <span class="c1">#infos[&quot;dbg_bitrateindex&quot;]   = bitrateindex</span>
+        <span class="c1">#infos[&quot;dbg_samplerateindex&quot;]= samplerateindex</span>
+        <span class="c1">#infos[&quot;dbg_padding_bit&quot;]    = padding_bit</span>
+        <span class="c1">#infos[&quot;dbg_private_bit&quot;]    = private_bit</span>
+        <span class="c1">#infos[&quot;dbg_mode&quot;]           = mode</span>
+        <span class="c1">#infos[&quot;dbg_mode_extension&quot;] = mode_extension</span>
+        <span class="c1">#infos[&quot;dbg_copyright&quot;]      = copyright</span>
+        <span class="c1">#infos[&quot;dbg_original&quot;]       = original</span>
+        <span class="c1">#infos[&quot;dbg_emphasis&quot;]       = emphasis</span>
+
+        <span class="c1"># Check version</span>
+        <span class="k">if</span> <span class="n">mpeg_version</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;mpeg version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.5</span>
+        <span class="k">elif</span> <span class="n">mpeg_version</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;mpeg version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">mpeg_version</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;mpeg version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid MPEG version code. </span><span class="si">%i</span><span class="s2"> ∉ {0,2,3}&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">mpeg_version</span><span class="p">))</span>
+
+        <span class="c1"># Check Layer</span>
+        <span class="k">if</span> <span class="n">layer</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;layer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="k">elif</span> <span class="n">layer</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;layer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">layer</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;layer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid MPEG layer code. $i ∉ {1,2,3}&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">layer</span><span class="p">))</span>
+
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;bitrate&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">BitrateTable</span><span class="p">[</span><span class="n">mpeg_version</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">][</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;layer&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">bitrateindex</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1000</span>
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;samplerate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SamplerateTable</span><span class="p">[</span><span class="n">mpeg_version</span><span class="p">][</span><span class="n">samplerateindex</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;bitrate&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid bit rate code </span><span class="si">%i</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">bitrateindex</span><span class="p">))</span>
+        
+        <span class="k">if</span> <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;samplerate&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid sample rate code </span><span class="si">%i</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">samplerateindex</span><span class="p">))</span>
+
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;protection&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">protection_bit</span><span class="p">)</span>
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;padding&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">padding_bit</span><span class="p">)</span>
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;private&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">private_bit</span><span class="p">)</span>
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span>           <span class="o">=</span> <span class="n">ModeTable</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span>
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;modeextension&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">ModeExtensionTable</span><span class="p">[</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;layer&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">mode_extension</span><span class="p">]</span>
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;copyright&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">copyright</span><span class="p">)</span>
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;original&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">original</span><span class="p">)</span>
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;emphasis&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">EmphaseTable</span><span class="p">[</span><span class="n">emphasis</span><span class="p">]</span>
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;samples&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">FrameSamplesTable</span><span class="p">[</span><span class="n">mpeg_version</span><span class="p">][</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;layer&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;slotsize&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">SlotsizeTable</span><span class="p">[</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;layer&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;bitspersample&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;samples&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">8.0</span><span class="p">;</span>
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;framesize&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;bitspersample&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;bitrate&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;samplerate&quot;</span><span class="p">]</span>
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;frametime&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;samples&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;samplerate&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="mi">1000</span>
+        <span class="k">if</span> <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;padding&quot;</span><span class="p">]:</span>
+            <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;framesize&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;slotsize&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Frame size must be an integer - it is the size in bytes</span>
+        <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;framesize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;framesize&quot;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">infos</span></div></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="n">mp3file</span> <span class="o">=</span> <span class="n">MP3File</span><span class="p">(</span><span class="s2">&quot;./test2.mp3&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">mp3file</span><span class="o">.</span><span class="n">Frames</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;35m=== </span><span class="si">%5i</span><span class="s2"> / </span><span class="si">%5i</span><span class="s2"> ===</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">],</span> <span class="n">frame</span><span class="p">[</span><span class="s2">&quot;total&quot;</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;header&quot;</span><span class="p">])</span>
+
+
+<span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
+
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Ralf Stemmer.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'3.0.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,8 +1,8 @@
 Handling log-files
 =========================
 
-There are three major tools that create a lot of logging data: ``mpd``, ``icecast`` and ``musicdb server`` itself.
-To handle those logfiles it is recommended to make use of ``logrotate``.
+There are two programs that create a lot of logging data: ``icecast`` and ``musicdb server`` itself.
+To handle those log files it is recommended to make use of `logrotate <https://linux.die.net/man/8/logrotate>`_ .
 
 The following example configuration contains settings for all three.
 The variable ``DATADIR`` points to the directory where all MusicDB relevant data and configurations are stored.

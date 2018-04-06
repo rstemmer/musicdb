@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Configuration &mdash; MusicDB 2.1.0 documentation</title>
+  <title>Configuration &mdash; MusicDB 3.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 2.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Database" href="database.html"/>
         <link rel="prev" title="Command Line User Interface" href="clui.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.1
+                3.0
               </div>
             
           
@@ -99,7 +99,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/config.html">MusicDB Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#websocket">websocket</a></li>
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#icecast">Icecast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
@@ -125,14 +125,25 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/overview.html">Overview of MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#mp3-cache">MP3 Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -165,6 +176,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
@@ -206,7 +218,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#system-preparation">System Preparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
@@ -261,6 +272,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
@@ -288,7 +303,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/server.html">server - MusicDB Websocket Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/stats.html">stats - MusicDB Song Statistic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
@@ -344,14 +363,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/mpd.html">mpd / Music Playing Daemon Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#observer-thread">Observer Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#callbacks">Callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#managing-mpd">Managing MPD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#queue-management">Queue management</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicai.html">MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#training-time">Training Time</a></li>
@@ -365,18 +376,51 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randyinterface-class">RandyInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randy-class">Randy Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tracker.html">Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
 </ul>
@@ -397,7 +441,11 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#musicdb-configuration">MusicDB Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lib.cfg.mdbstate">MusicDB State</a></li>
@@ -405,6 +453,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">Database</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="database.html#database-class">Database Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="filesystem.html">Filesystem Interface</a><ul>
@@ -415,13 +467,28 @@
 <li class="toctree-l2"><a class="reference internal" href="hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="metatags.html">Meta Tags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="metatags.html#metatags-class">MetaTags Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="mp3file.html">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="musicdb.html">MusicDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#adding-a-column">Adding a Column</a></li>
-<li class="toctree-l2"><a class="reference internal" href="musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#albums">Albums</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#album-related-methods">Album Related Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#artworks">Artworks</a></li>
@@ -571,12 +638,13 @@
 Only the more important methods are shown in the diagram.
 For a list of all methods see the related documentation of the class.</p>
 <blockquote>
-<div><object data="../_images/graphviz-8f6b840222eaec7803b419517886031bdfcbeccb.svg" type="image/svg+xml">
+<div><object data="../_images/graphviz-ae26c11ad921d3a6174e8cd2808642b7fdeeeaa7.svg" type="image/svg+xml">
             <p class="warning">digraph hierarchy {
    size=&quot;5,5&quot;
    node[shape=record,style=filled,fillcolor=gray95]
    edge[dir=back, arrowtail=empty]
 
+   csv      [label = &quot;{CSVFile||+ Read()\l+ Write()\l}&quot;]
    config   [label = &quot;{Config||+ Load()\l+ Reload()\l+ Save()\l+ OptionAvailable()\l+ Get()\l+ Set()\l}&quot;]
    musicdb  [label = &quot;{MusicDBConfig||- GetDirectory()\l- GetFile()\l}&quot;]
    extern   [label = &quot;{ExternConfig||}&quot;]
@@ -585,10 +653,13 @@ For a list of all methods see the related documentation of the class.</p>
    config -&gt; musicdb
    config -&gt; extern
    config -&gt; mdbstate
+   csv    -&gt; mdbstate [arrowtail=open]
 }</p></object>
 </div></blockquote>
+<div class="section" id="base-classes">
+<h2>Base Classes<a class="headerlink" href="#base-classes" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="module-lib.cfg.config">
-<span id="base-class"></span><h2>Base Class<a class="headerlink" href="#module-lib.cfg.config" title="Permalink to this headline">¶</a></h2>
+<span id="config"></span><h3>Config<a class="headerlink" href="#module-lib.cfg.config" title="Permalink to this headline">¶</a></h3>
 <p>This module handles the reading and writing of ini-files.
 The definition of names is shown in the ini file example below.</p>
 <blockquote>
@@ -768,6 +839,68 @@ This is necessary because there is no reliable destructor in python to.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-lib.cfg.csv">
+<span id="csvfile"></span><h3>CSVFile<a class="headerlink" href="#module-lib.cfg.csv" title="Permalink to this headline">¶</a></h3>
+<p>This module handles the reading and writing of csv-files.</p>
+<dl class="class">
+<dt id="lib.cfg.csv.CSVFile">
+<em class="property">class </em><code class="descclassname">lib.cfg.csv.</code><code class="descname">CSVFile</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class does not cache the files content.
+Every read access accesses the actual file.
+Writing does the file update.</p>
+<p>The csv files this class works with must have the following dialect:</p>
+<blockquote>
+<div><ul class="simple">
+<li>delimiter:  <code class="docutils literal"><span class="pre">,</span></code></li>
+<li>escapechar: <code class="docutils literal"><span class="pre">\</span></code></li>
+<li>quotechar:  <code class="docutils literal"><span class="pre">&quot;</span></code></li>
+<li>quoting:    <code class="docutils literal"><span class="pre">csv.QUOTE_NONNUMERIC</span></code></li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – Absolute path of the csv file the class works with</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lib.cfg.csv.CSVFile.Read">
+<code class="descname">Read</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the file an returns its rows as a list.</p>
+<p>If there is only a single column, than the returned list contains values.
+If there are multiple columns, the returned list contains tuple</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of rows</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.cfg.csv.CSVFile.Write">
+<code class="descname">Write</code><span class="sig-paren">(</span><em>rows</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write rows into the csv file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rows</strong> (<em>list</em>) – A list of rows</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – when <code class="docutils literal"><span class="pre">rows</span></code> is not a list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
 <div class="section" id="musicdb-configuration">
 <h2>MusicDB Configuration<a class="headerlink" href="#musicdb-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Detail of the MusicDB Configuration can be found under <a class="reference internal" href="../basics/config.html"><span class="doc">MusicDB Configuration</span></a>.</p>
@@ -891,17 +1024,57 @@ If values get changed, they will not be stored!</p>
 </div>
 <div class="section" id="module-lib.cfg.mdbstate">
 <span id="musicdb-state"></span><h2>MusicDB State<a class="headerlink" href="#module-lib.cfg.mdbstate" title="Permalink to this headline">¶</a></h2>
+<p>This module takes care that the state of MusicDB will persist over several sessions.
+This is not done automatically by the <a class="reference internal" href="#lib.cfg.mdbstate.MDBState" title="lib.cfg.mdbstate.MDBState"><code class="xref py py-class docutils literal"><span class="pre">MDBState</span></code></a> class.
+Each read or write process to the files that hold the state will be triggered by the classes who manage the related information.</p>
+<p>The state is stored in several files in a directory that can be configured via <code class="docutils literal"><span class="pre">[server]-&gt;statedir</span></code></p>
+<p>All files inside the state directory are managed by the <a class="reference internal" href="#lib.cfg.mdbstate.MDBState" title="lib.cfg.mdbstate.MDBState"><code class="xref py py-class docutils literal"><span class="pre">MDBState</span></code></a> class.
+The content of those files should not be changed by any user because its content gets not validated.</p>
 <dl class="class">
 <dt id="lib.cfg.mdbstate.MDBState">
-<em class="property">class </em><code class="descclassname">lib.cfg.mdbstate.</code><code class="descname">MDBState</code><span class="sig-paren">(</span><em>filename</em>, <em>musicdb</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">lib.cfg.mdbstate.</code><code class="descname">MDBState</code><span class="sig-paren">(</span><em>path</em>, <em>musicdb=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class holds the MusicDB internal state.</p>
+<p>The following table shows which method is responsible for which file in the MusicDB State Directory.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">File Name</th>
+<th class="head">Read Method</th>
+<th class="head">Write Method</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>songqueue.csv</td>
+<td><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadSongQueue" title="lib.cfg.mdbstate.MDBState.LoadSongQueue"><code class="xref py py-meth docutils literal"><span class="pre">LoadSongQueue()</span></code></a></td>
+<td><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveSongQueue" title="lib.cfg.mdbstate.MDBState.SaveSongQueue"><code class="xref py py-meth docutils literal"><span class="pre">SaveSongQueue()</span></code></a></td>
+</tr>
+<tr class="row-odd"><td>artistblacklist.csv</td>
+<td><code class="xref py py-meth docutils literal"><span class="pre">LoadBlacklist()</span></code></td>
+<td><code class="xref py py-meth docutils literal"><span class="pre">SaveBlacklist()</span></code></td>
+</tr>
+<tr class="row-even"><td>albumblacklist.csv</td>
+<td><code class="xref py py-meth docutils literal"><span class="pre">LoadBlacklist()</span></code></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>songblacklist.csv</td>
+<td><code class="xref py py-meth docutils literal"><span class="pre">LoadBlacklist()</span></code></td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>filename</strong> – Absolute path to the MusicDB state file</li>
-<li><strong>musicdb</strong> – instance of the MusicDB Database</li>
+<li><strong>path</strong> – Absolute path to the MusicDB state directory</li>
+<li><strong>musicdb</strong> – Instance of the MusicDB Database (can be None)</li>
 </ul>
 </td>
 </tr>
@@ -916,6 +1089,107 @@ If values get changed, they will not be stored!</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of main genre names that are activated</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.cfg.mdbstate.MDBState.LoadBlacklists">
+<code class="descname">LoadBlacklists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns a dictionary with the blacklist managed by <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal"><span class="pre">mdbapi.randy.Randy</span></code></a>
+:returns: A dictionary with the blacklists as expected by <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal"><span class="pre">mdbapi.randy.Randy</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.cfg.mdbstate.MDBState.LoadSongQueue">
+<code class="descname">LoadSongQueue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadSongQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadSongQueue" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method reads the song queue from the state directory.</p>
+<p>The method returns the queue as needed inside <a class="reference internal" href="../mdbapi/songqueue.html#mdbapi.songqueue.SongQueue" title="mdbapi.songqueue.SongQueue"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.songqueue.SongQueue()</span></code></a>:
+A list of tuple, each containing the entryid and songid as integers.</p>
+<p>The UUIDs of the queue entries remain.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A stored song queue</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.cfg.mdbstate.MDBState.ReadList">
+<code class="descname">ReadList</code><span class="sig-paren">(</span><em>listname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.ReadList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.ReadList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a list from the mdbstate directory.
+The <code class="docutils literal"><span class="pre">listname</span></code> argument defines which file gets read: <code class="docutils literal"><span class="pre">config.server.statedir/listname.csv</span></code>.</p>
+<p>This method should only be used by class internal methods.
+When a file can not be accessed, an empty list gets returned.
+So deleting a file is an option to reset an internal state of MusicDB.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>listname</strong> (<em>str</em>) – Name of the list to read without trailing .csv</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of rows from the file. When reading the list fails, an empty list gets returned.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.cfg.mdbstate.MDBState.SaveBlacklists">
+<code class="descname">SaveBlacklists</code><span class="sig-paren">(</span><em>blacklist</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method stores the blacklist in the related CSV files.
+The data structure of the dictionary is expected to be the same, <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal"><span class="pre">mdbapi.randy.Randy</span></code></a> uses.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>blacklist</strong> (<em>dict</em>) – A dictionary of blacklists.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.cfg.mdbstate.MDBState.SaveSongQueue">
+<code class="descname">SaveSongQueue</code><span class="sig-paren">(</span><em>queue</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveSongQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveSongQueue" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method saves a song queue.
+The data structure of the queue must be exact as the one expected when the queue shall be loaded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>queue</strong> (<em>list</em>) – The song queue to save.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.cfg.mdbstate.MDBState.WriteList">
+<code class="descname">WriteList</code><span class="sig-paren">(</span><em>listname</em>, <em>rows</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.WriteList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.WriteList" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method write a list of rows into the related file.
+The <code class="docutils literal"><span class="pre">listname</span></code> argument defines which file gets written: <code class="docutils literal"><span class="pre">config.server.statedir/listname.csv</span></code>.</p>
+<p>This method should only be used by class internal methods.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>listname</strong> (<em>str</em>) – Name of the list to read without trailing .csv</li>
+<li><strong>rows</strong> (<em>list</em>) – The list that shall be stored</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal"><span class="pre">False</span></code></p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -939,7 +1213,7 @@ If values get changed, they will not be stored!</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ralf Stemmer.
+        &copy; Copyright 2018, Ralf Stemmer.
 
     </p>
   </div>
@@ -961,7 +1235,7 @@ If values get changed, they will not be stored!</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.1.0',
+            VERSION:'3.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

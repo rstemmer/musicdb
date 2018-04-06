@@ -18,8 +18,8 @@ maxcallthreads (number ∈ ℕ):
    The number of threads that are used to handle websocket-API-Calls.
    For a single user a number equal to the number of clients used or at least 2 is a good value.
 
-statefile (path to file):
-   In this file the current global state of MusicDB is stored.
+statedir (path to a directory):
+   In this directory the current global state of MusicDB is stored.
    More details can be found in the documentation for the state-file: :mod:`~lib.cfg.mdbstate`
 
 fifofile (path to file):
@@ -81,6 +81,9 @@ owner (UNIX user name):
 
 group (UNIX group name):
    Name of the group that shall be the owner of the music files
+
+cache (path to directory):
+   This is the place where MusicDB caches all songs as clean tagged mp3 files.
    
 artwork
 -------
@@ -120,10 +123,6 @@ tracker
 dbpath (path to file):
    Path to the tracker database
 
-interval (number ∈ ℕ):
-   Tracker uses a message queue to get request from several threads.
-   This is the interval for polling if new requests exist.
-
 
 lycra
 -----
@@ -132,17 +131,27 @@ dbpath (path to file):
    Path to the database the lyrics will be cached at
 
 
-MPD
----
+Icecast
+-------
 
-address (URL):
-   Address where MPD (Music Playing Daemon) is listening at
+The default values all match the default Icecast configuration provided by MusicDB.
+The password got generated during the installation process and can be considered as secure.
+The only reason to change something in this section is, that the Icecast server gets shared with multiple sources.
 
 port (number ∈ ℕ):
-   Address where MPD (Music Playing Daemon) is listening at
+   Port where Icecast is listening at.
+   This is the none SSL secured port.
 
-interval (number ∈ ℕ):
-   The interval MusicDB polls for the current state of MPD
+user (string):
+   This is the *source user* MusicDB uses to connect to Icecast.
+   By default, ``source`` is the user name.
+
+password (string):
+   The password MusicDB needs to authenticate as a valid source for the Icecast server.
+   The default password was generated during the installation process of MusicDB and is secure.
+
+mountname (string starting with ``/``):
+   This is the name of the mount MusicDB uses.
 
 
 MusicAI
@@ -193,10 +202,6 @@ usegpu (boolean):
 Randy
 -----
 
-interval (number ∈ ℕ):
-   Randy uses a message queue to get request from several threads.
-   This is the interval for polling if new requests exist.
-
 nodisabled (boolean):
    If ``true`` no disabled songs will be chosen
 
@@ -231,7 +236,7 @@ debugfile (path to file):
 
 ignore (list of python module names):
    List of modules to ignore in the logs.
-   At least ``mpd, requests, urllib3, PIL, tensorflow`` is recommended
+   At least ``requests, urllib3, PIL, tensorflow`` is recommended
 
 
 debug
