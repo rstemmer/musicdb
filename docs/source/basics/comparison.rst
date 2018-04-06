@@ -15,7 +15,7 @@ Introducing other tools
    * `CherryMusic <http://www.fomori.org/cherrymusic/index.html>`_
    * `Ampache <http://ampache.org/index.html>`_
    * `Sonerezh <https://www.sonerezh.bzh/>`_
-   * `Music Playing Daemon <https://musicpd.org/>`_
+   * `Music Player Daemon <https://musicpd.org/>`_
    * `Modipy <https://www.mopidy.com/>`_
 
 Some tools use `MusicBrainz <https://musicbrainz.org/>`_.

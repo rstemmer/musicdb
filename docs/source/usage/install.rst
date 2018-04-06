@@ -13,6 +13,15 @@ The following sections describe how to install MusicDB and its dependencies.
    I guess everyone reads this part of the documentation, so hopefully this is the most read text of the whole project.
 
 
+.. warning::
+
+   Before installing or updating MusicDB, **update your system**.
+   MusicDB does not support outdated dependencies.
+
+   Before updating MusicDB **backup the MusicDB Data directory**.
+   Major updates change the configuration file and the database scheme.
+
+
 Installation (Automatic)
 ------------------------
 
@@ -35,7 +44,7 @@ First, you need to install some dependencies using your systems package manager:
 Executing the install.sh Script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Now you can simply execute the script from the source directory, after you have cloned the `git <https://github.com/rstemmer/musicdb>`_ repository from GitHub.
+Now you can simply execute the ``install.sh`` script from the source directory, after you have cloned the `git <https://github.com/rstemmer/musicdb>`_ repository from GitHub.
 
 .. code-block:: bash
 
@@ -81,7 +90,7 @@ The following settings must be configured for the installation (and will be reco
 
 During the installation process, SSL certificates gets generated for the WebSocket connection.
 The following files will be generated during installation: ``musicdb.key``, ``musicdb.crt``, ``musicdb.pfx`` and ``musicdb.pem``.
-At least the *.key* and *.crt* files are needed to start the MusicDB server.
+At least the *.key*, *.crt* and *.pem* files are needed to start the MusicDB server and Icecast.
 If you want to use your own already available files, you can set in the settings mentioned above.
 For details on how the files are created, search inside the ``install.sh`` file for ``CreateMusicDBSSLKeys``.
 
@@ -95,7 +104,7 @@ Install all Dependencies
 
 Execute the ``musicdb-check.sh`` script to see what dependencies are missing.
 In context of the install.sh script, the name of this script is a bit misleading.
-It only checks for dependencies. It does not check the installation.
+It only checks for dependencies needed by MusicDB to run. It does not check the installation.
 
 Install at least all mandatory (none optional) dependencies.
 You can use your system package manager or pythons package manager ``pip`` (``pip3`` on Debian) to install them.
@@ -103,7 +112,8 @@ You can use your system package manager or pythons package manager ``pip`` (``pi
 Configureing MusicDB
 ^^^^^^^^^^^^^^^^^^^^
 
-To configure MusicDB edit the ``musicdb.ini`` file in the data directory (that is also linked to /etc/musicdb.ini)
+To configure MusicDB edit the ``musicdb.ini`` file in the data directory (that is also linked to /etc/musicdb.ini).
+Furthermore you should check ``icecast/config.xml`` (also in MusicDB's data directory) if those settings are what you want.
 
 
 Installation (Manually)
@@ -244,9 +254,9 @@ Configureing MusicDB WebUI
 
 The WebUI configuration must be done inside the file ``webui/js/musicdb.js``
 
-At the begin of that file, the variable ``WEBSOCKET_URL`` must be configured.
+At the begin of this file, the variable ``WEBSOCKET_URL`` must be configured.
 In particular the port number must match the one set in the MusicDB Configuration file /etc/musicdb.ini.
-An example variable is ``WEBSOCKET_URL = "wss://testserver.org:9000"``.
+An example variable is ``WEBSOCKET_URL = "wss://localhost:9000"``.
 
 For further details, read the :doc:`/webui/websockets` documentation
 See the sections for the watchdog and the communication to the server.
@@ -258,7 +268,7 @@ The web server must provide the following virtual directories:
 
    * ``/musicdb/`` pointing to the WebUI directory (``$SERVERDIR/webui``)
    * ``/musicdb/artwork/`` pointing to the artwork directory (``$DATADIR/artwork``)
-   * ``/musicdb/music/`` pointing to the music collection
+   * ``/musicdb/music/`` pointing to the MusicDB mp3 Cache (``$DATADIR/mp3cache``)
    * ``/musicdb/docs/`` pointing to the documentation directory (``$SERVERDIR/docs``)
 
 An example `Apache <https://httpd.apache.org/>`_ configuration can look like this:
@@ -272,8 +282,8 @@ An example `Apache <https://httpd.apache.org/>`_ configuration can look like thi
       Require all granted
    </Directory>
 
-   Alias /musicdb/music/ "/var/music/"
-   <Directory "/var/music">
+   Alias /musicdb/music/ "/opt/musicdb/data/mp3cache/"
+   <Directory "/opt/musicdb/data/mp3cache">
       AllowOverride None
       Options +FollowSymLinks
       Require all granted
@@ -295,7 +305,7 @@ An example `Apache <https://httpd.apache.org/>`_ configuration can look like thi
    </Directory>
                               
 
-When everything is correct, and the server running, the WebUI can be reached via `http://localhost/musicdb/webui/moderator.html`
+When everything is correct, and the server is running, the WebUI can be reached via ``http://localhost/musicdb/webui/moderator.html``
 
 
 
@@ -312,14 +322,17 @@ CUDA for MusicAI
    If you still think working with a Convolutional Deep Neural Network is a good idea, then you should give it a try.
    For me it works well and it has a coolness level over 9000.
 
-When you want to use MusicAI you need a working `TensorFlow <https://www.tensorflow.org/>`_ environment 
-with `CUDA <https://developer.nvidia.com/cuda-zone>`_ support.
+When you want to use :doc:`/mdbapi/musicai` you need a working `TensorFlow <https://www.tensorflow.org/>`_ environment 
+with `CUDA <https://developer.nvidia.com/cuda-zone>`_ support:
 
 .. code-block:: bash
 
    pacman -S nvidia
    shutdown -r now
    pacman -S opencl-nvidia opencl-headers cuda
+
+   pip install tensorflow
+   pip install tflearn
 
 The `CuDNN <https://developer.nvidia.com/cudnn>`_ libraries are needed by *TensorFlow*.
 To download them you need a `NVidia Developer Account <https://developer.nvidia.com/rdp/form/cudnn-download-survey>`_.
@@ -370,6 +383,7 @@ After updating *CUDA*, *TensorFlow* must be updated, too.
 
 If you want to update MusicDB, pull the latest version from GitHub, and execute the ``install.sh`` script.
 Make sure the detected settings that are displayed in the dialog are correct.
+For minor release updates, the ``quickupdate.sh`` is also OK (It just updates MusicDB without checking the environment).
 
 .. code-block:: bash
 
