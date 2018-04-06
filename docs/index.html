@@ -118,13 +118,12 @@
                         like your portable music-player or your car.
                     </p>
                     <p>
-                        You can also stream your music with
-                        <a href="https://www.musicpd.org/" target="_blank">Music Player Daemon (MPD)</a>.
+                        MusicDB also supports streaming your music.
                         This stream and can be received by all kind of players like 
-                        iTunes, VLC or by 
-                        <a href="https://icecast.org/" target="_blank">Icecast</a> to encrypt the stream 
-                        and send it out into the internet.
-                        So <b>your music is <i>in the cloud</i> but your files stay at home.</b>
+                        iTunes or VLC.
+                        The streaming server uses <a href="https://icecast.org/" target="_blank">Icecast</a>
+                        to encrypt the stream. So, it us safe to send it out into the internet.
+                        Then <b>your music is <i>in the cloud</i> but your files stay at home.</b>
                     </p>
                     <p>
                         The stream gets controlled by a WebUI that hides the ugliness of software behind a <b>nice, 
@@ -147,8 +146,10 @@
                                 <p>
                                     The WebUI presents the music, mostly represented by their album artwork.
                                     Instead of most other music manager and player, the management part of the music is totally hidden.
-                                    This UI is <b>made to enjoy listening to music, not to work on managing it.</b>
-                                    It allows using the colors of the artwork as individual color theme for each album and making excessive use of Unicode.
+                                    The UI is <b>made to enjoy listening to music, not to work on managing it.</b>
+                                    It allows using the colors of the artwork as individual color theme for each album.
+                                    Further more, MusicDB makes excessive use of Unicode.
+                                    Enjoy your favorite Japanese Metal band, instead of fearing the song titles.
                                 </p>
                                 <p>There are four important panes in the WebUI:</p>
                                 <ol>
@@ -190,7 +191,7 @@
                                 The head-up display presents the current playing song.
                                 It also shows its genre tags and mood-flags.
                                 The <b>mood-flags represent different moods the user/listener has associates with this song.</b>
-                                Furthermore there are buttons to mark this song as favorite or hated.
+                                Furthermore there are buttons to mark the song as favorite or hated.
                                 On the right side, the current time and the time when the queue runs empty is shown.
                                 So, you can see when you can sleep, or if it is worth adding some more songs to the queue.
                             </p>
@@ -218,7 +219,7 @@
                             <p>
                                 Beside selecting an album from Artist List and then choose a song, 
                                 you can use a <b>typo tolerant search</b> to find and add a certain song directly.
-                                The search finds all songs, albums and artists that matches the enters string to a
+                                The search finds all songs, albums and artists that matches the entered string to a
                                 certain probability.
                                 While typing the name, a preview of the results with the five most probable hits gets shown in real time. 
                                 <!--For Nerds: I mean soft real time, the deadline is reached when the user is annoyed of waiting for the results. -->
@@ -272,7 +273,7 @@
                             <h4 class="header-text">Album View</h4>
                             <p>
                                 The Album View show the current playing album or a selected album from the Artist List.
-                                In this view, all <b>songs of an album get presented.</b>
+                                In this view, all <b>songs of an album get presented</b>.
                                 Beside the song name, their mood flags are displayed.
                                 The diamonds on the screenshot show that these songs are favorite songs.
                                 Furthermore on the very right of each song entry, a "likes/dislikes-bar" is shown.
@@ -311,7 +312,7 @@
                         <div class="col-md-5">
                             <h4 class="header-text">Queue</h4>
                             <p>
-                                <b>MusicDB does not use playlists, it uses a queue.</b>
+                                <b>MusicDB does not use playlists, it uses a queue for streaming.</b>
                                 Songs can be added at the end of the queue, or on top right after the current playing song.
                                 The queue view also allows to remove songs from the queue or change their position
                                 by moving them via drag 'n' drop.
@@ -394,9 +395,10 @@
                                 <div class="text">
                                     <h4>Global state</h4>
                                     <p>
-                                        The state of MusicDB is stored in the server.
+                                        The state of MusicDB is stored on the server.
                                         So, all clients connected to the server see the same information.
                                         This is <i>not a multi-user application</i>.
+                                        It is a <i>multi-device application</i>.
                                         All clients see the same queue, and the same album gets shown in the album view.
                                         Updating a flag or setting a tag gets immediately visible to all clients.
                                     </p>
@@ -480,6 +482,7 @@
                                         Some interesting examples on different abstraction layers:
                                         <ul style="text-align: left;">
                                             <li><a href="build/html/index.html"><b>Documentation Overview</b></a></li>
+                                            <li><a href="build/html/basics/overview.html">Overview of MusicDB</a></li>
                                             <li><a href="build/html/usage/install.html">Install MusicDB</a></li>
                                             <li><a href="build/html/mod/extern.html">How to export your music</a></li>
                                             <li><a href="build/html/basics/webapi.html">How to build your own WebUI</a></li>
