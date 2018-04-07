@@ -3,7 +3,7 @@
 # MusicDB
 
 MusicDB is a music manager with focus on remote access to your music using a WebUI
-and [Music Player Daemon (MPD)](https://musicpd.org/) for streaming.
+an audio stream.
 The WebUI is more a presentation of your music than a database frontend.
 
 So, when you are listening to music, you do not work with software.
@@ -20,6 +20,16 @@ Time to share it with the world. :smiley:
 For news, follow [@MusicDBProject](https://twitter.com/MusicDBProject) on Twitter.
 
 
+## This is MusicDB
+
+The following image shows a complete overview of MusicDB and its connections to other software.
+It shows the flow of our music and the related information (purple) from the source music collection (bottom left) to the Web Browser and Audio Player.
+
+![MusicDB Overview](https://rstemmer.github.io/musicdb/build/html/_images/Map2.svg)
+
+A detailed description of this overview image and MusicDB's components can be found in the documentation: [Description of the Image ](https://rstemmer.github.io/musicdb/build/html/basics/overview.html)
+
+
 ## Breaking News
 
 This section contains some important information on how to update to a next major version.
@@ -32,22 +42,22 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* upd
 
 * Two new columns added to the database: `checksum` and `lastplayed`
   * **:wrench: Change:** After *installing via install.sh* execute [:notebook: repair](https://rstemmer.github.io/musicdb/build/html/mod/repair.html) with `--checksums` option (`musicdb repair --checksums`) to fill the new added checksum column.
-* [:notebook: mp3 cache](https://rstemmer.github.io/musicdb/build/html/mdbapi/musiccache.html) added
+* [:notebook: MP3 Cache](https://rstemmer.github.io/musicdb/build/html/mdbapi/musiccache.html) added
   * New configuration: `[music] -> cache=DATADIR/mp3cache`
   * New CLI module [:notebook: cache](https://rstemmer.github.io/musicdb/build/html/mod/cache.html) for managing the cache added.
-  * **:wrench: Change:** After installation execute `musicdb cache update` to cache all songs as mp3 files in the mp3cache. 
+  * **:wrench: Change:** After installation execute `musicdb cache update` to cache all songs as mp3 files in the MP3 Cache. 
   * Creating the cache my take some hours. After the initial build the cache gets quickly updated when adding new albums.
   * It is safe to use MusicDB while the cache gets still built. So have fun listening to music until the `cache update` process is completed :wink:
-* Using Icecast instead of MPD possible
+* I replaced the MPD backend with an own [Icecast](https://icecast.org/) Source Client
   * **:wrench: Change:** The install script creates a new directory in the MusicDB data directory called `icecast`. Make sure that such a directory does not exist before running `install.sh`. If it does, rename it, and merge your setup after the installation.
   * **:wrench: Change:** The `[mpd]` section can be removed from the MusicDB Configuration
 * MusicDB's state now gets stored with the blacklists and song queue in an extra directory.
   * The directory can be configured: `[server] -> statedir`
 * **:wrench: Change:** New dependency: [shouty](https://github.com/edne/shouty). Execute `pip install shouty`.
-* **:wrench: Change:** Song-"preview" in Web UI now uses the MP3-Cache instead of the source audio files. This requires updating your HTTP daemon configuration.
+* **:wrench: Change:** Song-"preview" in Web UI now uses the MP3-Cache instead of the source audio files. This requires updating your HTTP daemon configuration to point to the new music directory.
 
 **:wrench: Update:**
-```
+```sh
 # Backup the MusicDB Data directory!
 
 # Download latest version of MusicDB
@@ -107,9 +117,8 @@ In case MusicDB does not run on outdated operating systems, update your system ;
   * [Debian](https://www.debian.org/distrib/) for x86-64 (not recommended because it comes with lots of ~~old~~ "stable" software)
   * [Arch Linux ARM](https://archlinuxarm.org/) for AArch64 with [ODROID-C2](https://wiki.odroid.com/odroid-c2/odroid-c2)
   * [Arch Linux ARM](https://archlinuxarm.org/) for ARMv7 with [Raspberry Pi 3](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
-* [Python3](https://www.python.org/)
-* [Music Player Daemon (MPD)](https://musicpd.org/)
-  * You should consider [Icecast](https://icecast.org/) for encrypting the stream
+* [Python3](https://www.python.org/) (I test with Python 3.6)
+* [Icecast](https://icecast.org/) for streaming
 * A modern web browser for accessing the WebUI:
   * [Firefox](https://www.mozilla.org/en-US/) (recommended)
   * [Chrome](https://www.google.com/chrome/index.html) 
@@ -129,7 +138,7 @@ Execute `pip install -r requirements.txt` to install a basic set of Python modul
 To get the latest version of MusicDB, clone this repository.
 The *master* branch can be considered stable.
 
-```
+```sh
 git clone https://github.com/rstemmer/musicdb.git
 ```
 
@@ -162,7 +171,7 @@ In general, the first steps are the following, after you have done the [:noteboo
 
 Some helpful hints:
 
-* For security reasons, MusicDB and MPD only accepts connections from localhost by default. Change the [:notebook: WebSocket address configuration](https://rstemmer.github.io/musicdb/build/html/basics/config.html#websocket) and MPD's `bind_to_address` configuration from `127.0.0.1` to `0.0.0.0` to access your music from anywhere.
+* For security reasons, MusicDB only accepts connections from localhost by default. Change the [:notebook: WebSocket address configuration](https://rstemmer.github.io/musicdb/build/html/basics/config.html#websocket) to access your music from anywhere.
 * Don't be to specific with the genre tags. Tag albums beforehand and songs only when they are currently playing.
 * Set mood-flags only for the current playing song.
 * Check the [:notebook: Configuration of Randy](https://rstemmer.github.io/musicdb/build/html/basics/config.html#randy) to make sure the random song selection can work with your music collection. When you have a small music collection, decrease the blacklist sizes.
@@ -201,7 +210,7 @@ Every help is welcome.
 ### Before you change code
 
 * Read [:notebook: Working on MusicDB's Code](https://rstemmer.github.io/musicdb/build/html/basics/workflow.html)
-* … and [:notebook: Basic Rules for MusicDB](https://rstemmer.github.io/musicdb/build/html/basics/concept.html)
+* … and [:notebook: Philosophy of MusicDB](https://rstemmer.github.io/musicdb/build/html/basics/concept.html)
 * Branch from *master*.
 * Please don't commit *docs/build*,
 
@@ -247,5 +256,12 @@ Make a backup of your MusicDB data directory before using installing MusicDB fro
 I'm working on a mobile app that downloads your whole music collection via WLAN onto your smartphone.
 It is still very experimental and not ready to use.
 For the app, I use the [kivy](https://kivy.org/#home) framework.
+
 Target will only be Android smartphones due to the storage limitation of iOS based devices.
+
+## GitHub Releases
+
+Some special old releases are tagged in the git repository.
+They can be found in [GitHubs Releases Section](https://github.com/rstemmer/musicdb/releases).
+These are not the latest version of MusicDB and I do not recommend to use them.
 
