@@ -42,14 +42,14 @@
 		</authentication>
         <public>0</public>
         <mp3-metadata-interval>3145728</mp3-metadata-interval> <!-- every 3MiB -->
-		<stream-name>M45ch1n3/stream</stream-name>
+		<stream-name>MusicDB Stream</stream-name>
 		<stream-description>MusicDB managed music stream</stream-description> 
-		<genre>Metal, Electro, NDH, Gothic</genre>
+		<genre>Various</genre>
 	</mount>
 
-	<fileserve>1</fileserve>
-
 	<paths>
+		<basedir>/usr/share/icecast</basedir>
+		<webroot>/usr/share/icecast/web</webroot>
 		<logdir>DATADIR/icecast/log</logdir>
         <pidfile>DATADIR/icecast/icecast.pid</pidfile>
 		<adminroot>/usr/share/icecast/admin</adminroot>
