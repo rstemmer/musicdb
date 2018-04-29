@@ -47,9 +47,29 @@ class MP3Transcoder(object):
             ffpribe out.mp3
             #> Duration: 00:03:43.16, start: 0.000000, bitrate: 320 kb/s
             #> Stream #0:0: Audio: mp3, 44100 Hz, stereo, s16p, 320 kb/s
+
+    Args:
+        path (str): The absolute path of the audio file that shall be transcoded
+
+    Raises:
+        TypeError: When path is not of type string
+
+    Example:
+        
+        .. code-block:: python
+
+            with MP3Transcoder("/tmp/test.flac") as transcoder:
+                while True:
+                    chunk = transcoder.GetChunk(4096)
+                    if len(chunk) == 0:
+                        break
     """
 
-    def __init__(self):
+    def __init__(self, path):
+        if type(path) != str:
+            raise TypeError("Path must be of type string!")
+
+        self.path            = path
         self.gstreamer       = GStreamer("transcoder")
         self.gstreamerthread = None
 
@@ -61,6 +81,7 @@ class MP3Transcoder(object):
 
         self.unixpipesource, self.unixpipesink = os.pipe2(os.O_NONBLOCK)
 
+        self.source.set_property("location", self.path)
         self.encoder.set_property("target", 1)
         self.encoder.set_property("bitrate", 320)
         self.encoder.set_property("cbr", True)
@@ -70,6 +91,16 @@ class MP3Transcoder(object):
         self.converter.link(self.encoder)
         self.encoder.link(self.sink)
         self.decoder.connect("pad-added", self.onDecoderPadAdded)
+
+
+    def __enter__(self):
+        self.Transcode()    # start transcoding
+        return self
+
+
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.Cancel()       # stop transcoding
 
 
 
@@ -90,7 +121,31 @@ class MP3Transcoder(object):
 
 
 
-    def Transcode(self, path):
+    def Cancel(self):
+        """
+        This method cancels a currently running transcoding process.
+        If there is no transcoding going on, nothing happens.
+        """
+        # Cancel when there is still a transcoding process
+        self.gstreamer.Cancel()
+        while True:
+            gstate = self.gstreamer.GetState()
+            if gstate == "IDLE":
+                break
+            elif gstate == "ERROR":
+                logging.error("GStreamer is in ERROR state!", gstate)
+                break
+            time.sleep(0.1)
+
+        # Wait until Execute thread is finished
+        if self.gstreamerthread:
+            logging.debug("Waiting for previous transcoding process to stop")
+            self.gstreamerthread.join()
+            self.gstreamerthread = None
+
+
+
+    def Transcode(self):
         """
         This method starts the transcoding process of a file as thread.
         After setting the ``path`` as source for the audio data,
@@ -100,45 +155,23 @@ class MP3Transcoder(object):
 
         When calling this method, a previous started transcoding process gets canceled.
 
-        Args:
-            path (str): The absolute path of the audio file that shall be transcoded
-
         Returns:
             If an error occurs ``False`` gets returned, otherwise ``True``.
-
-        Raises:
-            TypeError: When path is not of type string
 
         Example:
 
             .. code-block:: python
 
-                retval   = transcoder.Transcode("/tmp/test.flac")
+                transcoder = MP3Transcoder("/tmp/test.flac")
+
+                retval   = transcoder.Transcode()
                 if retval == False:
                     print("\033[1;31mStarting Transcoder failed!")
         """
-        if type(path) != str:
-            raise TypeError("Path must be of type string!")
-
         # Cancel when there is still a transcoding process
-        self.gstreamer.Cancel()
-        while True:
-            gstate = self.gstreamer.GetState()
-            if gstate == "IDLE":
-                break
-            elif gstate == "ERROR":
-                logging.error("GStreamer is in ERROR state!", gstate)
-                return False
-            time.sleep(0.1)
+        self.Cancel()
 
-        # Wait until Execute thread is finished
-        if self.gstreamerthread:
-            logging.debug("Waiting for previous transcoding process to stop")
-            self.gstreamerthread.join()
-            self.gstreamerthread = None
-
-        # Setup new streaming
-        self.source.set_property("location", path)
+        # Setup new streaming thread
         self.gstreamerthread = Thread(target=self.gstreamer.Execute)
         self.gstreamerthread.start()
 

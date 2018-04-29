@@ -87,8 +87,6 @@ class MP3Stream(object):
     """
 
     def __init__(self, path):
-        self.transcoder = MP3Transcoder()
-        self.transcoder.Transcode(path) # This starts transcoding in background
         self.path = path
 
 
@@ -142,25 +140,26 @@ class MP3Stream(object):
                     print(frame["header"])
 
         """
-        while True:
-            # read the next frame header (4 bytes)
-            mp3header = self.transcoder.GetChunk(4)
-            if len(mp3header) == 0:
-                break   # end of stream
+        with MP3Transcoder(self.path) as transcoder:
+            while True:
+                # read the next frame header (4 bytes)
+                mp3header = transcoder.GetChunk(4)
+                if len(mp3header) == 0:
+                    break   # end of stream
 
-            if mp3header[:2] != b"\xFF\xFB":
-                raise ValueError("Expected Frame Sync Bits missing. First two bytes of the MP3 Frame Header should be \"0xFF 0xFB\", not \"%s\""%(str(mp3header[:2])))
+                if mp3header[:2] != b"\xFF\xFB":
+                    raise ValueError("Expected Frame Sync Bits missing. First two bytes of the MP3 Frame Header should be \"0xFF 0xFB\", not \"%s\""%(str(mp3header[:2])))
 
-            # Read MP3 Header … done (magic already has all 4 bytes of the header
-            infos    = self.AnalyzeHeader(mp3header) # Analyze header
-            datasize = infos["framesize"] - 4        # 4 bytes MP3 Frame Header already read, rest are MP3 Frame Data
+                # Read MP3 Header … done (magic already has all 4 bytes of the header
+                infos    = self.AnalyzeHeader(mp3header) # Analyze header
+                datasize = infos["framesize"] - 4        # 4 bytes MP3 Frame Header already read, rest are MP3 Frame Data
 
-            # Drop Frame Tag
-            mp3frame = mp3header + self.transcoder.GetChunk(datasize)
-            frame = {}
-            frame["frame"] = mp3frame
-            frame["header"]= infos
-            yield frame
+                # Drop Frame Tag
+                mp3frame = mp3header + transcoder.GetChunk(datasize)
+                frame = {}
+                frame["frame"] = mp3frame
+                frame["header"]= infos
+                yield frame
 
 
 
