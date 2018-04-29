@@ -2,11 +2,11 @@
 Icecast Interface
 =================
 
-.. automodule:: lib.icecast
+.. automodule:: lib.stream.icecast
 
 Icecast Class
 -------------
 
-.. autoclass:: lib.icecast.IcecastInterface
+.. autoclass:: lib.stream.icecast.IcecastInterface
    :members:
 

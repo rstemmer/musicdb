@@ -16,7 +16,7 @@
 """
 This module implements the stream that streams the music.
 This module provides a thread that takes the songs from a :class:`mdbapi.songqueue.SongQueue` to stream them via Icecast.
-It manages the connection to the Icecast server using the :mod:`lib.icecast` module.
+It manages the connection to the Icecast server using the :mod:`lib.stream.icecast` module.
 Further more this module provides some callback interfaces to inform the rest of MusicDB about the state of the stream.
 
 So this module consist of the following parts:
@@ -243,7 +243,7 @@ def StreamingThread():
 
     The ``TimeChanged`` event gets triggered approximately every second.
     """
-    from lib.icecast        import IcecastInterface
+    from lib.stream.icecast import IcecastInterface
     from mdbapi.tracker     import Tracker
 
     global Config
