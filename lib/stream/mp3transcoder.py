@@ -15,13 +15,67 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
+This module transcodes the users source music into mp3 data that can be streamed via :class:`lib.stream.icecast.Icecast`.
 
-Example
--------
+GStreamer Pipeline
+------------------
+
+As shown in the graph below, GStreamer is used for the transcoding.
+The files get read by the ``filesrc`` element and then be decoded.
+The raw audio data gets then be encoded using the ``lamemp3enc`` element.
+These mp3 encoded data will then be provided by writing into a `UNIX Pipe`_ for further processing.
+
+    .. graphviz::
+
+        digraph hierarchy {
+            size="5,8"
+
+            filesrc       [shape=box, label="filesrc"]
+            decodebin     [shape=box, label="decodebin"]
+            audioconvert  [shape=box, label="audioconvert"]
+            lamemp3enc    [shape=box, label="lamemp3enc"]
+            fdsink        [shape=box, label="fdsink"]
+
+
+            filesrc         -> decodebin
+            decodebin       -> audioconvert
+            audioconvert    -> lamemp3enc
+            lamemp3enc      -> fdsink
+        }
+
+The following example shows the bash representation of the pipeline:
 
     .. code-block:: bash
 
         gst-launch-1.0 filesrc location=in.m4a ! decodebin ! audioconvert ! lamemp3enc target=1 bitrate=320 cbr=true ! filesink location=out.mp3
+
+        file out.mp3
+        #> out.mp3: MPEG ADTS, layer III, v1, 320 kbps, 44.1 kHz, JntStereo
+
+        ffpribe out.mp3
+        #> Duration: 00:03:43.16, start: 0.000000, bitrate: 320 kb/s
+        #> Stream #0:0: Audio: mp3, 44100 Hz, stereo, s16p, 320 kb/s
+
+UNIX Pipe
+---------
+
+A UNIX Pipe is connected to the ``fdsink`` GStreamer Element.
+``fdsink`` writes into the pipe.
+Then :meth:`MP3Transcoder.GetChunk` reads some chunks from the mp3 data encoded by the ``lamemp3enc`` Element.
+
+The pipe is accessed non-blocking.
+
+Transcoding
+-----------
+
+Transcoding will be done in a separate thread.
+To safely work with the :class:`MP3Transcoder` class, you should use the provided context management:
+
+
+    .. code-block:: python
+
+        with MP3Transcoder("/tmp/test.flac") as transcoder:
+            # …
 """
 
 from threading import Thread
@@ -31,23 +85,8 @@ import sys
 import os
 from lib.stream.gstreamer import GStreamer
 
-# TODO: GStreamer pipeline diagram
-# TODO: Unix Pipes lösung beschreiben - hinweis auf nonblocking
 class MP3Transcoder(object):
     """
-    Bash representation
-
-        .. code-block:: bash
-
-            gst-launch-1.0 filesrc location=in.m4a ! decodebin ! audioconvert ! lamemp3enc target=1 bitrate=320 cbr=true ! filesink location=out.mp3
-
-            file out.mp3
-            #> out.mp3: MPEG ADTS, layer III, v1, 320 kbps, 44.1 kHz, JntStereo
-
-            ffpribe out.mp3
-            #> Duration: 00:03:43.16, start: 0.000000, bitrate: 320 kb/s
-            #> Stream #0:0: Audio: mp3, 44100 Hz, stereo, s16p, 320 kb/s
-
     Args:
         path (str): The absolute path of the audio file that shall be transcoded
 

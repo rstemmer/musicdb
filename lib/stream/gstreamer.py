@@ -27,9 +27,11 @@ GStreamer Elements
 Installation
 ------------
 
-    pacman -S gst-plugins-good gst-python gst-plugins-bad
-# -good for mp3
-# -bad  for m4a/aac
+    .. code-block:: bash
+
+        pacman -S gst-plugins-good gst-python gst-plugins-bad
+        # -good for mp3
+        # -bad  for m4a/aac
 
 Example
 -------
