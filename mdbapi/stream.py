@@ -135,7 +135,6 @@ from lib.filesystem     import Filesystem
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
 from mdbapi.songqueue      import SongQueue
-from mdbapi.musiccache  import MusicCache
 from mdbapi.randy       import Randy
 
 
@@ -232,12 +231,12 @@ def StreamingThread():
     """
     This thread manages the streaming of the songs from the Song Queue to the Icecast server.
 
-    The tread tracks the played song using the :doc:`/mdbapi/tracker` module.
+    The thread tracks the played song using the :doc:`/mdbapi/tracker` module.
     It also tracks randomly added songs assuming the user skips or removes songs that don't fit.
     Only completely played songs will be considered.
     Skipped songs will be ignored.
 
-    The thread tiggers the following events:
+    The thread triggers the following events:
 
         * ``StatusChanged``: When the play-state
         * ``TimeChanged``: To update the current streaming progress of a song
@@ -255,7 +254,7 @@ def StreamingThread():
     # Create all interfaces that are needed by this Thread
     musicdb = MusicDatabase(Config.database.path)
     tracker = Tracker(Config, musicdb)
-    cache   = MusicCache(Config, musicdb)
+    filesystem = Filesystem(Config.music.path)
     queue   = SongQueue(Config, musicdb)
     randy   = Randy(Config, musicdb)
     icecast = IcecastInterface(
@@ -289,7 +288,7 @@ def StreamingThread():
         # Get current song that shall be streamed.
         currententryid, currentsongid = queue.CurrentSong()
         mdbsong  = musicdb.GetSongById(currentsongid)
-        songpath = cache.GetSongPath(mdbsong, absolute=True)
+        songpath = filesystem.AbsolutePath(mdbsong["path"])
 
 
         # Stream song
