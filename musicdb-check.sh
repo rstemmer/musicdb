@@ -39,6 +39,7 @@ function CheckPythonModuleExistence
 
 echo -e "\e[1;34mChecking programs …"
 CheckBinaryExistence "icecast"
+CheckBinaryExistence "gst-inspect-1.0"
 CheckBinaryExistence "id3edit"      # Source code included in this repository
 CheckBinaryExistence "clang"        # To compile id3edit
 CheckBinaryExistence "ffmpeg"
@@ -53,6 +54,7 @@ CheckBinaryExistence "dialog" opt   # for installation script
 
 echo -e "\e[1;34mChecking python modules …"
 CheckPythonModuleExistence "shouty"
+CheckPythonModuleExistence "gi"
 CheckPythonModuleExistence "sqlite3"
 CheckPythonModuleExistence "gzip"
 CheckPythonModuleExistence "configparser"
