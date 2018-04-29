@@ -293,6 +293,7 @@ def StreamingThread():
 
 
         # Stream song
+        logging.debug("Start streaming %s", songpath)
         timeplayed    = 0
         lasttimestamp = time.time()
         for frameinfo in icecast.StreamFile(songpath):

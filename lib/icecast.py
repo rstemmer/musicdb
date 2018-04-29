@@ -89,7 +89,7 @@ The ports will be configured in the ``icecast`` section of the configuration fil
 import os
 import logging
 import shouty
-from lib.mp3file import MP3File
+from lib.stream.mp3stream import MP3Stream
 
 
 class IcecastInterface(object):
@@ -379,7 +379,7 @@ class IcecastInterface(object):
         """
 
         try:
-            mp3 = MP3File(path)
+            mp3 = MP3Stream(path)
         except Exception as e:
             logging.error("Loading \"%s\" failed with error: %s", str(path), str(e))
             return
