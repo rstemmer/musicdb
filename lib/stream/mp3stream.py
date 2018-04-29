@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 This module provides a class to read any audio file and provide it as mp3 frames.
-Transcoding is done by the :doc:`/lib/stream/mp3transcoder` module.
+Transcoding is done by the :doc:`/lib/mp3transcoder` module.
 """
 import sys
 from lib.stream.mp3transcoder import MP3Transcoder
@@ -65,7 +65,7 @@ SlotsizeTable = [ 4, 1, 1, None ]
 class MP3Stream(object):
     """
     This class allows frame wise access to mp3 frames generated from an valid audio file by transcoding it.
-    See :doc:`/lib/stream/mp3transcoder` for more details about the transcoding process.
+    See :doc:`/lib/mp3transcoder` for more details about the transcoding process.
     The frame wise access can be done by the :meth:`~Frames` generator.
     Beside the mp3 frames the generator returns lots of information extracted from the mp3 Frame Header.    
 

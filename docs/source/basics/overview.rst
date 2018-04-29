@@ -26,8 +26,8 @@ MusicDB Data (Blue)
 -------------------
 
 The music files get read by `MusicDB Components (Green)`_.
-At this point, the Music Collection gets split in three separate kind of information:
-The `Artwork Cache`_ for the artworks, the `MP3 Cache`_ for the audio and the `Music Database`_ for the meta data.
+At this point, the Music Collection gets split in two separate kind of information:
+The `Artwork Cache`_ for the artworks and the `Music Database`_ for the meta data.
 
 Music Database
 ^^^^^^^^^^^^^^

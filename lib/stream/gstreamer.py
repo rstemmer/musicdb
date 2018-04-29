@@ -39,6 +39,7 @@ Example
     .. code-block:: bash
 
         gst-launch-1.0 filesrc location=in.m4a ! decodebin ! audioconvert ! lamemp3enc target=1 bitrate=320 cbr=true ! filesink location=out.mp3
+
 """
 
 import logging
@@ -47,7 +48,7 @@ gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 
 class GStreamer(object):
-    """
+    r"""
     This class provides a simple abstraction to the GStreamer Python module.
     The class is made to manage one pipeline that can be executed in a thread.
     Therefore a state machine is implemented providing the following states.
@@ -94,6 +95,7 @@ class GStreamer(object):
 
     Args:
         pipelinename (str): Optional name for the pipeline
+
     """
 
     def __init__(self, pipelinename="pipeline"):
@@ -137,6 +139,7 @@ class GStreamer(object):
     
                 gst-inspect-1.0 filesrc
                 gst-inspect-1.0 decodebin
+
         """
         # Find element
         factory = Gst.ElementFactory.find(elementname)
@@ -209,6 +212,7 @@ class GStreamer(object):
                         elif state != "IDLE":
                             print("Unexpected gstreamer state: %s"%(gstate))
                             return False
+
         """
         if self.state != "IDLE":
             self.state = "ERROR"

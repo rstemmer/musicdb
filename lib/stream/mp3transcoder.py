@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-This module transcodes the users source music into mp3 data that can be streamed via :class:`lib.stream.icecast.Icecast`.
+This module transcodes the users source music into mp3 data that can be streamed via :class:`lib.stream.icecast.IcecastInterface`.
 
 GStreamer Pipeline
 ------------------
@@ -227,7 +227,7 @@ class MP3Transcoder(object):
 
 
     def GetChunk(self, size):
-        """
+        r"""
         This method reads a chunk of data that gets provided by the GStreamer ``fdsink`` element from the GStreamer Pipeline.
         This element writes into a UNIX Pipe.
         It tries to read ``size`` bytes of data.
@@ -301,6 +301,7 @@ class MP3Transcoder(object):
 
                     sinkfile.write(chunk)
                 sinkfile.close()
+
         """
         retval = bytes()
         while size > 0:
