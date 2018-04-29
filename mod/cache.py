@@ -86,7 +86,8 @@ class cache(MDBModule, MusicCache):
 
     @staticmethod
     def MDBM_CreateArgumentParser(parserset, modulename):
-        parser = parserset.add_parser(modulename, help="Manage the mp3 cache")
+        #parser = parserset.add_parser(modulename, help="Manage the mp3 cache")
+        parser = parserset.add_parser(modulename, help="WILL NOT BE USED IN MUSICDB")
         parser.set_defaults(module=modulename)
 
         subp   = parser.add_subparsers(title="Commands", metavar="command", help="cache commands")
@@ -98,6 +99,9 @@ class cache(MDBModule, MusicCache):
 
     # return exit-code
     def MDBM_Main(self, args):
+        print("\033[1;33mThe mp3 cache will not be used in MusicDB!\033[1;30m\nThis command does nothing!\033[0m")
+        return 0
+
         # get & check command and its arguments
         try:
             command = args.command
