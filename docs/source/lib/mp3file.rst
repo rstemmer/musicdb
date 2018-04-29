@@ -2,11 +2,11 @@
 MP3 File Interface
 ==================
 
-.. automodule:: lib.mp3file
+.. automodule:: lib.stream.mp3file
 
 MP3File Class
 -------------
 
-.. autoclass:: lib.mp3file.MP3File
+.. autoclass:: lib.stream.mp3file.MP3File
    :members:
 
