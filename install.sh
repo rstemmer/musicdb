@@ -255,12 +255,6 @@ function UpdateMusicDBConfiguration {
     # The following if statements check if an entry in the musicdb.ini exists.
     # If not, it will be created and set with a good default value
 
-    # [music] -> cache
-    if [ -z "$(sed -nr '/\[music\]/,/\[/{/cache/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
-        echo -e "\t\e[1;32m + \e[1;34mAdding \e[0;36m[music] -> cache\e[0m"
-        sed -i -e "s;\[music];&\ncache=$DATADIR/mp3cache;" "$MUSICCFG"
-    fi
-
     # [Icecast] -> *
     if [ -z "$(sed -nr '/\[Icecast\]/,/\[/{/port/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
         echo -e "\t\e[1;32m + \e[1;34mAdding \e[0;36m[Icecast] section\e[0m"
@@ -293,18 +287,6 @@ function UpdateMusicDBConfiguration {
 
 }
 
-
-function InstallMP3Cache {
-    echo -e -n "\e[1;34mSetup mp3 cache directory \e[0;36m$DATADIR/mp3cache\e[1;34m: "
-    if [ ! -d "$DATADIR/mp3cache" ] ; then
-        mkdir $DATADIR/mp3cache
-        chown -R $MDBUSER:$MDBGROUP $DATADIR/mp3cache
-        chmod -R g+w $DATADIR/mp3cache
-        echo -e "\e[1;32mdone"
-    else
-        echo -e "\e[1;37malready done!"
-    fi
-}
 
 
 function InstallArtwork {
@@ -695,7 +677,6 @@ UpdateMusicDBConfiguration  # Check if things must be updated
 InstallMusicDBDatabases
 UpdateMusicDBDatabases      # Check if things must be updated
 InstallArtwork
-InstallMP3Cache
 InstallMusicAI
 
 InstallIcecastEnvironment

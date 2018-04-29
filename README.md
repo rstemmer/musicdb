@@ -42,19 +42,14 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* upd
 
 * Two new columns added to the database: `checksum` and `lastplayed`
   * **:wrench: Change:** After *installing via install.sh* execute [:notebook: repair](https://rstemmer.github.io/musicdb/build/html/mod/repair.html) with `--checksums` option (`musicdb repair --checksums`) to fill the new added checksum column.
-* [:notebook: MP3 Cache](https://rstemmer.github.io/musicdb/build/html/mdbapi/musiccache.html) added
-  * New configuration: `[music] -> cache=DATADIR/mp3cache`
-  * New CLI module [:notebook: cache](https://rstemmer.github.io/musicdb/build/html/mod/cache.html) for managing the cache added.
-  * **:wrench: Change:** After installation execute `musicdb cache update` to cache all songs as mp3 files in the MP3 Cache. 
-  * Creating the cache my take some hours. After the initial build the cache gets quickly updated when adding new albums.
-  * It is safe to use MusicDB while the cache gets still built. So have fun listening to music until the `cache update` process is completed :wink:
 * I replaced the MPD backend with an own [Icecast](https://icecast.org/) Source Client
+  * Transcoding is done by [GStreamer](https://gstreamer.freedesktop.org/)
+  * **:wrench: Change:** New dependencies: gstreamer, gst-python and the good+bad GStreamer plugins
   * **:wrench: Change:** The install script creates a new directory in the MusicDB data directory called `icecast`. Make sure that such a directory does not exist before running `install.sh`. If it does, rename it, and merge your setup after the installation.
   * **:wrench: Change:** The `[mpd]` section can be removed from the MusicDB Configuration
 * MusicDB's state now gets stored with the blacklists and song queue in an extra directory.
   * The directory can be configured: `[server] -> statedir`
 * **:wrench: Change:** New dependency: [shouty](https://github.com/edne/shouty). Execute `pip install shouty`.
-* **:wrench: Change:** Song-"preview" in Web UI now uses the MP3-Cache instead of the source audio files. This requires updating your HTTP daemon configuration to point to the new music directory.
 
 **:wrench: Update:**
 ```sh
@@ -66,14 +61,14 @@ git pull
 
 # Install latest version of MusicDB
 sudo pip install shouty
+sudo pacman -S gst-plugins-good gst-python gst-plugins-bad
 sudo ./install.sh
 
-# Read the linked documentation of the repair and cache command
+# Read the linked documentation of the repair module
 
 # Update old data
 newgrp musicdb
 musicdb repair --checksums
-musicdb cache update
 ```
 
 ### 05.01.18: 1.x.x → 2.0.0+
@@ -118,7 +113,7 @@ In case MusicDB does not run on outdated operating systems, update your system ;
   * [Arch Linux ARM](https://archlinuxarm.org/) for AArch64 with [ODROID-C2](https://wiki.odroid.com/odroid-c2/odroid-c2)
   * [Arch Linux ARM](https://archlinuxarm.org/) for ARMv7 with [Raspberry Pi 3](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
 * [Python3](https://www.python.org/) (I test with Python 3.6)
-* [Icecast](https://icecast.org/) for streaming
+* [Icecast](https://icecast.org/) and [GStreamer](https://gstreamer.freedesktop.org/) for streaming
 * A modern web browser for accessing the WebUI:
   * [Firefox](https://www.mozilla.org/en-US/) (recommended)
   * [Chrome](https://www.google.com/chrome/index.html) 

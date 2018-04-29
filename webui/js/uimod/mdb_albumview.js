@@ -266,12 +266,12 @@ function _ABV_CreateSongEntry(MDBSong, MDBSongTags)
     html += _ABV_CreateSongSettings(MDBSong, MDBSongTags);
     html += "</div>";
     // artistid/albumid/songid:checksum.mp3
-    let mp3path = MDBSong.artistid + "/" + MDBSong.albumid + "/" + MDBSong.id + "%3A" + MDBSong.checksum + ".mp3"
+    //let mp3path = MDBSong.artistid + "/" + MDBSong.albumid + "/" + MDBSong.id + "%3A" + MDBSong.checksum + ".mp3"
     html += "<div class=\"ABV_songsettings_row\">";
     html += "   <div class=\"ABVS_playerbox\">";
     html += "   <audio controls preload=none class=\"ABVS_player hovpacity\">";
-    //html += "   <source src=\"/musicdb/music/"+MDBSong.path+"\">";    // better use the mp3 cache
-    html += "   <source src=\"/musicdb/music/"+mp3path+"\">";
+    html += "   <source src=\"/musicdb/music/"+MDBSong.path+"\">";
+    //html += "   <source src=\"/musicdb/music/"+mp3path+"\">";
     html += "   </audio>";
     html += "   </div>";
     html += "</div>";

@@ -138,7 +138,6 @@ class MusicDBConfig(Config):
         self.music.owner            = self.Get(str, "music",    "owner",        "user")
         self.music.group            = self.Get(str, "music",    "group",        "musicdb")
         # TODO: Check if user or group exist
-        self.music.cache            = self.GetDirectory("music",    "cache",    "/data/mp3cache")
 
         ignorelist = self.Get(str, "music",    "ignoreartists","gemisch / youtube")
         ignorelist = ignorelist.split("/")

@@ -25,7 +25,6 @@ It does the following steps:
     #. Import artist and album
     #. Import artwork (if there is one in the meta data)
     #. Import lyrics (if there are some in the files meta data)
-    #. Import fine into MusicDB's mp3 cache
     #. Run MusicAI to determine the music genres
 
 Press ``Ctrl-D`` to exit the tool and reject changes.
@@ -139,7 +138,6 @@ from lib.metatags       import MetaTags
 #from mdbapi.tags        import MusicDBTags
 from mdbapi.database    import MusicDBDatabase
 from mdbapi.artwork     import MusicDBArtwork
-from mdbapi.musiccache  import MusicCache
 from lib.clui.listview  import ListView
 from lib.clui.text      import Text
 from lib.clui.pane      import Pane
@@ -760,13 +758,6 @@ class add(MDBModule, MusicDBDatabase):
             album["origin"] = data["origin"]
             self.db.WriteAlbum(album)
         self.cli.PrintText("\033[1;32mImporting album succeeded!\n")
-
-        # import songs into the mp3 cache
-        songs = self.db.GetSongsByAlbumId(album["id"])
-        self.cli.PrintText("\033[1;37mAdding new files into the mp3-cache\n")
-        cache = MusicCache(self.cfg, self.db)
-        for song in songs:
-            cache.Add(song)
 
         # process
         if data["runartwork"]:

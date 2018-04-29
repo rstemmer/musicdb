@@ -38,8 +38,9 @@ First, you need to install some dependencies using your systems package manager:
    * sed
    * git
    * icecast
+   * gstreamer (gst-python, gst-plugins-good, gst-plugins-bad)
    * dialog
-   * gcc/clang
+   * gcc and clang
 
 Executing the install.sh Script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -268,7 +269,7 @@ The web server must provide the following virtual directories:
 
    * ``/musicdb/`` pointing to the WebUI directory (``$SERVERDIR/webui``)
    * ``/musicdb/artwork/`` pointing to the artwork directory (``$DATADIR/artwork``)
-   * ``/musicdb/music/`` pointing to the MusicDB mp3 Cache (``$DATADIR/mp3cache``)
+   * ``/musicdb/music/`` pointing to the music source directory (``*/music``)
    * ``/musicdb/docs/`` pointing to the documentation directory (``$SERVERDIR/docs``)
 
 An example `Apache <https://httpd.apache.org/>`_ configuration can look like this:
@@ -282,8 +283,8 @@ An example `Apache <https://httpd.apache.org/>`_ configuration can look like thi
       Require all granted
    </Directory>
 
-   Alias /musicdb/music/ "/opt/musicdb/data/mp3cache/"
-   <Directory "/opt/musicdb/data/mp3cache">
+   Alias /musicdb/music/ "/data/music/"
+   <Directory "/data/music>
       AllowOverride None
       Options +FollowSymLinks
       Require all granted

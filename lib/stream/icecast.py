@@ -94,8 +94,7 @@ from lib.stream.mp3stream import MP3Stream
 
 class IcecastInterface(object):
     """
-    This Icecast interface manages the connection to the Icecast server 
-    and provides the server with the mp3 files cached in the MusicDB mp3 Cache (:mod:`mod.cache`, :mod:`mdbapi:musiccache`).
+    This Icecast interface manages the connection to the Icecast server.
     
     The following values for setting up the connection via libshout are hard coded.
     They can easily be changed in the Icecast configuration in the ``icecast/mount`` section.
