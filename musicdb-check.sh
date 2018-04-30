@@ -53,7 +53,6 @@ CheckBinaryExistence "jsdoc" opt    # for documentation
 CheckBinaryExistence "dialog" opt   # for installation script
 
 echo -e "\e[1;34mChecking python modules …"
-CheckPythonModuleExistence "shouty"
 CheckPythonModuleExistence "gi"
 CheckPythonModuleExistence "sqlite3"
 CheckPythonModuleExistence "gzip"

@@ -88,7 +88,10 @@ The ports will be configured in the ``icecast`` section of the configuration fil
 
 import os
 import logging
-import shouty
+#import shouty
+from lib.stream.libshout2 import LibShout2
+from lib.stream.libshout2 import Format     as ShoutFormat
+from lib.stream.libshout2 import Protocol   as ShoutProtocol
 from lib.stream.mp3stream import MP3Stream
 
 
@@ -157,14 +160,31 @@ class IcecastInterface(object):
 
     def __init__(self, port, user, password, mountname):
 
-        self.icecast = shouty.connection.Connection()
-        self.icecast.set_params(
+        #self.icecast = shouty.connection.Connection()
+        #self.icecast.set_params(
+        #        host     = "localhost",
+        #        port     = port,
+        #        user     = user,
+        #        password = password,
+        #        protocol = shouty.Protocol.HTTP,
+        #        format   = shouty.Format.MP3,
+        #        mount    = mountname,
+        #        dumpfile = None,
+        #        agent    = None,
+        #        public   = 0,
+        #        name     = "MusicDB Stream",
+        #        url      = None,
+        #        genre    = None,
+        #        description = None,
+        #        audio_info  = None
+        #        )
+        self.icecast = LibShout2(
                 host     = "localhost",
                 port     = port,
                 user     = user,
                 password = password,
-                protocol = shouty.Protocol.HTTP,
-                format   = shouty.Format.MP3,
+                protocol = ShoutProtocol.HTTP,
+                format   = ShoutFormat.MP3,
                 mount    = mountname,
                 dumpfile = None,
                 agent    = None,

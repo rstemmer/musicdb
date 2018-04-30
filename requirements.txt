@@ -4,4 +4,3 @@ fuzzywuzzy
 autobahn
 tqdm
 pillow
-shouty
