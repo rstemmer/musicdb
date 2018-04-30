@@ -49,7 +49,7 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* upd
   * **:wrench: Change:** The `[mpd]` section can be removed from the MusicDB Configuration
 * MusicDB's state now gets stored with the blacklists and song queue in an extra directory.
   * The directory can be configured: `[server] -> statedir`
-* **:wrench: Change:** New dependency: [shouty](https://github.com/edne/shouty). Execute `pip install shouty`.
+* **:wrench: Change:** New `musicdb.ini` file will be installed as `musicdb.ini.new` - check the differences.
 
 **:wrench: Update:**
 ```sh

@@ -114,26 +114,29 @@ function CreateMusicDBSSLKeys {
 
 
 function InstallMusicDBConfiguration {
-    echo -e -n "\e[1;34mInstalling \e[0;36mmusicdb.ini\e[1;34m: \e[1;31m"
     if [ ! -f "$DATADIR/musicdb.ini" ] ; then
-        # Install file
-        install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/musicdb.ini -D $DATADIR/.
-
-        # Update configuration to the real setup
-        sed -i -e "s;DATADIR;$DATADIR;g"       $DATADIR/musicdb.ini
-        sed -i -e "s;SERVERDIR;$SERVERDIR;g"   $DATADIR/musicdb.ini
-        sed -i -e "s;MUSICDIR;$MUSICDIR;g"     $DATADIR/musicdb.ini
-        sed -i -e "s;MUSICDBGROUP;$MDBGROUP;g" $DATADIR/musicdb.ini
-        sed -i -e "s;USER;$USER;g"             $DATADIR/musicdb.ini
-        sed -i -e "s;SSLKEY;$SSLKEY;g"         $DATADIR/musicdb.ini
-        sed -i -e "s;SSLCRT;$SSLCRT;g"         $DATADIR/musicdb.ini
-
-        # Create a link in /etc because this is the default path to look for the configuration
-        ln -sf $DATADIR/musicdb.ini /etc/musicdb.ini
-        echo -e "\e[1;32mdone"
+        CONFIGFILE="$DATADIR/musicdb.ini"
+        echo -e -n "\e[1;34mInstalling \e[0;36mmusicdb.ini\e[1;34m: \e[1;31m"
     else
-        echo -e "\e[1;37malready done!"
+        CONFIGFILE="$DATADIR/musicdb.ini.new"
+        echo -e -n "\e[1;34mInstalling \e[0;36mmusicdb.ini\e[1;36m.new\e[1;34m: \e[1;31m"
     fi
+
+    # Install file
+    install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/musicdb.ini -D $CONFIGFILE
+
+    # Update configuration to the real setup
+    sed -i -e "s;DATADIR;$DATADIR;g"       $CONFIGFILE
+    sed -i -e "s;SERVERDIR;$SERVERDIR;g"   $CONFIGFILE
+    sed -i -e "s;MUSICDIR;$MUSICDIR;g"     $CONFIGFILE
+    sed -i -e "s;MUSICDBGROUP;$MDBGROUP;g" $CONFIGFILE
+    sed -i -e "s;USER;$USER;g"             $CONFIGFILE
+    sed -i -e "s;SSLKEY;$SSLKEY;g"         $CONFIGFILE
+    sed -i -e "s;SSLCRT;$SSLCRT;g"         $CONFIGFILE
+
+    # Create a link in /etc because this is the default path to look for the configuration
+    ln -sf $DATADIR/musicdb.ini /etc/musicdb.ini
+    echo -e "\e[1;32mdone"
 
     echo -e -n "\e[1;34mInstalling \e[0;36mmdbstate.ini\e[1;34m: \e[1;31m"
     if [ ! -f "$DATADIR/mdbstate/state.ini" ] ; then
@@ -242,49 +245,6 @@ function UpdateMusicDBDatabases {
     
     # turn exit-in-error back on
     set -e
-}
-
-function UpdateMusicDBConfiguration {
-    echo -e "\e[1;34mChecking configuration \e[0;36m$DATADIR/musicdb.ini\e[1;34m \e[1;31m"
-    local MUSICCFG="$DATADIR/musicdb.ini"
-    if [ ! -f "$MUSICCFG" ] ; then
-        echo -e "\e[1;31m ! The configuration $MUSICCFG is missing!\033[0m"
-        exit 1
-    fi
-
-    # The following if statements check if an entry in the musicdb.ini exists.
-    # If not, it will be created and set with a good default value
-
-    # [Icecast] -> *
-    if [ -z "$(sed -nr '/\[Icecast\]/,/\[/{/port/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
-        echo -e "\t\e[1;32m + \e[1;34mAdding \e[0;36m[Icecast] section\e[0m"
-        echo "[Icecast]" >> "$MUSICCFG"
-        sed -i -e "s;\[Icecast];&\nmountname=/stream;" "$MUSICCFG"
-        sed -i -e "s;\[Icecast];&\npassword=ICECASTSOURCEPASSWORD$;" "$MUSICCFG"    # Will be updated later in this script
-        sed -i -e "s;\[Icecast];&\nuser=source;" "$MUSICCFG"
-        sed -i -e "s;\[Icecast];&\nport=6666;" "$MUSICCFG"
-    fi
-
-    # [server] -> statedir
-    if [ -z "$(sed -nr '/\[server\]/,/\[/{/statedir/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
-        echo -e "\t\e[1;32m + \e[1;34mAdding \e[0;36m[server] -> statedir\e[0m"
-        sed -i -e "s;\[server];&\nstatedir=$DATADIR/mdbstate;" "$MUSICCFG"
-        echo -e "\t\e[1;31m - \e[1;34mRemoving \e[0;36m[server] -> statefile\e[0m"
-        sed -i '/\[server\]/,/\[/{/statefile/d}' "$MUSICCFG"
-    fi
-
-    # [randy] -> interval
-    if [ ! -z "$(sed -nr '/\[randy\]/,/\[/{/interval/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
-        echo -e "\t\e[1;31m - \e[1;34mRemoving \e[0;36m[randy] -> interval\e[0m"
-        sed -i '/\[randy\]/,/\[/{/interval/d}' "$MUSICCFG"
-    fi
-
-    # [tracker] -> interval
-    if [ ! -z "$(sed -nr '/\[tracker\]/,/\[/{/interval/p}'  /etc/musicdb.ini | cut -d "=" -f 2)" ] ; then
-        echo -e "\t\e[1;31m - \e[1;34mRemoving \e[0;36m[tracker] -> interval\e[0m"
-        sed -i '/\[tracker\]/,/\[/{/interval/d}' "$MUSICCFG"
-    fi
-
 }
 
 
@@ -673,7 +633,6 @@ CreateMusicDBSSLKeys
 CreateBaseDirectories
 
 InstallMusicDBConfiguration
-UpdateMusicDBConfiguration  # Check if things must be updated
 InstallMusicDBDatabases
 UpdateMusicDBDatabases      # Check if things must be updated
 InstallArtwork
