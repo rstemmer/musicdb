@@ -119,7 +119,7 @@ function InstallMusicDBConfiguration {
         echo -e -n "\e[1;34mInstalling \e[0;36mmusicdb.ini\e[1;34m: \e[1;31m"
     else
         CONFIGFILE="$DATADIR/musicdb.ini.new"
-        echo -e -n "\e[1;34mInstalling \e[0;36mmusicdb.ini\e[1;36m.new\e[1;34m: \e[1;31m"
+        echo -e -n "\e[1;34mInstalling \e[0;36mmusicdb.ini\e[1;33m.new\e[1;34m: \e[1;31m"
     fi
 
     # Install file
