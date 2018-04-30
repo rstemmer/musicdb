@@ -292,7 +292,8 @@ class SongQueue(object):
         The method returns element 0 from the queue which is the current song that can be streamed or gets already streamed.
         The songs remain in the queue until they got completely streamed.
 
-        If the queue is empty, ``(None, None)`` gets returned.
+        When the queue is empty, a new random song gets added.
+        This is the exact same song that then will be returned by this method.
 
         Returns:
             A tuple (entryid, songid).
@@ -319,10 +320,9 @@ class SongQueue(object):
         global QueueLock
 
         with QueueLock:
-            if len(Queue) > 0:
-                entry = Queue[0]
-            else:
-                entry = (None, None)
+            if len(Queue) == 0:
+                self.AddRandomSong()
+            entry = Queue[0]
 
         return entry
 
