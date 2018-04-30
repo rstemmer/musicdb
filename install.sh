@@ -311,8 +311,17 @@ function InstallIcecastEnvironment {
         chown -R icecast:$MDBGROUP "$DATADIR/icecast"
         chmod o-r "$DATADIR/icecast/users"
 
-        install -m 664 -g $MDBGROUP -o icecast "$SOURCEDIR/share/config.xml" -D "$DATADIR/icecast/."
+        echo -e "\e[1;32mdone"
+    else
+        echo -e "\e[1;37malready done!"
+    fi
+
+    if [ ! -d "$DATADIR/icecast/certificate.pem" ] ; then
         install -m 400 -g $MDBGROUP -o icecast "$SSLCRT"                     -D "$DATADIR/icecast/certificate.pem"
+    fi
+
+    if [ ! -d "$DATADIR/icecast/config.xml" ] ; then
+        install -m 664 -g $MDBGROUP -o icecast "$SOURCEDIR/share/config.xml" -D "$DATADIR/icecast/."
 
         # Create some secure default passwords
         local SOURCEPW="$(openssl rand -base64 32)"
