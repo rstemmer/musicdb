@@ -4,9 +4,9 @@ GStreamer Interface
 
 .. automodule:: lib.stream.gstreamer
 
-GStreamer Class
----------------
+GStreamerInterface Class
+------------------------
 
-.. autoclass:: lib.stream.gstreamer.GStreamer
+.. autoclass:: lib.stream.gstreamer.GStreamerInterface
    :members:
 
