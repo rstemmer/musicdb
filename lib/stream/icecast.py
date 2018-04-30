@@ -160,24 +160,6 @@ class IcecastInterface(object):
 
     def __init__(self, port, user, password, mountname):
 
-        #self.icecast = shouty.connection.Connection()
-        #self.icecast.set_params(
-        #        host     = "localhost",
-        #        port     = port,
-        #        user     = user,
-        #        password = password,
-        #        protocol = shouty.Protocol.HTTP,
-        #        format   = shouty.Format.MP3,
-        #        mount    = mountname,
-        #        dumpfile = None,
-        #        agent    = None,
-        #        public   = 0,
-        #        name     = "MusicDB Stream",
-        #        url      = None,
-        #        genre    = None,
-        #        description = None,
-        #        audio_info  = None
-        #        )
         self.icecast = LibShout2(
                 host     = "localhost",
                 port     = port,
