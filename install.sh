@@ -318,8 +318,8 @@ function InstallIcecastEnvironment {
         local SOURCEPW="$(openssl rand -base64 32)"
         local ADMINPW="$( openssl rand -base64 32)"
         
-        sed -i -e "s;DATADIR;$DATADIR;g"       $DATADIR/icecast/config.xml
-        sed -i -e "s;MUSICDBGROUP;$MDBGROUP;g" $DATADIR/icecast/config.xml
+        sed -i -e "s;DATADIR;$DATADIR;g"                $DATADIR/icecast/config.xml
+        sed -i -e "s;MDBGROUP;$MDBGROUP;g"              $DATADIR/icecast/config.xml
         sed -i -e "s;ICECASTSOURCEPASSWORD;$SOURCEPW;g" $DATADIR/icecast/config.xml
         sed -i -e "s;ICECASTADMINPASSWORD;$ADMINPW;g"   $DATADIR/icecast/config.xml
         sed -i -e "s;ICECASTSOURCEPASSWORD;$SOURCEPW;g" $DATADIR/musicdb.ini
