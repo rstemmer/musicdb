@@ -16,6 +16,10 @@
 
 """
 This module transcodes the users source music into mp3 data that can be streamed via :class:`lib.stream.icecast.IcecastInterface`.
+Therefore it uses the :class:`lib.stream.gstreamer.GStreamerInterface` class.
+A `GStreamer Pipeline`_ will be created to transcode m4a, mp3 and flac files into a specific mp3 encoding.
+The output of the GStreamer Pipeline gets written into a `UNIX Pipe`_.
+The data can then be accessed via :mod:`~MP3Transcoder.GetChunk`.
 
 GStreamer Pipeline
 ------------------
@@ -42,6 +46,8 @@ These mp3 encoded data will then be provided by writing into a `UNIX Pipe`_ for 
             audioconvert    -> lamemp3enc
             lamemp3enc      -> fdsink
         }
+
+The encoding is a MPEG v1 Layer III encoding with 320kb/s and Joint Stereo.
 
 The following example shows the bash representation of the pipeline:
 
@@ -83,7 +89,7 @@ import time
 import logging
 import sys
 import os
-from lib.stream.gstreamer import GStreamer
+from lib.stream.gstreamer import GStreamerInterface
 
 class MP3Transcoder(object):
     """
@@ -109,7 +115,7 @@ class MP3Transcoder(object):
             raise TypeError("Path must be of type string!")
 
         self.path            = path
-        self.gstreamer       = GStreamer("transcoder")
+        self.gstreamer       = GStreamerInterface("transcoder")
         self.gstreamerthread = None
 
         self.source    = self.gstreamer.CreateElement("filesrc",      "source")
@@ -172,7 +178,7 @@ class MP3Transcoder(object):
             if gstate == "IDLE":
                 break
             elif gstate == "ERROR":
-                logging.error("GStreamer is in ERROR state!", gstate)
+                logging.error("GStreamerInterface is in ERROR state!", gstate)
                 break
             time.sleep(0.1)
 
@@ -220,7 +226,7 @@ class MP3Transcoder(object):
             if gstate == "RUNNING":
                 return True
             elif gstate != "IDLE":
-                logging.error("Unexpected GStreamer Pipeline process state: %s", gstate)
+                logging.error("Unexpected GStreamerInterface state: %s", gstate)
                 return False
             time.sleep(0.1)
 

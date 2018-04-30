@@ -47,7 +47,7 @@ import gi
 gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 
-class GStreamer(object):
+class GStreamerInterface(object):
     r"""
     This class provides a simple abstraction to the GStreamer Python module.
     The class is made to manage one pipeline that can be executed in a thread.
@@ -81,11 +81,11 @@ class GStreamer(object):
             node [shape = circle, color=black, fontsize=10, label="CANCEL"  ] cancel;
             node [shape = circle, color=black, fontsize=10, label="ERROR"   ] error;
 
-            idle    -> running [ label = "GStreamer.Execute()\nGStreamer Pipeline State := PLAYING" ];
+            idle    -> running [ label = "GStreamerInterface.Execute()\n/ GStreamer Pipeline State := PLAYING" ];
             idle    -> error   [ label = "Starting GStreamer Pipeline failed" ];
             running -> cancel  [ label = "GStreamer Error Message" ];
             running -> cancel  [ label = "GStreamer EOS Message" ];
-            cancel  -> idle    [ label = "GStreamer Pipeline State := NULL" ];
+            cancel  -> idle    [ label = "/ GStreamer Pipeline State := NULL" ];
             running -> error   [ label = "Tried to start pipeline that was not IDLE" ];
             cancel  -> error   [ label = "Tried to start pipeline that was not IDLE" ];
             
@@ -126,7 +126,7 @@ class GStreamer(object):
 
             .. code-block:: python
 
-                gstreamer = GStreamer("example")
+                gstreamer = GStreamerInterface("example")
                 source    = gstreamer.CreateElement("filesrc",   "source")
                 decoder   = gstreamer.CreateElement("decodebin", "decoder")
 
@@ -195,7 +195,7 @@ class GStreamer(object):
 
             .. code-block:: python
 
-                gstreamer = GStreamer()
+                gstreamer = GStreamerInterface()
                 
                 # … Setup pipeline …
 
@@ -215,6 +215,7 @@ class GStreamer(object):
 
         """
         if self.state != "IDLE":
+            logging.error("GStreamer Interface was not in IDLE state but in %s state. Entering ERROR state!", self.state)
             self.state = "ERROR"
             return
 
