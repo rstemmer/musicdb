@@ -60,7 +60,6 @@ git checkout master
 git pull
 
 # Install latest version of MusicDB
-sudo pip install shouty
 sudo pacman -S gst-plugins-good gst-python gst-plugins-bad
 sudo ./install.sh
 
