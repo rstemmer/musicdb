@@ -1614,7 +1614,7 @@ class MusicDatabase(Database):
 
         Statistics are:
 
-            * **Valid:** ``"likes"``, ``"dislikes"``, ``"favorite"``, ``"disabled"``
+            * **Valid:** ``"likes"``, ``"dislikes"``, ``"favorite"``, ``"disabled"``, ``"lastplayed"``
             * **Deprecated:** ``"qskips"``, ``"qadds"``, ``"qrndadds"``, ``"qremoves"``
 
         Deprecated statistics will be ignored.
@@ -1631,10 +1631,12 @@ class MusicDatabase(Database):
             * ``0``: Normal song
             * ``1``: Loved song
 
+        ``lastplayed`` expects the unix time as integer given as value.
+
         Args:
             songid (int): ID of the song
             stat (str): Name of the statistics to update
-            value (str): How to update
+            value (str/int): How to update
 
         Returns:
             ``None``
@@ -1642,15 +1644,25 @@ class MusicDatabase(Database):
         Raises:
             TypeError: When *songid* is not an integer or string
             ValueError: if stats or value have an invalid value. Deprecated statistics do not raise an exception.
+            TypeError: When ``stat == "lastplayed"`` but ``value`` is not an integer
+            ValueError: When an expected unix time is less than 0
         """
         if type(songid) != str and type(songid) != int:
             raise TypeError("songid must be a decimal number of type integer or string")
 
         # Check if value and stat are valid
-        if stat not in ["likes", "dislikes", "qskips", "qadds", "qrndadds", "qremoves", "favorite", "disable"]:
+        if stat not in ["likes", "dislikes", "qskips", "qadds", "qrndadds", "qremoves", "favorite", "disable", "lastplayed"]:
             raise ValueError("stat has an invalid value \"%s\"", str(stat))
-        if value not in ["inc", "dec", "reset", "love", "hate", "none", "yes", "no"]:
-            raise ValueError("value has an invalid value \"%s\"", str(value))
+
+        if stat == "lastplayed":
+            if type(value) != int:
+                raise TypeError("For statistic lastplayed, an integer as value is expected! (containing a unix timestamp)")
+            if value < 0:
+                raise ValueError("Unix time must be greater than 0!")
+        else:
+            if value not in ["inc", "dec", "reset", "love", "hate", "none", "yes", "no"]:
+                raise ValueError("value has an invalid value \"%s\"", str(value))
+        
 
         if stat in ["qskips", "qadds", "qrndadds", "qremoves"]:
             logging.warning("The statistic \"%s\" is deprecated! It will be removed in April 2019.") # DEPRECATED
@@ -1673,6 +1685,8 @@ class MusicDatabase(Database):
                 song["favorite"] = modifier
             elif stat == "disable":
                 song["disabled"] = modifier
+            elif stat == "lastplayed":
+                song["lastplayed"] = value
             elif modifier == 0:
                 song[stat]       = 0
             else:

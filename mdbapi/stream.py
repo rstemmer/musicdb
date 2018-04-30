@@ -327,9 +327,11 @@ def StreamingThread():
         else:
             # when the for loop streaming the current song gets not left via break,
             # then the whole song was streamed. So add that song to the trackers list
+            # Also update the last time played information.
             # In case the loop ended because Icecast failed, update the Status
             if icecast.IsConnected():
                 tracker.AddSong(currentsongid)
+                musicdb.UpdateSongStatistic(currentsongid, "lastplayed", int(time.time()))
             else:
                 icecast.Mute()
                 State["isplaying"]   = False

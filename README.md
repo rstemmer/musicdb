@@ -42,6 +42,7 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* upd
 
 * Two new columns added to the database: `checksum` and `lastplayed`
   * **:wrench: Change:** After *installing via install.sh* execute [:notebook: repair](https://rstemmer.github.io/musicdb/build/html/mod/repair.html) with `--checksums` option (`musicdb repair --checksums`) to fill the new added checksum column.
+  * The date a song was last played is currently shown in the tooltip when hovering the cursor above a song in the Album-View.
 * I replaced the MPD backend with an own [Icecast](https://icecast.org/) Source Client
   * Transcoding is done by [GStreamer](https://gstreamer.freedesktop.org/)
   * **:wrench: Change:** New dependencies: gstreamer, gst-python and the good+bad GStreamer plugins

@@ -254,7 +254,7 @@ function _ABV_CreateSongEntry(MDBSong, MDBSongTags)
     html += ">";
 
     html += _ABV_CreateSongEntryNumber(MDBSong.number);
-    html += _ABV_CreateSongEntryName(MDBSong.name, MDBSong.id, MDBSong.disabled);
+    html += _ABV_CreateSongEntryName(MDBSong);
     html += _ABV_CreateSongEntryTags(MDBSongTags);
     html += _ABV_CreateSongEntryButtonbox(MDBSong);
     html += _ABV_CreateSongEntryLikeGraph(MDBSong);
@@ -367,17 +367,34 @@ function _ABV_CreateSongEntryNumber(songnumber)
     else
         return "<span class=\"ABV_songnumber hlcolor\">⚪&#x0000FE0E;</span>";
 }
-function _ABV_CreateSongEntryName(songname, songid, disabled)
+function _ABV_CreateSongEntryName(MDBSong)
 {
-    var color = "";
+    let songname    = MDBSong.name;
+    let songid      = MDBSong.id;
+    let disabled    = MDBSong.disabled;
+    let lastplayed  = new Date(MDBSong.lastplayed * 1000);
+
+    let color = "";
     if(disabled)
         color = "hlcolor";
     else
         color = "fgcolor"; 
 
-    var html = "";
+    // Source: https://gist.github.com/kmaida/6045266
+    let yyyy = lastplayed.getFullYear();
+    let mm   = ('0' + (lastplayed.getMonth() + 1)).slice(-2);   // Months are zero based. Add leading 0.
+    let dd   = ('0' +  lastplayed.getDate()).slice(-2);         // Add leading 0.
+    let lpdate = dd + "." + mm + "." + yyyy;
+
+    let title;
+    if(MDBSong.lastplayed > 0)
+        title = songname + "\u000A" + lpdate;
+    else
+        title = songname;
+
+    let html = "";
     html += "<span id=ABVPS_"+songid+" class=\"ABV_songplaystate hlcolor\" data-playing=\"no\"></span>";
-    html += "<span class=\"ABV_songname "+color+"\" title=\""+songname+"\">"+songname+"</span>";
+    html += "<span class=\"ABV_songname "+color+"\" title=\""+title+"\">"+songname+"</span>";
     return html;
 }
     
