@@ -16,7 +16,7 @@
 """
 This module implements the interface to `Icecast <https://icecast.org/>`_.
 
-The stream uses the python interface `Shouty <https://github.com/edne/shouty>`_ 
+The stream uses the :mod:`lib.stream.libshout2` module as wrapper
 to `libshout <https://github.com/xiph/Icecast-libshout>`_ 
 from the `Icecast <https://icecast.org/>`_ project.
 

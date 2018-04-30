@@ -104,7 +104,7 @@ class LibShout2(object):
                    user='source', password='',
                    protocol=Protocol.HTTP,
                    format=Format.OGG,
-                   mount='/shouty',
+                   mount='/shout',
                    dumpfile=None, agent=None,
                    public=0,
                    name=None, url=None, genre=None, description=None,
