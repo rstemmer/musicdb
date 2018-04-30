@@ -187,7 +187,7 @@ class IcecastInterface(object):
                 format   = ShoutFormat.MP3,
                 mount    = mountname,
                 dumpfile = None,
-                agent    = None,
+                agent    = "MusicDB",
                 public   = 0,
                 name     = "MusicDB Stream",
                 url      = None,
@@ -260,6 +260,35 @@ class IcecastInterface(object):
             logging.error("Disconnecting from Icecast failed with the following exception: %s", str(e))
             return False
 
+        return True
+
+
+
+    def UpdateTitle(self, title):
+        """
+        This method updates the stream title.
+
+        Args:
+            title (str): A string as new title for the stream - for example the song name
+
+        Returns:
+            ``True`` on success, ``False`` otherwise
+
+        Raises:
+            TypeError: When ``title`` is not of type string
+        """
+        if type(title) != str:
+            raise TypeError("Title must be of type string!")
+
+        if self.connectionstate == False:
+            logging.warning("Not connected to Icecast! \033[1;30m(No title update)")
+            return False
+
+        try:
+            self.icecast.set_metadata_song(title)
+        except Exception as e:
+            logging.warning("Sending title update to Icecast failed with error %s! \033[1;30m(Error will be igored)", str(e))
+            return False
         return True
 
 

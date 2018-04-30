@@ -292,6 +292,7 @@ def StreamingThread():
 
 
         # Stream song
+        icecast.UpdateTitle(mdbsong["path"])
         logging.debug("Start streaming %s", songpath)
         timeplayed    = 0
         lasttimestamp = time.time()
