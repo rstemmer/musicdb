@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="1.3.2"
+SCRIPTVERSION="1.3.3"
 echo -e "\e[1;31mMusicDB-Install [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
@@ -297,11 +297,15 @@ function InstallIcecastEnvironment {
         exit 1
     fi
 
+    # Check group
+    if [ -z "$(getent group icecast)" ]; then
+        groupadd -r icecast
+        echo -e -n "\e[1;32m(icecast group created)\e[1;31m "
+    fi
     # Check user
     if [ -z "$(getent passwd icecast)" ]; then
-        echo -e -n "\e[1;32m(icecast user created)\e[1;31m "
-        groupadd -r icecast
         useradd -d "$DATADIR/icecast" -s /usr/bin/false -g icecast -r -N -M icecast
+        echo -e -n "\e[1;32m(icecast user created)\e[1;31m "
     fi
 
     # Install icecast setup
@@ -332,6 +336,10 @@ function InstallIcecastEnvironment {
         sed -i -e "s;ICECASTSOURCEPASSWORD;$SOURCEPW;g" $DATADIR/icecast/config.xml
         sed -i -e "s;ICECASTADMINPASSWORD;$ADMINPW;g"   $DATADIR/icecast/config.xml
         sed -i -e "s;ICECASTSOURCEPASSWORD;$SOURCEPW;g" $DATADIR/musicdb.ini
+        # also update a possible new MusicDB Configuration
+        if [ -f "$DATADIR/musicdb.ini.new" ] ; then
+            sed -i -e "s;ICECASTSOURCEPASSWORD;$SOURCEPW;g" $DATADIR/musicdb.ini.new
+        fi
 
         echo -e "\e[1;32mdone"
     else
