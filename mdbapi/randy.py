@@ -259,7 +259,7 @@ class Randy(object):
 
         filterlist = self.mdbstate.GetFilterList()
         if not filterlist:
-            logging.warning("No Genre selected! \033[1;30(Selecting random song from the whole collection)")
+            logging.warning("No Genre selected! \033[1;30m(Selecting random song from the whole collection)")
 
         # Get Random Song - this may take several tries 
         logging.debug("Randy starts looking for a random song …")
@@ -274,7 +274,7 @@ class Randy(object):
                 return None
 
             if not song:
-                logging.error("There is no song fulfilling the constraints! \033[1;30(Check the stage 1 constraints)")
+                logging.error("There is no song fulfilling the constraints! \033[1;30m(Check the stage 1 constraints)")
                 return None
 
             logging.debug("Candidate for next song: \033[0;35m" + song["path"])
