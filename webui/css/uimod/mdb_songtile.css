@@ -37,6 +37,17 @@ div.ST_buttonbox
     flex-shrink:    0;
     flex-grow:      0;
 }
+
+/* Show controls only when mouse is on the tile */
+.ST_tile .ST_buttonbox
+{
+    opacity: 0.1;
+}
+.ST_tile:hover .ST_buttonbox
+{
+    opacity: 1.0;
+}
+
 div.ST_artworkbox
 {
     display:        flex;

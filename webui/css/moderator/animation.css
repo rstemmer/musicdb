@@ -41,6 +41,10 @@ div.hovpacity
     transition:     opacity             500ms;
 }
 
+.ST_tile .ST_buttonbox
+{
+    transition:     opacity             500ms;
+}
 
 
 .bgcolor
