@@ -287,6 +287,11 @@ def StreamingThread():
 
         # Get current song that shall be streamed.
         currententryid, currentsongid = queue.CurrentSong()
+        if currententryid == None:
+            logging.info("Waiting for 5s to try to get a new song to play.")
+            time.sleep(5)
+            continue
+
         mdbsong  = musicdb.GetSongById(currentsongid)
         songpath = filesystem.AbsolutePath(mdbsong["path"])
 

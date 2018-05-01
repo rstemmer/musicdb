@@ -294,6 +294,7 @@ class SongQueue(object):
 
         When the queue is empty, a new random song gets added.
         This is the exact same song that then will be returned by this method.
+        If adding a new song fails, ``(None, None)`` gets returned.
 
         Returns:
             A tuple (entryid, songid).
@@ -320,8 +321,16 @@ class SongQueue(object):
         global QueueLock
 
         with QueueLock:
+            # Empty Queue? Add a random song!
             if len(Queue) == 0:
                 self.AddRandomSong()
+
+            # Still empty (no random song found)? Then return (None, None). Nothing to do…
+            if len(Queue) == 0:
+                logging.critical("Queue run empty! \033[1;30m(Check constraints for random song selection and check if there are songs at all)")
+                return (None, None)
+
+            # Select first song from queue
             entry = Queue[0]
 
         return entry
@@ -489,10 +498,14 @@ class SongQueue(object):
         If the album ID is ``None``, the method :meth:`mdbapi.randy.Randy.GetSong` will be used to get a random song from the activated genres.
 
         After selecting the random song, the :meth:`~AddSong` method gets used to insert the new song into the queue.
+        If there is no song found by Randy, then nothing gets added to the queue and ``False`` will be returned.
 
         Args:
             position (str): Defines the position where the song gets inserted.
             albumid (int/NoneType): ID of the album from that the song will be selected, or ``None`` for selecting a song from the activated genres.
+
+        Returns:
+            ``True`` when a random song got added to the queue. Otherwise ``False``.
 
         Raises:
             TypeError: When one of the types of the arguments are not correct
@@ -507,7 +520,11 @@ class SongQueue(object):
         else:
             mdbsong = self.randy.GetSong()
 
+        if not mdbsong:
+            return False
+
         self.AddSong(mdbsong["id"], position)
+        return True
 
 
 
