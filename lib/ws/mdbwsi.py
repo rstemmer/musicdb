@@ -853,10 +853,6 @@ class MusicDBWebSocketInterface(object):
 
                 MusicDB_Call("SetMDBState", {category:"albumfilter", name:"Metal", value:true});
         """
-        if not self.mdbstate.OptionAvailable(category, name):
-            logging.warning("Unknown state-settings " + str(category) + ">" + str(name) + "! \033[1;30m(Will be ignored)")
-            return
-
         self.mdbstate.Set(category, name, value)
         return None
 
