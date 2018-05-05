@@ -172,6 +172,8 @@ class Randy(object):
 
                     dst = Blacklist[key]
                     src = loadedlists[key]
+                    if not src:
+                        continue    # when there are no entries loaded, keep the generated list of None-entries
 
                     # The following python magic inserts as much of src at the end of dst, as fits.
                     # if src must be cut, the first elements get removed
