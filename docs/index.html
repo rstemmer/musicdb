@@ -69,7 +69,8 @@
 
         <!-- Head -->
         <div class="wrapper">
-            <div class="parallax filter-gradient gray" data-color="gray">
+                <div class="parallax filter-gradient gray" data-color="gray">
+                    <!--<div class="parallax filter-gradient gray" data-color="gray">-->
                 <div class= "container">
                     <div class="row">
                         <div class="col-md-7  hidden-xs">
@@ -111,18 +112,21 @@
                 <div class="container text-center" style="width: 800px;">
                     <h4 class="header-text">Introduction</h4>
                     <p>
-                        <b>MusicDB</b> is a music manager, server and player that focus is on music, not the software itself. 
-                        It manages your music collection on a server following the concept
-                        <i>The Filesystem is Always Right; the Database is Just for Augmentation.</i>
+                        <b>MusicDB</b> is a music manager, server and player that focus is on music.
+                        Unlike most other players, it does not feel like using software.
+                    </p>
+                    <p>
+                        MusicDB manages your music collection following the concept
+                        <i>The Filesystem is Always Right. The Database is Only for Augmentation.</i>
                         The <b>tidiness of your music collection</b> is not just inside MusicDB but on all devices 
-                        like your portable music-player or your car.
+                        like your portable music-player or your car that cannot be accessed by third party software.
                     </p>
                     <p>
                         MusicDB also supports streaming your music.
-                        This stream and can be received by all kind of players like 
+                        This stream can be received by all kind of players like 
                         iTunes or VLC.
                         The streaming server uses <a href="https://icecast.org/" target="_blank">Icecast</a>
-                        to encrypt the stream. So, it us safe to send it out into the internet.
+                        to encrypt the stream. So, it is safe to send it out into the internet.
                         Then <b>your music is <i>in the cloud</i> but your files stay at home.</b>
                     </p>
                     <p>
@@ -131,8 +135,8 @@
                         Your music gets presented and is not just a database entry in a boring list of artists and albums.
                     </p>
                     <p>
-                        Album covers blurred for copyright reasons!<br>
-                        Screenshots may be from different versions and won't be updated.
+                        (Album covers blurred for copyright reasons!)<br>
+                        (Screenshots may be from different versions and won't be updated.)
                     </p>
                 </div>
             </div>
@@ -190,8 +194,10 @@
                             <p>
                                 The head-up display presents the current playing song.
                                 It also shows its genre tags and mood-flags.
-                                The <b>mood-flags represent different moods the user/listener has associates with this song.</b>
+                                The configurable <b>mood-flags represent different moods the user/listener has associates with this song.</b>
                                 Furthermore there are buttons to mark the song as favorite or hated.
+                            </p>
+                            <p>
                                 On the right side, the current time and the time when the queue runs empty is shown.
                                 So, you can see when you can sleep, or if it is worth adding some more songs to the queue.
                             </p>
@@ -204,7 +210,7 @@
                             <h4 class="header-text">Artist List</h4>
                             <p>
                                 The artist list <b>shows all albums that are in the selected genres</b>
-                                of the genre filter box above.
+                                from the genre filter box above.
                                 The albums are grouped by their artists and sorted by release date.
                                 By clicking on the album, it gets presented in the Album View.
                             </p>
@@ -212,6 +218,7 @@
                                 Albums can have one or more main genre like "Metal", "Classic", ….
                                 If you want to listen to Metal, you simply select the Metal genre and disable all other.
                                 Then only Metal albums are listed.
+                                This feature makes MusicDB perfect for huge music collections.
                                 When you select multiple genre, all albums that belong to at least one of the activated genres are shown.
                             </p>
 
@@ -221,7 +228,7 @@
                                 you can use a <b>typo tolerant search</b> to find and add a certain song directly.
                                 The search finds all songs, albums and artists that matches the entered string to a
                                 certain probability.
-                                While typing the name, a preview of the results with the five most probable hits gets shown in real time. 
+                                While typing the name, a preview of the results with the five most probable hits gets shown in real-time. 
                                 <!--For Nerds: I mean soft real time, the deadline is reached when the user is annoyed of waiting for the results. -->
                             </p>
                             <p>
@@ -272,7 +279,7 @@
                         <div class="col-md-5 col-md-offset-1">
                             <h4 class="header-text">Album View</h4>
                             <p>
-                                The Album View show the current playing album or a selected album from the Artist List.
+                                The Album View shows the current playing album or a selected album from the Artist List.
                                 In this view, all <b>songs of an album get presented</b>.
                                 Beside the song name, their mood flags are displayed.
                                 The diamonds on the screenshot show that these songs are favorite songs.
@@ -297,7 +304,7 @@
                             <h5>Artwork management</h5>
                             <p>
                                 Album artwork is an important part of music.
-                                The management does not only concentrates on the music but also on the artwork.
+                                MusicDB does not only concentrates on the music but also on the artwork.
                             </p>
                             <p>
                                 For each album are three colors defined that will be used for the whole WebUI.
@@ -327,7 +334,7 @@
                                 does not add songs to the queue that are too short,
                                 flagged as <i>hated</i> 
                                 or when another song of the same album or artist was recently played.
-                                <b>The selected song order is not mathematical random, that's why they feel random.</b>
+                                <b>The selected song is not mathematical random, that's why they feel random.</b>
                             </p>
                         </div>
                         <div class="col-md-6 col-md-offset-1">
@@ -380,7 +387,7 @@
                                     <p>
                                         Due to the fact that this is a server/client application, 
                                         you can listen to your music wherever there is an internet connection.
-                                        The music is stored on the server MusicDB runs on.
+                                        The music is stored on your home computer MusicDB runs on.
                                         The queue of the music that gets streamed can be managed from anywhere via browser.
                                         And each device that can play audio streams can be used to listen to that stream.
                                     </p>
@@ -479,7 +486,7 @@
                                         into your environment.
                                     </p>
                                     <p>
-                                        Some interesting examples on different abstraction layers:
+                                        Some interesting documentation examples on different abstraction layers:
                                         <ul style="text-align: left;">
                                             <li><a href="build/html/index.html"><b>Documentation Overview</b></a></li>
                                             <li><a href="build/html/basics/overview.html">Overview of MusicDB</a></li>
