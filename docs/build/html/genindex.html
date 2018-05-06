@@ -127,7 +127,6 @@
 <li class="toctree-l2"><a class="reference internal" href="basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="basics/overview.html#music-database">Music Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/overview.html#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="basics/overview.html#mp3-cache">MP3 Cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
@@ -143,6 +142,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -462,6 +466,14 @@
 <li class="toctree-l2"><a class="reference internal" href="lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
@@ -480,6 +492,17 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lib/mp3file.html">MP3 File Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lib/musicdb.html">MusicDatabase</a><ul>
@@ -725,8 +748,12 @@
 </li>
       <li><a href="mod/musicai.html#mod.musicai.musicai.AnalysisThread">AnalysisThread() (mod.musicai.musicai method)</a>
 </li>
-      <li><a href="lib/mp3file.html#lib.mp3file.MP3File.AnalyzeHeader">AnalyzeHeader() (lib.mp3file.MP3File method)</a>
+      <li><a href="lib/mp3file.html#lib.stream.mp3file.MP3File.AnalyzeHeader">AnalyzeHeader() (lib.stream.mp3file.MP3File method)</a>
+
+      <ul>
+        <li><a href="lib/mp3stream.html#lib.stream.mp3stream.MP3Stream.AnalyzeHeader">(lib.stream.mp3stream.MP3Stream method)</a>
 </li>
+      </ul></li>
       <li><a href="mod/artwork.html#mod.artwork.artwork">artwork (class in mod.artwork)</a>
 </li>
       <li><a href="mdbapi/artwork.html#lib.cache.ArtworkCache">ArtworkCache (class in lib.cache)</a>
@@ -761,6 +788,12 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mod/cache.html#mod.cache.cache">cache (class in mod.cache)</a>
 </li>
+      <li><a href="lib/gstreamer.html#lib.stream.gstreamer.GStreamerInterface.Cancel">Cancel() (lib.stream.gstreamer.GStreamerInterface method)</a>
+
+      <ul>
+        <li><a href="lib/mp3transcoder.html#lib.stream.mp3transcoder.MP3Transcoder.Cancel">(lib.stream.mp3transcoder.MP3Transcoder method)</a>
+</li>
+      </ul></li>
       <li><a href="lib/pidfile.html#lib.pidfile.CheckPIDFile">CheckPIDFile() (in module lib.pidfile)</a>
 </li>
       <li><a href="lib/fileprocessing.html#lib.fileprocessing.Fileprocessing.Checksum">Checksum() (lib.fileprocessing.Fileprocessing method)</a>
@@ -775,7 +808,7 @@
 </li>
       <li><a href="lib/config.html#lib.cfg.config.Config">Config (class in lib.cfg.config)</a>
 </li>
-      <li><a href="lib/icecast.html#lib.icecast.IcecastInterface.Connect">Connect() (lib.icecast.IcecastInterface method)</a>
+      <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface.Connect">Connect() (lib.stream.icecast.IcecastInterface method)</a>
 </li>
       <li><a href="webui/websockets.html#ConnectToMusicDB">ConnectToMusicDB() (built-in function)</a>
 </li>
@@ -787,15 +820,17 @@
 </li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.CopySong">CopySong() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
-      <li><a href="mdbapi/lycra.html#lib.crawlerapi.LycraCrawler.Crawl">Crawl() (lib.crawlerapi.LycraCrawler method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mdbapi/lycra.html#lib.crawlerapi.LycraCrawler.Crawl">Crawl() (lib.crawlerapi.LycraCrawler method)</a>
+</li>
       <li><a href="mdbapi/lycra.html#mdbapi.lycra.Lycra.CrawlForLyrics">CrawlForLyrics() (mdbapi.lycra.Lycra method)</a>
 </li>
       <li><a href="lib/namedpipe.html#lib.namedpipe.NamedPipe.Create">Create() (lib.namedpipe.NamedPipe method)</a>
 </li>
       <li><a href="mdbapi/artwork.html#mdbapi.artwork.MusicDBArtwork.CreateArtworkName">CreateArtworkName() (mdbapi.artwork.MusicDBArtwork static method)</a>
+</li>
+      <li><a href="lib/gstreamer.html#lib.stream.gstreamer.GStreamerInterface.CreateElement">CreateElement() (lib.stream.gstreamer.GStreamerInterface method)</a>
 </li>
       <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI.CreateFeatureset">CreateFeatureset() (mdbapi.musicai.MusicAI method)</a>
 </li>
@@ -849,7 +884,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/clui.html#lib.clui.dialog.Dialog">Dialog (class in lib.clui.dialog)</a>
 </li>
-      <li><a href="lib/icecast.html#lib.icecast.IcecastInterface.Disconnect">Disconnect() (lib.icecast.IcecastInterface method)</a>
+      <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface.Disconnect">Disconnect() (lib.stream.icecast.IcecastInterface method)</a>
 </li>
       <li><a href="mdbapi/lycra.html#lib.crawlerapi.LycraCrawler.DoCrawl">DoCrawl() (lib.crawlerapi.LycraCrawler method)</a>
 </li>
@@ -884,6 +919,8 @@
       <ul>
         <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.Execute">(lib.filesystem.Filesystem method)</a>
 </li>
+        <li><a href="lib/gstreamer.html#lib.stream.gstreamer.GStreamerInterface.Execute">(lib.stream.gstreamer.GStreamerInterface method)</a>
+</li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -915,10 +952,10 @@
       </ul></li>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.FindLostPaths">FindLostPaths() (mdbapi.database.MusicDBDatabase method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.FindNewPaths">FindNewPaths() (mdbapi.database.MusicDBDatabase method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.FixAttributes">FixAttributes() (mdbapi.database.MusicDBDatabase method)</a>
 </li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.FixPath">FixPath() (mdbapi.extern.MusicDBExtern method)</a>
@@ -927,8 +964,12 @@
 </li>
       <li><a href="lib/clui.html#lib.clui.frame.Frame">Frame (class in lib.clui.frame)</a>
 </li>
-      <li><a href="lib/mp3file.html#lib.mp3file.MP3File.Frames">Frames() (lib.mp3file.MP3File method)</a>
+      <li><a href="lib/mp3file.html#lib.stream.mp3file.MP3File.Frames">Frames() (lib.stream.mp3file.MP3File method)</a>
+
+      <ul>
+        <li><a href="lib/mp3stream.html#lib.stream.mp3stream.MP3Stream.Frames">(lib.stream.mp3stream.MP3Stream method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -1003,6 +1044,8 @@
 </li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetCDNumber">GetCDNumber() (lib.metatags.MetaTags method)</a>
 </li>
+      <li><a href="lib/mp3transcoder.html#lib.stream.mp3transcoder.MP3Transcoder.GetChunk">GetChunk() (lib.stream.mp3transcoder.MP3Transcoder method)</a>
+</li>
       <li><a href="lib/clui.html#lib.clui.boolinput.BoolInput.GetData">GetData() (lib.clui.boolinput.BoolInput method)</a>
 
       <ul>
@@ -1027,10 +1070,10 @@
 </li>
       <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.GetFilterList">GetFilterList() (lib.cfg.mdbstate.MDBState method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/database.html#lib.db.database.Database.GetFromDatabase">GetFromDatabase() (lib.db.database.Database method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI.GetGenreMatrix">GetGenreMatrix() (mdbapi.musicai.MusicAI method)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.text.Text.GetKey">GetKey() (lib.clui.text.Text method)</a>
@@ -1109,6 +1152,8 @@
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs">GetSortedAlbumCDs() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
+      <li><a href="lib/gstreamer.html#lib.stream.gstreamer.GStreamerInterface.GetState">GetState() (lib.stream.gstreamer.GStreamerInterface method)</a>
+</li>
       <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI.GetStatistics">GetStatistics() (mdbapi.musicai.MusicAI method)</a>
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState">GetStreamState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
@@ -1126,6 +1171,8 @@
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetTargetTags">GetTargetTags() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetTracknumber">GetTracknumber() (lib.metatags.MetaTags method)</a>
+</li>
+      <li><a href="lib/gstreamer.html#lib.stream.gstreamer.GStreamerInterface">GStreamerInterface (class in lib.stream.gstreamer)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1161,7 +1208,7 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="lib/icecast.html#lib.icecast.IcecastInterface">IcecastInterface (class in lib.icecast)</a>
+      <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface">IcecastInterface (class in lib.stream.icecast)</a>
 </li>
       <li><a href="mdbapi/server.html#mdbapi.server.Initialize">Initialize() (in module mdbapi.server)</a>
 </li>
@@ -1169,7 +1216,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="lib/icecast.html#lib.icecast.IcecastInterface.IsConnected">IsConnected() (lib.icecast.IcecastInterface method)</a>
+      <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface.IsConnected">IsConnected() (lib.stream.icecast.IcecastInterface method)</a>
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.IsDirectory">IsDirectory() (lib.filesystem.Filesystem method)</a>
 </li>
@@ -1225,19 +1272,25 @@
 </li>
       <li><a href="lib/filesystem.html#module-lib.filesystem">lib.filesystem (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/hdf5storage.html#module-lib.hdf5storage">lib.hdf5storage (module)</a>
-</li>
-      <li><a href="lib/icecast.html#module-lib.icecast">lib.icecast (module)</a>
 </li>
       <li><a href="lib/metatags.html#module-lib.metatags">lib.metatags (module)</a>
 </li>
-      <li><a href="lib/mp3file.html#module-lib.mp3file">lib.mp3file (module)</a>
-</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/namedpipe.html#module-lib.namedpipe">lib.namedpipe (module)</a>
 </li>
       <li><a href="lib/pidfile.html#module-lib.pidfile">lib.pidfile (module)</a>
+</li>
+      <li><a href="lib/gstreamer.html#module-lib.stream.gstreamer">lib.stream.gstreamer (module)</a>
+</li>
+      <li><a href="lib/icecast.html#module-lib.stream.icecast">lib.stream.icecast (module)</a>
+</li>
+      <li><a href="lib/mp3file.html#module-lib.stream.mp3file">lib.stream.mp3file (module)</a>
+</li>
+      <li><a href="lib/mp3stream.html#module-lib.stream.mp3stream">lib.stream.mp3stream (module)</a>
+</li>
+      <li><a href="lib/mp3transcoder.html#module-lib.stream.mp3transcoder">lib.stream.mp3transcoder (module)</a>
 </li>
       <li><a href="basics/webapi.html#module-lib.ws.mdbwsi">lib.ws.mdbwsi (module)</a>
 </li>
@@ -1254,7 +1307,7 @@
       <ul>
         <li><a href="lib/metatags.html#lib.metatags.MetaTags.Load">(lib.metatags.MetaTags method)</a>
 </li>
-        <li><a href="lib/mp3file.html#lib.mp3file.MP3File.Load">(lib.mp3file.MP3File method)</a>
+        <li><a href="lib/mp3file.html#lib.stream.mp3file.MP3File.Load">(lib.stream.mp3file.MP3File method)</a>
 </li>
         <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.Load">(mdbapi.songqueue.SongQueue method)</a>
 </li>
@@ -1341,10 +1394,10 @@
 </li>
       <li><a href="mod/repair.html#module-mod.repair">mod.repair (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mod/server.html#module-mod.server">mod.server (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mod/stats.html#module-mod.stats">mod.stats (module)</a>
 </li>
       <li><a href="mod/tags.html#module-mod.tags">mod.tags (module)</a>
@@ -1371,7 +1424,11 @@
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue">MoveSongInQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
-      <li><a href="lib/mp3file.html#lib.mp3file.MP3File">MP3File (class in lib.mp3file)</a>
+      <li><a href="lib/mp3file.html#lib.stream.mp3file.MP3File">MP3File (class in lib.stream.mp3file)</a>
+</li>
+      <li><a href="lib/mp3stream.html#lib.stream.mp3stream.MP3Stream">MP3Stream (class in lib.stream.mp3stream)</a>
+</li>
+      <li><a href="lib/mp3transcoder.html#lib.stream.mp3transcoder.MP3Transcoder">MP3Transcoder (class in lib.stream.mp3transcoder)</a>
 </li>
       <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI">MusicAI (class in mdbapi.musicai)</a>
 </li>
@@ -1407,7 +1464,7 @@
 </li>
       <li><a href="lib/websockets.html#lib.ws.server.MusicDBWebSocketServer">MusicDBWebSocketServer (class in lib.ws.server)</a>
 </li>
-      <li><a href="lib/icecast.html#lib.icecast.IcecastInterface.Mute">Mute() (lib.icecast.IcecastInterface method)</a>
+      <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface.Mute">Mute() (lib.stream.icecast.IcecastInterface method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1436,6 +1493,8 @@
 </li>
       </ul></li>
       <li><a href="lib/websockets.html#lib.ws.websocket.WebSocket.onClose">onClose() (lib.ws.websocket.WebSocket method)</a>
+</li>
+      <li><a href="lib/mp3transcoder.html#lib.stream.mp3transcoder.MP3Transcoder.onDecoderPadAdded">onDecoderPadAdded() (lib.stream.mp3transcoder.MP3Transcoder method)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.dialog.Dialog.onDrawElement">onDrawElement() (lib.clui.dialog.Dialog method)</a>
 
@@ -1703,9 +1762,9 @@
 </li>
       <li><a href="mod/musicai.html#mod.musicai.musicai.StorePrediction">StorePrediction() (mod.musicai.musicai method)</a>
 </li>
-      <li><a href="lib/icecast.html#lib.icecast.IcecastInterface.StreamChunk">StreamChunk() (lib.icecast.IcecastInterface method)</a>
+      <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface.StreamChunk">StreamChunk() (lib.stream.icecast.IcecastInterface method)</a>
 </li>
-      <li><a href="lib/icecast.html#lib.icecast.IcecastInterface.StreamFile">StreamFile() (lib.icecast.IcecastInterface method)</a>
+      <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface.StreamFile">StreamFile() (lib.stream.icecast.IcecastInterface method)</a>
 </li>
       <li><a href="mdbapi/stream.html#mdbapi.stream.StreamingThread">StreamingThread() (in module mdbapi.stream)</a>
 </li>
@@ -1746,6 +1805,8 @@
       <li><a href="mod/tracker.html#mod.tracker.tracker">tracker (class in mod.tracker)</a>
 </li>
       <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase">TrackerDatabase (class in lib.db.trackerdb)</a>
+</li>
+      <li><a href="lib/mp3transcoder.html#lib.stream.mp3transcoder.MP3Transcoder.Transcode">Transcode() (lib.stream.mp3transcoder.MP3Transcoder method)</a>
 </li>
       <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.TriggerEvent">TriggerEvent() (mdbapi.songqueue.SongQueue method)</a>
 </li>
@@ -1798,6 +1859,8 @@
 </li>
       </ul></li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.UpdateStorage">UpdateStorage() (mdbapi.extern.MusicDBExtern method)</a>
+</li>
+      <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface.UpdateTitle">UpdateTitle() (lib.stream.icecast.IcecastInterface method)</a>
 </li>
   </ul></td>
 </tr></table>

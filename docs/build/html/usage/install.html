@@ -128,7 +128,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#mp3-cache">MP3 Cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
@@ -144,6 +143,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -463,6 +467,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
@@ -481,6 +493,17 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/mp3file.html">MP3 File Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
@@ -666,8 +689,9 @@ The following subsections explain how to install MusicDB using this script.</p>
 <li>sed</li>
 <li>git</li>
 <li>icecast</li>
+<li>gstreamer (gst-python, gst-plugins-good, gst-plugins-bad)</li>
 <li>dialog</li>
-<li>gcc/clang</li>
+<li>gcc and clang</li>
 </ul>
 </div></blockquote>
 </div>
@@ -871,7 +895,7 @@ The update process saves the lines with the configuration and restores them afte
 <div><ul class="simple">
 <li><code class="docutils literal"><span class="pre">/musicdb/</span></code> pointing to the WebUI directory (<code class="docutils literal"><span class="pre">$SERVERDIR/webui</span></code>)</li>
 <li><code class="docutils literal"><span class="pre">/musicdb/artwork/</span></code> pointing to the artwork directory (<code class="docutils literal"><span class="pre">$DATADIR/artwork</span></code>)</li>
-<li><code class="docutils literal"><span class="pre">/musicdb/music/</span></code> pointing to the MusicDB mp3 Cache (<code class="docutils literal"><span class="pre">$DATADIR/mp3cache</span></code>)</li>
+<li><code class="docutils literal"><span class="pre">/musicdb/music/</span></code> pointing to the music source directory (<code class="docutils literal"><span class="pre">*/music</span></code>)</li>
 <li><code class="docutils literal"><span class="pre">/musicdb/docs/</span></code> pointing to the documentation directory (<code class="docutils literal"><span class="pre">$SERVERDIR/docs</span></code>)</li>
 </ul>
 </div></blockquote>
@@ -883,8 +907,8 @@ The update process saves the lines with the configuration and restores them afte
    <span class="nb">Require</span> <span class="k">all</span> granted
 <span class="nt">&lt;/Directory&gt;</span>
 
-<span class="nb">Alias</span> <span class="sx">/musicdb/music/</span> <span class="s2">&quot;/opt/musicdb/data/mp3cache/&quot;</span>
-<span class="nt">&lt;Directory</span> <span class="s">&quot;/opt/musicdb/data/mp3cache&quot;</span><span class="nt">&gt;</span>
+<span class="nb">Alias</span> <span class="sx">/musicdb/music/</span> <span class="s2">&quot;/data/music/&quot;</span>
+<span class="nt">&lt;Directory</span> <span class="s">&quot;/data/music</span><span class="nt">&gt;</span>
    <span class="nb">AllowOverride</span> <span class="k">None</span>
    <span class="nb">Options</span> +FollowSymLinks
    <span class="nb">Require</span> <span class="k">all</span> granted

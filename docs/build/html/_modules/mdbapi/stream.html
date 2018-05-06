@@ -127,7 +127,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#music-database">Music Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#mp3-cache">MP3 Cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
@@ -143,6 +142,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -462,6 +466,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
@@ -480,6 +492,17 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/mp3file.html">MP3 File Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/musicdb.html">MusicDatabase</a><ul>
@@ -648,7 +671,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This module implements the stream that streams the music.</span>
 <span class="sd">This module provides a thread that takes the songs from a :class:`mdbapi.songqueue.SongQueue` to stream them via Icecast.</span>
-<span class="sd">It manages the connection to the Icecast server using the :mod:`lib.icecast` module.</span>
+<span class="sd">It manages the connection to the Icecast server using the :mod:`lib.stream.icecast` module.</span>
 <span class="sd">Further more this module provides some callback interfaces to inform the rest of MusicDB about the state of the stream.</span>
 
 <span class="sd">So this module consist of the following parts:</span>
@@ -767,7 +790,6 @@
 <span class="kn">from</span> <span class="nn">lib.cfg.musicdb</span>    <span class="k">import</span> <span class="n">MusicDBConfig</span>
 <span class="kn">from</span> <span class="nn">lib.db.musicdb</span>     <span class="k">import</span> <span class="n">MusicDatabase</span>
 <span class="kn">from</span> <span class="nn">mdbapi.songqueue</span>      <span class="k">import</span> <span class="n">SongQueue</span>
-<span class="kn">from</span> <span class="nn">mdbapi.musiccache</span>  <span class="k">import</span> <span class="n">MusicCache</span>
 <span class="kn">from</span> <span class="nn">mdbapi.randy</span>       <span class="k">import</span> <span class="n">Randy</span>
 
 
@@ -864,19 +886,19 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This thread manages the streaming of the songs from the Song Queue to the Icecast server.</span>
 
-<span class="sd">    The tread tracks the played song using the :doc:`/mdbapi/tracker` module.</span>
+<span class="sd">    The thread tracks the played song using the :doc:`/mdbapi/tracker` module.</span>
 <span class="sd">    It also tracks randomly added songs assuming the user skips or removes songs that don&#39;t fit.</span>
 <span class="sd">    Only completely played songs will be considered.</span>
 <span class="sd">    Skipped songs will be ignored.</span>
 
-<span class="sd">    The thread tiggers the following events:</span>
+<span class="sd">    The thread triggers the following events:</span>
 
 <span class="sd">        * ``StatusChanged``: When the play-state</span>
 <span class="sd">        * ``TimeChanged``: To update the current streaming progress of a song</span>
 
 <span class="sd">    The ``TimeChanged`` event gets triggered approximately every second.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">lib.icecast</span>        <span class="k">import</span> <span class="n">IcecastInterface</span>
+    <span class="kn">from</span> <span class="nn">lib.stream.icecast</span> <span class="k">import</span> <span class="n">IcecastInterface</span>
     <span class="kn">from</span> <span class="nn">mdbapi.tracker</span>     <span class="k">import</span> <span class="n">Tracker</span>
 
     <span class="k">global</span> <span class="n">Config</span>
@@ -887,7 +909,7 @@
     <span class="c1"># Create all interfaces that are needed by this Thread</span>
     <span class="n">musicdb</span> <span class="o">=</span> <span class="n">MusicDatabase</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
     <span class="n">tracker</span> <span class="o">=</span> <span class="n">Tracker</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
-    <span class="n">cache</span>   <span class="o">=</span> <span class="n">MusicCache</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
+    <span class="n">filesystem</span> <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
     <span class="n">queue</span>   <span class="o">=</span> <span class="n">SongQueue</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
     <span class="n">randy</span>   <span class="o">=</span> <span class="n">Randy</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
     <span class="n">icecast</span> <span class="o">=</span> <span class="n">IcecastInterface</span><span class="p">(</span>
@@ -920,11 +942,18 @@
 
         <span class="c1"># Get current song that shall be streamed.</span>
         <span class="n">currententryid</span><span class="p">,</span> <span class="n">currentsongid</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">currententryid</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Waiting for 5s to try to get a new song to play.&quot;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="k">continue</span>
+
         <span class="n">mdbsong</span>  <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">currentsongid</span><span class="p">)</span>
-        <span class="n">songpath</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">GetSongPath</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">,</span> <span class="n">absolute</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">songpath</span> <span class="o">=</span> <span class="n">filesystem</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
 
 
         <span class="c1"># Stream song</span>
+        <span class="n">icecast</span><span class="o">.</span><span class="n">UpdateTitle</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Start streaming </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">songpath</span><span class="p">)</span>
         <span class="n">timeplayed</span>    <span class="o">=</span> <span class="mi">0</span>
         <span class="n">lasttimestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">frameinfo</span> <span class="ow">in</span> <span class="n">icecast</span><span class="o">.</span><span class="n">StreamFile</span><span class="p">(</span><span class="n">songpath</span><span class="p">):</span>
@@ -958,9 +987,12 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># when the for loop streaming the current song gets not left via break,</span>
             <span class="c1"># then the whole song was streamed. So add that song to the trackers list</span>
+            <span class="c1"># Also update the last time played information.</span>
             <span class="c1"># In case the loop ended because Icecast failed, update the Status</span>
             <span class="k">if</span> <span class="n">icecast</span><span class="o">.</span><span class="n">IsConnected</span><span class="p">():</span>
                 <span class="n">tracker</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">currentsongid</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">Config</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">disablestats</span><span class="p">:</span>
+                    <span class="n">musicdb</span><span class="o">.</span><span class="n">UpdateSongStatistic</span><span class="p">(</span><span class="n">currentsongid</span><span class="p">,</span> <span class="s2">&quot;lastplayed&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">icecast</span><span class="o">.</span><span class="n">Mute</span><span class="p">()</span>
                 <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="kc">False</span>

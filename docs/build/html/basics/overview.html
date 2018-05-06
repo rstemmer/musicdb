@@ -36,7 +36,7 @@
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="MusicDB 3.0.0 documentation" href="../index.html"/>
-        <link rel="next" title="MusicDB Test VMs" href="testvm.html"/>
+        <link rel="next" title="MusicDB Stream" href="streaming.html"/>
         <link rel="prev" title="MusicDB Commandline Modules" href="mods.html"/> 
 
   
@@ -128,7 +128,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#music-database">Music Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mp3-cache">MP3 Cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
@@ -144,6 +143,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="testvm.html">MusicDB Test VMs</a><ul>
@@ -463,6 +467,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
@@ -481,6 +493,17 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/mp3file.html">MP3 File Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
@@ -638,7 +661,7 @@
 It shows what happens with the music and its annotated information like the meta data and artworks.
 Furthermore the image shows how everything is connected and how MusicDB integrates in the system.</p>
 <div class="figure">
-<img alt="../_images/Map2.svg" src="../_images/Map2.svg" /></div>
+<img alt="../_images/Map2_1.svg" src="../_images/Map2_1.svg" /></div>
 <p>In the following sections, I describe the tasks of each block and how the interact with each other.
 The sections represent the colors of the rectangles and arrows, that represent the components of the environment of MusicDB.</p>
 <div class="section" id="music-information-purple">
@@ -653,8 +676,8 @@ As the arrow shows, MusicDB will never change anything in the users files.</p>
 <div class="section" id="musicdb-data-blue">
 <h2>MusicDB Data (Blue)<a class="headerlink" href="#musicdb-data-blue" title="Permalink to this headline">¶</a></h2>
 <p>The music files get read by <a class="reference internal" href="#musicdb-components-green">MusicDB Components (Green)</a>.
-At this point, the Music Collection gets split in three separate kind of information:
-The <a class="reference internal" href="#artwork-cache">Artwork Cache</a> for the artworks, the <a class="reference internal" href="#mp3-cache">MP3 Cache</a> for the audio and the <a class="reference internal" href="#music-database">Music Database</a> for the meta data.</p>
+At this point, the Music Collection gets split in two separate kind of information:
+The <a class="reference internal" href="#artwork-cache">Artwork Cache</a> for the artworks and the <a class="reference internal" href="#music-database">Music Database</a> for the meta data.</p>
 <div class="section" id="music-database">
 <h3>Music Database<a class="headerlink" href="#music-database" title="Permalink to this headline">¶</a></h3>
 <p>The Music Database is the central storage for information of music.
@@ -665,11 +688,6 @@ A detailed explanation of the database can be found in the <a class="reference i
 <div class="section" id="artwork-cache">
 <h3>Artwork Cache<a class="headerlink" href="#artwork-cache" title="Permalink to this headline">¶</a></h3>
 <p>The artwork cache contains all albums artworks and scaled version of those artworks managed by the <a class="reference internal" href="../mdbapi/artwork.html"><span class="doc">Artwork Management</span></a>.</p>
-</div>
-<div class="section" id="mp3-cache">
-<h3>MP3 Cache<a class="headerlink" href="#mp3-cache" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference internal" href="../mdbapi/musiccache.html"><span class="doc">MusicCache</span></a> has for each song in the users music collection an mp3 file.
-All the cached audio files have the exact same encoding so that they can be used for streaming with the <a class="reference internal" href="../mdbapi/stream.html"><span class="doc">Streaming Server</span></a> module.</p>
 </div>
 <div class="section" id="musicdb-data-configuration">
 <h3>MusicDB Data &amp; Configuration<a class="headerlink" href="#musicdb-data-configuration" title="Permalink to this headline">¶</a></h3>
@@ -684,7 +702,7 @@ There are also files storing the state of the server (selected genres) and allow
 <div class="section" id="command-line-modules">
 <h3>Command-Line Modules<a class="headerlink" href="#command-line-modules" title="Permalink to this headline">¶</a></h3>
 <p>The command line modules provide the interface from the users music collection to the MusicDB world.
-These modules manage the <a class="reference internal" href="#music-database">Music Database</a>, the <a class="reference internal" href="#artwork-cache">Artwork Cache</a>, the <a class="reference internal" href="#mp3-cache">MP3 Cache</a> and many more.
+These modules manage the <a class="reference internal" href="#music-database">Music Database</a>, the <a class="reference internal" href="#artwork-cache">Artwork Cache</a> and many more.
 Details of the modules can be found in the <a class="reference internal" href="mods.html"><span class="doc">MusicDB Commandline Modules</span></a> documentation.
 One special module is the <a class="reference internal" href="#musicdb-server">MusicDB Server</a> module that will be described later in this section.</p>
 </div>

@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="MusicDB 3.0.0 documentation" href="../index.html"/>
         <link rel="next" title="NamedPipe" href="namedpipe.html"/>
-        <link rel="prev" title="MP3 File Interface" href="mp3file.html"/> 
+        <link rel="prev" title="MP3 Transcoder" href="mp3transcoder.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -128,7 +128,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#mp3-cache">MP3 Cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
@@ -144,6 +143,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -463,6 +467,14 @@
 <li class="toctree-l2"><a class="reference internal" href="filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
@@ -481,6 +493,17 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mp3file.html">MP3 File Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">MusicDatabase</a><ul>
@@ -2142,7 +2165,7 @@ But only if the new approval level is greater or equal to the already set one.</
 <p>Statistics are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>Valid:</strong> <code class="docutils literal"><span class="pre">&quot;likes&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;dislikes&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;favorite&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;disabled&quot;</span></code></li>
+<li><strong>Valid:</strong> <code class="docutils literal"><span class="pre">&quot;likes&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;dislikes&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;favorite&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;disabled&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;lastplayed&quot;</span></code></li>
 <li><strong>Deprecated:</strong> <code class="docutils literal"><span class="pre">&quot;qskips&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;qadds&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;qrndadds&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;qremoves&quot;</span></code></li>
 </ul>
 </div></blockquote>
@@ -2163,6 +2186,7 @@ But only if the new approval level is greater or equal to the already set one.</
 <li><code class="docutils literal"><span class="pre">1</span></code>: Loved song</li>
 </ul>
 </div></blockquote>
+<p><code class="docutils literal"><span class="pre">lastplayed</span></code> expects the unix time as integer given as value.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2170,7 +2194,7 @@ But only if the new approval level is greater or equal to the already set one.</
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>songid</strong> (<em>int</em>) – ID of the song</li>
 <li><strong>stat</strong> (<em>str</em>) – Name of the statistics to update</li>
-<li><strong>value</strong> (<em>str</em>) – How to update</li>
+<li><strong>value</strong> (<em>str/int</em>) – How to update</li>
 </ul>
 </td>
 </tr>
@@ -2180,6 +2204,8 @@ But only if the new approval level is greater or equal to the already set one.</
 <tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
 <li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>songid</em> is not an integer or string</li>
 <li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – if stats or value have an invalid value. Deprecated statistics do not raise an exception.</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <code class="docutils literal"><span class="pre">stat</span> <span class="pre">==</span> <span class="pre">&quot;lastplayed&quot;</span></code> but <code class="docutils literal"><span class="pre">value</span></code> is not an integer</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When an expected unix time is less than 0</li>
 </ul>
 </td>
 </tr>

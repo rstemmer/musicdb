@@ -127,7 +127,6 @@
 <li class="toctree-l2"><a class="reference internal" href="basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="basics/overview.html#music-database">Music Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/overview.html#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="basics/overview.html#mp3-cache">MP3 Cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
@@ -143,6 +142,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -462,6 +466,14 @@
 <li class="toctree-l2"><a class="reference internal" href="lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
@@ -480,6 +492,17 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lib/mp3file.html">MP3 File Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lib/musicdb.html">MusicDatabase</a><ul>
@@ -695,6 +718,7 @@ Those chapters are for users as well as for developers.</p>
 <li class="toctree-l1"><a class="reference internal" href="basics/logging.html">Handling log-files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basics/mods.html">MusicDB Commandline Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basics/overview.html">Overview of MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics/streaming.html">MusicDB Stream</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basics/testvm.html">MusicDB Test VMs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basics/webapi.html">MusicDB Websocket API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basics/workflow.html">Workflow for development</a></li>
@@ -812,10 +836,13 @@ When developing a new module for MusicDB, never bypass these libraries!</p>
 <li class="toctree-l1"><a class="reference internal" href="lib/database.html">Database</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lib/fileprocessing.html">Fileprocessing Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lib/filesystem.html">Filesystem Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lib/gstreamer.html">GStreamer Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lib/hdf5storage.html">HDF5Storage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lib/icecast.html">Icecast Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lib/metatags.html">Meta Tags</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lib/mp3file.html">MP3 File Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lib/mp3stream.html">MP3 Stream Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lib/mp3transcoder.html">MP3 Transcoder</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lib/musicdb.html">MusicDatabase</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lib/namedpipe.html">NamedPipe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lib/pidfile.html">PID File Handling</a></li>

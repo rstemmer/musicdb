@@ -127,7 +127,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#music-database">Music Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#mp3-cache">MP3 Cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
@@ -143,6 +142,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -462,6 +466,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
@@ -480,6 +492,17 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/mp3file.html">MP3 File Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/musicdb.html">MusicDatabase</a><ul>
@@ -804,6 +827,8 @@
 
                     <span class="n">dst</span> <span class="o">=</span> <span class="n">Blacklist</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
                     <span class="n">src</span> <span class="o">=</span> <span class="n">loadedlists</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">src</span><span class="p">:</span>
+                        <span class="k">continue</span>    <span class="c1"># when there are no entries loaded, keep the generated list of None-entries</span>
 
                     <span class="c1"># The following python magic inserts as much of src at the end of dst, as fits.</span>
                     <span class="c1"># if src must be cut, the first elements get removed</span>
@@ -891,7 +916,7 @@
 
         <span class="n">filterlist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span><span class="o">.</span><span class="n">GetFilterList</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">filterlist</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No Genre selected! </span><span class="se">\033</span><span class="s2">[1;30(Selecting random song from the whole collection)&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No Genre selected! </span><span class="se">\033</span><span class="s2">[1;30m(Selecting random song from the whole collection)&quot;</span><span class="p">)</span>
 
         <span class="c1"># Get Random Song - this may take several tries </span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Randy starts looking for a random song …&quot;</span><span class="p">)</span>
@@ -906,7 +931,7 @@
                 <span class="k">return</span> <span class="kc">None</span>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="n">song</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;There is no song fulfilling the constraints! </span><span class="se">\033</span><span class="s2">[1;30(Check the stage 1 constraints)&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;There is no song fulfilling the constraints! </span><span class="se">\033</span><span class="s2">[1;30m(Check the stage 1 constraints)&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">None</span>
 
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Candidate for next song: </span><span class="se">\033</span><span class="s2">[0;35m&quot;</span> <span class="o">+</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>

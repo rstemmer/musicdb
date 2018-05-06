@@ -128,7 +128,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#mp3-cache">MP3 Cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
@@ -144,6 +143,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -463,6 +467,14 @@
 <li class="toctree-l2"><a class="reference internal" href="filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
@@ -481,6 +493,17 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mp3file.html">MP3 File Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="musicdb.html">MusicDatabase</a><ul>
@@ -632,10 +655,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-lib.icecast">
-<span id="icecast-interface"></span><h1>Icecast Interface<a class="headerlink" href="#module-lib.icecast" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-lib.stream.icecast">
+<span id="icecast-interface"></span><h1>Icecast Interface<a class="headerlink" href="#module-lib.stream.icecast" title="Permalink to this headline">¶</a></h1>
 <p>This module implements the interface to <a class="reference external" href="https://icecast.org/">Icecast</a>.</p>
-<p>The stream uses the python interface <a class="reference external" href="https://github.com/edne/shouty">Shouty</a>
+<p>The stream uses the <code class="xref py py-mod docutils literal"><span class="pre">lib.stream.libshout2</span></code> module as wrapper
 to <a class="reference external" href="https://github.com/xiph/Icecast-libshout">libshout</a>
 from the <a class="reference external" href="https://icecast.org/">Icecast</a> project.</p>
 <div class="section" id="introduction-to-icecast">
@@ -701,10 +724,9 @@ Further more it must be equal to the name definded in the detailed mount specifi
 <div class="section" id="icecast-class">
 <h2>Icecast Class<a class="headerlink" href="#icecast-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="lib.icecast.IcecastInterface">
-<em class="property">class </em><code class="descclassname">lib.icecast.</code><code class="descname">IcecastInterface</code><span class="sig-paren">(</span><em>port</em>, <em>user</em>, <em>password</em>, <em>mountname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/icecast.html#IcecastInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.icecast.IcecastInterface" title="Permalink to this definition">¶</a></dt>
-<dd><p>This Icecast interface manages the connection to the Icecast server
-and provides the server with the mp3 files cached in the MusicDB mp3 Cache (<a class="reference internal" href="../mod/cache.html#module-mod.cache" title="mod.cache"><code class="xref py py-mod docutils literal"><span class="pre">mod.cache</span></code></a>, <code class="xref py py-mod docutils literal"><span class="pre">mdbapi:musiccache</span></code>).</p>
+<dt id="lib.stream.icecast.IcecastInterface">
+<em class="property">class </em><code class="descclassname">lib.stream.icecast.</code><code class="descname">IcecastInterface</code><span class="sig-paren">(</span><em>port</em>, <em>user</em>, <em>password</em>, <em>mountname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>This Icecast interface manages the connection to the Icecast server.</p>
 <p>The following values for setting up the connection via libshout are hard coded.
 They can easily be changed in the Icecast configuration in the <code class="docutils literal"><span class="pre">icecast/mount</span></code> section.</p>
 <blockquote>
@@ -768,11 +790,11 @@ They can easily be changed in the Icecast configuration in the <code class="docu
 </tbody>
 </table>
 </div></blockquote>
-<p>The Icecast Interface class can stream any data to the Icecast Server via <a class="reference internal" href="#lib.icecast.IcecastInterface.StreamChunk" title="lib.icecast.IcecastInterface.StreamChunk"><code class="xref py py-meth docutils literal"><span class="pre">StreamChunk()</span></code></a>.
+<p>The Icecast Interface class can stream any data to the Icecast Server via <a class="reference internal" href="#lib.stream.icecast.IcecastInterface.StreamChunk" title="lib.stream.icecast.IcecastInterface.StreamChunk"><code class="xref py py-meth docutils literal"><span class="pre">StreamChunk()</span></code></a>.
 In general this should be not necessary!
-Instead only use the <a class="reference internal" href="#lib.icecast.IcecastInterface.StreamFile" title="lib.icecast.IcecastInterface.StreamFile"><code class="xref py py-meth docutils literal"><span class="pre">StreamFile()</span></code></a> method that streams a mp3 file addressed by its path.
-Advantage of the <a class="reference internal" href="#lib.icecast.IcecastInterface.StreamFile" title="lib.icecast.IcecastInterface.StreamFile"><code class="xref py py-meth docutils literal"><span class="pre">StreamFile()</span></code></a> is, beside a clean frame wise transfer of the data to the server,
-that the stream can be muted via <a class="reference internal" href="#lib.icecast.IcecastInterface.Mute" title="lib.icecast.IcecastInterface.Mute"><code class="xref py py-meth docutils literal"><span class="pre">Mute()</span></code></a>.</p>
+Instead only use the <a class="reference internal" href="#lib.stream.icecast.IcecastInterface.StreamFile" title="lib.stream.icecast.IcecastInterface.StreamFile"><code class="xref py py-meth docutils literal"><span class="pre">StreamFile()</span></code></a> method that streams a mp3 file addressed by its path.
+Advantage of the <a class="reference internal" href="#lib.stream.icecast.IcecastInterface.StreamFile" title="lib.stream.icecast.IcecastInterface.StreamFile"><code class="xref py py-meth docutils literal"><span class="pre">StreamFile()</span></code></a> is, beside a clean frame wise transfer of the data to the server,
+that the stream can be muted via <a class="reference internal" href="#lib.stream.icecast.IcecastInterface.Mute" title="lib.stream.icecast.IcecastInterface.Mute"><code class="xref py py-meth docutils literal"><span class="pre">Mute()</span></code></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -803,8 +825,8 @@ that the stream can be muted via <a class="reference internal" href="#lib.icecas
 </pre></div>
 </div>
 <dl class="method">
-<dt id="lib.icecast.IcecastInterface.Connect">
-<code class="descname">Connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/icecast.html#IcecastInterface.Connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.icecast.IcecastInterface.Connect" title="Permalink to this definition">¶</a></dt>
+<dt id="lib.stream.icecast.IcecastInterface.Connect">
+<code class="descname">Connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tries to connect to Icecast.</p>
 <p>If already connected, only <code class="docutils literal"><span class="pre">True</span></code> gets returned with out opening again.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -818,8 +840,8 @@ that the stream can be muted via <a class="reference internal" href="#lib.icecas
 </dd></dl>
 
 <dl class="method">
-<dt id="lib.icecast.IcecastInterface.Disconnect">
-<code class="descname">Disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/icecast.html#IcecastInterface.Disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.icecast.IcecastInterface.Disconnect" title="Permalink to this definition">¶</a></dt>
+<dt id="lib.stream.icecast.IcecastInterface.Disconnect">
+<code class="descname">Disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Disconnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tries to close the Icecast connection.</p>
 <p>If already disconnected, only <code class="docutils literal"><span class="pre">True</span></code> gets returned with out disconnecting again.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -833,8 +855,8 @@ that the stream can be muted via <a class="reference internal" href="#lib.icecas
 </dd></dl>
 
 <dl class="method">
-<dt id="lib.icecast.IcecastInterface.IsConnected">
-<code class="descname">IsConnected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/icecast.html#IcecastInterface.IsConnected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.icecast.IcecastInterface.IsConnected" title="Permalink to this definition">¶</a></dt>
+<dt id="lib.stream.icecast.IcecastInterface.IsConnected">
+<code class="descname">IsConnected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.IsConnected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.IsConnected" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -846,10 +868,10 @@ that the stream can be muted via <a class="reference internal" href="#lib.icecas
 </dd></dl>
 
 <dl class="method">
-<dt id="lib.icecast.IcecastInterface.Mute">
-<code class="descname">Mute</code><span class="sig-paren">(</span><em>state=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/icecast.html#IcecastInterface.Mute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.icecast.IcecastInterface.Mute" title="Permalink to this definition">¶</a></dt>
+<dt id="lib.stream.icecast.IcecastInterface.Mute">
+<code class="descname">Mute</code><span class="sig-paren">(</span><em>state=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Mute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Mute" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets the Icecast Interface into a mute state (when <code class="docutils literal"><span class="pre">state</span> <span class="pre">==</span> <span class="pre">True</span></code>).
-Then, the method <a class="reference internal" href="#lib.icecast.IcecastInterface.StreamFile" title="lib.icecast.IcecastInterface.StreamFile"><code class="xref py py-meth docutils literal"><span class="pre">StreamFile()</span></code></a> streams silence instead of the file content.
+Then, the method <a class="reference internal" href="#lib.stream.icecast.IcecastInterface.StreamFile" title="lib.stream.icecast.IcecastInterface.StreamFile"><code class="xref py py-meth docutils literal"><span class="pre">StreamFile()</span></code></a> streams silence instead of the file content.
 After leaving the mute state, the file streaming continues at the position it got muted (=paused)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -864,8 +886,8 @@ After leaving the mute state, the file streaming continues at the position it go
 </dd></dl>
 
 <dl class="method">
-<dt id="lib.icecast.IcecastInterface.StreamChunk">
-<code class="descname">StreamChunk</code><span class="sig-paren">(</span><em>chunk</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/icecast.html#IcecastInterface.StreamChunk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.icecast.IcecastInterface.StreamChunk" title="Permalink to this definition">¶</a></dt>
+<dt id="lib.stream.icecast.IcecastInterface.StreamChunk">
+<code class="descname">StreamChunk</code><span class="sig-paren">(</span><em>chunk</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.StreamChunk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.StreamChunk" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method send a chunk of a file to the Icecast server.
 The method synchronizes with Icecast before sending the data.
 This is a blocking process!</p>
@@ -900,17 +922,17 @@ the method disconnects from the Server.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="lib.icecast.IcecastInterface.StreamFile">
-<code class="descname">StreamFile</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/icecast.html#IcecastInterface.StreamFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.icecast.IcecastInterface.StreamFile" title="Permalink to this definition">¶</a></dt>
+<dt id="lib.stream.icecast.IcecastInterface.StreamFile">
+<code class="descname">StreamFile</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.StreamFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.StreamFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a generator that sends a mp3 file to the Icecast server.
 The mp3 file gets split into its frames, and sent frame wise.</p>
 <p>After sending one chunk, the generator returns a dictionary with exact the keys and values
-that gets returned by <a class="reference internal" href="mp3file.html#lib.mp3file.MP3File.Frames" title="lib.mp3file.MP3File.Frames"><code class="xref py py-meth docutils literal"><span class="pre">lib.mp3file.MP3File.Frames()</span></code></a> and  <a class="reference internal" href="mp3file.html#lib.mp3file.MP3File.AnalyzeHeader" title="lib.mp3file.MP3File.AnalyzeHeader"><code class="xref py py-meth docutils literal"><span class="pre">lib.mp3file.MP3File.AnalyzeHeader()</span></code></a></p>
+that gets returned by <a class="reference internal" href="mp3stream.html#lib.stream.mp3stream.MP3Stream.Frames" title="lib.stream.mp3stream.MP3Stream.Frames"><code class="xref py py-meth docutils literal"><span class="pre">lib.stream.mp3stream.MP3Stream.Frames()</span></code></a> and  <a class="reference internal" href="mp3stream.html#lib.stream.mp3stream.MP3Stream.AnalyzeHeader" title="lib.stream.mp3stream.MP3Stream.AnalyzeHeader"><code class="xref py py-meth docutils literal"><span class="pre">lib.stream.mp3stream.MP3Stream.AnalyzeHeader()</span></code></a></p>
 <p>This frame dictionary gets extended by one further key: <code class="docutils literal"><span class="pre">muted</span></code>.
 When this value is <code class="docutils literal"><span class="pre">True</span></code>, then a silent frame got sent.
 In this case, all information in the dictionary relate to the next frame from the mp3 file that will be send when the stream continues.
 When <code class="docutils literal"><span class="pre">False</span></code> then the information are related to the actual sent frame.</p>
-<p>Streaming of the file using this method allows to pause the audio stream by calling the <a class="reference internal" href="#lib.icecast.IcecastInterface.Mute" title="lib.icecast.IcecastInterface.Mute"><code class="xref py py-meth docutils literal"><span class="pre">Mute()</span></code></a> method.
+<p>Streaming of the file using this method allows to pause the audio stream by calling the <a class="reference internal" href="#lib.stream.icecast.IcecastInterface.Mute" title="lib.stream.icecast.IcecastInterface.Mute"><code class="xref py py-meth docutils literal"><span class="pre">Mute()</span></code></a> method.
 Then instead of the frames from the file, a hard coded frame of pure silence gets streamed as long as the mute-state persists.
 Instead of one silent frame, 10 frames will be streamed at once.
 This is about 261ms of silence.</p>
@@ -944,7 +966,7 @@ This is about 261ms of silence.</p>
 }</p></object>
 <p>The silent frame is optimized to be injected in the mp3-files generated by MusicDB for the MP3 Cache.
 The mp3 file was generated as shown in the script example below.
-Then the first frame was captured via the <a class="reference internal" href="mp3file.html#lib.mp3file.MP3File.Frames" title="lib.mp3file.MP3File.Frames"><code class="xref py py-meth docutils literal"><span class="pre">lib.mp3file.MP3File.Frames()</span></code></a> method.</p>
+Then the first frame was captured via the <a class="reference internal" href="mp3stream.html#lib.stream.mp3stream.MP3Stream.Frames" title="lib.stream.mp3stream.MP3Stream.Frames"><code class="xref py py-meth docutils literal"><span class="pre">lib.stream.mp3stream.MP3Stream.Frames()</span></code></a> method.</p>
 <blockquote>
 <div><div class="highlight-bash"><div class="highlight"><pre><span></span>ffmpeg -filter_complex <span class="nv">aevalsrc</span><span class="o">=</span><span class="m">0</span> -acodec libmp3lame -ab 320k -t <span class="m">1</span> monosilence.mp3
 ffmpeg -i monosilence.mp3 -ab 320k -ac <span class="m">2</span> stereosilence.mp3
@@ -974,6 +996,24 @@ ffmpeg -i monosilence.mp3 -ab 320k -ac <span class="m">2</span> stereosilence.mp
             <span class="p">))</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.stream.icecast.IcecastInterface.UpdateTitle">
+<code class="descname">UpdateTitle</code><span class="sig-paren">(</span><em>title</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.UpdateTitle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.UpdateTitle" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method updates the stream title.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>title</strong> (<em>str</em>) – A string as new title for the stream - for example the song name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> on success, <code class="docutils literal"><span class="pre">False</span></code> otherwise</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <code class="docutils literal"><span class="pre">title</span></code> is not of type string</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>

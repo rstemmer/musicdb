@@ -127,7 +127,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#music-database">Music Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#mp3-cache">MP3 Cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
@@ -143,6 +142,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -462,6 +466,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
@@ -480,6 +492,17 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/mp3file.html">MP3 File Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/musicdb.html">MusicDatabase</a><ul>
@@ -924,7 +947,9 @@
 <span class="sd">        The method returns element 0 from the queue which is the current song that can be streamed or gets already streamed.</span>
 <span class="sd">        The songs remain in the queue until they got completely streamed.</span>
 
-<span class="sd">        If the queue is empty, ``(None, None)`` gets returned.</span>
+<span class="sd">        When the queue is empty, a new random song gets added.</span>
+<span class="sd">        This is the exact same song that then will be returned by this method.</span>
+<span class="sd">        If adding a new song fails, ``(None, None)`` gets returned.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            A tuple (entryid, songid).</span>
@@ -951,10 +976,17 @@
         <span class="k">global</span> <span class="n">QueueLock</span>
 
         <span class="k">with</span> <span class="n">QueueLock</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">entry</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">entry</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="c1"># Empty Queue? Add a random song!</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AddRandomSong</span><span class="p">()</span>
+
+            <span class="c1"># Still empty (no random song found)? Then return (None, None). Nothing to do…</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;Queue run empty! </span><span class="se">\033</span><span class="s2">[1;30m(Check constraints for random song selection and check if there are songs at all)&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+            <span class="c1"># Select first song from queue</span>
+            <span class="n">entry</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="n">entry</span></div>
 
@@ -1121,10 +1153,14 @@
 <span class="sd">        If the album ID is ``None``, the method :meth:`mdbapi.randy.Randy.GetSong` will be used to get a random song from the activated genres.</span>
 
 <span class="sd">        After selecting the random song, the :meth:`~AddSong` method gets used to insert the new song into the queue.</span>
+<span class="sd">        If there is no song found by Randy, then nothing gets added to the queue and ``False`` will be returned.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            position (str): Defines the position where the song gets inserted.</span>
 <span class="sd">            albumid (int/NoneType): ID of the album from that the song will be selected, or ``None`` for selecting a song from the activated genres.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` when a random song got added to the queue. Otherwise ``False``.</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            TypeError: When one of the types of the arguments are not correct</span>
@@ -1139,7 +1175,11 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">mdbsong</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">GetSong</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">mdbsong</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
 
 
 

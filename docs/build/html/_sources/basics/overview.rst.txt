@@ -5,7 +5,7 @@ The following graph shows a complete overview of MusicDB's information flow thro
 It shows what happens with the music and its annotated information like the meta data and artworks.
 Furthermore the image shows how everything is connected and how MusicDB integrates in the system.
 
-.. figure:: ../images/Map2.svg
+.. figure:: ../images/Map2_1.svg
 
 In the following sections, I describe the tasks of each block and how the interact with each other.
 The sections represent the colors of the rectangles and arrows, that represent the components of the environment of MusicDB.
@@ -26,8 +26,8 @@ MusicDB Data (Blue)
 -------------------
 
 The music files get read by `MusicDB Components (Green)`_.
-At this point, the Music Collection gets split in three separate kind of information:
-The `Artwork Cache`_ for the artworks, the `MP3 Cache`_ for the audio and the `Music Database`_ for the meta data.
+At this point, the Music Collection gets split in two separate kind of information:
+The `Artwork Cache`_ for the artworks and the `Music Database`_ for the meta data.
 
 Music Database
 ^^^^^^^^^^^^^^
@@ -41,12 +41,6 @@ Artwork Cache
 ^^^^^^^^^^^^^
 
 The artwork cache contains all albums artworks and scaled version of those artworks managed by the :doc:`/mdbapi/artwork`.
-
-MP3 Cache
-^^^^^^^^^
-
-The :doc:`/mdbapi/musiccache` has for each song in the users music collection an mp3 file.
-All the cached audio files have the exact same encoding so that they can be used for streaming with the :doc:`/mdbapi/stream` module.
 
 MusicDB Data & Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -65,7 +59,7 @@ Command-Line Modules
 ^^^^^^^^^^^^^^^^^^^^
 
 The command line modules provide the interface from the users music collection to the MusicDB world.
-These modules manage the `Music Database`_, the `Artwork Cache`_, the `MP3 Cache`_ and many more.
+These modules manage the `Music Database`_, the `Artwork Cache`_ and many more.
 Details of the modules can be found in the :doc:`/basics/mods` documentation.
 One special module is the `MusicDB Server`_ module that will be described later in this section.
 

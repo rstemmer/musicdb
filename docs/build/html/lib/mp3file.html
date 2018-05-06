@@ -36,7 +36,7 @@
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="MusicDB 3.0.0 documentation" href="../index.html"/>
-        <link rel="next" title="MusicDatabase" href="musicdb.html"/>
+        <link rel="next" title="MP3 Stream Interface" href="mp3stream.html"/>
         <link rel="prev" title="Meta Tags" href="metatags.html"/> 
 
   
@@ -128,7 +128,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#mp3-cache">MP3 Cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
@@ -144,6 +143,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -463,6 +467,14 @@
 <li class="toctree-l2"><a class="reference internal" href="filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
@@ -481,6 +493,17 @@
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">MP3 File Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="musicdb.html">MusicDatabase</a><ul>
@@ -632,17 +655,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-lib.mp3file">
-<span id="mp3-file-interface"></span><h1>MP3 File Interface<a class="headerlink" href="#module-lib.mp3file" title="Permalink to this headline">¶</a></h1>
-<p>This module provides a class to read mp3 files frame wise.
+  <div class="section" id="mp3-file-interface">
+<h1>MP3 File Interface<a class="headerlink" href="#mp3-file-interface" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This module will no longer be used in <em>MusicDB</em>.
+It may get removed in future.</p>
+<p class="last">What this module does is now done by <a class="reference internal" href="mp3stream.html"><span class="doc">MP3 Stream Interface</span></a>.</p>
+</div>
+<span class="target" id="module-lib.stream.mp3file"></span><p>This module provides a class to read mp3 files frame wise.
 Decoding is not part of it.</p>
 <div class="section" id="mp3file-class">
 <h2>MP3File Class<a class="headerlink" href="#mp3file-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="lib.mp3file.MP3File">
-<em class="property">class </em><code class="descclassname">lib.mp3file.</code><code class="descname">MP3File</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/mp3file.html#MP3File"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.mp3file.MP3File" title="Permalink to this definition">¶</a></dt>
+<dt id="lib.stream.mp3file.MP3File">
+<em class="property">class </em><code class="descclassname">lib.stream.mp3file.</code><code class="descname">MP3File</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class allows frame wise reading of an mp3 file.
-This is done by the <a class="reference internal" href="#lib.mp3file.MP3File.Frames" title="lib.mp3file.MP3File.Frames"><code class="xref py py-meth docutils literal"><span class="pre">Frames()</span></code></a> generator.
+This is done by the <a class="reference internal" href="#lib.stream.mp3file.MP3File.Frames" title="lib.stream.mp3file.MP3File.Frames"><code class="xref py py-meth docutils literal"><span class="pre">Frames()</span></code></a> generator.
 Beside the mp3 frames the generator returns lots of information extracted from the mp3 Frame Header.</p>
 <p>The class expects a valid mp3 file (MPEG Layer III) with an valid ID3 Tag (ID3v2.3.0 or ID3v2.4.0).</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -663,8 +692,8 @@ Beside the mp3 frames the generator returns lots of information extracted from t
 </pre></div>
 </div>
 <dl class="method">
-<dt id="lib.mp3file.MP3File.AnalyzeHeader">
-<code class="descname">AnalyzeHeader</code><span class="sig-paren">(</span><em>header</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/mp3file.html#MP3File.AnalyzeHeader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.mp3file.MP3File.AnalyzeHeader" title="Permalink to this definition">¶</a></dt>
+<dt id="lib.stream.mp3file.MP3File.AnalyzeHeader">
+<code class="descname">AnalyzeHeader</code><span class="sig-paren">(</span><em>header</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File.AnalyzeHeader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File.AnalyzeHeader" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method analyzes a MP3 Frame Header and returns all information that are implicit included in these 4 bytes.
 It is build for the internal use inside this class.</p>
 <p>Primary source for analyzing the header is <a class="reference external" href="http://mpgedit.org/mpgedit/mpeg_format/MP3Format.html">mpgedit.org (no HTTPS)</a>
@@ -741,14 +770,14 @@ The returned dictionary contains the following keys:</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="lib.mp3file.MP3File.Frames">
-<code class="descname">Frames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/mp3file.html#MP3File.Frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.mp3file.MP3File.Frames" title="Permalink to this definition">¶</a></dt>
+<dt id="lib.stream.mp3file.MP3File.Frames">
+<code class="descname">Frames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File.Frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File.Frames" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a generator that returns a frame from the loaded mp3 file and information about that frame.</p>
 <p>The returned dictionary contains the following information:</p>
 <blockquote>
 <div><ul class="simple">
 <li><code class="docutils literal"><span class="pre">&quot;frame&quot;</span></code> (bytes): A complete MP3 Frame including the Frame Header and the Frame Data</li>
-<li><code class="docutils literal"><span class="pre">&quot;header&quot;</span></code> (dict): The interpretation of the MP3 Frame Header as returned by <a class="reference internal" href="#lib.mp3file.MP3File.AnalyzeHeader" title="lib.mp3file.MP3File.AnalyzeHeader"><code class="xref py py-meth docutils literal"><span class="pre">AnalyzeHeader()</span></code></a></li>
+<li><code class="docutils literal"><span class="pre">&quot;header&quot;</span></code> (dict): The interpretation of the MP3 Frame Header as returned by <a class="reference internal" href="#lib.stream.mp3file.MP3File.AnalyzeHeader" title="lib.stream.mp3file.MP3File.AnalyzeHeader"><code class="xref py py-meth docutils literal"><span class="pre">AnalyzeHeader()</span></code></a></li>
 <li><code class="docutils literal"><span class="pre">&quot;total&quot;</span></code> (int): The total number of frames in the mp3 file</li>
 <li><code class="docutils literal"><span class="pre">&quot;count&quot;</span></code> (int): The number of this frame between <code class="docutils literal"><span class="pre">1</span></code> and <code class="docutils literal"><span class="pre">total</span></code></li>
 </ul>
@@ -771,8 +800,8 @@ The returned dictionary contains the following keys:</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="lib.mp3file.MP3File.Load">
-<code class="descname">Load</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/mp3file.html#MP3File.Load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.mp3file.MP3File.Load" title="Permalink to this definition">¶</a></dt>
+<dt id="lib.stream.mp3file.MP3File.Load">
+<code class="descname">Load</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File.Load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File.Load" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method loads a new mp3 file.
 All information from the previous file will be discard.</p>
 <p>The method reads the whole file, analyzes each frame, and stores them in memory.

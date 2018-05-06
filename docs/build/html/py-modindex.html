@@ -129,7 +129,6 @@
 <li class="toctree-l2"><a class="reference internal" href="basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="basics/overview.html#music-database">Music Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/overview.html#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="basics/overview.html#mp3-cache">MP3 Cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
@@ -145,6 +144,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -464,6 +468,14 @@
 <li class="toctree-l2"><a class="reference internal" href="lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
@@ -482,6 +494,17 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lib/mp3file.html">MP3 File Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lib/musicdb.html">MusicDatabase</a><ul>
@@ -760,17 +783,7 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="lib/icecast.html#module-lib.icecast"><code class="xref">lib.icecast</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
        <a href="lib/metatags.html#module-lib.metatags"><code class="xref">lib.metatags</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="lib/mp3file.html#module-lib.mp3file"><code class="xref">lib.mp3file</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -781,6 +794,31 @@
        <td></td>
        <td>&#160;&#160;&#160;
        <a href="lib/pidfile.html#module-lib.pidfile"><code class="xref">lib.pidfile</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="lib/gstreamer.html#module-lib.stream.gstreamer"><code class="xref">lib.stream.gstreamer</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="lib/icecast.html#module-lib.stream.icecast"><code class="xref">lib.stream.icecast</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="lib/mp3file.html#module-lib.stream.mp3file"><code class="xref">lib.stream.mp3file</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="lib/mp3stream.html#module-lib.stream.mp3stream"><code class="xref">lib.stream.mp3stream</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="lib/mp3transcoder.html#module-lib.stream.mp3transcoder"><code class="xref">lib.stream.mp3transcoder</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>

@@ -128,7 +128,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#mp3-cache">MP3 Cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
@@ -144,6 +143,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -463,6 +467,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
@@ -481,6 +493,17 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/mp3file.html">MP3 File Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
@@ -734,7 +757,8 @@ If this fails, a new empty queue gets created.</p>
 </div></blockquote>
 <p>When there is an album ID, the randoms song gets selected from that album using <a class="reference internal" href="randy.html#mdbapi.randy.Randy.GetSongFromAlbum" title="mdbapi.randy.Randy.GetSongFromAlbum"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.randy.Randy.GetSongFromAlbum()</span></code></a>.
 If the album ID is <code class="docutils literal"><span class="pre">None</span></code>, the method <a class="reference internal" href="randy.html#mdbapi.randy.Randy.GetSong" title="mdbapi.randy.Randy.GetSong"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.randy.Randy.GetSong()</span></code></a> will be used to get a random song from the activated genres.</p>
-<p>After selecting the random song, the <a class="reference internal" href="#mdbapi.songqueue.SongQueue.AddSong" title="mdbapi.songqueue.SongQueue.AddSong"><code class="xref py py-meth docutils literal"><span class="pre">AddSong()</span></code></a> method gets used to insert the new song into the queue.</p>
+<p>After selecting the random song, the <a class="reference internal" href="#mdbapi.songqueue.SongQueue.AddSong" title="mdbapi.songqueue.SongQueue.AddSong"><code class="xref py py-meth docutils literal"><span class="pre">AddSong()</span></code></a> method gets used to insert the new song into the queue.
+If there is no song found by Randy, then nothing gets added to the queue and <code class="docutils literal"><span class="pre">False</span></code> will be returned.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -745,7 +769,10 @@ If the album ID is <code class="docutils literal"><span class="pre">None</span><
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When one of the types of the arguments are not correct</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">True</span></code> when a random song got added to the queue. Otherwise <code class="docutils literal"><span class="pre">False</span></code>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When one of the types of the arguments are not correct</p>
 </td>
 </tr>
 </tbody>
@@ -793,7 +820,9 @@ So the current playing song (index 0) remains!</p>
 <dd><p>This method returns the current song in the queue.</p>
 <p>The method returns element 0 from the queue which is the current song that can be streamed or gets already streamed.
 The songs remain in the queue until they got completely streamed.</p>
-<p>If the queue is empty, <code class="docutils literal"><span class="pre">(None,</span> <span class="pre">None)</span></code> gets returned.</p>
+<p>When the queue is empty, a new random song gets added.
+This is the exact same song that then will be returned by this method.
+If adding a new song fails, <code class="docutils literal"><span class="pre">(None,</span> <span class="pre">None)</span></code> gets returned.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />

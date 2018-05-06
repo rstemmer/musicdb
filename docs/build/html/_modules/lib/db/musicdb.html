@@ -127,7 +127,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#music-database">Music Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#mp3-cache">MP3 Cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
@@ -143,6 +142,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -462,6 +466,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
@@ -480,6 +492,17 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/mp3file.html">MP3 File Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/musicdb.html">MusicDatabase</a><ul>
@@ -2246,7 +2269,7 @@
 
 <span class="sd">        Statistics are:</span>
 
-<span class="sd">            * **Valid:** ``&quot;likes&quot;``, ``&quot;dislikes&quot;``, ``&quot;favorite&quot;``, ``&quot;disabled&quot;``</span>
+<span class="sd">            * **Valid:** ``&quot;likes&quot;``, ``&quot;dislikes&quot;``, ``&quot;favorite&quot;``, ``&quot;disabled&quot;``, ``&quot;lastplayed&quot;``</span>
 <span class="sd">            * **Deprecated:** ``&quot;qskips&quot;``, ``&quot;qadds&quot;``, ``&quot;qrndadds&quot;``, ``&quot;qremoves&quot;``</span>
 
 <span class="sd">        Deprecated statistics will be ignored.</span>
@@ -2263,10 +2286,12 @@
 <span class="sd">            * ``0``: Normal song</span>
 <span class="sd">            * ``1``: Loved song</span>
 
+<span class="sd">        ``lastplayed`` expects the unix time as integer given as value.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            songid (int): ID of the song</span>
 <span class="sd">            stat (str): Name of the statistics to update</span>
-<span class="sd">            value (str): How to update</span>
+<span class="sd">            value (str/int): How to update</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ``None``</span>
@@ -2274,15 +2299,25 @@
 <span class="sd">        Raises:</span>
 <span class="sd">            TypeError: When *songid* is not an integer or string</span>
 <span class="sd">            ValueError: if stats or value have an invalid value. Deprecated statistics do not raise an exception.</span>
+<span class="sd">            TypeError: When ``stat == &quot;lastplayed&quot;`` but ``value`` is not an integer</span>
+<span class="sd">            ValueError: When an expected unix time is less than 0</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;songid must be a decimal number of type integer or string&quot;</span><span class="p">)</span>
 
         <span class="c1"># Check if value and stat are valid</span>
-        <span class="k">if</span> <span class="n">stat</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;likes&quot;</span><span class="p">,</span> <span class="s2">&quot;dislikes&quot;</span><span class="p">,</span> <span class="s2">&quot;qskips&quot;</span><span class="p">,</span> <span class="s2">&quot;qadds&quot;</span><span class="p">,</span> <span class="s2">&quot;qrndadds&quot;</span><span class="p">,</span> <span class="s2">&quot;qremoves&quot;</span><span class="p">,</span> <span class="s2">&quot;favorite&quot;</span><span class="p">,</span> <span class="s2">&quot;disable&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">stat</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;likes&quot;</span><span class="p">,</span> <span class="s2">&quot;dislikes&quot;</span><span class="p">,</span> <span class="s2">&quot;qskips&quot;</span><span class="p">,</span> <span class="s2">&quot;qadds&quot;</span><span class="p">,</span> <span class="s2">&quot;qrndadds&quot;</span><span class="p">,</span> <span class="s2">&quot;qremoves&quot;</span><span class="p">,</span> <span class="s2">&quot;favorite&quot;</span><span class="p">,</span> <span class="s2">&quot;disable&quot;</span><span class="p">,</span> <span class="s2">&quot;lastplayed&quot;</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;stat has an invalid value </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">stat</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;inc&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">,</span> <span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="s2">&quot;love&quot;</span><span class="p">,</span> <span class="s2">&quot;hate&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;value has an invalid value </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;lastplayed&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;For statistic lastplayed, an integer as value is expected! (containing a unix timestamp)&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unix time must be greater than 0!&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;inc&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">,</span> <span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="s2">&quot;love&quot;</span><span class="p">,</span> <span class="s2">&quot;hate&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;value has an invalid value </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        
 
         <span class="k">if</span> <span class="n">stat</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;qskips&quot;</span><span class="p">,</span> <span class="s2">&quot;qadds&quot;</span><span class="p">,</span> <span class="s2">&quot;qrndadds&quot;</span><span class="p">,</span> <span class="s2">&quot;qremoves&quot;</span><span class="p">]:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The statistic </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> is deprecated! It will be removed in April 2019.&quot;</span><span class="p">)</span> <span class="c1"># DEPRECATED</span>
@@ -2305,6 +2340,8 @@
                 <span class="n">song</span><span class="p">[</span><span class="s2">&quot;favorite&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modifier</span>
             <span class="k">elif</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;disable&quot;</span><span class="p">:</span>
                 <span class="n">song</span><span class="p">[</span><span class="s2">&quot;disabled&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modifier</span>
+            <span class="k">elif</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;lastplayed&quot;</span><span class="p">:</span>
+                <span class="n">song</span><span class="p">[</span><span class="s2">&quot;lastplayed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
             <span class="k">elif</span> <span class="n">modifier</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">song</span><span class="p">[</span><span class="n">stat</span><span class="p">]</span>       <span class="o">=</span> <span class="mi">0</span>
             <span class="k">else</span><span class="p">:</span>

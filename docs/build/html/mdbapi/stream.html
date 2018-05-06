@@ -128,7 +128,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#mp3-cache">MP3 Cache</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
@@ -144,6 +143,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -463,6 +467,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
@@ -481,6 +493,17 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/mp3file.html">MP3 File Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
@@ -636,7 +659,7 @@
 <span id="streaming-server"></span><h1>Streaming Server<a class="headerlink" href="#module-mdbapi.stream" title="Permalink to this headline">¶</a></h1>
 <p>This module implements the stream that streams the music.
 This module provides a thread that takes the songs from a <a class="reference internal" href="songqueue.html#mdbapi.songqueue.SongQueue" title="mdbapi.songqueue.SongQueue"><code class="xref py py-class docutils literal"><span class="pre">mdbapi.songqueue.SongQueue</span></code></a> to stream them via Icecast.
-It manages the connection to the Icecast server using the <a class="reference internal" href="../lib/icecast.html#module-lib.icecast" title="lib.icecast"><code class="xref py py-mod docutils literal"><span class="pre">lib.icecast</span></code></a> module.
+It manages the connection to the Icecast server using the <a class="reference internal" href="../lib/icecast.html#module-lib.stream.icecast" title="lib.stream.icecast"><code class="xref py py-mod docutils literal"><span class="pre">lib.stream.icecast</span></code></a> module.
 Further more this module provides some callback interfaces to inform the rest of MusicDB about the state of the stream.</p>
 <p>So this module consist of the following parts:</p>
 <blockquote>
@@ -781,11 +804,11 @@ The function is blocking and waits until the thread is closed.</p>
 <dt id="mdbapi.stream.StreamingThread">
 <code class="descclassname">mdbapi.stream.</code><code class="descname">StreamingThread</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamingThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamingThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>This thread manages the streaming of the songs from the Song Queue to the Icecast server.</p>
-<p>The tread tracks the played song using the <a class="reference internal" href="tracker.html"><span class="doc">Song Tracker</span></a> module.
+<p>The thread tracks the played song using the <a class="reference internal" href="tracker.html"><span class="doc">Song Tracker</span></a> module.
 It also tracks randomly added songs assuming the user skips or removes songs that don’t fit.
 Only completely played songs will be considered.
 Skipped songs will be ignored.</p>
-<p>The thread tiggers the following events:</p>
+<p>The thread triggers the following events:</p>
 <blockquote>
 <div><ul class="simple">
 <li><code class="docutils literal"><span class="pre">StatusChanged</span></code>: When the play-state</li>
