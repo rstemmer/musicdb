@@ -8,6 +8,12 @@ For streaming, two major open source projects are involved.
 Reading and transcoding the audio files is done by the `GStreamer Framework <https://gstreamer.freedesktop.org>`_.
 Streaming the done using `Icecast <https://icecast.org/>`_.
 
+After describing the general data flow from the file to the users client,
+a more detailed explanation of how the stream is implemented in MusicDB follows.
+
+General Data Flow
+-----------------
+
 The following graph shows the data flow from the audio file to the listener:
 
    .. graphviz::
@@ -40,4 +46,33 @@ After transcoding, the mp3 frames gets read and processed by the :doc:`/lib/mp3s
 Then each mp3 frame gets send to the `Icecast <https://icecast.org/>`_ process using *libshout*
 
 The audio stream provided by Icecast can new be received by any multimedia player that can connect to audio streams.
+
+
+Stream Implementation
+---------------------
+
+The following image shows how the stream management is implemented and integrated into MusicDB.
+Furthermore it shows where user actions are handled, and where events come from.
+
+.. figure:: ../images/stream.svg
+
+The *purple* parts are the implementation of the streaming functionality.
+It starts from the :doc:`/mdbapi/songqueue` that provides a queue with all songs that shall be streamed.
+The :meth:`mdbapi.stream.StreamingThread` gets the song at index 0 and streams it 
+using the :class:`lib.stream.icecast.IcecastInterface` (See also :doc:`/lib/icecast`).
+
+The :class:`lib.stream.icecast.IcecastInterface` then loads the audio file of the song that shall be streamed.
+Loading, and at the same time transcoding, is done with :doc:`/lib/gstreamer`.
+The :class:`lib.stream.gstreamer.GStreamerInterface` class provides the audio data as a stream of MP3 frames.
+Those frames are read and analyzed with the :class:`lib.stream.mp3stream.MP3Stream` class
+and then send to the `Icecast <https://icecast.org/>`_ server (*dark gray* box).
+
+The *green* components are the interface to manage the behavior of the stream and to get its state.
+Depending on the actions, the :class:`mdbapi.songqueue.SongQueue` or :class:`mdbapi.stream.StreamManager` class methods get called.
+At the same time, the ``SongQueue`` as well as the ``StreamingThread`` can trigger events that will be propagated back to the WebUI.
+
+Furthermore the *blue* components are involved in the streaming.
+The :class:`mdbapi.randy.Randy` class is used to get random songs when the queue runs empty, or when the user wants to add a random song to the queue.
+
+The ``StreamingThread`` informs the :doc:`/mdbapi/tracker` about new played songs and when songs were skipped.
 
