@@ -29,7 +29,7 @@ In this diagram, only the most relavant methods and attributes are mentioned.
 
          wssp   [label = "{WebSocketServerProtocol||}"]
          ws     [label = "{WebSocket||+ SendPacket()\l+ BroadcastPacket()\l/- onOpen()\l/- onClose()\l/- onMessage()\l}", color=blue]
-         mdbwsi [label = "{MusicDBWebSocketInterface||# onWSConnect()\l# onWSDisconnect()\l# onCall()\l- onMPDEvent()\l}", color=red]
+         mdbwsi [label = "{MusicDBWebSocketInterface||# onWSConnect()\l# onWSDisconnect()\l# onCall()\l- onStreamEvent()\l- onQueueEvent\l}", color=red]
          mdbwsp [label = "{MusicDBWebSocketProtoctol||}"]
          wssf   [label = "{WebSocketServerFactory||}"]
          mdbwsf [label = "{MusicDBWebSocketFactory|- clients\l|+ AddToBroadcast()\l+ RemoveFromBroadcast()\l+ BroadcastPacket()\l+ CloseConnections()\l}"]
@@ -54,7 +54,7 @@ The following code may make it a bit more understandable what the *Autobahn* lib
             self.factory.protocol = MusicDBWebSocketProtocol
 
 The methods ``onWSDisconnect`` and ``onWSConnect`` are called from :class:`lib.ws.websocket.WebSocket` and implemented in :class:`lib.ws.mdbwsi.MusicDBWebSocketInterface`.
-They are used to register the callback functions for the MPD module.
+They are used to register the callback functions for the :mod:`mdbapi.stream` and :mod:`mdbapi.songqueue` module.
 
 The following state machine shows how a connections is processed.
 The :meth:`lib.ws.websocket.WebSocket.SendPacket` and :meth:`lib.ws.websocket.WebSocket.BroadcastPacket` method can be called independed from the clients requests.

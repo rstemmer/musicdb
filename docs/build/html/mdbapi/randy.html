@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Randomizer &mdash; MusicDB 2.1.0 documentation</title>
+  <title>Randomizer &mdash; MusicDB 3.0.0 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 2.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDB Websocket Server" href="server.html"/>
-        <link rel="prev" title="MusicAI" href="musicai.html"/> 
+        <link rel="prev" title="MusicCache" href="musiccache.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.1
+                3.0
               </div>
             
           
@@ -99,7 +99,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/config.html">MusicDB Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#websocket">websocket</a></li>
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#icecast">Icecast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
@@ -125,14 +125,29 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/overview.html">Overview of MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -165,6 +180,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
@@ -206,7 +222,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#system-preparation">System Preparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
@@ -261,6 +276,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
@@ -288,7 +307,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/server.html">server - MusicDB Websocket Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/stats.html">stats - MusicDB Song Statistic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
@@ -344,14 +367,6 @@
 <li class="toctree-l2"><a class="reference internal" href="mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mpd.html">mpd / Music Playing Daemon Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#observer-thread">Observer Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#callbacks">Callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#managing-mpd">Managing MPD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mpd.html#queue-management">Queue management</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="musicai.html">MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#external-dependencies">External Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#training-time">Training Time</a></li>
@@ -365,18 +380,51 @@
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Randomizer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-mdbapi.randy">Randy Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#randyinterface-class">RandyInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#randy-class">Randy Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tracker.html">Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
 </ul>
@@ -397,7 +445,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/config.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
@@ -407,21 +459,59 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/database.html#database-class">Database Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/filesystem.html">Filesystem Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/metatags.html">Meta Tags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/metatags.html#metatags-class">MetaTags Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3file.html">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#albums">Albums</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#artworks">Artworks</a></li>
@@ -579,165 +669,164 @@ Humans would neither expect, nor want such behavior of a randomizer.
 This is why MusicDB uses a less random randomizer that feels more random.</p>
 <div class="section" id="module-mdbapi.randy">
 <span id="randy-module"></span><h2>Randy Module<a class="headerlink" href="#module-mdbapi.randy" title="Permalink to this headline">¶</a></h2>
-<p>This MusicDB component adds a random song under certain constraint into MPDs (Music Playing Daemon) the song-queue</p>
+<p>The <em>randy</em> module provides a way to select random songs that can be put into the Song Queue.
+The selection of random songs follows certain constraints.</p>
 <p>Randy consists of two parts:</p>
-<ul class="simple">
-<li>The <a class="reference internal" href="#mdbapi.randy.RandyThread" title="mdbapi.randy.RandyThread"><code class="xref py py-meth docutils literal"><span class="pre">RandyThread()</span></code></a> and its environment <a class="reference internal" href="#mdbapi.randy.StartRandy" title="mdbapi.randy.StartRandy"><code class="xref py py-meth docutils literal"><span class="pre">StartRandy()</span></code></a> and <a class="reference internal" href="#mdbapi.randy.StopRandy" title="mdbapi.randy.StopRandy"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.randy.StopRandy()</span></code></a>.</li>
-<li>The <a class="reference internal" href="#mdbapi.randy.RandyInterface" title="mdbapi.randy.RandyInterface"><code class="xref py py-class docutils literal"><span class="pre">RandyInterface</span></code></a> class providing an interface to interact with the <a class="reference internal" href="#mdbapi.randy.RandyThread" title="mdbapi.randy.RandyThread"><code class="xref py py-meth docutils literal"><span class="pre">RandyThread()</span></code></a>. This can happen in several threads simultaneously.</li>
+<blockquote>
+<div><ul class="simple">
+<li>A global <a class="reference internal" href="#blacklist">Blacklist</a> for songs, albums and artists</li>
+<li>A class <a class="reference internal" href="#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal"><span class="pre">Randy</span></code></a> that provides methods to get random songs</li>
 </ul>
-<p>To use Randy, start the <a class="reference internal" href="#mdbapi.randy.RandyThread" title="mdbapi.randy.RandyThread"><code class="xref py py-meth docutils literal"><span class="pre">RandyThread()</span></code></a> by calling <a class="reference internal" href="#mdbapi.randy.StartRandy" title="mdbapi.randy.StartRandy"><code class="xref py py-meth docutils literal"><span class="pre">StartRandy()</span></code></a> once.
-Now it is possible to access the randomizer using the <a class="reference internal" href="#mdbapi.randy.RandyInterface" title="mdbapi.randy.RandyInterface"><code class="xref py py-class docutils literal"><span class="pre">RandyInterface</span></code></a> class. This can be done from multiple different threads.
-When Randy is not needed anymore, it can be stopped by calling <a class="reference internal" href="#mdbapi.randy.StopRandy" title="mdbapi.randy.StopRandy"><code class="xref py py-meth docutils literal"><span class="pre">StopRandy()</span></code></a>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Dependencies</span>
-<span class="n">cfg</span>      <span class="o">=</span> <span class="n">MusicDBConfig</span><span class="p">(</span><span class="s2">&quot;./musicdb.ini&quot;</span><span class="p">)</span>
-
-<span class="c1"># Start Randy</span>
-<span class="n">StartRandy</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
-
-<span class="c1"># Use Randy (Can be anywhere in the code)</span>
-<span class="n">randy</span> <span class="o">=</span> <span class="n">RandyInterface</span><span class="p">()</span>
-<span class="n">randy</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="s2">&quot;next&quot;</span><span class="p">)</span>   <span class="c1"># add random song after current song</span>
-<span class="n">randy</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="s2">&quot;last&quot;</span><span class="p">)</span>   <span class="c1"># add random song at the end of the queue</span>
-
-<span class="c1"># Stop Randy</span>
-<span class="n">StopRandy</span><span class="p">()</span>
+</div></blockquote>
+<div class="section" id="blacklist">
+<h3>Blacklist<a class="headerlink" href="#blacklist" title="Permalink to this headline">¶</a></h3>
+<p>There are three FIFO organized blacklists: For songs, albums and artists.
+Each blacklist holds the IDs of the last played songs, albums and artists.</p>
+<p>Songs that will be selected by the <a class="reference internal" href="#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal"><span class="pre">Randy</span></code></a> class will be added to the blacklists automatically.
+If a user adds a song into the Queue, this song must be added manually by calling the <a class="reference internal" href="#mdbapi.randy.Randy.AddSongToBlacklist" title="mdbapi.randy.Randy.AddSongToBlacklist"><code class="xref py py-meth docutils literal"><span class="pre">AddSongToBlacklist()</span></code></a> method.</p>
+<p>Once a song got added to the blacklist, it remains even if the song got removed from the queue.</p>
+<p>The length of those blacklist can be configured in the MusicDB Configuration:</p>
+<blockquote>
+<div><div class="highlight-ini"><div class="highlight"><pre><span></span><span class="k">[Randy]</span>
+<span class="na">songbllen</span><span class="o">=</span><span class="s">50</span>
+<span class="na">albumbllen</span><span class="o">=</span><span class="s">20</span>
+<span class="na">artistbllen</span><span class="o">=</span><span class="s">10</span>
 </pre></div>
 </div>
-<dl class="function">
-<dt id="mdbapi.randy.StartRandy">
-<code class="descclassname">mdbapi.randy.</code><code class="descname">StartRandy</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#StartRandy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.StartRandy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Starts the randy thread.
-You should use this function instead of calling the RandyThread directly.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> – a MusicDB config object</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code> if something went wrong, otherwise the thread-handler will be returned</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="mdbapi.randy.StopRandy">
-<code class="descclassname">mdbapi.randy.</code><code class="descname">StopRandy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#StopRandy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.StopRandy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stops the Randy thread.
-This function is blocking and waits until the thread is closed.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="mdbapi.randy.RandyThread">
-<code class="descclassname">mdbapi.randy.</code><code class="descname">RandyThread</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#RandyThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.RandyThread" title="Permalink to this definition">¶</a></dt>
-<dd><div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This function should not be called directly. Use <a class="reference internal" href="#mdbapi.randy.StartRandy" title="mdbapi.randy.StartRandy"><code class="xref py py-meth docutils literal"><span class="pre">StartRandy()</span></code></a> to execute the Thread!</p>
+</div></blockquote>
+<p>For small music collections, the lengths should not exceed the possibility to provide individual data.
+For medium collections and above, the default values as shown in the example are good.
+When set to <code class="docutils literal"><span class="pre">0</span></code>, the blacklist for the songs, albums or artists will be disabled.</p>
+<p>The blacklists get maintained by the <a class="reference internal" href="#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal"><span class="pre">Randy</span></code></a> class.
+Each instance of this class accesses the same global blacklist.</p>
+<p>The blacklist is implemented as a dictionary with the keys <code class="docutils literal"><span class="pre">&quot;songs&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;albums&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;artists&quot;</span></code>.
+Their values are lists holding the IDs of the songs, albums and artists.</p>
 </div>
-<p>This Thread chooses a random song in a two-stage process.
-The first stage selects a song from a limited set of songs, the second stage checks if the song is on a blacklist.</p>
+<div class="section" id="song-selection-algorithm">
+<h3>Song Selection Algorithm<a class="headerlink" href="#song-selection-algorithm" title="Permalink to this headline">¶</a></h3>
+<p>Selecting a random song is done in two stages, the <a class="reference internal" href="#database-stage">Database Stage</a> and the <a class="reference internal" href="#blacklist-stage">Blacklist Stage</a>
+The first stage selects a song from a limited set of songs, the second stage checks if the song is on a blacklist.
+In each stage, a song can be rejected and the algorithm starts at the beginning.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">The process of trying to get a good song gets repeated until a good song is found.
 If over constraint, this ends in an infinite loop!</p>
 </div>
-<p><strong>Database-Stage</strong></p>
-<p>The Song gets chosen by the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetRandomSong" title="lib.db.musicdb.MusicDatabase.GetRandomSong"><code class="xref py py-meth docutils literal"><span class="pre">lib.db.musicdb.MusicDatabase.GetRandomSong()</span></code></a> datebase access call.
-There are 4 parameters that define the set on of possible songs.
-Some of them can be configured in the MusicDB configuration file.</p>
+<div class="section" id="database-stage">
+<h4>Database Stage<a class="headerlink" href="#database-stage" title="Permalink to this headline">¶</a></h4>
+<p>In the first stage, a song gets chosen by the database via <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetRandomSong" title="lib.db.musicdb.MusicDatabase.GetRandomSong"><code class="xref py py-meth docutils literal"><span class="pre">lib.db.musicdb.MusicDatabase.GetRandomSong()</span></code></a>.
+There are 4 parameters that define the constraints applied on set of possible songs:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The activated genres</li>
-<li>Flag if <em>disabled</em> songs shall be excluded</li>
-<li>Flag if <em>hated</em> songs shall be excluded</li>
+<li>The activated genres as maintained by the <a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate" title="lib.cfg.mdbstate"><code class="xref py py-mod docutils literal"><span class="pre">lib.cfg.mdbstate</span></code></a> module.</li>
+<li>The flag if <em>disabled</em> songs shall be excluded</li>
+<li>The flag if <em>hated</em> songs shall be excluded</li>
 <li>Minimum length of a song in seconds</li>
 </ul>
 </div></blockquote>
-<p>Because the database only takes album tags into account, the song tags gets checked afterwards.
-If the song has a genre tag, and if this tag does not match the filter, the song gets rejected.
-Song genres set by the AI will be ignored because the AI may be wrong.</p>
-<p><strong>Blacklist-Stage</strong></p>
-<p>The selected song gets compared to three blacklists of configurable length: Artist, Album, Song.
-If the song is listed in a blacklist, the song, a song from the same album or from the same artist was played in near past.
-So: the chosen song gets dropped and the finding-process starts again.</p>
-<p>Is the blacklist length set to 0, the specific blacklist is disabled</p>
-<p>If a song is found. The oldest entries of the blacklist get dropped, and the new song, album, artist get pushed on top of the list.
-Then the song gets added to the <em>MPD-Queue</em> and the <code class="docutils literal"><span class="pre">qrndadds</span></code> statistic gets incremented.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> – <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal"><span class="pre">lib.cfg.musicdb.MusicDBConfig</span></code></a> object</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
+<p>Some of them can be configured in the MusicDB configuration file:</p>
+<blockquote>
+<div><div class="highlight-ini"><div class="highlight"><pre><span></span><span class="k">[Randy]</span>
+<span class="na">nodisabled</span><span class="o">=</span><span class="s">True</span>
+<span class="na">nohated</span><span class="o">=</span><span class="s">True</span>
+<span class="na">minsonglen</span><span class="o">=</span><span class="s">120</span>
+</pre></div>
 </div>
-<div class="section" id="randyinterface-class">
-<h2>RandyInterface Class<a class="headerlink" href="#randyinterface-class" title="Permalink to this headline">¶</a></h2>
+</div></blockquote>
+<p>Because the database only takes album tags into account, the song tags gets checked afterwards.
+If the song has a confirmed genre tag, and if this tag does not match the filter, the song gets rejected.
+Song genres set by the Music AI (see <a class="reference internal" href="musicai.html"><span class="doc">MusicAI</span></a>) will be ignored because the AI may be wrong.</p>
+</div>
+<div class="section" id="blacklist-stage">
+<h4>Blacklist Stage<a class="headerlink" href="#blacklist-stage" title="Permalink to this headline">¶</a></h4>
+<p>The selected song from the first stage now gets compared to the three blacklists.
+If the song, or its album or artist, is listed in one of blacklist,
+then the song, a song from the same album or from the same artist was played recently.
+So, the chosen song gets dropped and the finding-process starts again.</p>
+<p>Is the blacklist length set to 0, the specific blacklist is disabled</p>
+<p>If a song is found. The oldest entries of the blacklist get dropped, and the new song, album, artist get pushed on top of the list.</p>
+</div>
+</div>
+</div>
+<div class="section" id="randy-class">
+<h2>Randy Class<a class="headerlink" href="#randy-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="mdbapi.randy.RandyInterface">
-<em class="property">class </em><code class="descclassname">mdbapi.randy.</code><code class="descname">RandyInterface</code><a class="reference internal" href="../_modules/mdbapi/randy.html#RandyInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.RandyInterface" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface to the <a class="reference internal" href="#mdbapi.randy.RandyThread" title="mdbapi.randy.RandyThread"><code class="xref py py-meth docutils literal"><span class="pre">RandyThread()</span></code></a>.
-This class is made to access the thread form all over the code simultaneously.</p>
-<dl class="method">
-<dt id="mdbapi.randy.RandyInterface.AddSong">
-<code class="descname">AddSong</code><span class="sig-paren">(</span><em>position='last'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#RandyInterface.AddSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.RandyInterface.AddSong" title="Permalink to this definition">¶</a></dt>
-<dd><p>Triggers Randy to add a random song into the song-queue</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> (<em>str</em>) – Determines where the song gets added. <code class="docutils literal"><span class="pre">&quot;next&quot;</span></code>: after the current playing song, or <code class="docutils literal"><span class="pre">&quot;last&quot;</span></code> at the end of the queue.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="mdbapi.randy.RandyInterface.AddSongFromAlbum">
-<code class="descname">AddSongFromAlbum</code><span class="sig-paren">(</span><em>albumid</em>, <em>position='last'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#RandyInterface.AddSongFromAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.RandyInterface.AddSongFromAlbum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Triggers Randy to add a random song from a specific album into the song-queue</p>
-<p>It gets not checked if the song is listed on the black list.
-But the song gets added to the black list for songs, as well as the album and artist gets added.</p>
+<dt id="mdbapi.randy.Randy">
+<em class="property">class </em><code class="descclassname">mdbapi.randy.</code><code class="descname">Randy</code><span class="sig-paren">(</span><em>config</em>, <em>database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides methods to get a random song under certain constraints.</p>
+<p>This class is made to access the thread form all over the code simultaneously.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>albumid</strong> (<em>int</em>) – ID of the album the song shall come from</li>
-<li><strong>position</strong> (<em>str</em>) – Determines where the song gets added. <code class="docutils literal"><span class="pre">&quot;next&quot;</span></code>: after the current playing song, or <code class="docutils literal"><span class="pre">&quot;last&quot;</span></code> at the end of the queue.</li>
+<li><strong>config</strong> – <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal"><span class="pre">MusicDBConfig</span></code></a> object holding the MusicDB Configuration</li>
+<li><strong>database</strong> – A <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal"><span class="pre">MusicDatabase</span></code></a> instance</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">None</span></code></p>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When the arguments are not of the correct type.</p>
 </td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mdbapi.randy.Randy.AddSongToBlacklist">
+<code class="descname">AddSongToBlacklist</code><span class="sig-paren">(</span><em>song</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.AddSongToBlacklist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy.AddSongToBlacklist" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method pushes a song onto the blacklists.
+If the song is <code class="docutils literal"><span class="pre">None</span></code> nothing happens.</p>
+<p>This method should be the only place where the blacklist gets changed.
+After adding a song, the lists get stored in the MusicDB State Directory to be persistent</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>song</strong> (<em>dict</em>) – A song from the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal"><span class="pre">MusicDatabase</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="mdbapi.randy.RandyInterface.PrintBlacklist">
-<code class="descname">PrintBlacklist</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#RandyInterface.PrintBlacklist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.RandyInterface.PrintBlacklist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Triggers Randy to print the blacklists to <em>stdout</em>.
-This can be useful for debugging.</p>
+<dt id="mdbapi.randy.Randy.GetSong">
+<code class="descname">GetSong</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSong" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method chooses a random song in a two-stage process as described in the module description.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A song from the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal"><span class="pre">MusicDatabase</span></code></a> or <code class="docutils literal"><span class="pre">None</span></code> if an error occurred.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdbapi.randy.Randy.GetSongFromAlbum">
+<code class="descname">GetSongFromAlbum</code><span class="sig-paren">(</span><em>albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSongFromAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSongFromAlbum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a random song from a specific album.</p>
+<p>If the selected song is listed in the blacklist for songs, a new one will be selected.
+Entries in the album and artist blacklist will be ignored because the artist and album is forced by the user.
+But the song gets added to the blacklist for songs, as well as the album and artist gets added.</p>
+<p>The genre of the song gets completely ignored.
+The user wants to have a song from the given album, so it gets one.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>This is a dangerous method.
+An album only has a very limited set of songs.</p>
+<p class="last">If all the songs are listed in the blacklist, the method would get caught in an infinite loop.
+To avoid this, there are only 10 tries to find a random song.
+If after the tenth try, the method leaves returning <code class="docutils literal"><span class="pre">None</span></code></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>albumid</strong> (<em>int</em>) – ID of the album the song shall come from</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A song from the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal"><span class="pre">MusicDatabase</span></code></a> or <code class="docutils literal"><span class="pre">None</span></code> if an error occurred.</td>
 </tr>
 </tbody>
 </table>
@@ -761,7 +850,7 @@ This can be useful for debugging.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ralf Stemmer.
+        &copy; Copyright 2018, Ralf Stemmer.
 
     </p>
   </div>
@@ -783,7 +872,7 @@ This can be useful for debugging.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.1.0',
+            VERSION:'3.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

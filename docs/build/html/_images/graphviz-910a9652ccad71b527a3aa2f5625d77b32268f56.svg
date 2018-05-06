@@ -58,21 +58,22 @@
 <!-- mdbwsi -->
 <g id="node3" class="node">
 <title>mdbwsi</title>
-<polygon fill="#f2f2f2" stroke="#ff0000" points="203.5,-431 203.5,-545 431.5,-545 431.5,-431 203.5,-431"/>
-<text text-anchor="middle" x="317.5" y="-529.8" font-family="Times,serif" font-size="14.00" fill="#000000">MusicDBWebSocketInterface</text>
-<polyline fill="none" stroke="#ff0000" points="203.5,-522 431.5,-522 "/>
-<text text-anchor="middle" x="317.5" y="-506.8" font-family="Times,serif" font-size="14.00" fill="#000000"> </text>
-<polyline fill="none" stroke="#ff0000" points="203.5,-499 431.5,-499 "/>
-<text text-anchor="start" x="211.5" y="-483.8" font-family="Times,serif" font-size="14.00" fill="#000000"># onWSConnect()</text>
-<text text-anchor="start" x="211.5" y="-468.8" font-family="Times,serif" font-size="14.00" fill="#000000"># onWSDisconnect()</text>
-<text text-anchor="start" x="211.5" y="-453.8" font-family="Times,serif" font-size="14.00" fill="#000000"># onCall()</text>
-<text text-anchor="start" x="211.5" y="-438.8" font-family="Times,serif" font-size="14.00" fill="#000000">&#45; onMPDEvent()</text>
+<polygon fill="#f2f2f2" stroke="#ff0000" points="203.5,-423.5 203.5,-552.5 431.5,-552.5 431.5,-423.5 203.5,-423.5"/>
+<text text-anchor="middle" x="317.5" y="-537.3" font-family="Times,serif" font-size="14.00" fill="#000000">MusicDBWebSocketInterface</text>
+<polyline fill="none" stroke="#ff0000" points="203.5,-529.5 431.5,-529.5 "/>
+<text text-anchor="middle" x="317.5" y="-514.3" font-family="Times,serif" font-size="14.00" fill="#000000"> </text>
+<polyline fill="none" stroke="#ff0000" points="203.5,-506.5 431.5,-506.5 "/>
+<text text-anchor="start" x="211.5" y="-491.3" font-family="Times,serif" font-size="14.00" fill="#000000"># onWSConnect()</text>
+<text text-anchor="start" x="211.5" y="-476.3" font-family="Times,serif" font-size="14.00" fill="#000000"># onWSDisconnect()</text>
+<text text-anchor="start" x="211.5" y="-461.3" font-family="Times,serif" font-size="14.00" fill="#000000"># onCall()</text>
+<text text-anchor="start" x="211.5" y="-446.3" font-family="Times,serif" font-size="14.00" fill="#000000">&#45; onStreamEvent()</text>
+<text text-anchor="start" x="211.5" y="-431.3" font-family="Times,serif" font-size="14.00" fill="#000000">&#45; onQueueEvent</text>
 </g>
 <!-- mdbwsi&#45;&gt;mdbwsp -->
 <g id="edge3" class="edge">
 <title>mdbwsi&#45;&gt;mdbwsp</title>
-<path fill="none" stroke="#000000" d="M265.5689,-422.6053C255.7242,-410.2082 245.7876,-397.6956 237.0707,-386.7186"/>
-<polygon fill="none" stroke="#000000" points="263.0515,-425.0634 272.0113,-430.7179 268.5333,-420.7102 263.0515,-425.0634"/>
+<path fill="none" stroke="#000000" d="M259.7019,-415.2172C251.8236,-405.2964 244.0537,-395.5121 237.0674,-386.7145"/>
+<polygon fill="none" stroke="#000000" points="257.0707,-417.5319 266.0304,-423.1865 262.5525,-413.1787 257.0707,-417.5319"/>
 </g>
 <!-- mdbwsf -->
 <g id="node6" class="node">

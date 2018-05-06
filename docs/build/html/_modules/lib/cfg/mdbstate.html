@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.cfg.mdbstate &mdash; MusicDB 2.1.0 documentation</title>
+  <title>lib.cfg.mdbstate &mdash; MusicDB 3.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 2.1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.1
+                3.0
               </div>
             
           
@@ -98,7 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/config.html">MusicDB Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#websocket">websocket</a></li>
@@ -109,7 +109,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#lycra">lycra</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#icecast">Icecast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#log">log</a></li>
@@ -124,14 +124,29 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/overview.html">Overview of MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#music-database">Music Database</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -164,6 +179,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#albums">Albums</a></li>
@@ -205,7 +221,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#system-preparation">System Preparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#basic-packages">Basic packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#id3edit">id3edit</a></li>
@@ -260,6 +275,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/cache.html#class">class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/extern.html#class">class</a></li>
@@ -287,7 +306,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/server.html">server - MusicDB Websocket Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/stats.html">stats - MusicDB Song Statistic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
@@ -343,14 +366,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/mpd.html">mpd / Music Playing Daemon Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/mpd.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/mpd.html#observer-thread">Observer Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/mpd.html#callbacks">Callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/mpd.html#managing-mpd">Managing MPD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/mpd.html#queue-management">Queue management</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/musicai.html">MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#training-time">Training Time</a></li>
@@ -364,18 +379,51 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/randy.html">Randomizer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#randyinterface-class">RandyInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/randy.html#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../mdbapi/randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#randy-class">Randy Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/tracker.html">Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
 </ul>
@@ -396,7 +444,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/config.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
@@ -406,21 +458,59 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/database.html#database-class">Database Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/filesystem.html">Filesystem Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/metatags.html">Meta Tags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/metatags.html#metatags-class">MetaTags Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/mp3file.html">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/musicdb.html">MusicDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#albums">Albums</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#artworks">Artworks</a></li>
@@ -564,7 +654,7 @@
             
   <h1>Source code for lib.cfg.mdbstate</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2017,2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -578,10 +668,22 @@
 <span class="c1"># </span>
 <span class="c1"># You should have received a copy of the GNU General Public License</span>
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module takes care that the state of MusicDB will persist over several sessions.</span>
+<span class="sd">This is not done automatically by the :class:`~MDBState` class.</span>
+<span class="sd">Each read or write process to the files that hold the state will be triggered by the classes who manage the related information.</span>
+
+<span class="sd">The state is stored in several files in a directory that can be configured via ``[server]-&gt;statedir``</span>
+
+<span class="sd">All files inside the state directory are managed by the :class:`~MDBState` class.</span>
+<span class="sd">The content of those files should not be changed by any user because its content gets not validated.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">lib.cfg.config</span> <span class="k">import</span> <span class="n">Config</span>
+<span class="kn">from</span> <span class="nn">lib.cfg.csv</span>    <span class="k">import</span> <span class="n">CSVFile</span>
 <span class="kn">from</span> <span class="nn">lib.db.musicdb</span> <span class="k">import</span> <span class="n">MusicDatabase</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="k">class</span> <span class="nc">QUEUE</span><span class="p">:</span>
     <span class="k">pass</span>
@@ -590,17 +692,162 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class holds the MusicDB internal state.</span>
 
+<span class="sd">    The following table shows which method is responsible for which file in the MusicDB State Directory.</span>
+
+<span class="sd">        +------------------------+------------------------+------------------------+</span>
+<span class="sd">        | File Name              | Read Method            | Write Method           |</span>
+<span class="sd">        +========================+========================+========================+</span>
+<span class="sd">        | songqueue.csv          | :meth:`~LoadSongQueue` | :meth:`~SaveSongQueue` |</span>
+<span class="sd">        +------------------------+------------------------+------------------------+</span>
+<span class="sd">        | artistblacklist.csv    | :meth:`~LoadBlacklist` | :meth:`~SaveBlacklist` |</span>
+<span class="sd">        +------------------------+------------------------+------------------------+</span>
+<span class="sd">        | albumblacklist.csv     | :meth:`~LoadBlacklist` |                        |</span>
+<span class="sd">        +------------------------+------------------------+------------------------+</span>
+<span class="sd">        | songblacklist.csv      | :meth:`~LoadBlacklist` |                        |</span>
+<span class="sd">        +------------------------+------------------------+------------------------+</span>
+
 <span class="sd">    Args:</span>
-<span class="sd">        filename: Absolute path to the MusicDB state file</span>
-<span class="sd">        musicdb: instance of the MusicDB Database</span>
+<span class="sd">        path: Absolute path to the MusicDB state directory</span>
+<span class="sd">        musicdb: Instance of the MusicDB Database (can be None)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">):</span>
-        <span class="n">Config</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">musicdb</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="n">Config</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;state.ini&quot;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">musicdb</span> <span class="o">=</span> <span class="n">musicdb</span><span class="p">;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span>    <span class="o">=</span> <span class="n">path</span><span class="p">;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">queue</span>   <span class="o">=</span> <span class="n">QUEUE</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">eoqevent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;queue&quot;</span><span class="p">,</span> <span class="s2">&quot;EoQEvent&quot;</span><span class="p">,</span> <span class="s2">&quot;add&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MDBState.ReadList"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.ReadList">[docs]</a>    <span class="k">def</span> <span class="nf">ReadList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads a list from the mdbstate directory.</span>
+<span class="sd">        The ``listname`` argument defines which file gets read: ``config.server.statedir/listname.csv``.</span>
+
+<span class="sd">        This method should only be used by class internal methods.</span>
+<span class="sd">        When a file can not be accessed, an empty list gets returned.</span>
+<span class="sd">        So deleting a file is an option to reset an internal state of MusicDB.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            listname (str): Name of the list to read without trailing .csv</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of rows from the file. When reading the list fails, an empty list gets returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">listname</span> <span class="o">+</span> <span class="s2">&quot;.csv&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">csv</span>  <span class="o">=</span> <span class="n">CSVFile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">Read</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Accessing file </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed with error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="k">return</span> <span class="n">rows</span></div>
+
+
+<div class="viewcode-block" id="MDBState.WriteList"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.WriteList">[docs]</a>    <span class="k">def</span> <span class="nf">WriteList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listname</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method write a list of rows into the related file.</span>
+<span class="sd">        The ``listname`` argument defines which file gets written: ``config.server.statedir/listname.csv``.</span>
+
+<span class="sd">        This method should only be used by class internal methods.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            listname (str): Name of the list to read without trailing .csv</span>
+<span class="sd">            rows(list): The list that shall be stored</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` on success, otherwise ``False``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">listname</span> <span class="o">+</span> <span class="s2">&quot;.csv&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Expected a list to write into the csv file at </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">. Got type </span><span class="se">\&quot;</span><span class="s2">$s</span><span class="se">\&quot;</span><span class="s2"> instead. </span><span class="se">\033</span><span class="s2">[1;30m(Will not change the file)&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">rows</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">csv</span>  <span class="o">=</span> <span class="n">CSVFile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">csv</span><span class="o">.</span><span class="n">Write</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Accessing file </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed with error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Data: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">rows</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="MDBState.LoadSongQueue"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.LoadSongQueue">[docs]</a>    <span class="k">def</span> <span class="nf">LoadSongQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method reads the song queue from the state directory.</span>
+
+<span class="sd">        The method returns the queue as needed inside :meth:`mdbapi.songqueue.SongQueue`:</span>
+<span class="sd">        A list of tuple, each containing the entryid and songid as integers.</span>
+
+<span class="sd">        The UUIDs of the queue entries remain.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A stored song queue</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rows</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReadList</span><span class="p">(</span><span class="s2">&quot;songqueue&quot;</span><span class="p">)</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">entryid</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">songid</span>  <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">entryid</span><span class="p">,</span> <span class="n">songid</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Invalid entry in stored Song Queue: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">! </span><span class="se">\033</span><span class="s2">[1;30m(Entry will be ignored)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">queue</span></div>
+
+
+<div class="viewcode-block" id="MDBState.SaveSongQueue"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.SaveSongQueue">[docs]</a>    <span class="k">def</span> <span class="nf">SaveSongQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method saves a song queue.</span>
+<span class="sd">        The data structure of the queue must be exact as the one expected when the queue shall be loaded.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            queue (list): The song queue to save.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># transform data to a structure that can be handled by the csv module</span>
+        <span class="c1"># save entry ID as string, csv cannot handle 128bit integer</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">queue</span><span class="p">:</span>
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WriteList</span><span class="p">(</span><span class="s2">&quot;songqueue&quot;</span><span class="p">,</span> <span class="n">rows</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="MDBState.LoadBlacklists"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.LoadBlacklists">[docs]</a>    <span class="k">def</span> <span class="nf">LoadBlacklists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a dictionary with the blacklist managed by :class:`mdbapi.randy.Randy`</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary with the blacklists as expected by :class:`mdbapi.randy.Randy`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">blacklist</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReadList</span><span class="p">(</span><span class="s2">&quot;artistblacklist&quot;</span><span class="p">)</span> <span class="p">]</span>
+        <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReadList</span><span class="p">(</span><span class="s2">&quot;albumblacklist&quot;</span><span class="p">)</span>  <span class="p">]</span>
+        <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="p">[</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReadList</span><span class="p">(</span><span class="s2">&quot;songblacklist&quot;</span><span class="p">)</span>   <span class="p">]</span>
+        <span class="k">return</span> <span class="n">blacklist</span></div>
+
+
+<div class="viewcode-block" id="MDBState.SaveBlacklists"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.SaveBlacklists">[docs]</a>    <span class="k">def</span> <span class="nf">SaveBlacklists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blacklist</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method stores the blacklist in the related CSV files.</span>
+<span class="sd">        The data structure of the dictionary is expected to be the same, :class:`mdbapi.randy.Randy` uses.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            blacklist (dict): A dictionary of blacklists.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WriteList</span><span class="p">(</span><span class="s2">&quot;songblacklist&quot;</span><span class="p">,</span>   <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WriteList</span><span class="p">(</span><span class="s2">&quot;albumblacklist&quot;</span><span class="p">,</span>  <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WriteList</span><span class="p">(</span><span class="s2">&quot;artistblacklist&quot;</span><span class="p">,</span> <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="MDBState.GetFilterList"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.GetFilterList">[docs]</a>    <span class="k">def</span> <span class="nf">GetFilterList</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -610,6 +857,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            A list of main genre names that are activated</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">musicdb</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Music Database object required but it is None.&quot;</span><span class="p">)</span>
         <span class="n">filterlist</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">genretags</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">musicdb</span><span class="o">.</span><span class="n">GetAllTags</span><span class="p">(</span><span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">)</span>
         
@@ -637,7 +886,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ralf Stemmer.
+        &copy; Copyright 2018, Ralf Stemmer.
 
     </p>
   </div>
@@ -659,7 +908,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'2.1.0',
+            VERSION:'3.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

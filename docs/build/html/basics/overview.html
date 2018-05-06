@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview of MusicDB &mdash; MusicDB 2.1.0 documentation</title>
+  <title>Overview of MusicDB &mdash; MusicDB 3.0.0 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 2.1.0 documentation" href="../index.html"/>
-        <link rel="next" title="MusicDB Test VMs" href="testvm.html"/>
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="../index.html"/>
+        <link rel="next" title="MusicDB Stream" href="streaming.html"/>
         <link rel="prev" title="MusicDB Commandline Modules" href="mods.html"/> 
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.1
+                3.0
               </div>
             
           
@@ -99,7 +99,7 @@
 <li class="toctree-l2"><a class="reference internal" href="comparison.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">MusicDB Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#websocket">websocket</a></li>
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#lycra">lycra</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#icecast">Icecast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#log">log</a></li>
@@ -125,14 +125,29 @@
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Overview of MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#music-information-purple">Music Information (Purple)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#music-database">Music Database</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#http-server-black">HTTP Server (Black)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="testvm.html">MusicDB Test VMs</a><ul>
@@ -165,6 +180,7 @@
 <li class="toctree-l3"><a class="reference internal" href="webapi.html#send-data-to-the-server">Send data to the server</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="webapi.html#albums">Albums</a></li>
@@ -206,7 +222,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#system-preparation">System Preparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
@@ -261,6 +276,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
@@ -288,7 +307,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/server.html">server - MusicDB Websocket Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/stats.html">stats - MusicDB Song Statistic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
@@ -344,14 +367,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/mpd.html">mpd / Music Playing Daemon Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#observer-thread">Observer Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#callbacks">Callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#managing-mpd">Managing MPD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#queue-management">Queue management</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicai.html">MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#training-time">Training Time</a></li>
@@ -365,18 +380,51 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randyinterface-class">RandyInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randy-class">Randy Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tracker.html">Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
 </ul>
@@ -397,7 +445,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/config.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
@@ -407,21 +459,59 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/database.html#database-class">Database Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/filesystem.html">Filesystem Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/metatags.html">Meta Tags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/metatags.html#metatags-class">MetaTags Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3file.html">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#albums">Albums</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#artworks">Artworks</a></li>
@@ -567,9 +657,11 @@
             
   <div class="section" id="overview-of-musicdb">
 <h1>Overview of MusicDB<a class="headerlink" href="#overview-of-musicdb" title="Permalink to this headline">¶</a></h1>
-<p>The following graph shows a complete overview of MusicDB’s information flow through all its components.</p>
+<p>The following graph shows a complete overview of MusicDB’s information flow through all its components.
+It shows what happens with the music and its annotated information like the meta data and artworks.
+Furthermore the image shows how everything is connected and how MusicDB integrates in the system.</p>
 <div class="figure">
-<img alt="../_images/Map.svg" src="../_images/Map.svg" /></div>
+<img alt="../_images/Map2_1.svg" src="../_images/Map2_1.svg" /></div>
 <p>In the following sections, I describe the tasks of each block and how the interact with each other.
 The sections represent the colors of the rectangles and arrows, that represent the components of the environment of MusicDB.</p>
 <div class="section" id="music-information-purple">
@@ -577,67 +669,15 @@ The sections represent the colors of the rectangles and arrows, that represent t
 <p>There are two main paths (bold purple arrows) the data of the music collections goes to reach the listener.
 One path is for the audio part the listener wants to hear,
 the other path is for the information the listener wants to see when he listens to a song or manages the queue of songs that will be played in future.</p>
-<p>Starting at the music collection where all music files are stored, <strong>the audio part</strong> goes straight up to the audio streaming server <a class="reference external" href="https://musicpd.org/">Music Player Daemon (MPD)</a>.
-MPD reads the music files and streams them to a client that can receive audio streams.
-For example VLC, iTunes or the Windows Media Player.
-If you stream into the internet, you may want to use <a class="reference external" href="https://icecast.org/">Icecast</a> for encrypting the steam.
-Icecast would be placed on server side right behind MPD.</p>
-<p>The second main path is <strong>the meta data path</strong>.
-The music files get read by <a class="reference internal" href="#musicdb-components-green">MusicDB Components (Green)</a> and meta data will be cached in the <a class="reference internal" href="#music-database">Music Database</a>
-Those meta data will be served by the MusicDB WebSocket Server to the clients web browser.
-Meta data are for example the names of the songs, albums and artists.
-Genres associated to songs and albums, and other information.</p>
-<p>There are two further paths towards the <a class="reference internal" href="#http-server-black">HTTP Server (Black)</a> component.
-The audio files that will be directly accessed from the music collection is for prelistening to songs in the WebUI.
-And the image files of the album artworks, cached and scaled by MusicDB in the <a class="reference internal" href="#artwork-cache">Artwork Cache</a></p>
-<p><strong>Conclusion:</strong></p>
-<blockquote>
-<div><ul class="simple">
-<li>Audio goes through MPD to the clients audio player</li>
-<li>Artwork will be processed by MusicDB and gets served by an HTTP Server</li>
-<li>Meta data are cached in the Music Database and gets served via WebSockets by the MusicDB WebSocket Server</li>
-</ul>
-</div></blockquote>
+<p>Everything starts with the users music collection shown in the bottom left corner.
+This collection is the source of all information MusicDB works with.
+As the arrow shows, MusicDB will never change anything in the users files.</p>
 </div>
-<div class="section" id="music-player-daemon-cyan">
-<h2>Music Player Daemon (Cyan)<a class="headerlink" href="#music-player-daemon-cyan" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference external" href="https://musicpd.org/">Music Player Daemon (MPD)</a> streams the music to the clients.
-The MPD process is strict bound to MusicDB, this is why the configuration is stored in the MusicDB data directory.
-MusicDB will not work correctly when using a MPD process that does not use the configuration optimized to the MusicDB working environment.
-So by using a configuration separated from the operating systems default configuration allows the user to use this instance of MPD in parallel to another instance you may already use.
-The MPD process gets controlled by the MusicDB WebSocket Server and should not be influenced by other clients like <em>mpc</em>.</p>
-<p>The documentation of how MusicDB accesses MPD can be found here: <a class="reference internal" href="../mdbapi/mpd.html"><span class="doc">mpd / Music Playing Daemon Interface</span></a>.</p>
-<p><strong>Conclusion:</strong></p>
-<blockquote>
-<div><ul class="simple">
-<li>Music Player Daemon provides the audio stream.</li>
-</ul>
-</div></blockquote>
-</div>
-<div class="section" id="musicdb-components-green">
-<h2>MusicDB Components (Green)<a class="headerlink" href="#musicdb-components-green" title="Permalink to this headline">¶</a></h2>
-<p>MusicDB itself can be divided into three parts: The WebUI, the WebSocket Server and the Command-Line Modules.</p>
-<p>The <strong>MusicDB WebUI</strong> is the front end part of MusicDB.
-It is written in JavaScript and gets executed on the client side.
-A WebSocket connection gets established to communicate with the MusicDB Server using the <a class="reference internal" href="webapi.html"><span class="doc">MusicDB Websocket API</span></a>.
-The WebUI allows the user to interact with the audio stream by adding, removing or moving songs in the queue of songs to play in future.
-Furthermore the WebUI shows all kind of information of the music currently playing and the music collection.</p>
-<p>The server side of MusicDB are the <strong>MusicDB Command-Line Modules</strong>.
-They are the core of MusicDB.
-These modules manage the <a class="reference internal" href="#music-database">Music Database</a> and the <a class="reference internal" href="#artwork-cache">Artwork Cache</a>.
-Details of the modules can be found in the <a class="reference internal" href="mods.html"><span class="doc">MusicDB Commandline Modules</span></a> documentation.
-One special module is the WebSocket Server module.</p>
-<p>While the other modules are simple tools that get executed, do their job, and exit,
-the <strong>MusicDB WebSocket Server</strong> module runs permanent to serve
-information to the WebUI.
-Details of how the server works can be found in the <a class="reference internal" href="../mdbapi/server.html"><span class="doc">MusicDB Websocket Server</span></a> documentation.</p>
-<p><strong>Conclusion:</strong></p>
-<blockquote>
-<div><ul class="simple">
-<li>MusicDB is a WebUI, Command-line tools and a WebSocket server</li>
-</ul>
-</div></blockquote>
-<p>In the following subsections, some important information storage (Blue) gets describes.</p>
+<div class="section" id="musicdb-data-blue">
+<h2>MusicDB Data (Blue)<a class="headerlink" href="#musicdb-data-blue" title="Permalink to this headline">¶</a></h2>
+<p>The music files get read by <a class="reference internal" href="#musicdb-components-green">MusicDB Components (Green)</a>.
+At this point, the Music Collection gets split in two separate kind of information:
+The <a class="reference internal" href="#artwork-cache">Artwork Cache</a> for the artworks and the <a class="reference internal" href="#music-database">Music Database</a> for the meta data.</p>
 <div class="section" id="music-database">
 <h3>Music Database<a class="headerlink" href="#music-database" title="Permalink to this headline">¶</a></h3>
 <p>The Music Database is the central storage for information of music.
@@ -645,19 +685,50 @@ It is a cache for the artist, album and song names.
 Furthermore the database contains information associated with the albums and songs like genre tags, mood flags and lyrics.
 A detailed explanation of the database can be found in the <a class="reference internal" href="../lib/musicdb.html"><span class="doc">MusicDatabase</span></a> documentation.</p>
 </div>
+<div class="section" id="artwork-cache">
+<h3>Artwork Cache<a class="headerlink" href="#artwork-cache" title="Permalink to this headline">¶</a></h3>
+<p>The artwork cache contains all albums artworks and scaled version of those artworks managed by the <a class="reference internal" href="../mdbapi/artwork.html"><span class="doc">Artwork Management</span></a>.</p>
+</div>
 <div class="section" id="musicdb-data-configuration">
 <h3>MusicDB Data &amp; Configuration<a class="headerlink" href="#musicdb-data-configuration" title="Permalink to this headline">¶</a></h3>
 <p>Beside the music database, there are lots of other data in the MusicDB data directory.
 For example the <a class="reference internal" href="config.html"><span class="doc">MusicDB Configuration</span></a> and the database of the <a class="reference internal" href="../mdbapi/tracker.html"><span class="doc">Song Tracker</span></a>.
 There are also files storing the state of the server (selected genres) and allowing controlling the server via <a class="reference internal" href="../lib/namedpipe.html"><span class="doc">NamedPipe</span></a></p>
 </div>
-<div class="section" id="artwork-cache">
-<h3>Artwork Cache<a class="headerlink" href="#artwork-cache" title="Permalink to this headline">¶</a></h3>
-<p>The artwork cache contains all albums artworks and scaled version of those artworks managed by the <a class="reference internal" href="../mdbapi/artwork.html"><span class="doc">Artwork Management</span></a>.</p>
+</div>
+<div class="section" id="musicdb-components-green">
+<h2>MusicDB Components (Green)<a class="headerlink" href="#musicdb-components-green" title="Permalink to this headline">¶</a></h2>
+<p>MusicDB itself can be divided into three parts: The <a class="reference internal" href="#musicdb-webui">MusicDB WebUI</a>, the <cite>MusicDB Server</cite> and the <a class="reference internal" href="#command-line-modules">Command-Line Modules</a>.</p>
+<div class="section" id="command-line-modules">
+<h3>Command-Line Modules<a class="headerlink" href="#command-line-modules" title="Permalink to this headline">¶</a></h3>
+<p>The command line modules provide the interface from the users music collection to the MusicDB world.
+These modules manage the <a class="reference internal" href="#music-database">Music Database</a>, the <a class="reference internal" href="#artwork-cache">Artwork Cache</a> and many more.
+Details of the modules can be found in the <a class="reference internal" href="mods.html"><span class="doc">MusicDB Commandline Modules</span></a> documentation.
+One special module is the <a class="reference internal" href="#musicdb-server">MusicDB Server</a> module that will be described later in this section.</p>
+</div>
+<div class="section" id="musicdb-webui">
+<h3>MusicDB WebUI<a class="headerlink" href="#musicdb-webui" title="Permalink to this headline">¶</a></h3>
+<p>The MusicDB WebUI is the front end part of MusicDB.
+It is written in JavaScript and gets executed on the client side.
+A WebSocket connection gets established to communicate with the <a class="reference internal" href="#musicdb-server">MusicDB Server</a> using the <a class="reference internal" href="webapi.html"><span class="doc">MusicDB Websocket API</span></a>.
+The WebUI allows the user to interact with the audio stream by adding, removing or moving songs in the queue of songs to play in future.
+Furthermore the WebUI shows all kind of information of the music currently playing and the music collection.</p>
+</div>
+<div class="section" id="musicdb-server">
+<h3>MusicDB Server<a class="headerlink" href="#musicdb-server" title="Permalink to this headline">¶</a></h3>
+<p>While the other modules are simple tools that get executed, do their job, and exit,
+the MusicDB Server module runs permanent to serve information to the WebUI via <a class="reference internal" href="webapi.html"><span class="doc">MusicDB Websocket API</span></a>,
+and to provide an audio stream.
+Details of how the server works can be found in the <a class="reference internal" href="../mdbapi/server.html"><span class="doc">MusicDB Websocket Server</span></a> and <a class="reference internal" href="../mdbapi/stream.html"><span class="doc">Streaming Server</span></a> documentation.</p>
 </div>
 </div>
-<div class="section" id="http-server-black">
-<h2>HTTP Server (Black)<a class="headerlink" href="#http-server-black" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="external-servers-black">
+<h2>External Servers (Black)<a class="headerlink" href="#external-servers-black" title="Permalink to this headline">¶</a></h2>
+<p>There are two external tools involved in the MusicDB setup.
+The <a class="reference internal" href="#http-server">HTTP Server</a> serves the <a class="reference internal" href="#musicdb-webui">MusicDB WebUI</a>.
+The <a class="reference internal" href="#icecast-server">Icecast Server</a> manages the audio stream provided by the <a class="reference internal" href="#musicdb-server">MusicDB Server</a></p>
+<div class="section" id="http-server">
+<h3>HTTP Server<a class="headerlink" href="#http-server" title="Permalink to this headline">¶</a></h3>
 <p>To serve the WebUI files to the client, a HTTP server is needed.
 In the setup shown in the figure above, <a class="reference external" href="https://httpd.apache.org/">Apache</a> is used.
 The HTTP server needs to have access to the audio files, artwork cache and the MusicDB WebUI files.
@@ -665,12 +736,19 @@ The audio file access is needed by the WebUI to provide the possibility to liste
 Of course it can also be used to serve the documentation.
 The HTTP server is not bound to MusicDB in the way MPD is.
 So Apache can be replaced by any other web server.</p>
-<p><strong>Conclusion:</strong></p>
-<blockquote>
-<div><ul class="simple">
-<li>The HTTP server serves the WebUI, artwork, and audio files.</li>
-</ul>
-</div></blockquote>
+</div>
+<div class="section" id="icecast-server">
+<h3>Icecast Server<a class="headerlink" href="#icecast-server" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="https://icecast.org/">Icecast</a> server gets the audio data from the <a class="reference internal" href="#musicdb-server">MusicDB Server</a> and provides additional encryption and user management based protection to the stream.
+From the point of view from Icecast, MusicDB is a Source Client.
+More details are documented in the <a class="reference internal" href="../lib/icecast.html"><span class="doc">Icecast Interface</span></a> documentation.</p>
+</div>
+</div>
+<div class="section" id="consuming-music-orange">
+<h2>Consuming Music (Orange)<a class="headerlink" href="#consuming-music-orange" title="Permalink to this headline">¶</a></h2>
+<p>At the top of the figure, all information streams come together to the user.
+The user can see and control the audio stream using a web browser.
+To listen to the stream the user can connect with any media player that can receive mp3 audio streams.</p>
 </div>
 </div>
 
@@ -687,7 +765,7 @@ So Apache can be replaced by any other web server.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ralf Stemmer.
+        &copy; Copyright 2018, Ralf Stemmer.
 
     </p>
   </div>
@@ -709,7 +787,7 @@ So Apache can be replaced by any other web server.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.1.0',
+            VERSION:'3.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

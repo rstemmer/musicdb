@@ -15,7 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 This command checks the database and finds inconsistent information.
-The following things get checked:
+
+Until now, only a singe part of this tool comes with a command line GUI.
+The following things get checked by the GUI part:
 
     #. Do all artist, album and song files have an database entry
     #. Do all artist, album and song database entries have a file
@@ -34,22 +36,58 @@ Press ``q`` key, or ``Ctrl-D`` to exit the tool.
     
     Currently, only songs can be removed.
 
+
+Beside the GUI part, there are two more features that must be enabled via command line option:
+
+    * ``-l``/``--lyrics``: Search for lyrics in all files. If there are lyrics in a file, that are not in the database, they will be added. But only if the lyrics state is *Empty*. If the user already changed something, the changes will not be overwritten.
+    * ``-c``/``--checksums``: Updates all checksum entries in the songs table.
+
+These features will not be applied when the GUI mode is used.
+
+Lyrics Check
+^^^^^^^^^^^^
+
+When using the lyrics-check, there may appear lots off error messaged.
+This is a result of bad meta data and can be ignored.
+Most common are errors regarding the BOM (Byte Order Mark), because there are far too many tools out there that cannot handle Unicode correct.
+
+This process is very Disk I/O intensive!
+
+Checksum update
+^^^^^^^^^^^^^^^
+
+Applying this process updates all checksums.
+
+This process is very CPU intensive!
+
+Examples
+--------
+
 Example:
+
+    Starting ``repair`` in the GUI mode:
 
     .. code-block:: bash
 
         musicdb repair
+
+    Checking for lyrics and update checksums (no GUI will be shown)
+
+    .. code-block:: bash
+
+        musicdb repair --lyrics --checksums
 """
 
 import argparse
 from lib.modapi         import MDBModule
-from lib.db.musicdb     import MusicDatabase
+from lib.db.musicdb     import MusicDatabase, SONG_LYRICSSTATE_EMPTY
 from lib.filesystem     import Filesystem
 from mdbapi.database    import MusicDBDatabase
 from lib.clui.listview  import ListView
 from lib.clui.text      import Text
 from lib.clui.buttonview import ButtonView
 from lib.clui.tabgroup  import TabGroup
+from tqdm               import tqdm
 
 
 class OrphanPathView(ListView):
@@ -151,6 +189,8 @@ class repair(MDBModule, MusicDBDatabase):
     def MDBM_CreateArgumentParser(parserset, modulename):
         parser = parserset.add_parser(modulename, help="find and repair inconsistent information")
         parser.set_defaults(module=modulename)
+        parser.add_argument("-l", "--lyrics",    action="store_true", help="Check all files for lyrics")
+        parser.add_argument("-c", "--checksums", action="store_true", help="Update all checksums")
         return parser
 
 
@@ -298,13 +338,68 @@ class repair(MDBModule, MusicDBDatabase):
         return
 
 
+
+    def RepairLyrics(self):
+        """
+        This method checks for all songs in the songs table if there are lyrics in their files.
+        If a lyrics state is not *Empty* nothing will be changed for that song.
+        If it is *Empty*, the lyrics from the file will be add into the database.
+
+        Returns:
+            *Nothing*
+        """
+        print("\033[1;34mSearching for lyrics inside the songs meta data …\033[0;36m")
+
+        songs = self.db.GetAllSongs()
+
+        updates = 0 # count updates
+        for song in tqdm(songs):
+            # Only check for lyrics if the lyrics of the song are "empty"
+            if song["lyricsstate"] != SONG_LYRICSSTATE_EMPTY:
+                continue
+
+            # Load meta 
+            retval = self.AddLyricsFromFile(song["path"])
+            if retval:
+                updates += 1
+
+        print("\033[1;34mSearch completed. \033[1;37m%i\033[1;34m lyrics added.\033[0m"%(updates))
+
+
+
+    def UpdateChecksums(self):
+        """
+        This method updates the checksum for all songs in the songs table.
+
+        Returns:
+            *Nothing*
+        """
+        print("\033[1;34mUpdating checksum of all songs …\033[0;36m")
+
+        songs = self.db.GetAllSongs()
+
+        errors = 0  # count errors
+        for song in tqdm(songs):
+            retval = self.UpdateChecksum(song["path"])
+            if retval == False:
+                errors += 1
+
+        print("\033[1;34mUpdate completed. \033[1;37m%i\033[1;34m errors occur.\n\033[1;30mErrors indicate a missing link between a database entry and its file.\033[0m"%(errors))
+
+
+
     # return exit-code
     def MDBM_Main(self, args):
-        albums       = self.db.GetAllAlbums()
-        songs        = self.db.GetAllSongs()
 
-        self.RunCheck()
-        self.ShowUI()
+        if args.lyrics:
+            self.RepairLyrics()
+
+        if args.checksums:
+            self.UpdateChecksums()
+
+        if not args.lyrics and not args.checksums:
+            self.RunCheck()
+            self.ShowUI()
         return 0
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

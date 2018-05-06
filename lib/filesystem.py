@@ -197,12 +197,15 @@ class Filesystem(object):
     def RemoveFile(self, xpath):
         """
         This method removes a file from the filesystem.
-        **Handle with care!**
+
+        .. warning::
+
+            **Handle with care!**
 
         If the file does not exist, ``False`` gets returned
 
         Args:
-            xpath (str): A relative or absolute path
+            xpath (str): A relative or absolute path to a file
 
         Returns:
             ``False`` if the file does not exist.
@@ -214,6 +217,33 @@ class Filesystem(object):
 
         os.remove(abspath)
         return True
+
+
+
+    def RemoveDirectory(self, xpath):
+        """
+        This method removes a directory tree from the filesystem.
+
+        .. warning::
+
+            **Handle with care!**
+
+        If the file does not exist, ``False`` gets returned
+
+        Args:
+            xpath (str): A relative or absolute path to a directory
+
+        Returns:
+            ``False`` if the directory does not exist.
+        """
+        abspath = self.AbsolutePath(xpath)
+        
+        if not self.IsDirectory(abspath):
+            return False
+
+        shutil.rmtree(abspath, ignore_errors=True)
+        return True
+
 
 
     def MoveFile(self, xsrcpath, xdstpath):
@@ -302,8 +332,8 @@ class Filesystem(object):
     def CreateSubdirectory(self, xnewpath):
         """
         This method creates a subdirectory.
-        The directories are not made recursively.
-        So *xnewpath* must address the new directory with its parents existing.
+        The directories are made recursively.
+        So *xnewpath* can address the last directory of a path that will be created.
 
         Args:
             xnewpath: A path that addresses a new directory
@@ -312,7 +342,7 @@ class Filesystem(object):
             ``True``
         """
         absnewpath = self.AbsolutePath(xnewpath)
-        os.makedirs(absnewpath)
+        os.makedirs(absnewpath, exist_ok=True)
         return True
 
 

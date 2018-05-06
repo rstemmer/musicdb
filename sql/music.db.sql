@@ -42,7 +42,9 @@ CREATE TABLE IF NOT EXISTS songs
     qremoves    INTEGER DEFAULT 0,
     favorite    INTEGER DEFAULT 0,
     qrndadds    INTEGER DEFAULT 0,
-    lyricsstate INTEGER DEFAULT 0
+    lyricsstate INTEGER DEFAULT 0,
+    checksum    TEXT    DEFAULT "",
+    lastplayed  INTEGER DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS lyrics

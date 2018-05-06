@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-This is the main module to run the MusicDB Websocket Server.
+This is the main module to run the MusicDB Server.
 
 To start and run the server, the following sequence of function calls is necessary:
 
@@ -24,11 +24,11 @@ To start and run the server, the following sequence of function calls is necessa
         StartWebSocketServer()
         Run()
 
+When starting the server, a named pipe gets created at the path set in the configuration file.
 MusicDB Server handles the following commands when written into its named pipe:
 
     * refresh:  :meth:`~mdbapi.server.UpdateCaches` - Update server caches and inform clients to update their caches
     * shutdown: :meth:`~mdbapi.server.Shutdown` - Shut down the server
-    * blacklist: Show the blacklists maintained by :mod:`~mdbapi.randy`
 
 Further more does this module maintain global instances of the following classes.
 Those objects can be used inside the thread the server runs. 
@@ -39,9 +39,8 @@ If the server is not started, the objects are all ``None``.
     * :class:`lib.db.musicdb.MusicDatabase` as ``database``
     * :class:`mdbapi.mise.MusicDBMicroSearchEngine` as ``mise``
     * :class:`lib.cfg.musicdb.MusicDBConfig` as ``cfg``
-    * :class:`lib.cfg.mdbstate.MDBState` as ``mdbstate``
 
-The following example shows hot to use the pipe interface:
+The following example shows how to use the pipe interface:
 
     .. code-block:: bash
 
@@ -59,27 +58,21 @@ import time
 import signal
 from threading          import Thread
 from lib.cfg.musicdb    import MusicDBConfig
-from lib.cfg.mdbstate   import MDBState
 from lib.db.musicdb     import MusicDatabase
 from lib.pidfile        import *
 from lib.namedpipe      import NamedPipe
 from lib.ws.server      import MusicDBWebSocketServer
 from mdbapi.mise        import MusicDBMicroSearchEngine
-from mdbapi.randy       import StartRandy, StopRandy, RandyInterface
-from mdbapi.tracker     import StartTracker, StopTracker
-import mdbapi.mpd as mpd
+from mdbapi.stream      import StartStreamingThread, StopStreamingThread
 import logging
 
 # Global objects
-# This is the server environment that needs to be accessed by many objects like the RPC-Server instances
+# This is the server environment that needs to be accessed by many objects
 # Instances
 database    = None  # music.db object
-mise        = None  # micre searche engine object
+mise        = None  # micro search engine object
 cfg         = None  # overall configuration file
-mdbstate    = None  # ini file holding the state like selected genres and EoQ-Event
 pipe        = None  # Named pipe for server commands
-# Threadhandler
-mpdthread   = None
 # WS Server
 tlswsserver = None
 shutdown    = False
@@ -119,7 +112,6 @@ def UpdateCaches():
     On server side:
     
         * The MiSE Cache gets updated by calling :meth:`mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache`
-        * The MPD database gets updated by calling :meth:`mdbapi.mpd.Update`
 
 
     To inform the clients a broadcast packet get sent with the following content: ``{method:"broadcast", fncname:"sys:refresh", fncsig:"UpdateCaches", arguments:null, pass:null}``
@@ -140,11 +132,6 @@ def UpdateCaches():
         mise.UpdateCache()
     except Exception as e:
         logging.warning("Unexpected error updating MiSE cache: %s \033[0;33m(will be ignored)\033[0m", str(e))
-
-    try:
-        mpd.Update()
-    except Exception as e:
-        logging.warning("Unexpected error updating MPD cache: %s \033[0;33m(will be ignored)\033[0m", str(e))
 
     try:
         packet = {}
@@ -178,13 +165,10 @@ def Initialize(configobj, databaseobj):
     The following things happen when this method gets called:
 
         #. Assign the *configobj* and *databaseobj* to global variables ``cfg`` and ``database`` to share them between multiple connections
-        #. Seed Python's randomizer *Randy* (See MDBAPI documentation :doc:`/mdbapi/randy`)
-        #. Load the last state of MusicDB via :meth:`lib.cfg.mdbstate.MDBState` class
+        #. Seed Python's random number generator
         #. Instantiate a global :meth:`mdbapi.mise.MusicDBMicroSearchEngine` object
-        #. Start the song Tracker via :meth:`mdbapi.Tracker.StartTracker`
-        #. Connect to MPD (Music Playing Daemon) and start Observer thread (see :doc:`/mdbapi/mpd` and :doc:`/mdbapi/tracker`)
+        #. Start the Streaming Thread via :meth:`mdbapi.stream.StartStreamingThread` (see :doc:`/mdbapi/stream` for details)
         #. Update MiSE cache via :meth:`mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache`
-        #. Start the randomizer Randy via :meth:`mdbapi.Randy.StartRandy`
         #. Create FIFO file for named pipe
 
     Args:
@@ -213,28 +197,18 @@ def Initialize(configobj, databaseobj):
 
     random.seed()
 
-    # load MusicDBState file
-    global mdbstate
-    mdbstate    = MDBState(cfg.server.statefile, database)
-
     # Initialize all interfaces
     logging.debug("Initializing MicroSearchEngine…")
     global mise
     mise   = MusicDBMicroSearchEngine(database)
 
     # Start/Connect all interfaces
-    logging.debug("Starting Tracker…")
-    StartTracker(cfg)
-    
-    logging.debug("Starting MDP Client")
-    mpd.StartMPDClient(cfg)
+    logging.debug("Starting Streaming Thread…")
+    StartStreamingThread(cfg, database)
     
     logging.debug("Updateing MiSE Cache…")
     mise.UpdateCache()
     
-    logging.debug("Starting Randy…")
-    StartRandy(cfg)
-
     # Signal Handler
     # Don't mention the signals - they are deprecated!
     #logging.info("Register signals \033[0;36m(" + cfg.server.pidfile + ")\033[0m")
@@ -286,9 +260,7 @@ def Shutdown():
 
     The following things happen when this function gets called:
 
-        #. Stop the randomizer Randy via :meth:`mdbapi.randy.StopRandy`
-        #. Stop the song Tracker via :meth:`mdbapi.tracker.StopTracker`
-        #. Disconnect from MPD and stop the observer Thread via :meth:`mdbapi.mpd.StopObserver`
+        #. Stop the Streaming Thread via :meth:`mdbapi.stream.StopStreamingThread`
         #. Removing FIFO file for named pipe
         #. Stop the websocket server
 
@@ -306,14 +278,8 @@ def Shutdown():
         logging.debug("Disconnect from clients…")
         tlswsserver.factory.CloseConnections()
     
-    logging.debug("Stopping Randy…")
-    StopRandy()
-
-    logging.debug("Stopping Tracker…")
-    StopTracker()
-
-    logging.debug("Disconnecting from MPD…")
-    mpd.StopObserver()
+    logging.debug("Stopping Streaming Thread…")
+    StopStreamingThread()
     
     if tlswsserver:
         logging.debug("Stopping TLS WS Server…")
@@ -363,8 +329,6 @@ def Run():
                 shutdown = True
             elif line == "refresh":
                 UpdateCaches()
-            elif line == "blacklist":
-                RandyInterface().PrintBlacklist()
 
             if shutdown:
                 Shutdown()

@@ -29,7 +29,7 @@ function ShowMPDControls(parentID)
     html += " id=MPDCPauseButton";
     html += " title=\"Play/Pause music\"";
     html += " class=\"MPDC_button hlcolor\"";
-    html += " onClick=\"MusicDB_Call(\'SetMPDState\', {mpdstate:\'playpause\'});\">";
+    html += " onClick=\"MusicDB_Call(\'SetStreamState\', {state:\'playpause\'});\">";
     html += "Pause/Play";
     html += "</div>";
 

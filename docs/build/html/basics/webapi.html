@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Websocket API &mdash; MusicDB 2.1.0 documentation</title>
+  <title>MusicDB Websocket API &mdash; MusicDB 3.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 2.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Workflow for development" href="workflow.html"/>
         <link rel="prev" title="MusicDB Test VMs" href="testvm.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                2.1
+                3.0
               </div>
             
           
@@ -99,7 +99,7 @@
 <li class="toctree-l2"><a class="reference internal" href="comparison.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">MusicDB Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#websocket">websocket</a></li>
@@ -110,7 +110,7 @@
 <li class="toctree-l2"><a class="reference internal" href="config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#lycra">lycra</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#icecast">Icecast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#log">log</a></li>
@@ -125,14 +125,29 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview of MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="overview.html#music-information-purple">Music Information (Purple)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="overview.html#music-database">Music Database</a></li>
-<li class="toctree-l3"><a class="reference internal" href="overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="overview.html#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="overview.html#http-server-black">HTTP Server (Black)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview.html#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview.html#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="testvm.html">MusicDB Test VMs</a><ul>
@@ -165,6 +180,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#send-data-to-the-server">Send data to the server</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lib.ws.mdbwsi">Server side API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#albums">Albums</a></li>
@@ -206,7 +222,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#system-preparation">System Preparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
@@ -261,6 +276,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
@@ -288,7 +307,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/server.html">server - MusicDB Websocket Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/stats.html">stats - MusicDB Song Statistic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
@@ -344,14 +367,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/mpd.html">mpd / Music Playing Daemon Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#observer-thread">Observer Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#callbacks">Callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#managing-mpd">Managing MPD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mpd.html#queue-management">Queue management</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicai.html">MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#training-time">Training Time</a></li>
@@ -365,18 +380,51 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randyinterface-class">RandyInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randy-class">Randy Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tracker.html">Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
 </ul>
@@ -397,7 +445,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/config.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/config.html#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
@@ -407,21 +459,59 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/database.html#database-class">Database Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/filesystem.html">Filesystem Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/metatags.html">Meta Tags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/metatags.html#metatags-class">MetaTags Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3file.html">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#albums">Albums</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#artworks">Artworks</a></li>
@@ -740,6 +830,38 @@ The arguments <em>args</em> and <em>pass</em> are optional arguments.</p>
 </div>
 </div>
 </div>
+<div class="section" id="events">
+<h2>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h2>
+<p>The Streaming Thread generates events that get broadcast to all clients via notifications.</p>
+<p>The package has the following information:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>method:</strong> notification</li>
+<li><strong>pass:</strong> <code class="docutils literal"><span class="pre">null</span></code></li>
+<li><dl class="first docutils">
+<dt>Event triggered by <a class="reference internal" href="../mdbapi/stream.html"><span class="doc">Streaming Server</span></a></dt>
+<dd><ul class="first last">
+<li><strong>fncname:</strong> <code class="docutils literal"><span class="pre">&quot;MusicDB:Stream&quot;</span></code></li>
+<li><strong>fncsig:</strong> <code class="docutils literal"><span class="pre">&quot;onStatusChanged&quot;</span></code> or <code class="docutils literal"><span class="pre">&quot;onTimeChanged&quot;</span></code></li>
+<li><strong>argument:</strong> The playtime of the current song in seconds, when the <em>fncsig</em> is <code class="docutils literal"><span class="pre">&quot;onTimeChanged&quot;</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Event triggered by <a class="reference internal" href="../mdbapi/songqueue.html"><span class="doc">MusicDB Song Queue</span></a></dt>
+<dd><ul class="first last">
+<li><strong>fncname:</strong> <code class="docutils literal"><span class="pre">&quot;MusicDB:Queue&quot;</span></code></li>
+<li><strong>fncsig:</strong> <code class="docutils literal"><span class="pre">&quot;onQueueChanged&quot;</span></code> or <code class="docutils literal"><span class="pre">&quot;onSongChanged&quot;</span></code></li>
+<li><strong>argument:</strong> <code class="docutils literal"><span class="pre">None</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>See the related documentation of the event sources for more details</p>
+</div>
 <div class="section" id="module-lib.ws.mdbwsi">
 <span id="server-side-api"></span><h2>Server side API<a class="headerlink" href="#module-lib.ws.mdbwsi" title="Permalink to this headline">¶</a></h2>
 <p>Overview of all WebAPI Methods sorted by category (some methods appear multiple times).</p>
@@ -814,11 +936,12 @@ The arguments <em>args</em> and <em>pass</em> are optional arguments.</p>
 <div class="section" id="other">
 <h3>Other<a class="headerlink" href="#other" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMPDState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMPDState"><code class="xref py py-meth docutils literal"><span class="pre">GetMPDState()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMPDState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMPDState"><code class="xref py py-meth docutils literal"><span class="pre">SetMPDState()</span></code></a></li>
+<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState"><code class="xref py py-meth docutils literal"><span class="pre">GetStreamState()</span></code></a></li>
+<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState"><code class="xref py py-meth docutils literal"><span class="pre">SetStreamState()</span></code></a></li>
 <li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong"><code class="xref py py-meth docutils literal"><span class="pre">PlayNextSong()</span></code></a></li>
 <li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState"><code class="xref py py-meth docutils literal"><span class="pre">SetMDBState()</span></code></a></li>
 <li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState"><code class="xref py py-meth docutils literal"><span class="pre">GetMDBState()</span></code></a></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">GetTables()</span></code></li>
 </ul>
 </div>
 <dl class="class">
@@ -827,8 +950,9 @@ The arguments <em>args</em> and <em>pass</em> are optional arguments.</p>
 <dd><dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue">
 <code class="descname">AddAlbumToQueue</code><span class="sig-paren">(</span><em>albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddAlbumToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method adds all songs of an album (from all CDs) at the end of the MPD queue.</p>
+<dd><p>This method adds all songs of an album (from all CDs) at the end of the queue.</p>
 <p>The <em>adds</em>-statistic gets <strong>not</strong> incremented when a whole album gets add to the queue.</p>
+<p>If a song is flagged as “hated” or disabled, than it gets discarded.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -849,11 +973,10 @@ The arguments <em>args</em> and <em>pass</em> are optional arguments.</p>
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue">
 <code class="descname">AddRandomSongToQueue</code><span class="sig-paren">(</span><em>position</em>, <em>albumid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddRandomSongToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Similar to <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue"><code class="xref py py-meth docutils literal"><span class="pre">AddSongToQueue()</span></code></a>.
-Instead of a specific song, a random song gets chosen by the random-song manager <em>Randy</em>.
-This is done using <code class="xref py py-meth docutils literal"><span class="pre">mdbapi.randy.Randy.AddSong()</span></code>.</p>
+Instead of a specific song, a random song gets chosen by the random-song manager <em>Randy</em> (See <a class="reference internal" href="../mdbapi/randy.html"><span class="doc">Randomizer</span></a>).
+This is done using the <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy.GetSong" title="mdbapi.randy.Randy.GetSong"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.randy.Randy.GetSong()</span></code></a> method.</p>
 <p>If an album ID is given, the new song will be added from that album
-using <code class="xref py py-meth docutils literal"><span class="pre">mdbapi.randy.Randy.AddSongFromAlbum()</span></code>.</p>
-<p>The random-song manager also increments the <em>rndadds</em> statistics for the song that gets added to the queue.</p>
+using <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy.GetSongFromAlbum" title="mdbapi.randy.Randy.GetSongFromAlbum"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.randy.Randy.GetSongFromAlbum()</span></code></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -879,12 +1002,11 @@ using <code class="xref py py-meth docutils literal"><span class="pre">mdbapi.ra
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue">
 <code class="descname">AddSongToQueue</code><span class="sig-paren">(</span><em>songid</em>, <em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddSongToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method adds a new song to the queue of songs MPD (Music Playing Daemon) will play.</p>
+<dd><p>This method adds a new song to the queue of songs that will be streamed.</p>
 <p>The song gets address by its ID.
 The position can be <code class="docutils literal"><span class="pre">&quot;next&quot;</span></code> if the song shall be places behind the current playing song.
 So, the new added song will be played next.
 Alternative <code class="docutils literal"><span class="pre">&quot;last&quot;</span></code> can be used to place the song at the end of the queue.</p>
-<p>If a song got add, the <em>adds</em>-statistic value gets incremented.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1233,7 +1355,6 @@ If there are no cached lyrics, the <em>lyricscache</em> entry is <code class="do
 <blockquote>
 <div><ul class="simple">
 <li><strong>albumfilter:</strong> a list of tag-names of class Genre</li>
-<li><strong>queue:</strong> a further dictionary related to the music-queue. Currently, only the <em>eoqevent</em> entry exists.</li>
 </ul>
 </div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1264,72 +1385,14 @@ If there are no cached lyrics, the <em>lyricscache</em> entry is <code class="do
 </dd></dl>
 
 <dl class="method">
-<dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMPDState">
-<code class="descname">GetMPDState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetMPDState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMPDState" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method returns the state of MPD (Music Playing Daemon).</p>
-<p>The state is a dictionary that has always the following information:</p>
-<blockquote>
-<div><ul class="simple">
-<li><strong>isconnected:</strong> <code class="docutils literal"><span class="pre">True</span></code> if MusicDB is connected to MPD, otherwise <code class="docutils literal"><span class="pre">False</span></code></li>
-<li><strong>isplaying:</strong> <code class="docutils literal"><span class="pre">True</span></code> if MPD is in <em>playing</em>-mode, otherwise <code class="docutils literal"><span class="pre">False</span></code></li>
-</ul>
-</div></blockquote>
-<p>If MusicDB is connected, there are further information about MPDs state:</p>
-<blockquote>
-<div><ul class="simple">
-<li><strong>mpdstatus:</strong> as returned by <a class="reference internal" href="../mdbapi/mpd.html#mdbapi.mpd.GetStatus" title="mdbapi.mpd.GetStatus"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mpd.GetStatus()</span></code></a></li>
-<li><strong>hasqueue:</strong> <code class="docutils literal"><span class="pre">True</span></code> If there are songs in MPDs playing-Queue, otherwise <code class="docutils literal"><span class="pre">False</span></code></li>
-</ul>
-</div></blockquote>
-<p>In case there is a at least one song in the queue, that song gets played by MPD if <code class="docutils literal"><span class="pre">isplaying</span></code> is <code class="docutils literal"><span class="pre">True</span></code>.
-In this case, there are also information about the current song:</p>
-<blockquote>
-<div><ul class="simple">
-<li><strong>song:</strong> The song entry from the database for the song that is currently playing</li>
-<li><strong>album:</strong> The related album entry from the database</li>
-<li><strong>artist:</strong> The related artist entry from the database</li>
-<li><strong>songtags:</strong> a list of tags as returned by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal"><span class="pre">GetSongTags()</span></code></a></li>
-<li><strong>albumtags:</strong> a list of tags as returned by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags"><code class="xref py py-meth docutils literal"><span class="pre">GetAlbumTags()</span></code></a></li>
-</ul>
-</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The current state of MPD</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Example</p>
-<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetMPDState&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowMPDState&quot;</span><span class="p">);</span>
-
-<span class="c1">// …</span>
-
-<span class="kd">function</span> <span class="nx">onMusicDBMessage</span><span class="p">(</span><span class="nx">fnc</span><span class="p">,</span> <span class="nx">sig</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">pass</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">fnc</span> <span class="o">==</span> <span class="s2">&quot;GetMPDState&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">sig</span> <span class="o">==</span> <span class="s2">&quot;ShowMPDState&quot;</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">if</span><span class="p">(</span><span class="nx">args</span><span class="p">.</span><span class="nx">isconnected</span> <span class="o">==</span> <span class="kc">true</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">if</span><span class="p">(</span><span class="nx">args</span><span class="p">.</span><span class="nx">hasqueue</span> <span class="o">==</span> <span class="kc">true</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Current playing song: &quot;</span> <span class="o">+</span> <span class="nx">args</span><span class="p">.</span><span class="nx">song</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue">
 <code class="descname">GetQueue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method returns a list of songs, albums and artists for each song in the MPD queue.
-If there are not songs in the queue, an empty list gets returned.</p>
+<dd><p>This method returns a list of songs, albums and artists for each song in the song queue.
+If there are no songs in the queue, an empty list gets returned.</p>
 <p>Each entry of the list contains the following information:</p>
 <blockquote>
 <div><ul class="simple">
+<li><strong>entryid:</strong> A unique ID to identify the entry in the queue (as string because it is a 128 integer that blows JavaScripts mind)</li>
 <li><strong>song:</strong> The song entry from the database</li>
 <li><strong>album:</strong> The related album entry from the database</li>
 <li><strong>artist:</strong> The related artist entry from the database</li>
@@ -1339,7 +1402,7 @@ If there are not songs in the queue, an empty list gets returned.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of song, album and artist information for each song in the MPD queue</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of song, album and artist information for each song in the song queue</td>
 </tr>
 </tbody>
 </table>
@@ -1523,6 +1586,59 @@ Each song-entry is a dictionary with the following keys:</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState">
+<code class="descname">GetStreamState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetStreamState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the state of the Streaming Thread. (See <a class="reference internal" href="../mdbapi/stream.html"><span class="doc">Streaming Server</span></a>)</p>
+<p>The state is a dictionary that has always the following information:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>isconnected:</strong> <code class="docutils literal"><span class="pre">True</span></code> if MusicDB is connected to Icecast, otherwise <code class="docutils literal"><span class="pre">False</span></code></li>
+<li><strong>isplaying:</strong> <code class="docutils literal"><span class="pre">True</span></code> if the Streaming Thread is in <em>playing</em>-mode, otherwise <code class="docutils literal"><span class="pre">False</span></code></li>
+<li><strong>hasqueue:</strong> <code class="docutils literal"><span class="pre">True</span></code> when there is at least one song in the queue. When <code class="docutils literal"><span class="pre">False</span></code>, the following song information are <em>not</em> included!</li>
+</ul>
+</div></blockquote>
+<p>In case there is a at least one song in the queue, this current streamed song gets returned with the following information:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>song:</strong> The song entry from the database for the song that is currently playing</li>
+<li><strong>album:</strong> The related album entry from the database</li>
+<li><strong>artist:</strong> The related artist entry from the database</li>
+<li><strong>songtags:</strong> a list of tags as returned by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal"><span class="pre">GetSongTags()</span></code></a></li>
+<li><strong>albumtags:</strong> a list of tags as returned by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags"><code class="xref py py-meth docutils literal"><span class="pre">GetAlbumTags()</span></code></a></li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The current state of the streaming thread</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetStreamState&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowStreamState&quot;</span><span class="p">);</span>
+
+<span class="c1">// …</span>
+
+<span class="kd">function</span> <span class="nx">onMusicDBMessage</span><span class="p">(</span><span class="nx">fnc</span><span class="p">,</span> <span class="nx">sig</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">pass</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">fnc</span> <span class="o">==</span> <span class="s2">&quot;GetStreamState&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">sig</span> <span class="o">==</span> <span class="s2">&quot;ShowStreamtate&quot;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">args</span><span class="p">.</span><span class="nx">isconnected</span> <span class="o">==</span> <span class="kc">true</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Connection to Icecast established&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">args</span><span class="p">.</span><span class="nx">hasqueue</span> <span class="o">==</span> <span class="kc">true</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Current playing song: &quot;</span> <span class="o">+</span> <span class="nx">args</span><span class="p">.</span><span class="nx">song</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags">
 <code class="descname">GetTags</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns all tags that are available, separated by the tag classes.</p>
@@ -1562,22 +1678,84 @@ Each song-entry is a dictionary with the following keys:</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue">
-<code class="descname">MoveSongInQueue</code><span class="sig-paren">(</span><em>songid</em>, <em>srcpos</em>, <em>dstpos</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.MoveSongInQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a direct interface to <a class="reference internal" href="../mdbapi/mpd.html#mdbapi.mpd.MoveSong" title="mdbapi.mpd.MoveSong"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mpd.MoveSong()</span></code></a>.
+<code class="descname">MoveSongInQueue</code><span class="sig-paren">(</span><em>entryid</em>, <em>afterid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.MoveSongInQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a direct interface to <a class="reference internal" href="../mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.MoveSong" title="mdbapi.songqueue.SongQueue.MoveSong"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.songqueue.SongQueue.MoveSong()</span></code></a>.
 It moves a song from one position in the queue to another one.</p>
+<p>It is not allowed to move the current playing song (index 0).
+When this is tried, nothing happens.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>songid</strong> (<em>int</em>) – ID of the song that shall be removed.</li>
-<li><strong>srcpos</strong> (<em>int</em>) – Position of the song</li>
-<li><strong>dstpos</strong> (<em>int</em>) – The position the song shall be moved to</li>
+<li><strong>entryid</strong> (<em>str</em>) – Position of the song</li>
+<li><strong>afterid</strong> (<em>str</em>) – The position the song shall be moved to</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">None</span></code></p>
 </td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<p>Assuming the following queue:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="53%" />
+<col width="47%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">entry ID</th>
+<th class="head">song ID</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1337</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td>7357</td>
+<td>2</td>
+</tr>
+<tr class="row-even"><td>2323</td>
+<td>3</td>
+</tr>
+<tr class="row-odd"><td>4242</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>Then the two calls will be applied.
+The first one is invalid, because entry ID <code class="docutils literal"><span class="pre">&quot;1337&quot;</span></code> addresses the current playing song at the top of the queue.
+So that one will be ignored.
+The next one moves song 2 to the end of the queue.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;MoveSongInQueue&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">entryid</span><span class="o">:</span><span class="s2">&quot;1337&quot;</span><span class="p">,</span> <span class="nx">afterid</span><span class="o">:</span><span class="s2">&quot;2323&quot;</span><span class="p">});</span>
+<span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;MoveSongInQueue&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">entryid</span><span class="o">:</span><span class="s2">&quot;7357&quot;</span><span class="p">,</span> <span class="nx">afterid</span><span class="o">:</span><span class="s2">&quot;4242&quot;</span><span class="p">});</span>
+</pre></div>
+</div>
+<p>So after processing the two calls, the queue looks like this:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="53%" />
+<col width="47%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">entry ID</th>
+<th class="head">song ID</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1337</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td>2323</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>4242</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td>7357</td>
+<td>2</td>
 </tr>
 </tbody>
 </table>
@@ -1587,8 +1765,7 @@ It moves a song from one position in the queue to another one.</p>
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong">
 <code class="descname">PlayNextSong</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.PlayNextSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method skips the current playing song.
-If there is no song that can be skipped, nothing will be done.</p>
-<p>When a song got skipped, its statistics for being skipped gets incremented.</p>
+If there is no song that can be skipped, the Song Queue or Streaming Thread will handle this properly.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1631,27 +1808,21 @@ If there is no song that can be skipped, nothing will be done.</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue">
-<code class="descname">RemoveSongFromQueue</code><span class="sig-paren">(</span><em>songid</em>, <em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RemoveSongFromQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method removes a song from MPDs queue.
-The position is the index of the song in the queue and must be an integer.</p>
-<p>The <em>removes</em>-statistic of this song gets incremented.</p>
+<code class="descname">RemoveSongFromQueue</code><span class="sig-paren">(</span><em>entryid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RemoveSongFromQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method removes a song from song queue.
+The song gets identified by the entry ID of the queue entry.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>songid</strong> (<em>int</em>) – The ID of the song that shall be removed</li>
-<li><strong>position</strong> (<em>int</em>) – Position of the song in the MPD queue</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entryid</strong> (<em>str</em>) – </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">None</span></code></p>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;RemoveSongFromQueue&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">songid</span><span class="o">:</span><span class="mi">1337</span><span class="p">,</span> <span class="nx">position</span><span class="o">:</span><span class="mi">3</span><span class="p">});</span>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;RemoveSongFromQueue&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">entryid</span><span class="o">:</span><span class="s2">&quot;82390194629402649&quot;</span><span class="p">});</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1739,11 +1910,12 @@ So, this method can also be used to approve an AI set tag.</p>
 <code class="descname">SetMDBState</code><span class="sig-paren">(</span><em>category</em>, <em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetMDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets the global state of MDB clients</p>
 <p>If the state is not available in the global state settings, it will be created.</p>
-<p>Currently, <em>category</em> must always be <code class="docutils literal"><span class="pre">&quot;albumfilter&quot;</span></code>.
-Then, <em>name</em> is a Genre-Name and <em>value</em> is <code class="docutils literal"><span class="pre">True</span></code> or <code class="docutils literal"><span class="pre">False</span></code>.
+<p>When the <em>category</em> is <code class="docutils literal"><span class="pre">&quot;albumfilter&quot;</span></code>,
+then <em>name</em> must be a Genre-Name and <em>value</em> is <code class="docutils literal"><span class="pre">True</span></code> or <code class="docutils literal"><span class="pre">False</span></code>.
 If a genre gets set to true, all albums for that genre are included in the list of returned albums by methods that use the filter.</p>
 <p>After executing this method, the MusicDB server broadcasts the result of <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState"><code class="xref py py-meth docutils literal"><span class="pre">GetMDBState()</span></code></a>. (<code class="docutils literal"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;broadcast&quot;,</span> <span class="pre">fncname</span> <span class="pre">=</span> <span class="pre">&quot;GetMDBState&quot;</span></code>)
 So each client gets informed about the new state.</p>
+<p>The category must be <code class="docutils literal"><span class="pre">&quot;albumfilter&quot;</span></code>!</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1762,34 +1934,6 @@ So each client gets informed about the new state.</p>
 </table>
 <p class="rubric">Example</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;SetMDBState&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">category</span><span class="o">:</span><span class="s2">&quot;albumfilter&quot;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span><span class="s2">&quot;Metal&quot;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span><span class="kc">true</span><span class="p">});</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMPDState">
-<code class="descname">SetMPDState</code><span class="sig-paren">(</span><em>mpdstate</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetMPDState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMPDState" title="Permalink to this definition">¶</a></dt>
-<dd><p>This Method can be used to set the  <em>playing</em>-state of MPD (Music Playing Daemon)</p>
-<p>The following arguments are possible:</p>
-<blockquote>
-<div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">&quot;play&quot;</span></code>: Set state to <em>playing</em>. If there are songs in the queue, MPD start streaming.</li>
-<li><code class="docutils literal"><span class="pre">&quot;pause&quot;</span></code>: Set state to <em>pause</em>.</li>
-<li><code class="docutils literal"><span class="pre">&quot;playpause&quot;</span></code>: Toggle between <em>playing</em> and <em>pause</em></li>
-</ul>
-</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mpdstate</strong> (<em>str</em>) – New playing-state for MPD. <em>mpdstate</em> must be one of the following strings: playpause, play or pause.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Example</p>
-<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;SetMPDState&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">mpdstate</span><span class="o">:</span><span class="s2">&quot;playpause&quot;</span><span class="p">});</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1843,6 +1987,34 @@ So when changing a genre or sub genre, then they get suggested as album genre or
 </dd></dl>
 
 <dl class="method">
+<dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState">
+<code class="descname">SetStreamState</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetStreamState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method can be used to set the  <em>playing</em>-state of the stream (see <a class="reference internal" href="../mdbapi/stream.html"><span class="doc">Streaming Server</span></a>)</p>
+<p>The following arguments are possible:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">&quot;play&quot;</span></code>: Set state to <em>playing</em>. If there are songs in the queue, MusicDB starts streaming.</li>
+<li><code class="docutils literal"><span class="pre">&quot;pause&quot;</span></code>: Set state to <em>pause</em>.</li>
+<li><code class="docutils literal"><span class="pre">&quot;playpause&quot;</span></code>: Toggle between <em>playing</em> and <em>pause</em></li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>str</em>) – New playing-state for the Streamin Thread. <em>state</em> must be one of the following strings: <code class="docutils literal"><span class="pre">&quot;playpause&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;play&quot;</span></code> or <code class="docutils literal"><span class="pre">&quot;pause&quot;</span></code>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;SetStreamState&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">state</span><span class="o">:</span><span class="s2">&quot;playpause&quot;</span><span class="p">});</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic">
 <code class="descname">UpdateSongStatistic</code><span class="sig-paren">(</span><em>songid</em>, <em>statistic</em>, <em>modifier</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.UpdateSongStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic" title="Permalink to this definition">¶</a></dt>
 <dd><p>When this method got called direct via the JavaScript API, the MusicDB server broadcasts the result of <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong"><code class="xref py py-meth docutils literal"><span class="pre">GetSong()</span></code></a>. (<code class="docutils literal"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;broadcast&quot;,</span> <span class="pre">fncname</span> <span class="pre">=</span> <span class="pre">&quot;GetSong&quot;</span></code>)
@@ -1869,7 +2041,7 @@ This is important to update the HUD if the song is currently playing.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ralf Stemmer.
+        &copy; Copyright 2018, Ralf Stemmer.
 
     </p>
   </div>
@@ -1891,7 +2063,7 @@ This is important to update the HUD if the song is currently playing.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.1.0',
+            VERSION:'3.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

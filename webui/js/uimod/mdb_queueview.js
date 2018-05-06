@@ -28,6 +28,7 @@ function ShowQueue(parentID, MDBQueue)
     html += "<div id=QMainBox>"; // main box
     for(var pos in MDBQueue)
     {
+        var entryid     = MDBQueue[pos].entryid;
         var MDBSong     = MDBQueue[pos].song;
         var MDBAlbum    = MDBQueue[pos].album;
         var MDBArtist   = MDBQueue[pos].artist;
@@ -37,14 +38,15 @@ function ShowQueue(parentID, MDBQueue)
         
         // Create Entry
 
-        var buttonbox   = Button_QueueEntryControls(MDBSong.id, pos);
+        var buttonbox   = Button_QueueEntryControls(MDBSong.id, entryid, pos);
 
         html += "<div";
         html += " id=Q_drag_" + pos;
         html += " class=\"Q_entry\"";
         html += " draggable=\"true\"";
-        html += " data-pos=\"" + pos + "\"";
-        html += " data-songid=\""+MDBSong.id+"\"";
+        html += " data-pos=\""     + pos        + "\"";
+        html += " data-songid=\""  + MDBSong.id + "\"";
+        html += " data-entryid=\"" + entryid    + "\"";
         html += ">";
         html += CreateSongTile(MDBSong, MDBAlbum, MDBArtist, buttonbox)
         html += "</div>";
@@ -52,7 +54,7 @@ function ShowQueue(parentID, MDBQueue)
         html += "<div";
         html += " id=Q_drop_" + pos;
         html += " class=\"Q_separator\"";
-        html += " data-pos=\"" + pos + "\"";
+        html += " data-entryid=\"" + entryid + "\"";
         html += "></div>";
     }
     
@@ -84,18 +86,12 @@ function ShowQueue(parentID, MDBQueue)
         e.preventDefault();
         $(this).removeClass("Q_hldropzone");
 
-        var entryid = "#" + e.target.id;
-        var dstpos  = parseInt( $(entryid).attr("data-pos") );
-        var srcpos  = parseInt( e.originalEvent.dataTransfer.getData("srcpos") );
+        var attrid = "#" + e.target.id;
+        var dstpos  = $(attrid).attr("data-entryid");
+        var srcpos  = e.originalEvent.dataTransfer.getData("srcpos");
         var songid  = e.originalEvent.dataTransfer.getData("songid");
 
-        // if a song gets move up, it shall be inserted BEHIND the other entry.
-        // for example: if song 5 gets moved to position 2 it shall be behing song 2.
-        //              so the new id would be 3
-        if(dstpos < srcpos)
-            dstpos += 1;
-
-        MusicDB_Call("MoveSongInQueue", {songid:songid, srcpos:srcpos, dstpos:dstpos});
+        MusicDB_Call("MoveSongInQueue", {entryid:srcpos, afterid:dstpos});
     });
 
     // the entries itself need some DnD-handler too
@@ -103,13 +99,13 @@ function ShowQueue(parentID, MDBQueue)
         e.target.style.opacity = "0.5";
 
         // get data needed vor queue-move and set it as dataTransfer
-        var entryid = "#" + e.originalEvent.originalTarget.id;
+        var attrid = "#" + e.originalEvent.originalTarget.id;
 
-        var position = $(entryid).attr("data-pos");
-        var songid   = $(entryid).attr("data-songid");
+        var entryid = $(attrid).attr("data-entryid");
+        var songid  = $(attrid).attr("data-songid");
 
-        // Set data that will be transfared (mandatory to make DnD work)
-        e.originalEvent.dataTransfer.setData("srcpos", position);
+        // Set data that will be transferred (mandatory to make DnD work)
+        e.originalEvent.dataTransfer.setData("srcpos", entryid);
         e.originalEvent.dataTransfer.setData("songid", songid);
     });
     $(dragelement).on("dragend", function(e){

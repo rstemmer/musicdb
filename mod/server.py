@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2018  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ This module starts the MusicDB Websocket Server.
 The start is done in the following steps:
 
     #. Create PID file (this will be deleted at exit)
+    #. Initialize the GObject and GStreamer libraries
     #. Initialize the server by calling :meth:`mdbapi.Initialize`
     #. Start the websocket server by calling :meth:`mdbapi.StartWebSocketServer`
     #. Create a named pipe (this will be deleted at exit)
@@ -28,19 +29,19 @@ Read :doc:`/mdbapi/server` for details
 
 Example:
 
-    This example shows the easiest way to start musicdb.
+    This example shows the easiest way to start MusicDB Server.
     The following commands must be called as root. 
-    There will appear warnings and errors if ``mpd`` is not running.
+    There will appear warnings and errors when ``icecast`` is not running.
 
     .. code-block:: bash
 
         musicdb server
 
-    A typical call to start the server as user *musicdb* and to run ``mpd`` is shown in the following example:
+    A typical call to start the server as user *musicdb* and to run ``icecast`` is shown in the following example:
 
     .. code-block:: bash
 
-        mpd /data/musicdb/mpd/mpd.conf
+        icecast -b -c /data/musicdb/icecast/config.xml > /dev/null
         su -l -c "musicdb --config /data/musicdb/musicdb.ini server" musicdb
 
     To stop the server, use the named pipe (this can also be done as user):
@@ -53,9 +54,14 @@ Example:
 import traceback
 import argparse
 import atexit
+import logging
+
+import gi
+gi.require_version('Gst', '1.0')
+from gi.repository import GObject, Gst
+
 from lib.modapi         import MDBModule
 from lib.pidfile        import *    # CreatePIDFile
-import logging
 import mdbapi.server as srv
 
 class server(MDBModule):
@@ -88,6 +94,10 @@ class server(MDBModule):
         # Create a PID-File
         CreatePIDFile(self.config.server.pidfile)                  # needed to work with signals
         atexit.register(DeletePIDFile, self.config.server.pidfile) # Delete PID file on exit
+
+        # Prepare GStreamer
+        GObject.threads_init()
+        Gst.init(None)
 
         # Initialize Server
         try:

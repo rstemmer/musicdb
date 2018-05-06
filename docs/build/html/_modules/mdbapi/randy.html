@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.randy &mdash; MusicDB 2.1.0 documentation</title>
+  <title>mdbapi.randy &mdash; MusicDB 3.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 2.1.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.1
+                3.0
               </div>
             
           
@@ -98,7 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../basics/config.html">MusicDB Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#websocket">websocket</a></li>
@@ -109,7 +109,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#lycra">lycra</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#icecast">Icecast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#log">log</a></li>
@@ -124,14 +124,29 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../basics/overview.html">Overview of MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#music-database">Music Database</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -164,6 +179,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#albums">Albums</a></li>
@@ -205,7 +221,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#system-preparation">System Preparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#basic-packages">Basic packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id3edit">id3edit</a></li>
@@ -260,6 +275,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/cache.html#class">class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/extern.html#class">class</a></li>
@@ -287,7 +306,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/server.html">server - MusicDB Websocket Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/stats.html">stats - MusicDB Song Statistic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
@@ -343,14 +366,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/mpd.html">mpd / Music Playing Daemon Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#observer-thread">Observer Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#callbacks">Callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#managing-mpd">Managing MPD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#queue-management">Queue management</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/musicai.html">MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#training-time">Training Time</a></li>
@@ -364,18 +379,51 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/randy.html">Randomizer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#randyinterface-class">RandyInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#randy-class">Randy Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tracker.html">Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
 </ul>
@@ -396,7 +444,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/config.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
@@ -406,21 +458,59 @@
 <li class="toctree-l2"><a class="reference internal" href="../../lib/database.html#database-class">Database Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/filesystem.html">Filesystem Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/metatags.html">Meta Tags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/metatags.html#metatags-class">MetaTags Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/mp3file.html">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/musicdb.html">MusicDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#albums">Albums</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#artworks">Artworks</a></li>
@@ -579,354 +669,384 @@
 <span class="c1"># You should have received a copy of the GNU General Public License</span>
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This MusicDB component adds a random song under certain constraint into MPDs (Music Playing Daemon) the song-queue</span>
+<span class="sd">The *randy* module provides a way to select random songs that can be put into the Song Queue.</span>
+<span class="sd">The selection of random songs follows certain constraints.</span>
 
 <span class="sd">Randy consists of two parts:</span>
 
-<span class="sd">* The :meth:`~mdbapi.randy.RandyThread` and its environment :meth:`~mdbapi.randy.StartRandy` and :meth:`mdbapi.randy.StopRandy`.</span>
-<span class="sd">* The :class:`~mdbapi.randy.RandyInterface` class providing an interface to interact with the :meth:`~mdbapi.randy.RandyThread`. This can happen in several threads simultaneously.</span>
+<span class="sd">    * A global `Blacklist`_ for songs, albums and artists</span>
+<span class="sd">    * A class :class:`~Randy` that provides methods to get random songs</span>
 
-<span class="sd">To use Randy, start the :meth:`~mdbapi.randy.RandyThread` by calling :meth:`~mdbapi.randy.StartRandy` once. </span>
-<span class="sd">Now it is possible to access the randomizer using the :class:`~mdbapi.randy.RandyInterface` class. This can be done from multiple different threads.</span>
-<span class="sd">When Randy is not needed anymore, it can be stopped by calling :meth:`~mdbapi.randy.StopRandy`.</span>
 
-<span class="sd">.. code-block:: python</span>
+<span class="sd">Blacklist</span>
+<span class="sd">---------</span>
 
-<span class="sd">    # Dependencies </span>
-<span class="sd">    cfg      = MusicDBConfig(&quot;./musicdb.ini&quot;)</span>
+<span class="sd">There are three FIFO organized blacklists: For songs, albums and artists.</span>
+<span class="sd">Each blacklist holds the IDs of the last played songs, albums and artists.</span>
 
-<span class="sd">    # Start Randy</span>
-<span class="sd">    StartRandy(cfg)</span>
+<span class="sd">Songs that will be selected by the :class:`~Randy` class will be added to the blacklists automatically.</span>
+<span class="sd">If a user adds a song into the Queue, this song must be added manually by calling the :meth:`~mdbapi.randy.Randy.AddSongToBlacklist` method.</span>
 
-<span class="sd">    # Use Randy (Can be anywhere in the code)</span>
-<span class="sd">    randy = RandyInterface()</span>
-<span class="sd">    randy.AddSong(&quot;next&quot;)   # add random song after current song</span>
-<span class="sd">    randy.AddSong(&quot;last&quot;)   # add random song at the end of the queue</span>
+<span class="sd">Once a song got added to the blacklist, it remains even if the song got removed from the queue.</span>
 
-<span class="sd">    # Stop Randy</span>
-<span class="sd">    StopRandy()</span>
+<span class="sd">The length of those blacklist can be configured in the MusicDB Configuration:</span>
 
+<span class="sd">    .. code-block:: ini</span>
+
+<span class="sd">            [Randy]</span>
+<span class="sd">            songbllen=50</span>
+<span class="sd">            albumbllen=20</span>
+<span class="sd">            artistbllen=10</span>
+
+<span class="sd">For small music collections, the lengths should not exceed the possibility to provide individual data.</span>
+<span class="sd">For medium collections and above, the default values as shown in the example are good.</span>
+<span class="sd">When set to ``0``, the blacklist for the songs, albums or artists will be disabled.</span>
+
+<span class="sd">The blacklists get maintained by the :class:`~Randy` class.</span>
+<span class="sd">Each instance of this class accesses the same global blacklist.</span>
+
+<span class="sd">The blacklist is implemented as a dictionary with the keys ``&quot;songs&quot;``, ``&quot;albums&quot;`` and ``&quot;artists&quot;``.</span>
+<span class="sd">Their values are lists holding the IDs of the songs, albums and artists.</span>
+
+<span class="sd">Song Selection Algorithm</span>
+<span class="sd">------------------------</span>
+
+<span class="sd">Selecting a random song is done in two stages, the `Database Stage`_ and the `Blacklist Stage`_</span>
+<span class="sd">The first stage selects a song from a limited set of songs, the second stage checks if the song is on a blacklist.</span>
+<span class="sd">In each stage, a song can be rejected and the algorithm starts at the beginning.</span>
+
+
+<span class="sd">.. warning::</span>
+
+<span class="sd">    The process of trying to get a good song gets repeated until a good song is found.</span>
+<span class="sd">    If over constraint, this ends in an infinite loop!</span>
+
+
+<span class="sd">Database Stage</span>
+<span class="sd">^^^^^^^^^^^^^^</span>
+
+<span class="sd">In the first stage, a song gets chosen by the database via :meth:`lib.db.musicdb.MusicDatabase.GetRandomSong`.</span>
+<span class="sd">There are 4 parameters that define the constraints applied on set of possible songs:</span>
+
+<span class="sd">    - The activated genres as maintained by the :mod:`lib.cfg.mdbstate` module.</span>
+<span class="sd">    - The flag if *disabled* songs shall be excluded</span>
+<span class="sd">    - The flag if *hated* songs shall be excluded</span>
+<span class="sd">    - Minimum length of a song in seconds</span>
+
+<span class="sd">Some of them can be configured in the MusicDB configuration file:</span>
+
+<span class="sd">    .. code-block:: ini</span>
+
+<span class="sd">        [Randy]</span>
+<span class="sd">        nodisabled=True</span>
+<span class="sd">        nohated=True</span>
+<span class="sd">        minsonglen=120</span>
+
+<span class="sd">Because the database only takes album tags into account, the song tags gets checked afterwards.</span>
+<span class="sd">If the song has a confirmed genre tag, and if this tag does not match the filter, the song gets rejected.</span>
+<span class="sd">Song genres set by the Music AI (see :doc:`/mdbapi/musicai`) will be ignored because the AI may be wrong.</span>
+
+
+<span class="sd">Blacklist Stage</span>
+<span class="sd">^^^^^^^^^^^^^^^</span>
+
+<span class="sd">The selected song from the first stage now gets compared to the three blacklists.</span>
+<span class="sd">If the song, or its album or artist, is listed in one of blacklist, </span>
+<span class="sd">then the song, a song from the same album or from the same artist was played recently.</span>
+<span class="sd">So, the chosen song gets dropped and the finding-process starts again.</span>
+
+<span class="sd">Is the blacklist length set to 0, the specific blacklist is disabled</span>
+
+<span class="sd">If a song is found. The oldest entries of the blacklist get dropped, and the new song, album, artist get pushed on top of the list.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">threading</span>          <span class="k">import</span> <span class="n">Thread</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">threading</span>        <span class="c1"># for Lock</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">from</span> <span class="nn">lib.cfg.musicdb</span>    <span class="k">import</span> <span class="n">MusicDBConfig</span>
 <span class="kn">from</span> <span class="nn">lib.db.musicdb</span>     <span class="k">import</span> <span class="n">MusicDatabase</span>
 <span class="kn">from</span> <span class="nn">lib.cfg.mdbstate</span>   <span class="k">import</span> <span class="n">MDBState</span>
-<span class="kn">import</span> <span class="nn">mdbapi.mpd</span> <span class="k">as</span> <span class="nn">mpd</span>
 
-<span class="n">RUN</span>    <span class="o">=</span> <span class="kc">False</span>
-<span class="n">THREAD</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="n">CMDQUEUE</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">CMD_ADDSONG</span>             <span class="o">=</span> <span class="mi">1</span>
-<span class="n">CMD_ADDSONGFROMALBUM</span>    <span class="o">=</span> <span class="mi">2</span>
-<span class="n">CMD_PRINTBLACKLIST</span>      <span class="o">=</span> <span class="mi">10</span>
+<span class="n">BlacklistLock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+<span class="n">Blacklist</span>     <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="StartRandy"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.StartRandy">[docs]</a><span class="k">def</span> <span class="nf">StartRandy</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+
+
+<div class="viewcode-block" id="Randy"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.Randy">[docs]</a><span class="k">class</span> <span class="nc">Randy</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Starts the randy thread.</span>
-<span class="sd">    You should use this function instead of calling the RandyThread directly.</span>
+<span class="sd">    This class provides methods to get a random song under certain constraints.</span>
+
+<span class="sd">    This class is made to access the thread form all over the code simultaneously.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        config: a MusicDB config object</span>
+<span class="sd">        config: :class:`~lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration</span>
+<span class="sd">        database: A :class:`~lib.db.musicdb.MusicDatabase` instance</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        ``None`` if something went wrong, otherwise the thread-handler will be returned</span>
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: When the arguments are not of the correct type.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">THREAD</span>
-    <span class="k">if</span> <span class="n">THREAD</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Randy already running&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="k">global</span> <span class="n">RUN</span>
-    <span class="n">RUN</span>    <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">THREAD</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">RandyThread</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="p">))</span>
-    <span class="n">THREAD</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDBConfig</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;config argument not of type MusicDBConfig&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">database</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDatabase</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;database argument not of type MusicDatabase&quot;</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">THREAD</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span>         <span class="o">=</span> <span class="n">database</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span>        <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span>   <span class="o">=</span> <span class="n">MDBState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">statedir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">)</span>
 
+        <span class="c1"># Load most important keys</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodisabled</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">nodisabled</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nohated</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">nohated</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minlen</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">minsonglen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">songbllen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">albumbllen</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">albumbllen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">artistbllen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">artistbllen</span>
 
-<div class="viewcode-block" id="StopRandy"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.StopRandy">[docs]</a><span class="k">def</span> <span class="nf">StopRandy</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Stops the Randy thread.</span>
-<span class="sd">    This function is blocking and waits until the thread is closed.</span>
+        <span class="c1"># Check blacklist and create new one if there is none yet</span>
+        <span class="k">global</span> <span class="n">Blacklist</span>
+        <span class="k">global</span> <span class="n">BlacklistLock</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        ``None``</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">RUN</span>
-    <span class="k">global</span> <span class="n">THREAD</span>
-    <span class="n">RUN</span>    <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="n">THREAD</span><span class="p">:</span>
-        <span class="n">THREAD</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;There is no Thread to stop!&quot;</span><span class="p">)</span>
-    <span class="n">THREAD</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">return</span> <span class="kc">None</span></div>
+        <span class="k">with</span> <span class="n">BlacklistLock</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">Blacklist</span><span class="p">:</span>
+                <span class="c1"># try to load the blacklist from MusicDB State</span>
+                <span class="n">loadedlists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span><span class="o">.</span><span class="n">LoadBlacklists</span><span class="p">()</span>
 
+                <span class="c1"># First, create a clean blacklist</span>
+                <span class="n">Blacklist</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span>
+                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">albumbllen</span>
+                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">artistbllen</span>
+                
+                <span class="c1"># Now fill the blacklist considering changes in their size</span>
+                <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">loadedlists</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">,</span> <span class="s2">&quot;albums&quot;</span><span class="p">,</span> <span class="s2">&quot;artists&quot;</span><span class="p">]:</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Unexpected key </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> in loaded blacklist dictionary! </span><span class="se">\033</span><span class="s2">[1;30(Will be discard)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+                        <span class="k">continue</span>
 
-<div class="viewcode-block" id="RandyThread"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.RandyThread">[docs]</a><span class="k">def</span> <span class="nf">RandyThread</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    .. warning::</span>
+                    <span class="n">dst</span> <span class="o">=</span> <span class="n">Blacklist</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                    <span class="n">src</span> <span class="o">=</span> <span class="n">loadedlists</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">src</span><span class="p">:</span>
+                        <span class="k">continue</span>    <span class="c1"># when there are no entries loaded, keep the generated list of None-entries</span>
 
-<span class="sd">        This function should not be called directly. Use :meth:`~mdbapi.randy.StartRandy` to execute the Thread!</span>
+                    <span class="c1"># The following python magic inserts as much of src at the end of dst, as fits.</span>
+                    <span class="c1"># if src must be cut, the first elements get removed</span>
+                    <span class="c1"># So, case 1: len(dst) &gt; len(src)</span>
+                    <span class="c1">#   dst = [None, None, None, None, None]</span>
+                    <span class="c1">#   src = [1, 2, 3]</span>
+                    <span class="c1">#   Results in [None, None, 1, 2, 3]</span>
+                    <span class="c1">#</span>
+                    <span class="c1"># Case 2: len(dst) &lt; len(src)</span>
+                    <span class="c1">#   dst = [None, None]</span>
+                    <span class="c1">#   src = [1, 2, 3]</span>
+                    <span class="c1">#   Results in [2, 3]</span>
+                    <span class="c1">#</span>
+                    <span class="c1"># &gt;&gt;&gt; l = [1,2,3]</span>
+                    <span class="c1"># &gt;&gt;&gt; d = [0]*3</span>
+                    <span class="c1"># &gt;&gt;&gt; d[-len(l):] = l[-len(d):]</span>
+                    <span class="c1"># &gt;&gt;&gt; l</span>
+                    <span class="c1"># [1, 2, 3]</span>
+                    <span class="c1"># &gt;&gt;&gt; d</span>
+                    <span class="c1"># [1, 2, 3]</span>
+                    <span class="c1"># &gt;&gt;&gt; d = [0]*2</span>
+                    <span class="c1"># &gt;&gt;&gt; d[-len(l):] = l[-len(d):]</span>
+                    <span class="c1"># &gt;&gt;&gt; l</span>
+                    <span class="c1"># [1, 2, 3]</span>
+                    <span class="c1"># &gt;&gt;&gt; d</span>
+                    <span class="c1"># [2, 3]</span>
+                    <span class="c1"># &gt;&gt;&gt; d = [0]*4</span>
+                    <span class="c1"># &gt;&gt;&gt; d[-len(l):] = l[-len(d):]</span>
+                    <span class="c1"># &gt;&gt;&gt; l</span>
+                    <span class="c1"># [1, 2, 3]</span>
+                    <span class="c1"># &gt;&gt;&gt; d</span>
+                    <span class="c1"># [0, 1, 2, 3]</span>
+                    <span class="c1"># &gt;&gt;&gt; </span>
+                    <span class="n">dst</span> <span class="o">=</span> <span class="n">dst</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">src</span><span class="p">):]</span> <span class="o">=</span> <span class="n">src</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">dst</span><span class="p">):]</span>
 
-<span class="sd">    This Thread chooses a random song in a two-stage process.</span>
-<span class="sd">    The first stage selects a song from a limited set of songs, the second stage checks if the song is on a blacklist.</span>
-<span class="sd">    </span>
-<span class="sd">    .. warning::</span>
-
-<span class="sd">        The process of trying to get a good song gets repeated until a good song is found.</span>
-<span class="sd">        If over constraint, this ends in an infinite loop!</span>
-<span class="sd">        </span>
-
-<span class="sd">    **Database-Stage**</span>
-
-<span class="sd">    The Song gets chosen by the :meth:`lib.db.musicdb.MusicDatabase.GetRandomSong` datebase access call.</span>
-<span class="sd">    There are 4 parameters that define the set on of possible songs.</span>
-<span class="sd">    Some of them can be configured in the MusicDB configuration file.</span>
-
-<span class="sd">        - The activated genres</span>
-<span class="sd">        - Flag if *disabled* songs shall be excluded</span>
-<span class="sd">        - Flag if *hated* songs shall be excluded</span>
-<span class="sd">        - Minimum length of a song in seconds</span>
-
-<span class="sd">    Because the database only takes album tags into account, the song tags gets checked afterwards.</span>
-<span class="sd">    If the song has a genre tag, and if this tag does not match the filter, the song gets rejected.</span>
-<span class="sd">    Song genres set by the AI will be ignored because the AI may be wrong.</span>
-
-<span class="sd">    **Blacklist-Stage**</span>
-
-<span class="sd">    The selected song gets compared to three blacklists of configurable length: Artist, Album, Song.</span>
-<span class="sd">    If the song is listed in a blacklist, the song, a song from the same album or from the same artist was played in near past.</span>
-<span class="sd">    So: the chosen song gets dropped and the finding-process starts again.</span>
-
-<span class="sd">    Is the blacklist length set to 0, the specific blacklist is disabled</span>
-
-<span class="sd">    If a song is found. The oldest entries of the blacklist get dropped, and the new song, album, artist get pushed on top of the list.</span>
-<span class="sd">    Then the song gets added to the *MPD-Queue* and the ``qrndadds`` statistic gets incremented.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        config: :class:`lib.cfg.musicdb.MusicDBConfig` object</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">musicdb</span>     <span class="o">=</span> <span class="n">MusicDatabase</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-    <span class="n">mdbstate</span>    <span class="o">=</span> <span class="n">MDBState</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">statefile</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
-    <span class="n">interval</span>    <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">interval</span>
-    <span class="n">nodisabled</span>  <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">nodisabled</span>
-    <span class="n">nohated</span>     <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">nohated</span>
-    <span class="n">minlen</span>      <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">minsonglen</span>
-    <span class="n">songbllen</span>   <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">songbllen</span>
-    <span class="n">albumbllen</span>  <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">albumbllen</span>
-    <span class="n">artistbllen</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">artistbllen</span>
-    <span class="k">global</span> <span class="n">RUN</span>
-    <span class="k">global</span> <span class="n">CMDQUEUE</span>
-
-    <span class="n">songblacklist</span>   <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">songbllen</span>
-    <span class="n">albumblacklist</span>  <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">albumbllen</span>
-    <span class="n">artistblacklist</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">artistbllen</span>
-
-    <span class="k">while</span> <span class="n">RUN</span><span class="p">:</span>
-        <span class="c1"># Get next command if one is available</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">CMDQUEUE</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span> <span class="o">=</span> <span class="n">CMDQUEUE</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span> 
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
-            <span class="k">continue</span>
-
-        <span class="c1"># execute commands</span>
-        <span class="k">if</span> <span class="n">cmd</span> <span class="o">==</span> <span class="n">CMD_PRINTBLACKLIST</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;36mRandy&#39;s Blacklists:&quot;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;34m</span><span class="se">\t</span><span class="s2">Songs:&quot;</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">songblacklist</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31m</span><span class="se">\t</span><span class="s2"> - </span><span class="se">\033</span><span class="s2">[0;36m</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">)))</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;34m</span><span class="se">\t</span><span class="s2">Albums:&quot;</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">albumblacklist</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31m</span><span class="se">\t</span><span class="s2"> - </span><span class="se">\033</span><span class="s2">[0;36m</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">)))</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;34m</span><span class="se">\t</span><span class="s2">Artists:&quot;</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">artistblacklist</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31m</span><span class="se">\t</span><span class="s2"> - </span><span class="se">\033</span><span class="s2">[0;36m</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">)))</span>
+                    <span class="n">Blacklist</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">dst</span>
 
 
-        <span class="k">elif</span> <span class="n">cmd</span> <span class="o">==</span> <span class="n">CMD_ADDSONGFROMALBUM</span><span class="p">:</span>
-            <span class="c1"># Get parameters</span>
-            <span class="n">position</span>   <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">albumid</span>    <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Randy.AddSongToBlacklist"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.Randy.AddSongToBlacklist">[docs]</a>    <span class="k">def</span> <span class="nf">AddSongToBlacklist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">song</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method pushes a song onto the blacklists.</span>
+<span class="sd">        If the song is ``None`` nothing happens.</span>
+
+<span class="sd">        This method should be the only place where the blacklist gets changed.</span>
+<span class="sd">        After adding a song, the lists get stored in the MusicDB State Directory to be persistent</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            song (dict): A song from the :class:`~lib.db.musicdb.MusicDatabase`</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">song</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">global</span> <span class="n">BlacklistLock</span>
+        <span class="k">global</span> <span class="n">Blacklist</span>
+
+        <span class="k">with</span> <span class="n">BlacklistLock</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">artistbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">albumbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+
+            <span class="c1"># Save blacklists to files </span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span><span class="o">.</span><span class="n">SaveBlacklists</span><span class="p">(</span><span class="n">Blacklist</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Randy.GetSong"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.Randy.GetSong">[docs]</a>    <span class="k">def</span> <span class="nf">GetSong</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method chooses a random song in a two-stage process as described in the module description.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A song from the :class:`~lib.db.musicdb.MusicDatabase` or ``None`` if an error occurred.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">global</span> <span class="n">BlacklistLock</span>
+        <span class="k">global</span> <span class="n">Blacklist</span>
+
+        <span class="n">filterlist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span><span class="o">.</span><span class="n">GetFilterList</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">filterlist</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No Genre selected! </span><span class="se">\033</span><span class="s2">[1;30m(Selecting random song from the whole collection)&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Get Random Song - this may take several tries </span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Randy starts looking for a random song …&quot;</span><span class="p">)</span>
+        <span class="n">t_start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">song</span>    <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">song</span><span class="p">:</span>
+            <span class="c1"># STAGE 1: Get Mathematical random song (under certain constraints)</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">song</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetRandomSong</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">nodisabled</span><span class="p">,</span> <span class="n">nohated</span><span class="p">,</span> <span class="n">minlen</span><span class="p">,</span> <span class="n">albumid</span><span class="p">)</span>
+                <span class="n">song</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetRandomSong</span><span class="p">(</span><span class="n">filterlist</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodisabled</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nohated</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minlen</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Getting random song failed with error: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-                <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
-                <span class="k">continue</span>
+                <span class="k">return</span> <span class="kc">None</span>
 
-            <span class="c1"># maintain blacklists</span>
-            <span class="k">if</span> <span class="n">artistbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">artistblacklist</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">artistblacklist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">albumbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">albumblacklist</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">albumblacklist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">songbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">songblacklist</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">songblacklist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">song</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;There is no song fulfilling the constraints! </span><span class="se">\033</span><span class="s2">[1;30m(Check the stage 1 constraints)&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
 
-            <span class="c1"># Add song to queue</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Randy adds the following song: </span><span class="se">\033</span><span class="s2">[0;36m&quot;</span> <span class="o">+</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
-            <span class="n">success</span> <span class="o">=</span> <span class="n">mpd</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Candidate for next song: </span><span class="se">\033</span><span class="s2">[0;35m&quot;</span> <span class="o">+</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
 
-            <span class="c1"># Update statistics</span>
-            <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">disablestats</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Updating song statistics disabled. </span><span class="se">\033</span><span class="s2">[1;33m!!&quot;</span><span class="p">)</span>
-                    <span class="k">continue</span>
-                <span class="n">musicdb</span><span class="o">.</span><span class="n">UpdateSongStatistic</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="s2">&quot;qrndadds&quot;</span><span class="p">,</span> <span class="s2">&quot;inc&quot;</span><span class="p">)</span>
+            <span class="c1"># GetRandomSong only looks for album genres.</span>
+            <span class="c1"># The song genre may be different and not in the set of the filerlist.</span>
+            <span class="k">try</span><span class="p">:</span>
 
-        <span class="k">elif</span> <span class="n">cmd</span> <span class="o">==</span> <span class="n">CMD_ADDSONG</span><span class="p">:</span>
-            <span class="c1"># Get parameters</span>
-            <span class="n">position</span>   <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">songgenres</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetTargetTags</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">)</span>
+                <span class="c1"># Create a set of tagnames if there are tags for this song.</span>
+                <span class="c1"># Ignore AI set tags because they may be wrong</span>
+                <span class="k">if</span> <span class="n">songgenres</span><span class="p">:</span>
+                    <span class="n">tagnames</span> <span class="o">=</span> <span class="p">{</span> <span class="n">songgenre</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">songgenre</span> <span class="ow">in</span> <span class="n">songgenres</span> <span class="k">if</span> <span class="n">songgenre</span><span class="p">[</span><span class="s2">&quot;approval&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">}</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">tagnames</span> <span class="o">=</span> <span class="p">{</span> <span class="p">}</span>
 
-            <span class="n">filterlist</span> <span class="o">=</span> <span class="n">mdbstate</span><span class="o">.</span><span class="n">GetFilterList</span><span class="p">()</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">filterlist</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No Genre selected&quot;</span><span class="p">)</span>
-                <span class="k">continue</span>
+                <span class="c1"># If the tag name set was successfully created, compare it with the selected genres</span>
+                <span class="k">if</span> <span class="n">tagnames</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">tagnames</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">filterlist</span><span class="p">):</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;song is of different genre than album and not in activated genres. (Song genres: </span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tagnames</span><span class="p">))</span>
+                        <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="k">continue</span>
 
-            <span class="c1"># Get Random Song</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Randy starts looking for a random song …&quot;</span><span class="p">)</span>
-            <span class="n">t_start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-            <span class="n">song</span>    <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">while</span> <span class="ow">not</span> <span class="n">song</span> <span class="ow">and</span> <span class="n">RUN</span><span class="p">:</span>
-                <span class="c1"># STAGE 1: Get Mathematical random song (under certain constraints)</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">song</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetRandomSong</span><span class="p">(</span><span class="n">filterlist</span><span class="p">,</span> <span class="n">nodisabled</span><span class="p">,</span> <span class="n">nohated</span><span class="p">,</span> <span class="n">minlen</span><span class="p">)</span> <span class="c1"># returns None if there is no song</span>
-                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Getting random song failed with error: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-                    <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
-                    <span class="k">continue</span>
-
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">song</span><span class="p">:</span>
-                    <span class="k">continue</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Candidate for next song: </span><span class="se">\033</span><span class="s2">[0;35m&quot;</span> <span class="o">+</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
-
-                <span class="c1"># GetRandomSong only looks for album genres.</span>
-                <span class="c1"># The song genre may be diffrent and not in the set of the filerlist.</span>
-                <span class="k">try</span><span class="p">:</span>
-
-                    <span class="n">songgenres</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetTargetTags</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">)</span>
-                    <span class="c1"># Create a set of tagnames if there are tags for this song.</span>
-                    <span class="c1"># Ignore AI set tags because they may be wrong</span>
-                    <span class="k">if</span> <span class="n">songgenres</span><span class="p">:</span>
-                        <span class="n">tagnames</span> <span class="o">=</span> <span class="p">{</span> <span class="n">songgenre</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">songgenre</span> <span class="ow">in</span> <span class="n">songgenres</span> <span class="k">if</span> <span class="n">songgenre</span><span class="p">[</span><span class="s2">&quot;approval&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">}</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">tagnames</span> <span class="o">=</span> <span class="p">{</span> <span class="p">}</span>
-
-                    <span class="c1"># If the tagname set was successfully created, compare it with the selected genres</span>
-                    <span class="k">if</span> <span class="n">tagnames</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="ow">not</span> <span class="n">tagnames</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">filterlist</span><span class="p">):</span>
-                            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;song of different genre than album and not in activated genres. (Song genres: </span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tagnames</span><span class="p">))</span>
-                            <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
-                            <span class="k">continue</span>
-
-                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Song tag check failed with exception: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-                    <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
-                    <span class="k">continue</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Song tag check failed with exception: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">None</span>
 
 
-                <span class="c1"># STAGE 1: Make Randomnes feeling random</span>
-                <span class="k">if</span> <span class="n">artistbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">artistblacklist</span><span class="p">:</span>
+            <span class="c1"># STAGE 2: Make randomness feeling random by checking if the song was recently played</span>
+            <span class="k">with</span> <span class="n">BlacklistLock</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">artistbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]:</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;artist on blacklist&quot;</span><span class="p">)</span>
                     <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="k">continue</span>
-                <span class="k">if</span> <span class="n">albumbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">albumblacklist</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">albumbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]:</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;album on blacklist&quot;</span><span class="p">)</span>
                     <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="k">continue</span>
-                <span class="k">if</span> <span class="n">songbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">songblacklist</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]:</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;song on blacklist&quot;</span><span class="p">)</span>
                     <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="k">continue</span> 
 
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">song</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The loop that should find a new random song did not deliver a song! </span><span class="se">\033</span><span class="s2">[1;30m(This can happen if the server got shut down before)&quot;</span><span class="p">)</span>
-                <span class="k">continue</span>
+        <span class="c1"># New song found \o/</span>
+        <span class="c1"># Add song into blacklists</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddSongToBlacklist</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
 
-            <span class="c1"># maintain blacklists</span>
-            <span class="k">if</span> <span class="n">artistbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">artistblacklist</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">artistblacklist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">albumbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">albumblacklist</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">albumblacklist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">songbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">songblacklist</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">songblacklist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
-
-            <span class="c1"># Add song to queue</span>
-            <span class="n">t_stop</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Randy found the following song after </span><span class="si">%s</span><span class="s2"> : </span><span class="se">\033</span><span class="s2">[0;36m&quot;</span> <span class="o">+</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">t_stop</span><span class="o">-</span><span class="n">t_start</span><span class="p">))</span>
-            <span class="n">success</span> <span class="o">=</span> <span class="n">mpd</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span>
-
-            <span class="c1"># Update statistics</span>
-            <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">disablestats</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Updating song statistics disabled. </span><span class="se">\033</span><span class="s2">[1;33m!!&quot;</span><span class="p">)</span>
-                    <span class="k">continue</span>
-                <span class="n">musicdb</span><span class="o">.</span><span class="n">UpdateSongStatistic</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="s2">&quot;qrndadds&quot;</span><span class="p">,</span> <span class="s2">&quot;inc&quot;</span><span class="p">)</span></div>
+        <span class="n">t_stop</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Randy found the following song after </span><span class="si">%s</span><span class="s2"> : </span><span class="se">\033</span><span class="s2">[0;36m</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">t_stop</span><span class="o">-</span><span class="n">t_start</span><span class="p">),</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">song</span></div>
 
 
 
-<div class="viewcode-block" id="RandyInterface"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.RandyInterface">[docs]</a><span class="k">class</span> <span class="nc">RandyInterface</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Interface to the :meth:`~mdbapi.randy.RandyThread`. </span>
-<span class="sd">    This class is made to access the thread form all over the code simultaneously.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-
-
-<div class="viewcode-block" id="RandyInterface.AddSong"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.RandyInterface.AddSong">[docs]</a>    <span class="k">def</span> <span class="nf">AddSong</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="Randy.GetSongFromAlbum"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.Randy.GetSongFromAlbum">[docs]</a>    <span class="k">def</span> <span class="nf">GetSongFromAlbum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Triggers Randy to add a random song into the song-queue</span>
+<span class="sd">        Get a random song from a specific album.</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            position (str): Determines where the song gets added. ``&quot;next&quot;``: after the current playing song, or ``&quot;last&quot;`` at the end of the queue.</span>
+<span class="sd">        If the selected song is listed in the blacklist for songs, a new one will be selected.</span>
+<span class="sd">        Entries in the album and artist blacklist will be ignored because the artist and album is forced by the user.</span>
+<span class="sd">        But the song gets added to the blacklist for songs, as well as the album and artist gets added.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            ``None``</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">CMDQUEUE</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">CMD_ADDSONG</span><span class="p">,</span> <span class="p">[</span><span class="n">position</span><span class="p">]))</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
+<span class="sd">        The genre of the song gets completely ignored.</span>
+<span class="sd">        The user wants to have a song from the given album, so it gets one.</span>
 
+<span class="sd">        .. warning::</span>
 
-<div class="viewcode-block" id="RandyInterface.AddSongFromAlbum"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.RandyInterface.AddSongFromAlbum">[docs]</a>    <span class="k">def</span> <span class="nf">AddSongFromAlbum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Triggers Randy to add a random song from a specific album into the song-queue</span>
+<span class="sd">            This is a dangerous method.</span>
+<span class="sd">            An album only has a very limited set of songs.</span>
 
-<span class="sd">        It gets not checked if the song is listed on the black list.</span>
-<span class="sd">        But the song gets added to the black list for songs, as well as the album and artist gets added.</span>
+<span class="sd">            If all the songs are listed in the blacklist, the method would get caught in an infinite loop.</span>
+<span class="sd">            To avoid this, there are only 10 tries to find a random song.</span>
+<span class="sd">            If after the tenth try, the method leaves returning ``None``</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            albumid (int): ID of the album the song shall come from</span>
-<span class="sd">            position (str): Determines where the song gets added. ``&quot;next&quot;``: after the current playing song, or ``&quot;last&quot;`` at the end of the queue.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            ``None``</span>
+<span class="sd">            A song from the :class:`~lib.db.musicdb.MusicDatabase` or ``None`` if an error occurred.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">CMDQUEUE</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">CMD_ADDSONGFROMALBUM</span><span class="p">,</span> <span class="p">[</span><span class="n">position</span><span class="p">,</span> <span class="n">albumid</span><span class="p">]))</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
+        <span class="k">global</span> <span class="n">BlacklistLock</span>
+        <span class="k">global</span> <span class="n">Blacklist</span>
 
+        <span class="c1"># Get parameters</span>
+        <span class="n">song</span>       <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">tries</span>      <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># there is just a very limited set of possible songs. Avoid infinite loop when all songs are on the blacklist</span>
 
-<div class="viewcode-block" id="RandyInterface.PrintBlacklist"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.RandyInterface.PrintBlacklist">[docs]</a>    <span class="k">def</span> <span class="nf">PrintBlacklist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Triggers Randy to print the blacklists to *stdout*.</span>
-<span class="sd">        This can be useful for debugging. </span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">song</span> <span class="ow">and</span> <span class="n">tries</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="n">tries</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="c1"># STAGE 1: Get Mathematical random song (under certain constraints)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">song</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetRandomSong</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodisabled</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nohated</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minlen</span><span class="p">,</span> <span class="n">albumid</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Getting random song failed with error: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Candidate for next song: </span><span class="se">\033</span><span class="s2">[0;35m&quot;</span> <span class="o">+</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+            
+            <span class="c1"># STAGE 2: Make randomness feeling random by checking if the song was recently played</span>
+            <span class="c1"># only check, if that song is in the blacklist. Artist and album is forced by the user</span>
+            <span class="k">with</span> <span class="n">BlacklistLock</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;song on blacklist&quot;</span><span class="p">)</span>
+                    <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">continue</span> 
 
-<span class="sd">        Returns:</span>
-<span class="sd">            ``None``</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">CMDQUEUE</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">CMD_PRINTBLACKLIST</span><span class="p">,</span> <span class="p">[]))</span>
-        <span class="k">return</span> <span class="kc">None</span></div></div>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">song</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The loop that should find a new random song did not deliver a song! </span><span class="se">\033</span><span class="s2">[1;30m(This happens when there are too many songs of the given album are already on the blacklist)&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># maintain blacklists</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddSongToBlacklist</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
+
+        <span class="c1"># Add song to queue</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Randy adds the following song after </span><span class="si">%s</span><span class="s2"> tries: </span><span class="se">\033</span><span class="s2">[0;36m</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">tries</span><span class="p">,</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">song</span></div></div>
+
 
 
 <span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
@@ -945,7 +1065,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ralf Stemmer.
+        &copy; Copyright 2018, Ralf Stemmer.
 
     </p>
   </div>
@@ -967,7 +1087,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'2.1.0',
+            VERSION:'3.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

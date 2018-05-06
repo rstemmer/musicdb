@@ -1,16 +1,16 @@
-Basic Rules for MusicDB
-=======================
+Philosophy of MusicDB
+=====================
 
-There are some major rules for MusicDB.
-Every decision made follows those rules.
+There are some major rules and guide lines for MusicDB.
+Every decision made follows this philosophy.
 They define what MusicDB is, and what it isn't.
 The order of the rules defines their priority.
-The nested list elements highlight some important implications of these rules.
+The nested list elements highlight some important implications of the philosophy.
 
 #. The filesystem is always right
 
-   * Metadata in files have to be considered wrong
-   * The filesystem must be able to handle filenames with Unicode
+   * Meta data in files have to be considered wrong
+   * The filesystem must be able to handle file names with Unicode
    * The user has to care about a proper naming of the files
    * The database is just for cache and augmentation
 
@@ -27,12 +27,15 @@ The nested list elements highlight some important implications of these rules.
 
 #. The GUI is not for managing music, it is for presenting the music
 
-   * No control/management buttons if not absolutely necessary (only hidden in context menus)
+   * No control/management buttons if not absolutely necessary
    * The current playing song is the "hero" and in focus of the presentation
    * No playlist management, only an easy to handle queue.
    * Management shall be done via command line tools
 
-#. AI shall not replace users action, just give hints and good defaults
+#. The user is always right. Software is just a tool under full control of the user.
 
+   * The software must follow the users decision and not question it
+   * AI and other algorithms shall not replace the users action and decision, just give hints and good defaults
    * Every decision made by AI must be approved or denied by the user
+   * The source music collection of the user shall be considered read-only
 

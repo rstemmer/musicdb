@@ -95,8 +95,8 @@ When the connection gets closed or an error occured, the watchdog timer gets sto
 Only when there are no more messages comming without any reason, the watchdog closes the current connection and establishes a new one.
 When the watchdog timer runs to 0, a callback function ``onMusicDBWatchdogBarks`` gets called.
 
-The watchdog does an automatic reconnect to the server when there are no packages comming from the server.
-The MusicDB Server send in a configurable period the state of the Music Playing Daemon (MPD) to all clients.
+The watchdog does an automatic reconnect to the server when there are no packages coming from the server.
+The MusicDB Server send in a period of several seconds (max 3) the state of the :mod:`mdbapi.stream.StreamingThread` to all clients.
 On Windows systems, packages can be stuck inside Windows internal buffers for a long time (several seconds).
 Keep this in mind when configuring the Watchdog.
 
@@ -107,7 +107,6 @@ WATCHDOG_RUN (boolean):
 
 WATCHDOG_INTERVAL (integer):
    If there is no sign that the connection is active for *interval* milliseconds, the watchdog will recognize it.
-   This value should be at least three times the heartbeat (polling intervall to Music Playing Daemon).
 
 The following functions implement the Watchdog.
 They are used internal by the socket object as shown in the figure above.

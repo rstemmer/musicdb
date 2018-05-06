@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="1.1.3"
+SCRIPTVERSION="1.3.3"
 echo -e "\e[1;31mMusicDB-Install [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
@@ -114,31 +114,40 @@ function CreateMusicDBSSLKeys {
 
 
 function InstallMusicDBConfiguration {
-    echo -e -n "\e[1;34mInstalling \e[0;36mmusicdb.ini\e[1;34m: \e[1;31m"
     if [ ! -f "$DATADIR/musicdb.ini" ] ; then
-        # Install file
-        install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/musicdb.ini -D $DATADIR/.
-
-        # Update configuration to the real setup
-        sed -i -e "s;DATADIR;$DATADIR;g"       $DATADIR/musicdb.ini
-        sed -i -e "s;SERVERDIR;$SERVERDIR;g"   $DATADIR/musicdb.ini
-        sed -i -e "s;MUSICDIR;$MUSICDIR;g"     $DATADIR/musicdb.ini
-        sed -i -e "s;MUSICDBGROUP;$MDBGROUP;g" $DATADIR/musicdb.ini
-        sed -i -e "s;USER;$USER;g"             $DATADIR/musicdb.ini
-        sed -i -e "s;SSLKEY;$SSLKEY;g"         $DATADIR/musicdb.ini
-        sed -i -e "s;SSLCRT;$SSLCRT;g"         $DATADIR/musicdb.ini
-
-        # Create a link in /etc because this is the default path to look for the configuration
-        ln -sf $DATADIR/musicdb.ini /etc/musicdb.ini
-        echo -e "\e[1;32mdone"
+        CONFIGFILE="$DATADIR/musicdb.ini"
+        echo -e -n "\e[1;34mInstalling \e[0;36mmusicdb.ini\e[1;34m: \e[1;31m"
     else
-        echo -e "\e[1;37malready done!"
+        CONFIGFILE="$DATADIR/musicdb.ini.new"
+        echo -e -n "\e[1;34mInstalling \e[0;36mmusicdb.ini\e[1;33m.new\e[1;34m: \e[1;31m"
     fi
 
+    # Install file
+    install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/musicdb.ini -D $CONFIGFILE
+
+    # Update configuration to the real setup
+    sed -i -e "s;DATADIR;$DATADIR;g"       $CONFIGFILE
+    sed -i -e "s;SERVERDIR;$SERVERDIR;g"   $CONFIGFILE
+    sed -i -e "s;MUSICDIR;$MUSICDIR;g"     $CONFIGFILE
+    sed -i -e "s;MUSICDBGROUP;$MDBGROUP;g" $CONFIGFILE
+    sed -i -e "s;USER;$USER;g"             $CONFIGFILE
+    sed -i -e "s;SSLKEY;$SSLKEY;g"         $CONFIGFILE
+    sed -i -e "s;SSLCRT;$SSLCRT;g"         $CONFIGFILE
+
+    # Create a link in /etc because this is the default path to look for the configuration
+    ln -sf $DATADIR/musicdb.ini /etc/musicdb.ini
+    echo -e "\e[1;32mdone"
+
     echo -e -n "\e[1;34mInstalling \e[0;36mmdbstate.ini\e[1;34m: \e[1;31m"
-    if [ ! -f "$DATADIR/mdbstate.ini" ] ; then
+    if [ ! -f "$DATADIR/mdbstate/state.ini" ] ; then
         # Install the MusicDB state file
-        install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/mdbstate.ini  -D $DATADIR/.
+        install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/mdbstate.ini  -D $DATADIR/mdbstate/state.ini
+        chown $MDBUSER:$MDBGROUP $DATADIR/mdbstate
+
+        if [ -f "$DATADIR/mdbstate.ini" ] ; then # REMOVE IN NEXT VERSION (v4)
+            mv "$DATADIR/mdbstate.ini" "$DATADIR/mdbstate/state.ini"
+            echo -e -n "\e[1;33m(moving old state file to new directory)"
+        fi
         echo -e "\e[1;32mdone"
     else
         echo -e "\e[1;37malready done!"
@@ -193,6 +202,51 @@ function InstallMusicDBDatabases {
 
 }
 
+function UpdateMusicDBDatabases {
+    echo -e "\e[1;34mChecking databases in \e[0;36m$DATADIR\e[1;34m\e[1;31m"
+    if ! type sqlite3 2> /dev/null > /dev/null ; then
+        echo -e "\e[1;31mThe mandatory tool \e[1;35msqlite3\e[1;31m missing! \e[1;30m(No sqlite3 installed?)\e[0m"
+        exit 1
+    fi
+
+    local MUSICDB="$DATADIR/music.db"
+    if [ ! -f "$MUSICDB" ] ; then
+        echo -e "\e[1;31m ! The database $MUSICDB is missing!\033[0m"
+        exit 1
+    fi
+
+    # allow errors, because then I know if a column exists or not
+    set +e
+    # !! Order matters !!
+
+    # checksum column
+    sqlite3 "$MUSICDB" "PRAGMA table_info(\"songs\");" | grep "checksum" > /dev/null
+    if [ $? -ne 0 ]; then
+        echo -e -n "\t\e[1;32m + \e[1;34mAdding \e[0;36mchecksum\e[1;34m column: \e[0m"
+        sqlite3 "$MUSICDB" 'ALTER TABLE songs ADD COLUMN checksum TEXT DEFAULT "";'
+        if [ $? -eq 0 ]; then
+            echo -e "\e[1;32mdone"
+        else
+            echo -e "\e[1;31mfailed! Database is broken!\e[0m"
+        fi
+    fi
+
+    # lastplayed column
+    sqlite3 "$MUSICDB" "PRAGMA table_info(\"songs\");" | grep "lastplayed" > /dev/null
+    if [ $? -ne 0 ]; then
+        echo -e -n "\t\e[1;32m + \e[1;34mAdding \e[0;36mlastplayed\e[1;34m column: \e[0m"
+        sqlite3 "$MUSICDB" 'ALTER TABLE songs ADD COLUMN lastplayed INTEGER DEFAULT 0;'
+        if [ $? -eq 0 ]; then
+            echo -e "\e[1;32mdone"
+        else
+            echo -e "\e[1;31mfailed! Database is broken!\e[0m"
+        fi
+    fi
+    
+    # turn exit-in-error back on
+    set -e
+}
+
 
 
 function InstallArtwork {
@@ -223,33 +277,70 @@ function InstallMusicAI {
 
 
 
-function InstallMPDEnvironment {
-    echo -e -n "\e[1;34mSetup MPD environment in \e[0;36m$DATADIR/mpd\e[1;34m: \e[1;31m"
-    if ! type mpd 2> /dev/null > /dev/null ; then
-        echo -e    "\t\e[1;33mmpd binary missing! \e[1;30m(mpd not yet installed?)"
+function InstallIcecastEnvironment {
+    echo -e -n "\e[1;34mSetup Icecast environment in \e[0;36m$DATADIR/icecast\e[1;34m: \e[1;31m"
+
+    local ICECAST=""
+
+    if type "icecast" 2> /dev/null > /dev/null ; then
+        ICECAST=icecast
+    elif type "icecast2" 2> /dev/null > /dev/null ; then
+        # Debian based distributions have a different name for the icecast binary
+        ICECAST=icecast2
+    else
+        echo -e    "\t\e[1;33micecast binary missing! \e[1;30m(icecast not yet installed?)"
         echo -e -n "\t\e[1;34mInstalling configuration anyway: \e[1;31m"
     fi
 
-    if [ ! -d "$DATADIR/mpd" ] ; then
-        mkdir -p $DATADIR/mpd/playlists
-        install -m 664 -g $MDBGROUP -o $MPDUSER $SOURCEDIR/share/mpd.conf    -D $DATADIR/mpd/.
-        install -m 644 -g $MDBGROUP -o $MPDUSER $SOURCEDIR/share/mpdstate    -D $DATADIR/mpd/state
-        install -m 664 -g $MDBGROUP -o $MPDUSER $SOURCEDIR/share/mpddatabase -D $DATADIR/mpd/database
-        
-        sed -i -e "s;DATADIR;$DATADIR;g"       $DATADIR/mpd/mpd.conf
-        sed -i -e "s;MUSICDIR;$MUSICDIR;g"     $DATADIR/mpd/mpd.conf
-        sed -i -e "s;MUSICDBGROUP;$MDBGROUP;g" $DATADIR/mpd/mpd.conf
-        sed -i -e "s;MPDUSER;$MPDUSER;g"       $DATADIR/mpd/mpd.conf
+    if ! type openssl 2> /dev/null > /dev/null ; then
+        echo -e "\e[1;31mThe mandatory tool \e[1;35mopenssl\e[1;31m missing! \e[1;30m(No openssl installed?)\e[0m"
+        exit 1
+    fi
 
-        chown -R $MPDUSER:$MDBGROUP $DATADIR/mpd
+    # Check group
+    if [ -z "$(getent group icecast)" ]; then
+        groupadd -r icecast
+        echo -e -n "\e[1;32m(icecast group created)\e[1;31m "
+    fi
+    # Check user
+    if [ -z "$(getent passwd icecast)" ]; then
+        useradd -d "$DATADIR/icecast" -s /usr/bin/false -g icecast -r -N -M icecast
+        echo -e -n "\e[1;32m(icecast user created)\e[1;31m "
+    fi
+
+    # Install icecast setup
+    if [ ! -d "$DATADIR/icecast" ] ; then
+        mkdir -p "$DATADIR/icecast/log"
+        touch    "$DATADIR/icecast/users"
+        chown -R icecast:$MDBGROUP "$DATADIR/icecast"
+        chmod o-r "$DATADIR/icecast/users"
+
         echo -e "\e[1;32mdone"
     else
         echo -e "\e[1;37malready done!"
     fi
 
-    echo -e -n "\e[1;34mSetting MPD home directory to \e[0;36m$DATADIR/mpd\e[1;34m: \e[1;31m"
-    if [ "$(getent passwd someuser | cut -f6 -d:)" != "$DATADIR/mpd" ]; then
-        usermod -d $DATADIR/mpd $MPDUSER
+    if [ ! -d "$DATADIR/icecast/certificate.pem" ] ; then
+        install -m 400 -g $MDBGROUP -o icecast "$SSLCRT"                     -D "$DATADIR/icecast/certificate.pem"
+    fi
+
+    if [ ! -d "$DATADIR/icecast/config.xml" ] ; then
+        install -m 664 -g $MDBGROUP -o icecast "$SOURCEDIR/share/config.xml" -D "$DATADIR/icecast/."
+
+        # Create some secure default passwords
+        local SOURCEPW="$(openssl rand -base64 32)"
+        local ADMINPW="$( openssl rand -base64 32)"
+        
+        sed -i -e "s;DATADIR;$DATADIR;g"                $DATADIR/icecast/config.xml
+        sed -i -e "s;MDBGROUP;$MDBGROUP;g"              $DATADIR/icecast/config.xml
+        sed -i -e "s;ICECASTSOURCEPASSWORD;$SOURCEPW;g" $DATADIR/icecast/config.xml
+        sed -i -e "s;ICECASTADMINPASSWORD;$ADMINPW;g"   $DATADIR/icecast/config.xml
+        sed -i -e "s;ICECASTSOURCEPASSWORD;$SOURCEPW;g" $DATADIR/musicdb.ini
+        # also update a possible new MusicDB Configuration
+        if [ -f "$DATADIR/musicdb.ini.new" ] ; then
+            sed -i -e "s;ICECASTSOURCEPASSWORD;$SOURCEPW;g" $DATADIR/musicdb.ini.new
+        fi
+
         echo -e "\e[1;32mdone"
     else
         echo -e "\e[1;37malready done!"
@@ -448,15 +539,6 @@ else
     exit 1
 fi
 
-# Figure out, how the MPD user is called
-if [ ! -z "$(getent passwd mpd)" ]; then
-    MPDUSER="mpd"
-else
-    echo -e "\t\e[1;31mUnable to figure out how the MPD user is called! \e[1;30m(No MPD installed?)\e[0m"
-    exit 1
-fi
-
-
 # Check if pwd is the source directory
 SOURCEDIR="$(pwd)"
 if [ ! -d "$SOURCEDIR/.git" ] ; then
@@ -526,9 +608,8 @@ dialog --backtitle "$FORMTITLE" --title "Installation Setup" \
     "MusicDB group:"    5 1 "$MDBGROUP"     5 20 45 0 \
     "MusicDB user:"     6 1 "$MDBUSER"      6 20 45 0 \
     "HTTP group:"       7 1 "$HTTPGROUP"    7 20 45 0 \
-    "MPD user:"         8 1 "$MPDUSER"      8 20 45 0 \
-    "SSL key file:"     9 1 "$SSLKEY"       9 20 45 0 \
-    "SSL certificate"  10 1 "$SSLCRT"     10 20 45 0 \
+    "SSL key file:"     8 1 "$SSLKEY"       8 20 45 0 \
+    "SSL certificate"   9 1 "$SSLCRT"       9 20 45 0 \
     2> $FORMFILE
 
 # the form file exists anyway, but only when pressed OK it holds the new setting
@@ -540,9 +621,8 @@ if [ -s $FORMFILE ] ; then
     MDBGROUP="$( sed  "5q;d" $FORMFILE)"
     MDBUSER="$(  sed  "6q;d" $FORMFILE)"
     HTTPGROUP="$(sed  "7q;d" $FORMFILE)"
-    MPDUSER="$(  sed  "8q;d" $FORMFILE)"
-    SSLKEY="$(   sed  "9q;d" $FORMFILE)"
-    SSLCRT="$(   sed "10q;d" $FORMFILE)"
+    SSLKEY="$(   sed  "8q;d" $FORMFILE)"
+    SSLCRT="$(   sed  "9q;d" $FORMFILE)"
 fi
 
 rm $FORMFILE
@@ -558,7 +638,6 @@ echo -e "\t\e[1;34mMusic directory:  \e[0;36m$MUSICDIR"
 echo -e "\t\e[1;34mMusicDB group:    \e[0;36m$MDBGROUP"
 echo -e "\t\e[1;34mMusicDB user:     \e[0;36m$MDBUSER"
 echo -e "\t\e[1;34mHTTP group:       \e[0;36m$HTTPGROUP"
-echo -e "\t\e[1;34mMPD user:         \e[0;36m$MPDUSER"
 echo -e "\t\e[1;34mSSL key file:     \e[0;36m$SSLKEY"
 echo -e "\t\e[1;34mSSL certificate:  \e[0;36m$SSLCRT"
 
@@ -572,10 +651,11 @@ CreateBaseDirectories
 
 InstallMusicDBConfiguration
 InstallMusicDBDatabases
+UpdateMusicDBDatabases      # Check if things must be updated
 InstallArtwork
 InstallMusicAI
 
-InstallMPDEnvironment
+InstallIcecastEnvironment
 InstallLogrotateConfiguration
 InstallShellProfile
 

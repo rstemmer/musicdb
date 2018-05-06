@@ -200,12 +200,14 @@ class MusicDBLogger():
             self.formatter = MBDLogFormatter([])
 
         for h in self.handler:
-            h.setFormatter(self.formatter)
+            if h:
+                h.setFormatter(self.formatter)
 
 
         # Add handler
         for h in self.handler:
-            logging.root.addHandler(h)
+            if h:
+                logging.root.addHandler(h)
 
 
         # Show the user where to find the debugging infos

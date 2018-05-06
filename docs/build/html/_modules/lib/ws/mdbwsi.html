@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.ws.mdbwsi &mdash; MusicDB 2.1.0 documentation</title>
+  <title>lib.ws.mdbwsi &mdash; MusicDB 3.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 2.1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.1
+                3.0
               </div>
             
           
@@ -98,7 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/config.html">MusicDB Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#websocket">websocket</a></li>
@@ -109,7 +109,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#lycra">lycra</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#icecast">Icecast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#log">log</a></li>
@@ -124,14 +124,29 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/overview.html">Overview of MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#music-database">Music Database</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -164,6 +179,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#albums">Albums</a></li>
@@ -205,7 +221,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#system-preparation">System Preparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#basic-packages">Basic packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#id3edit">id3edit</a></li>
@@ -260,6 +275,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/cache.html#class">class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/extern.html#class">class</a></li>
@@ -287,7 +306,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/server.html">server - MusicDB Websocket Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/stats.html">stats - MusicDB Song Statistic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
@@ -343,14 +366,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/mpd.html">mpd / Music Playing Daemon Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/mpd.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/mpd.html#observer-thread">Observer Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/mpd.html#callbacks">Callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/mpd.html#managing-mpd">Managing MPD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/mpd.html#queue-management">Queue management</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/musicai.html">MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#training-time">Training Time</a></li>
@@ -364,18 +379,51 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/randy.html">Randomizer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#randyinterface-class">RandyInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/randy.html#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../mdbapi/randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#randy-class">Randy Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/tracker.html">Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
 </ul>
@@ -396,7 +444,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/config.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
@@ -406,21 +458,59 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/database.html#database-class">Database Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/filesystem.html">Filesystem Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/metatags.html">Meta Tags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/metatags.html#metatags-class">MetaTags Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/mp3file.html">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/musicdb.html">MusicDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#albums">Albums</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#artworks">Artworks</a></li>
@@ -564,7 +654,7 @@
             
   <h1>Source code for lib.ws.mdbwsi</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2017,2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -639,11 +729,12 @@
 
 <span class="sd">Other</span>
 <span class="sd">^^^^^</span>
-<span class="sd">* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMPDState`</span>
-<span class="sd">* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMPDState`</span>
+<span class="sd">* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState`</span>
+<span class="sd">* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState`</span>
 <span class="sd">* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`</span>
 <span class="sd">* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState`</span>
 <span class="sd">* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState`</span>
+<span class="sd">* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTables`</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">random</span>
@@ -651,14 +742,15 @@
 <span class="kn">from</span> <span class="nn">lib.db.trackerdb</span>   <span class="k">import</span> <span class="n">TrackerDatabase</span>
 <span class="kn">from</span> <span class="nn">lib.db.musicdb</span>     <span class="k">import</span> <span class="n">MusicDatabase</span>
 <span class="kn">from</span> <span class="nn">lib.cfg.musicdb</span>    <span class="k">import</span> <span class="n">MusicDBConfig</span>
+<span class="kn">from</span> <span class="nn">lib.cfg.mdbstate</span>   <span class="k">import</span> <span class="n">MDBState</span>
 <span class="kn">from</span> <span class="nn">lib.filesystem</span>     <span class="k">import</span> <span class="n">Filesystem</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">mdbapi.lycra</span>       <span class="k">import</span> <span class="n">Lycra</span>
 <span class="kn">from</span> <span class="nn">mdbapi.database</span>    <span class="k">import</span> <span class="n">MusicDBDatabase</span>
-<span class="kn">from</span> <span class="nn">mdbapi.randy</span>       <span class="k">import</span> <span class="n">RandyInterface</span>
 <span class="kn">from</span> <span class="nn">mdbapi.mise</span>        <span class="k">import</span> <span class="n">MusicDBMicroSearchEngine</span>
 <span class="kn">from</span> <span class="nn">mdbapi.tags</span>        <span class="k">import</span> <span class="n">MusicDBTags</span>
-<span class="kn">import</span> <span class="nn">mdbapi.mpd</span> <span class="k">as</span> <span class="nn">mpd</span>
+<span class="kn">from</span> <span class="nn">mdbapi.stream</span>      <span class="k">import</span> <span class="n">StreamManager</span>
+<span class="kn">from</span> <span class="nn">mdbapi.songqueue</span>   <span class="k">import</span> <span class="n">SongQueue</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">threading</span>          <span class="k">import</span> <span class="n">Thread</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
@@ -667,14 +759,21 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Import global variables from the server</span>
-        <span class="kn">from</span> <span class="nn">mdbapi.server</span> <span class="k">import</span> <span class="n">database</span><span class="p">,</span> <span class="n">mise</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">mdbstate</span>
+        <span class="kn">from</span> <span class="nn">mdbapi.server</span> <span class="k">import</span> <span class="n">database</span><span class="p">,</span> <span class="n">mise</span><span class="p">,</span> <span class="n">cfg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">database</span>   <span class="o">=</span> <span class="n">database</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mise</span>       <span class="o">=</span> <span class="n">mise</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span>        <span class="o">=</span> <span class="n">cfg</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fs</span>         <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tags</span>       <span class="o">=</span> <span class="n">MusicDBTags</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span>   <span class="o">=</span> <span class="n">mdbstate</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">randy</span>      <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># RandyInterface will be created onWSConnect</span>
+
+        <span class="c1"># The autobahn framework silently hides all exceptions - that sucks</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fs</span>         <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tags</span>       <span class="o">=</span> <span class="n">MusicDBTags</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span>   <span class="o">=</span> <span class="n">MDBState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">statedir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stream</span>     <span class="o">=</span> <span class="n">StreamManager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">queue</span>      <span class="o">=</span> <span class="n">SongQueue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">e</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">MaxCallThreads</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">maxcallthreads</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">CallThreadList</span>     <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">MaxCallThreads</span>
@@ -682,22 +781,35 @@
 
 
     <span class="k">def</span> <span class="nf">onWSConnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">randy</span> <span class="o">=</span> <span class="n">RandyInterface</span><span class="p">()</span>
-        <span class="n">mpd</span><span class="o">.</span><span class="n">RegisterCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onMPDEvent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">RegisterCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onStreamEvent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">RegisterCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onQueueEvent</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
         
 
     <span class="k">def</span> <span class="nf">onWSDisconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wasClean</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
-        <span class="n">mpd</span><span class="o">.</span><span class="n">RemoveCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onMPDEvent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">RemoveCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onStreamEvent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">RemoveCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onQueueEvent</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 
 
-    <span class="k">def</span> <span class="nf">onMPDEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">onStreamEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="c1"># This function is called from a different thread. Therefore NO sqlite3-access is allowed.</span>
-        <span class="c1"># So there will be just a notification so that the clients can request an MPDStateUpdate.</span>
+        <span class="c1"># So there will be just a notification so that the clients can request GetStreamState.</span>
         <span class="n">response</span>    <span class="o">=</span> <span class="p">{}</span>
         <span class="n">response</span><span class="p">[</span><span class="s2">&quot;method&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="s2">&quot;notification&quot;</span>
-        <span class="n">response</span><span class="p">[</span><span class="s2">&quot;fncname&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="s2">&quot;mpd&quot;</span>
+        <span class="n">response</span><span class="p">[</span><span class="s2">&quot;fncname&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="s2">&quot;MusicDB:Stream&quot;</span>
+        <span class="n">response</span><span class="p">[</span><span class="s2">&quot;fncsig&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="s2">&quot;on&quot;</span><span class="o">+</span><span class="n">event</span>
+        <span class="n">response</span><span class="p">[</span><span class="s2">&quot;arguments&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">data</span>
+        <span class="n">response</span><span class="p">[</span><span class="s2">&quot;pass&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SendPacket</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">success</span>
+
+    <span class="k">def</span> <span class="nf">onQueueEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="c1"># This function is called from a different thread. Therefore NO sqlite3-access is allowed.</span>
+        <span class="c1"># So there will be just a notification so that the clients can request related functions.</span>
+        <span class="n">response</span>    <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">response</span><span class="p">[</span><span class="s2">&quot;method&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="s2">&quot;notification&quot;</span>
+        <span class="n">response</span><span class="p">[</span><span class="s2">&quot;fncname&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="s2">&quot;MusicDB:Queue&quot;</span>
         <span class="n">response</span><span class="p">[</span><span class="s2">&quot;fncsig&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="s2">&quot;on&quot;</span><span class="o">+</span><span class="n">event</span>
         <span class="n">response</span><span class="p">[</span><span class="s2">&quot;arguments&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">data</span>
         <span class="n">response</span><span class="p">[</span><span class="s2">&quot;pass&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="kc">None</span>
@@ -729,10 +841,12 @@
             <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSongTags</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;GetAlbumTags&quot;</span><span class="p">:</span>
             <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetAlbumTags</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;GetTables&quot;</span><span class="p">:</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTables</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;tables&quot;</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;GetMDBState&quot;</span><span class="p">:</span>
             <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetMDBState</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;GetMPDState&quot;</span><span class="p">:</span>
-            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetMPDState</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;GetStreamState&quot;</span><span class="p">:</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetStreamState</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;GetQueue&quot;</span><span class="p">:</span>
             <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetQueue</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;Find&quot;</span><span class="p">:</span>
@@ -792,16 +906,16 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddRandomSongToQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;MoveSongInQueue&quot;</span><span class="p">:</span>
-            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MoveSongInQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;srcpos&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;dstpos&quot;</span><span class="p">])</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">MoveSongInQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;afterid&quot;</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;RemoveSongFromQueue&quot;</span><span class="p">:</span>
-            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RemoveSongFromQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RemoveSongFromQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;CutSongRelationship&quot;</span><span class="p">:</span>
             <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CutSongRelationship</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;relatedsongid&quot;</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;request&quot;</span><span class="p">:</span>
                 <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSongRelationship</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">])</span>
                 <span class="n">fncname</span><span class="o">=</span> <span class="s2">&quot;GetSongRelationship&quot;</span>
-        <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;SetMPDState&quot;</span><span class="p">:</span>
-            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SetMPDState</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;mpdstate&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;SetStreamState&quot;</span><span class="p">:</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SetStreamState</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;state&quot;</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;PlayNextSong&quot;</span><span class="p">:</span>
             <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PlayNextSong</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1315,19 +1429,71 @@
         <span class="k">return</span> <span class="n">tags</span></div>
 
 
-    <span class="c1"># THIS METHOD IS THREADSAFE</span>
+    <span class="k">def</span> <span class="nf">GetTables</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tablenames</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a dictionary that contains for each requested table a key.</span>
+<span class="sd">        Behind this key is a list of dictionaries representing the rows of the requested table.</span>
+
+<span class="sd">        If ``tablenames`` is ``None``, the result is an empty dictionary.</span>
+
+<span class="sd">        The following list shows all valid names and links to the database calls that returned lists will be returned by this method.:</span>
+
+<span class="sd">            * ``&quot;songs&quot;``: :meth:`lib.db.musicdb.MusicDatabase.GetAllSongs`</span>
+<span class="sd">            * ``&quot;albums&quot;``: :meth:`lib.db.musicdb.MusicDatabase.GetAllAlbums`</span>
+<span class="sd">            * ``&quot;artists&quot;``: :meth:`lib.db.musicdb.MusicDatabase.GetAllArtists`</span>
+<span class="sd">            * ``&quot;tags&quot;``: :meth:`lib.db.musicdb.MusicDatabase.GetAllTags`</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tablenames (list of strings): A list of table names.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dict of lists of database entries</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            .. code-block:: javascript</span>
+
+<span class="sd">                MusicDB_Request(&quot;GetTables&quot;, &quot;ShowTables&quot;, {position:[&quot;songs&quot;, &quot;albums&quot;]});</span>
+
+<span class="sd">                // …</span>
+
+<span class="sd">                function onMusicDBMessage(fnc, sig, args, pass)</span>
+<span class="sd">                {</span>
+<span class="sd">                    if(fnc == &quot;GetTables&quot; &amp;&amp; sig == &quot;ShowTables&quot;)</span>
+<span class="sd">                    {</span>
+<span class="sd">                        console.log(&quot;Tags of the song with the ID &quot; + args.songid);</span>
+<span class="sd">                        for(let song of args.songs)</span>
+<span class="sd">                            console.log(song.name);</span>
+<span class="sd">                        for(let album of args.albumss)</span>
+<span class="sd">                            console.log(album.name);</span>
+<span class="sd">                    }</span>
+<span class="sd">                }</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="s2">&quot;songs&quot;</span> <span class="ow">in</span> <span class="n">tablenames</span><span class="p">:</span>
+            <span class="n">retval</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetAllSongs</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s2">&quot;albums&quot;</span> <span class="ow">in</span> <span class="n">tablenames</span><span class="p">:</span>
+            <span class="n">retval</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetAllAlbums</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s2">&quot;artists&quot;</span> <span class="ow">in</span> <span class="n">tablenames</span><span class="p">:</span>
+            <span class="n">retval</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetAllArtists</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s2">&quot;tags&quot;</span> <span class="ow">in</span> <span class="n">tablenames</span><span class="p">:</span>
+            <span class="n">retval</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetAllTags</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">retval</span>
+
+
 <div class="viewcode-block" id="MusicDBWebSocketInterface.SetMDBState"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState">[docs]</a>    <span class="k">def</span> <span class="nf">SetMDBState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method sets the global state of MDB clients</span>
 
 <span class="sd">        If the state is not available in the global state settings, it will be created.</span>
 
-<span class="sd">        Currently, *category* must always be ``&quot;albumfilter&quot;``. </span>
-<span class="sd">        Then, *name* is a Genre-Name and *value* is ``True`` or ``False``.</span>
+<span class="sd">        When the *category* is ``&quot;albumfilter&quot;``,</span>
+<span class="sd">        then *name* must be a Genre-Name and *value* is ``True`` or ``False``.</span>
 <span class="sd">        If a genre gets set to true, all albums for that genre are included in the list of returned albums by methods that use the filter.</span>
 
 <span class="sd">        After executing this method, the MusicDB server broadcasts the result of :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState`. (``method = &quot;broadcast&quot;, fncname = &quot;GetMDBState&quot;``)</span>
 <span class="sd">        So each client gets informed about the new state.</span>
+
+<span class="sd">        The category must be ``&quot;albumfilter&quot;``!</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            category (str): Category of the state</span>
@@ -1342,14 +1508,10 @@
 
 <span class="sd">                MusicDB_Call(&quot;SetMDBState&quot;, {category:&quot;albumfilter&quot;, name:&quot;Metal&quot;, value:true});</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span><span class="o">.</span><span class="n">OptionAvailable</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unknown state-settings &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">category</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&gt;&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;! </span><span class="se">\033</span><span class="s2">[1;30m(Will be created)&quot;</span><span class="p">)</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-    <span class="c1"># THIS METHOD IS THREADSAFE</span>
 <div class="viewcode-block" id="MusicDBWebSocketInterface.GetMDBState"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState">[docs]</a>    <span class="k">def</span> <span class="nf">GetMDBState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method returns the current global state of the MusicDB WebUIs</span>
@@ -1359,7 +1521,6 @@
 <span class="sd">        The state is a dictionary with the following information:</span>
 
 <span class="sd">            * **albumfilter:** a list of tag-names of class Genre</span>
-<span class="sd">            * **queue:** a further dictionary related to the music-queue. Currently, only the *eoqevent* entry exists.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Current global MusicDB WebUI state</span>
@@ -1384,31 +1545,27 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">albumfilter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span><span class="o">.</span><span class="n">GetFilterList</span><span class="p">()</span>
 
-        <span class="n">queue</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">queue</span><span class="p">[</span><span class="s2">&quot;eoqevent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">eoqevent</span>
-
         <span class="n">state</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">state</span><span class="p">[</span><span class="s2">&quot;albumfilter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">albumfilter</span>
-        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;queue&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">queue</span>
         <span class="k">return</span> <span class="n">state</span></div>
 
 
-<div class="viewcode-block" id="MusicDBWebSocketInterface.GetMPDState"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMPDState">[docs]</a>    <span class="k">def</span> <span class="nf">GetMPDState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">GetMPDState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># DEPRECATED: Remove in April 2019</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;GetMPDState is DEPRECATED - The new method is called GetStreamState&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">state</span>
+<div class="viewcode-block" id="MusicDBWebSocketInterface.GetStreamState"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState">[docs]</a>    <span class="k">def</span> <span class="nf">GetStreamState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method returns the state of MPD (Music Playing Daemon).</span>
+<span class="sd">        This method returns the state of the Streaming Thread. (See :doc:`/mdbapi/stream`)</span>
 
 <span class="sd">        The state is a dictionary that has always the following information:</span>
 
-<span class="sd">            * **isconnected:** ``True`` if MusicDB is connected to MPD, otherwise ``False``</span>
-<span class="sd">            * **isplaying:** ``True`` if MPD is in *playing*-mode, otherwise ``False``</span>
+<span class="sd">            * **isconnected:** ``True`` if MusicDB is connected to Icecast, otherwise ``False``</span>
+<span class="sd">            * **isplaying:** ``True`` if the Streaming Thread is in *playing*-mode, otherwise ``False``</span>
+<span class="sd">            * **hasqueue:** ``True`` when there is at least one song in the queue. When ``False``, the following song information are *not* included!</span>
 
-<span class="sd">        If MusicDB is connected, there are further information about MPDs state:</span>
-
-<span class="sd">            * **mpdstatus:** as returned by :meth:`mdbapi.mpd.GetStatus`</span>
-<span class="sd">            * **hasqueue:** ``True`` If there are songs in MPDs playing-Queue, otherwise ``False``</span>
-
-<span class="sd">        In case there is a at least one song in the queue, that song gets played by MPD if ``isplaying`` is ``True``.</span>
-<span class="sd">        In this case, there are also information about the current song:</span>
+<span class="sd">        In case there is a at least one song in the queue, this current streamed song gets returned with the following information:</span>
 
 <span class="sd">            * **song:** The song entry from the database for the song that is currently playing</span>
 <span class="sd">            * **album:** The related album entry from the database</span>
@@ -1417,73 +1574,72 @@
 <span class="sd">            * **albumtags:** a list of tags as returned by :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags`</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            The current state of MPD</span>
+<span class="sd">            The current state of the streaming thread</span>
 
 <span class="sd">        Example:</span>
 <span class="sd">            .. code-block:: javascript</span>
 
-<span class="sd">                MusicDB_Request(&quot;GetMPDState&quot;, &quot;ShowMPDState&quot;);</span>
+<span class="sd">                MusicDB_Request(&quot;GetStreamState&quot;, &quot;ShowStreamState&quot;);</span>
 
 <span class="sd">                // …</span>
 
 <span class="sd">                function onMusicDBMessage(fnc, sig, args, pass)</span>
 <span class="sd">                {</span>
-<span class="sd">                    if(fnc == &quot;GetMPDState&quot; &amp;&amp; sig == &quot;ShowMPDState&quot;)</span>
+<span class="sd">                    if(fnc == &quot;GetStreamState&quot; &amp;&amp; sig == &quot;ShowStreamtate&quot;)</span>
 <span class="sd">                    {</span>
 <span class="sd">                        if(args.isconnected == true)</span>
 <span class="sd">                        {</span>
-<span class="sd">                            if(args.hasqueue == true)</span>
-<span class="sd">                            {</span>
-<span class="sd">                                console.log(&quot;Current playing song: &quot; + args.song.name);</span>
-<span class="sd">                            }</span>
+<span class="sd">                            console.log(&quot;Connection to Icecast established&quot;);</span>
+<span class="sd">                        }</span>
+<span class="sd">                        if(args.hasqueue == true)</span>
+<span class="sd">                        {</span>
+<span class="sd">                            console.log(&quot;Current playing song: &quot; + args.song.name);</span>
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;isconnected&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mpd</span><span class="o">.</span><span class="n">GetConnectionState</span><span class="p">()</span>
-        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">mpd</span><span class="o">.</span><span class="n">GetPlayingState</span><span class="p">()</span>
 
-        <span class="c1"># if not connected, there will be no more information</span>
-        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;isconnected&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="c1"># BE CAREFUL! The structure of mpds song-infos are different from the one used in the database</span>
-            <span class="n">mpdsong</span> <span class="o">=</span> <span class="n">mpd</span><span class="o">.</span><span class="n">GetCurrentSong</span><span class="p">()</span>
+        <span class="n">streamstate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">GetStreamState</span><span class="p">()</span>
+        <span class="n">queueentry</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>   <span class="c1"># returns (entryid, songid)</span>
+        <span class="n">songid</span>      <span class="o">=</span> <span class="n">queueentry</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;isconnected&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">streamstate</span><span class="p">[</span><span class="s2">&quot;isconnected&quot;</span><span class="p">]</span>
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">streamstate</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span>
 
-            <span class="c1"># if no file is given, the queue is empty - or &quot;there is no queue&quot;</span>
-            <span class="k">if</span> <span class="n">mpdsong</span> <span class="ow">and</span> <span class="s2">&quot;file&quot;</span> <span class="ow">in</span> <span class="n">mpdsong</span><span class="p">:</span>
-                <span class="n">song</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongByPath</span><span class="p">(</span><span class="n">mpdsong</span><span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">])</span>
-                <span class="n">album</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetAlbumById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
-                <span class="n">artist</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetArtistById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
-                <span class="n">songtags</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSongTags</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
-                <span class="n">albumtags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetAlbumTags</span><span class="p">(</span><span class="n">album</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+        <span class="c1"># if no file is given, the queue is empty - or &quot;there is no queue&quot;</span>
+        <span class="k">if</span> <span class="n">songid</span><span class="p">:</span>
+            <span class="n">song</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
+            <span class="n">album</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetAlbumById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
+            <span class="n">artist</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetArtistById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
+            <span class="n">songtags</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSongTags</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+            <span class="n">albumtags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetAlbumTags</span><span class="p">(</span><span class="n">album</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
 
-                <span class="n">state</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">song</span>
-                <span class="n">state</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">album</span>
-                <span class="n">state</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">artist</span>
-                <span class="n">state</span><span class="p">[</span><span class="s2">&quot;songtags&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">songtags</span>
-                <span class="n">state</span><span class="p">[</span><span class="s2">&quot;albumtags&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">albumtags</span>
-                <span class="n">state</span><span class="p">[</span><span class="s2">&quot;hasqueue&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">state</span><span class="p">[</span><span class="s2">&quot;hasqueue&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="kc">False</span>
-
-            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;mpdstatus&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mpd</span><span class="o">.</span><span class="n">GetStatus</span><span class="p">()</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">song</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">album</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">artist</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;songtags&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">songtags</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;albumtags&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">albumtags</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;hasqueue&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;hasqueue&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">return</span> <span class="n">state</span></div>
 
 
 <div class="viewcode-block" id="MusicDBWebSocketInterface.GetQueue"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue">[docs]</a>    <span class="k">def</span> <span class="nf">GetQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method returns a list of songs, albums and artists for each song in the MPD queue.</span>
-<span class="sd">        If there are not songs in the queue, an empty list gets returned.</span>
+<span class="sd">        This method returns a list of songs, albums and artists for each song in the song queue.</span>
+<span class="sd">        If there are no songs in the queue, an empty list gets returned.</span>
 
 <span class="sd">        Each entry of the list contains the following information:</span>
 
+<span class="sd">            * **entryid:** A unique ID to identify the entry in the queue (as string because it is a 128 integer that blows JavaScripts mind)</span>
 <span class="sd">            * **song:** The song entry from the database</span>
 <span class="sd">            * **album:** The related album entry from the database</span>
 <span class="sd">            * **artist:** The related artist entry from the database</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A list of song, album and artist information for each song in the MPD queue</span>
+<span class="sd">            A list of song, album and artist information for each song in the song queue</span>
 
 <span class="sd">        Example:</span>
 <span class="sd">            .. code-block:: javascript</span>
@@ -1503,25 +1659,20 @@
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">paths</span> <span class="o">=</span> <span class="n">mpd</span><span class="o">.</span><span class="n">GetQueue</span><span class="p">()</span>
+        <span class="n">entries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">GetQueue</span><span class="p">()</span>
 
         <span class="c1"># return empty list if there is no queue</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">entries</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[]</span>
 
         <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
-            <span class="n">song</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongByPath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-
-            <span class="c1"># it may happen that other tools add songs to mpd that are not handled by the database</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">song</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The song behind the path </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> does not exist in the MusicDB database!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
-                <span class="k">continue</span>
-
+        <span class="k">for</span> <span class="n">entryid</span><span class="p">,</span> <span class="n">songid</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">:</span>
+            <span class="n">song</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
             <span class="n">album</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetAlbumById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
             <span class="n">artist</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetArtistById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
 
             <span class="n">entry</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">entryid</span><span class="p">)</span>
             <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">song</span>
             <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">album</span>
             <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">artist</span>
@@ -1627,19 +1778,22 @@
         <span class="k">return</span> <span class="n">results</span></div>
 
 
-    <span class="c1"># THIS METHOD IS THREADSAFE</span>
-<div class="viewcode-block" id="MusicDBWebSocketInterface.SetMPDState"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMPDState">[docs]</a>    <span class="k">def</span> <span class="nf">SetMPDState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mpdstate</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">SetMPDState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1"># REMOVE/DEPRECATED: Remove in April 2019</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;SetMPDState is DEPRECATED - The new method is called SetStreamState&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+<div class="viewcode-block" id="MusicDBWebSocketInterface.SetStreamState"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState">[docs]</a>    <span class="k">def</span> <span class="nf">SetStreamState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This Method can be used to set the  *playing*-state of MPD (Music Playing Daemon)</span>
+<span class="sd">        This method can be used to set the  *playing*-state of the stream (see :doc:`/mdbapi/stream`)</span>
 
 <span class="sd">        The following arguments are possible:</span>
 
-<span class="sd">            * ``&quot;play&quot;``: Set state to *playing*. If there are songs in the queue, MPD start streaming.</span>
+<span class="sd">            * ``&quot;play&quot;``: Set state to *playing*. If there are songs in the queue, MusicDB starts streaming.</span>
 <span class="sd">            * ``&quot;pause&quot;``: Set state to *pause*.</span>
 <span class="sd">            * ``&quot;playpause&quot;``: Toggle between *playing* and *pause*</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            mpdstate (str): New playing-state for MPD. *mpdstate* must be one of the following strings: playpause, play or pause.</span>
+<span class="sd">            state (str): New playing-state for the Streamin Thread. *state* must be one of the following strings: ``&quot;playpause&quot;``, ``&quot;play&quot;`` or ``&quot;pause&quot;``.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ``None``</span>
@@ -1647,24 +1801,23 @@
 <span class="sd">        Example:</span>
 <span class="sd">            .. code-block:: javascript</span>
 
-<span class="sd">                MusicDB_Call(&quot;SetMPDState&quot;, {mpdstate:&quot;playpause&quot;});</span>
+<span class="sd">                MusicDB_Call(&quot;SetStreamState&quot;, {state:&quot;playpause&quot;});</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">isplaying</span> <span class="o">=</span> <span class="n">mpd</span><span class="o">.</span><span class="n">GetPlayingState</span><span class="p">()</span>
+        <span class="n">currentstate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">GetStreamState</span><span class="p">()</span>
+        <span class="n">isplaying</span>    <span class="o">=</span> <span class="n">currentstate</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="n">mpdstate</span> <span class="o">==</span> <span class="s2">&quot;playpause&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;playpause&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">isplaying</span><span class="p">:</span>
-                <span class="n">mpd</span><span class="o">.</span><span class="n">Play</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting Play-State to False&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">Play</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">mpd</span><span class="o">.</span><span class="n">Play</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting Play-State to True&quot;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">mpdstate</span> <span class="o">==</span> <span class="s2">&quot;pause&quot;</span><span class="p">:</span>
-            <span class="n">mpd</span><span class="o">.</span><span class="n">Play</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">mpdstate</span> <span class="o">==</span> <span class="s2">&quot;play&quot;</span><span class="p">:</span>
-            <span class="n">mpd</span><span class="o">.</span><span class="n">Play</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">Play</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;pause&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">Play</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;play&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">Play</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unexpected mpdstate  </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> will not be set!&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">mpdstate</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unexpected state </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> will not be set! </span><span class="se">\033</span><span class="s2">[1;30m(State must be play, pause or playpause)&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">mpdstate</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="kc">None</span></div>
 
@@ -1672,9 +1825,7 @@
 <div class="viewcode-block" id="MusicDBWebSocketInterface.PlayNextSong"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong">[docs]</a>    <span class="k">def</span> <span class="nf">PlayNextSong</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method skips the current playing song.</span>
-<span class="sd">        If there is no song that can be skipped, nothing will be done.</span>
-
-<span class="sd">        When a song got skipped, its statistics for being skipped gets incremented.</span>
+<span class="sd">        If there is no song that can be skipped, the Song Queue or Streaming Thread will handle this properly.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ``None``</span>
@@ -1685,36 +1836,18 @@
 <span class="sd">                MusicDB_Call(&quot;PlayNextSong&quot;);</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># First, get the current song</span>
-        <span class="c1"># BE CAREFUL! The structure of mpds song-infos are different from the one used in the database</span>
-        <span class="n">mpdsong</span> <span class="o">=</span> <span class="n">mpd</span><span class="o">.</span><span class="n">GetCurrentSong</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">mpdsong</span> <span class="ow">and</span> <span class="s2">&quot;file&quot;</span> <span class="ow">in</span> <span class="n">mpdsong</span><span class="p">:</span>
-            <span class="n">song</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongByPath</span><span class="p">(</span><span class="n">mpdsong</span><span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">])</span>
-            <span class="n">songid</span>  <span class="o">=</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unexpected Behaviour: There is no current song in the MPD-Queue to skip. </span><span class="se">\033</span><span class="s2">[1;30m(ignoring PlayNextSong command)&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="c1"># Give MPD the command to play the next song</span>
-        <span class="n">success</span> <span class="o">=</span> <span class="n">mpd</span><span class="o">.</span><span class="n">PlayNextSong</span><span class="p">()</span>
-
-        <span class="c1"># if skipping was successfull, update stats</span>
-        <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">UpdateSongStatistic</span><span class="p">(</span><span class="n">songid</span><span class="p">,</span> <span class="s2">&quot;qskips&quot;</span><span class="p">,</span> <span class="s2">&quot;inc&quot;</span><span class="p">)</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">PlayNextSong</span><span class="p">()</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="MusicDBWebSocketInterface.AddSongToQueue"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue">[docs]</a>    <span class="k">def</span> <span class="nf">AddSongToQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method adds a new song to the queue of songs MPD (Music Playing Daemon) will play.</span>
+<span class="sd">        This method adds a new song to the queue of songs that will be streamed.</span>
 
 <span class="sd">        The song gets address by its ID.</span>
 <span class="sd">        The position can be ``&quot;next&quot;`` if the song shall be places behind the current playing song.</span>
 <span class="sd">        So, the new added song will be played next.</span>
 <span class="sd">        Alternative ``&quot;last&quot;`` can be used to place the song at the end of the queue.</span>
-
-<span class="sd">        If a song got add, the *adds*-statistic value gets incremented.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            songid (int): ID of the song that shall be added</span>
@@ -1729,26 +1862,29 @@
 <span class="sd">                MusicDB_Call(&quot;AddSongToQueue&quot;, {songid:1000, position:&quot;next&quot;});</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check if the song ID is valid</span>
         <span class="n">song</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">song</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Invalid song ID: </span><span class="si">%s</span><span class="s2">! </span><span class="se">\033</span><span class="s2">[1;30m(ignoring AddSongToQueue command)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">))</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="n">success</span> <span class="o">=</span> <span class="n">mpd</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span> <span class="c1"># position: &quot;last&quot; or &quot;next&quot;</span>
-        <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">UpdateSongStatistic</span><span class="p">(</span><span class="n">songid</span><span class="p">,</span> <span class="s2">&quot;qadds&quot;</span><span class="p">,</span> <span class="s2">&quot;inc&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">position</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;next&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="p">]:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Position must have the value </span><span class="se">\&quot;</span><span class="s2">next</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">last</span><span class="se">\&quot;</span><span class="s2">. Given was </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">position</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Add song to the queue and update statistics</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">songid</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="MusicDBWebSocketInterface.AddRandomSongToQueue"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue">[docs]</a>    <span class="k">def</span> <span class="nf">AddRandomSongToQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">albumid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Similar to :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue`.</span>
-<span class="sd">        Instead of a specific song, a random song gets chosen by the random-song manager *Randy*.</span>
-<span class="sd">        This is done using :meth:`mdbapi.randy.Randy.AddSong`.</span>
+<span class="sd">        Instead of a specific song, a random song gets chosen by the random-song manager *Randy* (See :doc:`/mdbapi/randy`).</span>
+<span class="sd">        This is done using the :meth:`mdbapi.randy.Randy.GetSong` method.</span>
 
 <span class="sd">        If an album ID is given, the new song will be added from that album</span>
-<span class="sd">        using :meth:`mdbapi.randy.Randy.AddSongFromAlbum`.</span>
-
-<span class="sd">        The random-song manager also increments the *rndadds* statistics for the song that gets added to the queue.</span>
+<span class="sd">        using :meth:`mdbapi.randy.Randy.GetSongFromAlbum`.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            position (str): ``&quot;next&quot;`` or ``&quot;last&quot;`` - Determines where the song gets added</span>
@@ -1764,26 +1900,23 @@
 <span class="sd">                MusicDB_Call(&quot;AddRandomSongToQueue&quot;, {albumid:&quot;42&quot;, position:&quot;next&quot;});</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Check if the Randy Interface was created. This is not done in the constructor!</span>
-        <span class="c1"># The interface to Randy gets instantiated in the onWSConnect callback function.</span>
-        <span class="c1"># This is save as long as this (AddRandomSongToQueue) method gets only called by the WebSocket interface!</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No Randy interface created. </span><span class="se">\033</span><span class="s2">[0:33m(This may not be intentional!) </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">position</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;next&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="p">]:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Position must have the value </span><span class="se">\&quot;</span><span class="s2">next</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">last</span><span class="se">\&quot;</span><span class="s2">. Given was </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">position</span><span class="p">))</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="k">if</span> <span class="n">albumid</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">AddSongFromAlbum</span><span class="p">(</span><span class="n">albumid</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
-
+        <span class="k">if</span> <span class="n">albumid</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">albumid</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">AddRandomSong</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">albumid</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="MusicDBWebSocketInterface.AddAlbumToQueue"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue">[docs]</a>    <span class="k">def</span> <span class="nf">AddAlbumToQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method adds all songs of an album (from all CDs) at the end of the MPD queue.</span>
+<span class="sd">        This method adds all songs of an album (from all CDs) at the end of the queue.</span>
 
 <span class="sd">        The *adds*-statistic gets **not** incremented when a whole album gets add to the queue.</span>
+
+<span class="sd">        If a song is flagged as &quot;hated&quot; or disabled, than it gets discarded.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            albumid (int): ID of the album that shall be added</span>
@@ -1801,20 +1934,19 @@
         <span class="k">for</span> <span class="n">cd</span> <span class="ow">in</span> <span class="n">sortedcds</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">cd</span><span class="p">:</span>
                 <span class="n">song</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span>
-                <span class="n">mpd</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">],</span> <span class="s2">&quot;last&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;disabled&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;favorite&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
         <span class="k">return</span> <span class="kc">None</span></div>
     
         
-<div class="viewcode-block" id="MusicDBWebSocketInterface.RemoveSongFromQueue"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveSongFromQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+<div class="viewcode-block" id="MusicDBWebSocketInterface.RemoveSongFromQueue"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveSongFromQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entryid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method removes a song from MPDs queue.</span>
-<span class="sd">        The position is the index of the song in the queue and must be an integer.</span>
-
-<span class="sd">        The *removes*-statistic of this song gets incremented.</span>
+<span class="sd">        This method removes a song from song queue.</span>
+<span class="sd">        The song gets identified by the entry ID of the queue entry.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            songid (int): The ID of the song that shall be removed</span>
-<span class="sd">            position (int): Position of the song in the MPD queue</span>
+<span class="sd">            entryid (str) Queue entry ID of the song</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ``None``</span>
@@ -1822,29 +1954,81 @@
 <span class="sd">        Example:</span>
 <span class="sd">            .. code-block:: javascript</span>
 
-<span class="sd">                MusicDB_Call(&quot;RemoveSongFromQueue&quot;, {songid:1337, position:3});</span>
+<span class="sd">                MusicDB_Call(&quot;RemoveSongFromQueue&quot;, {entryid:&quot;82390194629402649&quot;});</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">success</span> <span class="o">=</span> <span class="n">mpd</span><span class="o">.</span><span class="n">RemoveSong</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">UpdateSongStatistic</span><span class="p">(</span><span class="n">songid</span><span class="p">,</span> <span class="s2">&quot;qremoves&quot;</span><span class="p">,</span> <span class="s2">&quot;inc&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">entryid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;entryid must be of type string! Actual type was </span><span class="si">%s</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(RemoveSongFromQueue will be ignored)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">entryid</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">RemoveSong</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">entryid</span><span class="p">))</span>
         <span class="k">return</span> <span class="kc">None</span></div>
     
     
-<div class="viewcode-block" id="MusicDBWebSocketInterface.MoveSongInQueue"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue">[docs]</a>    <span class="k">def</span> <span class="nf">MoveSongInQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">srcpos</span><span class="p">,</span> <span class="n">dstpos</span><span class="p">):</span>
+<div class="viewcode-block" id="MusicDBWebSocketInterface.MoveSongInQueue"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue">[docs]</a>    <span class="k">def</span> <span class="nf">MoveSongInQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entryid</span><span class="p">,</span> <span class="n">afterid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This is a direct interface to :meth:`mdbapi.mpd.MoveSong`.</span>
+<span class="sd">        This is a direct interface to :meth:`mdbapi.songqueue.SongQueue.MoveSong`.</span>
 <span class="sd">        It moves a song from one position in the queue to another one.</span>
 
+<span class="sd">        It is not allowed to move the current playing song (index 0).</span>
+<span class="sd">        When this is tried, nothing happens.</span>
+
 <span class="sd">        Args:</span>
-<span class="sd">            songid (int): ID of the song that shall be removed.</span>
-<span class="sd">            srcpos (int): Position of the song</span>
-<span class="sd">            dstpos (int): The position the song shall be moved to</span>
+<span class="sd">            entryid (str): Position of the song</span>
+<span class="sd">            afterid (str): The position the song shall be moved to</span>
 
 <span class="sd">        Return:</span>
 <span class="sd">            ``None``</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            Assuming the following queue:</span>
+
+<span class="sd">            +----------+---------+</span>
+<span class="sd">            | entry ID | song ID |</span>
+<span class="sd">            +==========+=========+</span>
+<span class="sd">            | 1337     | 1       |</span>
+<span class="sd">            +----------+---------+</span>
+<span class="sd">            | 7357     | 2       |</span>
+<span class="sd">            +----------+---------+</span>
+<span class="sd">            | 2323     | 3       |</span>
+<span class="sd">            +----------+---------+</span>
+<span class="sd">            | 4242     | 4       |</span>
+<span class="sd">            +----------+---------+</span>
+
+<span class="sd">            Then the two calls will be applied.</span>
+<span class="sd">            The first one is invalid, because entry ID ``&quot;1337&quot;`` addresses the current playing song at the top of the queue.</span>
+<span class="sd">            So that one will be ignored.</span>
+<span class="sd">            The next one moves song 2 to the end of the queue.</span>
+
+<span class="sd">            .. code-block:: javascript</span>
+
+<span class="sd">                MusicDB_Call(&quot;MoveSongInQueue&quot;, {entryid:&quot;1337&quot;, afterid:&quot;2323&quot;});</span>
+<span class="sd">                MusicDB_Call(&quot;MoveSongInQueue&quot;, {entryid:&quot;7357&quot;, afterid:&quot;4242&quot;});</span>
+
+<span class="sd">            So after processing the two calls, the queue looks like this:</span>
+
+<span class="sd">            +----------+---------+</span>
+<span class="sd">            | entry ID | song ID |</span>
+<span class="sd">            +==========+=========+</span>
+<span class="sd">            | 1337     | 1       |</span>
+<span class="sd">            +----------+---------+</span>
+<span class="sd">            | 2323     | 3       |</span>
+<span class="sd">            +----------+---------+</span>
+<span class="sd">            | 4242     | 4       |</span>
+<span class="sd">            +----------+---------+</span>
+<span class="sd">            | 7357     | 2       |</span>
+<span class="sd">            +----------+---------+</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">mpd</span><span class="o">.</span><span class="n">MoveSong</span><span class="p">(</span><span class="n">srcpos</span><span class="p">,</span> <span class="n">dstpos</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">entryid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;entryid must be of type string! Actual type was </span><span class="si">%s</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(MoveSongInQueue will be ignored)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">entryid</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">afterid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;afterid must be of type string! Actual type was </span><span class="si">%s</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(MoveSongInQueue will be ignored)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">afterid</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">MoveSong</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">entryid</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">afterid</span><span class="p">))</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
@@ -2238,7 +2422,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ralf Stemmer.
+        &copy; Copyright 2018, Ralf Stemmer.
 
     </p>
   </div>
@@ -2260,7 +2444,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'2.1.0',
+            VERSION:'3.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

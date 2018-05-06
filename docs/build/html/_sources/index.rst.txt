@@ -12,20 +12,24 @@ Welcome to MusicDB's documentation!
 **MusicDB** is a music manager, server and player that focus on music, not the software itself.
 It manages music on a server following the "strange" concept of *The Filesystem is Always Right; the Database is Just for Augmentation*.
 So, the tidiness of you music is not just inside *MusicDB* but all devices like your portable music-player or your car.
-The music gets streamed by mpd and can be received by all kind of players like iTunes, VLC or by icecast to encrypt the stream and send it out to the internet.
-The stream gets controlled by a webui that hides the ugliness of software behind a nice, music-oriented frontend.
+The music can be streamed by MusicDB and can be received by all kind of players like iTunes or VLC.
+For streaming, MusicDB connects as source client to a local `Icecast <https://icecast.org/>`_ server.
+This allows encrypted and protected streams so that they can be send  out to the internet.
+The stream gets controlled by a WebUI that hides the ugliness of software behind a nice, music-oriented frontend.
 Your music gets presented and is not just a database entry in a boring list of artists and albums.
+
 With *MusicDB* you control a queue of music that gets streamed.
-
 There is no playlist-management and no repeating loop of songs. 
-If you are lazy to fill the queue with new songs, a randomizer gets in action.
-This randomizer does not use cryptographic randomness. It uses lots of constraints that the selection *feels random*.
-So recently played artists, albums and songs are blocked for a specific time until they can be added again by the randomizer.
-Furthermore, the randomizer only adds songs with a playtime within a configurable span to prevent adding intros or "long-silent-songs".
+If you are lazy to fill the queue with new songs, a random songs get append to the queue.
+This random song selector does not use cryptographic randomness.
+It uses lots of constraints that the selection *feels random*.
+So recently played artists, albums and songs are blocked for a specific time until they can be added again.
+Furthermore, only songs with a playtime within a configurable span will be append to prevent adding intros or "long-silent-songs".
 
-*MusicDB* is for people who hate all other players. If there is another music player/manager you like (winamp, VLC, iTunes, Spotify), you probably hate this one ;)
+*MusicDB* is for people who hate all other players. If there is another music player/manager you like (Beets, iTunes, Spotify, ...), you probably hate this one ;)
 In the :doc:`/basics/comparison` chapter is a comparison with tools similar to *MusicDB*.
 
+See the :doc:`/basics/concept` chapter and  :doc:`/basics/overview` to get an idea what it is like to use *MusicDB*.
 
 ------------------------------------
 
@@ -43,14 +47,16 @@ MusicDB has several abstraction layers shown in the following table:
 | Python            | Linux Tools       |
 +-------------------+-------------------+
 
-*Linux Tools*  are tools like ``mpd``, ``ffmpeg`` or ``id3edit``.
-Some those tools and libraries are side projects of the MusicDB project and also documented.
+*Linux Tools*  are tools like ``icecast``, ``ffmpeg`` or ``id3edit``.
+Some of those tools and libraries are side projects of the MusicDB project and also documented.
 A list of these side projects can be found in the subsection `Other tools and Libraries`_.
 
-With *Python* the interpreter itself and all python modules needed to run MusicDB are meant.
+With *Python*, the interpreter itself and all python modules needed to run MusicDB are meant.
 A complete list of all dependencies can be found in ``musicdb-check.sh``.
 
-In the following chapters, the basic concepts and rules for MusicDB and its components are explained.
+A documentation of the *Bash Scripts* an be found in the chapter :doc:`/usage/scripts`
+
+In the following chapters, the basic concepts and philosophy of MusicDB and its components are explained.
 Furthermore usage guides for MusicDB and how to handle its environment are provided.
 Those chapters are for users as well as for developers.
 
@@ -75,7 +81,7 @@ MusicDB CLI
 
 Modules are extensions for the command-line interface. 
 Those classes are not supposed to be used inside MusicDB.
-Inside the following documentation of each module the usage of them is also explained.
+In the following documentation of each module the usage of them is also explained.
 These chapters will help users to use MusicDB.
 They provide lots of examples on how to use the MusicDB command line tool.
 
@@ -109,9 +115,10 @@ The name is the last parameter for ``musicdb``, all following parameters are par
 MusicDB API
 ===========
 
-These classes are made to be used inside MusicDB.
+The MusicDB API Classes are made to be used inside MusicDB.
+These classes implement the features of MusicDB.
 Their input will not be perfectly checks for sanity, so do not confront those classes with the wild.
-Check user-inputs before applying them to these classes.
+Check user-inputs before applying them to these classes - This should be done in the `MusicDB CLI`_ modules.
 The documentation for these classes are for developer.
 Users may also want look at this documentation to understand whats behind the functionality.
 
@@ -164,8 +171,8 @@ MusicDB WebUI
 
 Here are some documentations of the JavaScript WebUI.
 This documentation is not complete, and will never be.
-The whole WebUI must and will be rebuilt in future using webassembly technology.
-JavaScript is just not the right language for such a complex application.
+The whole WebUI must and will be rebuilt in future using `WebAssembly (no HTTPS) <http://webassembly.org/>`_  technology.
+JavaScript is simply not the right language for such a complex application.
 
 .. toctree::
    :maxdepth: 1
@@ -178,12 +185,12 @@ JavaScript is just not the right language for such a complex application.
 Other tools and Libraries
 =========================
 
-There are lots of tools used by MusicDBs modules.
+There are lots of tools used by MusicDB's modules.
 Whenever a method or function uses an external program, it is mentioned in the documentation.
 Some of them are developed by myself:
 
 ``ID3Edit``:
-   Is a tool that is used by MusicDB to edit and repair ID3 tags in mp3-files.
+   Is a tool that is used by MusicDB to edit and repair `ID3 Tags (no HTTPS) <http://id3.org/>`_ in mp3-files.
    Type ``id3edit --help`` for a short help. There is no more documentation yet, sorry.
 
 ``libprinthex``:
@@ -199,11 +206,11 @@ The following free third party components are included in MusicDB:
    * `jQuery 3 <https://jquery.com/>`_
    * `jQuery UI <https://jqueryui.com/>`_
    * `jQuery nanoScroller.js <https://jamesflorentino.github.io/nanoScrollerJS/>`_
-   * `Silkscreen <http://www.kottke.org/plus/type/silkscreen/index.html>`_
+   * `Silkscreen <https://www.kottke.org/plus/type/silkscreen/index.html>`_
    * `Source Sans Pro <https://github.com/adobe-fonts/source-sans-pro>`_ and `Source Serif Pro <https://github.com/adobe-fonts/source-serif-pro>`_
    * `DejaVuSans <https://github.com/dejavu-fonts/dejavu-fonts>`_
-   * `Font Awesome <http://fontawesome.io/>`_
-   * `ConvertUTF.h <http://llvm.org/doxygen/ConvertUTF_8h_source.html>`_
+   * `Font Awesome <https://fontawesome.io/>`_
+   * `ConvertUTF.h <https://llvm.org/doxygen/ConvertUTF_8h_source.html>`_
 
 
 Indices and tables

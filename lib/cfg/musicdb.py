@@ -78,7 +78,7 @@ class TRACKER:
     pass
 class LYCRA:
     pass
-class MPD:
+class ICECAST:
     pass
 class LOG:
     pass
@@ -108,7 +108,7 @@ class MusicDBConfig(Config):
             logging.error("Value of [server]->maxcallthreads is too small. It must be at least 1.")
         elif self.server.maxcallthreads > 12:
             logging.warning("Value of [server]->maxcallthreads looks too big.")
-        self.server.statefile       = self.Get(str, "server",   "statefile",        "/data/musicdb/state.ini")
+        self.server.statedir        = self.Get(str, "server",   "statedir",         "/data/musicdb/mdbstate")
         self.server.fifofile        = self.Get(str, "server",   "fifofile",         "/data/musicdb/musicdb.fifo")
 
 
@@ -119,7 +119,6 @@ class MusicDBConfig(Config):
         self.websocket.url          = self.Get(str, "websocket","url",          "wss://localhost:443")
         self.websocket.opentimeout  = self.Get(int, "websocket","opentimeout",  10)
         self.websocket.closetimeout = self.Get(int, "websocket","closetimeout",  5)
-        #self.websocket.portoffset   = self.Get(int, "websocket","MDB_P2_portoffset", 10)
 
 
         # [TLS]
@@ -175,13 +174,6 @@ class MusicDBConfig(Config):
         # [tracker]
         self.tracker = TRACKER()
         self.tracker.dbpath         = self.GetFile( "tracker",  "dbpath",       "/data/musicdb/tracker.db")
-        self.tracker.interval       = self.Get(int, "tracker",  "interval",     1)
-        if self.tracker.interval < 0:
-            logging.error("Value of [tracker]->interval is negative. It must be at least 1.")
-        elif self.tracker.interval < 1:
-            logging.warning("Value of [tracker]->interval is too low. It should be at least 1.")
-        elif self.tracker.interval > 30:
-            logging.warning("Value of [tracker]->interval may be too big. It should be less than 30.")
         
 
         # [lycra]
@@ -189,17 +181,12 @@ class MusicDBConfig(Config):
         self.lycra.dbpath           = self.GetFile( "lycra",    "dbpath",       "/data/musicdb/lycra.db")
 
 
-        # [MPD]
-        self.mpd        = MPD()
-        self.mpd.address            = self.Get(str, "MPD",      "address",      "localhost")
-        self.mpd.port               = self.Get(str, "MPD",      "port",         "999")
-        self.mpd.interval           = self.Get(int, "MPD",      "interval",     1)
-        if self.mpd.interval < 0:
-            logging.error("Value of [mpd]->interval is negative. It must be at least 1.")
-        elif self.mpd.interval < 1:
-            logging.warning("Value of [mpd]->interval is too low. It should be at least 1.")
-        elif self.mpd.interval > 30:
-            logging.warning("Value of [mpd]->interval may be too big. It should be less than 30.")
+        # [Icecast]
+        self.icecast    = ICECAST()
+        self.icecast.port           = self.Get(int, "Icecast",  "port",     "6666")
+        self.icecast.user           = self.Get(str, "Icecast",  "user",     "source")
+        self.icecast.password       = self.Get(str, "Icecast",  "password", "hackme")
+        self.icecast.mountname      = self.Get(str, "Icecast",  "mountname","/stream")
 
 
         # [MusicAI]
@@ -218,19 +205,12 @@ class MusicDBConfig(Config):
         
         # [Randy]
         self.randy      = RANDY()
-        self.randy.interval         = self.Get(int,  "Randy",   "interval",     1)
         self.randy.nodisabled       = self.Get(bool, "Randy",   "nodisabled",   True)
         self.randy.nohated          = self.Get(bool, "Randy",   "nohated",      True)
         self.randy.minsonglen       = self.Get(int,  "Randy",   "minsonglen",   120)
         self.randy.songbllen        = self.Get(int,  "Randy",   "songbllen",    50)
         self.randy.albumbllen       = self.Get(int,  "Randy",   "albumbllen",   20)
         self.randy.artistbllen      = self.Get(int,  "Randy",   "artistbllen",  10)
-        if self.randy.interval < 0:
-            logging.error("Value of [randy]->interval is negative. It must be at least 1.")
-        elif self.randy.interval < 1:
-            logging.warning("Value of [randy]->interval is too low. It should be at least 1.")
-        elif self.randy.interval > 30:
-            logging.warning("Value of [randy]->interval may be too big. It should be less than 30.")
 
 
         # [log]
@@ -251,6 +231,10 @@ class MusicDBConfig(Config):
         self.debug.disabletracker   = self.Get(int, "debug",    "disabletracker",0)
         self.debug.disableai        = self.Get(int, "debug",    "disableai",    0)
         self.debug.disabletagging   = self.Get(int, "debug",    "disabletagging",0)
+        self.debug.streambackend    = self.Get(str, "debug",    "streambackend",    "mpd")
+        self.debug.streambackend    = self.debug.streambackend.lower()
+        if not self.debug.streambackend in ["mpd", "icecast"]:
+            logging.error("Invalid backend for [debug]->streambackend. Backend must be one of the following: mpd, icecast")
 
         logging.info("\033[1;32mdone")
 

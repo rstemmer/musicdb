@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.tracker &mdash; MusicDB 2.1.0 documentation</title>
+  <title>mdbapi.tracker &mdash; MusicDB 3.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 2.1.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.1
+                3.0
               </div>
             
           
@@ -98,7 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/comparison.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../basics/concept.html">Basic Rules for MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../basics/config.html">MusicDB Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#websocket">websocket</a></li>
@@ -109,7 +109,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#lycra">lycra</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#mpd">MPD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#icecast">Icecast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#log">log</a></li>
@@ -124,14 +124,29 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../basics/overview.html">Overview of MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#music-player-daemon-cyan">Music Player Daemon (Cyan)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#music-database">Music Database</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#http-server-black">HTTP Server (Black)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../basics/testvm.html">MusicDB Test VMs</a><ul>
@@ -164,6 +179,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#albums">Albums</a></li>
@@ -205,7 +221,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#system-preparation">System Preparation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id1">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#basic-packages">Basic packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#mpd-music-player-daemon">MPD - Music Player Daemon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#libprinthex">libprinthex</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id3edit">id3edit</a></li>
@@ -260,6 +275,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/cache.html#class">class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/extern.html#class">class</a></li>
@@ -287,7 +306,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/repair.html">repair - Repair Database Entries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/server.html">server - MusicDB Websocket Server</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/stats.html">stats - MusicDB Song Statistic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
@@ -343,14 +366,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/mpd.html">mpd / Music Playing Daemon Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#observer-thread">Observer Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#callbacks">Callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#managing-mpd">Managing MPD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mpd.html#queue-management">Queue management</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/musicai.html">MusicAI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#training-time">Training Time</a></li>
@@ -364,18 +379,51 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/randy.html">Randomizer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#randyinterface-class">RandyInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#randy-class">Randy Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tracker.html">Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#trackerinterface-class">TrackerInterface Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
 </ul>
@@ -396,7 +444,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/config.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.config">Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
@@ -406,21 +458,59 @@
 <li class="toctree-l2"><a class="reference internal" href="../../lib/database.html#database-class">Database Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/filesystem.html">Filesystem Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/hdf5storage.html">HDF5Storage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/metatags.html">Meta Tags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/metatags.html#metatags-class">MetaTags Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/mp3file.html">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3file.html#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../lib/mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/musicdb.html">MusicDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#songs">Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#albums">Albums</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#album-related-methods">Album Related Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#artworks">Artworks</a></li>
@@ -564,7 +654,7 @@
             
   <h1>Source code for mdbapi.tracker</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2017,2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -579,21 +669,16 @@
 <span class="c1"># You should have received a copy of the GNU General Public License</span>
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This module provides a tracker to track songs that were played by MusicDBs backend MPD (Music Playing Daemon).</span>
+<span class="sd">This module provides a tracker to track songs that were streamed.</span>
 <span class="sd">The goal of the tracker is to collect information which songs can be played in series.</span>
-<span class="sd">So the relation between two songs gets stored in a database.</span>
-<span class="sd">The user can than get the information which song were played after (or before) a specific song.</span>
+<span class="sd">So the relation between two songs gets stored in a database - the Tracker Database.</span>
+<span class="sd">The user can then get the information which song were played after (or before) a specific song.</span>
+<span class="sd">Beside the songs, also the artist relations are tracked.</span>
 
-<span class="sd">The Tracker consists of three parts:</span>
+<span class="sd">The Tracker consists of two parts:</span>
 
-<span class="sd">    * The **Tracker Thread** (:meth:`~mdbapi.tracker.TrackerThread`) and its environment :meth:`~mdbapi.tracker.StartTracker` and  :meth:`~mdbapi.tracker.StopTracker`.</span>
-<span class="sd">    * The **Tracker Interface** class (:class:`~mdbapi.tracker.TrackerInterface`) providing an interface to interact with the Tracker thread. The interaction with the thread can happen in several threads simultaneously.</span>
+<span class="sd">    * The **Tracker** class (:class:`~mdbapi.tracker.Tracker`) tracking songs with an internal queue that holds the last played songs.</span>
 <span class="sd">    * The **Tracker Database** (:class:`~lib.db.trackerdb.TrackerDatabase`) that stores the tracked song relations.</span>
-
-<span class="sd">To use the tracker, start the Tracker Thread by calling :meth:`~mdbapi.tracker.StartTracker` once. </span>
-<span class="sd">Now it is possible to access the randomizer using the :class:`~mdbapi.tracker.TrackerInterface` class. </span>
-<span class="sd">This can be done from multiple different threads.</span>
-<span class="sd">When the tracker is not needed anymore, it can be stopped by calling :meth:`~mdbapi.tracker.StopTracker`.</span>
 
 <span class="sd">Example:</span>
 
@@ -602,308 +687,151 @@
 <span class="sd">        # Dependencies </span>
 <span class="sd">        cfg = MusicDBConfig(&quot;./musicdb.ini&quot;)</span>
 
-<span class="sd">        # Start the Tracker</span>
-<span class="sd">        StartTracker(cfg)</span>
-
-<span class="sd">        # Use Tracker (Can be anywhere in the code)</span>
-<span class="sd">        tracker = TrackerInterface()</span>
-<span class="sd">        tracker.NewSong(&quot;Unicorn/2000 - Honey Horn/13 Rainbow Song.mp3&quot;)</span>
-<span class="sd">        tracker.NewSong(&quot;Truther/2013 - Real Album/23 Illuminati.mp3&quot;)</span>
-<span class="sd">        tracker.SongSkipped()</span>
-
-<span class="sd">        # Stop Tracker</span>
-<span class="sd">        StopTracker()</span>
+<span class="sd">        # Create a new tracker</span>
+<span class="sd">        tracker = Tracker(cfg)</span>
+<span class="sd">        tracker.AddSong(&quot;Unicorn/2000 - Honey Horn/13 Rainbow Song.mp3&quot;)</span>
+<span class="sd">        tracker.AddSong(&quot;Truther/2013 - Real Album/23 Illuminati.mp3&quot;)</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">threading</span>          <span class="k">import</span> <span class="n">Thread</span>
 <span class="kn">from</span> <span class="nn">lib.db.musicdb</span>     <span class="k">import</span> <span class="n">MusicDatabase</span>
 <span class="kn">from</span> <span class="nn">lib.db.trackerdb</span>   <span class="k">import</span> <span class="n">TrackerDatabase</span>
-
-<span class="n">RUN</span>      <span class="o">=</span> <span class="kc">False</span>
-<span class="n">THREAD</span>   <span class="o">=</span> <span class="kc">None</span>
-<span class="n">CMDQUEUE</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">CMD_NEWSONG</span>     <span class="o">=</span> <span class="mi">1</span>
-<span class="n">CMD_SONGSKIPPED</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">CMD_CLEAR</span>       <span class="o">=</span> <span class="mi">3</span>
-
-<span class="c1"># Tracks the time between two songs added</span>
-<span class="n">LastTimeStamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">lib.cfg.musicdb</span>    <span class="k">import</span> <span class="n">MusicDBConfig</span>
 
 
-<div class="viewcode-block" id="StartTracker"><a class="viewcode-back" href="../../mdbapi/tracker.html#mdbapi.tracker.StartTracker">[docs]</a><span class="k">def</span> <span class="nf">StartTracker</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Tracker"><a class="viewcode-back" href="../../mdbapi/tracker.html#mdbapi.tracker.Tracker">[docs]</a><span class="k">class</span> <span class="nc">Tracker</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Start the Tracker thread.</span>
-<span class="sd">    You should use this function instead of calling the TrackerThread directly.</span>
+<span class="sd">    This class tracks songs that were played after each other.</span>
+<span class="sd">    So it gets tracked what songs the user put together into the queue because their style fit to each other.</span>
+<span class="sd">    It should also track randomly added songs assuming the user skips or removes songs that don&#39;t fit.</span>
+<span class="sd">    Only completely played songs should considered.</span>
+<span class="sd">    Skipped songs should be ignored.</span>
+<span class="sd">    Beside the songs, also the artist relations get tracked.</span>
+<span class="sd">    The artist relation gets derived from the song relations.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        config: a MusicDB config object</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        ``None`` if something went wrong, otherwise the thread-handler will be returned</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">THREAD</span>
-    <span class="k">if</span> <span class="n">THREAD</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Tracker already running&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-    <span class="k">global</span> <span class="n">RUN</span>
-    <span class="n">RUN</span>    <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">THREAD</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">TrackerThread</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">config</span><span class="p">,))</span>
-    <span class="n">THREAD</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-
-    <span class="k">return</span> <span class="n">THREAD</span></div>
-
-
-<div class="viewcode-block" id="StopTracker"><a class="viewcode-back" href="../../mdbapi/tracker.html#mdbapi.tracker.StopTracker">[docs]</a><span class="k">def</span> <span class="nf">StopTracker</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Stops the Tracker thread.</span>
-<span class="sd">    This function is blocking and waits until the thread is closed.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        ``None``</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">RUN</span>
-    <span class="k">global</span> <span class="n">THREAD</span>
-    <span class="n">RUN</span> <span class="o">=</span> <span class="kc">False</span>
-
-    <span class="k">if</span> <span class="n">THREAD</span><span class="p">:</span>
-        <span class="n">THREAD</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;There is no Thread to stop!&quot;</span><span class="p">)</span>
-
-    <span class="n">THREAD</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">return</span> <span class="kc">None</span></div>
-
-
-<div class="viewcode-block" id="TrackerThread"><a class="viewcode-back" href="../../mdbapi/tracker.html#mdbapi.tracker.TrackerThread">[docs]</a><span class="k">def</span> <span class="nf">TrackerThread</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    .. warning::</span>
 
-<span class="sd">        This function should not be called directly. Use :meth:`~mdbapi.tracker.StartTracker` to execute the Thread!</span>
-
-<span class="sd">    This thread tracks songs that were played after each other.</span>
-<span class="sd">    So it gets tracked what songs the user put together into the queue because their style fit to each other.</span>
-<span class="sd">    It will also track randomly added songs assuming the user skips songs that don&#39;t fit.</span>
-<span class="sd">    Only completely played songs were considered.</span>
-<span class="sd">    Skipped songs get ignored.</span>
-
-<span class="sd">    The thread runs in three stages until :meth:`~mdbapi.tracker.StopTracker` gets called.</span>
-
-<span class="sd">    **Check for new command**</span>
-
-<span class="sd">    First a new command gets popped from the command queue.</span>
-<span class="sd">    An entry in the command queue is a tuple of the command itself and one argument.</span>
-<span class="sd">    If there is no new command, the thread sleeps for a configured time and checks again.</span>
-
-<span class="sd">    **Check for a relationship**</span>
-
-<span class="sd">    If there was a command in the queue it gets executed.</span>
-<span class="sd">    The command influences the state of the tracker internal playlist.</span>
-
-<span class="sd">    The intern playlist holds up to three entries. Each is a relative path to a played or playing song.</span>
-<span class="sd">    So the first and second (index 0 and index 1) have a connection that will be tracked.</span>
-<span class="sd">    As list:</span>
-
-<span class="sd">        #. The song that was fully played before the last song</span>
-<span class="sd">        #. The last song that was played completely</span>
-<span class="sd">        #. The current playing song</span>
-<span class="sd">    </span>
-<span class="sd">    The following commands exist:</span>
-
-<span class="sd">    CMD_NEWSONG:</span>
-<span class="sd">        Set by the method :meth:`~mdbapi.tracker.TrackerInterface.NewSong`.</span>
-<span class="sd">        This signals that MPD (Music Playing Daemon) started playing a new file.</span>
-<span class="sd">        The path to the file is the argument to this command.</span>
-<span class="sd">        If the last song added to the playlist already exist, it gets ignored.</span>
-
-<span class="sd">    CMD_SONGSKIPPED:</span>
-<span class="sd">        Set by the method :meth:`~mdbapi.tracker.TrackerInterface.SongSkipped`.</span>
-<span class="sd">        This command signals that the current song was skipped and so the first entry (index 0)</span>
-<span class="sd">        gets removed from the internal playlist.</span>
-
-<span class="sd">    CMD_CLEAR:</span>
-<span class="sd">        Set by the method :meth:`~mdbapi.tracker.TrackerInterface.NewSong`.</span>
-<span class="sd">        If the time between two songs more than 30 minutes, the relation gets rejected.</span>
-<span class="sd">        The internal playlist gets emptied and a new &quot;session&quot; can start.</span>
-
-
-<span class="sd">    **Store relationship into database**</span>
-
-<span class="sd">    The third step is to check for a new relation between two songs.</span>
-<span class="sd">    This is the case if there are three entries in the internal playlist.</span>
-<span class="sd">    If there are less, or if the tracker was disabled by the configuration, </span>
-<span class="sd">    nothing will be done and the control flow goes back to the first step - reading a new command.</span>
-
-<span class="sd">    If there are three entries in the queue, the song IDs get determined.</span>
-<span class="sd">    Then the relation gets added to the tracker database by calling :meth:`lib.db.tracker.TrackerDatabase.AddEdge`</span>
+<span class="sd">        It tracks the played songs using a local state.</span>
+<span class="sd">        Creating a new instance of this class also creates a further independent tracker.</span>
+<span class="sd">        This could mess up the database with relations that were counted twice!</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        config: MusicDB Configuration</span>
+<span class="sd">        config: :class:`~lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration</span>
+<span class="sd">        musicdb: Optional a :class:`~lib.db.musicdb.MusicDatabase` instance. When ``None`` a new instance will be created</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: When the arguments are not of the correct type.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Read some settings</span>
-    <span class="n">disabled</span>      <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">disabletracker</span>
-    <span class="n">musicdbpath</span>   <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">path</span>
-    <span class="n">trackerdbpath</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">tracker</span><span class="o">.</span><span class="n">dbpath</span>
-    <span class="n">pollinterval</span>  <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">tracker</span><span class="o">.</span><span class="n">interval</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDBConfig</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;config argument not of type MusicDBConfig&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">musicdb</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDatabase</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;database argument not of type MusicDatabase&quot;</span><span class="p">)</span>
 
-    <span class="k">global</span> <span class="n">RUN</span>
-    <span class="k">global</span> <span class="n">CMDQUEUE</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span>   <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">disabletracker</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lastsongid</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lastaction</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
-    <span class="c1"># Open databases</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">disabled</span><span class="p">:</span>
-        <span class="n">musicdb</span>   <span class="o">=</span> <span class="n">MusicDatabase</span><span class="p">(</span><span class="n">musicdbpath</span><span class="p">)</span>
-        <span class="n">trackerdb</span> <span class="o">=</span> <span class="n">TrackerDatabase</span><span class="p">(</span><span class="n">trackerdbpath</span><span class="p">)</span>
-
-    <span class="c1"># Enter main loop</span>
-    <span class="n">playlist</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">while</span> <span class="n">RUN</span><span class="p">:</span>
-            <span class="c1"># check if there is a new command, otherwise sleep</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">CMDQUEUE</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">pollinterval</span><span class="p">)</span>
-                <span class="k">continue</span>
-
-            <span class="c1"># Get command and argument</span>
-            <span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span> <span class="o">=</span> <span class="n">CMDQUEUE</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
-            <span class="c1"># Process command</span>
-            <span class="k">if</span> <span class="n">cmd</span> <span class="o">==</span> <span class="n">CMD_NEWSONG</span><span class="p">:</span>
-                <span class="c1"># check if the previous song is the same one</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">playlist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">playlist</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">arg</span><span class="p">:</span>
-                        <span class="n">playlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The new song to track </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> is the same as the previous one - so it gets ignored&quot;</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">playlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
-
-            <span class="k">elif</span> <span class="n">cmd</span> <span class="o">==</span> <span class="n">CMD_SONGSKIPPED</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">playlist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">playlist</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-
-            <span class="k">elif</span> <span class="n">cmd</span> <span class="o">==</span> <span class="n">CMD_CLEAR</span><span class="p">:</span>
-                <span class="n">playlist</span> <span class="o">=</span> <span class="p">[]</span>
-
-            <span class="c1"># check if we got a new relation (two songs played completely - implies that a 3rd one is currently running)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">playlist</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="k">continue</span>
-
-            <span class="n">song0Path</span> <span class="o">=</span> <span class="n">playlist</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">song1Path</span> <span class="o">=</span> <span class="n">playlist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>     <span class="c1"># do not remove this song, now its just the successor</span>
-
-            <span class="k">if</span> <span class="n">disabled</span><span class="p">:</span>
-                <span class="c1"># do not do anything further when database accesses are permitted</span>
-                <span class="k">continue</span>
-
-            <span class="c1"># Translate songpath to songid</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">songa</span>       <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongByPath</span><span class="p">(</span><span class="n">song0Path</span><span class="p">)</span>
-                <span class="n">songb</span>       <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongByPath</span><span class="p">(</span><span class="n">song1Path</span><span class="p">)</span>
-                <span class="n">songida</span>     <span class="o">=</span> <span class="n">songa</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
-                <span class="n">songidb</span>     <span class="o">=</span> <span class="n">songb</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
-                <span class="n">artistida</span>   <span class="o">=</span> <span class="n">songa</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span>
-                <span class="n">artistidb</span>   <span class="o">=</span> <span class="n">songb</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;musicdb.GetSongByPath failed with error </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-                <span class="k">continue</span>
-
-            <span class="c1"># store relation</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">trackerdb</span><span class="o">.</span><span class="n">AddRelation</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span>   <span class="n">songida</span><span class="p">,</span>   <span class="n">songidb</span><span class="p">)</span>
-                <span class="n">trackerdb</span><span class="o">.</span><span class="n">AddRelation</span><span class="p">(</span><span class="s2">&quot;artist&quot;</span><span class="p">,</span> <span class="n">artistida</span><span class="p">,</span> <span class="n">artistidb</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;trackerdb.AddEdge failed with error </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-                <span class="k">continue</span></div>
+        <span class="c1"># When tracking is disabled, don&#39;t even instantiate the databases.</span>
+        <span class="c1"># Tracking is disabled for a reason, so protect the databases as good as possible!</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trackerdb</span> <span class="o">=</span> <span class="n">TrackerDatabase</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">tracker</span><span class="o">.</span><span class="n">dbpath</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">musicdb</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">musicdb</span> <span class="o">=</span> <span class="n">musicdb</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">musicdb</span> <span class="o">=</span> <span class="n">MusicDatabase</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
 
 
 
-<div class="viewcode-block" id="TrackerInterface"><a class="viewcode-back" href="../../mdbapi/tracker.html#mdbapi.tracker.TrackerInterface">[docs]</a><span class="k">class</span> <span class="nc">TrackerInterface</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Interface to the :meth:`~mdbapi.tracker.TrackerThread`.</span>
-<span class="sd">    This class is made to access the thread form all over the code simultaneously.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
 
-
-
-    <span class="c1"># A command is a tuple of the command ID and ONE argument</span>
-<div class="viewcode-block" id="TrackerInterface.PushCMD"><a class="viewcode-back" href="../../mdbapi/tracker.html#mdbapi.tracker.TrackerInterface.PushCMD">[docs]</a>    <span class="k">def</span> <span class="nf">PushCMD</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">argument</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Tracker.AddSong"><a class="viewcode-back" href="../../mdbapi/tracker.html#mdbapi.tracker.Tracker.AddSong">[docs]</a>    <span class="k">def</span> <span class="nf">AddSong</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method pushes a new command into the command queue that gets processed by the Tracker thread.</span>
-<span class="sd">        This method is supposed to be only called from a method inside the Tracker class.</span>
-<span class="sd">        You should not call this method directly.</span>
-
-<span class="sd">        If the Tracker is not running, nothing happens and ``False`` gets returned</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            command: One of the commands that can be processed by the Tracker</span>
-<span class="sd">            argument: Optional argument for a command</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            ``None``</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">global</span> <span class="n">CMDQUEUE</span>
-        <span class="k">global</span> <span class="n">RUN</span>
-        
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">RUN</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Tracker is not running. Command will be ignored.&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="n">CMDQUEUE</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">command</span><span class="p">,</span> <span class="n">argument</span><span class="p">))</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
-
-
-
-<div class="viewcode-block" id="TrackerInterface.NewSong"><a class="viewcode-back" href="../../mdbapi/tracker.html#mdbapi.tracker.TrackerInterface.NewSong">[docs]</a>    <span class="k">def</span> <span class="nf">NewSong</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songpath</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method adds a new song to the list of song tracked.</span>
+<span class="sd">        This method tracks the relation to the given song with the last added song.</span>
+<span class="sd">        This new song should be a song that was recently and completely played.</span>
 
 <span class="sd">        If the time between this song, and the previous one exceeds 30 minutes, it gets ignored and the internal state gets reset.</span>
 <span class="sd">        So the chain of songs get cut if the time between playing them is too long.</span>
-<span class="sd">        The chain of songs gets also cut, if *songpath* is ``None``.</span>
+<span class="sd">        The chain of songs gets also cut, if *songid* is ``None`` or invalid.</span>
+
+<span class="sd">        If the given song is the same as the last song, then it gets ignored.</span>
+
+<span class="sd">        After adding a song, the method checks for a new relation between two songs.</span>
+<span class="sd">        This is the case when there was previously a song added.</span>
+
+<span class="sd">        If there is a relation to track then the songs get loaded from the :class:`lib.db.musicdb.MusicDatabase` to get the artist IDs.</span>
+<span class="sd">        The relation gets added to the tracker database by calling :meth:`lib.db.trackerdb.TrackerDatabase.AddRelation`</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            songpath: relative song path of the song that gets currently played.</span>
+<span class="sd">            songid: song ID of the song that gets currently played, ``None`` to cut the chain of consecutive songs.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ``True`` on success. ``False`` in case an error occurred.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Check argument (A situation where songpath was None leads to chaos.)</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">PushCMD</span><span class="p">(</span><span class="n">CMD_CLEAR</span><span class="p">)</span>    <span class="c1"># avoid tracking wrong relations</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Songpath of new song is of type None! </span><span class="se">\033</span><span class="s2">[0;33m(Ignoring the NewSong-Call)&quot;</span><span class="p">)</span>
+        <span class="c1"># Check argument (A situation where songID was None leads to chaos.)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lastsongid</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">song</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span> <span class="c1"># None is allowed to cut a song chain.</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Song ID of new song is not an integer! The type was $s. </span><span class="se">\033</span><span class="s2">[0;33m(Ignoring the NewSong-Call and clearing tracking list)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">songid</span><span class="p">)))</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="c1"># Get timestamp</span>
-        <span class="k">global</span> <span class="n">LastTimeStamp</span>
-        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-
         <span class="c1"># If there is a 30 Minute gap, do not associate this song with the previous -&gt; clear list</span>
-        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">timestamp</span> <span class="o">-</span> <span class="n">LastTimeStamp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="o">*</span><span class="mi">60</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Clear tracker history because of a 30 minute gap.&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">PushCMD</span><span class="p">(</span><span class="n">CMD_CLEAR</span><span class="p">)</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">timediff</span>  <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">timestamp</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lastaction</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">timediff</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="o">*</span><span class="mi">60</span><span class="p">:</span>  <span class="c1"># TODO: make configurable!</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Resetting tracker history because of a time gap greater than </span><span class="si">%i</span><span class="s2"> minutes.&quot;</span><span class="p">,</span> <span class="n">timediff</span><span class="o">//</span><span class="mi">60</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">lastaction</span> <span class="o">=</span> <span class="n">timestamp</span>
 
-        <span class="n">LastTimeStamp</span> <span class="o">=</span> <span class="n">timestamp</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Track new song: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">songpath</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">PushCMD</span><span class="p">(</span><span class="n">CMD_NEWSONG</span><span class="p">,</span> <span class="n">songpath</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lastsongid</span> <span class="o">==</span> <span class="n">songid</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The new song to track (</span><span class="si">%i</span><span class="s2">) is the same as the previous one - so it gets ignored&quot;</span><span class="p">,</span> <span class="n">songid</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
 
+        <span class="c1"># Adding new song to the history</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Tracking new song with ID </span><span class="si">%i</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">songid</span><span class="p">)</span>
 
+        <span class="c1"># If there was no previous song, initialize the tracker.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">lastsongid</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lastsongid</span> <span class="o">=</span> <span class="n">songid</span>
+            <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="c1"># The playing song was skipped (undo NewSong-Call - ONCE)</span>
-<div class="viewcode-block" id="TrackerInterface.SongSkipped"><a class="viewcode-back" href="../../mdbapi/tracker.html#mdbapi.tracker.TrackerInterface.SongSkipped">[docs]</a>    <span class="k">def</span> <span class="nf">SongSkipped</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method signals the tracker that the last added song (via :meth:`~.mdbapi.tracker.TrackerInterface.NewSong`) was skipped.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span><span class="p">:</span>
+            <span class="c1"># do not do anything further when tracer is deactivated</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Updating tracker disabled. </span><span class="se">\033</span><span class="s2">[1;33m!! </span><span class="se">\033</span><span class="s2">[1;30m(Will not process relationship between </span><span class="si">%i</span><span class="s2"> and </span><span class="si">%i</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lastsongid</span><span class="p">,</span> <span class="n">songid</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lastsongid</span> <span class="o">=</span> <span class="n">songid</span>    <span class="c1"># fake the last step for better debugging</span>
+            <span class="k">return</span> <span class="kc">True</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            ``None``</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">PushCMD</span><span class="p">(</span><span class="n">CMD_SONGSKIPPED</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Last tracked song was skipped&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span></div></div>
+        <span class="c1"># Get songs</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">songa</span>       <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lastsongid</span><span class="p">)</span>
+            <span class="n">songb</span>       <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
+            <span class="n">artistida</span>   <span class="o">=</span> <span class="n">songa</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span>
+            <span class="n">artistidb</span>   <span class="o">=</span> <span class="n">songb</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># If one of the IDs is invalid, then here it will become noticed the first time.</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;musicdb.GetSongById failed with error </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># store relation</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trackerdb</span><span class="o">.</span><span class="n">AddRelation</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span>   <span class="bp">self</span><span class="o">.</span><span class="n">lastsongid</span><span class="p">,</span> <span class="n">songid</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trackerdb</span><span class="o">.</span><span class="n">AddRelation</span><span class="p">(</span><span class="s2">&quot;artist&quot;</span><span class="p">,</span> <span class="n">artistida</span><span class="p">,</span> <span class="n">artistidb</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;trackerdb.AddRelation failed with error </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;New relation added: </span><span class="se">\033</span><span class="s2">[0;35m</span><span class="si">%i</span><span class="s2"> → </span><span class="si">%i</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lastsongid</span><span class="p">,</span> <span class="n">songid</span><span class="p">)</span>
+
+        <span class="c1"># Rotate the chain</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lastsongid</span> <span class="o">=</span> <span class="n">songid</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div></div>
+
 
 
 <span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
@@ -922,7 +850,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ralf Stemmer.
+        &copy; Copyright 2018, Ralf Stemmer.
 
     </p>
   </div>
@@ -944,7 +872,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'2.1.0',
+            VERSION:'3.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

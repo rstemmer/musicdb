@@ -21,7 +21,7 @@ It is the interface between the music and its entries in the database (:mod:`lib
 import os
 import stat
 import signal
-from lib.filesystem     import Filesystem
+from lib.fileprocessing import Fileprocessing
 from lib.metatags       import MetaTags
 from lib.pidfile        import *                    # Check PID File…
 from lib.namedpipe      import NamedPipe
@@ -32,6 +32,24 @@ from lib.db.trackerdb   import TrackerDatabase      # To update when a song gets
 
 class MusicDBDatabase(object):
     """
+    This class supports the following features
+
+        * File management
+            * :meth:`~FindLostPaths`: Check if all paths in the *songs*, *albums* and *artists* table are valid.
+            * :meth:`~FindNewPaths`: Check if there are new songs, albums or artists in the music collection that are not in the database.
+            * :meth:`~FixAttributes`: Change the access mode and ownership of the music to match the configutation
+            * :meth:`~AnalysePath`: Extract song information from its file path
+            * :meth:`~TyrAnalysePathFor`: Check if the given path is valid for an artist, album or song
+        * Database management
+            * :meth:`~AddArtist`, :meth:`~AddAlbum`, :meth:`~AddSong`: Adds a new artist, album or song to the database
+            * :meth:`~UpdateArtist`, :meth:`~UpdateAlbum`, :meth:`~UpdateSong`: Updates a artist, album or song path in the database
+            * :meth:`~RemoveArtist`, :meth:`~RemoveAlbum`, :meth:`~RemoveSong`: Removes a artist, album or song from the database
+        * Add information into the database
+            * :meth:`~AddLyricsFromFile`: Read lyrics from the meta data of a song file into the database
+            * :meth:`~UpdateChecksum`: Calculates and adds the checksum of a song file into the database
+        * Other
+            * :meth:`~UpdateServerCache`: Signals the WebSocket Server to refresh its internal caches
+
     Args:
         config: MusicDB configuration object
         database: MusicDB database
@@ -50,7 +68,7 @@ class MusicDBDatabase(object):
 
         self.db     = database
         self.cfg    = config
-        self.fs     = Filesystem(self.cfg.music.path)
+        self.fs     = Fileprocessing(self.cfg.music.path)
         self.meta   = MetaTags(self.cfg.music.path)
 
         # -rw-rw-r--
@@ -67,8 +85,10 @@ class MusicDBDatabase(object):
 
     def FindLostPaths(self):
         """
-        This method checks all artist, album and song entries if the pathes to their related directories and files are still valid.
+        This method checks all artist, album and song entries if the paths to their related directories and files are still valid.
         Entries with invalid paths gets returned in three lists: ``artists, albums, songs``
+
+        This method does not check if the song is cached in the Song Cache.
 
         Returns:
             A three lists of database entries with invalid paths. Empty lists if there is no invalid entrie.
@@ -698,22 +718,24 @@ class MusicDBDatabase(object):
         # Collect all data needed for the song-entry (except the song ID)
         # Remember! The filesystem is always right
         song = {}
-        song["artistid"] = artistid # \_ In case they are None yet, they will be updated later in the code
-        song["albumid"]  = albumid  # /
-        song["path"]     = songpath
-        song["number"]   = fsmeta["songnumber"]
-        song["cd"]       = fsmeta["cdnumber"]
-        song["disabled"] = 0
-        song["playtime"] = tagmeta["playtime"]
-        song["bitrate"]  = tagmeta["bitrate"]
-        song["likes"]    = 0
-        song["dislikes"] = 0
-        song["qskips"]   = 0
-        song["qadds"]    = 0
-        song["qremoves"] = 0
-        song["favorite"] = 0
-        song["qrndadds"] = 0
+        song["artistid"]    = artistid # \_ In case they are None yet, they will be updated later in the code
+        song["albumid"]     = albumid  # /
+        song["path"]        = songpath
+        song["number"]      = fsmeta["songnumber"]
+        song["cd"]          = fsmeta["cdnumber"]
+        song["disabled"]    = 0
+        song["playtime"]    = tagmeta["playtime"]
+        song["bitrate"]     = tagmeta["bitrate"]
+        song["likes"]       = 0
+        song["dislikes"]    = 0
+        song["qskips"]      = 0
+        song["qadds"]       = 0
+        song["qremoves"]    = 0
+        song["favorite"]    = 0
+        song["qrndadds"]    = 0
         song["lyricsstate"] = SONG_LYRICSSTATE_EMPTY
+        song["checksum"]    = self.fs.Checksum(songpath)
+        song["lastplayed"]  = 0
 
         # FIX: THE FILESYSTEM IS _ALWAYS_ RIGHT! - WHAT THE FUCK!
         song["name"] = fsmeta["song"] 
@@ -794,6 +816,7 @@ class MusicDBDatabase(object):
             * cd number
             * playtime
             * bitrate
+            * checksum
 
         Further more the following album information get updted:
 
@@ -837,6 +860,7 @@ class MusicDBDatabase(object):
         song["cd"]       = fsmeta["cdnumber"]
         song["playtime"] = tagmeta["playtime"]
         song["bitrate"]  = tagmeta["bitrate"]
+        song["checksum"] = self.fs.Checksum(songpath)
 
         self.db.WriteSong(song)
 
@@ -942,6 +966,46 @@ class MusicDBDatabase(object):
 
 
 
+    def UpdateChecksum(self, songpath):
+        """
+        This method can be used to add or update the checksum of the file of a song into the database.
+        The method does not care if there is already a checksum.
+        
+        .. note::
+
+            :meth:`~AddSong` and :meth:`~UpdateSong` also update the checksum.
+            So after calling that methods, calling this ``AddChecksum`` method is not necessary.
+
+        Args:
+            songpath (str): Absolute song path, or relative to the music root directory.
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+        """
+        # remove the root-path to the music directory
+        try:
+            songpath = self.fs.RemoveRoot(songpath)
+        except ValueError:
+            # if RemoveRoot raises an ValueError, this only means that song path is already a relative path
+            pass
+        except Exception as e:
+            logging.error("Invalid song path: %s. \033[1;30m(No checksum will be added)", str(e))
+            return False
+
+
+        # Check if the song exists in the database
+        song = self.db.GetSongByPath(songpath)
+        if song == None:
+            logging.warning("There is no song with file \"%s\" in the database! \033[1;30m(No checksum will be added)", songpath)
+            return False
+
+        # Add new checksum
+        song["checksum"] = self.fs.Checksum(songpath)
+        self.db.WriteSong(song)
+        return True
+
+
+
     def AddLyricsFromFile(self, songpath):
         """
         This method can be used to add lyrics from the file of a song into the database.
@@ -960,15 +1024,15 @@ class MusicDBDatabase(object):
         """
         # remove the root-path to the music directory
         try:
-            songpath = self.fs.RemoveRoot(songpath) # remove the path to the musicdirectory
+            songpath = self.fs.RemoveRoot(songpath)
         except ValueError:
-            # if RemoveRoot raises an ValueError, this only means that songpath is already a realtive path
+            # if RemoveRoot raises an ValueError, this only means that song path is already a relative path
             pass
         except Exception as e:
             logging.error("Invalid song path: %s. \033[1;30m(No lyrics will be loaded)", str(e))
             return False
 
-        # Get all information from the songpath and its meta data
+        # Get all information from the song path and its meta data
         try:
             self.meta.Load(songpath)
         except Exception as e:
@@ -1001,10 +1065,15 @@ class MusicDBDatabase(object):
 
     def UpdateSongPath(self, newsongpath, oldsongpath):
         """
+        .. warning::
+
+            This method is deprecated!
+            It will be removed in April 2019!
+
         This method can be used to update a song.
 
-        The new song file must be names as necessary for MusicDB.
-        It is OK when the songs filename changes, as long as the cd and track number are equal to the old file.
+        The new song file must be named as necessary for MusicDB.
+        It is OK when the songs file name changes, as long as the cd and track number are equal to the old file.
 
         The following steps will be done:
 
@@ -1041,6 +1110,8 @@ class MusicDBDatabase(object):
                 # replace an old mp3 by a new flac file
                 db.UpdateSongPath("/tmp/downloads/23 Is Everywhere.flac", "/data/music/Illuminati/2023 - Sheeple/23 Is Everwhere.mp3")
         """
+        logging.warning("DEPRECATED! Will be removed in April 2019!")
+
         if type(newsongpath) != str or type(oldsongpath) != str:
             logging.error("Arguments of wrong type. Strings were expected")
             return False

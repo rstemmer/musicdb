@@ -7,6 +7,33 @@
 
 Run  git log --oneline  for more details
 
+┍━━━━┫ 2018-05-06 ┣━━━━┫ 3.0.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ + New Columns in songs table: checksum, lastplayed
+│ + Tracing the checksum of a song file 
+│ * Changes in the configuration:
+│   - [server]->statefile will no longer be used, instead the following:
+│   + [server]->statedir a director holding MusicDBs state. The old state got moved into it as state.ini
+│ + All new streaming: MPD interface removed and Icecast interface added
+│ * Tracker refactored. Interface changed.
+│ * Randy refactored. Interface changed.
+│   - PrintBlacklist removed
+│ + Major changes in the Web API. Changed functions are:
+│   - GetMPDState replaced with GetStreamState (they are not compatible!)
+│   - SetMPDState replaced with SetStreamState (they are not compatible!)
+│   - SetMDBState simplified - Does not allow creating new settings (they could not be read anyway)
+│   * GetQueue API changed: entryid added
+│   * AddAlbumToQueue improved: Does not add hated or disabled songs to the queue
+│   * RemoveSongFromQueue API changed: Song gets identified by the entry ID
+│   * MoveSongInQueue API changed: Songs gets identified by the entry ID
+│   * Stream event have now the fncname "MuscDB:Stream" instead of "mpd"
+│
+┝━ MINOR CHANGES
+│ - The following song statistics got removed: qadds, qrndadds, qskips, qremoves. They got NEVER used.
+│ - End of Queue option removed from mdbstate.ini->[queue] -> EoQEvent. It was not used for years.
+│ - The MusicDB state gets now saved in an own directory. The state file is at DATADIR/mdbstate/state.ini
+└───────────────────────────────────────╌╌
+
 
 ┍━━━━┫ 2018-02-18 ┣━━━━┫ 2.2.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES

@@ -1,0 +1,921 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MP3 File Interface &mdash; MusicDB 3.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="MusicDB 3.0.0 documentation" href="../index.html"/>
+        <link rel="next" title="MP3 Stream Interface" href="mp3stream.html"/>
+        <link rel="prev" title="Meta Tags" href="metatags.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> MusicDB
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#metrics">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#comparison">Comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Philosophy of MusicDB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#server">server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#websocket">websocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tls">TLS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#database">database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#music">music</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#icecast">Icecast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/logging.html">Handling log-files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/mods.html">MusicDB Commandline Modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#loading-of-modules">Loading of Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/mods.html#creation-of-new-modules">Creation of new Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/overview.html">Overview of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#music-information-purple">Music Information (Purple)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-data-blue">MusicDB Data (Blue)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#music-database">Music Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#artwork-cache">Artwork Cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-data-configuration">MusicDB Data &amp; Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#musicdb-components-green">MusicDB Components (Green)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#command-line-modules">Command-Line Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-webui">MusicDB WebUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#musicdb-server">MusicDB Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#external-servers-black">External Servers (Black)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#http-server">HTTP Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/overview.html#icecast-server">Icecast Server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/overview.html#consuming-music-orange">Consuming Music (Orange)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/streaming.html">MusicDB Stream</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#general-data-flow">General Data Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/streaming.html#stream-implementation">Stream Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/testvm.html">MusicDB Test VMs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#qemu-installation">qemu Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#basic-setup">Basic Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#disk-images">Disk Images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#system-setup">System Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#installing-updating-musicdb-test-environment">Installing/Updating MusicDB Test Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#create-dummy-files">Create Dummy Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/testvm.html#test-systems">Test Systems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#debian">Debian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#raspian">Raspian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/testvm.html#arch-linux">Arch Linux</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/webapi.html">MusicDB Websocket API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#communication">Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#packet-format">Packet format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#client-side-interface">Client side interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#callback-functions">Callback functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#send-data-to-the-server">Send data to the server</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#events">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#queue">Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#tag-related">Tag related</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#other">Other</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/workflow.html">Workflow for development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#working-on-code">Working on code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#rebuilding-the-documentation">Rebuilding the Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#using-git">Using git</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#micro-commits">Micro Commits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#createing-a-hotfix">Createing a Hotfix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/workflow.html#merging-develop-to-master">Merging Develop to Master</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/workflow.html#releasing-a-new-version">Releasing a New Version</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-all-dependencies">Install all Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#configureing-musicdb">Configureing MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-manually">Installation (Manually)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#system-preparation">System Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#musicdb">musicdb</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#cuda-for-musicai">CUDA for MusicAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#naming">Naming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-database-module">Using the database module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-repair-module">Using the repair module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#using-the-add-module">Using the add module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../usage/scripts.html">Scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-boot">musicdb-boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-start">musicdb-start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#quickupdate">quickupdate</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/add.html#repair-file-names">Repair File Names</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mod/add.html#album-import-form">Album Import Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mod/add.html#new-songs-form">New Songs Form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mod/add.html#online-check">Online Check</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/add.html#import-process">Import Process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/artwork.html">artwork - Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#automatization">Automatization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/genres.html">genres - Genre Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/genres.html#managing-genres">Managing Genres</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/genres.html#updating-caches">Updating Caches</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/metadata.html">metadata - Metadata Reader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/mise.html">mise - Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/mise.html#class">class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/moods.html">moods - Mood Tag Manager with CLUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-list">Mood List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-grid">Mood Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#style-guide">Style Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/musicai.html">musicai - MusicAI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#module-mod.musicai">Module Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#lyrics-check">Lyrics Check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/repair.html#checksum-update">Checksum update</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/server.html">server - MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/stats.html">stats - MusicDB Song Statistic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/tags.html">tags - MusicDB Tag Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#main-commands">Main commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#style-guide">Style Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#example-calls">Example calls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/tracker.html">tracker - Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#module-mod.tracker">Module Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#class-description">Class Description</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#path-structure">Path structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/artwork.html#web-browsers">Web Browsers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#manifest">Manifest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/database.html">MusicDBDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/extern.html">MusicDBExtern</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#initializing-a-storage">Initializing a Storage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/extern.html#storage-configuration">Storage Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/extern.html#the-state-file">The State-File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#updating-a-storage">Updating a Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#handling-toxic-environments">Handling Toxic Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/extern.html#musicdbextern-class">MusicDBExtern Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/lycra.html">LyCra - Lyrics Crawler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/lycra.html#module-mdbapi.lycra">Lycra API Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/lycra.html#crawler-base-class">Crawler Base Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/lycra.html#module-lib.db.lycradb">Lycra Database</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/mise.html">Micro Search Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicai.html">MusicAI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#training-time">Training Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#featureset">Featureset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#trainingset">Trainingset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musiccache.html">MusicCache</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#blacklist">Blacklist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#database-stage">Database Stage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randy-class">Randy Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/server.html">MusicDB Websocket Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/songqueue.html">MusicDB Song Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/stream.html">Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/tags.html">MusicDBTags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/tracker.html">Song Tracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Libraries</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clui.html">Command Line User Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.text">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.frame">Frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.pane">Pane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.buttonview">ButtonView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.listview">ListView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.dialog">Dialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.textinput">TextInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.boolinput">BoolInput</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.tabgroup">TabGroup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="config.html#module-lib.cfg.config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#module-lib.cfg.csv">CSVFile</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="database.html#database-class">Database Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fileprocessing.html">Fileprocessing Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fileprocessing.html#fileprocessing-class">Fileprocessing Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem.html">Filesystem Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="filesystem.html#filesystem-class">Filesystem Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gstreamer.html">GStreamer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gstreamer.html#gstreamer-pipeline">GStreamer Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gstreamer.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hdf5storage.html">HDF5Storage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="icecast.html">Icecast Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="icecast.html#introduction-to-icecast">Introduction to Icecast</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="icecast.html#icecast-configuration">Icecast Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="icecast.html#icecast-class">Icecast Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metatags.html">Meta Tags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metatags.html#metatags-class">MetaTags Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MP3 File Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mp3file-class">MP3File Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mp3stream.html">MP3 Stream Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mp3stream.html#mp3stream-class">MP3Stream Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mp3transcoder.html">MP3 Transcoder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#gstreamer-pipeline">GStreamer Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#unix-pipe">UNIX Pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#transcoding">Transcoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mp3transcoder.html#mp3transcoder-class">MP3Transcoder Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#adding-a-column">Adding a Column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#songs">Songs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#albums">Albums</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#album-related-methods">Album Related Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#artworks">Artworks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#origin">Origin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#artists">Artists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#lyrics">Lyrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#tags">Tags</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-definition-table">Tag Definition Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#database-api">Database API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="namedpipe.html">NamedPipe</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="namedpipe.html#namedpipe-class">NamedPipe Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pidfile.html">PID File Handling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="websockets.html">MusicDB Websocket Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="websockets.html#module-lib.ws.server">Websocket Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="websockets.html#module-lib.ws.websocket">Websocket Protocol</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#sending-data">Sending Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#receiving-data">Receiving Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#minimal-usage">Minimal usage</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#kontakt">Kontakt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#verantwortlich-fur-den-inhalt-nach-55-abs-2-rstv">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#haftung-fur-inhalte">Haftung für Inhalte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#haftung-fur-links">Haftung für Links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#urheberrecht">Urheberrecht</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../other/impressum.html#datenschutzerklarung">Datenschutzerklärung</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#datenschutz">Datenschutz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#cookies">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#server-log-files">Server-Log-Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#facebook-plugins-like-button">Facebook-Plugins (Like-Button)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#twitter">Twitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#google">Google+</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#youtube">YouTube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#ssl-verschlusselung">SSL-Verschlüsselung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#widerspruch-werbe-mails">Widerspruch Werbe-Mails</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MusicDB</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>MP3 File Interface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/lib/mp3file.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="mp3-file-interface">
+<h1>MP3 File Interface<a class="headerlink" href="#mp3-file-interface" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This module will no longer be used in <em>MusicDB</em>.
+It may get removed in future.</p>
+<p class="last">What this module does is now done by <a class="reference internal" href="mp3stream.html"><span class="doc">MP3 Stream Interface</span></a>.</p>
+</div>
+<span class="target" id="module-lib.stream.mp3file"></span><p>This module provides a class to read mp3 files frame wise.
+Decoding is not part of it.</p>
+<div class="section" id="mp3file-class">
+<h2>MP3File Class<a class="headerlink" href="#mp3file-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lib.stream.mp3file.MP3File">
+<em class="property">class </em><code class="descclassname">lib.stream.mp3file.</code><code class="descname">MP3File</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class allows frame wise reading of an mp3 file.
+This is done by the <a class="reference internal" href="#lib.stream.mp3file.MP3File.Frames" title="lib.stream.mp3file.MP3File.Frames"><code class="xref py py-meth docutils literal"><span class="pre">Frames()</span></code></a> generator.
+Beside the mp3 frames the generator returns lots of information extracted from the mp3 Frame Header.</p>
+<p>The class expects a valid mp3 file (MPEG Layer III) with an valid ID3 Tag (ID3v2.3.0 or ID3v2.4.0).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – An absolute path to a valid mp3 file</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># ffmpeg -filter_complex aevalsrc=0 -acodec libmp3lame -ab 320k -t 1 silence.mp3</span>
+
+<span class="n">mp3file</span> <span class="o">=</span> <span class="n">MP3File</span><span class="p">(</span><span class="s2">&quot;./silence.mp3&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">mp3file</span><span class="o">.</span><span class="n">Frames</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;=== </span><span class="si">%5i</span><span class="s2"> / </span><span class="si">%5i</span><span class="s2"> ===&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">],</span> <span class="n">frame</span><span class="p">[</span><span class="s2">&quot;total&quot;</span><span class="p">]))</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;header&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="lib.stream.mp3file.MP3File.AnalyzeHeader">
+<code class="descname">AnalyzeHeader</code><span class="sig-paren">(</span><em>header</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File.AnalyzeHeader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File.AnalyzeHeader" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method analyzes a MP3 Frame Header and returns all information that are implicit included in these 4 bytes.
+It is build for the internal use inside this class.</p>
+<p>Primary source for analyzing the header is <a class="reference external" href="http://mpgedit.org/mpgedit/mpeg_format/MP3Format.html">mpgedit.org (no HTTPS)</a>
+Another important source is <a class="reference external" href="https://en.wikipedia.org/wiki/MP3#Design">Wikipedia</a></p>
+<p>Base of the implementation of this method is from <a class="reference external" href="https://www.w3.org/2000/10/swap/pim/mp3/mp3info.py">a python script from Vivake Gupta (vivake AT lab49.com)</a>
+A further helpful code example comes from <a class="reference external" href="https://hydrogenaud.io/index.php?topic=85125.msg747716#msg747716">SirNickity from the hydrogenaud.io community</a></p>
+<p>Those codes were improved by me to get information I need.
+These information (and more) are returned as dictionary.
+The returned dictionary contains the following keys:</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="first docutils">
+<dt>Relevant information:</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">&quot;framesize&quot;</span></code> (int): Size of a frame in the MP3 file. This includes the 4 bytes of the MP3 Frame Header.</li>
+<li><code class="docutils literal"><span class="pre">&quot;frametime&quot;</span></code> (float): The playtime of the audio in milliseconds that is encoded in one frame</li>
+<li><code class="docutils literal"><span class="pre">&quot;layer&quot;</span></code> (int): MPEG layer. For MP3 it should be <code class="docutils literal"><span class="pre">3</span></code></li>
+<li><code class="docutils literal"><span class="pre">&quot;mpeg</span> <span class="pre">version&quot;</span></code> (int): MPEG version. For MP3, it should be <code class="docutils literal"><span class="pre">1</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Further information (I have no idea what some of the information mean. They are simply not relevant anyway.):</dt>
+<dd><ul class="first last">
+<li><code class="docutils literal"><span class="pre">&quot;protection&quot;</span></code> (bool): When <code class="docutils literal"><span class="pre">True</span></code> the header has a CRC16 checksum</li>
+<li><code class="docutils literal"><span class="pre">&quot;padding&quot;</span></code> (bool): When <code class="docutils literal"><span class="pre">True</span></code> the frame is padded with an extra slot. (The slot size is given in <code class="docutils literal"><span class="pre">&quot;slotsize&quot;</span></code>)</li>
+<li><code class="docutils literal"><span class="pre">&quot;private&quot;</span></code> (bool): <em>free to use</em></li>
+<li><code class="docutils literal"><span class="pre">&quot;mode&quot;</span></code> (str): Channel mode: <code class="docutils literal"><span class="pre">&quot;stereo&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;joint</span> <span class="pre">stereo&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;dual</span> <span class="pre">channel&quot;</span></code> or <code class="docutils literal"><span class="pre">&quot;mono&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">&quot;modeextension&quot;</span></code> (str): For MPEG Layer 1 and 2: <code class="docutils literal"><span class="pre">&quot;4-31&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;8-31&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;12-31&quot;</span></code> or <code class="docutils literal"><span class="pre">&quot;16-31&quot;</span></code>. For MPEG Layer 3: <code class="docutils literal"><span class="pre">&quot;&quot;</span></code> (empty), <code class="docutils literal"><span class="pre">&quot;IS&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;MS&quot;</span></code> or <code class="docutils literal"><span class="pre">&quot;IS+MS&quot;</span></code>. <code class="docutils literal"><span class="pre">&quot;IS&quot;</span></code> stands for <em>Intensity Stereo Mode</em>, <code class="docutils literal"><span class="pre">&quot;MS&quot;</span></code> for <em>MS Stereo Mode</em></li>
+<li><code class="docutils literal"><span class="pre">&quot;copyright&quot;</span></code> (bool): Copyrighted data</li>
+<li><code class="docutils literal"><span class="pre">&quot;original&quot;</span></code> (bool): Original data</li>
+<li><code class="docutils literal"><span class="pre">&quot;emphasis&quot;</span></code> (str): One of the following strings: <code class="docutils literal"><span class="pre">&quot;none&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;50/15</span> <span class="pre">ms&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;reserved&quot;</span></code> or <code class="docutils literal"><span class="pre">&quot;CCIT</span> <span class="pre">J.17&quot;</span></code></li>
+<li><code class="docutils literal"><span class="pre">&quot;samples&quot;</span></code> (int): Samples per frame</li>
+<li><code class="docutils literal"><span class="pre">&quot;slotsize&quot;</span></code> (int): The size of one slot</li>
+<li><code class="docutils literal"><span class="pre">&quot;bitspersample&quot;</span></code> (int): Bit per sample</li>
+<li><code class="docutils literal"><span class="pre">&quot;samplerate&quot;</span></code> (int): Samplerate</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>header</strong> (<em>int/bytes</em>) – The 4 byte MP3 Frame Header in bytes, or as integer (unsigned, big endian!)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A dictionary with all information encoded in the header</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <code class="docutils literal"><span class="pre">header</span></code> is not of type bytes or int.</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When there are invalid information encoded in the header.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># ...</span>
+<span class="n">header</span> <span class="o">=</span> <span class="n">mp3</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">header</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xFF\xFB</span><span class="s2">&quot;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Expected Frame Sync Bits missing&quot;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">infos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AnalyzeHeader</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Invalid header! Problem: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.stream.mp3file.MP3File.Frames">
+<code class="descname">Frames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File.Frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File.Frames" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a generator that returns a frame from the loaded mp3 file and information about that frame.</p>
+<p>The returned dictionary contains the following information:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">&quot;frame&quot;</span></code> (bytes): A complete MP3 Frame including the Frame Header and the Frame Data</li>
+<li><code class="docutils literal"><span class="pre">&quot;header&quot;</span></code> (dict): The interpretation of the MP3 Frame Header as returned by <a class="reference internal" href="#lib.stream.mp3file.MP3File.AnalyzeHeader" title="lib.stream.mp3file.MP3File.AnalyzeHeader"><code class="xref py py-meth docutils literal"><span class="pre">AnalyzeHeader()</span></code></a></li>
+<li><code class="docutils literal"><span class="pre">&quot;total&quot;</span></code> (int): The total number of frames in the mp3 file</li>
+<li><code class="docutils literal"><span class="pre">&quot;count&quot;</span></code> (int): The number of this frame between <code class="docutils literal"><span class="pre">1</span></code> and <code class="docutils literal"><span class="pre">total</span></code></li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A generator that returns a dictionary including a mp3 frame</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mp3file</span> <span class="o">=</span> <span class="n">MP3File</span><span class="p">(</span><span class="s2">&quot;./silence.mp3&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">mp3file</span><span class="o">.</span><span class="n">Frames</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;=== </span><span class="si">%5i</span><span class="s2"> / </span><span class="si">%5i</span><span class="s2"> ===&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">],</span> <span class="n">frame</span><span class="p">[</span><span class="s2">&quot;total&quot;</span><span class="p">]))</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;header&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="lib.stream.mp3file.MP3File.Load">
+<code class="descname">Load</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File.Load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File.Load" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method loads a new mp3 file.
+All information from the previous file will be discard.</p>
+<p>The method reads the whole file, analyzes each frame, and stores them in memory.
+The ID3 Tag gets also read, but not further processed.</p>
+<p>The following diagram shows how this method loads and processes the mp3 file:</p>
+<object data="../_images/graphviz-d567b5b40b06c5250241b1885154181e2f638e09.svg" type="image/svg+xml">
+            <p class="warning">digraph hierarchy {
+    size=&quot;5,8&quot;
+    start           [label=&quot;Start&quot;];
+
+    readid3header   [shape=box,     label=&quot;Read ID3 Header&quot;]
+    decodeid3size   [shape=box,     label=&quot;Decode the length\nof the ID3 Tag&quot;]
+    readid3tag      [shape=box,     label=&quot;Read ID3 Tag&quot;]
+
+    readmp3header   [shape=box,     label=&quot;Read MP3 Frame Header&quot;]
+    analyzeheader   [shape=box,     label=&quot;Analyze MP3 Frame Header&quot;]
+    readmp3frame    [shape=box,     label=&quot;Read MP3 Frame&quot;]
+    savemp3frame    [shape=box,     label=&quot;Store MP3 Frame\nin internal list&quot;]
+
+    end             [label=&quot;End&quot;];
+
+    start           -&gt; readid3header
+    readid3header   -&gt; decodeid3size
+    decodeid3size   -&gt; readid3tag
+    readid3tag      -&gt; readmp3header
+
+    readmp3header   -&gt; analyzeheader
+    analyzeheader   -&gt; readmp3frame
+    readmp3frame    -&gt; savemp3frame
+    savemp3frame    -&gt; readmp3header
+
+    readmp3header   -&gt; end              [label=&quot;No further data&quot;]
+}</p></object>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – An absolute path to a valid mp3 file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When there are unexpected for invalid information in the given file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Ralf Stemmer.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'3.0.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

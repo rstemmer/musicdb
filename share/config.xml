@@ -1,0 +1,76 @@
+<icecast>
+	<location>Earth</location>
+	<admin>MusicDB</admin>
+
+	<limits>
+		<clients>10</clients>
+		<sources>1</sources>
+		<threadpool>5</threadpool>
+		<queue-size>524288</queue-size>
+		<client-timeout>30</client-timeout>
+		<header-timeout>15</header-timeout>
+		<source-timeout>10</source-timeout>
+		<burst-on-connect>1</burst-on-connect>
+		<burst-size>65535</burst-size>
+	</limits>
+
+	<authentication>
+		<source-password>ICECASTSOURCEPASSWORD</source-password>
+		<admin-user>admin</admin-user>
+		<admin-password>ICECASTADMINPASSWORD</admin-password>
+	</authentication>
+
+	<hostname>localhost</hostname>
+
+	<listen-socket>
+		<port>666</port>
+		<ssl>1</ssl>
+	</listen-socket>
+	<listen-socket>
+		<port>6666</port>
+		<ssl>0</ssl>
+        <shoutcast-mount>/stream</shoutcast-mount>
+	</listen-socket>
+
+	<mount>
+		<mount-name>/stream</mount-name>
+		<max-listeners>10</max-listeners>
+        <charset>UTF8</charset>
+		<authentication type="htpasswd">
+			<option name="filename" value="DATADIR/icecast/users"/>
+			<option name="allow_duplicate_users" value="1"/>
+		</authentication>
+        <public>0</public>
+        <mp3-metadata-interval>3145728</mp3-metadata-interval> <!-- every 3MiB -->
+		<stream-name>MusicDB Stream</stream-name>
+		<stream-description>MusicDB managed music stream</stream-description> 
+		<genre>Various</genre>
+	</mount>
+
+	<paths>
+		<basedir>/usr/share/icecast</basedir>
+		<webroot>/usr/share/icecast/web</webroot>
+		<logdir>DATADIR/icecast/log</logdir>
+        <pidfile>DATADIR/icecast/icecast.pid</pidfile>
+		<adminroot>/usr/share/icecast/admin</adminroot>
+		<alias source="/" destination="/status.xsl"/>
+		<ssl-certificate>DATADIR/icecast/certificate.pem</ssl-certificate>
+		<ssl-allowed-ciphers>ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS</ssl-allowed-ciphers>
+	</paths>
+
+	<logging>
+		<accesslog>access.log</accesslog>
+		<errorlog>error.log</errorlog>
+		<loglevel>3</loglevel> <!-- 4 Debug, 3 Info, 2 Warn, 1 Error -->
+		<logsize>10000</logsize> <!-- Max size of a logfile -->
+	</logging>
+
+	<security>
+		<chroot>0</chroot>
+		<changeowner>
+			<user>icecast</user>
+			<group>MDBGROUP</group>
+		</changeowner>
+	</security>
+</icecast>
+
