@@ -16,9 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-This module is a highly modified fork of `Shouty <https://github.com/edne/shouty/>`_ - A python wrapper for *libshout2*.
-Sadly the project seems to be dead or at least sleeping.
-That's why this fork is necessary.
+.. note::
+
+    This module is a highly modified fork of `Shouty <https://github.com/edne/shouty/>`_ - A python wrapper for *libshout2*.
+    All improvements to this code should be propagated to the original *Shouty* project.
 
 The module provides a wrapper for the shout library that will be used to access `Icecast <https://icecast.org/>`_.
 For the Icecast interface, another module :mod:`lib.stream.icecast` is provided that uses this module.
