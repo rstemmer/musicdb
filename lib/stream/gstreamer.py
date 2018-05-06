@@ -18,14 +18,8 @@
 GStreamer Pipeline
 ------------------
 
-Pipeline States
-^^^^^^^^^^^^^^^
-
-GStreamer Elements
-------------------
-
 Installation
-------------
+^^^^^^^^^^^^
 
     .. code-block:: bash
 
@@ -34,7 +28,7 @@ Installation
         # -bad  for m4a/aac
 
 Example
--------
+^^^^^^^
 
     .. code-block:: bash
 
