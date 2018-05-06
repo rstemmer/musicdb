@@ -38,7 +38,7 @@ Furthermore those changes may break scripts you wrote around MusicDB.
 
 Lines starting with "**:wrench: Change:**" are steps you have to do *before* updating via `install.sh` script.
 
-### xx.04.18: 2.x.x → 3.0.0+
+### 06.05.18: 2.x.x → 3.0.0+
 
 * Two new columns added to the database: `checksum` and `lastplayed`
   * **:wrench: Change:** After *installing via install.sh* execute [:notebook: repair](https://rstemmer.github.io/musicdb/build/html/mod/repair.html) with `--checksums` option (`musicdb repair --checksums`) to fill the new added checksum column.
