@@ -122,10 +122,16 @@ function InstallMusicDBConfiguration {
         echo -e -n "\e[1;34mInstalling \e[0;36mmusicdb.ini\e[1;33m.new\e[1;34m: \e[1;31m"
     fi
 
+    if ! type openssl 2> /dev/null > /dev/null ; then
+        echo -e "\e[1;31mThe mandatory tool \e[1;35mopenssl\e[1;31m missing! \e[1;30m(No openssl installed?)\e[0m"
+        exit 1
+    fi
+
     # Install file
     install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/musicdb.ini -D $CONFIGFILE
 
     # Update configuration to the real setup
+    local WSAPIKEY="$(openssl rand -base64 32)"
     sed -i -e "s;DATADIR;$DATADIR;g"       $CONFIGFILE
     sed -i -e "s;SERVERDIR;$SERVERDIR;g"   $CONFIGFILE
     sed -i -e "s;MUSICDIR;$MUSICDIR;g"     $CONFIGFILE
@@ -133,6 +139,7 @@ function InstallMusicDBConfiguration {
     sed -i -e "s;USER;$USER;g"             $CONFIGFILE
     sed -i -e "s;SSLKEY;$SSLKEY;g"         $CONFIGFILE
     sed -i -e "s;SSLCRT;$SSLCRT;g"         $CONFIGFILE
+    sed -i -e "s;WSAPIKEY;$WSAPIKEY;g"     $CONFIGFILE
 
     # Create a link in /etc because this is the default path to look for the configuration
     ln -sf $DATADIR/musicdb.ini /etc/musicdb.ini
@@ -400,6 +407,10 @@ function InstallMusicDBFiles {
         WATCHDOG_RUN="$(     grep "var.WATCHDOG_RUN"      $WSCLIENTFILE)"
         WATCHDOG_INTERVAL="$(grep "var.WATCHDOG_INTERVAL" $WSCLIENTFILE)"
         WEBSOCKET_URL="$(    grep "var.WEBSOCKET_URL"     $WSCLIENTFILE)"
+        WEBSOCKET_APIKEY="$( grep "var.WEBSOCKET_APIKEY"  $WSCLIENTFILE)"
+        if [ -z "$WEBSOCKET_APIKEY" ] ; then
+            WEBSOCKET_APIKEY="var WEBSOCKET_APIKEY    = WSAPIKEY";
+        fi
     fi
 
     rsync -uav  \
@@ -423,6 +434,7 @@ function InstallMusicDBFiles {
         sed -i -e "s\\var.WATCHDOG_RUN.*\\$WATCHDOG_RUN\\g"           $WSCLIENTFILE
         sed -i -e "s\\var.WATCHDOG_INTERVAL.*\\$WATCHDOG_INTERVAL\\g" $WSCLIENTFILE
         sed -i -e "s\\var.WEBSOCKET_URL.*\\$WEBSOCKET_URL\\g"         $WSCLIENTFILE
+        sed -i -e "s\\var.WEBSOCKET_APIKEY.*\\$WEBSOCKET_APIKEY\\g"   $WSCLIENTFILE
     fi
 
     echo -e "\e[1;32mdone\e[0m"

@@ -290,6 +290,7 @@ class MusicDBWebSocketInterface(object):
             fncsig      = packet["fncsig"]
             arguments   = packet["arguments"]
             passthrough = packet["pass"]
+            apikey      = packet["key"]
         except:
             logging.warning("Malformed request packet received! \033[0;33m(Call will be ignored)")
             logging.debug("Packet: %s", str(packet))
@@ -297,6 +298,10 @@ class MusicDBWebSocketInterface(object):
 
         logging.debug("method: %s, fncname: \033[1;37m%s\033[1;30m, fncsig: %s, arguments: %s, pass: %s", 
                 str(method),str(fncname),str(fncsig),str(arguments),str(passthrough))
+
+        if apikey != self.cfg.websocket.apikey:
+            logging.error("Invalid WebSocket API Key! \033[1;30m(Check your configuration. If they are correct check your HTTP servers security!)\033[0m\nreceived: %s\nexpected: %s", str(apikey), str(self.cfg.websocket.apikey))
+            return False
 
         if not method in ["call", "request", "broadcast"]:
             logging.warning("Unknown call-method: %s! \033[0;33m(Call will be ignored)", str(method))
