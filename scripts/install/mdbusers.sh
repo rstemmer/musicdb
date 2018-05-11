@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# SetupUsersAndGroups MDBUser MDBGroup User
+#
+#
+function SetupUsersAndGroups {
+    local MDBUSER="$1"
+    local MDBGROUP="$2"
+    local USER="$3"
+
+    # Create MusicDB group
+    if [ -z "$(getent group $MDBGROUP)" ]; then
+        echo -e -n "\e[1;34mCreating musicdb group \e[0;36m$MDBGROUP\e[1;34m: \e[1;31m"
+        # Creates a new unix system group
+        groupadd -r $MDBGROUP
+        usermod -a -G $MDBGROUP $USER
+        echo -e "\e[1;32mdone"
+    fi
+
+    # Create MusicDB user
+    if [ -z "$(getent passwd $MDBUSER)" ]; then
+        echo -e -n "\e[1;34mCreating musicdb user \e[0;36m$MDBUSER\e[1;34m: \e[1;31m"
+        useradd -d $DATADIR -s "$(grep -w bash /etc/shells)" -g $MDBGROUP -r -M $MDBUSER
+        usermod -a -G $HTTPGROUP $MDBUSER
+        echo -e "\e[1;32mdone"
+    fi
+}
+
+
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
+
