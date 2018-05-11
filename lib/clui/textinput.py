@@ -15,6 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from lib.clui.text import Text
+import unicodedata
 
 class TextInput(Text):
     """
@@ -29,6 +30,8 @@ class TextInput(Text):
     """
     def __init__(self, x=0, y=0, w=0):
         Text.__init__(self)
+        self.x     = x
+        self.y     = y
         self.w     = w
         self.data  = "" # text buffer
         self.cursor= 0
@@ -43,6 +46,12 @@ class TextInput(Text):
         This method sets the data of the input element.
         The cursor points to the end of the input data.
 
+        .. note::
+
+            The string gets normalized (NFC).
+            All further manipulations of the string won't be normalized.
+
+
         Args:
             string (str): String that will be used as the input
 
@@ -56,6 +65,7 @@ class TextInput(Text):
             raise TypeError("Data must be of type string!")
 
         self.data = string
+        self.data = unicodedata.normalize("NFC", self.data)
 
 
     def GetData(self):
@@ -77,13 +87,15 @@ class TextInput(Text):
         Returns:
             *Nothing*
         """
+        # Print text segment character by character and handle special Unicode characters
         self.SetColor(self.textfg, self.textbg)
+        self.SetCursor(self.x, self.y)
 
         string = self.data[self.offset:self.offset+self.w]
         string = string.ljust(self.w)
-        self.SetCursor(self.x, self.y)
         self.PrintText(string)
 
+        # Place cursor on text, or one character behind if end of text was reached
         self.SetCursor(self.x+self.cursor, self.y)
         self.SetBGColor(self.cursorbg)
         self.PrintText(string[self.cursor])

@@ -27,6 +27,7 @@ It provides some primitive UI elements documented in this section of the documen
          Dialog      [label = "{Dialog||/+ Draw()\l/+ HandleKey()\l}"]
          TabGroup    [label = "{TabGroup||+ HandleKey()\l}"]
          TextInput   [label = "{TextInput||+ Draw()\l+ HandleKey\l}"]
+         NoTextInput [label = "{NoTextInput||\l/+ HandleKey\l}"]
          BoolInput   [label = "{BoolInput||+ Draw()\l+ HandleKey\l}"]
 
          Text        -> Frame
@@ -34,6 +35,7 @@ It provides some primitive UI elements documented in this section of the documen
          Text        -> BoolInput
          Text        -> ButtonView
 
+         TextInput   -> NoTextInput
          Frame       -> Pane
          
          Pane        -> ListView
@@ -109,6 +111,8 @@ TextInput
 .. autoclass:: lib.clui.textinput.TextInput
    :members:
 
+.. autoclass:: lib.clui.textinput.NoTextInput
+   :members:
 
 BoolInput
 ---------
