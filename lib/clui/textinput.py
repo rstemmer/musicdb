@@ -29,6 +29,8 @@ class TextInput(Text):
     """
     def __init__(self, x=0, y=0, w=0):
         Text.__init__(self)
+        self.x     = x
+        self.y     = y
         self.w     = w
         self.data  = "" # text buffer
         self.cursor= 0
