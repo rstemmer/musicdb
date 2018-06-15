@@ -1,3 +1,4 @@
+3.1.0 - MP3 decode is now more tolerant for unusual MP3 files
 3.0.1 - Normalize Unicode strings when loaded into CLUI TextInput
 3.0.0 - SEE CHANGELOG
 2.2.2 - Avoids adding same song, when "AddSongFromAlbum" method is used multiple times.

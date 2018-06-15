@@ -414,23 +414,28 @@ class IcecastInterface(object):
             logging.error("Loading \"%s\" failed with error: %s", str(path), str(e))
             return
 
-        for frame in mp3.Frames():
-            # Muted -> stream silence
-            while self.mutestate == True:
-                retval = self.StreamChunk(self.silentframe*10) # ~ 261ms silence
+        try:
+            for frame in mp3.Frames():
+                # Muted -> stream silence
+                while self.mutestate == True:
+                    retval = self.StreamChunk(self.silentframe*10) # ~ 261ms silence
+                    if retval == False:
+                        break
+
+                    frame["muted"] = True
+                    yield frame
+
+                # stream mp3 frame
+                retval = self.StreamChunk(frame["frame"])   # Stream whole mp3 frame
                 if retval == False:
                     break
 
-                frame["muted"] = True
+                frame["muted"] = False
                 yield frame
 
-            # stream mp3 frame
-            retval = self.StreamChunk(frame["frame"])   # Stream whole mp3 frame
-            if retval == False:
-                break
-
-            frame["muted"] = False
-            yield frame
+        except ValueError as e:
+            logging.error("Decoding \"%s\" failed with error: %s", str(path), str(e))
+            return
 
 
 
