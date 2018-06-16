@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.stream.icecast &mdash; MusicDB 3.0.0 documentation</title>
+  <title>lib.stream.icecast &mdash; MusicDB 3.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 3.0.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 3.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                3.0
+                3.1
               </div>
             
           
@@ -579,7 +579,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#urheberrecht">Urheberrecht</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../other/impressum.html#datenschutzerklarung">Datenschutzerklärung</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/impressum.html#datenschutzerklarung-privacy-statement">Datenschutzerklärung / Privacy Statement</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#datenschutz">Datenschutz</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#cookies">Cookies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#server-log-files">Server-Log-Files</a></li>
@@ -1069,23 +1069,28 @@
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Loading </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed with error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="k">return</span>
 
-        <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">mp3</span><span class="o">.</span><span class="n">Frames</span><span class="p">():</span>
-            <span class="c1"># Muted -&gt; stream silence</span>
-            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutestate</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">StreamChunk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">silentframe</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># ~ 261ms silence</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">mp3</span><span class="o">.</span><span class="n">Frames</span><span class="p">():</span>
+                <span class="c1"># Muted -&gt; stream silence</span>
+                <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutestate</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">StreamChunk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">silentframe</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># ~ 261ms silence</span>
+                    <span class="k">if</span> <span class="n">retval</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                        <span class="k">break</span>
+
+                    <span class="n">frame</span><span class="p">[</span><span class="s2">&quot;muted&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">yield</span> <span class="n">frame</span>
+
+                <span class="c1"># stream mp3 frame</span>
+                <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">StreamChunk</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;frame&quot;</span><span class="p">])</span>   <span class="c1"># Stream whole mp3 frame</span>
                 <span class="k">if</span> <span class="n">retval</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
                     <span class="k">break</span>
 
-                <span class="n">frame</span><span class="p">[</span><span class="s2">&quot;muted&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">frame</span><span class="p">[</span><span class="s2">&quot;muted&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="k">yield</span> <span class="n">frame</span>
 
-            <span class="c1"># stream mp3 frame</span>
-            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">StreamChunk</span><span class="p">(</span><span class="n">frame</span><span class="p">[</span><span class="s2">&quot;frame&quot;</span><span class="p">])</span>   <span class="c1"># Stream whole mp3 frame</span>
-            <span class="k">if</span> <span class="n">retval</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
-                <span class="k">break</span>
-
-            <span class="n">frame</span><span class="p">[</span><span class="s2">&quot;muted&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">yield</span> <span class="n">frame</span></div>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Decoding </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed with error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span></div>
 
 
 
@@ -1143,7 +1148,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'3.0.0',
+            VERSION:'3.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

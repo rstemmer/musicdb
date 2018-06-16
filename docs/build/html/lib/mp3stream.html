@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MP3 Stream Interface &mdash; MusicDB 3.0.0 documentation</title>
+  <title>MP3 Stream Interface &mdash; MusicDB 3.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 3.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 3.1.0 documentation" href="../index.html"/>
         <link rel="next" title="MP3 Transcoder" href="mp3transcoder.html"/>
         <link rel="prev" title="MP3 File Interface" href="mp3file.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                3.0
+                3.1
               </div>
             
           
@@ -580,7 +580,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#urheberrecht">Urheberrecht</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../other/impressum.html#datenschutzerklarung">Datenschutzerklärung</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="../other/impressum.html#datenschutzerklarung-privacy-statement">Datenschutzerklärung / Privacy Statement</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#datenschutz">Datenschutz</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#cookies">Cookies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#server-log-files">Server-Log-Files</a></li>
@@ -797,11 +797,15 @@ There will be no ID3 Tag or any other meta data.</p>
 
     readmp3header   -&gt; end              [label=&quot;No further data&quot;]
 }</p></object>
+<p>When the Version code of an MP3 frame is not as expected, a warning will be printed.
+This warning will only be printed once for each file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A generator that returns a dictionary including a mp3 frame</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When the MP3 Sync Bits are not correct</td>
 </tr>
 </tbody>
 </table>
@@ -853,7 +857,7 @@ There will be no ID3 Tag or any other meta data.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'3.0.0',
+            VERSION:'3.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

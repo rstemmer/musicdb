@@ -19,6 +19,7 @@ This module provides a class to read any audio file and provide it as mp3 frames
 Transcoding is done by the :doc:`/lib/mp3transcoder` module.
 """
 import sys
+import logging
 from lib.stream.mp3transcoder import MP3Transcoder
 
 BitrateTable = [ # in kilo
@@ -128,8 +129,14 @@ class MP3Stream(object):
             }
 
 
+        When the Version code of an MP3 frame is not as expected, a warning will be printed.
+        This warning will only be printed once for each file.
+
         Returns:
             A generator that returns a dictionary including a mp3 frame
+
+        Raises:
+            ValueError: When the MP3 Sync Bits are not correct
 
         Example:
 
@@ -140,6 +147,9 @@ class MP3Stream(object):
                     print(frame["header"])
 
         """
+
+        VersionCheckWarningPrinted = False
+
         with MP3Transcoder(self.path) as transcoder:
             while True:
                 # read the next frame header (4 bytes)
@@ -147,10 +157,19 @@ class MP3Stream(object):
                 if len(mp3header) == 0:
                     break   # end of stream
 
-                if mp3header[:2] != b"\xFF\xFB":
-                    raise ValueError("Expected Frame Sync Bits missing. First two bytes of the MP3 Frame Header should be \"0xFF 0xFB\", not \"%s\""%(str(mp3header[:2])))
+                # roughly check if the header is valid
+                headerchunk = int.from_bytes(mp3header[:2], byteorder='big', signed=False)  # Get first 2 bytes from header
+                syncbits    = headerchunk &  0xFFE0
+                version     = headerchunk & ~0xFFE0
 
-                # Read MP3 Header … done (magic already has all 4 bytes of the header
+                if syncbits != 0xFFE0:
+                    raise ValueError("Expected Frame Sync Bits wrong! First two bytes of the MP3 Frame Header should be \"0xFFFE\", not \"%s\"!", hex(syncbits))
+
+                if version != 0x1B and not VersionCheckWarningPrinted:
+                    logging.warning("Unexpected MP3 Version Code \"%s\". Should be \"0x1b\". \033[1;30m(This only indicates an invalid MP3 file. Transcoding will be continued.)", hex(version))
+                    VersionCheckWarningPrinted = True   # Print this warning only once per file
+
+                # Read MP3 Header
                 infos    = self.AnalyzeHeader(mp3header) # Analyze header
                 datasize = infos["framesize"] - 4        # 4 bytes MP3 Frame Header already read, rest are MP3 Frame Data
 

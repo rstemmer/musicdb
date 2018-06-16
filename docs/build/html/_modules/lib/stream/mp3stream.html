@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.stream.mp3stream &mdash; MusicDB 3.0.0 documentation</title>
+  <title>lib.stream.mp3stream &mdash; MusicDB 3.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 3.0.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 3.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                3.0
+                3.1
               </div>
             
           
@@ -579,7 +579,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#urheberrecht">Urheberrecht</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../other/impressum.html#datenschutzerklarung">Datenschutzerklärung</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/impressum.html#datenschutzerklarung-privacy-statement">Datenschutzerklärung / Privacy Statement</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#datenschutz">Datenschutz</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#cookies">Cookies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#server-log-files">Server-Log-Files</a></li>
@@ -674,6 +674,7 @@
 <span class="sd">Transcoding is done by the :doc:`/lib/mp3transcoder` module.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">lib.stream.mp3transcoder</span> <span class="k">import</span> <span class="n">MP3Transcoder</span>
 
 <span class="n">BitrateTable</span> <span class="o">=</span> <span class="p">[</span> <span class="c1"># in kilo</span>
@@ -783,8 +784,14 @@
 <span class="sd">            }</span>
 
 
+<span class="sd">        When the Version code of an MP3 frame is not as expected, a warning will be printed.</span>
+<span class="sd">        This warning will only be printed once for each file.</span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            A generator that returns a dictionary including a mp3 frame</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: When the MP3 Sync Bits are not correct</span>
 
 <span class="sd">        Example:</span>
 
@@ -795,6 +802,9 @@
 <span class="sd">                    print(frame[&quot;header&quot;])</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">VersionCheckWarningPrinted</span> <span class="o">=</span> <span class="kc">False</span>
+
         <span class="k">with</span> <span class="n">MP3Transcoder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">transcoder</span><span class="p">:</span>
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="c1"># read the next frame header (4 bytes)</span>
@@ -802,10 +812,19 @@
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mp3header</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="k">break</span>   <span class="c1"># end of stream</span>
 
-                <span class="k">if</span> <span class="n">mp3header</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\xFF\xFB</span><span class="s2">&quot;</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Expected Frame Sync Bits missing. First two bytes of the MP3 Frame Header should be </span><span class="se">\&quot;</span><span class="s2">0xFF 0xFB</span><span class="se">\&quot;</span><span class="s2">, not </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">mp3header</span><span class="p">[:</span><span class="mi">2</span><span class="p">])))</span>
+                <span class="c1"># roughly check if the header is valid</span>
+                <span class="n">headerchunk</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">mp3header</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">byteorder</span><span class="o">=</span><span class="s1">&#39;big&#39;</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># Get first 2 bytes from header</span>
+                <span class="n">syncbits</span>    <span class="o">=</span> <span class="n">headerchunk</span> <span class="o">&amp;</span>  <span class="mh">0xFFE0</span>
+                <span class="n">version</span>     <span class="o">=</span> <span class="n">headerchunk</span> <span class="o">&amp;</span> <span class="o">~</span><span class="mh">0xFFE0</span>
 
-                <span class="c1"># Read MP3 Header … done (magic already has all 4 bytes of the header</span>
+                <span class="k">if</span> <span class="n">syncbits</span> <span class="o">!=</span> <span class="mh">0xFFE0</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Expected Frame Sync Bits wrong! First two bytes of the MP3 Frame Header should be </span><span class="se">\&quot;</span><span class="s2">0xFFFE</span><span class="se">\&quot;</span><span class="s2">, not </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="n">syncbits</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="mh">0x1B</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">VersionCheckWarningPrinted</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unexpected MP3 Version Code </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">. Should be </span><span class="se">\&quot;</span><span class="s2">0x1b</span><span class="se">\&quot;</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(This only indicates an invalid MP3 file. Transcoding will be continued.)&quot;</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="n">version</span><span class="p">))</span>
+                    <span class="n">VersionCheckWarningPrinted</span> <span class="o">=</span> <span class="kc">True</span>   <span class="c1"># Print this warning only once per file</span>
+
+                <span class="c1"># Read MP3 Header</span>
                 <span class="n">infos</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AnalyzeHeader</span><span class="p">(</span><span class="n">mp3header</span><span class="p">)</span> <span class="c1"># Analyze header</span>
                 <span class="n">datasize</span> <span class="o">=</span> <span class="n">infos</span><span class="p">[</span><span class="s2">&quot;framesize&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">4</span>        <span class="c1"># 4 bytes MP3 Frame Header already read, rest are MP3 Frame Data</span>
 
@@ -1003,7 +1022,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'3.0.0',
+            VERSION:'3.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

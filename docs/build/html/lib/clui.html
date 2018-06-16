@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Command Line User Interface &mdash; MusicDB 3.0.0 documentation</title>
+  <title>Command Line User Interface &mdash; MusicDB 3.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 3.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 3.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Configuration" href="config.html"/>
         <link rel="prev" title="Song Tracker" href="../mdbapi/tracker.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                3.0
+                3.1
               </div>
             
           
@@ -580,7 +580,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#urheberrecht">Urheberrecht</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../other/impressum.html#datenschutzerklarung">Datenschutzerklärung</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="../other/impressum.html#datenschutzerklarung-privacy-statement">Datenschutzerklärung / Privacy Statement</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#datenschutz">Datenschutz</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#cookies">Cookies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#server-log-files">Server-Log-Files</a></li>
@@ -667,7 +667,7 @@ Handle with care and expect interface changes with the next update.</p>
 <p>The Command Line User Interface (CLUI) is an unicode based “graphical” user interface library.
 It provides some primitive UI elements documented in this section of the documentation.</p>
 <blockquote>
-<div><object data="../_images/graphviz-6cac2f6425005f3d465442cdf47858fc1cf9cd9c.svg" type="image/svg+xml">
+<div><object data="../_images/graphviz-e49b7f65602b55113805a7d1dec42eac820b3fc2.svg" type="image/svg+xml">
             <p class="warning">digraph hierarchy {
    size=&quot;5,8&quot;
    node[shape=record,style=filled,fillcolor=gray95]
@@ -681,6 +681,7 @@ It provides some primitive UI elements documented in this section of the documen
    Dialog      [label = &quot;{Dialog||/+ Draw()\l/+ HandleKey()\l}&quot;]
    TabGroup    [label = &quot;{TabGroup||+ HandleKey()\l}&quot;]
    TextInput   [label = &quot;{TextInput||+ Draw()\l+ HandleKey\l}&quot;]
+   NoTextInput [label = &quot;{NoTextInput||\l/+ HandleKey\l}&quot;]
    BoolInput   [label = &quot;{BoolInput||+ Draw()\l+ HandleKey\l}&quot;]
 
    Text        -&gt; Frame
@@ -688,6 +689,7 @@ It provides some primitive UI elements documented in this section of the documen
    Text        -&gt; BoolInput
    Text        -&gt; ButtonView
 
+   TextInput   -&gt; NoTextInput
    Frame       -&gt; Pane
 
    Pane        -&gt; ListView
@@ -1712,6 +1714,11 @@ Each printable character gets inserted left to the cursor.</p>
 <code class="descname">SetData</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/textinput.html#TextInput.SetData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.textinput.TextInput.SetData" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets the data of the input element.
 The cursor points to the end of the input data.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The string gets normalized (NFC).
+All further manipulations of the string won’t be normalized.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1721,6 +1728,40 @@ The cursor points to the end of the input data.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When string is not of type string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lib.clui.textinput.NoTextInput">
+<em class="property">class </em><code class="descclassname">lib.clui.textinput.</code><code class="descname">NoTextInput</code><span class="sig-paren">(</span><em>x=0</em>, <em>y=0</em>, <em>w=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/textinput.html#NoTextInput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.textinput.NoTextInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a <em>read-only</em> variation of the <a class="reference internal" href="#lib.clui.textinput.TextInput" title="lib.clui.textinput.TextInput"><code class="xref py py-class docutils literal"><span class="pre">TextInput</span></code></a> element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong><strong>,</strong><strong>y</strong> (<em>int</em>) – Position of the list view</li>
+<li><strong>w</strong> (<em>int</em>) – Width</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lib.clui.textinput.NoTextInput.HandleKey">
+<code class="descname">HandleKey</code><span class="sig-paren">(</span><em>key=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/textinput.html#NoTextInput.HandleKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.textinput.NoTextInput.HandleKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method does nothing. This is a read-only control element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> – <em>will be ignored</em></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
 </tr>
 </tbody>
 </table>
@@ -1920,7 +1961,7 @@ If the key is <code class="docutils literal"><span class="pre">&quot;</span>&#16
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'3.0.0',
+            VERSION:'3.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

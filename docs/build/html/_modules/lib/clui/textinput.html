@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.clui.textinput &mdash; MusicDB 3.0.0 documentation</title>
+  <title>lib.clui.textinput &mdash; MusicDB 3.1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 3.0.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 3.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                3.0
+                3.1
               </div>
             
           
@@ -579,7 +579,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#urheberrecht">Urheberrecht</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../other/impressum.html#datenschutzerklarung">Datenschutzerklärung</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../other/impressum.html#datenschutzerklarung-privacy-statement">Datenschutzerklärung / Privacy Statement</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#datenschutz">Datenschutz</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#cookies">Cookies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#server-log-files">Server-Log-Files</a></li>
@@ -670,6 +670,7 @@
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
 <span class="kn">from</span> <span class="nn">lib.clui.text</span> <span class="k">import</span> <span class="n">Text</span>
+<span class="kn">import</span> <span class="nn">unicodedata</span>
 
 <div class="viewcode-block" id="TextInput"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.textinput.TextInput">[docs]</a><span class="k">class</span> <span class="nc">TextInput</span><span class="p">(</span><span class="n">Text</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -684,6 +685,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="n">Text</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span>     <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span>     <span class="o">=</span> <span class="n">y</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">w</span>     <span class="o">=</span> <span class="n">w</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span>  <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="c1"># text buffer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">=</span> <span class="mi">0</span>
@@ -698,6 +701,12 @@
 <span class="sd">        This method sets the data of the input element.</span>
 <span class="sd">        The cursor points to the end of the input data.</span>
 
+<span class="sd">        .. note::</span>
+
+<span class="sd">            The string gets normalized (NFC).</span>
+<span class="sd">            All further manipulations of the string won&#39;t be normalized.</span>
+
+
 <span class="sd">        Args:</span>
 <span class="sd">            string (str): String that will be used as the input</span>
 
@@ -710,7 +719,8 @@
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Data must be of type string!&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">string</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">string</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s2">&quot;NFC&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TextInput.GetData"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.textinput.TextInput.GetData">[docs]</a>    <span class="k">def</span> <span class="nf">GetData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -732,13 +742,15 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            *Nothing*</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Print text segment character by character and handle special Unicode characters</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">SetColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">textfg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">textbg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SetCursor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
 
         <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">]</span>
         <span class="n">string</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">SetCursor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PrintText</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
 
+        <span class="c1"># Place cursor on text, or one character behind if end of text was reached</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">SetCursor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">SetBGColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursorbg</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">PrintText</span><span class="p">(</span><span class="n">string</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="p">])</span></div>
@@ -803,7 +815,7 @@
 
 
 
-<span class="k">class</span> <span class="nc">NoTextInput</span><span class="p">(</span><span class="n">TextInput</span><span class="p">):</span>
+<div class="viewcode-block" id="NoTextInput"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.textinput.NoTextInput">[docs]</a><span class="k">class</span> <span class="nc">NoTextInput</span><span class="p">(</span><span class="n">TextInput</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This is a *read-only* variation of the :class:`~TextInput` element.</span>
 
@@ -817,7 +829,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">textbg</span>   <span class="o">=</span> <span class="s2">&quot;40&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursorbg</span> <span class="o">=</span> <span class="s2">&quot;40&quot;</span>
 
-    <span class="k">def</span> <span class="nf">HandleKey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="NoTextInput.HandleKey"><a class="viewcode-back" href="../../../lib/clui.html#lib.clui.textinput.NoTextInput.HandleKey">[docs]</a>    <span class="k">def</span> <span class="nf">HandleKey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method does nothing. This is a read-only control element.</span>
 
@@ -827,7 +839,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            *Nothing*</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
+        <span class="k">pass</span></div></div>
 
 
 <span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
@@ -868,7 +880,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'3.0.0',
+            VERSION:'3.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
