@@ -25,6 +25,7 @@ var socket              = null;
 var WATCHDOG_RUN        = true;
 var WATCHDOG_INTERVAL   = 5000; //[ms] (here, 5 times longer than a heartbeat)
 var WEBSOCKET_URL       = "wss://" + location.hostname + ":9000";
+var WEBSOCKET_APIKEY    = WSAPIKEY
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -264,8 +265,11 @@ function MusicDB_Broadcast(fncname, fncsig, args, pass)
  */
 function MDB_SendPacket(packet)
 {
-    var buffer;
-    buffer = JSON.stringify(packet);
+    let buffer;
+
+    packet.key = WEBSOCKET_APIKEY;
+    buffer     = JSON.stringify(packet);
+
     try
     {
         socket.send(buffer);

@@ -119,6 +119,9 @@ class MusicDBConfig(Config):
         self.websocket.url          = self.Get(str, "websocket","url",          "wss://localhost:443")
         self.websocket.opentimeout  = self.Get(int, "websocket","opentimeout",  10)
         self.websocket.closetimeout = self.Get(int, "websocket","closetimeout",  5)
+        self.websocket.apikey       = self.Get(str, "websocket","apikey",       None)
+        if not self.websocket.apikey:
+            logging.warning("Value of [websocket]->apikey is not set!")
 
 
         # [TLS]

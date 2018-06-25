@@ -54,6 +54,9 @@ opentimeout (time in seconds):
 closetimeout (time in seconds):
    Time until the disconnection process of the websocket server raises a timeout exception
 
+key (base64 encoded key):
+   A key that is used to identify clients that are allowed to use the websocket interface.
+
 TLS
 ---
 
