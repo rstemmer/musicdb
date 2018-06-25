@@ -401,17 +401,19 @@ function InstallMusicDBFiles {
         exit 1
     fi
 
-    WSCLIENTFILE=$SERVERDIR/webui/js/musicdb.js
-    if [ -f "$WSCLIENTFILE" ] ; then
-        # this is an update, so save the websocket and watchdog configuration before overwriting this file
-        WATCHDOG_RUN="$(     grep "var.WATCHDOG_RUN"      $WSCLIENTFILE)"
-        WATCHDOG_INTERVAL="$(grep "var.WATCHDOG_INTERVAL" $WSCLIENTFILE)"
-        WEBSOCKET_URL="$(    grep "var.WEBSOCKET_URL"     $WSCLIENTFILE)"
-        WEBSOCKET_APIKEY="$( grep "var.WEBSOCKET_APIKEY"  $WSCLIENTFILE)"
-        if [ -z "$WEBSOCKET_APIKEY" ] ; then
-            WEBSOCKET_APIKEY="var WEBSOCKET_APIKEY    = WSAPIKEY";
-        fi
-    fi
+    WSCONFIG=$SERVERDIR/webui/config.js
+    cp "$WSCONFIG" "$WSCONFIG.bak"
+    #WSCLIENTFILE=$SERVERDIR/webui/js/musicdb.js
+    #if [ -f "$WSCLIENTFILE" ] ; then
+    #    # this is an update, so save the websocket and watchdog configuration before overwriting this file
+    #    WATCHDOG_RUN="$(     grep "var.WATCHDOG_RUN"      $WSCLIENTFILE)"
+    #    WATCHDOG_INTERVAL="$(grep "var.WATCHDOG_INTERVAL" $WSCLIENTFILE)"
+    #    WEBSOCKET_URL="$(    grep "var.WEBSOCKET_URL"     $WSCLIENTFILE)"
+    #    WEBSOCKET_APIKEY="$( grep "var.WEBSOCKET_APIKEY"  $WSCLIENTFILE)"
+    #    if [ -z "$WEBSOCKET_APIKEY" ] ; then
+    #        WEBSOCKET_APIKEY="var WEBSOCKET_APIKEY    = WSAPIKEY";
+    #    fi
+    #fi
 
     rsync -uav  \
         --exclude 'tmp/' \
@@ -427,15 +429,16 @@ function InstallMusicDBFiles {
         --delete \
         $SOURCEDIR/ $SERVERDIR/. > /dev/null
 
+    cp "$WSCONFIG.bak" "$WSCONFIG"
     chown -R $MDBUSER:$MDBGROUP $SERVERDIR
 
-    # on update, reset the settings from the old version of the musicdb.js file
-    if [ ! -z "$WATCHDOG_RUN" ] ; then
-        sed -i -e "s\\var.WATCHDOG_RUN.*\\$WATCHDOG_RUN\\g"           $WSCLIENTFILE
-        sed -i -e "s\\var.WATCHDOG_INTERVAL.*\\$WATCHDOG_INTERVAL\\g" $WSCLIENTFILE
-        sed -i -e "s\\var.WEBSOCKET_URL.*\\$WEBSOCKET_URL\\g"         $WSCLIENTFILE
-        sed -i -e "s\\var.WEBSOCKET_APIKEY.*\\$WEBSOCKET_APIKEY\\g"   $WSCLIENTFILE
-    fi
+    ## on update, reset the settings from the old version of the musicdb.js file
+    #if [ ! -z "$WATCHDOG_RUN" ] ; then
+    #    sed -i -e "s\\var.WATCHDOG_RUN.*\\$WATCHDOG_RUN\\g"           $WSCLIENTFILE
+    #    sed -i -e "s\\var.WATCHDOG_INTERVAL.*\\$WATCHDOG_INTERVAL\\g" $WSCLIENTFILE
+    #    sed -i -e "s\\var.WEBSOCKET_URL.*\\$WEBSOCKET_URL\\g"         $WSCLIENTFILE
+    #    sed -i -e "s\\var.WEBSOCKET_APIKEY.*\\$WEBSOCKET_APIKEY\\g"   $WSCLIENTFILE
+    #fi
 
     echo -e "\e[1;32mdone\e[0m"
 }

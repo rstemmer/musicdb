@@ -22,10 +22,6 @@
  */
 
 var socket              = null;
-var WATCHDOG_RUN        = true;
-var WATCHDOG_INTERVAL   = 5000; //[ms] (here, 5 times longer than a heartbeat)
-var WEBSOCKET_URL       = "wss://" + location.hostname + ":9000";
-var WEBSOCKET_APIKEY    = WSAPIKEY
 
 
 ///////////////////////////////////////////////////////////////////////////////

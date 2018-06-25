@@ -8,14 +8,8 @@ echo -e "\e[1;31mMusicDB-QuickUpdate [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 function UpdateMusicDBFiles {
     echo -e -n "\e[1;34mUpdating MusicDB files to \e[0;36m$SERVERDIR\e[1;34m: "
 
-    WSCLIENTFILE=$SERVERDIR/webui/js/musicdb.js
-    if [ -f "$WSCLIENTFILE" ] ; then
-        # this is an update, so save the websocket and watchdog configuration before overwriting this file
-        WATCHDOG_RUN="$(     grep "var.WATCHDOG_RUN"      $WSCLIENTFILE)"
-        WATCHDOG_INTERVAL="$(grep "var.WATCHDOG_INTERVAL" $WSCLIENTFILE)"
-        WEBSOCKET_URL="$(    grep "var.WEBSOCKET_URL"     $WSCLIENTFILE)"
-        WEBSOCKET_APIKEY="$( grep "var.WEBSOCKET_APIKEY"  $WSCLIENTFILE)"
-    fi
+    WSCONFIG=$SERVERDIR/webui/config.js
+    cp "$WSCONFIG" "/tmp/mdbwebuicfg.bak"
 
     rsync -uav  \
         --exclude 'tmp/' \
@@ -31,15 +25,8 @@ function UpdateMusicDBFiles {
         --delete \
         $SOURCEDIR/ $SERVERDIR/. > /dev/null
 
+    mv "/tmp/mdbwebuicfg.bak" "$WSCONFIG"
     chown -R $MDBUSER:$MDBGROUP $SERVERDIR
-
-    # on update, reset the settings from the old version of the musicdb.js file
-    if [ ! -z "$WATCHDOG_RUN" ] ; then
-        sed -i -e "s\\var.WATCHDOG_RUN.*\\$WATCHDOG_RUN\\g"           $WSCLIENTFILE
-        sed -i -e "s\\var.WATCHDOG_INTERVAL.*\\$WATCHDOG_INTERVAL\\g" $WSCLIENTFILE
-        sed -i -e "s\\var.WEBSOCKET_URL.*\\$WEBSOCKET_URL\\g"         $WSCLIENTFILE
-        sed -i -e "s\\var.WEBSOCKET_APIKEY.*\\$WEBSOCKET_APIKEY\\g"   $WSCLIENTFILE
-    fi
 
     echo -e "\e[1;32mdone\e[0m"
 }
