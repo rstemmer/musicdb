@@ -14,6 +14,7 @@ function UpdateMusicDBFiles {
         WATCHDOG_RUN="$(     grep "var.WATCHDOG_RUN"      $WSCLIENTFILE)"
         WATCHDOG_INTERVAL="$(grep "var.WATCHDOG_INTERVAL" $WSCLIENTFILE)"
         WEBSOCKET_URL="$(    grep "var.WEBSOCKET_URL"     $WSCLIENTFILE)"
+        WEBSOCKET_APIKEY="$( grep "var.WEBSOCKET_APIKEY"  $WSCLIENTFILE)"
     fi
 
     rsync -uav  \
@@ -37,6 +38,7 @@ function UpdateMusicDBFiles {
         sed -i -e "s\\var.WATCHDOG_RUN.*\\$WATCHDOG_RUN\\g"           $WSCLIENTFILE
         sed -i -e "s\\var.WATCHDOG_INTERVAL.*\\$WATCHDOG_INTERVAL\\g" $WSCLIENTFILE
         sed -i -e "s\\var.WEBSOCKET_URL.*\\$WEBSOCKET_URL\\g"         $WSCLIENTFILE
+        sed -i -e "s\\var.WEBSOCKET_APIKEY.*\\$WEBSOCKET_APIKEY\\g"   $WSCLIENTFILE
     fi
 
     echo -e "\e[1;32mdone\e[0m"
