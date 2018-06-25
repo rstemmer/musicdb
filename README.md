@@ -44,6 +44,7 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* upd
   * **:wrench: Change:** Remove the old CSV-Files from the `mdbstate` directory. (You'll loose the current song queue and blacklist state)
 * WebSocket configuration for WebUI is now in separate `webui/config.js`
   * **:wrench: Change:** You may want to backup the settings `from webui/js/musicdb.js`
+* The server now only accepts request from clients with a valid API Key
 
 
 ### 06.05.18: 2.x.x → 3.0.0+
