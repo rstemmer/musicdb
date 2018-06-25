@@ -38,6 +38,11 @@ Furthermore those changes may break scripts you wrote around MusicDB.
 
 Lines starting with "**:wrench: Change:**" are steps you have to do *before* updating via `install.sh` script.
 
+### xx.07.18: 3.x.x → 4.0.0+
+
+* More stable CSV files by adding a header. Now updating the old CSV files is possible
+  * **:wrench: Change:** Remove the old CSV-Files from the *mdbstate* directory. (You'll loose the current song queue and blacklist state)
+
 ### 06.05.18: 2.x.x → 3.0.0+
 
 * Two new columns added to the database: `checksum` and `lastplayed`

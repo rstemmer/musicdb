@@ -137,8 +137,8 @@ class MDBState(Config, object):
         queue = []
         for row in rows:
             try:
-                entryid = int(row[0])
-                songid  = int(row[1])
+                entryid = int(row["EntryID"])
+                songid  = int(row["SongID"])
                 queue.append((entryid, songid))
             except Exception as e:
                 logging.warning("Invalid entry in stored Song Queue: \"%s\"! \033[1;30m(Entry will be ignored)", str(row))
@@ -161,7 +161,13 @@ class MDBState(Config, object):
         # save entry ID as string, csv cannot handle 128bit integer
         rows = []
         for entry in queue:
-            rows.append([str(entry[0]), int(entry[1])])
+            row = {}
+            row["EntryID"] = str(entry[0])
+            row["SongID"]  = int(entry[1])
+
+            rows.append(row)
+
+            #rows.append([str(entry[0]), int(entry[1])])
         self.WriteList("songqueue", rows)
         return
 
@@ -169,13 +175,14 @@ class MDBState(Config, object):
     def LoadBlacklists(self):
         """
         This method returns a dictionary with the blacklist managed by :class:`mdbapi.randy.Randy`
+
         Returns:
             A dictionary with the blacklists as expected by :class:`mdbapi.randy.Randy`
         """
         blacklist = {}
-        blacklist["artists"] = [ None if x == "" else int(x) for x in self.ReadList("artistblacklist") ]
-        blacklist["albums"]  = [ None if x == "" else int(x) for x in self.ReadList("albumblacklist")  ]
-        blacklist["songs"]   = [ None if x == "" else int(x) for x in self.ReadList("songblacklist")   ]
+        blacklist["artists"] = [ None if x["ArtistID"] == "" else int(x["ArtistID"]) for x in self.ReadList("artistblacklist") ]
+        blacklist["albums"]  = [ None if x["AlbumID"]  == "" else int(x["AlbumID"] ) for x in self.ReadList("albumblacklist")  ]
+        blacklist["songs"]   = [ None if x["SongID"]   == "" else int(x["SongID"]  ) for x in self.ReadList("songblacklist")   ]
         return blacklist
 
 
@@ -190,9 +197,12 @@ class MDBState(Config, object):
         Returns:
             *Nothing*
         """
-        self.WriteList("songblacklist",   blacklist["songs"])
-        self.WriteList("albumblacklist",  blacklist["albums"])
-        self.WriteList("artistblacklist", blacklist["artists"])
+        songblacklist   = [ {"SongID":   x} for x in blacklist["songs"]   ]
+        albumblacklist  = [ {"AlbumID":  x} for x in blacklist["albums"]  ]
+        artistblacklist = [ {"ArtistID": x} for x in blacklist["artists"] ]
+        self.WriteList("songblacklist",   songblacklist)
+        self.WriteList("albumblacklist",  albumblacklist)
+        self.WriteList("artistblacklist", artistblacklist)
 
 
     def GetFilterList(self):

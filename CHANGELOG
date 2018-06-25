@@ -7,6 +7,14 @@
 
 Run  git log --oneline  for more details
 
+
+┍━━━━┫ 2018-07-xx ┣━━━━┫ 4.0.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ * CSV Files now have headers
+│
+┝━ MINOR CHANGES
+└───────────────────────────────────────╌╌
+
 ┍━━━━┫ 2018-05-06 ┣━━━━┫ 3.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ + New Columns in songs table: checksum, lastplayed
