@@ -22,7 +22,8 @@ function ShowMPDControls(parentID)
 
     html += "<div id=MPDControls>"; // main box
     // Frame
-    html += "<div id=MPDCMainFrame class=\"fmcolor frame hovpacity\">";
+    //html += "<div id=MPDCMainFrame class=\"fmcolor frame hovpacity\">";
+    html += "<div id=MPDCMainFrame class=\"fmcolor\">";
     
     // Pause/Play
     html += "<div";
