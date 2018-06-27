@@ -30,6 +30,8 @@ from lib.db.musicdb import MusicDatabase
 import logging
 import os
 
+class META:
+    pass
 class QUEUE:
     pass
 
@@ -59,9 +61,14 @@ class MDBState(Config, object):
     def __init__(self, path, musicdb=None):
 
         Config.__init__(self, os.path.join(path, "state.ini"))
-        self.musicdb = musicdb;
-        self.path    = path;
-        self.queue   = QUEUE()
+        self.musicdb = musicdb
+        self.path    = path
+        self.meta    = META
+
+        self.meta.version = self.Get(int, "meta", "version", 0) # 0 = inf
+        if self.meta.version < 2:
+            logging.info("Updating mdbstate/state.ini to version 2")
+            self.Set("meta", "version", 2)
 
 
     def ReadList(self, listname):
