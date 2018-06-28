@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 
+#
+# Creates a new SSL key and certificate for MusicDBs WebSocket connection (will also be used for icecast)
+#
 function CreateMusicDBSSLKeys {
     local SSLKEY="$1"
     local SSLCRT="$2"
-    local HHPGROUP="$3"
+    local HTTPGROUP="$3"
     local SSLDIR="$(dirname $SSLKEY)"
 
 
-    _ExpectingTool openssl
+    _ExpectingTool  openssl
+    _ExpectingGroup $HTTPGROUP
 
 
     # Create directory if not exists

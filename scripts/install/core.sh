@@ -13,6 +13,32 @@ function _ExpectingTool {
     fi
 }
 
+function _ExpectingUser {
+    local USER="$1"
+    if [ -z "$(getent passwd "$USER")" ]; then
+        echo -e "\e[1;31mThe user \e[1;35m$USER\e[1;31m does not exist!\e[0m"
+        exit 1
+    fi
+}
+
+function _ExpectingGroup {
+    local GROUP="$1"
+    if [ -z "$(getent group "$GROUP")" ]; then
+        echo -e "\e[1;31mThe group \e[1;35m$GROUP\e[1;31m does not exist!\e[0m"
+        exit 1
+    fi
+}
+
+function _ExpectingFile {
+    local PATH="$1"
+    if [ ! -f "$PATH" ]; then
+        echo -e "\e[1;31mThe file \e[1;35m$PATH\e[1;31m does not exist!\e[0m"
+        exit 1
+    fi
+}
+
+
+
 # _ExpectingDirectory Path
 #
 # Checks if directory exists.

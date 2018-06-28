@@ -40,6 +40,8 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* upd
 
 ### xx.07.18: 3.x.x → 4.0.0+
 
+* Rebuild of the installation process.
+  * **:wrench: Change:** Make a backup of the MusicDB data directory!
 * More stable CSV files by adding a header. Now updating the old CSV files is possible
   * **:wrench: Change:** Remove the old CSV-Files from the `mdbstate` directory. (You'll loose the current song queue and blacklist state)
 * WebSocket configuration for WebUI is now in separate `webui/config.js`

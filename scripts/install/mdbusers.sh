@@ -2,11 +2,16 @@
 
 # SetupUsersAndGroups MDBUser MDBGroup User
 #
+# 1.: Creates a new group for MusicDB if it does not exist
+#     The music owner ("User") gets added to the MusicDB group
+# 2.: Adds a new user for MusicDB if it does not exist
 #
 function SetupUsersAndGroups {
     local MDBUSER="$1"
     local MDBGROUP="$2"
     local USER="$3"
+
+    _ExpectingUser $USER
 
     # Create MusicDB group
     if [ -z "$(getent group $MDBGROUP)" ]; then

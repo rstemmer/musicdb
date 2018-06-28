@@ -10,15 +10,25 @@ function InstallMusicDBConfiguration {
     local SERVERDIR="$2"
     local DATADIR="$3"
     local MUSICDIR="$4"
-    local MDBUSER="$5"
-    local MDBGROUP="$6"
+    local USER="$5"
+    local MDBUSER="$6"
+    local MDBGROUP="$7"
+    local SSLKEY="$8"
+    local SSLCRT="$9"
     local CONFIGFILE="$DATADIR/musicdb.ini"
+
+    _ExpectingUser  $USER
+    _ExpectingUser  $MDBUSER
+    _ExpectingGroup $MDBGROUP
+    _ExpectingFile  $SSLKEY
+    _ExpectingFile  $SSLCRT
 
     if [ ! -f "$DATADIR/musicdb.ini" ] ; then
         echo -e -n "\e[1;34mInstalling \e[0;36mmusicdb.ini\e[1;34m: \e[1;31m"
     else
-        cp "$DATADIR/musicdb.ini" "$DATADIR/musicdb.ini.bak"
-        echo -e -n "\e[1;34mOld configuration copied to \e[0;36mmusicdb.ini\e[1;33m.bak\e[1;34m: \e[1;31m"
+        mv "$DATADIR/musicdb.ini" "$DATADIR/musicdb.ini.bak"
+        echo -e    "\e[1;34mOld configuration moved to \e[0;36mmusicdb.ini\e[1;33m.bak\e[1;34m: \e[1;31m"
+        echo -e -n "\e[1;34mInstalling \e[0;36mmusicdb.ini\e[1;34m: \e[1;31m"
     fi
 
     # Install file new configuration file
@@ -36,22 +46,6 @@ function InstallMusicDBConfiguration {
     # Create a link in /etc because this is the default path to look for the configuration
     ln -sf $DATADIR/musicdb.ini /etc/musicdb.ini
     echo -e "\e[1;32mdone"
-
-    echo -e -n "\e[1;34mInstalling \e[0;36mmdbstate.ini\e[1;34m: \e[1;31m"
-    if [ ! -f "$DATADIR/mdbstate/state.ini" ] ; then
-        # Install the MusicDB state file
-        install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/mdbstate.ini  -D $DATADIR/mdbstate/state.ini
-        chown $MDBUSER:$MDBGROUP $DATADIR/mdbstate
-
-        if [ -f "$DATADIR/mdbstate.ini" ] ; then # REMOVE IN NEXT VERSION (v4)
-            mv "$DATADIR/mdbstate.ini" "$DATADIR/mdbstate/state.ini"
-            echo -e -n "\e[1;33m(moving old state file to new directory)"
-        fi
-        echo -e "\e[1;32mdone"
-    else
-        echo -e "\e[1;37malready done!"
-    fi
-
 }
 
 

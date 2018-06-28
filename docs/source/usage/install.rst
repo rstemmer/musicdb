@@ -120,6 +120,42 @@ Furthermore you should check ``icecast/config.xml`` (also in MusicDB's data dire
 Installation (Manually)
 -----------------------
 
+The whole installation and updating process can be concluded into the steps in the table below.
+
++-----------------------+------------------------------------------+------------------------------------------+
+|         Step          |               Installation               |                  Update                  |
++=======================+==========================================+==========================================+
+| MusicDB User          | - Create ``musicdb`` User and Group      |                                          |
+|                       | - Add music owner to ``musicdb`` group   |                                          |
++-----------------------+------------------------------------------+------------------------------------------+
+| Generate SSL Key      | - Generate an SSL certificate and key    |                                          |
++-----------------------+------------------------------------------+------------------------------------------+
+| Create directory tree | - Create data and server base directory  | - Update ``artwork/default.jpg``         |
+|                       | - Create MusicAI tree                    |                                          |
+|                       | - Create Artwork Cache                   |                                          |
++-----------------------+------------------------------------------+------------------------------------------+
+| MusicDB Configuration | - Install ``musicdb.ini``                | - Update ``musicdb.ini``                 |
+|                       | - Set default parameters                 |                                          |
+|                       | - Create symlink to ``/etc/musicdb.ini`` |                                          |
++-----------------------+------------------------------------------+------------------------------------------+
+| Create databases      | - Create all databases                   | - Update database schemes                |
++-----------------------+------------------------------------------+------------------------------------------+
+| Icecast Configuration | - Create icecast user and group          | - Update icecast configuration           |
+|                       | - Create icecast configuration           |                                          |
+|                       | - Copy SSL certificates                  |                                          |
+|                       | - Generate icecast passwords             |                                          |
+|                       | - Update ``musicdb.ini`` with source PW  |                                          |
++-----------------------+------------------------------------------+------------------------------------------+
+| System environment    | - Install logrotate configuration        | - Update logrotate configuration         |
+|                       | - Install shell profile                  |                                          |
++-----------------------+------------------------------------------+------------------------------------------+
+| ID3Edit Installation  | - Install ID3Edit                        | - Update ID3Edit                         |
++-----------------------+------------------------------------------+------------------------------------------+
+| MusicDB Installation  | - Install MusicDB                        | - Update MusicDB                         |
++-----------------------+------------------------------------------+------------------------------------------+
+
+
+
 The following steps give an idea of how to install MusicDB.
 
 System Preparation

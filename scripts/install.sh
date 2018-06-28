@@ -2,176 +2,24 @@
 
 set -e
 
-SCRIPTVERSION="1.3.3"
+SCRIPTVERSION="2.0.0"
 echo -e "\e[1;31mMusicDB-Install [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
-# mdbdirtree.sh
-# mdbusers.sh
-# ssl.sh
-# mdbconfig.sh
-# database.sh
-# icecast.sh
+echo -e "\e[1;34mLoading install scripts … \e[1;31m"
+source ./install/core.sh
+source ./install/mdbdirtree.sh
+source ./install/mdbusers.sh
+source ./install/ssl.sh
+source ./install/mdbconfig.sh
+source ./install/database.sh
+source ./install/icecast.sh
+source ./install/sysenv.sh
+source ./install/mdbfiles.sh
+source ./install/id3edit.sh
 
 
-function InstallLogrotateConfiguration {
-    echo -e -n "\e[1;34mSetup logrotate configuration \e[0;36m/etc/logrotatet.d/musicdb\e[1;34m: \e[1;31m"
-    if ! type logrotate 2> /dev/null > /dev/null ; then
-        echo -e "\e[1;33mThe optional tool \e[1;37mlogrotate\e[1;33m is missing! \e[1;30m(No logrotate installed?)\e[0m"
-        return 0
-    fi
-
-    if [ -d /etc/logrotate.d ] ; then
-        if [ ! -f "/etc/logrotate.d/musicdb" ] ; then
-            cp $SOURCEDIR/share/logrotate.conf /etc/logrotate.d/musicdb
-            sed -i -e "s;DATADIR;$DATADIR;g"   /etc/logrotate.d/musicdb
-            sed -i -e "s;MDBUSER;$MDBUSER;g"   /etc/logrotate.d/musicdb
-            sed -i -e "s;MDBGROUP;$MDBGROUP;g" /etc/logrotate.d/musicdb
-            echo -e "\e[1;32mdone"
-        else
-            echo -e "\e[1;37malready done!"
-        fi
-    else
-        echo -e "\e[1;31mLogrotate directory \e[1;35m/etc/logrotate.d\e[1;31m missing! \e[1;30m(No logrotate installed?)\e[0m"
-        exit 1
-    fi
-}
-
-
-
-function InstallShellProfile {
-    echo -e -n "\e[1;34mSetup shell profile in \e[0;36m/etc/profile.d/musicdb.sh\e[1;34m: \e[1;31m"
-    if [ ! -f "/etc/profile.d/musicdb.sh" ] ; then
-        cp $SOURCEDIR/share/profile.sh /etc/profile.d/musicdb.sh
-        sed -i -e "s;SERVERDIR;$SERVERDIR;g"   /etc/profile.d/musicdb.sh
-        echo -e "\e[1;32mdone"
-    else
-        echo -e "\e[1;37malready done!"
-    fi
-}
-
-
-
-function InstallMusicDBFiles {
-    echo -e -n "\e[1;34mInstalling MusicDB files to \e[0;36m$SERVERDIR\e[1;34m: "
-    if ! type rsync 2> /dev/null > /dev/null ; then
-        echo -e "\e[1;31mThe mandatory tool \e[1;35mrsync\e[1;31m is missing! \e[1;30m(No rsync installed?)\e[0m"
-        exit 1
-    fi
-
-    WSCLIENTFILE=$SERVERDIR/webui/js/musicdb.js
-    if [ -f "$WSCLIENTFILE" ] ; then
-        # this is an update, so save the websocket and watchdog configuration before overwriting this file
-        WATCHDOG_RUN="$(     grep "var.WATCHDOG_RUN"      $WSCLIENTFILE)"
-        WATCHDOG_INTERVAL="$(grep "var.WATCHDOG_INTERVAL" $WSCLIENTFILE)"
-        WEBSOCKET_URL="$(    grep "var.WEBSOCKET_URL"     $WSCLIENTFILE)"
-    fi
-
-    rsync -uav  \
-        --exclude 'tmp/' \
-        --exclude 'id3edit/' \
-        --exclude 'lib/crawler/' \
-        --exclude 'docs/build/doctrees/' \
-        --exclude '.git/' \
-        --exclude '.gitignore' \
-        --exclude '*.swp' \
-        --exclude '*.swo' \
-        --exclude '*.pyc' \
-        --exclude '*~' \
-        --delete \
-        $SOURCEDIR/ $SERVERDIR/. > /dev/null
-
-    chown -R $MDBUSER:$MDBGROUP $SERVERDIR
-
-    # on update, reset the settings from the old version of the musicdb.js file
-    if [ ! -z "$WATCHDOG_RUN" ] ; then
-        sed -i -e "s\\var.WATCHDOG_RUN.*\\$WATCHDOG_RUN\\g"           $WSCLIENTFILE
-        sed -i -e "s\\var.WATCHDOG_INTERVAL.*\\$WATCHDOG_INTERVAL\\g" $WSCLIENTFILE
-        sed -i -e "s\\var.WEBSOCKET_URL.*\\$WEBSOCKET_URL\\g"         $WSCLIENTFILE
-    fi
-
-    echo -e "\e[1;32mdone\e[0m"
-}
-
-
-
-function InstallID3Edit {
-    if ! type git 2> /dev/null > /dev/null ; then
-        echo -e "\e[1;31mThe mandatory tool \e[1;35mgit\e[1;31m is missing! \e[1;30m(No git installed?)\e[0m"
-        exit 1
-    fi
-
-    HERE=$(pwd)
-
-    # install libprinthex
-    echo -e -n "\e[1;34mInstalling \e[0;36mlibprinthex\e[1;34m: "
-    if [ ! -f /usr/local/lib/libprinthex.a ] ; then
-        if ! type gcc 2> /dev/null > /dev/null ; then
-            echo -e "\e[1;31mThe mandatory tool \e[1;35mgcc\e[1;31m missing! \e[1;30m(No gcc/binutils installed?)\e[0m"
-            exit 1
-        fi
-        cd /tmp
-        echo -e "\e[1;30m"
-        git clone https://github.com/rstemmer/libprinthex.git
-        cd libprinthex
-        ./build.sh
-        ./install.sh
-        cd /tmp
-        rm -r libprinthex
-        echo -e "\e[1;32mdone"
-    else
-        echo -e "\e[1;37malready done!"
-    fi
-
-    cd $HERE
-
-    # install id3edit
-    echo -e -n "\e[1;34mInstalling \e[0;36mid3edit\e[1;34m: \e[1;31m"
-    local INSTALLID3EDIT="False"
-    if ! type id3edit 2> /dev/null > /dev/null ; then
-        INSTALLID3EDIT="True"
-    else
-        # check if the already installed version is up to date
-        local BIN_MAJOR=$(id3edit --version | cut -d "." -f 1)
-        local BIN_MINOR=$(id3edit --version | cut -d "." -f 2)
-        local BIN_PATCH=$(id3edit --version | cut -d "." -f 3)
-
-        local SRC_MAJOR=$(grep "#define VERSION" ./id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 1)
-        local SRC_MINOR=$(grep "#define VERSION" ./id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 2)
-        local SRC_PATCH=$(grep "#define VERSION" ./id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 3)
-
-        if [ $SRC_MAJOR -gt $BIN_MAJOR ] ; then
-            INSTALLID3EDIT="True"
-        elif [ $SRC_MAJOR -eq $BIN_MAJOR ] ; then
-            if [ $SRC_MINOR -gt $BIN_MINOR ] ; then
-                INSTALLID3EDIT="True"
-            elif [ $SRC_MINOR -eq $BIN_MINOR ] ; then
-                if [ $SRC_PATCH -gt $BIN_PATCH ] ; then
-                    INSTALLID3EDIT="True"
-                fi
-            fi
-        fi
-    fi
-
-
-    if [ "$INSTALLID3EDIT" == "True" ] ; then
-        if ! type clang 2> /dev/null > /dev/null ; then
-            echo -e "\e[1;31mThe mandatory tool \e[1;35mclang\e[1;31m missing! \e[1;30m(No clang installed?)\e[0m"
-            exit 1
-        fi
-        cd id3edit
-        ./build.sh
-        ./install.sh
-        echo -e "\e[1;32mdone"
-    else
-        echo -e "\e[1;37malready done!"
-    fi
-
-    cd $HERE
-}
-
-
-echo -e "\e[1;34mChecking environment: "
+echo -e "\e[1;34mChecking environment … \e[1;31m"
 # Check the environment this script is executed in.
 # Depending on the Linux distribution some things work different.
 
@@ -180,14 +28,9 @@ if [ $EUID -ne 0 ]; then
     echo -e "\t\e[1;31mYou need to have root permissions!\e[0m"
     exit 1
 fi
-if ! type sed 2> /dev/null > /dev/null ; then
-    echo -e "\e[1;31mThe mandatory tool \e[1;35msed\e[1;31m is missing!\e[0m"
-    exit 1
-fi
-if ! type dialog 2> /dev/null > /dev/null ; then
-    echo -e "\e[1;31mThe mandatory tool \e[1;35mdialog\e[1;31m is missing!\e[0m"
-    exit 1
-fi
+
+_ExpectingTool sed
+_ExpectingTool dialog
 
 
 # Figure out, how the apache unix group is called
@@ -205,9 +48,10 @@ else
 fi
 
 # Check if pwd is the source directory
-SOURCEDIR="$(pwd)"
+SOURCEDIR="$(dirname "$(pwd)")"
 if [ ! -d "$SOURCEDIR/.git" ] ; then
-    echo -e "\t\e[1;31mThe script must be executed from the source directory! \e[1;30m($SOURCEDIR/.git directory missing)\e[0m"
+    echo -e "\t\e[1;31mThe script must be executed from the \e[1;37mscripts\e[1;31m directory inside the source directory!"
+    echo -e "\t\e[1;30m($SOURCEDIR/.git directory missing)\e[0m"
     exit 1
 fi
 
@@ -265,16 +109,17 @@ echo -e "\e[1;32mdone\e[0m"
 FORMFILE=/tmp/form.$$
 # dialog --form text height width formheight [ label y x item y x flen ilen ]
 dialog --backtitle "$FORMTITLE" --title "Installation Setup" \
-    --form "\nCheck and specify the MusicDB environment\n" 18 71 10 \
-    "Source directory:" 1 1 "$SOURCEDIR"    1 20 45 0 \
-    "Server directory:" 2 1 "$SERVERDIR"    2 20 45 0 \
-    "Data directory:"   3 1 "$DATADIR"      3 20 45 0 \
-    "Music directory:"  4 1 "$MUSICDIR"     4 20 45 0 \
-    "MusicDB group:"    5 1 "$MDBGROUP"     5 20 45 0 \
-    "MusicDB user:"     6 1 "$MDBUSER"      6 20 45 0 \
-    "HTTP group:"       7 1 "$HTTPGROUP"    7 20 45 0 \
-    "SSL key file:"     8 1 "$SSLKEY"       8 20 45 0 \
-    "SSL certificate"   9 1 "$SSLCRT"       9 20 45 0 \
+    --form "\nCheck and specify the MusicDB environment\n" 18 71 11 \
+    "Source directory:"  1 1 "$SOURCEDIR"    1 20 45 0 \
+    "Server directory:"  2 1 "$SERVERDIR"    2 20 45 0 \
+    "Data directory:"    3 1 "$DATADIR"      3 20 45 0 \
+    "Music directory:"   4 1 "$MUSICDIR"     4 20 45 0 \
+    "MusicDB group:"     5 1 "$MDBGROUP"     5 20 45 0 \
+    "MusicDB user:"      6 1 "$MDBUSER"      6 20 45 0 \
+    "Music owner (you):" 7 1 "$MDBUSER"      7 20 45 0 \
+    "HTTP group:"        8 1 "$HTTPGROUP"    8 20 45 0 \
+    "SSL key file:"      9 1 "$SSLKEY"       9 20 45 0 \
+    "SSL certificate"   10 1 "$SSLCRT"      10 20 45 0 \
     2> $FORMFILE
 
 # the form file exists anyway, but only when pressed OK it holds the new setting
@@ -285,9 +130,10 @@ if [ -s $FORMFILE ] ; then
     MUSICDIR="$( sed  "4q;d" $FORMFILE)"
     MDBGROUP="$( sed  "5q;d" $FORMFILE)"
     MDBUSER="$(  sed  "6q;d" $FORMFILE)"
-    HTTPGROUP="$(sed  "7q;d" $FORMFILE)"
-    SSLKEY="$(   sed  "8q;d" $FORMFILE)"
-    SSLCRT="$(   sed  "9q;d" $FORMFILE)"
+    USER="$(     sed  "7q;d" $FORMFILE)"
+    HTTPGROUP="$(sed  "8q;d" $FORMFILE)"
+    SSLKEY="$(   sed  "9q;d" $FORMFILE)"
+    SSLCRT="$(   sed "10q;d" $FORMFILE)"
 fi
 
 rm $FORMFILE
@@ -302,32 +148,22 @@ echo -e "\t\e[1;34mData directory:   \e[0;36m$DATADIR"
 echo -e "\t\e[1;34mMusic directory:  \e[0;36m$MUSICDIR"
 echo -e "\t\e[1;34mMusicDB group:    \e[0;36m$MDBGROUP"
 echo -e "\t\e[1;34mMusicDB user:     \e[0;36m$MDBUSER"
+echo -e "\t\e[1;34mMusic owner:      \e[0;36m$USER"
 echo -e "\t\e[1;34mHTTP group:       \e[0;36m$HTTPGROUP"
 echo -e "\t\e[1;34mSSL key file:     \e[0;36m$SSLKEY"
 echo -e "\t\e[1;34mSSL certificate:  \e[0;36m$SSLCRT"
 
 
-
-# Start installing process
-CreateMusicDBGroup
-CreateMusicDBUser
-CreateMusicDBSSLKeys
-CreateBaseDirectories
-
-InstallMusicDBConfiguration
-InstallMusicDBDatabases
-UpdateMusicDBDatabases      # Check if things must be updated
-InstallArtwork
-InstallMusicAI
-
-InstallIcecastEnvironment
-InstallLogrotateConfiguration
-InstallShellProfile
-
-# TODO: Setup apache - debians apache installation is inacceptable messed up. No script for this.
+SetupUsersAndGroups "$MDBUSER" "$MDBGROUP" "$USER"
+CreateMusicDBSSLKeys "$SSLKEY" "$SSLCRT" "$HTTPGROUP"
+CreateDirectoryTree "$SOURCEDIR" "$SERVERDIR" "$DATADIR" "$MUSICDIR" "$USER" "$MDBUSER" "$MDBGROUP"
+InstallMusicDBConfiguration "$SOURCEDIR" "$SERVERDIR" "$DATADIR" "$MUSICDIR" "$USER" "$MDBUSER" "$MDBGROUP" "$SSLKEY" "$SSLCRT"
+InstallMusicDBDatabases "$SOURCEDIR" "$DATADIR" "$MDBUSER" "$MDBGROUP"
+SetupIcecastEnvironment "$SOURCEDIR" "$DATADIR" "$MDBGROUP" "$SSLCRT"
+InstallLogrotateConfiguration "$SOURCEDIR" "$DATADIR" "$MDBUSER" "$MDBGROUP"
+InstallShellProfile "$SOURCEDIR" "$SERVERDIR" 
 InstallID3Edit
-InstallMusicDBFiles
-
+InstallMusicDBFiles "$SOURCEDIR" "$SERVERDIR" "$MDBUSER" "$MDBGROUP"
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

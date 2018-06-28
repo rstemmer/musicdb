@@ -9,20 +9,9 @@ function SetupIcecastEnvironment {
 
     echo -e "\e[1;34mSetup Icecast environment in \e[0;36m$DATADIR/icecast\e[1;31m"
 
-    _ExpectingTool openssl
-
-    # Find correct icecast binary
-    #local ICECAST=""
-
-    #if type "icecast" 2> /dev/null > /dev/null ; then
-    #    ICECAST=icecast
-    #elif type "icecast2" 2> /dev/null > /dev/null ; then
-    #    # Debian based distributions have a different name for the icecast binary
-    #    ICECAST=icecast2
-    #else
-    #    echo -e    "\t\e[1;33micecast binary missing! \e[1;30m(icecast not yet installed?)"
-    #    echo -e -n "\t\e[1;34mInstalling configuration anyway: \e[1;31m"
-    #fi
+    _ExpectingTool  openssl
+    _ExpectingGroup $MDBGROUP
+    _ExpectingFile  $SSLCRT
 
 
     # Check group
@@ -33,7 +22,7 @@ function SetupIcecastEnvironment {
     # Check user
     if [ -z "$(getent passwd icecast)" ]; then
         useradd -d "$DATADIR/icecast" -s /usr/bin/false -g icecast -r -N -M icecast
-        echo -e -n "\t\e[1;34micecast user created\e[1;31m "
+        echo -e "\t\e[1;34micecast user created\e[1;31m "
     fi
 
     # Install icecast directories
@@ -48,12 +37,12 @@ function SetupIcecastEnvironment {
     fi
 
     # Install SSL certificate
-    if [ ! -d "$DATADIR/icecast/certificate.pem" ] ; then
+    if [ ! -f "$DATADIR/icecast/certificate.pem" ] ; then
         install -m 400 -g $MDBGROUP -o icecast "$SSLCRT" -D "$DATADIR/icecast/certificate.pem"
     fi
 
     # Install configuration
-    if [ ! -d "$DATADIR/icecast/config.xml" ] ; then
+    if [ ! -f "$DATADIR/icecast/config.xml" ] ; then
         install -m 664 -g $MDBGROUP -o icecast "$SOURCEDIR/share/config.xml" -D "$DATADIR/icecast/."
 
         # Create some secure default passwords
@@ -65,13 +54,11 @@ function SetupIcecastEnvironment {
         sed -i -e "s;ICECASTSOURCEPASSWORD;$SOURCEPW;g" $DATADIR/icecast/config.xml
         sed -i -e "s;ICECASTADMINPASSWORD;$ADMINPW;g"   $DATADIR/icecast/config.xml
         sed -i -e "s;ICECASTSOURCEPASSWORD;$SOURCEPW;g" $DATADIR/musicdb.ini
-        # also update a possible new MusicDB Configuration
-        if [ -f "$DATADIR/musicdb.ini.new" ] ; then
-            sed -i -e "s;ICECASTSOURCEPASSWORD;$SOURCEPW;g" $DATADIR/musicdb.ini.new
-        fi
 
-        echo -e "\e[1;32mdone"
+        echo -e "\t\e[1;34mNew icecast source password: \e[1;36m$SOURCEPW"
+        echo -e "\t\e[1;34mNew icecast admin  password: \e[1;36m$ADMINPW"
     fi
+    echo -e "\t\e[1;32mdone"
 }
 
 
