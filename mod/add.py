@@ -646,7 +646,12 @@ class add(MDBModule, MusicDBDatabase):
         releaseinput.SetData(release)
         origininput.SetData(origin)
         artworkinput.SetData(True)
-        musicaiinput.SetData(False)
+
+        if self.cfg.debug.disableai:
+            musicaiinput.SetData(False)
+        else:
+            musicaiinput.SetData(True)
+
         if metadata["lyrics"]:
             lyricsinput.SetData(True)
         else:
