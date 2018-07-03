@@ -242,9 +242,12 @@ class WebSocket(WebSocketServerProtocol):
         It removes this connection to the broadcasting infrastructure of :class:`lib.ws.websocket.MusicDBWebSocketFactory`.
 
         This method calls an ``onWSDisconnect(wasClean:bool, closecode:int, closereason:str)`` Method that must be implemented by the programmer who uses this class.
+        The ``onWSDisconnect`` method gets only called when there was a successful connection before!
         """
-        self.connected = False
-        self.factory.RemoveFromBroadcast(self)
+        if self.connected:
+            self.connected = False
+            self.factory.RemoveFromBroadcast(self)
+            self.onWSDisconnect(wasClean, code, reason)
 
         if code == WebSocketServerProtocol.CLOSE_STATUS_CODE_NORMAL:
             logging.info("Websocket connection closed with \"Normal\" code.")
@@ -267,7 +270,6 @@ class WebSocket(WebSocketServerProtocol):
             logging.debug  ("\033[1;33mremoteCloseCode   = %s" % self.remoteCloseCode)
             logging.debug  ("\033[1;33mremoteCloseReason = %s" % self.remoteCloseReason)
 
-        self.onWSDisconnect(wasClean, code, reason)
 
         #CLOSE_CODE_NORMAL              = 1000 #Normal close of connection.
         #CLOSE_CODE_GOING_AWAY          = 1001 #Going away.
