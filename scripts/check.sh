@@ -59,7 +59,7 @@ CheckPythonModuleExistence "gzip"
 CheckPythonModuleExistence "configparser"
 CheckPythonModuleExistence "json"
 CheckPythonModuleExistence "csv"
-CheckPythonModuleExistence "pyquery" opt    # usefull for lyrics crawler
+CheckPythonModuleExistence "pyquery" opt    # useful for lyrics crawler
 CheckPythonModuleExistence "hashlib"
 CheckPythonModuleExistence "mutagenx"
 CheckPythonModuleExistence "Levenshtein"

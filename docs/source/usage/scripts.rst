@@ -7,6 +7,10 @@ The scripts and how they work are described in the following sections.
 All scripts have no command line arguments.
 The last code examples in each subsection give an impression of what the script does.
 
+In the source directory, the scripts described in this chapter can be found in ``scrips/helper``.
+When installing MusicDB, they get copied into the server directory that is part of the ``$PATH`` variable.
+So the scripts can be executed from anywhere in the shell.
+
 When and how to use these scripts will be shown in the following code example:
 
 .. code-block:: bash
@@ -26,8 +30,8 @@ When and how to use these scripts will be shown in the following code example:
    # Stop all depending processes (befor shutting down the whole operating system)
    musicdb-shutdown.sh
 
-There are some more scripts in the MusicDB directory that are used for the installation process.
-See the :doc:`/usage/install` documentation to learn about ``install.sh`` and ``musicdb-check.sh``.
+There are some more scripts in the MusicDB scripts directory that are used for the installation process.
+See the :doc:`/usage/install` documentation to learn about ``install.sh`` and ``check.sh``.
 
 
 musicdb-boot

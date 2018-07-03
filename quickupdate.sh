@@ -15,6 +15,7 @@ function UpdateMusicDBFiles {
         --exclude 'tmp/' \
         --exclude 'id3edit/' \
         --exclude 'lib/crawler/' \
+        --exclude 'scripts/' \
         --exclude 'docs/build/doctrees/' \
         --exclude '.git/' \
         --exclude '.gitignore' \
@@ -24,6 +25,10 @@ function UpdateMusicDBFiles {
         --exclude '*~' \
         --delete \
         $SOURCEDIR/ $SERVERDIR/. > /dev/null
+
+    set +f
+    cp $SOURCEDIR/scripts/helper/*.sh "$SERVERDIR/."
+    set -f
 
     mv "/tmp/mdbwebuicfg.bak" "$WSCONFIG"
     chown -R $MDBUSER:$MDBGROUP $SERVERDIR

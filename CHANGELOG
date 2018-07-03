@@ -17,6 +17,7 @@ Run  git log --oneline  for more details
 ┝━ MINOR CHANGES
 │ * musicdb.ini now has a version number
 │ * Databases now has a version number
+│ * Scripts are now in a separate directory. Helpers will be moved to the server directory on installation.
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2018-05-06 ┣━━━━┫ 3.0.0 ┣━━━━━━━━╍╍

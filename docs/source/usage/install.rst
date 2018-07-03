@@ -25,7 +25,8 @@ The following sections describe how to install MusicDB and its dependencies.
 Installation (Automatic)
 ------------------------
 
-To install MusicDB, there is a script ``install.sh`` that will help you.
+To install MusicDB, there is a script ``scripts/install.sh`` that will help you.
+Execute this script from the scripts directory to install MusicDB.
 The following subsections explain how to install MusicDB using this script.
 
 Install Dependencies
@@ -45,7 +46,8 @@ First, you need to install some dependencies using your systems package manager:
 Executing the install.sh Script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Now you can simply execute the ``install.sh`` script from the source directory, after you have cloned the `git <https://github.com/rstemmer/musicdb>`_ repository from GitHub.
+Now you can simply execute the ``install.sh`` script from the scripts directory in the source directory,
+after you have cloned the `git <https://github.com/rstemmer/musicdb>`_ repository from GitHub.
 
 .. code-block:: bash
 
@@ -54,7 +56,7 @@ Now you can simply execute the ``install.sh`` script from the source directory, 
 
    # download MusicDB
    git clone https://github.com/rstemmer/musicdb
-   cd musicdb
+   cd musicdb/scripts
 
    # start the installation
    su    # you need to be root
@@ -103,7 +105,7 @@ The script always tries to determine the state of a single installation step and
 Install all Dependencies
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Execute the ``musicdb-check.sh`` script to see what dependencies are missing.
+Execute the ``check.sh`` script to see what dependencies are missing.
 In context of the install.sh script, the name of this script is a bit misleading.
 It only checks for dependencies needed by MusicDB to run. It does not check the installation.
 
@@ -191,10 +193,10 @@ Some: ``git``, ``gcc``, ``python``, ``pip``
    On Debian the ``python`` command runs the ancient Python 2.
    Whenever this documentation is talking about Python, Python 3 is meant!
 
-Further more, everything ``musicdb-check`` is missing.
+Further more, everything ``check`` tells you is missing.
 The following list gives you some details about the listed modules.
 
-   * If an optional dependency is missing, read the ``musicdb-check.sh`` script. The comments help you to decide if you need them.
+   * If an optional dependency is missing, read the ``check.sh`` script. The comments help you to decide if you need them.
    * The *PIL* module can be found as ``pillow``.
    * ``icecast`` won't be detected on Debian because there it is called ``icecast2`` (This has no impact).
    * ``apachectl`` my be not found if it is only available for root user. Or you simply use another HTTP server.
@@ -206,7 +208,7 @@ Basic packages
 
 There are some external tools necessary.
 Furthermore there are lots of python packages needed.
-You can use the ``musicdb-check.sh`` script to see what packages are missing.
+You can use the ``check.sh`` script to see what packages are missing.
 
 The missing ``id3edit`` tool is part of MusicDB.
 It's installation is described in this documentation later on.
@@ -427,6 +429,7 @@ For minor release updates, the ``quickupdate.sh`` is also OK (It just updates Mu
    cd /src/musicdb      # go to MusicDB's source directory
    git pull             # get the latest source code
    git checkout master  # make sure you are in the master branch
+   cd scripts           # go into the scripts directory
    su                   # you must be root for the updating process
    ./install.sh         # update
 
