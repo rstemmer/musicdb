@@ -107,14 +107,10 @@ class MusicDBConfig(Config):
         if self.meta.version < 2:
             logging.warning("Version of musicdb.ini is too old. Please update the MusicDB Configuration!")
 
+
         # [server]
         self.server = SERVER()
         self.server.pidfile         = self.Get(str, "server",   "pidfile",          "/data/musicdb/musicdb.pid")
-        self.server.maxcallthreads  = self.Get(int, "server",   "maxcallthreads",   2)
-        if self.server.maxcallthreads <= 0:
-            logging.error("Value of [server]->maxcallthreads is too small. It must be at least 1.")
-        elif self.server.maxcallthreads > 12:
-            logging.warning("Value of [server]->maxcallthreads looks too big.")
         self.server.statedir        = self.Get(str, "server",   "statedir",         "/data/musicdb/mdbstate")
         self.server.fifofile        = self.Get(str, "server",   "fifofile",         "/data/musicdb/musicdb.fifo")
 
