@@ -47,6 +47,12 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* upd
 * WebSocket configuration for WebUI is now in separate `webui/config.js`
   * **:wrench: Change:** You may want to backup the settings `from webui/js/musicdb.js`
 * The server now only accepts request from clients with a valid API Key
+* Databases now have a version number to allow easy updated.
+  * **:wrench: Change:** This is the last time you have to touch the databases by yourself. For each database:
+    * ``sqlite $DATABASE.db`` (With DATABASE = ``music``, ``lycra``, ``tracker``)
+    * ``CREATE TABLE IF NOT EXISTS meta (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT, VALUE TEXT DEFAULT '');``
+    * ``INSERT INTO meta (key, value) VALUES ("version", 2);``
+    * ``.quit``
 
 
 ### 06.05.18: 2.x.x → 3.0.0+
