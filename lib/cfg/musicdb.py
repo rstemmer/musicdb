@@ -58,6 +58,8 @@ import logging
 from lib.cfg.config import Config
 from lib.filesystem import Filesystem
 
+class META:
+    pass
 class SERVER:
     pass
 class WEBSOCKET:
@@ -99,6 +101,11 @@ class MusicDBConfig(Config):
 
         logging.info("Reading and checking MusicDB Configuration")
 
+        # [meta]
+        self.meta = META()
+        self.meta.version           = self.Get(int, "meta",     "version",          1)
+        if self.meta.version < 2:
+            logging.warning("Version of musicdb.ini is too old. Please update the MusicDB Configuration!")
 
         # [server]
         self.server = SERVER()

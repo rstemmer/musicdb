@@ -15,6 +15,7 @@ Run  git log --oneline  for more details
 │ * WebSocket configuration for WebUI is now in separate config.js
 │
 ┝━ MINOR CHANGES
+│ * musicdb.ini now has a version number
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2018-05-06 ┣━━━━┫ 3.0.0 ┣━━━━━━━━╍╍

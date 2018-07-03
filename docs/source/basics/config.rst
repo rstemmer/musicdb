@@ -8,6 +8,15 @@ The sections have the following structure:
 option (type):
    description
 
+meta
+----
+
+version (integer):
+   This is the version number of configuration.
+   This number is used *internal* to check if the configuration file provides the sections and key expected by MusicDB.
+   When new sections or keys are added (or old ones removed), the version number gets incremented.
+   After updating MusicDB compare your configuration with the new one and update the file by yourself (including the version number)
+
 server
 ------
 
