@@ -37,9 +37,9 @@ function InstallID3Edit {
         local BIN_MINOR=$(id3edit --version | cut -d "." -f 2)
         local BIN_PATCH=$(id3edit --version | cut -d "." -f 3)
 
-        local SRC_MAJOR=$(grep "#define VERSION" ./id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 1)
-        local SRC_MINOR=$(grep "#define VERSION" ./id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 2)
-        local SRC_PATCH=$(grep "#define VERSION" ./id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 3)
+        local SRC_MAJOR=$(grep "#define VERSION" ./../id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 1)
+        local SRC_MINOR=$(grep "#define VERSION" ./../id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 2)
+        local SRC_PATCH=$(grep "#define VERSION" ./../id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 3)
 
         if [ $SRC_MAJOR -gt $BIN_MAJOR ] ; then
             INSTALLID3EDIT="True"
