@@ -124,7 +124,7 @@ class Config(configparser.ConfigParser, object):
         If writing fails not because of missing write permission, an exception gets raised.
         """
         try:
-            with open(self.__filename, "w+") as configfile:
+            with open(self.__filename, "w") as configfile:
                 self.write(configfile)
         except IOError as e:
             if e[0] != 13:
