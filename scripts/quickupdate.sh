@@ -5,6 +5,7 @@ set -e
 SCRIPTVERSION="2.0.0"
 echo -e "\e[1;31mMusicDB-QuickUpdate [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
+source ./install/core.sh
 source ./install/mdbfiles.sh
 
 
