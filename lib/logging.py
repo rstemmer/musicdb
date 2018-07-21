@@ -186,19 +186,20 @@ class MusicDBLogger():
         self.handler = []
 
         # primary handler
-        if logpath == "stdout":
-            phandler = logging.StreamHandler(sys.stdout)
-        elif logpath == "stderr":
-            phandler = logging.StreamHandler(sys.stderr)
-        else:
-            phandler = logging.FileHandler(logpath)
-            self.SetFilePermissions(logpath)
+        if logpath != None and logpath != "/dev/null":
+            if logpath == "stdout":
+                phandler = logging.StreamHandler(sys.stdout)
+            elif logpath == "stderr":
+                phandler = logging.StreamHandler(sys.stderr)
+            else:
+                phandler = logging.FileHandler(logpath)
+                self.SetFilePermissions(logpath) # Set file permission to rw-rw-r-- !
 
-        phandler.setLevel(loglevel)
-        self.handler.append(phandler)
+            phandler.setLevel(loglevel)
+            self.handler.append(phandler)
 
         # secondary handler
-        if debugpath:
+        if debugpath != None and debugpath != "/dev/null":
             shandler = logging.FileHandler(debugpath)
             self.SetFilePermissions(debugpath)
             shandler.setLevel(logging.DEBUG)
@@ -223,7 +224,7 @@ class MusicDBLogger():
 
 
         # Show the user where to find the debugging infos
-        if debugpath:
+        if debugpath != None and debugpath != "/dev/null":
             logging.debug("logging debugging info in %s", debugpath)
         logging.debug("setting display-loglevel to \033[1;36m%s", loglevelname)
 

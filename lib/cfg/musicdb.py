@@ -237,6 +237,8 @@ class MusicDBConfig(Config):
         if not self.log.loglevel in ["DEBUG", "INFO", "WARNING", "ERROR"]:
             logging.error("Invalid loglevel for [log]->loglevel. Loglevel must be one of the following: DEBUG, INFO, WARNING, ERROR")
         self.log.debugfile          = self.Get(str, "log",      "debugfile",    None)
+        if self.log.debugfile == "/dev/null":
+            self.log.debugfile = None
         self.log.ignore             = self.Get(str, "log",      "ignore",       None, islist=True)
 
 
