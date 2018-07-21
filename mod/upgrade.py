@@ -25,6 +25,7 @@ from lib.filesystem     import Filesystem
 from mdbapi.database    import MusicDBDatabase
 from lib.db.trackerdb   import TrackerDatabase
 from lib.db.lycradb     import LycraDatabase
+from lib.cfg.musicdb    import MusicDBConfig
 
 
 class upgrade(MDBModule, MusicDBDatabase):
@@ -44,7 +45,7 @@ class upgrade(MDBModule, MusicDBDatabase):
 
 
     def PrintCheckFile(self, filename):
-        print("\033[1;35m * \033[1;34mChecking \033[0;36m%s\033[1;34m: "%(filename), endl="")
+        print("\033[1;35m * \033[1;34mChecking \033[0;36m%s\033[1;34m: "%(filename), end="")
 
     def PrintGood(self):
         print("\033[1;32mOK\033[0m")
@@ -54,7 +55,7 @@ class upgrade(MDBModule, MusicDBDatabase):
 
     def PrintUpgrade(self, fromversion, toversion):
         print("\033[1;33mOutdated\033[0m")
-        print("\033[1;34m\tUpgrading from \033[0;33m%i\033[1;34m to \033[0;32m%i\033[1;34m: "%(fromversion, toversion), endl="")
+        print("\033[1;34m\tUpgrading from \033[0;33m%i\033[1;34m to \033[0;32m%i\033[1;34m: "%(fromversion, toversion), end="")
 
 
     def GetDatabaseVersion(self, database):
@@ -62,7 +63,7 @@ class upgrade(MDBModule, MusicDBDatabase):
             result = self.db.GetFromDatabase("SELECT value FROM meta WHERE key = 'version'")
             version = int(result[0][0])
         except Exception as e:
-            version = 1
+            version = 0
         return version
 
 
@@ -187,7 +188,7 @@ class upgrade(MDBModule, MusicDBDatabase):
             version = 2
 
         # Reload configuration
-        self.cfg = MusicDBConfiguration(filename)
+        self.cfg = MusicDBConfig(filename)
 
         self.PrintGood()
         return True
