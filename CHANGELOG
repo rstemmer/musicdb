@@ -18,6 +18,7 @@ Run  git log --oneline  for more details
 │ * musicdb.ini now has a version number
 │ * Databases now has a version number
 │ * Scripts are now in a separate directory. Helpers will be moved to the server directory on installation.
+│ - Moved id3edit sources into its own repository
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2018-05-06 ┣━━━━┫ 3.0.0 ┣━━━━━━━━╍╍

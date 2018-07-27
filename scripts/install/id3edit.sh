@@ -37,17 +37,28 @@ function InstallID3Edit {
         local BIN_MINOR=$(id3edit --version | cut -d "." -f 2)
         local BIN_PATCH=$(id3edit --version | cut -d "." -f 3)
 
-        local SRC_MAJOR=$(grep "#define VERSION" ./../id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 1)
-        local SRC_MINOR=$(grep "#define VERSION" ./../id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 2)
-        local SRC_PATCH=$(grep "#define VERSION" ./../id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 3)
+        #local SRC_MAJOR=$(grep "#define VERSION" ./../id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 1)
+        #local SRC_MINOR=$(grep "#define VERSION" ./../id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 2)
+        #local SRC_PATCH=$(grep "#define VERSION" ./../id3edit/main.c | cut -d " " -f 3 | tr -d \" | cut -d "." -f 3)
 
-        if [ $SRC_MAJOR -gt $BIN_MAJOR ] ; then
+        #if [ $SRC_MAJOR -gt $BIN_MAJOR ] ; then
+        #    INSTALLID3EDIT="True"
+        #elif [ $SRC_MAJOR -eq $BIN_MAJOR ] ; then
+        #    if [ $SRC_MINOR -gt $BIN_MINOR ] ; then
+        #        INSTALLID3EDIT="True"
+        #    elif [ $SRC_MINOR -eq $BIN_MINOR ] ; then
+        #        if [ $SRC_PATCH -gt $BIN_PATCH ] ; then
+        #            INSTALLID3EDIT="True"
+        #        fi
+        #    fi
+        #fi
+        if [ $BIN_MAJOR -lt 1 ] ; then
             INSTALLID3EDIT="True"
-        elif [ $SRC_MAJOR -eq $BIN_MAJOR ] ; then
-            if [ $SRC_MINOR -gt $BIN_MINOR ] ; then
+        else
+            if [ $BIN_MINOR -lt 11 ] ; then
                 INSTALLID3EDIT="True"
-            elif [ $SRC_MINOR -eq $BIN_MINOR ] ; then
-                if [ $SRC_PATCH -gt $BIN_PATCH ] ; then
+            else
+                if [ $BIN_PATCH -lt 3 ] ; then
                     INSTALLID3EDIT="True"
                 fi
             fi
@@ -58,9 +69,14 @@ function InstallID3Edit {
     if [ "$INSTALLID3EDIT" == "True" ] ; then
         _ExpectingTool clang
 
+        cd /tmp
+        echo -e "\e[1;30m"
+        git clone https://github.com/rstemmer/id3edit.git
         cd id3edit
         ./build.sh
         ./install.sh
+        cd /tmp
+        rm -r id3edit
         echo -e "\e[1;32mdone"
     else
         echo -e "\e[1;37malready done!"
