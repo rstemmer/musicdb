@@ -20,14 +20,7 @@ Time to share it with the world. :smiley:
 For news, follow [@MusicDBProject](https://twitter.com/MusicDBProject) on Twitter.
 
 
-## This is MusicDB
-
-The following image shows a complete overview of MusicDB and its connections to other software.
-It shows the flow of our music and the related information (purple) from the source music collection (bottom left) to the Web Browser and Audio Player.
-
-![MusicDB Overview](https://rstemmer.github.io/musicdb/build/html/basics/overview.html)
-
-A detailed description of this overview image and MusicDB's components can be found in the documentation: [Description of the Image ](https://rstemmer.github.io/musicdb/build/html/basics/overview.html)
+A detailed description of MusicDB and its components can be found in the documentation: [Overview of MusicDB](https://rstemmer.github.io/musicdb/build/html/basics/overview.html)
 
 
 ## Breaking News
