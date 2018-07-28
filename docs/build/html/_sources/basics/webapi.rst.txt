@@ -40,6 +40,11 @@ pass:
    The server will not touch this entry and returns it as it is.
    This may be useful to give the receiving client some context.
 
+key:
+   This entry holds the WebSocket API key.
+   If this key does not match with the key configured for the running server in the MusicDB Configuration (``[websocket]->apikey``), then the packet gets dropped.
+   Its value gets set by the JavaScript implementation right before the packet gets send to the server.
+
 The following code show an abstract of the implementation:
 
 .. code-block:: javascript

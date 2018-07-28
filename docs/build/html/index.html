@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to MusicDB’s documentation! &mdash; MusicDB 3.1.0 documentation</title>
+  <title>Welcome to MusicDB’s documentation! &mdash; MusicDB 4.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MusicDB 3.1.0 documentation" href="#"/>
+    <link rel="top" title="MusicDB 4.0.0 documentation" href="#"/>
         <link rel="next" title="Comparison to Other Tools" href="basics/comparison.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                3.1
+                4.0
               </div>
             
           
@@ -100,6 +100,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basics/config.html#meta">meta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#websocket">websocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#tls">TLS</a></li>
@@ -254,7 +255,7 @@
 <li class="toctree-l2"><a class="reference internal" href="usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage/scripts.html#musicdb-start">musicdb-start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="usage/scripts.html#quickupdate">quickupdate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/scripts.html#update">update</a></li>
 </ul>
 </li>
 </ul>
@@ -704,7 +705,7 @@ In the <a class="reference internal" href="basics/comparison.html"><span class="
 Some of those tools and libraries are side projects of the MusicDB project and also documented.
 A list of these side projects can be found in the subsection <a class="reference internal" href="#other-tools-and-libraries">Other tools and Libraries</a>.</p>
 <p>With <em>Python</em>, the interpreter itself and all python modules needed to run MusicDB are meant.
-A complete list of all dependencies can be found in <code class="docutils literal"><span class="pre">musicdb-check.sh</span></code>.</p>
+A complete list of all dependencies can be found in <code class="docutils literal"><span class="pre">check.sh</span></code> in the scripts directory.</p>
 <p>A documentation of the <em>Bash Scripts</em> an be found in the chapter <a class="reference internal" href="usage/scripts.html"><span class="doc">Scripts</span></a></p>
 <p>In the following chapters, the basic concepts and philosophy of MusicDB and its components are explained.
 Furthermore usage guides for MusicDB and how to handle its environment are provided.
@@ -872,7 +873,8 @@ Some of them are developed by myself:</p>
 <dl class="docutils">
 <dt><code class="docutils literal"><span class="pre">ID3Edit</span></code>:</dt>
 <dd>Is a tool that is used by MusicDB to edit and repair <a class="reference external" href="http://id3.org/">ID3 Tags (no HTTPS)</a> in mp3-files.
-Type <code class="docutils literal"><span class="pre">id3edit</span> <span class="pre">--help</span></code> for a short help. There is no more documentation yet, sorry.</dd>
+Type <code class="docutils literal"><span class="pre">id3edit</span> <span class="pre">--help</span></code> for a short help. There is no more documentation yet, sorry.
+Source code can be found at <a class="reference external" href="https://github.com/rstemmer/id3edit">GitHub</a></dd>
 <dt><code class="docutils literal"><span class="pre">libprinthex</span></code>:</dt>
 <dd>Supports ID3Edit with fancy hexadecimal outputs for debugging invalid ID3 tags.
 Source code and documentation can be found at <a class="reference external" href="https://github.com/rstemmer/libprinthex">GitHub</a></dd>
@@ -889,7 +891,6 @@ Source code and documentation can be found at <a class="reference external" href
 <li><a class="reference external" href="https://github.com/adobe-fonts/source-sans-pro">Source Sans Pro</a> and <a class="reference external" href="https://github.com/adobe-fonts/source-serif-pro">Source Serif Pro</a></li>
 <li><a class="reference external" href="https://github.com/dejavu-fonts/dejavu-fonts">DejaVuSans</a></li>
 <li><a class="reference external" href="https://fontawesome.io/">Font Awesome</a></li>
-<li><a class="reference external" href="https://llvm.org/doxygen/ConvertUTF_8h_source.html">ConvertUTF.h</a></li>
 </ul>
 </div></blockquote>
 </div>
@@ -946,7 +947,7 @@ Source code and documentation can be found at <a class="reference external" href
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'3.1.0',
+            VERSION:'4.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

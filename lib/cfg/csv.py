@@ -65,7 +65,7 @@ class CSVFile(object):
 
         Example:
 
-            .. code-block:: csv
+            .. code-block:: js
 
                 name, id
                 a, 1
@@ -77,7 +77,7 @@ class CSVFile(object):
                 table = csv.Read()
                 print(table)
 
-            .. code-block::
+            .. code-block:: js
 
                 [
                     {'name': 'a', 'id': 1},
@@ -124,7 +124,7 @@ class CSVFile(object):
 
         Example:
 
-            .. code-block::
+            .. code-block:: js
 
                 [
                     {'name': 'a', 'id': 1},
@@ -138,7 +138,7 @@ class CSVFile(object):
                 csv.Write(table)
                 # or: csv.Write(table, ["name", "id"])
 
-            .. code-block:: csv
+            .. code-block:: js
 
                 name, id
                 a, 1

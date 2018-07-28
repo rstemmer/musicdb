@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Scripts &mdash; MusicDB 3.1.0 documentation</title>
+  <title>Scripts &mdash; MusicDB 4.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 3.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 4.0.0 documentation" href="../index.html"/>
         <link rel="next" title="add - Add New Album to MusicDB" href="../mod/add.html"/>
         <link rel="prev" title="Music" href="music.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                3.1
+                4.0
               </div>
             
           
@@ -101,6 +101,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#meta">meta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#websocket">websocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tls">TLS</a></li>
@@ -255,7 +256,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#musicdb-shutdown">musicdb-shutdown</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#musicdb-start">musicdb-start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#musicdb-stop">musicdb-stop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#quickupdate">quickupdate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#update">update</a></li>
 </ul>
 </li>
 </ul>
@@ -660,7 +661,10 @@
 <p>There are several scripts to make it easier to use MusicDB.
 The scripts and how they work are described in the following sections.</p>
 <p>All scripts have no command line arguments.
-The last code examples in each subsection give an impression of what the script does.</p>
+The last code examples in each subsection give an impression of what the script internally does.</p>
+<p>In the source directory, the scripts described in this chapter can be found in <code class="docutils literal"><span class="pre">scripts/helper/*.sh</span></code>.
+When installing MusicDB, they get copied into the server directory that is part of the <code class="docutils literal"><span class="pre">$PATH</span></code> variable.
+So the scripts can be executed from anywhere in the shell.</p>
 <p>When and how to use these scripts will be shown in the following code example:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># Start all depending processes (once after each operating system reboot)</span>
 musicdb-boot.sh
@@ -678,8 +682,8 @@ musicdb-stop.sh
 musicdb-shutdown.sh
 </pre></div>
 </div>
-<p>There are some more scripts in the MusicDB directory that are used for the installation process.
-See the <a class="reference internal" href="install.html"><span class="doc">Installation &amp; Update</span></a> documentation to learn about <code class="docutils literal"><span class="pre">install.sh</span></code> and <code class="docutils literal"><span class="pre">musicdb-check.sh</span></code>.</p>
+<p>There are some more scripts in the MusicDB scripts directory that are used for the installation process.
+See the <a class="reference internal" href="install.html"><span class="doc">Installation &amp; Update</span></a> documentation to learn about <code class="docutils literal"><span class="pre">install.sh</span></code> and <code class="docutils literal"><span class="pre">check.sh</span></code>.</p>
 <div class="section" id="musicdb-boot">
 <h2>musicdb-boot<a class="headerlink" href="#musicdb-boot" title="Permalink to this headline">¶</a></h2>
 <p>This script starts all depending processes that are needed by the server.
@@ -733,19 +737,15 @@ Then the server just gets killed by its PID.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="quickupdate">
-<h2>quickupdate<a class="headerlink" href="#quickupdate" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p>This script is for partially updating the MusicDB installation during development and testing.</p>
-<p><strong>Developers</strong> should read this short script before using it.</p>
-<p class="last"><strong>Users</strong> should only use the <code class="docutils literal"><span class="pre">install.sh</span></code> script for updates.</p>
-</div>
+<div class="section" id="update">
+<h2>update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
 <p>This script only updates the files in the server directory.
-So only a code update will be done.
-Data updates (like new database schemes) must be done by the developer himself.</p>
+So only a code update will be done.</p>
 <p>The script immediately runs the update.
 It does not ask the user to confirm the auto-detected setup of the installation.</p>
+<p>Data updates (like new database schemes) must be done by the developer himself <strong>or</strong>
+use the argument <code class="docutils literal"><span class="pre">--major</span></code> for a major release update.
+Then a post-update process gets started that updates the configuration and database schemes.</p>
 </div>
 </div>
 
@@ -784,7 +784,7 @@ It does not ask the user to confirm the auto-detected setup of the installation.
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'3.1.0',
+            VERSION:'4.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

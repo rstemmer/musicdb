@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.db.trackerdb &mdash; MusicDB 3.1.0 documentation</title>
+  <title>lib.db.trackerdb &mdash; MusicDB 4.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 3.1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 4.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                3.1
+                4.0
               </div>
             
           
@@ -100,6 +100,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#meta">meta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#websocket">websocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#tls">TLS</a></li>
@@ -254,7 +255,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#musicdb-start">musicdb-start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#quickupdate">quickupdate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#update">update</a></li>
 </ul>
 </li>
 </ul>
@@ -719,10 +720,21 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        path (str): Absolute path to the tracker database file.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: When the version of the database does not match the expected version. (Updating MusicDB may failed)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
         <span class="n">Database</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="s2">&quot;SELECT value FROM meta WHERE key = &#39;version&#39;&quot;</span><span class="p">)</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unable to read version number from Tracker Database&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unexpected version number of Tracker Database. Got </span><span class="si">%i</span><span class="s2">, expected </span><span class="si">%i</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         
 
 <div class="viewcode-block" id="TrackerDatabase.AddRelation"><a class="viewcode-back" href="../../../mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.AddRelation">[docs]</a>    <span class="k">def</span> <span class="nf">AddRelation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">ida</span><span class="p">,</span> <span class="n">idb</span><span class="p">):</span>
@@ -1148,7 +1160,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'3.1.0',
+            VERSION:'4.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

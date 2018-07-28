@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.ws.websocket &mdash; MusicDB 3.1.0 documentation</title>
+  <title>lib.ws.websocket &mdash; MusicDB 4.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 3.1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 4.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                3.1
+                4.0
               </div>
             
           
@@ -100,6 +100,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#meta">meta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#websocket">websocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#tls">TLS</a></li>
@@ -254,7 +255,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#musicdb-start">musicdb-start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#quickupdate">quickupdate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#update">update</a></li>
 </ul>
 </li>
 </ul>
@@ -897,9 +898,12 @@
 <span class="sd">        It removes this connection to the broadcasting infrastructure of :class:`lib.ws.websocket.MusicDBWebSocketFactory`.</span>
 
 <span class="sd">        This method calls an ``onWSDisconnect(wasClean:bool, closecode:int, closereason:str)`` Method that must be implemented by the programmer who uses this class.</span>
+<span class="sd">        The ``onWSDisconnect`` method gets only called when there was a successful connection before!</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">RemoveFromBroadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">RemoveFromBroadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">onWSDisconnect</span><span class="p">(</span><span class="n">wasClean</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">code</span> <span class="o">==</span> <span class="n">WebSocketServerProtocol</span><span class="o">.</span><span class="n">CLOSE_STATUS_CODE_NORMAL</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Websocket connection closed with </span><span class="se">\&quot;</span><span class="s2">Normal</span><span class="se">\&quot;</span><span class="s2"> code.&quot;</span><span class="p">)</span>
@@ -920,9 +924,8 @@
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33mlocalCloseCode    = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">localCloseCode</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33mlocalCloseReason  = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">localCloseReason</span><span class="p">)</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33mremoteCloseCode   = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">remoteCloseCode</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33mremoteCloseReason = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">remoteCloseReason</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33mremoteCloseReason = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">remoteCloseReason</span><span class="p">)</span></div>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">onWSDisconnect</span><span class="p">(</span><span class="n">wasClean</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span></div>
 
         <span class="c1">#CLOSE_CODE_NORMAL              = 1000 #Normal close of connection.</span>
         <span class="c1">#CLOSE_CODE_GOING_AWAY          = 1001 #Going away.</span>
@@ -1038,7 +1041,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'3.1.0',
+            VERSION:'4.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.cfg.csv &mdash; MusicDB 3.1.0 documentation</title>
+  <title>lib.cfg.csv &mdash; MusicDB 4.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 3.1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 4.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                3.1
+                4.0
               </div>
             
           
@@ -100,6 +100,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#meta">meta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#websocket">websocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#tls">TLS</a></li>
@@ -254,7 +255,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#musicdb-start">musicdb-start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#quickupdate">quickupdate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#update">update</a></li>
 </ul>
 </li>
 </ul>
@@ -677,18 +678,26 @@
 <span class="kn">import</span> <span class="nn">csv</span>
 
 <div class="viewcode-block" id="CSVFile"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.csv.CSVFile">[docs]</a><span class="k">class</span> <span class="nc">CSVFile</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class reads `Comma Separated Value (CSV) &lt;https://tools.ietf.org/html/rfc4180&gt;`_ files as used by MusicDB.</span>
+
 <span class="sd">    The class does not cache the files content.</span>
 <span class="sd">    Every read access accesses the actual file.</span>
 <span class="sd">    Writing does the file update.</span>
 
 <span class="sd">    The csv files this class works with must have the following dialect:</span>
 
+<span class="sd">        * first line is a header line</span>
 <span class="sd">        * delimiter:  ``,`` </span>
 <span class="sd">        * escapechar: ``\``</span>
 <span class="sd">        * quotechar:  ``&quot;``</span>
 <span class="sd">        * quoting:    ``csv.QUOTE_NONNUMERIC``</span>
+<span class="sd">        * line break: ``\n``</span>
 
+<span class="sd">    It is allowed to modify the CSV files with external programs, but not guaranteed that</span>
+<span class="sd">    MusicDB will not overwrite the changes.</span>
+<span class="sd">    It is recommended to only read the files outside of MusicDB.</span>
+<span class="sd">    Do not change the layout of the files!</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path (str): Absolute path of the csv file the class works with</span>
@@ -705,14 +714,42 @@
 
 <div class="viewcode-block" id="CSVFile.Read"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.csv.CSVFile.Read">[docs]</a>    <span class="k">def</span> <span class="nf">Read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Reads the file an returns its rows as a list.</span>
+<span class="sd">        This method reads the file and returns its a table represented as a list of dictionaries.</span>
+<span class="sd">        The dictionary has a key for each column in the header of the file.</span>
+<span class="sd">        So each entry in the list represents one row of the file,</span>
+<span class="sd">        and each entry in the dictionary represents one cell or column in that row.</span>
 
-<span class="sd">        If there is only a single column, than the returned list contains values.</span>
-<span class="sd">        If there are multiple columns, the returned list contains tuple</span>
+<span class="sd">        Example:</span>
 
+<span class="sd">            .. code-block:: js</span>
+
+<span class="sd">                name, id</span>
+<span class="sd">                a, 1</span>
+<span class="sd">                b, 2</span>
+<span class="sd">                c, 3</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                table = csv.Read()</span>
+<span class="sd">                print(table)</span>
+
+<span class="sd">            .. code-block:: js</span>
+
+<span class="sd">                [</span>
+<span class="sd">                    {&#39;name&#39;: &#39;a&#39;, &#39;id&#39;: 1},</span>
+<span class="sd">                    {&#39;name&#39;: &#39;b&#39;, &#39;id&#39;: 2},</span>
+<span class="sd">                    {&#39;name&#39;: &#39;c&#39;, &#39;id&#39;: 3}</span>
+<span class="sd">                ]</span>
+
+<span class="sd">                </span>
 <span class="sd">        Returns:</span>
-<span class="sd">            A list of rows</span>
+<span class="sd">            A list of dictionaries with one entry or each cell. When the file does not exist, ``None`` gets returned.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            StopIteration: When the CSV file is empty</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="kc">None</span>    <span class="c1"># in case the file does not exist</span>
+
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
             <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> 
                     <span class="n">delimiter</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span><span class="p">,</span>
@@ -720,43 +757,94 @@
                     <span class="n">quotechar</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">quotechar</span><span class="p">,</span>
                     <span class="n">quoting</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">quoting</span><span class="p">)</span>
 
-            <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">row</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">rows</span></div>
+            <span class="c1"># read header and prepare a dict with a list for each column</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">table</span>  <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="c1"># read value rows and map them to the dict columns</span>
+            <span class="k">for</span> <span class="n">csvrow</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+                <span class="n">tablerow</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">csvrow</span><span class="p">):</span>
+                    <span class="n">key</span>           <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+                    <span class="n">tablerow</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+                <span class="n">table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tablerow</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">table</span> </div>
   
 
-<div class="viewcode-block" id="CSVFile.Write"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.csv.CSVFile.Write">[docs]</a>    <span class="k">def</span> <span class="nf">Write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+<div class="viewcode-block" id="CSVFile.Write"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.csv.CSVFile.Write">[docs]</a>    <span class="k">def</span> <span class="nf">Write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Write rows into the csv file</span>
+<span class="sd">        Write rows into the csv file.</span>
+<span class="sd">        The first row will be the header of the table.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: js</span>
+
+<span class="sd">                [</span>
+<span class="sd">                    {&#39;name&#39;: &#39;a&#39;, &#39;id&#39;: 1},</span>
+<span class="sd">                    {&#39;name&#39;: &#39;b&#39;, &#39;id&#39;: 2},</span>
+<span class="sd">                    {&#39;name&#39;: &#39;c&#39;, &#39;id&#39;: 3}</span>
+<span class="sd">                ]</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                print(table)</span>
+<span class="sd">                csv.Write(table)</span>
+<span class="sd">                # or: csv.Write(table, [&quot;name&quot;, &quot;id&quot;])</span>
+
+<span class="sd">            .. code-block:: js</span>
+
+<span class="sd">                name, id</span>
+<span class="sd">                a, 1</span>
+<span class="sd">                b, 2</span>
+<span class="sd">                c, 3</span>
+
 
 <span class="sd">        Args:</span>
-<span class="sd">            rows (list): A list of rows</span>
+<span class="sd">            table (list): A list with dictionaries of values for each column</span>
+<span class="sd">            header (list): The header of the CSV file. Each entry must also be a key in the ``table`` dictionary! If ``None``, then all keys of the dictionaries will be used.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            TypeError: when ``rows`` is not a list</span>
+<span class="sd">            TypeError: when ``table`` is not a list</span>
+<span class="sd">            ValueError: when the ``table`` list has not at least one entry</span>
+<span class="sd">            TypeError: when the ``table`` list elements are not dictionaries</span>
+<span class="sd">            TypeError: when ``header`` is not a list and not ``None``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;The rows argument must be of type list!&quot;</span><span class="p">)</span>
+        <span class="c1"># Check table</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">table</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;The table argument must be of type list!&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The table argument must be a list with at least one entry!&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;The table argument must be a list with elements of type dict!&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check header</span>
+        <span class="k">if</span> <span class="n">header</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">header</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;The header argument must be of type list!&quot;</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
-            <span class="n">csvwriter</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> 
+            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> 
                     <span class="n">delimiter</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span><span class="p">,</span>
                     <span class="n">escapechar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">escapechar</span><span class="p">,</span>
                     <span class="n">quotechar</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">quotechar</span><span class="p">,</span>
                     <span class="n">quoting</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">quoting</span><span class="p">)</span>
 
-            <span class="c1"># check if there are columns or not. The csv module cannot handle single columns lists</span>
-            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">tuple</span><span class="p">:</span>
-                    <span class="n">csvwriter</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">row</span><span class="p">])</span>
-                <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">csvwriter</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="kc">None</span><span class="p">])</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">csvwriter</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">row</span><span class="p">))</span>
+            <span class="c1"># write header</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">table</span><span class="p">:</span>
+                <span class="c1"># Write row</span>
+                <span class="n">csvrow</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">header</span><span class="p">]</span>
+                <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">csvrow</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="kc">None</span></div></div>
 
 <span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
@@ -797,7 +885,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'3.1.0',
+            VERSION:'4.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

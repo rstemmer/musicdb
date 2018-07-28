@@ -38,7 +38,7 @@ Furthermore those changes may break scripts you wrote around MusicDB.
 
 Lines starting with "**:wrench: Change:**" are steps you have to do *before* updating via `install.sh` script.
 
-### xx.07.18: 3.x.x → 4.0.0+
+### 28.07.18: 3.x.x → 4.0.0+
 
 * Rebuild of the installation process.
   * **:wrench: Change:** Make a backup of the MusicDB data directory!

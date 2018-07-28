@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.cfg.mdbstate &mdash; MusicDB 3.1.0 documentation</title>
+  <title>lib.cfg.mdbstate &mdash; MusicDB 4.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 3.1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 4.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                3.1
+                4.0
               </div>
             
           
@@ -100,6 +100,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#meta">meta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#websocket">websocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#tls">TLS</a></li>
@@ -254,7 +255,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#musicdb-start">musicdb-start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#quickupdate">quickupdate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/scripts.html#update">update</a></li>
 </ul>
 </li>
 </ul>
@@ -685,6 +686,8 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
+<span class="k">class</span> <span class="nc">META</span><span class="p">:</span>
+    <span class="k">pass</span>
 <span class="k">class</span> <span class="nc">QUEUE</span><span class="p">:</span>
     <span class="k">pass</span>
 
@@ -694,17 +697,17 @@
 
 <span class="sd">    The following table shows which method is responsible for which file in the MusicDB State Directory.</span>
 
-<span class="sd">        +------------------------+------------------------+------------------------+</span>
-<span class="sd">        | File Name              | Read Method            | Write Method           |</span>
-<span class="sd">        +========================+========================+========================+</span>
-<span class="sd">        | songqueue.csv          | :meth:`~LoadSongQueue` | :meth:`~SaveSongQueue` |</span>
-<span class="sd">        +------------------------+------------------------+------------------------+</span>
-<span class="sd">        | artistblacklist.csv    | :meth:`~LoadBlacklist` | :meth:`~SaveBlacklist` |</span>
-<span class="sd">        +------------------------+------------------------+------------------------+</span>
-<span class="sd">        | albumblacklist.csv     | :meth:`~LoadBlacklist` |                        |</span>
-<span class="sd">        +------------------------+------------------------+------------------------+</span>
-<span class="sd">        | songblacklist.csv      | :meth:`~LoadBlacklist` |                        |</span>
-<span class="sd">        +------------------------+------------------------+------------------------+</span>
+<span class="sd">        +------------------------+-------------------------+-------------------------+</span>
+<span class="sd">        | File Name              | Read Method             | Write Method            |</span>
+<span class="sd">        +========================+=========================+=========================+</span>
+<span class="sd">        | songqueue.csv          | :meth:`~LoadSongQueue`  | :meth:`~SaveSongQueue`  |</span>
+<span class="sd">        +------------------------+-------------------------+-------------------------+</span>
+<span class="sd">        | artistblacklist.csv    | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |</span>
+<span class="sd">        +------------------------+-------------------------+-------------------------+</span>
+<span class="sd">        | albumblacklist.csv     | :meth:`~LoadBlacklists` |                         |</span>
+<span class="sd">        +------------------------+-------------------------+-------------------------+</span>
+<span class="sd">        | songblacklist.csv      | :meth:`~LoadBlacklists` |                         |</span>
+<span class="sd">        +------------------------+-------------------------+-------------------------+</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path: Absolute path to the MusicDB state directory</span>
@@ -714,9 +717,14 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">musicdb</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
         <span class="n">Config</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;state.ini&quot;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">musicdb</span> <span class="o">=</span> <span class="n">musicdb</span><span class="p">;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">path</span>    <span class="o">=</span> <span class="n">path</span><span class="p">;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span>   <span class="o">=</span> <span class="n">QUEUE</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">musicdb</span> <span class="o">=</span> <span class="n">musicdb</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span>    <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span>    <span class="o">=</span> <span class="n">META</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;meta&quot;</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># 0 = inf</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">version</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Updating mdbstate/state.ini to version 2&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s2">&quot;meta&quot;</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="MDBState.ReadList"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.ReadList">[docs]</a>    <span class="k">def</span> <span class="nf">ReadList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listname</span><span class="p">):</span>
@@ -792,8 +800,8 @@
         <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">entryid</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                <span class="n">songid</span>  <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">entryid</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;EntryID&quot;</span><span class="p">])</span>
+                <span class="n">songid</span>  <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;SongID&quot;</span><span class="p">])</span>
                 <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">entryid</span><span class="p">,</span> <span class="n">songid</span><span class="p">))</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Invalid entry in stored Song Queue: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">! </span><span class="se">\033</span><span class="s2">[1;30m(Entry will be ignored)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">))</span>
@@ -816,7 +824,13 @@
         <span class="c1"># save entry ID as string, csv cannot handle 128bit integer</span>
         <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">queue</span><span class="p">:</span>
-            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])])</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">row</span><span class="p">[</span><span class="s2">&quot;EntryID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">row</span><span class="p">[</span><span class="s2">&quot;SongID&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+            <span class="c1">#rows.append([str(entry[0]), int(entry[1])])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">WriteList</span><span class="p">(</span><span class="s2">&quot;songqueue&quot;</span><span class="p">,</span> <span class="n">rows</span><span class="p">)</span>
         <span class="k">return</span></div>
 
@@ -824,13 +838,14 @@
 <div class="viewcode-block" id="MDBState.LoadBlacklists"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.LoadBlacklists">[docs]</a>    <span class="k">def</span> <span class="nf">LoadBlacklists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method returns a dictionary with the blacklist managed by :class:`mdbapi.randy.Randy`</span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            A dictionary with the blacklists as expected by :class:`mdbapi.randy.Randy`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">blacklist</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReadList</span><span class="p">(</span><span class="s2">&quot;artistblacklist&quot;</span><span class="p">)</span> <span class="p">]</span>
-        <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReadList</span><span class="p">(</span><span class="s2">&quot;albumblacklist&quot;</span><span class="p">)</span>  <span class="p">]</span>
-        <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="p">[</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReadList</span><span class="p">(</span><span class="s2">&quot;songblacklist&quot;</span><span class="p">)</span>   <span class="p">]</span>
+        <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;ArtistID&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;ArtistID&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReadList</span><span class="p">(</span><span class="s2">&quot;artistblacklist&quot;</span><span class="p">)</span> <span class="p">]</span>
+        <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;AlbumID&quot;</span><span class="p">]</span>  <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;AlbumID&quot;</span><span class="p">]</span> <span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReadList</span><span class="p">(</span><span class="s2">&quot;albumblacklist&quot;</span><span class="p">)</span>  <span class="p">]</span>
+        <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="p">[</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;SongID&quot;</span><span class="p">]</span>   <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;SongID&quot;</span><span class="p">]</span>  <span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReadList</span><span class="p">(</span><span class="s2">&quot;songblacklist&quot;</span><span class="p">)</span>   <span class="p">]</span>
         <span class="k">return</span> <span class="n">blacklist</span></div>
 
 
@@ -845,9 +860,12 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            *Nothing*</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">WriteList</span><span class="p">(</span><span class="s2">&quot;songblacklist&quot;</span><span class="p">,</span>   <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">WriteList</span><span class="p">(</span><span class="s2">&quot;albumblacklist&quot;</span><span class="p">,</span>  <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">WriteList</span><span class="p">(</span><span class="s2">&quot;artistblacklist&quot;</span><span class="p">,</span> <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">])</span></div>
+        <span class="n">songblacklist</span>   <span class="o">=</span> <span class="p">[</span> <span class="p">{</span><span class="s2">&quot;SongID&quot;</span><span class="p">:</span>   <span class="n">x</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span>   <span class="p">]</span>
+        <span class="n">albumblacklist</span>  <span class="o">=</span> <span class="p">[</span> <span class="p">{</span><span class="s2">&quot;AlbumID&quot;</span><span class="p">:</span>  <span class="n">x</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span>  <span class="p">]</span>
+        <span class="n">artistblacklist</span> <span class="o">=</span> <span class="p">[</span> <span class="p">{</span><span class="s2">&quot;ArtistID&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span> <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WriteList</span><span class="p">(</span><span class="s2">&quot;songblacklist&quot;</span><span class="p">,</span>   <span class="n">songblacklist</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WriteList</span><span class="p">(</span><span class="s2">&quot;albumblacklist&quot;</span><span class="p">,</span>  <span class="n">albumblacklist</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WriteList</span><span class="p">(</span><span class="s2">&quot;artistblacklist&quot;</span><span class="p">,</span> <span class="n">artistblacklist</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="MDBState.GetFilterList"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.GetFilterList">[docs]</a>    <span class="k">def</span> <span class="nf">GetFilterList</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -908,7 +926,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'3.1.0',
+            VERSION:'4.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

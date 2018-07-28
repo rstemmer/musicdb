@@ -41,17 +41,17 @@ class MDBState(Config, object):
 
     The following table shows which method is responsible for which file in the MusicDB State Directory.
 
-        +------------------------+------------------------+------------------------+
-        | File Name              | Read Method            | Write Method           |
-        +========================+========================+========================+
-        | songqueue.csv          | :meth:`~LoadSongQueue` | :meth:`~SaveSongQueue` |
-        +------------------------+------------------------+------------------------+
-        | artistblacklist.csv    | :meth:`~LoadBlacklist` | :meth:`~SaveBlacklist` |
-        +------------------------+------------------------+------------------------+
-        | albumblacklist.csv     | :meth:`~LoadBlacklist` |                        |
-        +------------------------+------------------------+------------------------+
-        | songblacklist.csv      | :meth:`~LoadBlacklist` |                        |
-        +------------------------+------------------------+------------------------+
+        +------------------------+-------------------------+-------------------------+
+        | File Name              | Read Method             | Write Method            |
+        +========================+=========================+=========================+
+        | songqueue.csv          | :meth:`~LoadSongQueue`  | :meth:`~SaveSongQueue`  |
+        +------------------------+-------------------------+-------------------------+
+        | artistblacklist.csv    | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |
+        +------------------------+-------------------------+-------------------------+
+        | albumblacklist.csv     | :meth:`~LoadBlacklists` |                         |
+        +------------------------+-------------------------+-------------------------+
+        | songblacklist.csv      | :meth:`~LoadBlacklists` |                         |
+        +------------------------+-------------------------+-------------------------+
 
     Args:
         path: Absolute path to the MusicDB state directory

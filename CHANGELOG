@@ -8,7 +8,7 @@
 Run  git log --oneline  for more details
 
 
-┍━━━━┫ 2018-07-xx ┣━━━━┫ 4.0.0 ┣━━━━━━━━╍╍
+┍━━━━┫ 2018-07-28 ┣━━━━┫ 4.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ * CSV Files now have headers
 │ * The server now only accepts request from clients with a valid API Key

@@ -52,7 +52,7 @@ Some of those tools and libraries are side projects of the MusicDB project and a
 A list of these side projects can be found in the subsection `Other tools and Libraries`_.
 
 With *Python*, the interpreter itself and all python modules needed to run MusicDB are meant.
-A complete list of all dependencies can be found in ``musicdb-check.sh``.
+A complete list of all dependencies can be found in ``check.sh`` in the scripts directory.
 
 A documentation of the *Bash Scripts* an be found in the chapter :doc:`/usage/scripts`
 
@@ -192,10 +192,11 @@ Some of them are developed by myself:
 ``ID3Edit``:
    Is a tool that is used by MusicDB to edit and repair `ID3 Tags (no HTTPS) <http://id3.org/>`_ in mp3-files.
    Type ``id3edit --help`` for a short help. There is no more documentation yet, sorry.
+   Source code can be found at `GitHub <https://github.com/rstemmer/id3edit>`__
 
 ``libprinthex``:
    Supports ID3Edit with fancy hexadecimal outputs for debugging invalid ID3 tags.
-   Source code and documentation can be found at `GitHub <https://github.com/rstemmer/libprinthex>`_
+   Source code and documentation can be found at `GitHub <https://github.com/rstemmer/libprinthex>`__
 
 
 Third Party Resources
@@ -210,7 +211,6 @@ The following free third party components are included in MusicDB:
    * `Source Sans Pro <https://github.com/adobe-fonts/source-sans-pro>`_ and `Source Serif Pro <https://github.com/adobe-fonts/source-serif-pro>`_
    * `DejaVuSans <https://github.com/dejavu-fonts/dejavu-fonts>`_
    * `Font Awesome <https://fontawesome.io/>`_
-   * `ConvertUTF.h <https://llvm.org/doxygen/ConvertUTF_8h_source.html>`_
 
 
 Indices and tables

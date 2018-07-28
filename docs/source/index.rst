@@ -192,11 +192,11 @@ Some of them are developed by myself:
 ``ID3Edit``:
    Is a tool that is used by MusicDB to edit and repair `ID3 Tags (no HTTPS) <http://id3.org/>`_ in mp3-files.
    Type ``id3edit --help`` for a short help. There is no more documentation yet, sorry.
-   Source code can be found at `GitHub <https://github.com/rstemmer/id3edit>`_
+   Source code can be found at `GitHub <https://github.com/rstemmer/id3edit>`__
 
 ``libprinthex``:
    Supports ID3Edit with fancy hexadecimal outputs for debugging invalid ID3 tags.
-   Source code and documentation can be found at `GitHub <https://github.com/rstemmer/libprinthex>`_
+   Source code and documentation can be found at `GitHub <https://github.com/rstemmer/libprinthex>`__
 
 
 Third Party Resources
