@@ -30,6 +30,8 @@ from lib.db.musicdb import MusicDatabase
 import logging
 import os
 
+class META:
+    pass
 class QUEUE:
     pass
 
@@ -39,17 +41,17 @@ class MDBState(Config, object):
 
     The following table shows which method is responsible for which file in the MusicDB State Directory.
 
-        +------------------------+------------------------+------------------------+
-        | File Name              | Read Method            | Write Method           |
-        +========================+========================+========================+
-        | songqueue.csv          | :meth:`~LoadSongQueue` | :meth:`~SaveSongQueue` |
-        +------------------------+------------------------+------------------------+
-        | artistblacklist.csv    | :meth:`~LoadBlacklist` | :meth:`~SaveBlacklist` |
-        +------------------------+------------------------+------------------------+
-        | albumblacklist.csv     | :meth:`~LoadBlacklist` |                        |
-        +------------------------+------------------------+------------------------+
-        | songblacklist.csv      | :meth:`~LoadBlacklist` |                        |
-        +------------------------+------------------------+------------------------+
+        +------------------------+-------------------------+-------------------------+
+        | File Name              | Read Method             | Write Method            |
+        +========================+=========================+=========================+
+        | songqueue.csv          | :meth:`~LoadSongQueue`  | :meth:`~SaveSongQueue`  |
+        +------------------------+-------------------------+-------------------------+
+        | artistblacklist.csv    | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |
+        +------------------------+-------------------------+-------------------------+
+        | albumblacklist.csv     | :meth:`~LoadBlacklists` |                         |
+        +------------------------+-------------------------+-------------------------+
+        | songblacklist.csv      | :meth:`~LoadBlacklists` |                         |
+        +------------------------+-------------------------+-------------------------+
 
     Args:
         path: Absolute path to the MusicDB state directory
@@ -59,9 +61,14 @@ class MDBState(Config, object):
     def __init__(self, path, musicdb=None):
 
         Config.__init__(self, os.path.join(path, "state.ini"))
-        self.musicdb = musicdb;
-        self.path    = path;
-        self.queue   = QUEUE()
+        self.musicdb = musicdb
+        self.path    = path
+        self.meta    = META
+
+        self.meta.version = self.Get(int, "meta", "version", 0) # 0 = inf
+        if self.meta.version < 2:
+            logging.info("Updating mdbstate/state.ini to version 2")
+            self.Set("meta", "version", 2)
 
 
     def ReadList(self, listname):
@@ -137,8 +144,8 @@ class MDBState(Config, object):
         queue = []
         for row in rows:
             try:
-                entryid = int(row[0])
-                songid  = int(row[1])
+                entryid = int(row["EntryID"])
+                songid  = int(row["SongID"])
                 queue.append((entryid, songid))
             except Exception as e:
                 logging.warning("Invalid entry in stored Song Queue: \"%s\"! \033[1;30m(Entry will be ignored)", str(row))
@@ -161,7 +168,13 @@ class MDBState(Config, object):
         # save entry ID as string, csv cannot handle 128bit integer
         rows = []
         for entry in queue:
-            rows.append([str(entry[0]), int(entry[1])])
+            row = {}
+            row["EntryID"] = str(entry[0])
+            row["SongID"]  = int(entry[1])
+
+            rows.append(row)
+
+            #rows.append([str(entry[0]), int(entry[1])])
         self.WriteList("songqueue", rows)
         return
 
@@ -169,13 +182,14 @@ class MDBState(Config, object):
     def LoadBlacklists(self):
         """
         This method returns a dictionary with the blacklist managed by :class:`mdbapi.randy.Randy`
+
         Returns:
             A dictionary with the blacklists as expected by :class:`mdbapi.randy.Randy`
         """
         blacklist = {}
-        blacklist["artists"] = [ None if x == "" else int(x) for x in self.ReadList("artistblacklist") ]
-        blacklist["albums"]  = [ None if x == "" else int(x) for x in self.ReadList("albumblacklist")  ]
-        blacklist["songs"]   = [ None if x == "" else int(x) for x in self.ReadList("songblacklist")   ]
+        blacklist["artists"] = [ None if x["ArtistID"] == "" else int(x["ArtistID"]) for x in self.ReadList("artistblacklist") ]
+        blacklist["albums"]  = [ None if x["AlbumID"]  == "" else int(x["AlbumID"] ) for x in self.ReadList("albumblacklist")  ]
+        blacklist["songs"]   = [ None if x["SongID"]   == "" else int(x["SongID"]  ) for x in self.ReadList("songblacklist")   ]
         return blacklist
 
 
@@ -190,9 +204,12 @@ class MDBState(Config, object):
         Returns:
             *Nothing*
         """
-        self.WriteList("songblacklist",   blacklist["songs"])
-        self.WriteList("albumblacklist",  blacklist["albums"])
-        self.WriteList("artistblacklist", blacklist["artists"])
+        songblacklist   = [ {"SongID":   x} for x in blacklist["songs"]   ]
+        albumblacklist  = [ {"AlbumID":  x} for x in blacklist["albums"]  ]
+        artistblacklist = [ {"ArtistID": x} for x in blacklist["artists"] ]
+        self.WriteList("songblacklist",   songblacklist)
+        self.WriteList("albumblacklist",  albumblacklist)
+        self.WriteList("artistblacklist", artistblacklist)
 
 
     def GetFilterList(self):

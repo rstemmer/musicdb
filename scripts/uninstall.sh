@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="1.0.0"
+SCRIPTVERSION="2.0.0"
 echo -e "\e[1;31mMusicDB-Uninstall [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
@@ -28,9 +28,10 @@ fi
 
 
 # Check if pwd is the source directory
-SOURCEDIR="$(pwd)"
+SOURCEDIR="$(dirname "$(pwd)")"
 if [ ! -d "$SOURCEDIR/.git" ] ; then
-    echo -e "\t\e[1;31mThe script must be executed from the source directory! \e[1;30m($SOURCEDIR/.git directory missing)\e[0m"
+    echo -e "\t\e[1;31mThe script must be executed from the \e[1;37mscripts\e[1;31m directory inside the source directory!"
+    echo -e "\t\e[1;30m($SOURCEDIR/.git directory missing)\e[0m"
     exit 1
 fi
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Configuration &mdash; MusicDB 3.1.0 documentation</title>
+  <title>MusicDB Configuration &mdash; MusicDB 4.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 3.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 4.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Handling log-files" href="logging.html"/>
         <link rel="prev" title="Philosophy of MusicDB" href="concept.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                3.1
+                4.0
               </div>
             
           
@@ -101,6 +101,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#meta">meta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#websocket">websocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tls">TLS</a></li>
@@ -255,7 +256,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-start">musicdb-start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#quickupdate">quickupdate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#update">update</a></li>
 </ul>
 </li>
 </ul>
@@ -663,14 +664,21 @@ The sections have the following structure:</p>
 <dt>option (type):</dt>
 <dd>description</dd>
 </dl>
+<div class="section" id="meta">
+<h2>meta<a class="headerlink" href="#meta" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>version (integer):</dt>
+<dd>This is the version number of configuration.
+This number is used <em>internal</em> to check if the configuration file provides the sections and key expected by MusicDB.
+When new sections or keys are added (or old ones removed), the version number gets incremented.
+After updating MusicDB compare your configuration with the new one and update the file by yourself (including the version number)</dd>
+</dl>
+</div>
 <div class="section" id="server">
 <h2>server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
 <dt>pidfile (path to file):</dt>
 <dd>This is the place where the PID file gets placed</dd>
-<dt>maxcallthreads (number ∈ ℕ):</dt>
-<dd>The number of threads that are used to handle websocket-API-Calls.
-For a single user a number equal to the number of clients used or at least 2 is a good value.</dd>
 <dt>statedir (path to a directory):</dt>
 <dd>In this directory the current global state of MusicDB is stored.
 More details can be found in the documentation for the state-file: <a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate" title="lib.cfg.mdbstate"><code class="xref py py-mod docutils literal"><span class="pre">mdbstate</span></code></a></dd>
@@ -704,6 +712,8 @@ For example, <code class="docutils literal"><span class="pre">0.0.0.0</span></co
 <dd>Time until the connection to the websocket server raises a timeout exception</dd>
 <dt>closetimeout (time in seconds):</dt>
 <dd>Time until the disconnection process of the websocket server raises a timeout exception</dd>
+<dt>key (base64 encoded key):</dt>
+<dd>A key that is used to identify clients that are allowed to use the websocket interface.</dd>
 </dl>
 </div>
 <div class="section" id="tls">
@@ -918,7 +928,7 @@ On weak computers this should be <code class="docutils literal"><span class="pre
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'3.1.0',
+            VERSION:'4.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

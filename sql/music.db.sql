@@ -1,3 +1,12 @@
+CREATE TABLE IF NOT EXISTS meta
+(
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    key         TEXT,
+    value       TEXT DEFAULT ''
+);
+INSERT INTO meta (key, value) VALUES ("version", 2);
+
+
 CREATE TABLE IF NOT EXISTS artists
 (
     artistid    INTEGER PRIMARY KEY AUTOINCREMENT,

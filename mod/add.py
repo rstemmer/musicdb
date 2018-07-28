@@ -22,6 +22,7 @@ It does the following steps:
 
     #. Find artists and albums that are not in the database
     #. Provide an UI to rename the files (with online validation)
+    #. Normalizes the Unicode of the file names to NFC (Canonical Composition) when applying ``[c] Clean name`` command.
     #. Import artist and album
     #. Import artwork (if there is one in the meta data)
     #. Import lyrics (if there are some in the files meta data)
@@ -131,11 +132,11 @@ In that case, you have to import an artwork manually using the :doc:`/mod/artwor
 import argparse
 import os
 import re
+import unicodedata
 from lib.modapi         import MDBModule
 from lib.db.musicdb     import MusicDatabase, SONG_LYRICSSTATE_FROMFILE
 from lib.filesystem     import Filesystem
 from lib.metatags       import MetaTags
-#from mdbapi.tags        import MusicDBTags
 from mdbapi.database    import MusicDBDatabase
 from mdbapi.artwork     import MusicDBArtwork
 from lib.clui.listview  import ListView
@@ -216,6 +217,7 @@ class SongView(ListView, ButtonView):
 
             newfilename  = filename[seg["number"]:seg["gap"]]
             newfilename += filename[seg["name"]:]
+            newfilename  = unicodedata.normalize("NFC", newfilename)
 
             newpath = os.path.join(directory, newfilename + "." + extension)
             self.elements[index] = (origpath, newpath)
@@ -644,7 +646,12 @@ class add(MDBModule, MusicDBDatabase):
         releaseinput.SetData(release)
         origininput.SetData(origin)
         artworkinput.SetData(True)
-        musicaiinput.SetData(False)
+
+        if self.cfg.debug.disableai:
+            musicaiinput.SetData(False)
+        else:
+            musicaiinput.SetData(True)
+
         if metadata["lyrics"]:
             lyricsinput.SetData(True)
         else:

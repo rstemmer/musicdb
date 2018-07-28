@@ -144,6 +144,29 @@ div.maincell
 }
 
 
+div.statecell
+{
+    display:        flex;
+    height:         100%;
+    width:          100%;
+    align-items:    center;
+    justify-content:center;
+}
+
+div.stateelements
+{
+    display:        flex;
+    height:         100%;
+    flex-direction: row;
+    align-items:    center;
+}
+
+div#Controls
+{
+    display:        flex;
+    height:         100%;
+}
+
 /******************/
 /* Sonderwürste for the HUD  */
 /******************/

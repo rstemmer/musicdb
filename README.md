@@ -25,7 +25,7 @@ For news, follow [@MusicDBProject](https://twitter.com/MusicDBProject) on Twitte
 The following image shows a complete overview of MusicDB and its connections to other software.
 It shows the flow of our music and the related information (purple) from the source music collection (bottom left) to the Web Browser and Audio Player.
 
-![MusicDB Overview](https://rstemmer.github.io/musicdb/build/html/_images/Map2.svg)
+![MusicDB Overview](https://rstemmer.github.io/musicdb/build/html/basics/overview.html)
 
 A detailed description of this overview image and MusicDB's components can be found in the documentation: [Description of the Image ](https://rstemmer.github.io/musicdb/build/html/basics/overview.html)
 
@@ -37,6 +37,27 @@ Major releases have changes that are not compatible to the previous version of M
 Furthermore those changes may break scripts you wrote around MusicDB.
 
 Lines starting with "**:wrench: Change:**" are steps you have to do *before* updating via `install.sh` script.
+
+### 28.07.18: 3.x.x → 4.0.0+
+
+* Rebuild of the installation process.
+  * **:wrench: Change:** Make a backup of the MusicDB data directory!
+  * Do not use the update script to update to this version (4.0.0). Use the `install.sh` script!
+* More stable CSV files by adding a header. Now updating the old CSV files is possible
+  * **:wrench: Change:** Remove the old CSV-Files from the `mdbstate` directory. (You'll loose the current song queue and blacklist state)
+* WebSocket configuration for WebUI is now in separate `webui/config.js`
+  * **:wrench: Change:** You may want to backup the settings `from webui/js/musicdb.js`
+* The server now only accepts request from clients with a valid API Key
+* Databases now have a version number to allow easy updated.
+  * **:wrench: Change:** This is the last time you have to touch the databases by yourself. For each database:
+    * ``sqlite $DATABASE.db`` (With DATABASE = ``music``, ``lycra``, ``tracker``)
+    * ``CREATE TABLE IF NOT EXISTS meta (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT, VALUE TEXT DEFAULT '');``
+    * ``INSERT INTO meta (key, value) VALUES ("version", 2);``
+    * ``.quit``
+* **:wrench: Change:** Restore your configuration
+  * Update the icecast passwort (`musicdb.ini` ↔ `icecast/config.xml`)
+  * Update the WebSocket API Key (`musicdb.ini` ↔ `../server/webui/config.js`)
+
 
 ### 06.05.18: 2.x.x → 3.0.0+
 

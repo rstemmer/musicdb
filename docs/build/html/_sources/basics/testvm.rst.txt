@@ -74,8 +74,8 @@ Installing/Updating MusicDB Test Environment
    cd /src
    git clone git@m45ch1n3.de:/data/git/musicdb.git
 
-   cd /src/musicdb
-   ./musicdb-check.sh   # Install all missing dependencies
+   cd /src/musicdb/scripts
+   ./check.sh     # Then install all missing dependencies
    ./install.sh
 
 

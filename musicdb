@@ -150,7 +150,7 @@ if __name__ == "__main__":
 
     # reconfigure logger
     if args.quiet:
-        debugfile = "/dev/null"
+        debugfile = None
     else:
         debugfile = config.log.debugfile
 
@@ -160,7 +160,7 @@ if __name__ == "__main__":
     elif args.verbose:
         logfile = config.log.logfile
     else:
-        logfile = "/dev/null"
+        logfile = None
         
     if args.loglevel:
         loglevel = args.loglevel

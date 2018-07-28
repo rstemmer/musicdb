@@ -51,10 +51,21 @@ class LycraDatabase(Database):
 
     Args:
         path (str): Absolute path to the LyCra database file.
+
+    Raises:
+        ValueError: When the version of the database does not match the expected version. (Updating MusicDB may failed)
     """
 
     def __init__(self, path):
         Database.__init__(self, path)
+        try:
+            result = self.GetFromDatabase("SELECT value FROM meta WHERE key = 'version'")
+            version = int(result[0][0])
+        except Exception as e:
+            raise ValueError("Unable to read version number from Lycra Database")
+
+        if version != 2:
+            raise ValueError("Unexpected version number of Lycra Database. Got %i, expected %i", version, 2)
 
 
 

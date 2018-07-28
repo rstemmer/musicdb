@@ -7,6 +7,20 @@
 
 Run  git log --oneline  for more details
 
+
+┍━━━━┫ 2018-07-28 ┣━━━━┫ 4.0.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ * CSV Files now have headers
+│ * The server now only accepts request from clients with a valid API Key
+│ * WebSocket configuration for WebUI is now in separate config.js
+│
+┝━ MINOR CHANGES
+│ * musicdb.ini now has a version number
+│ * Databases now has a version number
+│ * Scripts are now in a separate directory. Helpers will be moved to the server directory on installation.
+│ - Moved id3edit sources into its own repository
+└───────────────────────────────────────╌╌
+
 ┍━━━━┫ 2018-05-06 ┣━━━━┫ 3.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ + New Columns in songs table: checksum, lastplayed

@@ -20,6 +20,8 @@ This library provides the excessive logging system of MusicDB.
 
 import logging
 import sys
+import os
+import stat
 
 class MBDLogFormatter(logging.Formatter):
     """
@@ -97,7 +99,7 @@ class MusicDBLogger():
         debugpath (str): Path to a file where everything (DEBUG) shall be logged in. ``None`` for not such a file.
         config: A MusicDB Configuration object that hold the ignore list. If ``None`` the configuration will not be appied.
     """
-    def __init__(self, path="stderr", loglevelname="INFO", debugpath=None, config=None):
+    def __init__(self, logpath="stderr", loglevelname="INFO", debugpath=None, config=None):
         # configure loglevel
         loglevelname = loglevelname.upper()
         loglevelmap = {}
@@ -112,12 +114,13 @@ class MusicDBLogger():
         self.handler = []   # list of handler, at least one: stderr. maybe a file for more details
 
         # primary handler
-        if path == "stdout":
+        if logpath == "stdout":
             phandler = logging.StreamHandler(sys.stdout)
-        elif path == "stderr":
+        elif logpath == "stderr":
             phandler = logging.StreamHandler(sys.stderr)
         else:
-            phandler = logging.FileHandler(filename=path, mode="a")
+            phandler = logging.FileHandler(logpath)
+
         phandler.setLevel(loglevel)
         self.handler.append(phandler)
 
@@ -126,10 +129,6 @@ class MusicDBLogger():
         if debugpath:
             shandler = logging.FileHandler(debugpath)
             shandler.setLevel(logging.DEBUG)
-        else:
-            shandler = None
-
-        if shandler:
             self.handler.append(shandler)
 
 
@@ -155,7 +154,19 @@ class MusicDBLogger():
 
 
 
-    def Reconfigure(self, path="stderr", loglevelname="DEBUG", debugpath=None, config=None):
+    def SetFilePermissions(self, path):
+        try:
+            with open(path, 'a'):
+                pass
+
+            os.chmod(path, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH) # 664
+        except PermissionError:
+            return False
+        return True
+
+
+
+    def Reconfigure(self, logpath="stderr", loglevelname="DEBUG", debugpath=None, config=None):
         logging.debug("Reconfiguring logging behaviour")
         # configure loglevel
         loglevelname = loglevelname.upper()
@@ -175,22 +186,24 @@ class MusicDBLogger():
         self.handler = []
 
         # primary handler
-        if path == "stdout":
-            phandler = logging.StreamHandler(sys.stdout)
-        elif path == "stderr":
-            phandler = logging.StreamHandler(sys.stderr)
-        else:
-            phandler = logging.FileHandler(filename=path, mode="a")
-        phandler.setLevel(loglevel)
-        self.handler.append(phandler)
+        if logpath != None and logpath != "/dev/null":
+            if logpath == "stdout":
+                phandler = logging.StreamHandler(sys.stdout)
+            elif logpath == "stderr":
+                phandler = logging.StreamHandler(sys.stderr)
+            else:
+                phandler = logging.FileHandler(logpath)
+                self.SetFilePermissions(logpath) # Set file permission to rw-rw-r-- !
+
+            phandler.setLevel(loglevel)
+            self.handler.append(phandler)
 
         # secondary handler
-        if debugpath:
+        if debugpath != None and debugpath != "/dev/null":
             shandler = logging.FileHandler(debugpath)
+            self.SetFilePermissions(debugpath)
             shandler.setLevel(logging.DEBUG)
-        else:
-            shandler = None
-        self.handler.append(shandler)
+            self.handler.append(shandler)
 
 
         # configure formatter
@@ -211,7 +224,7 @@ class MusicDBLogger():
 
 
         # Show the user where to find the debugging infos
-        if debugpath:
+        if debugpath != None and debugpath != "/dev/null":
             logging.debug("logging debugging info in %s", debugpath)
         logging.debug("setting display-loglevel to \033[1;36m%s", loglevelname)
 

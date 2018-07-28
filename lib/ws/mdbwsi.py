@@ -120,10 +120,6 @@ class MusicDBWebSocketInterface(object):
             logging.exception(e)
             raise e
 
-        self.MaxCallThreads     = self.cfg.server.maxcallthreads
-        self.CallThreadList     = [None] * self.MaxCallThreads
-
-
 
     def onWSConnect(self):
         self.stream.RegisterCallback(self.onStreamEvent)
@@ -290,6 +286,7 @@ class MusicDBWebSocketInterface(object):
             fncsig      = packet["fncsig"]
             arguments   = packet["arguments"]
             passthrough = packet["pass"]
+            apikey      = packet["key"]
         except:
             logging.warning("Malformed request packet received! \033[0;33m(Call will be ignored)")
             logging.debug("Packet: %s", str(packet))
@@ -298,44 +295,21 @@ class MusicDBWebSocketInterface(object):
         logging.debug("method: %s, fncname: \033[1;37m%s\033[1;30m, fncsig: %s, arguments: %s, pass: %s", 
                 str(method),str(fncname),str(fncsig),str(arguments),str(passthrough))
 
+        if apikey != self.cfg.websocket.apikey:
+            logging.error("Invalid WebSocket API Key! \033[1;30m(Check your configuration. If they are correct check your HTTP servers security!)\033[0m\nreceived: %s\nexpected: %s", str(apikey), str(self.cfg.websocket.apikey))
+            return False
+
         if not method in ["call", "request", "broadcast"]:
             logging.warning("Unknown call-method: %s! \033[0;33m(Call will be ignored)", str(method))
             return False
 
-        # In some cases a call shall be handles asynchronously to avoid blocking.
-        # In Theads there is no access to the musicdb because self.database cannot be used in different threads.
-        # So this are just special cases.
-        asyncfunctions = [
-                "RunLyricsCrawler"
-                ]
-        if fncname in asyncfunctions:
-            try:
-                for i in range(self.MaxCallThreads):
-                    if self.CallThreadList[i] and self.CallThreadList[i].is_alive():
-                        continue
-                    self.CallThreadList[i] = Thread(
-                            target = MusicDBWebSocketInterface.HandleCall, 
-                            args   = (self, fncname, method, fncsig, arguments, passthrough))
-                    self.CallThreadList[i].start()
-                    break
-                else:
-                    logging.warning("There are too many asynchronous call-threads running. This request (call for %s) will be ignored!", str(fncname))
-                    return False
-
-            except Exception as e:
-                logging.error("Unexpected error for async. call-function: %s!", str(fncname))
-                logging.error(e)
-                traceback.print_exc()
-                return False
-        else:
-            # Handle the Call synchronously
-            try:
-                self.HandleCall(fncname, method, fncsig, arguments, passthrough)
-            except Exception as e:
-                logging.error("Unexpected error for async. call-function: %s!", str(fncname))
-                logging.error(e)
-                traceback.print_exc()
-                return False
+        try:
+            self.HandleCall(fncname, method, fncsig, arguments, passthrough)
+        except Exception as e:
+            logging.error("Unexpected error for async. call-function: %s!", str(fncname))
+            logging.error(e)
+            traceback.print_exc()
+            return False
 
         return True
 

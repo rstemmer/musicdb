@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &amp; Update &mdash; MusicDB 3.1.0 documentation</title>
+  <title>Installation &amp; Update &mdash; MusicDB 4.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 3.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 4.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Music" href="music.html"/>
         <link rel="prev" title="Workflow for development" href="../basics/workflow.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                3.1
+                4.0
               </div>
             
           
@@ -101,6 +101,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#meta">meta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#websocket">websocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tls">TLS</a></li>
@@ -255,7 +256,7 @@
 <li class="toctree-l2"><a class="reference internal" href="scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scripts.html#musicdb-start">musicdb-start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scripts.html#musicdb-stop">musicdb-stop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scripts.html#quickupdate">quickupdate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scripts.html#update">update</a></li>
 </ul>
 </li>
 </ul>
@@ -677,7 +678,8 @@ Major updates change the configuration file and the database scheme.</p>
 </div>
 <div class="section" id="installation-automatic">
 <h2>Installation (Automatic)<a class="headerlink" href="#installation-automatic" title="Permalink to this headline">¶</a></h2>
-<p>To install MusicDB, there is a script <code class="docutils literal"><span class="pre">install.sh</span></code> that will help you.
+<p>To install MusicDB, there is a script <code class="docutils literal"><span class="pre">scripts/install.sh</span></code> that will help you.
+Execute this script from the scripts directory to install MusicDB.
 The following subsections explain how to install MusicDB using this script.</p>
 <div class="section" id="install-dependencies">
 <h3>Install Dependencies<a class="headerlink" href="#install-dependencies" title="Permalink to this headline">¶</a></h3>
@@ -697,13 +699,14 @@ The following subsections explain how to install MusicDB using this script.</p>
 </div>
 <div class="section" id="executing-the-install-sh-script">
 <h3>Executing the install.sh Script<a class="headerlink" href="#executing-the-install-sh-script" title="Permalink to this headline">¶</a></h3>
-<p>Now you can simply execute the <code class="docutils literal"><span class="pre">install.sh</span></code> script from the source directory, after you have cloned the <a class="reference external" href="https://github.com/rstemmer/musicdb">git</a> repository from GitHub.</p>
+<p>Now you can simply execute the <code class="docutils literal"><span class="pre">install.sh</span></code> script from the scripts directory in the source directory,
+after you have cloned the <a class="reference external" href="https://github.com/rstemmer/musicdb">git</a> repository from GitHub.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># cd to a place where the source repository shall be downloaded</span>
 <span class="nb">cd</span> /src
 
 <span class="c1"># download MusicDB</span>
 git clone https://github.com/rstemmer/musicdb
-<span class="nb">cd</span> musicdb
+<span class="nb">cd</span> musicdb/scripts
 
 <span class="c1"># start the installation</span>
 su    <span class="c1"># you need to be root</span>
@@ -745,7 +748,7 @@ The script always tries to determine the state of a single installation step and
 </div>
 <div class="section" id="install-all-dependencies">
 <h3>Install all Dependencies<a class="headerlink" href="#install-all-dependencies" title="Permalink to this headline">¶</a></h3>
-<p>Execute the <code class="docutils literal"><span class="pre">musicdb-check.sh</span></code> script to see what dependencies are missing.
+<p>Execute the <code class="docutils literal"><span class="pre">check.sh</span></code> script to see what dependencies are missing.
 In context of the install.sh script, the name of this script is a bit misleading.
 It only checks for dependencies needed by MusicDB to run. It does not check the installation.</p>
 <p>Install at least all mandatory (none optional) dependencies.
@@ -759,6 +762,116 @@ Furthermore you should check <code class="docutils literal"><span class="pre">ic
 </div>
 <div class="section" id="installation-manually">
 <h2>Installation (Manually)<a class="headerlink" href="#installation-manually" title="Permalink to this headline">¶</a></h2>
+<p>The whole installation and updating process can be concluded into the steps in the table below.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="39%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Step</th>
+<th class="head">Installation</th>
+<th class="head">Update</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>MusicDB User</td>
+<td><ul class="first last simple">
+<li>Create <code class="docutils literal"><span class="pre">musicdb</span></code> User and Group</li>
+<li>Add music owner to <code class="docutils literal"><span class="pre">musicdb</span></code> group</li>
+</ul>
+</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Generate SSL Key</td>
+<td><ul class="first last simple">
+<li>Generate an SSL certificate and key</li>
+</ul>
+</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>Create directory tree</td>
+<td><ul class="first last simple">
+<li>Create data and server base directory</li>
+<li>Create MusicAI tree</li>
+<li>Create Artwork Cache</li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li>Update <code class="docutils literal"><span class="pre">artwork/default.jpg</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>MusicDB Configuration</td>
+<td><ul class="first last simple">
+<li>Install <code class="docutils literal"><span class="pre">musicdb.ini</span></code></li>
+<li>Set default parameters</li>
+<li>Create symlink to <code class="docutils literal"><span class="pre">/etc/musicdb.ini</span></code></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li>Update <code class="docutils literal"><span class="pre">musicdb.ini</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>Create databases</td>
+<td><ul class="first last simple">
+<li>Create all databases</li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li>Update database schemes</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>Icecast Configuration</td>
+<td><ul class="first last simple">
+<li>Create icecast user and group</li>
+<li>Create icecast configuration</li>
+<li>Copy SSL certificates</li>
+<li>Generate icecast passwords</li>
+<li>Update <code class="docutils literal"><span class="pre">musicdb.ini</span></code> with source PW</li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li>Update icecast configuration</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>System environment</td>
+<td><ul class="first last simple">
+<li>Install logrotate configuration</li>
+<li>Install shell profile</li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li>Update logrotate configuration</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>ID3Edit Installation</td>
+<td><ul class="first last simple">
+<li>Install ID3Edit</li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li>Update ID3Edit</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>MusicDB Installation</td>
+<td><ul class="first last simple">
+<li>Install MusicDB</li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li>Update MusicDB</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <p>The following steps give an idea of how to install MusicDB.</p>
 <div class="section" id="system-preparation">
 <h3>System Preparation<a class="headerlink" href="#system-preparation" title="Permalink to this headline">¶</a></h3>
@@ -792,11 +905,11 @@ mkdir /data/music   <span class="o">&amp;&amp;</span> chown -R user:musicdb    /
 <p class="last">On Debian the <code class="docutils literal"><span class="pre">python</span></code> command runs the ancient Python 2.
 Whenever this documentation is talking about Python, Python 3 is meant!</p>
 </div>
-<p>Further more, everything <code class="docutils literal"><span class="pre">musicdb-check</span></code> is missing.
+<p>Further more, everything <code class="docutils literal"><span class="pre">check</span></code> tells you is missing.
 The following list gives you some details about the listed modules.</p>
 <blockquote>
 <div><ul class="simple">
-<li>If an optional dependency is missing, read the <code class="docutils literal"><span class="pre">musicdb-check.sh</span></code> script. The comments help you to decide if you need them.</li>
+<li>If an optional dependency is missing, read the <code class="docutils literal"><span class="pre">check.sh</span></code> script. The comments help you to decide if you need them.</li>
 <li>The <em>PIL</em> module can be found as <code class="docutils literal"><span class="pre">pillow</span></code>.</li>
 <li><code class="docutils literal"><span class="pre">icecast</span></code> won’t be detected on Debian because there it is called <code class="docutils literal"><span class="pre">icecast2</span></code> (This has no impact).</li>
 <li><code class="docutils literal"><span class="pre">apachectl</span></code> my be not found if it is only available for root user. Or you simply use another HTTP server.</li>
@@ -809,7 +922,7 @@ The following list gives you some details about the listed modules.</p>
 <h3>Basic packages<a class="headerlink" href="#basic-packages" title="Permalink to this headline">¶</a></h3>
 <p>There are some external tools necessary.
 Furthermore there are lots of python packages needed.
-You can use the <code class="docutils literal"><span class="pre">musicdb-check.sh</span></code> script to see what packages are missing.</p>
+You can use the <code class="docutils literal"><span class="pre">check.sh</span></code> script to see what packages are missing.</p>
 <p>The missing <code class="docutils literal"><span class="pre">id3edit</span></code> tool is part of MusicDB.
 It’s installation is described in this documentation later on.</p>
 </div>
@@ -817,6 +930,7 @@ It’s installation is described in this documentation later on.</p>
 <h3>Download MusicDB<a class="headerlink" href="#download-musicdb" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># as user in ~/projects</span>
 git clone https://github.com/rstemmer/libprinthex.git
+git clone https://github.com/rstemmer/id3edit.git
 git clone https://github.com/rstemmer/musicdb.git
 </pre></div>
 </div>
@@ -831,7 +945,7 @@ git clone https://github.com/rstemmer/musicdb.git
 </div>
 <div class="section" id="id3edit">
 <h3>id3edit<a class="headerlink" href="#id3edit" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> musicdb/id3edit
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> id3edit
 ./build.sh
 ./install.sh
 </pre></div>
@@ -882,7 +996,7 @@ cp ~/projects/musicdb/share/logrotate.conf /etc/logrotate.d/musicdb
 </div>
 <div class="section" id="configureing-musicdb-webui">
 <h2>Configureing MusicDB WebUI<a class="headerlink" href="#configureing-musicdb-webui" title="Permalink to this headline">¶</a></h2>
-<p>The WebUI configuration must be done inside the file <code class="docutils literal"><span class="pre">webui/js/musicdb.js</span></code></p>
+<p>The WebUI configuration must be done inside the file <code class="docutils literal"><span class="pre">webui/config.js</span></code></p>
 <p>At the begin of this file, the variable <code class="docutils literal"><span class="pre">WEBSOCKET_URL</span></code> must be configured.
 In particular the port number must match the one set in the MusicDB Configuration file /etc/musicdb.ini.
 An example variable is <code class="docutils literal"><span class="pre">WEBSOCKET_URL</span> <span class="pre">=</span> <span class="pre">&quot;wss://localhost:9000&quot;</span></code>.</p>
@@ -993,8 +1107,9 @@ For minor release updates, the <code class="docutils literal"><span class="pre">
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> /src/musicdb      <span class="c1"># go to MusicDB&#39;s source directory</span>
 git pull             <span class="c1"># get the latest source code</span>
 git checkout master  <span class="c1"># make sure you are in the master branch</span>
+<span class="nb">cd</span> scripts           <span class="c1"># go into the scripts directory</span>
 su                   <span class="c1"># you must be root for the updating process</span>
-./install.sh         <span class="c1"># update</span>
+./update.sh --major  <span class="c1"># update</span>
 </pre></div>
 </div>
 </div>
@@ -1035,7 +1150,7 @@ su                   <span class="c1"># you must be root for the updating proces
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'3.1.0',
+            VERSION:'4.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

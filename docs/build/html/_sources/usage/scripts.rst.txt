@@ -5,7 +5,11 @@ There are several scripts to make it easier to use MusicDB.
 The scripts and how they work are described in the following sections.
 
 All scripts have no command line arguments.
-The last code examples in each subsection give an impression of what the script does.
+The last code examples in each subsection give an impression of what the script internally does.
+
+In the source directory, the scripts described in this chapter can be found in ``scripts/helper/*.sh``.
+When installing MusicDB, they get copied into the server directory that is part of the ``$PATH`` variable.
+So the scripts can be executed from anywhere in the shell.
 
 When and how to use these scripts will be shown in the following code example:
 
@@ -26,8 +30,8 @@ When and how to use these scripts will be shown in the following code example:
    # Stop all depending processes (befor shutting down the whole operating system)
    musicdb-shutdown.sh
 
-There are some more scripts in the MusicDB directory that are used for the installation process.
-See the :doc:`/usage/install` documentation to learn about ``install.sh`` and ``musicdb-check.sh``.
+There are some more scripts in the MusicDB scripts directory that are used for the installation process.
+See the :doc:`/usage/install` documentation to learn about ``install.sh`` and ``check.sh``.
 
 
 musicdb-boot
@@ -98,22 +102,16 @@ Then the server just gets killed by its PID.
    kill $( cat $MUSICDB_PIDFILE )
 
 
-quickupdate
------------
-
-.. warning::
-
-   This script is for partially updating the MusicDB installation during development and testing.
-
-   **Developers** should read this short script before using it.
-
-   **Users** should only use the ``install.sh`` script for updates.
+update
+------
 
 This script only updates the files in the server directory.
 So only a code update will be done.
-Data updates (like new database schemes) must be done by the developer himself.
 
 The script immediately runs the update.
 It does not ask the user to confirm the auto-detected setup of the installation.
 
+Data updates (like new database schemes) must be done by the developer himself **or**
+use the argument ``--major`` for a major release update.
+Then a post-update process gets started that updates the configuration and database schemes.
 

@@ -55,9 +55,13 @@ Now, the new option is availabe in the configuration object created using this c
 """
 
 import logging
+import grp
+import pwd
 from lib.cfg.config import Config
 from lib.filesystem import Filesystem
 
+class META:
+    pass
 class SERVER:
     pass
 class WEBSOCKET:
@@ -99,73 +103,86 @@ class MusicDBConfig(Config):
 
         logging.info("Reading and checking MusicDB Configuration")
 
+        # [meta]
+        self.meta = META()
+        self.meta.version           = self.Get(int, "meta",     "version",      1)
+        if self.meta.version < 2:
+            logging.warning("Version of musicdb.ini is too old. Please update the MusicDB Configuration!")
+
 
         # [server]
         self.server = SERVER()
-        self.server.pidfile         = self.Get(str, "server",   "pidfile",          "/data/musicdb/musicdb.pid")
-        self.server.maxcallthreads  = self.Get(int, "server",   "maxcallthreads",   2)
-        if self.server.maxcallthreads <= 0:
-            logging.error("Value of [server]->maxcallthreads is too small. It must be at least 1.")
-        elif self.server.maxcallthreads > 12:
-            logging.warning("Value of [server]->maxcallthreads looks too big.")
-        self.server.statedir        = self.Get(str, "server",   "statedir",         "/data/musicdb/mdbstate")
-        self.server.fifofile        = self.Get(str, "server",   "fifofile",         "/data/musicdb/musicdb.fifo")
+        self.server.pidfile         = self.Get(str, "server",   "pidfile",      "/opt/musicdb/data/musicdb.pid")
+        self.server.statedir        = self.Get(str, "server",   "statedir",     "/opt/musicdb/data/mdbstate")
+        self.server.fifofile        = self.Get(str, "server",   "fifofile",     "/opt/musicdb/data/musicdb.fifo")
 
 
         # [websocket]
         self.websocket = WEBSOCKET()
         self.websocket.address      = self.Get(str, "websocket","address",      "127.0.0.1")
         self.websocket.port         = self.Get(int, "websocket","port",         9000)
-        self.websocket.url          = self.Get(str, "websocket","url",          "wss://localhost:443")
+        self.websocket.url          = self.Get(str, "websocket","url",          "wss://localhost:9000")
         self.websocket.opentimeout  = self.Get(int, "websocket","opentimeout",  10)
         self.websocket.closetimeout = self.Get(int, "websocket","closetimeout",  5)
+        self.websocket.apikey       = self.Get(str, "websocket","apikey",       None)
+        if not self.websocket.apikey:
+            logging.warning("Value of [websocket]->apikey is not set!")
 
 
         # [TLS]
         self.tls = TLS()
         self.tls.cert               = self.GetFile( "tls",      "cert",         "/dev/null")
         self.tls.key                = self.GetFile( "tls",      "key",          "/dev/null")
+        if self.tls.cert == "/dev/null" or self.tls.key == "/dev/null":
+            logging.warning("You have to set a valid TLS certificate and key!")
 
 
         # [database]
         self.database = DATABASE()
-        self.database.path          = self.GetFile( "database", "path",         "/data/musicdb/music.db")
+        self.database.path          = self.GetFile( "database", "path",         "/opt/musicdb/data/music.db")
 
 
         # [music]
         self.music = MUSIC()
-        self.music.path             = self.GetDirectory("music",    "path",     "/data/music")
+        self.music.path             = self.GetDirectory("music",    "path",     "/var/music")
         self.music.owner            = self.Get(str, "music",    "owner",        "user")
         self.music.group            = self.Get(str, "music",    "group",        "musicdb")
-        # TODO: Check if user or group exist
+        try:
+            pwd.getpwnam(self.music.owner)
+        except KeyError:
+            logging.warning("The group name for [music]->owner is not an existing UNIX user!")
+        try:
+            grp.getgrnam(self.music.group)
+        except KeyError:
+            logging.warning("The group name for [music]->group is not an existing UNIX group!")
 
-        ignorelist = self.Get(str, "music",    "ignoreartists","gemisch / youtube")
+        ignorelist = self.Get(str, "music",    "ignoreartists","lost+found")
         ignorelist = ignorelist.split("/")
         self.music.ignoreartists = [item.strip() for item in ignorelist]
 
-        ignorelist = self.Get(str, "music",    "ignorealbums", "youtube / YouTube")
+        ignorelist = self.Get(str, "music",    "ignorealbums", "")
         ignorelist = ignorelist.split("/")
         self.music.ignorealbums = [item.strip() for item in ignorelist]
 
-        ignorelist = self.Get(str, "music",    "ignoresongs",  ".directory / .DS_Store")
+        ignorelist = self.Get(str, "music",    "ignoresongs",  ".directory / desktop.ini / Desktop.ini / .DS_Store / Thumbs.db")
         ignorelist = ignorelist.split("/")
         self.music.ignoresongs = [item.strip() for item in ignorelist]
 
 
         # [artwork]
         self.artwork = ARTWORK()
-        self.artwork.path           = self.GetDirectory("artwork",  "path",     "/data/musicdb/artwork")
+        self.artwork.path           = self.GetDirectory("artwork",  "path",     "/opt/musicdb/data/artwork")
         self.artwork.scales         = self.Get(int, "artwork",  "scales",       "50, 150, 500", islist=True)
         for s in [50, 150, 500]:
             if not s in self.artwork.scales:
                 logging.error("Missing scale in [artwork]->scales: The web UI expects a scale of %d (res: %dx%d)", s, s, s)
-        self.artwork.manifesttemplate=self.GetFile( "artwork",  "manifesttemplate", "/srv/musicdb/manifest.txt", logging.warning) # a missing manifest does not affect the main functionality
-        self.artwork.manifest       = self.Get(str, "artwork",  "manifest",     "/srv/musicdb/webui/manifest.appcache")
+        self.artwork.manifesttemplate=self.GetFile( "artwork",  "manifesttemplate", "/opt/musicdb/server/manifest.txt", logging.warning) # a missing manifest does not affect the main functionality
+        self.artwork.manifest       = self.Get(str, "artwork",  "manifest",     "/opt/musicdb/server/webui/manifest.appcache")
 
 
         # [extern]
         self.extern = EXTERN()
-        self.extern.configtemplate  = self.GetFile( "extern",   "configtemplate","/srv/musicdb/share/extconfig.ini")
+        self.extern.configtemplate  = self.GetFile( "extern",   "configtemplate","/opt/musicdb/server/share/extconfig.ini")
         self.extern.statedir        = self.Get(str, "extern",   "statedir",     ".mdbstate")
         self.extern.configfile      = self.Get(str, "extern",   "configfile",   "config.ini")
         self.extern.songmap         = self.Get(str, "extern",   "songmap",      "songmap.csv")
@@ -173,12 +190,12 @@ class MusicDBConfig(Config):
 
         # [tracker]
         self.tracker = TRACKER()
-        self.tracker.dbpath         = self.GetFile( "tracker",  "dbpath",       "/data/musicdb/tracker.db")
-        
+        self.tracker.dbpath         = self.GetFile( "tracker",  "dbpath",       "/opt/musicdb/data/tracker.db")
+
 
         # [lycra]
         self.lycra = LYCRA()
-        self.lycra.dbpath           = self.GetFile( "lycra",    "dbpath",       "/data/musicdb/lycra.db")
+        self.lycra.dbpath           = self.GetFile( "lycra",    "dbpath",       "/opt/musicdb/data/lycra.db")
 
 
         # [Icecast]
@@ -191,15 +208,15 @@ class MusicDBConfig(Config):
 
         # [MusicAI]
         self.musicai    = MUSICAI()
-        self.musicai.modelpath      = self.GetDirectory("MusicAI",  "modelpath",        "/data/musicdb/musicai/models")
-        self.musicai.tmppath        = self.GetDirectory("MusicAI",  "tmppath",          "/data/musicdb/musicai/tmp")
-        self.musicai.logpath        = self.GetDirectory("MusicAI",  "logpath",          "/data/musicdb/musicai/log")
-        self.musicai.specpath       = self.GetDirectory("MusicAI",  "spectrogrampath",  "/data/musicdb/musicai/spectrograms")
+        self.musicai.modelpath      = self.GetDirectory("MusicAI",  "modelpath",        "/opt/musicdb/data/musicai/models")
+        self.musicai.tmppath        = self.GetDirectory("MusicAI",  "tmppath",          "/opt/musicdb/data/musicai/tmp")
+        self.musicai.logpath        = self.GetDirectory("MusicAI",  "logpath",          "/opt/musicdb/data/musicai/log")
+        self.musicai.specpath       = self.GetDirectory("MusicAI",  "spectrogrampath",  "/opt/musicdb/data/musicai/spectrograms")
         self.musicai.slicesize      = self.Get(int, "MusicAI",  "slicesize",    128)
         self.musicai.epoch          = self.Get(int, "MusicAI",  "epoch",        20)
         self.musicai.batchsize      = self.Get(int, "MusicAI",  "batchsize",    128)
         self.musicai.usegpu         = self.Get(bool,"MusicAI",  "usegpu",       True)
-        self.musicai.modelname      = self.Get(str, "MusicAI",  "modelname",    "Borderline")
+        self.musicai.modelname      = self.Get(str, "MusicAI",  "modelname",    "MusicGenre")
         self.musicai.genrelist      = self.Get(str, "MusicAI",  "genrelist",    None, islist=True)
         
         
@@ -219,22 +236,18 @@ class MusicDBConfig(Config):
         self.log.loglevel           = self.Get(str, "log",      "loglevel",     "WARNING")
         if not self.log.loglevel in ["DEBUG", "INFO", "WARNING", "ERROR"]:
             logging.error("Invalid loglevel for [log]->loglevel. Loglevel must be one of the following: DEBUG, INFO, WARNING, ERROR")
-        self.log.debugfile          = self.Get(str, "log",      "debugfile",    "none")
-        if self.log.debugfile.lower() == "none":
-            self.log.debugfile=None
+        self.log.debugfile          = self.Get(str, "log",      "debugfile",    None)
+        if self.log.debugfile == "/dev/null":
+            self.log.debugfile = None
         self.log.ignore             = self.Get(str, "log",      "ignore",       None, islist=True)
 
 
         # [debug]
         self.debug      = DEBUG()     
-        self.debug.disablestats     = self.Get(int, "debug",    "disablestats", 0)
-        self.debug.disabletracker   = self.Get(int, "debug",    "disabletracker",0)
-        self.debug.disableai        = self.Get(int, "debug",    "disableai",    0)
-        self.debug.disabletagging   = self.Get(int, "debug",    "disabletagging",0)
-        self.debug.streambackend    = self.Get(str, "debug",    "streambackend",    "mpd")
-        self.debug.streambackend    = self.debug.streambackend.lower()
-        if not self.debug.streambackend in ["mpd", "icecast"]:
-            logging.error("Invalid backend for [debug]->streambackend. Backend must be one of the following: mpd, icecast")
+        self.debug.disablestats     = self.Get(int, "debug",    "disablestats",     0)
+        self.debug.disabletracker   = self.Get(int, "debug",    "disabletracker",   0)
+        self.debug.disableai        = self.Get(int, "debug",    "disableai",        1)
+        self.debug.disabletagging   = self.Get(int, "debug",    "disabletagging",   0)
 
         logging.info("\033[1;32mdone")
 

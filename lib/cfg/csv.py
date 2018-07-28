@@ -22,18 +22,26 @@ This module handles the reading and writing of csv-files.
 import csv
 
 class CSVFile(object):
-    """
+    r"""
+    This class reads `Comma Separated Value (CSV) <https://tools.ietf.org/html/rfc4180>`_ files as used by MusicDB.
+
     The class does not cache the files content.
     Every read access accesses the actual file.
     Writing does the file update.
 
     The csv files this class works with must have the following dialect:
 
+        * first line is a header line
         * delimiter:  ``,`` 
         * escapechar: ``\``
         * quotechar:  ``"``
         * quoting:    ``csv.QUOTE_NONNUMERIC``
+        * line break: ``\n``
 
+    It is allowed to modify the CSV files with external programs, but not guaranteed that
+    MusicDB will not overwrite the changes.
+    It is recommended to only read the files outside of MusicDB.
+    Do not change the layout of the files!
 
     Args:
         path (str): Absolute path of the csv file the class works with
@@ -50,14 +58,42 @@ class CSVFile(object):
 
     def Read(self):
         """
-        Reads the file an returns its rows as a list.
+        This method reads the file and returns its a table represented as a list of dictionaries.
+        The dictionary has a key for each column in the header of the file.
+        So each entry in the list represents one row of the file,
+        and each entry in the dictionary represents one cell or column in that row.
 
-        If there is only a single column, than the returned list contains values.
-        If there are multiple columns, the returned list contains tuple
+        Example:
 
+            .. code-block:: js
+
+                name, id
+                a, 1
+                b, 2
+                c, 3
+
+            .. code-block:: python
+
+                table = csv.Read()
+                print(table)
+
+            .. code-block:: js
+
+                [
+                    {'name': 'a', 'id': 1},
+                    {'name': 'b', 'id': 2},
+                    {'name': 'c', 'id': 3}
+                ]
+
+                
         Returns:
-            A list of rows
+            A list of dictionaries with one entry or each cell. When the file does not exist, ``None`` gets returned.
+
+        Raises:
+            StopIteration: When the CSV file is empty
         """
+        table = None    # in case the file does not exist
+
         with open(self.path) as csvfile:
             reader = csv.reader(csvfile, 
                     delimiter  = self.delimiter,
@@ -65,43 +101,94 @@ class CSVFile(object):
                     quotechar  = self.quotechar,
                     quoting    = self.quoting)
 
-            rows = []
-            for row in reader:
-                if len(row) == 1:
-                    rows.append(row[0])
-                else:
-                    rows.append(tuple(row))
-        return rows
+            # read header and prepare a dict with a list for each column
+            header = next(reader, None)
+            table  = []
+
+            # read value rows and map them to the dict columns
+            for csvrow in reader:
+                tablerow = {}
+                for index, value in enumerate(csvrow):
+                    key           = header[index]
+                    tablerow[key] = value
+
+                table.append(tablerow)
+
+        return table 
   
 
-    def Write(self, rows):
+    def Write(self, table, header=None):
         """
-        Write rows into the csv file
+        Write rows into the csv file.
+        The first row will be the header of the table.
+
+        Example:
+
+            .. code-block:: js
+
+                [
+                    {'name': 'a', 'id': 1},
+                    {'name': 'b', 'id': 2},
+                    {'name': 'c', 'id': 3}
+                ]
+
+            .. code-block:: python
+
+                print(table)
+                csv.Write(table)
+                # or: csv.Write(table, ["name", "id"])
+
+            .. code-block:: js
+
+                name, id
+                a, 1
+                b, 2
+                c, 3
+
 
         Args:
-            rows (list): A list of rows
+            table (list): A list with dictionaries of values for each column
+            header (list): The header of the CSV file. Each entry must also be a key in the ``table`` dictionary! If ``None``, then all keys of the dictionaries will be used.
+
+        Returns:
+            ``None``
 
         Raises:
-            TypeError: when ``rows`` is not a list
+            TypeError: when ``table`` is not a list
+            ValueError: when the ``table`` list has not at least one entry
+            TypeError: when the ``table`` list elements are not dictionaries
+            TypeError: when ``header`` is not a list and not ``None``
         """
-        if type(rows) != list:
-            raise TypeError("The rows argument must be of type list!")
+        # Check table
+        if type(table) != list:
+            raise TypeError("The table argument must be of type list!")
+        if len(table) < 1:
+            raise ValueError("The table argument must be a list with at least one entry!")
+        if type(table[0]) != dict:
+            raise TypeError("The table argument must be a list with elements of type dict!")
+
+        # Check header
+        if header == None:
+            header = list(table[0].keys())
+
+        if type(header) != list:
+            raise TypeError("The header argument must be of type list!")
 
         with open(self.path, "w") as csvfile:
-            csvwriter = csv.writer(csvfile, 
+            writer = csv.writer(csvfile, 
                     delimiter  = self.delimiter,
                     escapechar = self.escapechar,
                     quotechar  = self.quotechar,
                     quoting    = self.quoting)
 
-            # check if there are columns or not. The csv module cannot handle single columns lists
-            for row in rows:
-                if type(row) != list and type(row) != tuple:
-                    csvwriter.writerow([row])
-                elif len(row) == 0:
-                    csvwriter.writerow([None])
-                else:
-                    csvwriter.writerow(list(row))
+            # write header
+            writer.writerow(header)
+
+            for row in table:
+                # Write row
+                csvrow = [row[key] for key in header]
+                writer.writerow(csvrow)
+
         return None
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

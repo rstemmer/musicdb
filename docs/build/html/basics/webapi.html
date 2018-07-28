@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Websocket API &mdash; MusicDB 3.1.0 documentation</title>
+  <title>MusicDB Websocket API &mdash; MusicDB 4.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 3.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 4.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Workflow for development" href="workflow.html"/>
         <link rel="prev" title="MusicDB Test VMs" href="testvm.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                3.1
+                4.0
               </div>
             
           
@@ -101,6 +101,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#meta">meta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#websocket">websocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#tls">TLS</a></li>
@@ -255,7 +256,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-start">musicdb-start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#quickupdate">quickupdate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#update">update</a></li>
 </ul>
 </li>
 </ul>
@@ -686,6 +687,10 @@ On received packets, this are the returned values.</dd>
 <dd>A place for pass-through arguments.
 The server will not touch this entry and returns it as it is.
 This may be useful to give the receiving client some context.</dd>
+<dt>key:</dt>
+<dd>This entry holds the WebSocket API key.
+If this key does not match with the key configured for the running server in the MusicDB Configuration (<code class="docutils literal"><span class="pre">[websocket]-&gt;apikey</span></code>), then the packet gets dropped.
+Its value gets set by the JavaScript implementation right before the packet gets send to the server.</dd>
 </dl>
 <p>The following code show an abstract of the implementation:</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// method and fncname are mandatory, the other entries are optional</span>
@@ -2063,7 +2068,7 @@ This is important to update the HUD if the song is currently playing.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'3.1.0',
+            VERSION:'4.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

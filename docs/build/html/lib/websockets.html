@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Websocket Protocol &mdash; MusicDB 3.1.0 documentation</title>
+  <title>MusicDB Websocket Protocol &mdash; MusicDB 4.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 3.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 4.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Tag Management" href="../webui/taginput.html"/>
         <link rel="prev" title="PID File Handling" href="pidfile.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                3.1
+                4.0
               </div>
             
           
@@ -101,6 +101,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#meta">meta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#websocket">websocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tls">TLS</a></li>
@@ -255,7 +256,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-start">musicdb-start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#quickupdate">quickupdate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#update">update</a></li>
 </ul>
 </li>
 </ul>
@@ -712,7 +713,7 @@ The <a class="reference internal" href="#lib.ws.websocket.WebSocket.SendPacket" 
 Just be sure the <code class="docutils literal"><span class="pre">onWSConnect</span></code> method was called before.
 Otherwise the mechanics behind won’t work.</p>
 <blockquote>
-<div><object data="../_images/graphviz-bb415d50ad13c80f8fbdb8b0c9b6c041e15a353e.svg" type="image/svg+xml">
+<div><object data="../_images/graphviz-58f8b0a29464b49e77236175edae5b9a9673521d.svg" type="image/svg+xml">
             <p class="warning">digraph finite_state_machine {
    size=&quot;8,12&quot;
 
@@ -756,7 +757,7 @@ Otherwise the mechanics behind won’t work.</p>
 
     Active -&gt; onClose [ label = &quot;close connection&quot; ];
 
-    onClose -&gt; onWSDisconnect [ label = &quot;clean up&quot; ];
+    onClose -&gt; onWSDisconnect [ label = &quot;clean up\nwhen connected&quot; ];
     onWSDisconnect -&gt; onClose;
 
     onClose -&gt; Listen_on_port;
@@ -1045,7 +1046,8 @@ If the connection state is not <em>OPEN</em>, <code class="docutils literal"><sp
 <code class="descname">onClose</code><span class="sig-paren">(</span><em>wasClean</em>, <em>code</em>, <em>reason</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.onClose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.onClose" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets called by <code class="docutils literal"><span class="pre">WebSocketServerProtocol</span></code> implementation.
 It removes this connection to the broadcasting infrastructure of <a class="reference internal" href="#lib.ws.websocket.MusicDBWebSocketFactory" title="lib.ws.websocket.MusicDBWebSocketFactory"><code class="xref py py-class docutils literal"><span class="pre">lib.ws.websocket.MusicDBWebSocketFactory</span></code></a>.</p>
-<p>This method calls an <code class="docutils literal"><span class="pre">onWSDisconnect(wasClean:bool,</span> <span class="pre">closecode:int,</span> <span class="pre">closereason:str)</span></code> Method that must be implemented by the programmer who uses this class.</p>
+<p>This method calls an <code class="docutils literal"><span class="pre">onWSDisconnect(wasClean:bool,</span> <span class="pre">closecode:int,</span> <span class="pre">closereason:str)</span></code> Method that must be implemented by the programmer who uses this class.
+The <code class="docutils literal"><span class="pre">onWSDisconnect</span></code> method gets only called when there was a successful connection before!</p>
 </dd></dl>
 
 <dl class="method">
@@ -1133,7 +1135,7 @@ It registers this connection to the broadcasting infrastructure of <a class="ref
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'3.1.0',
+            VERSION:'4.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

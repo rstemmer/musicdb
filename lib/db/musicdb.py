@@ -378,6 +378,9 @@ class MusicDatabase(Database):
 
     Args:
         path: path to the music database
+
+    Raises:
+        ValueError: When the version of the database does not match the expected version. (Updating MusicDB may failed)
     """
     ARTIST_ID     = 0
     ARTIST_NAME   = 1
@@ -449,6 +452,14 @@ class MusicDatabase(Database):
 
     def __init__(self, path):
         Database.__init__(self, path)
+        try:
+            result = self.GetFromDatabase("SELECT value FROM meta WHERE key = 'version'")
+            version = int(result[0][0])
+        except Exception as e:
+            raise ValueError("Unable to read version number from Music Database")
+
+        if version != 2:
+            raise ValueError("Unexpected version number of Music Database. Got %i, expected %i", version, 2)
         
 
     def __ArtistEntryToDict(self, entry):

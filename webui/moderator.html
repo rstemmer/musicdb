@@ -85,6 +85,7 @@
         <script src="js/uimod/mdb_albumview.js"></script>  
         <script src="js/uimod/mdb_queueview.js"></script>  
 
+        <script src="config.js"></script>  
         <script src="js/musicdb.js"></script>  
         <!-- This needs to be the last one. It connects to the server and starts running the functionality. -->
         <script src="js/moderator/moderator.js"></script>  
@@ -112,9 +113,14 @@
                 </div>
                 <div class="flexcell flexcolumn_middle hudcell vsplit frame fmcolor">
                     <div id=HUD   class="primarycell"></div>
-                    <div id=State class="secondarycell"></div>
                 </div>
-                <div id=Controls    class="flexcell flexcolumn_right ">
+                <div class="flexcell flexcolumn_right">
+                    <div class="statecell">
+                        <div class="stateelements frame hovpacity fmcolor">
+                            <div id=Controls></div>
+                            <div id=State   ></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

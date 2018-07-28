@@ -8,15 +8,20 @@ The sections have the following structure:
 option (type):
    description
 
+meta
+----
+
+version (integer):
+   This is the version number of configuration.
+   This number is used *internal* to check if the configuration file provides the sections and key expected by MusicDB.
+   When new sections or keys are added (or old ones removed), the version number gets incremented.
+   After updating MusicDB compare your configuration with the new one and update the file by yourself (including the version number)
+
 server
 ------
 
 pidfile (path to file):
    This is the place where the PID file gets placed
-
-maxcallthreads (number ∈ ℕ):
-   The number of threads that are used to handle websocket-API-Calls.
-   For a single user a number equal to the number of clients used or at least 2 is a good value.
 
 statedir (path to a directory):
    In this directory the current global state of MusicDB is stored.
@@ -53,6 +58,9 @@ opentimeout (time in seconds):
 
 closetimeout (time in seconds):
    Time until the disconnection process of the websocket server raises a timeout exception
+
+key (base64 encoded key):
+   A key that is used to identify clients that are allowed to use the websocket interface.
 
 TLS
 ---

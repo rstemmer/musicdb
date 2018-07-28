@@ -106,7 +106,7 @@ Otherwise the mechanics behind won't work.
 
           Active -> onClose [ label = "close connection" ];
        
-          onClose -> onWSDisconnect [ label = "clean up" ];
+          onClose -> onWSDisconnect [ label = "clean up\nwhen connected" ];
           onWSDisconnect -> onClose;
        
           onClose -> Listen_on_port;

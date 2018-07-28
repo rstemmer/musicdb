@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Database &mdash; MusicDB 3.1.0 documentation</title>
+  <title>Database &mdash; MusicDB 4.0.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 3.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 4.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Fileprocessing Methods" href="fileprocessing.html"/>
         <link rel="prev" title="Configuration" href="config.html"/> 
 
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                3.1
+                4.0
               </div>
             
           
@@ -101,6 +101,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/concept.html">Philosophy of MusicDB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/config.html">MusicDB Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#meta">meta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#server">server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#websocket">websocket</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tls">TLS</a></li>
@@ -255,7 +256,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-shutdown">musicdb-shutdown</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-start">musicdb-start</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#musicdb-stop">musicdb-stop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#quickupdate">quickupdate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/scripts.html#update">update</a></li>
 </ul>
 </li>
 </ul>
@@ -655,9 +656,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-lib.db.database">
-<span id="database"></span><h1>Database<a class="headerlink" href="#module-lib.db.database" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="database-class">
+  <div class="section" id="database">
+<h1>Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h1>
+<p>All databases have a table ‘’meta’’ with the following scheme:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="31%" />
+<col width="44%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>id</td>
+<td>key</td>
+<td>value</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>key:</dt>
+<dd>A string to identify a meta data variable</dd>
+<dt>value:</dt>
+<dd>The value to a key as string</dd>
+</dl>
+</div></blockquote>
+<p>One important key is ‘’version’ that allows to identify old schemes and allows an easy update of the database.
+There may be other keys depending on the databases. In that case they are described in the documentations of the related modules.</p>
+<span class="target" id="module-lib.db.database"></span><div class="section" id="database-class">
 <h2>Database Class<a class="headerlink" href="#database-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib.db.database.Database">
@@ -839,7 +864,7 @@ Each row is represented by a tuple of values.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'3.1.0',
+            VERSION:'4.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
