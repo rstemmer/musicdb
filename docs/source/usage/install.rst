@@ -220,6 +220,7 @@ Download MusicDB
 
    # as user in ~/projects
    git clone https://github.com/rstemmer/libprinthex.git
+   git clone https://github.com/rstemmer/id3edit.git
    git clone https://github.com/rstemmer/musicdb.git
 
 
@@ -239,7 +240,7 @@ id3edit
 
 .. code-block:: bash
 
-   cd musicdb/id3edit
+   cd id3edit
    ./build.sh
    ./install.sh
 
@@ -291,7 +292,7 @@ musicdb
 Configureing MusicDB WebUI
 --------------------------
 
-The WebUI configuration must be done inside the file ``webui/js/musicdb.js``
+The WebUI configuration must be done inside the file ``webui/config.js``
 
 At the begin of this file, the variable ``WEBSOCKET_URL`` must be configured.
 In particular the port number must match the one set in the MusicDB Configuration file /etc/musicdb.ini.
@@ -431,7 +432,7 @@ For minor release updates, the ``quickupdate.sh`` is also OK (It just updates Mu
    git checkout master  # make sure you are in the master branch
    cd scripts           # go into the scripts directory
    su                   # you must be root for the updating process
-   ./install.sh         # update
+   ./update.sh --major  # update
 
 
 

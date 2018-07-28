@@ -42,7 +42,7 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* upd
 
 * Rebuild of the installation process.
   * **:wrench: Change:** Make a backup of the MusicDB data directory!
-  * Do not use the update script to update to this version (4.0.0)
+  * Do not use the update script to update to this version (4.0.0). Use the `install.sh` script!
 * More stable CSV files by adding a header. Now updating the old CSV files is possible
   * **:wrench: Change:** Remove the old CSV-Files from the `mdbstate` directory. (You'll loose the current song queue and blacklist state)
 * WebSocket configuration for WebUI is now in separate `webui/config.js`
@@ -54,6 +54,9 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* upd
     * ``CREATE TABLE IF NOT EXISTS meta (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT, VALUE TEXT DEFAULT '');``
     * ``INSERT INTO meta (key, value) VALUES ("version", 2);``
     * ``.quit``
+* **:wrench: Change:** Restore your configuration
+  * Update the icecast passwort (`musicdb.ini` ↔ `icecast/config.xml`)
+  * Update the WebSocket API Key (`musicdb.ini` ↔ `../server/webui/config.js`)
 
 
 ### 06.05.18: 2.x.x → 3.0.0+
