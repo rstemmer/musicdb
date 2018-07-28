@@ -54,7 +54,9 @@ fi
 InstallMusicDBFiles "$SOURCEDIR" "$SERVERDIR" "$MDBUSER" "$MDBGROUP"
 
 # Last step: upgrading internal files
-su -l -c "musicdb upgrade" $MDBUSER
+if [ "$1" == "--major" ] ; then
+    su -l -c "musicdb upgrade" $MDBUSER
+fi
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
