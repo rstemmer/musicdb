@@ -136,7 +136,7 @@ In case MusicDB does not run on outdated operating systems, update your system ;
 * A terminal that supports Unicode, with an Unicode capable font configured (I use KDE's [Konsole](https://www.kde.org/applications/system/konsole/) with [Hack](https://sourcefoundry.org/hack/))
 
 The `install.sh` script checks for tools needed to install MusicDB.
-Furthermore `musicdb-check.sh` list all tools and Python modules needed by MusicDB.
+Furthermore `check.sh` list all tools and Python modules needed by MusicDB.
 You can run the check-script at any time. 
 
 Execute `pip install -r requirements.txt` to install a basic set of Python modules needed for MusicDB.
@@ -156,10 +156,10 @@ git clone https://github.com/rstemmer/musicdb.git
 
 To install MusicDB, read [:notebook: How to Install MusicDB](https://rstemmer.github.io/musicdb/build/html/usage/install.html) in the documentation.
 
-For updating, you can also execute the `install.sh` script.
+For updating, you can also execute `cd scripts && ./install.sh && musicdb upgrade --major`.
 Read the *Breaking News* for manual steps to do before updating to a new major release.
 
-Updating to the next minor version can be done by simply executing `git pull && ./quickupdate.sh` (Be sure you are on the master branch).
+Updating to the next minor version can be done by simply executing `git pull && cd scripts && ./update.sh` (Be sure you are on the master branch).
 
 
 ## Usage
