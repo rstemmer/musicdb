@@ -126,7 +126,7 @@ In case MusicDB does not run on outdated operating systems, update your system ;
   * [Debian](https://www.debian.org/distrib/) for x86-64 (not recommended because it comes with lots of ~~old~~ "stable" software)
   * [Arch Linux ARM](https://archlinuxarm.org/) for AArch64 with [ODROID-C2](https://wiki.odroid.com/odroid-c2/odroid-c2)
   * [Arch Linux ARM](https://archlinuxarm.org/) for ARMv7 with [Raspberry Pi 3](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
-* [Python3](https://www.python.org/) (I test with Python 3.6)
+* [Python3](https://www.python.org/) (At least Python 3.5. I test with Python 3.7)
 * [Icecast](https://icecast.org/) and [GStreamer](https://gstreamer.freedesktop.org/) for streaming
 * A modern web browser for accessing the WebUI:
   * [Firefox](https://www.mozilla.org/en-US/) (recommended)

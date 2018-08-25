@@ -101,9 +101,10 @@ class MusicDBWebSocketServer(object):
             return False
 
         try:
-            self.coro = self.eventloop.create_server(self.factory, address, port, ssl=self.tlscontext)
+            self.coro = self.eventloop.create_server(self.factory, address, port, ssl=self.tlscontext, )
+            self.task = self.eventloop.create_task(self.coro)   # necessary for run_until_complete
         except Exception as e:
-            logging.exception("Creating coro server failed with exception: %s", str(e))
+            logging.exception("Creating server task failed with exception: %s", str(e))
             return False
         return True
 
@@ -140,7 +141,7 @@ class MusicDBWebSocketServer(object):
             return False
 
         try:
-            self.server = self.eventloop.run_until_complete(self.coro)
+            self.server = self.eventloop.run_until_complete(self.task)
         except Exception as e:
             logging.exception("Starting server eventloop failed with exception: %s", str(e))
             return False
@@ -168,7 +169,7 @@ class MusicDBWebSocketServer(object):
 
                         time.sleep(.1)  # Avoid high CPU load
         """
-        self.eventloop.run_until_complete(self.coro)
+        self.eventloop.run_until_complete(self.task)
 
 
     def Stop(self):
@@ -183,7 +184,11 @@ class MusicDBWebSocketServer(object):
             self.server.close() # Close the websocket server
         else:
             logging.warning("No server running to stop!")
+
+        logging.debug("Stopping event loop")
+        self.eventloop.run_until_complete(self.eventloop.shutdown_asyncgens()) # TODO: Check if I need this
         self.eventloop.close()  # Close the asyncio event loop
+
         self.server    = None
         self.eventloop = None
         return True

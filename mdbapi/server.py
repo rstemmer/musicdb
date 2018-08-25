@@ -56,7 +56,6 @@ import traceback
 import random
 import time
 import signal
-from threading          import Thread
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
 from lib.pidfile        import *
