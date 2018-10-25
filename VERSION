@@ -1,3 +1,4 @@
+4.2.0 - Replaces old imp module by importlib
 4.1.0 - Fixes problem caused by asyncio changes in Python3.7
 4.0.0 - SEE CHANGELOG
 3.1.0 - MP3 decode is now more tolerant for unusual MP3 files
