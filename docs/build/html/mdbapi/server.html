@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Websocket Server &mdash; MusicDB 4.0.0 documentation</title>
+  <title>MusicDB Websocket Server &mdash; MusicDB 4.3.0 documentation</title>
   
 
   
@@ -30,12 +30,14 @@
   
 
   
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 4.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 4.3.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDB Song Queue" href="songqueue.html"/>
         <link rel="prev" title="Randomizer" href="randy.html"/> 
 
@@ -66,7 +68,7 @@
             
             
               <div class="version">
-                4.0
+                4.3
               </div>
             
           
@@ -343,6 +345,14 @@
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#module-lib.cache">ArtworkCache Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="blacklist.html">Blacklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="blacklist.html#module-mdbapi.blacklist">Blacklist Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="blacklist.html#id1">Blacklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="blacklist.html#blacklist-interface-class">Blacklist Interface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">MusicDBDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
 </ul>
@@ -377,7 +387,7 @@
 <li class="toctree-l3"><a class="reference internal" href="musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicai.html#musicai-module">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -394,7 +404,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="randy.html">Randomizer</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="randy.html#module-mdbapi.randy">Randy Module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="randy.html#blacklist">Blacklist</a></li>
 <li class="toctree-l3"><a class="reference internal" href="randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="randy.html#database-stage">Database Stage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="randy.html#blacklist-stage">Blacklist Stage</a></li>
@@ -541,35 +550,6 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#sending-data">Sending Data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#receiving-data">Receiving Data</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#minimal-usage">Minimal usage</a></li>
-</ul>
-</li>
-</ul>
 <p class="caption"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
@@ -661,7 +641,7 @@
 <p>This is the main module to run the MusicDB Server.</p>
 <p>To start and run the server, the following sequence of function calls is necessary:</p>
 <blockquote>
-<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Initialize</span><span class="p">(</span><span class="n">mdbconfig</span><span class="p">,</span> <span class="n">musicdatabase</span><span class="p">)</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Initialize</span><span class="p">(</span><span class="n">mdbconfig</span><span class="p">,</span> <span class="n">musicdatabase</span><span class="p">)</span>
 <span class="n">StartWebSocketServer</span><span class="p">()</span>
 <span class="n">Run</span><span class="p">()</span>
 </pre></div>
@@ -671,25 +651,25 @@
 MusicDB Server handles the following commands when written into its named pipe:</p>
 <blockquote>
 <div><ul class="simple">
-<li>refresh:  <a class="reference internal" href="#mdbapi.server.UpdateCaches" title="mdbapi.server.UpdateCaches"><code class="xref py py-meth docutils literal"><span class="pre">UpdateCaches()</span></code></a> - Update server caches and inform clients to update their caches</li>
-<li>shutdown: <a class="reference internal" href="#mdbapi.server.Shutdown" title="mdbapi.server.Shutdown"><code class="xref py py-meth docutils literal"><span class="pre">Shutdown()</span></code></a> - Shut down the server</li>
+<li>refresh:  <a class="reference internal" href="#mdbapi.server.UpdateCaches" title="mdbapi.server.UpdateCaches"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateCaches()</span></code></a> - Update server caches and inform clients to update their caches</li>
+<li>shutdown: <a class="reference internal" href="#mdbapi.server.Shutdown" title="mdbapi.server.Shutdown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Shutdown()</span></code></a> - Shut down the server</li>
 </ul>
 </div></blockquote>
 <p>Further more does this module maintain global instances of the following classes.
 Those objects can be used inside the thread the server runs.
 Usually the main thread.
 Using these objects saves a lot of memory.
-If the server is not started, the objects are all <code class="docutils literal"><span class="pre">None</span></code>.</p>
+If the server is not started, the objects are all <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal"><span class="pre">lib.db.musicdb.MusicDatabase</span></code></a> as <code class="docutils literal"><span class="pre">database</span></code></li>
-<li><a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine" title="mdbapi.mise.MusicDBMicroSearchEngine"><code class="xref py py-class docutils literal"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine</span></code></a> as <code class="docutils literal"><span class="pre">mise</span></code></li>
-<li><a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal"><span class="pre">lib.cfg.musicdb.MusicDBConfig</span></code></a> as <code class="docutils literal"><span class="pre">cfg</span></code></li>
+<li><a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase</span></code></a> as <code class="docutils literal notranslate"><span class="pre">database</span></code></li>
+<li><a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine" title="mdbapi.mise.MusicDBMicroSearchEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine</span></code></a> as <code class="docutils literal notranslate"><span class="pre">mise</span></code></li>
+<li><a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.cfg.musicdb.MusicDBConfig</span></code></a> as <code class="docutils literal notranslate"><span class="pre">cfg</span></code></li>
 </ul>
 </div></blockquote>
 <p>The following example shows how to use the pipe interface:</p>
 <blockquote>
-<div><div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># Update caches</span>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Update caches</span>
 <span class="nb">echo</span> <span class="s2">&quot;refresh&quot;</span> &gt; /data/musicdb/musicdb.fifo
 
 <span class="c1"># Terminate server</span>
@@ -732,11 +712,11 @@ It initializes lots of global objects that get shared between multiple connectio
 <p>The following things happen when this method gets called:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Assign the <em>configobj</em> and <em>databaseobj</em> to global variables <code class="docutils literal"><span class="pre">cfg</span></code> and <code class="docutils literal"><span class="pre">database</span></code> to share them between multiple connections</li>
+<li>Assign the <em>configobj</em> and <em>databaseobj</em> to global variables <code class="docutils literal notranslate"><span class="pre">cfg</span></code> and <code class="docutils literal notranslate"><span class="pre">database</span></code> to share them between multiple connections</li>
 <li>Seed Python’s random number generator</li>
-<li>Instantiate a global <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine" title="mdbapi.mise.MusicDBMicroSearchEngine"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine()</span></code></a> object</li>
-<li>Start the Streaming Thread via <a class="reference internal" href="stream.html#mdbapi.stream.StartStreamingThread" title="mdbapi.stream.StartStreamingThread"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.stream.StartStreamingThread()</span></code></a> (see <a class="reference internal" href="stream.html"><span class="doc">Streaming Server</span></a> for details)</li>
-<li>Update MiSE cache via <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache()</span></code></a></li>
+<li>Instantiate a global <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine" title="mdbapi.mise.MusicDBMicroSearchEngine"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine()</span></code></a> object</li>
+<li>Start the Streaming Thread via <a class="reference internal" href="stream.html#mdbapi.stream.StartStreamingThread" title="mdbapi.stream.StartStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.stream.StartStreamingThread()</span></code></a> (see <a class="reference internal" href="stream.html"><span class="doc">Streaming Server</span></a> for details)</li>
+<li>Update MiSE cache via <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache()</span></code></a></li>
 <li>Create FIFO file for named pipe</li>
 </ol>
 </div></blockquote>
@@ -745,17 +725,17 @@ It initializes lots of global objects that get shared between multiple connectio
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>configobj</strong> – <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal"><span class="pre">MusicDBConfig</span></code></a> that gets shared between connections</li>
-<li><strong>databaseobj</strong> – <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal"><span class="pre">MusicDatabase</span></code></a> that gets shared between connections</li>
+<li><strong>configobj</strong> – <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> that gets shared between connections</li>
+<li><strong>databaseobj</strong> – <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> that gets shared between connections</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">None</span></code></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>configobj</em> is not of type <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal"><span class="pre">MusicDBConfig</span></code></a></li>
-<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>databaseobj</em> is not of type <code class="xref py py-class docutils literal"><span class="pre">MusicDatabase</span></code></li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When <em>configobj</em> is not of type <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a></li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When <em>databaseobj</em> is not of type <code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></li>
 </ul>
 </td>
 </tr>
@@ -771,7 +751,7 @@ It initializes lots of global objects that get shared between multiple connectio
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal"><span class="pre">False</span></code></td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -785,12 +765,12 @@ Its task is to trigger updating the servers cache and to inform the clients to u
 <p>On server side:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The MiSE Cache gets updated by calling <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache()</span></code></a></li>
+<li>The MiSE Cache gets updated by calling <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache()</span></code></a></li>
 </ul>
 </div></blockquote>
-<p>To inform the clients a broadcast packet get sent with the following content: <code class="docutils literal"><span class="pre">{method:&quot;broadcast&quot;,</span> <span class="pre">fncname:&quot;sys:refresh&quot;,</span> <span class="pre">fncsig:&quot;UpdateCaches&quot;,</span> <span class="pre">arguments:null,</span> <span class="pre">pass:null}</span></code></p>
+<p>To inform the clients a broadcast packet get sent with the following content: <code class="docutils literal notranslate"><span class="pre">{method:&quot;broadcast&quot;,</span> <span class="pre">fncname:&quot;sys:refresh&quot;,</span> <span class="pre">fncsig:&quot;UpdateCaches&quot;,</span> <span class="pre">arguments:null,</span> <span class="pre">pass:null}</span></code></p>
 <p class="rubric">Example</p>
-<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="k">if</span><span class="p">(</span><span class="nx">fnc</span> <span class="o">==</span> <span class="s2">&quot;sys:refresh&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">sig</span> <span class="o">==</span> <span class="s2">&quot;UpdateCaches&quot;</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="p">(</span><span class="nx">fnc</span> <span class="o">==</span> <span class="s2">&quot;sys:refresh&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">sig</span> <span class="o">==</span> <span class="s2">&quot;UpdateCaches&quot;</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetTags&quot;</span><span class="p">,</span> <span class="s2">&quot;UpdateTagsCache&quot;</span><span class="p">);</span>                  <span class="c1">// Update tag cache</span>
     <span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetFilteredArtistsWithAlbums&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowArtists&quot;</span><span class="p">);</span> <span class="c1">// Update artist view</span>
 <span class="p">}</span>
@@ -805,25 +785,25 @@ Its task is to trigger updating the servers cache and to inform the clients to u
 <p>The following things happen when this function gets called:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Stop the Streaming Thread via <a class="reference internal" href="stream.html#mdbapi.stream.StopStreamingThread" title="mdbapi.stream.StopStreamingThread"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.stream.StopStreamingThread()</span></code></a></li>
+<li>Stop the Streaming Thread via <a class="reference internal" href="stream.html#mdbapi.stream.StopStreamingThread" title="mdbapi.stream.StopStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.stream.StopStreamingThread()</span></code></a></li>
 <li>Removing FIFO file for named pipe</li>
 <li>Stop the websocket server</li>
 </ol>
 </div></blockquote>
 <p>At the end, the program gets terminated. So, this function gets never left.</p>
-<p>The exit code will be <code class="docutils literal"><span class="pre">0</span></code> if this was a regular shutdown.
-If the shutdown got forced, for example due to a critical error, the exit code is <code class="docutils literal"><span class="pre">1</span></code>.</p>
-<p>This function should also be called when <code class="xref py py-meth docutils literal"><span class="pre">Initialize()</span></code> fails or when it raises an exception.</p>
+<p>The exit code will be <code class="docutils literal notranslate"><span class="pre">0</span></code> if this was a regular shutdown.
+If the shutdown got forced, for example due to a critical error, the exit code is <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<p>This function should also be called when <code class="xref py py-meth docutils literal notranslate"><span class="pre">Initialize()</span></code> fails or when it raises an exception.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="mdbapi.server.Run">
 <code class="descclassname">mdbapi.server.</code><code class="descname">Run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#Run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.Run" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the servers main loop.</p>
-<p>Inside the loop all MusicDB Websocket Server events get handled by calling <a class="reference internal" href="../lib/websockets.html#lib.ws.server.MusicDBWebSocketServer.HandleEvents" title="lib.ws.server.MusicDBWebSocketServer.HandleEvents"><code class="xref py py-meth docutils literal"><span class="pre">lib.ws.server.MusicDBWebSocketServer.HandleEvents()</span></code></a>.
-When a shutdown gets triggered the <a class="reference internal" href="#mdbapi.server.Shutdown" title="mdbapi.server.Shutdown"><code class="xref py py-meth docutils literal"><span class="pre">Shutdown()</span></code></a> function gets called and the server stops.</p>
-<p>The <a class="reference internal" href="#mdbapi.server.Shutdown" title="mdbapi.server.Shutdown"><code class="xref py py-meth docutils literal"><span class="pre">Shutdown()</span></code></a> gets also called the user presses <em>Ctrl-C</em> This leads to a regular shutdown.</p>
-<p>In as an exception occurs the <a class="reference internal" href="#mdbapi.server.Shutdown" title="mdbapi.server.Shutdown"><code class="xref py py-meth docutils literal"><span class="pre">Shutdown()</span></code></a> gets called, too. In this case the exit-code will be <code class="docutils literal"><span class="pre">1</span></code>.</p>
+<p>Inside the loop all MusicDB Websocket Server events get handled by calling <a class="reference internal" href="../lib/websockets.html#lib.ws.server.MusicDBWebSocketServer.HandleEvents" title="lib.ws.server.MusicDBWebSocketServer.HandleEvents"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.ws.server.MusicDBWebSocketServer.HandleEvents()</span></code></a>.
+When a shutdown gets triggered the <a class="reference internal" href="#mdbapi.server.Shutdown" title="mdbapi.server.Shutdown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Shutdown()</span></code></a> function gets called and the server stops.</p>
+<p>The <a class="reference internal" href="#mdbapi.server.Shutdown" title="mdbapi.server.Shutdown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Shutdown()</span></code></a> gets also called the user presses <em>Ctrl-C</em> This leads to a regular shutdown.</p>
+<p>In as an exception occurs the <a class="reference internal" href="#mdbapi.server.Shutdown" title="mdbapi.server.Shutdown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Shutdown()</span></code></a> gets called, too. In this case the exit-code will be <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
 </dd></dl>
 
 </div>
@@ -863,7 +843,7 @@ When a shutdown gets triggered the <a class="reference internal" href="#mdbapi.s
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0',
+            VERSION:'4.3.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -874,6 +854,7 @@ When a shutdown gets triggered the <a class="reference internal" href="#mdbapi.s
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

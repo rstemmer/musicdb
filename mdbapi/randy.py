@@ -17,41 +17,6 @@
 The *randy* module provides a way to select random songs that can be put into the Song Queue.
 The selection of random songs follows certain constraints.
 
-Randy consists of two parts:
-
-    * A global `Blacklist`_ for songs, albums and artists
-    * A class :class:`~Randy` that provides methods to get random songs
-
-
-Blacklist
----------
-
-There are three FIFO organized blacklists: For songs, albums and artists.
-Each blacklist holds the IDs of the last played songs, albums and artists.
-
-Songs that will be selected by the :class:`~Randy` class will be added to the blacklists automatically.
-If a user adds a song into the Queue, this song must be added manually by calling the :meth:`~mdbapi.randy.Randy.AddSongToBlacklist` method.
-
-Once a song got added to the blacklist, it remains even if the song got removed from the queue.
-
-The length of those blacklist can be configured in the MusicDB Configuration:
-
-    .. code-block:: ini
-
-            [Randy]
-            songbllen=50
-            albumbllen=20
-            artistbllen=10
-
-For small music collections, the lengths should not exceed the possibility to provide individual data.
-For medium collections and above, the default values as shown in the example are good.
-When set to ``0``, the blacklist for the songs, albums or artists will be disabled.
-
-The blacklists get maintained by the :class:`~Randy` class.
-Each instance of this class accesses the same global blacklist.
-
-The blacklist is implemented as a dictionary with the keys ``"songs"``, ``"albums"`` and ``"artists"``.
-Their values are lists holding the IDs of the songs, albums and artists.
 
 Song Selection Algorithm
 ------------------------
@@ -95,33 +60,28 @@ Song genres set by the Music AI (see :doc:`/mdbapi/musicai`) will be ignored bec
 Blacklist Stage
 ^^^^^^^^^^^^^^^
 
-The selected song from the first stage now gets compared to the three blacklists.
+The selected song from the first stage now gets compared to the blacklists via 
+:meth:`mdbapi.blacklist.BlacklistInterface.CheckAllLists` or
+:meth:`mdbapi.blacklist.BlacklistInterface.CheckSongList`.
 If the song, or its album or artist, is listed in one of blacklist, 
 then the song, a song from the same album or from the same artist was played recently.
 So, the chosen song gets dropped and the finding-process starts again.
 
 Is the blacklist length set to 0, the specific blacklist is disabled
-
-If a song is found. The oldest entries of the blacklist get dropped, and the new song, album, artist get pushed on top of the list.
 """
 
 import logging
-import threading        # for Lock
 import datetime
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
 from lib.cfg.mdbstate   import MDBState
-
-BlacklistLock = threading.Lock()
-Blacklist     = None
+from mdbapi.blacklist   import BlacklistInterface
 
 
 
 class Randy(object):
     """
     This class provides methods to get a random song under certain constraints.
-
-    This class is made to access the thread form all over the code simultaneously.
 
     Args:
         config: :class:`~lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration
@@ -140,112 +100,12 @@ class Randy(object):
         self.db         = database
         self.cfg        = config
         self.mdbstate   = MDBState(self.cfg.server.statedir, self.db)
+        self.blacklist  = BlacklistInterface(self.cfg, self.db)
 
         # Load most important keys
         self.nodisabled  = self.cfg.randy.nodisabled
         self.nohated     = self.cfg.randy.nohated
         self.minlen      = self.cfg.randy.minsonglen
-        self.songbllen   = self.cfg.randy.songbllen
-        self.albumbllen  = self.cfg.randy.albumbllen
-        self.artistbllen = self.cfg.randy.artistbllen
-
-        # Check blacklist and create new one if there is none yet
-        global Blacklist
-        global BlacklistLock
-
-        with BlacklistLock:
-            if not Blacklist:
-                # try to load the blacklist from MusicDB State
-                loadedlists = self.mdbstate.LoadBlacklists()
-
-                # First, create a clean blacklist
-                Blacklist = {}
-                Blacklist["songs"]   = [None] * self.songbllen
-                Blacklist["albums"]  = [None] * self.albumbllen
-                Blacklist["artists"] = [None] * self.artistbllen
-                
-                # Now fill the blacklist considering changes in their size
-                for key in loadedlists:
-                    if key not in ["songs", "albums", "artists"]:
-                        logging.error("Unexpected key \"%s\" in loaded blacklist dictionary! \033[1;30(Will be discard)", str(key))
-                        continue
-
-                    dst = Blacklist[key]
-                    src = loadedlists[key]
-                    if not src:
-                        continue    # when there are no entries loaded, keep the generated list of None-entries
-
-                    # The following python magic inserts as much of src at the end of dst, as fits.
-                    # if src must be cut, the first elements get removed
-                    # So, case 1: len(dst) > len(src)
-                    #   dst = [None, None, None, None, None]
-                    #   src = [1, 2, 3]
-                    #   Results in [None, None, 1, 2, 3]
-                    #
-                    # Case 2: len(dst) < len(src)
-                    #   dst = [None, None]
-                    #   src = [1, 2, 3]
-                    #   Results in [2, 3]
-                    #
-                    # >>> l = [1,2,3]
-                    # >>> d = [0]*3
-                    # >>> d[-len(l):] = l[-len(d):]
-                    # >>> l
-                    # [1, 2, 3]
-                    # >>> d
-                    # [1, 2, 3]
-                    # >>> d = [0]*2
-                    # >>> d[-len(l):] = l[-len(d):]
-                    # >>> l
-                    # [1, 2, 3]
-                    # >>> d
-                    # [2, 3]
-                    # >>> d = [0]*4
-                    # >>> d[-len(l):] = l[-len(d):]
-                    # >>> l
-                    # [1, 2, 3]
-                    # >>> d
-                    # [0, 1, 2, 3]
-                    # >>> 
-                    dst = dst[-len(src):] = src[-len(dst):]
-
-                    Blacklist[key] = dst
-
-
-
-    def AddSongToBlacklist(self, song):
-        """
-        This method pushes a song onto the blacklists.
-        If the song is ``None`` nothing happens.
-
-        This method should be the only place where the blacklist gets changed.
-        After adding a song, the lists get stored in the MusicDB State Directory to be persistent
-
-        Args:
-            song (dict): A song from the :class:`~lib.db.musicdb.MusicDatabase`
-
-        Returns:
-            *Nothing*
-        """
-        if not song:
-            return
-
-        global BlacklistLock
-        global Blacklist
-
-        with BlacklistLock:
-            if self.artistbllen > 0:
-                Blacklist["artists"].pop(0)
-                Blacklist["artists"].append(song["artistid"])
-            if self.albumbllen > 0:
-                Blacklist["albums"].pop(0)
-                Blacklist["albums"].append(song["albumid"])
-            if self.songbllen > 0:
-                Blacklist["songs"].pop(0)
-                Blacklist["songs"].append(song["id"])
-
-            # Save blacklists to files 
-            self.mdbstate.SaveBlacklists(Blacklist)
 
 
 
@@ -306,24 +166,11 @@ class Randy(object):
 
 
             # STAGE 2: Make randomness feeling random by checking if the song was recently played
-            with BlacklistLock:
-                if self.artistbllen > 0 and song["artistid"] in Blacklist["artists"]:
-                    logging.debug("artist on blacklist")
-                    song = None
-                    continue
-                if self.albumbllen > 0 and song["albumid"] in Blacklist["albums"]:
-                    logging.debug("album on blacklist")
-                    song = None
-                    continue
-                if self.songbllen > 0 and song["id"] in Blacklist["songs"]:
-                    logging.debug("song on blacklist")
-                    song = None
-                    continue 
+            if self.blacklist.CheckAllLists(song):
+                song = None
+                continue
 
         # New song found \o/
-        # Add song into blacklists
-        self.AddSongToBlacklist(song)
-
         t_stop = datetime.datetime.now()
         logging.debug("Randy found the following song after %s : \033[0;36m%s", str(t_stop-t_start), song["path"])
         return song
@@ -375,18 +222,13 @@ class Randy(object):
             
             # STAGE 2: Make randomness feeling random by checking if the song was recently played
             # only check, if that song is in the blacklist. Artist and album is forced by the user
-            with BlacklistLock:
-                if self.songbllen > 0 and song["id"] in Blacklist["songs"]:
-                    logging.debug("song on blacklist")
+            if self.blacklist.CheckSongList(song):
                     song = None
                     continue 
 
         if not song:
             logging.warning("The loop that should find a new random song did not deliver a song! \033[1;30m(This happens when there are too many songs of the given album are already on the blacklist)")
             return None
-
-        # maintain blacklists
-        self.AddSongToBlacklist(song)
 
         # Add song to queue
         logging.debug("Randy adds the following song after %s tries: \033[0;36m%s", tries, song["path"])

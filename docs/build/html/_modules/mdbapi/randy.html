@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.randy &mdash; MusicDB 4.0.0 documentation</title>
+  <title>mdbapi.randy &mdash; MusicDB 4.3.0 documentation</title>
   
 
   
@@ -30,12 +30,14 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 4.0.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 4.3.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +67,7 @@
             
             
               <div class="version">
-                4.0
+                4.3
               </div>
             
           
@@ -342,6 +344,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/blacklist.html">Blacklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/blacklist.html#module-mdbapi.blacklist">Blacklist Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/blacklist.html#id1">Blacklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/blacklist.html#blacklist-interface-class">Blacklist Interface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/database.html">MusicDBDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
 </ul>
@@ -376,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -393,7 +403,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/randy.html">Randomizer</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#blacklist">Blacklist</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#database-stage">Database Stage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
@@ -673,41 +682,6 @@
 <span class="sd">The *randy* module provides a way to select random songs that can be put into the Song Queue.</span>
 <span class="sd">The selection of random songs follows certain constraints.</span>
 
-<span class="sd">Randy consists of two parts:</span>
-
-<span class="sd">    * A global `Blacklist`_ for songs, albums and artists</span>
-<span class="sd">    * A class :class:`~Randy` that provides methods to get random songs</span>
-
-
-<span class="sd">Blacklist</span>
-<span class="sd">---------</span>
-
-<span class="sd">There are three FIFO organized blacklists: For songs, albums and artists.</span>
-<span class="sd">Each blacklist holds the IDs of the last played songs, albums and artists.</span>
-
-<span class="sd">Songs that will be selected by the :class:`~Randy` class will be added to the blacklists automatically.</span>
-<span class="sd">If a user adds a song into the Queue, this song must be added manually by calling the :meth:`~mdbapi.randy.Randy.AddSongToBlacklist` method.</span>
-
-<span class="sd">Once a song got added to the blacklist, it remains even if the song got removed from the queue.</span>
-
-<span class="sd">The length of those blacklist can be configured in the MusicDB Configuration:</span>
-
-<span class="sd">    .. code-block:: ini</span>
-
-<span class="sd">            [Randy]</span>
-<span class="sd">            songbllen=50</span>
-<span class="sd">            albumbllen=20</span>
-<span class="sd">            artistbllen=10</span>
-
-<span class="sd">For small music collections, the lengths should not exceed the possibility to provide individual data.</span>
-<span class="sd">For medium collections and above, the default values as shown in the example are good.</span>
-<span class="sd">When set to ``0``, the blacklist for the songs, albums or artists will be disabled.</span>
-
-<span class="sd">The blacklists get maintained by the :class:`~Randy` class.</span>
-<span class="sd">Each instance of this class accesses the same global blacklist.</span>
-
-<span class="sd">The blacklist is implemented as a dictionary with the keys ``&quot;songs&quot;``, ``&quot;albums&quot;`` and ``&quot;artists&quot;``.</span>
-<span class="sd">Their values are lists holding the IDs of the songs, albums and artists.</span>
 
 <span class="sd">Song Selection Algorithm</span>
 <span class="sd">------------------------</span>
@@ -751,33 +725,28 @@
 <span class="sd">Blacklist Stage</span>
 <span class="sd">^^^^^^^^^^^^^^^</span>
 
-<span class="sd">The selected song from the first stage now gets compared to the three blacklists.</span>
+<span class="sd">The selected song from the first stage now gets compared to the blacklists via </span>
+<span class="sd">:meth:`mdbapi.blacklist.BlacklistInterface.CheckAllLists` or</span>
+<span class="sd">:meth:`mdbapi.blacklist.BlacklistInterface.CheckSongList`.</span>
 <span class="sd">If the song, or its album or artist, is listed in one of blacklist, </span>
 <span class="sd">then the song, a song from the same album or from the same artist was played recently.</span>
 <span class="sd">So, the chosen song gets dropped and the finding-process starts again.</span>
 
 <span class="sd">Is the blacklist length set to 0, the specific blacklist is disabled</span>
-
-<span class="sd">If a song is found. The oldest entries of the blacklist get dropped, and the new song, album, artist get pushed on top of the list.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">threading</span>        <span class="c1"># for Lock</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">from</span> <span class="nn">lib.cfg.musicdb</span>    <span class="k">import</span> <span class="n">MusicDBConfig</span>
 <span class="kn">from</span> <span class="nn">lib.db.musicdb</span>     <span class="k">import</span> <span class="n">MusicDatabase</span>
 <span class="kn">from</span> <span class="nn">lib.cfg.mdbstate</span>   <span class="k">import</span> <span class="n">MDBState</span>
-
-<span class="n">BlacklistLock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
-<span class="n">Blacklist</span>     <span class="o">=</span> <span class="kc">None</span>
+<span class="kn">from</span> <span class="nn">mdbapi.blacklist</span>   <span class="k">import</span> <span class="n">BlacklistInterface</span>
 
 
 
 <div class="viewcode-block" id="Randy"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.Randy">[docs]</a><span class="k">class</span> <span class="nc">Randy</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class provides methods to get a random song under certain constraints.</span>
-
-<span class="sd">    This class is made to access the thread form all over the code simultaneously.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        config: :class:`~lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration</span>
@@ -796,112 +765,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span>         <span class="o">=</span> <span class="n">database</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span>        <span class="o">=</span> <span class="n">config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span>   <span class="o">=</span> <span class="n">MDBState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">statedir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blacklist</span>  <span class="o">=</span> <span class="n">BlacklistInterface</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">)</span>
 
         <span class="c1"># Load most important keys</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nodisabled</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">nodisabled</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nohated</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">nohated</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">minlen</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">minsonglen</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">songbllen</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">albumbllen</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">albumbllen</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">artistbllen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">artistbllen</span>
-
-        <span class="c1"># Check blacklist and create new one if there is none yet</span>
-        <span class="k">global</span> <span class="n">Blacklist</span>
-        <span class="k">global</span> <span class="n">BlacklistLock</span>
-
-        <span class="k">with</span> <span class="n">BlacklistLock</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">Blacklist</span><span class="p">:</span>
-                <span class="c1"># try to load the blacklist from MusicDB State</span>
-                <span class="n">loadedlists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span><span class="o">.</span><span class="n">LoadBlacklists</span><span class="p">()</span>
-
-                <span class="c1"># First, create a clean blacklist</span>
-                <span class="n">Blacklist</span> <span class="o">=</span> <span class="p">{}</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">albumbllen</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">artistbllen</span>
-                
-                <span class="c1"># Now fill the blacklist considering changes in their size</span>
-                <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">loadedlists</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">,</span> <span class="s2">&quot;albums&quot;</span><span class="p">,</span> <span class="s2">&quot;artists&quot;</span><span class="p">]:</span>
-                        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Unexpected key </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> in loaded blacklist dictionary! </span><span class="se">\033</span><span class="s2">[1;30(Will be discard)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
-                        <span class="k">continue</span>
-
-                    <span class="n">dst</span> <span class="o">=</span> <span class="n">Blacklist</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-                    <span class="n">src</span> <span class="o">=</span> <span class="n">loadedlists</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">src</span><span class="p">:</span>
-                        <span class="k">continue</span>    <span class="c1"># when there are no entries loaded, keep the generated list of None-entries</span>
-
-                    <span class="c1"># The following python magic inserts as much of src at the end of dst, as fits.</span>
-                    <span class="c1"># if src must be cut, the first elements get removed</span>
-                    <span class="c1"># So, case 1: len(dst) &gt; len(src)</span>
-                    <span class="c1">#   dst = [None, None, None, None, None]</span>
-                    <span class="c1">#   src = [1, 2, 3]</span>
-                    <span class="c1">#   Results in [None, None, 1, 2, 3]</span>
-                    <span class="c1">#</span>
-                    <span class="c1"># Case 2: len(dst) &lt; len(src)</span>
-                    <span class="c1">#   dst = [None, None]</span>
-                    <span class="c1">#   src = [1, 2, 3]</span>
-                    <span class="c1">#   Results in [2, 3]</span>
-                    <span class="c1">#</span>
-                    <span class="c1"># &gt;&gt;&gt; l = [1,2,3]</span>
-                    <span class="c1"># &gt;&gt;&gt; d = [0]*3</span>
-                    <span class="c1"># &gt;&gt;&gt; d[-len(l):] = l[-len(d):]</span>
-                    <span class="c1"># &gt;&gt;&gt; l</span>
-                    <span class="c1"># [1, 2, 3]</span>
-                    <span class="c1"># &gt;&gt;&gt; d</span>
-                    <span class="c1"># [1, 2, 3]</span>
-                    <span class="c1"># &gt;&gt;&gt; d = [0]*2</span>
-                    <span class="c1"># &gt;&gt;&gt; d[-len(l):] = l[-len(d):]</span>
-                    <span class="c1"># &gt;&gt;&gt; l</span>
-                    <span class="c1"># [1, 2, 3]</span>
-                    <span class="c1"># &gt;&gt;&gt; d</span>
-                    <span class="c1"># [2, 3]</span>
-                    <span class="c1"># &gt;&gt;&gt; d = [0]*4</span>
-                    <span class="c1"># &gt;&gt;&gt; d[-len(l):] = l[-len(d):]</span>
-                    <span class="c1"># &gt;&gt;&gt; l</span>
-                    <span class="c1"># [1, 2, 3]</span>
-                    <span class="c1"># &gt;&gt;&gt; d</span>
-                    <span class="c1"># [0, 1, 2, 3]</span>
-                    <span class="c1"># &gt;&gt;&gt; </span>
-                    <span class="n">dst</span> <span class="o">=</span> <span class="n">dst</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">src</span><span class="p">):]</span> <span class="o">=</span> <span class="n">src</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">dst</span><span class="p">):]</span>
-
-                    <span class="n">Blacklist</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">dst</span>
-
-
-
-<div class="viewcode-block" id="Randy.AddSongToBlacklist"><a class="viewcode-back" href="../../mdbapi/randy.html#mdbapi.randy.Randy.AddSongToBlacklist">[docs]</a>    <span class="k">def</span> <span class="nf">AddSongToBlacklist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">song</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method pushes a song onto the blacklists.</span>
-<span class="sd">        If the song is ``None`` nothing happens.</span>
-
-<span class="sd">        This method should be the only place where the blacklist gets changed.</span>
-<span class="sd">        After adding a song, the lists get stored in the MusicDB State Directory to be persistent</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            song (dict): A song from the :class:`~lib.db.musicdb.MusicDatabase`</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            *Nothing*</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">song</span><span class="p">:</span>
-            <span class="k">return</span>
-
-        <span class="k">global</span> <span class="n">BlacklistLock</span>
-        <span class="k">global</span> <span class="n">Blacklist</span>
-
-        <span class="k">with</span> <span class="n">BlacklistLock</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">artistbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">albumbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
-
-            <span class="c1"># Save blacklists to files </span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span><span class="o">.</span><span class="n">SaveBlacklists</span><span class="p">(</span><span class="n">Blacklist</span><span class="p">)</span></div>
 
 
 
@@ -962,24 +831,11 @@
 
 
             <span class="c1"># STAGE 2: Make randomness feeling random by checking if the song was recently played</span>
-            <span class="k">with</span> <span class="n">BlacklistLock</span><span class="p">:</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">artistbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;artist on blacklist&quot;</span><span class="p">)</span>
-                    <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
-                    <span class="k">continue</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">albumbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;album on blacklist&quot;</span><span class="p">)</span>
-                    <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
-                    <span class="k">continue</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;song on blacklist&quot;</span><span class="p">)</span>
-                    <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
-                    <span class="k">continue</span> 
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">blacklist</span><span class="o">.</span><span class="n">CheckAllLists</span><span class="p">(</span><span class="n">song</span><span class="p">):</span>
+                <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">continue</span>
 
         <span class="c1"># New song found \o/</span>
-        <span class="c1"># Add song into blacklists</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">AddSongToBlacklist</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
-
         <span class="n">t_stop</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Randy found the following song after </span><span class="si">%s</span><span class="s2"> : </span><span class="se">\033</span><span class="s2">[0;36m</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">t_stop</span><span class="o">-</span><span class="n">t_start</span><span class="p">),</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">song</span></div>
@@ -1031,18 +887,13 @@
             
             <span class="c1"># STAGE 2: Make randomness feeling random by checking if the song was recently played</span>
             <span class="c1"># only check, if that song is in the blacklist. Artist and album is forced by the user</span>
-            <span class="k">with</span> <span class="n">BlacklistLock</span><span class="p">:</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;song on blacklist&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">blacklist</span><span class="o">.</span><span class="n">CheckSongList</span><span class="p">(</span><span class="n">song</span><span class="p">):</span>
                     <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="k">continue</span> 
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">song</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The loop that should find a new random song did not deliver a song! </span><span class="se">\033</span><span class="s2">[1;30m(This happens when there are too many songs of the given album are already on the blacklist)&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="c1"># maintain blacklists</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">AddSongToBlacklist</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
 
         <span class="c1"># Add song to queue</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Randy adds the following song after </span><span class="si">%s</span><span class="s2"> tries: </span><span class="se">\033</span><span class="s2">[0;36m</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">tries</span><span class="p">,</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
@@ -1088,7 +939,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'4.0.0',
+            VERSION:'4.3.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1099,6 +950,7 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

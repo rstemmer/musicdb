@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Test VMs &mdash; MusicDB 4.0.0 documentation</title>
+  <title>MusicDB Test VMs &mdash; MusicDB 4.3.0 documentation</title>
   
 
   
@@ -30,12 +30,14 @@
   
 
   
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 4.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 4.3.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDB Websocket API" href="webapi.html"/>
         <link rel="prev" title="MusicDB Stream" href="streaming.html"/> 
 
@@ -66,7 +68,7 @@
             
             
               <div class="version">
-                4.0
+                4.3
               </div>
             
           
@@ -343,6 +345,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/blacklist.html">Blacklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/blacklist.html#module-mdbapi.blacklist">Blacklist Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/blacklist.html#id1">Blacklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/blacklist.html#blacklist-interface-class">Blacklist Interface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/database.html">MusicDBDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
 </ul>
@@ -377,7 +387,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -394,7 +404,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#blacklist">Blacklist</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#database-stage">Database Stage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
@@ -541,35 +550,6 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#sending-data">Sending Data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#receiving-data">Receiving Data</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#minimal-usage">Minimal usage</a></li>
-</ul>
-</li>
-</ul>
 <p class="caption"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
@@ -661,14 +641,14 @@
 <p>To test MusicDB I created some VMs with different Linux distributions.
 Most time I test on my productive installation.</p>
 <p>To run a test system execute the following line:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>qemu-system-x86_64 -hda <span class="nv">$SYSDISK</span> -hdb MusicDB.cow -hdc music.cow -m <span class="m">1024</span> -net user,hostfwd<span class="o">=</span>tcp::10022-:22 -net nic -enable-kvm
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qemu-system-x86_64 -hda <span class="nv">$SYSDISK</span> -hdb MusicDB.cow -hdc music.cow -m <span class="m">1024</span> -net user,hostfwd<span class="o">=</span>tcp::10022-:22 -net nic -enable-kvm
 </pre></div>
 </div>
 <div class="section" id="qemu-installation">
 <h2>qemu Installation<a class="headerlink" href="#qemu-installation" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="basic-setup">
 <h3>Basic Setup<a class="headerlink" href="#basic-setup" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># Install qemu</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install qemu</span>
 pacman -S qemu-headless
 
 <span class="c1"># Create a VM directory for BTRFS</span>
@@ -683,11 +663,11 @@ chown user:user /data/vms
 <p>I use multiple images to make the test environment more composable:</p>
 <blockquote>
 <div><ul class="simple">
-<li>System image: <code class="docutils literal"><span class="pre">$DISTNAME.cow</span></code></li>
-<li>Music collection: <code class="docutils literal"><span class="pre">music.cow</span></code> (mount read only to allow multiple OSs to access that device)</li>
+<li>System image: <code class="docutils literal notranslate"><span class="pre">$DISTNAME.cow</span></code></li>
+<li>Music collection: <code class="docutils literal notranslate"><span class="pre">music.cow</span></code> (mount read only to allow multiple OSs to access that device)</li>
 </ul>
 </div></blockquote>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>qemu-img create -f qcow2 /data/vms/<span class="nv">$DISTNAME</span>.cow 20G
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qemu-img create -f qcow2 /data/vms/<span class="nv">$DISTNAME</span>.cow 20G
 qemu-img create -f qcow2 /data/vms/music.cow 10G
 </pre></div>
 </div>
@@ -698,8 +678,8 @@ qemu-img create -f qcow2 /data/vms/music.cow 10G
 <p>All system installations have the following setup:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Language: <code class="docutils literal"><span class="pre">English</span></code> (Location: <code class="docutils literal"><span class="pre">Germany/Berlin</span></code>, Locales: <code class="docutils literal"><span class="pre">de_DE.UTF-8</span></code>)</li>
-<li>User: <code class="docutils literal"><span class="pre">user:user</span></code> with id <code class="docutils literal"><span class="pre">1000:1000</span></code> and group</li>
+<li>Language: <code class="docutils literal notranslate"><span class="pre">English</span></code> (Location: <code class="docutils literal notranslate"><span class="pre">Germany/Berlin</span></code>, Locales: <code class="docutils literal notranslate"><span class="pre">de_DE.UTF-8</span></code>)</li>
+<li>User: <code class="docutils literal notranslate"><span class="pre">user:user</span></code> with id <code class="docutils literal notranslate"><span class="pre">1000:1000</span></code> and group</li>
 <li>Patitioning: Using the assistant; home on same partition; for the distribution recommended setup.</li>
 <li>Installation: Minimal system. No GUI if possible.</li>
 </ul>
@@ -711,20 +691,20 @@ qemu-img create -f qcow2 /data/vms/music.cow 10G
 <li><dl class="first docutils">
 <dt>edit fstap:</dt>
 <dd><ul class="first last">
-<li>music-disk: <code class="docutils literal"><span class="pre">/data/music</span></code></li>
+<li>music-disk: <code class="docutils literal notranslate"><span class="pre">/data/music</span></code></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir -p /data/music
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir -p /data/music
 </pre></div>
 </div>
 <div class="section" id="installing-updating-musicdb-test-environment">
 <h3>Installing/Updating MusicDB Test Environment<a class="headerlink" href="#installing-updating-musicdb-test-environment" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">icecast</span></code> is not needed because it only handles encryption what is not necessary for test runs.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># download</span>
+<p><code class="docutils literal notranslate"><span class="pre">icecast</span></code> is not needed because it only handles encryption what is not necessary for test runs.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># download</span>
 mkdir /src
 <span class="nb">cd</span> /src
 git clone git@m45ch1n3.de:/data/git/musicdb.git
@@ -738,9 +718,9 @@ git clone git@m45ch1n3.de:/data/git/musicdb.git
 <div class="section" id="create-dummy-files">
 <h3>Create Dummy Files<a class="headerlink" href="#create-dummy-files" title="Permalink to this headline">¶</a></h3>
 <p>The following code shows, how to create a simple fake song.
-To create a complete fake album, the script <code class="docutils literal"><span class="pre">testenv/mkalbum.sh</span></code> can be used.
+To create a complete fake album, the script <code class="docutils literal notranslate"><span class="pre">testenv/mkalbum.sh</span></code> can be used.
 Before executing the it, edit the variables at the beginning of the script.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># Generate 3 minutes and 37 seconds silence</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate 3 minutes and 37 seconds silence</span>
 sox -n -r <span class="m">44100</span> -c <span class="m">2</span> silence.wav trim <span class="m">0</span>.0 <span class="m">3</span>:37
 
 <span class="c1"># Encode it as mpeg3</span>
@@ -759,8 +739,8 @@ id3edit --create --set-name <span class="s2">&quot;Silence&quot;</span> --set-al
 <p><strong>Version:</strong> 9.1.0 AMD64</p>
 <p>I used a <em>qemu</em> installation with GUI on my development PC to install Debian.
 Later I copied the debain.cow image onto my workstation and use it via <em>qemu-headless</em>.</p>
-<p>Selected Software: <code class="docutils literal"><span class="pre">web</span> <span class="pre">server</span></code>, <code class="docutils literal"><span class="pre">SSH</span> <span class="pre">server</span></code>, <code class="docutils literal"><span class="pre">standard</span> <span class="pre">system</span> <span class="pre">utilities</span></code>. <em>NO</em> desktop or print server.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># Download</span>
+<p>Selected Software: <code class="docutils literal notranslate"><span class="pre">web</span> <span class="pre">server</span></code>, <code class="docutils literal notranslate"><span class="pre">SSH</span> <span class="pre">server</span></code>, <code class="docutils literal notranslate"><span class="pre">standard</span> <span class="pre">system</span> <span class="pre">utilities</span></code>. <em>NO</em> desktop or print server.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download</span>
 wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-9.1.0-amd64-netinst.iso
 
 <span class="c1"># Install</span>
@@ -775,18 +755,18 @@ ssh user@localhost -p10022
 <p class="first admonition-title">Attention</p>
 <p>After installing MPD, the daemon gets started via systemd (enabled!!)</p>
 <p>So, after installing MPD run the following commands:</p>
-<div class="last highlight-bash"><div class="highlight"><pre><span></span>systemctl stop mpd
+<div class="last highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl stop mpd
 systemctl disable mpd
 </pre></div>
 </div>
 </div>
 <div class="admonition attention">
 <p class="first admonition-title">Attention</p>
-<p class="last">On Debian, the icecast executable is called <code class="docutils literal"><span class="pre">icecast2</span></code>, not <code class="docutils literal"><span class="pre">icecast</span></code></p>
+<p class="last">On Debian, the icecast executable is called <code class="docutils literal notranslate"><span class="pre">icecast2</span></code>, not <code class="docutils literal notranslate"><span class="pre">icecast</span></code></p>
 </div>
 <div class="admonition attention">
 <p class="first admonition-title">Attention</p>
-<p class="last">On Debian, uses the ancient Python 2 when calling <code class="docutils literal"><span class="pre">python</span></code>! m(</p>
+<p class="last">On Debian, uses the ancient Python 2 when calling <code class="docutils literal notranslate"><span class="pre">python</span></code>! m(</p>
 </div>
 </div>
 <div class="section" id="raspian">
@@ -799,10 +779,10 @@ systemctl disable mpd
 <p><strong>Version:</strong> <em>latest</em> (x86-64)</p>
 <p>Compared to my development system that is also Arch Linux, this is only a minimal installation.
 Furthermore, I use this VM to test an installation without any MusicAI components including its dependencies.
-It also does not have an <code class="docutils literal"><span class="pre">icecast</span></code> installation.
+It also does not have an <code class="docutils literal notranslate"><span class="pre">icecast</span></code> installation.
 So, this is the minimum environment MusicDB must have to run.</p>
-<p>Selected Software: <code class="docutils literal"><span class="pre">base</span></code>, <code class="docutils literal"><span class="pre">base-devel</span></code>, <code class="docutils literal"><span class="pre">vim</span></code>, <code class="docutils literal"><span class="pre">git</span></code>, <code class="docutils literal"><span class="pre">openssh</span></code>, <code class="docutils literal"><span class="pre">ifplugd</span></code></p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># Download</span>
+<p>Selected Software: <code class="docutils literal notranslate"><span class="pre">base</span></code>, <code class="docutils literal notranslate"><span class="pre">base-devel</span></code>, <code class="docutils literal notranslate"><span class="pre">vim</span></code>, <code class="docutils literal notranslate"><span class="pre">git</span></code>, <code class="docutils literal notranslate"><span class="pre">openssh</span></code>, <code class="docutils literal notranslate"><span class="pre">ifplugd</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download</span>
 wget https://ftp.fau.de/archlinux/iso/2017.09.01/archlinux-2017.09.01-x86_64.iso
 
 <span class="c1"># Install</span>
@@ -848,7 +828,7 @@ qemu-system-x86_64 -cdrom archlinux-2017.09.01-x86_64.iso -hda arch.cow -boot <s
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0',
+            VERSION:'4.3.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -859,6 +839,7 @@ qemu-system-x86_64 -cdrom archlinux-2017.09.01-x86_64.iso -hda arch.cow -boot <s
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

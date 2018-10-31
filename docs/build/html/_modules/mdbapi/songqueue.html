@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.songqueue &mdash; MusicDB 4.0.0 documentation</title>
+  <title>mdbapi.songqueue &mdash; MusicDB 4.3.0 documentation</title>
   
 
   
@@ -30,12 +30,14 @@
   
 
   
+    <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 4.0.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 4.3.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -65,7 +67,7 @@
             
             
               <div class="version">
-                4.0
+                4.3
               </div>
             
           
@@ -342,6 +344,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/blacklist.html">Blacklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/blacklist.html#module-mdbapi.blacklist">Blacklist Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/blacklist.html#id1">Blacklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/blacklist.html#blacklist-interface-class">Blacklist Interface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/database.html">MusicDBDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
 </ul>
@@ -376,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -393,7 +403,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/randy.html">Randomizer</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#blacklist">Blacklist</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#database-stage">Database Stage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
@@ -745,6 +754,7 @@
 <span class="kn">from</span> <span class="nn">lib.cfg.mdbstate</span>   <span class="k">import</span> <span class="n">MDBState</span>
 <span class="kn">from</span> <span class="nn">lib.db.musicdb</span>     <span class="k">import</span> <span class="n">MusicDatabase</span>
 <span class="kn">from</span> <span class="nn">mdbapi.randy</span>       <span class="k">import</span> <span class="n">Randy</span>
+<span class="kn">from</span> <span class="nn">mdbapi.blacklist</span>   <span class="k">import</span> <span class="n">BlacklistInterface</span>
 
 <span class="n">Queue</span>     <span class="o">=</span> <span class="kc">None</span>
 <span class="n">QueueLock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span> <span class="c1"># RLock allows nested calls. It locks only different threads.</span>
@@ -777,6 +787,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span>         <span class="o">=</span> <span class="n">database</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span>        <span class="o">=</span> <span class="n">config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span>   <span class="o">=</span> <span class="n">MDBState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">statedir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blacklist</span>  <span class="o">=</span> <span class="n">BlacklistInterface</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">randy</span>      <span class="o">=</span> <span class="n">Randy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">)</span>
 
         <span class="k">global</span> <span class="n">Queue</span>
@@ -1108,6 +1119,7 @@
 <span class="sd">        When the song shall be put at the beginning of the queue, then it gets set to index 1 not index 0.</span>
 <span class="sd">        So the current playing song (index 0) remains!</span>
 
+<span class="sd">        The new song gets added to the :mod:`~mdbapi.blacklist` via :meth:`mdbapi.blacklist.BlacklistInterface.AddSong`</span>
 <span class="sd">        The method also triggers the ``QueueChanged`` event.</span>
 
 <span class="sd">        Args:</span>
@@ -1136,6 +1148,9 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Position must have the value </span><span class="se">\&quot;</span><span class="s2">next</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">last</span><span class="se">\&quot;</span><span class="s2">. Given was </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">position</span><span class="p">))</span>
                 <span class="k">return</span>
+
+        <span class="c1"># add to blacklist</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blacklist</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">Event_QueueChanged</span><span class="p">()</span></div>
 
@@ -1356,7 +1371,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'4.0.0',
+            VERSION:'4.3.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1367,6 +1382,7 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

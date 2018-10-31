@@ -89,6 +89,7 @@ from lib.cfg.musicdb    import MusicDBConfig
 from lib.cfg.mdbstate   import MDBState
 from lib.db.musicdb     import MusicDatabase
 from mdbapi.randy       import Randy
+from mdbapi.blacklist   import BlacklistInterface
 
 Queue     = None
 QueueLock = threading.RLock() # RLock allows nested calls. It locks only different threads.
@@ -121,6 +122,7 @@ class SongQueue(object):
         self.db         = database
         self.cfg        = config
         self.mdbstate   = MDBState(self.cfg.server.statedir, self.db)
+        self.blacklist  = BlacklistInterface(self.cfg, self.db)
         self.randy      = Randy(self.cfg, self.db)
 
         global Queue
@@ -452,6 +454,7 @@ class SongQueue(object):
         When the song shall be put at the beginning of the queue, then it gets set to index 1 not index 0.
         So the current playing song (index 0) remains!
 
+        The new song gets added to the :mod:`~mdbapi.blacklist` via :meth:`mdbapi.blacklist.BlacklistInterface.AddSong`
         The method also triggers the ``QueueChanged`` event.
 
         Args:
@@ -480,6 +483,9 @@ class SongQueue(object):
             else:
                 logging.warning("Position must have the value \"next\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
                 return
+
+        # add to blacklist
+        self.blacklist.AddSong(songid)
 
         self.Event_QueueChanged()
 

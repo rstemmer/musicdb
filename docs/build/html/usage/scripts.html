@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Scripts &mdash; MusicDB 4.0.0 documentation</title>
+  <title>Scripts &mdash; MusicDB 4.3.0 documentation</title>
   
 
   
@@ -30,12 +30,14 @@
   
 
   
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 4.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 4.3.0 documentation" href="../index.html"/>
         <link rel="next" title="add - Add New Album to MusicDB" href="../mod/add.html"/>
         <link rel="prev" title="Music" href="music.html"/> 
 
@@ -66,7 +68,7 @@
             
             
               <div class="version">
-                4.0
+                4.3
               </div>
             
           
@@ -343,6 +345,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/blacklist.html">Blacklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/blacklist.html#module-mdbapi.blacklist">Blacklist Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/blacklist.html#id1">Blacklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/blacklist.html#blacklist-interface-class">Blacklist Interface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/database.html">MusicDBDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
 </ul>
@@ -377,7 +387,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -394,7 +404,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#blacklist">Blacklist</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#database-stage">Database Stage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
@@ -541,35 +550,6 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#sending-data">Sending Data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#receiving-data">Receiving Data</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#minimal-usage">Minimal usage</a></li>
-</ul>
-</li>
-</ul>
 <p class="caption"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
@@ -662,11 +642,11 @@
 The scripts and how they work are described in the following sections.</p>
 <p>All scripts have no command line arguments.
 The last code examples in each subsection give an impression of what the script internally does.</p>
-<p>In the source directory, the scripts described in this chapter can be found in <code class="docutils literal"><span class="pre">scripts/helper/*.sh</span></code>.
-When installing MusicDB, they get copied into the server directory that is part of the <code class="docutils literal"><span class="pre">$PATH</span></code> variable.
+<p>In the source directory, the scripts described in this chapter can be found in <code class="docutils literal notranslate"><span class="pre">scripts/helper/*.sh</span></code>.
+When installing MusicDB, they get copied into the server directory that is part of the <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> variable.
 So the scripts can be executed from anywhere in the shell.</p>
 <p>When and how to use these scripts will be shown in the following code example:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># Start all depending processes (once after each operating system reboot)</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Start all depending processes (once after each operating system reboot)</span>
 musicdb-boot.sh
 
 <span class="c1"># Start MusicDB itself</span>
@@ -683,7 +663,7 @@ musicdb-shutdown.sh
 </pre></div>
 </div>
 <p>There are some more scripts in the MusicDB scripts directory that are used for the installation process.
-See the <a class="reference internal" href="install.html"><span class="doc">Installation &amp; Update</span></a> documentation to learn about <code class="docutils literal"><span class="pre">install.sh</span></code> and <code class="docutils literal"><span class="pre">check.sh</span></code>.</p>
+See the <a class="reference internal" href="install.html"><span class="doc">Installation &amp; Update</span></a> documentation to learn about <code class="docutils literal notranslate"><span class="pre">install.sh</span></code> and <code class="docutils literal notranslate"><span class="pre">check.sh</span></code>.</p>
 <div class="section" id="musicdb-boot">
 <h2>musicdb-boot<a class="headerlink" href="#musicdb-boot" title="Permalink to this headline">¶</a></h2>
 <p>This script starts all depending processes that are needed by the server.
@@ -694,27 +674,27 @@ In this directory, the related configuration files are placed.
 They are used.</p>
 <p>The configuration directory will be determined by checking in which directory the musicdb.ini in /etc is linked to.
 So if /etc/musicdb.ini is linked to /data/musicdb/musicdb.ini, then /data/musicdb is the used directory.
-In the following text just called <code class="docutils literal"><span class="pre">$CFGDIR</span></code>.</p>
+In the following text just called <code class="docutils literal notranslate"><span class="pre">$CFGDIR</span></code>.</p>
 <p>These are the processes that gets started with the annotated configuration:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">icecast[2]</span></code> with <code class="docutils literal"><span class="pre">$CFGDIR/icecast/config.xml</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">icecast[2]</span></code> with <code class="docutils literal notranslate"><span class="pre">$CFGDIR/icecast/config.xml</span></code></li>
 </ul>
 </div></blockquote>
 <p>Those files and the directory structure should be generated by the installation process.</p>
-<p><code class="docutils literal"><span class="pre">musicdb-boot</span></code> first checks if the processes are already running.
+<p><code class="docutils literal notranslate"><span class="pre">musicdb-boot</span></code> first checks if the processes are already running.
 If that is the case, they get killed and restarted.</p>
 <p>You need to be <em>root</em> to execute the script.
 The processes started by this script will run with their own user ID as configured in their configurations.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>icecast -b -c <span class="nv">$ICECASTCONFIG</span> &gt; /dev/null
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>icecast -b -c <span class="nv">$ICECASTCONFIG</span> &gt; /dev/null
 </pre></div>
 </div>
 </div>
 <div class="section" id="musicdb-shutdown">
 <h2>musicdb-shutdown<a class="headerlink" href="#musicdb-shutdown" title="Permalink to this headline">¶</a></h2>
-<p>Same procedure as <code class="docutils literal"><span class="pre">musicdb-boot</span></code>.
+<p>Same procedure as <code class="docutils literal notranslate"><span class="pre">musicdb-boot</span></code>.
 Just instead of starting the processes, they get stopped.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>killall icecast &gt; dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>killall icecast &gt; dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
 </pre></div>
 </div>
 </div>
@@ -722,9 +702,9 @@ Just instead of starting the processes, they get stopped.</p>
 <h2>musicdb-start<a class="headerlink" href="#musicdb-start" title="Permalink to this headline">¶</a></h2>
 <p>This scripts starts the MusicDB WebSocket Server.
 If the server is already running (determined by the existence of the PID-file), nothing will be done.
-The server gets executed with the user ID of the user <code class="docutils literal"><span class="pre">musicdb</span></code>.
+The server gets executed with the user ID of the user <code class="docutils literal notranslate"><span class="pre">musicdb</span></code>.
 This user should be created during the installation process</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>su -l -c <span class="s2">&quot;musicdb server&quot;</span> <span class="s2">&quot;musicdb&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>su -l -c <span class="s2">&quot;musicdb server&quot;</span> <span class="s2">&quot;musicdb&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -733,7 +713,7 @@ This user should be created during the installation process</p>
 <p>This script stops the MusicDB server.
 It reads the configuration (/etc/musicdb.ini) to determine the pid-file in which the PID of the MusicDB server is stored.
 Then the server just gets killed by its PID.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">kill</span> <span class="k">$(</span> cat <span class="nv">$MUSICDB_PIDFILE</span> <span class="k">)</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">kill</span> <span class="k">$(</span> cat <span class="nv">$MUSICDB_PIDFILE</span> <span class="k">)</span>
 </pre></div>
 </div>
 </div>
@@ -744,7 +724,7 @@ So only a code update will be done.</p>
 <p>The script immediately runs the update.
 It does not ask the user to confirm the auto-detected setup of the installation.</p>
 <p>Data updates (like new database schemes) must be done by the developer himself <strong>or</strong>
-use the argument <code class="docutils literal"><span class="pre">--major</span></code> for a major release update.
+use the argument <code class="docutils literal notranslate"><span class="pre">--major</span></code> for a major release update.
 Then a post-update process gets started that updates the configuration and database schemes.</p>
 </div>
 </div>
@@ -784,7 +764,7 @@ Then a post-update process gets started that updates the configuration and datab
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0',
+            VERSION:'4.3.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -795,6 +775,7 @@ Then a post-update process gets started that updates the configuration and datab
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
