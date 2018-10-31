@@ -169,8 +169,7 @@ When developing a new module for MusicDB, never bypass these libraries!
 MusicDB WebUI
 =============
 
-Here are some documentations of the JavaScript WebUI.
-This documentation is not complete, and will never be.
+The documentation of the WebUI is not complete, and will never be.
 The whole WebUI must and will be rebuilt in future using `WebAssembly (no HTTPS) <http://webassembly.org/>`_  technology.
 JavaScript is simply not the right language for such a complex application.
 

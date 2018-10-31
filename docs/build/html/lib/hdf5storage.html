@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>HDF5Storage &mdash; MusicDB 4.0.0 documentation</title>
+  <title>HDF5Storage &mdash; MusicDB 4.3.0 documentation</title>
   
 
   
@@ -30,12 +30,14 @@
   
 
   
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 4.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 4.3.0 documentation" href="../index.html"/>
         <link rel="next" title="Icecast Interface" href="icecast.html"/>
         <link rel="prev" title="GStreamer Interface" href="gstreamer.html"/> 
 
@@ -66,7 +68,7 @@
             
             
               <div class="version">
-                4.0
+                4.3
               </div>
             
           
@@ -343,6 +345,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/blacklist.html">Blacklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/blacklist.html#module-mdbapi.blacklist">Blacklist Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/blacklist.html#id1">Blacklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/blacklist.html#blacklist-interface-class">Blacklist Interface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/database.html">MusicDBDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
 </ul>
@@ -377,7 +387,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -394,7 +404,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#blacklist">Blacklist</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#database-stage">Database Stage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
@@ -541,35 +550,6 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#sending-data">Sending Data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#receiving-data">Receiving Data</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#minimal-usage">Minimal usage</a></li>
-</ul>
-</li>
-</ul>
 <p class="caption"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
@@ -662,7 +642,7 @@
 Its main advantage is to handle huge sets of binary data.</p>
 <p>The data handling and storage is done by the <a class="reference external" href="http://www.h5py.org/">h5py</a> library and the <a class="reference external" href="https://support.hdfgroup.org/HDF5/">HDF5</a> file format.</p>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Open storage</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Open storage</span>
 <span class="n">storage</span> <span class="o">=</span> <span class="n">HDF5Storage</span><span class="p">(</span><span class="s2">&quot;./test.h5&quot;</span><span class="p">)</span>
 
 <span class="c1"># Generate some datasets</span>
@@ -705,7 +685,7 @@ All datasets have the following format:</p>
 </ul>
 </div></blockquote>
 <p>The creation of a dataset is done as shown in the following code:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">shape</span>     <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">shape</span>     <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 <span class="n">maxshape</span>  <span class="o">=</span> <span class="p">(</span><span class="bp">None</span><span class="p">,)</span> <span class="o">+</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 <span class="n">chunkshape</span><span class="o">=</span> <span class="p">(</span><span class="mi">1024</span><span class="p">,)</span> <span class="o">+</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
@@ -753,12 +733,12 @@ This can be used to iterate over a large set of data.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a h5py dataset</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code> – When file not opened or dataset does not exist</td>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AssertionError</span></code> – When file not opened or dataset does not exist</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># print the dataset testdata</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># print the dataset testdata</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">storage</span><span class="o">.</span><span class="n">ReadDataset</span><span class="p">(</span><span class="s2">&quot;testdata&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
     <span class="k">print</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
@@ -791,7 +771,7 @@ the resulting dimension is (z+a, y, x).</p>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">entry</span>   <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span> <span class="c1"># create a 10x20 matrix with zeros</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">entry</span>   <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span> <span class="c1"># create a 10x20 matrix with zeros</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="p">[</span><span class="n">entry</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">entry</span><span class="p">]</span> <span class="c1"># create a dataset with 3 matrices</span>
 
 <span class="n">storage</span><span class="o">.</span><span class="n">WriteDataset</span><span class="p">(</span><span class="s2">&quot;testdata&quot;</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
@@ -843,7 +823,7 @@ the resulting dimension is (z+a, y, x).</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0',
+            VERSION:'4.3.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -854,6 +834,7 @@ the resulting dimension is (z+a, y, x).</p>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

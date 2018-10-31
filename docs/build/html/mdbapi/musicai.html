@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicAI &mdash; MusicDB 4.0.0 documentation</title>
+  <title>MusicAI &mdash; MusicDB 4.3.0 documentation</title>
   
 
   
@@ -30,12 +30,14 @@
   
 
   
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 4.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 4.3.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicCache" href="musiccache.html"/>
         <link rel="prev" title="Micro Search Engine" href="mise.html"/> 
 
@@ -66,7 +68,7 @@
             
             
               <div class="version">
-                4.0
+                4.3
               </div>
             
           
@@ -343,6 +345,14 @@
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#module-lib.cache">ArtworkCache Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="blacklist.html">Blacklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="blacklist.html#module-mdbapi.blacklist">Blacklist Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="blacklist.html#id1">Blacklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="blacklist.html#blacklist-interface-class">Blacklist Interface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">MusicDBDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
 </ul>
@@ -377,7 +387,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#musicai-module">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -394,7 +404,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="randy.html">Randomizer</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="randy.html#module-mdbapi.randy">Randy Module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="randy.html#blacklist">Blacklist</a></li>
 <li class="toctree-l3"><a class="reference internal" href="randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="randy.html#database-stage">Database Stage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="randy.html#blacklist-stage">Blacklist Stage</a></li>
@@ -666,10 +675,10 @@ With TensorFlow comes a tool called <a class="reference external" href="https://
 that provides detail about the model and training process and progress.
 To access the data of the MusicAIs neural network via TensorBoard, the following command must be executed.
 Paths are depending on the MusicDB configuration.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>tensorboard --logdir /data/musicdb/musicai/log
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tensorboard --logdir /data/musicdb/musicai/log
 </pre></div>
 </div>
-<p>After starting <code class="docutils literal"><span class="pre">tensorboard</span></code>, the data can be accessed using a web browser.
+<p>After starting <code class="docutils literal notranslate"><span class="pre">tensorboard</span></code>, the data can be accessed using a web browser.
 The tool prints the port number to <em>stdout</em>.</p>
 </div>
 <div class="section" id="training-time">
@@ -705,7 +714,7 @@ t_e &amp; = t \cdot e_t \cdot s_t &amp; \text{esitmated training time}
 <div class="section" id="removing-an-old-model">
 <h2>Removing an old model<a class="headerlink" href="#removing-an-old-model" title="Permalink to this headline">¶</a></h2>
 <p>To remove an old model the following steps are needed, with <em>modelpath</em> and <em>logpath</em> as set in the MusicDB Configuration.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>rm <span class="nv">$modelpath</span>/*
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm <span class="nv">$modelpath</span>/*
 rm -r <span class="nv">$logpath</span>/*
 </pre></div>
 </div>
@@ -716,21 +725,21 @@ rm -r <span class="nv">$logpath</span>/*
 In my case, it is over 16GiB of input data.
 This cannot be handled using only a sqlite3 database from that all data gets loaded into a python list object.</p>
 <p>So for training and the training data, the <a class="reference external" href="http://www.h5py.org/">h5py</a> library is used and the data gets stored in a <a class="reference external" href="https://support.hdfgroup.org/HDF5/">HDF5</a> file.
-In context of MusicDB, use the <a class="reference internal" href="../lib/hdf5storage.html#lib.hdf5storage.HDF5Storage" title="lib.hdf5storage.HDF5Storage"><code class="xref py py-class docutils literal"><span class="pre">lib.hdf5storage.HDF5Storage</span></code></a> class.</p>
+In context of MusicDB, use the <a class="reference internal" href="../lib/hdf5storage.html#lib.hdf5storage.HDF5Storage" title="lib.hdf5storage.HDF5Storage"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.hdf5storage.HDF5Storage</span></code></a> class.</p>
 <p>There are two categories of files:</p>
 <blockquote>
 <div><dl class="docutils">
 <dt>The <a class="reference internal" href="#featureset">Featureset</a>:</dt>
-<dd>This is a file for each song named <code class="docutils literal"><span class="pre">$spectrogrampath/$SongID.h5</span></code>. This file contains the features itself and nothing more.</dd>
+<dd>This is a file for each song named <code class="docutils literal notranslate"><span class="pre">$spectrogrampath/$SongID.h5</span></code>. This file contains the features itself and nothing more.</dd>
 <dt>The <a class="reference internal" href="#trainingset">Trainingset</a>:</dt>
-<dd>This is a much larger file named <code class="docutils literal"><span class="pre">$modelpath/$AIName.h5</span></code> containing lots of features and its annotation.</dd>
+<dd>This is a much larger file named <code class="docutils literal notranslate"><span class="pre">$modelpath/$AIName.h5</span></code> containing lots of features and its annotation.</dd>
 </dl>
 </div></blockquote>
 <div class="section" id="featureset">
 <h3>Featureset<a class="headerlink" href="#featureset" title="Permalink to this headline">¶</a></h3>
 <p>This file has only one dataset called <em>featureset</em>.
 It is stored in the same directory the spectrogram images are stored.</p>
-<p>The dimension of the featureset is <code class="docutils literal"><span class="pre">(x,</span> <span class="pre">slicesize,</span> <span class="pre">slicesize,</span> <span class="pre">1)</span></code>.
+<p>The dimension of the featureset is <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">slicesize,</span> <span class="pre">slicesize,</span> <span class="pre">1)</span></code>.
 With <em>x</em> as the amount of features in the featureset,
 and <em>slicesize</em> the configured size of spectrogram-slices used to create the feature.
 The additional dimension is needed by <em>TensorFlow</em></p>
@@ -740,29 +749,16 @@ The additional dimension is needed by <em>TensorFlow</em></p>
 <p>This file is organized as follows</p>
 <blockquote>
 <div><ul class="simple">
-<li><em>inputs</em>: input feature set (<code class="docutils literal"><span class="pre">chunksize=(1024,128,128,1)</span></code>)</li>
-<li><em>outputs</em>: output vectors (categories) (<code class="docutils literal"><span class="pre">chunksize=(1024,4,1)</span></code>)</li>
+<li><em>inputs</em>: input feature set (<code class="docutils literal notranslate"><span class="pre">chunksize=(1024,128,128,1)</span></code>)</li>
+<li><em>outputs</em>: output vectors (categories) (<code class="docutils literal notranslate"><span class="pre">chunksize=(1024,4,1)</span></code>)</li>
 <li><em>songids</em>: list of all song IDs thats features are in the featureset</li>
 </ul>
 </div></blockquote>
 <p>The <em>songids</em> can be used to check whether a song is included in the training set or not.</p>
 </div>
 </div>
-<div class="section" id="module-mdbapi.musicai">
-<span id="musicai-module"></span><h2>MusicAI Module<a class="headerlink" href="#module-mdbapi.musicai" title="Permalink to this headline">¶</a></h2>
-<p>MusicAI is made to set genre tags to songs based on the tags set to albums.</p>
-<p>This AI works for on a predefined set of genre.
-This set can be defined in the MusicDB Configuration <code class="docutils literal"><span class="pre">[MusicAI]-&gt;genrelist</span></code>.
-The list is bound to the model name also set in the configuration.
-If the gerelist changes, the model name should change, too.
-Otherwise the datasets loose their relation to the genres.</p>
-<p>This module changes two environment variables:</p>
-<blockquote>
-<div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">TF_CPP_MIN_LOG_LEVEL</span></code> will be set to <code class="docutils literal"><span class="pre">2</span></code> to suppress printing warnings.</li>
-<li><code class="docutils literal"><span class="pre">CUDA_VISIBLE_DEVICES</span></code> will be set to <code class="docutils literal"><span class="pre">0</span></code>. This is the GPU ID that will be used by TensorFlow.</li>
-</ul>
-</div></blockquote>
+<div class="section" id="musicai-module">
+<h2>MusicAI Module<a class="headerlink" href="#musicai-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="musicai-class">
 <h2>MusicAI Class<a class="headerlink" href="#musicai-class" title="Permalink to this headline">¶</a></h2>
@@ -773,9 +769,9 @@ Otherwise the datasets loose their relation to the genres.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> – Instance of <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal"><span class="pre">lib.cfg.musicdb.MusicDBConfig</span></code></a>.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> – Instance of <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.cfg.musicdb.MusicDBConfig</span></code></a>.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – If <em>config</em> is of an invalid type</td>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If <em>config</em> is of an invalid type</td>
 </tr>
 </tbody>
 </table>
@@ -787,9 +783,9 @@ To do so, first the feature set must be created.</p>
 <p>The feature set file gets read and a genre vector generated.
 The resultuing two sets (<em>inputs</em> = feature set and <em>outputs</em> = genre vector) will be stored in the training file.</p>
 <p>The <strong>inputs</strong> are a HDF5 dataset handler shaping a numpy-array of size <em>n</em> of input matrices:
-<code class="docutils literal"><span class="pre">(n,</span> <span class="pre">slicesize,</span> <span class="pre">slicesize,</span> <span class="pre">1)</span></code></p>
-<p>The <strong>outputs</strong> are a HDF5 dataset handler shaping a numpy-array of size <em>n</em> of genre-vectors formatted as shown in <a class="reference internal" href="#mdbapi.musicai.MusicAI.GetGenreMatrix" title="mdbapi.musicai.MusicAI.GetGenreMatrix"><code class="xref py py-meth docutils literal"><span class="pre">mdbapi.musicai.MusicAI.GetGenreMatrix()</span></code></a>:
-<code class="docutils literal"><span class="pre">(n,</span> <span class="pre">4,</span> <span class="pre">1)</span></code></p>
+<code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">slicesize,</span> <span class="pre">slicesize,</span> <span class="pre">1)</span></code></p>
+<p>The <strong>outputs</strong> are a HDF5 dataset handler shaping a numpy-array of size <em>n</em> of genre-vectors formatted as shown in <a class="reference internal" href="#mdbapi.musicai.MusicAI.GetGenreMatrix" title="mdbapi.musicai.MusicAI.GetGenreMatrix"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.musicai.MusicAI.GetGenreMatrix()</span></code></a>:
+<code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">4,</span> <span class="pre">1)</span></code></p>
 <p>The genre name should be the same as the related genre tag is named in the database.
 It also must be part of the list of genres this AI works with.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -802,13 +798,13 @@ It also must be part of the list of genres this AI works with.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">True</span></code> if the song has a feature set so that it was added to the database. Otherwise <code class="docutils literal"><span class="pre">False</span></code></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">True</span></code> if the song has a feature set so that it was added to the database. Otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">musicai</span> <span class="o">=</span> <span class="n">MusicAI</span><span class="p">(</span><span class="s2">&quot;./musicdb.ini&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">musicai</span> <span class="o">=</span> <span class="n">MusicAI</span><span class="p">(</span><span class="s2">&quot;./musicdb.ini&quot;</span><span class="p">)</span>
 <span class="n">musicai</span><span class="o">.</span><span class="n">CreateFeatureset</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]):</span>
 <span class="n">musicai</span><span class="o">.</span><span class="n">AddSongToTrainingset</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="s2">&quot;metal&quot;</span><span class="p">)</span>
 </pre></div>
@@ -822,7 +818,7 @@ It also must be part of the list of genres this AI works with.</p>
 The features are generated by the following steps:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>First step is to create the spectrogram calling <a class="reference internal" href="#mdbapi.musicai.MusicAI.CreateSpectrogram" title="mdbapi.musicai.MusicAI.CreateSpectrogram"><code class="xref py py-meth docutils literal"><span class="pre">CreateSpectrogram()</span></code></a>.</li>
+<li>First step is to create the spectrogram calling <a class="reference internal" href="#mdbapi.musicai.MusicAI.CreateSpectrogram" title="mdbapi.musicai.MusicAI.CreateSpectrogram"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CreateSpectrogram()</span></code></a>.</li>
 <li>Next it takes slices from the resulting image and converts it into a normalized <em>numpy</em> array.</li>
 <li>The begin and end of a song will be chopped of and gets ignored.</li>
 </ol>
@@ -830,7 +826,7 @@ The features are generated by the following steps:</p>
 <p>A slicesize can be defind in the MusicDB Configuration under musicai-&gt;slicesize. <strong>Be careful with this configuration and check the influence to other methods in this class!</strong>
 The first 10 and the last 10 slices will be skipped to avoid unnecessary much intro/outro-data-noise.</p>
 <p>The resulting data (a feature) is a <em>numpy</em> 3D (slicesize, slicesize, 1) matrix of type float in range of 0.0 to 1.0.
-This matrix of all features of a song gets stored in a HDF5 file under <code class="docutils literal"><span class="pre">$spectrograms/$SongID.h5</span></code></p>
+This matrix of all features of a song gets stored in a HDF5 file under <code class="docutils literal notranslate"><span class="pre">$spectrograms/$SongID.h5</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -841,13 +837,13 @@ This matrix of all features of a song gets stored in a HDF5 file under <code cla
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal"><span class="pre">False</span></code></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">musicai</span> <span class="o">=</span> <span class="n">MusicAI</span><span class="p">(</span><span class="s2">&quot;./musicdb.ini&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">musicai</span> <span class="o">=</span> <span class="n">MusicAI</span><span class="p">(</span><span class="s2">&quot;./musicdb.ini&quot;</span><span class="p">)</span>
 <span class="n">musicai</span><span class="o">.</span><span class="n">CreateFeatureset</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]):</span>
 </pre></div>
 </div>
@@ -863,15 +859,15 @@ This matrix of all features of a song gets stored in a HDF5 file under <code cla
 <p>Inside the method there are some configurable variables to easily change some basic settings of the network:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">useflatten</span> <span class="pre">=</span> <span class="pre">True</span></code>: Create a flatten-layer between the convolutional part and the fully connected end</li>
-<li><code class="docutils literal"><span class="pre">keepprob</span> <span class="pre">=</span> <span class="pre">0.5</span></code>: Probability of an input gets propagated through the dropout-layer</li>
-<li><code class="docutils literal"><span class="pre">activation</span> <span class="pre">=</span> <span class="pre">&quot;elu&quot;</span></code>: Name of the activation function used for the convolutional networks as used by <em>tensorflow</em></li>
-<li><code class="docutils literal"><span class="pre">weightinit</span> <span class="pre">=</span> <span class="pre">&quot;Xavier&quot;</span></code>: Initialisation function for the convolutional layers</li>
-<li><code class="docutils literal"><span class="pre">weightdecay</span> <span class="pre">=</span> <span class="pre">0.001</span></code></li>
-<li><code class="docutils literal"><span class="pre">learningrate</span> <span class="pre">=</span> <span class="pre">0.001</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">useflatten</span> <span class="pre">=</span> <span class="pre">True</span></code>: Create a flatten-layer between the convolutional part and the fully connected end</li>
+<li><code class="docutils literal notranslate"><span class="pre">keepprob</span> <span class="pre">=</span> <span class="pre">0.5</span></code>: Probability of an input gets propagated through the dropout-layer</li>
+<li><code class="docutils literal notranslate"><span class="pre">activation</span> <span class="pre">=</span> <span class="pre">&quot;elu&quot;</span></code>: Name of the activation function used for the convolutional networks as used by <em>tensorflow</em></li>
+<li><code class="docutils literal notranslate"><span class="pre">weightinit</span> <span class="pre">=</span> <span class="pre">&quot;Xavier&quot;</span></code>: Initialisation function for the convolutional layers</li>
+<li><code class="docutils literal notranslate"><span class="pre">weightdecay</span> <span class="pre">=</span> <span class="pre">0.001</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">learningrate</span> <span class="pre">=</span> <span class="pre">0.001</span></code></li>
 </ul>
 </div></blockquote>
-<p>The reason for using <code class="docutils literal"><span class="pre">&quot;elu&quot;</span></code> as activation function can be found in the following paper:</p>
+<p>The reason for using <code class="docutils literal notranslate"><span class="pre">&quot;elu&quot;</span></code> as activation function can be found in the following paper:</p>
 <blockquote>
 <div>Djork-Arné Clevert, Thomas Unterthiner and Sepp Hochreiter, <em>“Fast and Accurate Deep Network Learning by Exponential Linear Units (ELUs)”</em>, Nov. 2015, CoRR (scientific source), <a class="reference external" href="https://arxiv.org/abs/1511.07289">https://arxiv.org/abs/1511.07289</a></div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -895,7 +891,7 @@ The spectrogram is a png-image.</p>
 <p class="last">This method must be thread safe to process multiple files at once</p>
 </div>
 <p>This method represents the following shell commands:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># decode song to wave-file</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># decode song to wave-file</span>
 ffmpeg -v quiet -y -i <span class="nv">$songpath</span> <span class="s2">&quot;</span><span class="nv">$songid</span><span class="s2">-stereo.wav&quot;</span>
 
 <span class="c1"># make mono wave file out of the stereo wave file</span>
@@ -915,7 +911,7 @@ One column in the spectrogram represents 50ms of the song.
 All those variables can be set in the MusicDB Configuration.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">Before changing the slice-size read the <code class="docutils literal"><span class="pre">sox</span></code> manpages for the <code class="docutils literal"><span class="pre">-y</span></code> parameter carefully.</p>
+<p class="last">Before changing the slice-size read the <code class="docutils literal notranslate"><span class="pre">sox</span></code> manpages for the <code class="docutils literal notranslate"><span class="pre">-y</span></code> parameter carefully.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -942,7 +938,7 @@ When training a neural network for categorizing, each element of the result-vect
 This static mapping is returned by this method.
 The matrix gets dynamic generated out of the configuration of MusicDB.
 The configured genre list gets just transformed into the matirx.</p>
-<p>For example, the mapping for the genrelist <code class="docutils literal"><span class="pre">Metal,</span> <span class="pre">NDH,</span> <span class="pre">Gothic,</span> <span class="pre">Elector</span></code> is the following:</p>
+<p>For example, the mapping for the genrelist <code class="docutils literal notranslate"><span class="pre">Metal,</span> <span class="pre">NDH,</span> <span class="pre">Gothic,</span> <span class="pre">Elector</span></code> is the following:</p>
 <div class="math">
 <p><img src="../_images/math/ad67dc2d29d13cfb3b4220a1e84608c14402d0ab.png" alt="\begin{pmatrix}
     \text{Metal}\\
@@ -977,12 +973,12 @@ Each entry in the dictionary is a vector with the related cell set to 1.0 and th
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with statistics or <code class="docutils literal"><span class="pre">None</span></code> if there is no training set</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with statistics or <code class="docutils literal notranslate"><span class="pre">None</span></code> if there is no training set</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">stats</span> <span class="o">=</span> <span class="n">musicai</span><span class="o">.</span><span class="n">GetStatistics</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span> <span class="o">=</span> <span class="n">musicai</span><span class="o">.</span><span class="n">GetStatistics</span><span class="p">()</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Set Size: &quot;</span><span class="p">,</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;setsize&quot;</span><span class="p">])</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Number of Songs in Set: &quot;</span><span class="p">,</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;numofsongs&quot;</span><span class="p">])</span>
 </pre></div>
@@ -1002,7 +998,7 @@ The png encoded spectrogram is not the final feature set and so its existence is
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songid</strong> – ID of the song that shall be checked</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> if the songs feature set is available, otherwise <code class="docutils literal"><span class="pre">False</span></code></td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> if the songs feature set is available, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -1025,7 +1021,7 @@ The check is done in two steps:</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songid</strong> – ID of the song that shall be checked</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> if there exists a training set, otherwise <code class="docutils literal"><span class="pre">False</span></code></td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> if there exists a training set, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -1034,15 +1030,15 @@ The check is done in two steps:</p>
 <dl class="method">
 <dt id="mdbapi.musicai.MusicAI.LoadModel">
 <code class="descname">LoadModel</code><span class="sig-paren">(</span><em>modelfilepath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musicai.html#MusicAI.LoadModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musicai.MusicAI.LoadModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method creates a neural network model and loads the trained data from the model in <code class="docutils literal"><span class="pre">modelfilepath</span></code> if the file <code class="docutils literal"><span class="pre">modelfilepath</span> <span class="pre">+</span> <span class="pre">&quot;.index&quot;</span></code> exists.
-The model will be created to run on the GPU if the related configuration is set to <code class="docutils literal"><span class="pre">True</span></code>, otherwise the model will run on the CPU.
-Currently only <code class="docutils literal"><span class="pre">/gpu:0</span></code> and <code class="docutils literal"><span class="pre">/cpu:0</span></code> are supported.
-This method also resets <em>TensorFlows</em> and <em>TFLearn</em> internals by calling <code class="docutils literal"><span class="pre">tensorflow.reset_default_graph()</span></code> and <code class="docutils literal"><span class="pre">tflearn.config.init_graph()</span></code>.
-The model can then be saved by <a class="reference internal" href="#mdbapi.musicai.MusicAI.SaveModel" title="mdbapi.musicai.MusicAI.SaveModel"><code class="xref py py-meth docutils literal"><span class="pre">SaveModel()</span></code></a></p>
+<dd><p>This method creates a neural network model and loads the trained data from the model in <code class="docutils literal notranslate"><span class="pre">modelfilepath</span></code> if the file <code class="docutils literal notranslate"><span class="pre">modelfilepath</span> <span class="pre">+</span> <span class="pre">&quot;.index&quot;</span></code> exists.
+The model will be created to run on the GPU if the related configuration is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, otherwise the model will run on the CPU.
+Currently only <code class="docutils literal notranslate"><span class="pre">/gpu:0</span></code> and <code class="docutils literal notranslate"><span class="pre">/cpu:0</span></code> are supported.
+This method also resets <em>TensorFlows</em> and <em>TFLearn</em> internals by calling <code class="docutils literal notranslate"><span class="pre">tensorflow.reset_default_graph()</span></code> and <code class="docutils literal notranslate"><span class="pre">tflearn.config.init_graph()</span></code>.
+The model can then be saved by <a class="reference internal" href="#mdbapi.musicai.MusicAI.SaveModel" title="mdbapi.musicai.MusicAI.SaveModel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveModel()</span></code></a></p>
 <p>If model creation fails, an exception gets raised.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">The model data can become invalid if the code for creating the model (<a class="reference internal" href="#mdbapi.musicai.MusicAI.CreateModel" title="mdbapi.musicai.MusicAI.CreateModel"><code class="xref py py-meth docutils literal"><span class="pre">CreateModel()</span></code></a>) changes the architecture of the model.</p>
+<p class="last">The model data can become invalid if the code for creating the model (<a class="reference internal" href="#mdbapi.musicai.MusicAI.CreateModel" title="mdbapi.musicai.MusicAI.CreateModel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CreateModel()</span></code></a>) changes the architecture of the model.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1052,7 +1048,7 @@ The model can then be saved by <a class="reference internal" href="#mdbapi.music
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The TFLearn-model</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">tensorflow.errors.InternalError</span></code> – When creating the model failes.</td>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">tensorflow.errors.InternalError</span></code> – When creating the model failes.</td>
 </tr>
 </tbody>
 </table>
@@ -1062,12 +1058,12 @@ The model can then be saved by <a class="reference internal" href="#mdbapi.music
 <dt id="mdbapi.musicai.MusicAI.PerformPrediction">
 <code class="descname">PerformPrediction</code><span class="sig-paren">(</span><em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musicai.html#MusicAI.PerformPrediction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musicai.MusicAI.PerformPrediction" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method starts a prediction of the genre for a song addressed by its song ID.
-It returns a vector of confidence for the genres as described in <a class="reference internal" href="#mdbapi.musicai.MusicAI.GetGenreMatrix" title="mdbapi.musicai.MusicAI.GetGenreMatrix"><code class="xref py py-meth docutils literal"><span class="pre">GetGenreMatrix()</span></code></a>.
+It returns a vector of confidence for the genres as described in <a class="reference internal" href="#mdbapi.musicai.MusicAI.GetGenreMatrix" title="mdbapi.musicai.MusicAI.GetGenreMatrix"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetGenreMatrix()</span></code></a>.
 The confidence is the average of all features in the set.
 The featureset gets loaded from the related HDF5 file in the spectrogram directory configured
 in the MusicDB Configuration.
-A feature set can be created using the <a class="reference internal" href="#mdbapi.musicai.MusicAI.CreateFeatureset" title="mdbapi.musicai.MusicAI.CreateFeatureset"><code class="xref py py-meth docutils literal"><span class="pre">CreateFeatureset()</span></code></a>
-If the file does not exist <code class="docutils literal"><span class="pre">None</span></code> gets returned.</p>
+A feature set can be created using the <a class="reference internal" href="#mdbapi.musicai.MusicAI.CreateFeatureset" title="mdbapi.musicai.MusicAI.CreateFeatureset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CreateFeatureset()</span></code></a>
+If the file does not exist <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</p>
 <p>The result is calculated the following way from the set <em>P</em> of predictions based on a feature
 for each genre in the set of genres <em>G</em>.</p>
 <div class="math">
@@ -1078,12 +1074,12 @@ for each genre in the set of genres <em>G</em>.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songid</strong> – The ID of the song that shall be categorized</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A confidence-vector for the genres that were predicted, or <code class="docutils literal"><span class="pre">None</span></code> if an error occurs</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A confidence-vector for the genres that were predicted, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if an error occurs</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Create a feature set if there is none yet</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a feature set if there is none yet</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">musicai</span><span class="o">.</span><span class="n">HasFeatureset</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]):</span>
     <span class="n">musicai</span><span class="o">.</span><span class="n">CreateFeatureset</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
 
@@ -1109,10 +1105,10 @@ for each genre in the set of genres <em>G</em>.</p>
 The training is done in several steps:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Loading the model using <a class="reference internal" href="#mdbapi.musicai.MusicAI.LoadModel" title="mdbapi.musicai.MusicAI.LoadModel"><code class="xref py py-meth docutils literal"><span class="pre">LoadModel()</span></code></a></li>
+<li>Loading the model using <a class="reference internal" href="#mdbapi.musicai.MusicAI.LoadModel" title="mdbapi.musicai.MusicAI.LoadModel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadModel()</span></code></a></li>
 <li>Loading the training set from file</li>
 <li>Performing the training itself. This can be canceled by pressing ctrl-c.</li>
-<li>Saving new model state by calling <a class="reference internal" href="#mdbapi.musicai.MusicAI.SaveModel" title="mdbapi.musicai.MusicAI.SaveModel"><code class="xref py py-meth docutils literal"><span class="pre">SaveModel()</span></code></a></li>
+<li>Saving new model state by calling <a class="reference internal" href="#mdbapi.musicai.MusicAI.SaveModel" title="mdbapi.musicai.MusicAI.SaveModel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveModel()</span></code></a></li>
 </ol>
 </div></blockquote>
 <p>The size of the training set is determined by the MusicDB Configuration.</p>
@@ -1123,7 +1119,7 @@ These logs can be used for visualization using TensorBoard.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal"><span class="pre">False</span></code></td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -1132,12 +1128,12 @@ These logs can be used for visualization using TensorBoard.</p>
 <dl class="method">
 <dt id="mdbapi.musicai.MusicAI.SaveModel">
 <code class="descname">SaveModel</code><span class="sig-paren">(</span><em>model</em>, <em>modelfilepath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musicai.html#MusicAI.SaveModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musicai.MusicAI.SaveModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method stores the configuration (weights, biases, …) in <code class="docutils literal"><span class="pre">modelfilepath</span></code>.
-<em>TFLearn</em> creates multiple files with <code class="docutils literal"><span class="pre">modelfilepath</span></code> as suffix.</p>
-<p>The model can then be loaded by <a class="reference internal" href="#mdbapi.musicai.MusicAI.LoadModel" title="mdbapi.musicai.MusicAI.LoadModel"><code class="xref py py-meth docutils literal"><span class="pre">LoadModel()</span></code></a></p>
+<dd><p>This method stores the configuration (weights, biases, …) in <code class="docutils literal notranslate"><span class="pre">modelfilepath</span></code>.
+<em>TFLearn</em> creates multiple files with <code class="docutils literal notranslate"><span class="pre">modelfilepath</span></code> as suffix.</p>
+<p>The model can then be loaded by <a class="reference internal" href="#mdbapi.musicai.MusicAI.LoadModel" title="mdbapi.musicai.MusicAI.LoadModel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadModel()</span></code></a></p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">The model data can become invalid if the code for creating the model (<a class="reference internal" href="#mdbapi.musicai.MusicAI.CreateModel" title="mdbapi.musicai.MusicAI.CreateModel"><code class="xref py py-meth docutils literal"><span class="pre">CreateModel()</span></code></a>) changes the architecture of the model.</p>
+<p class="last">The model data can become invalid if the code for creating the model (<a class="reference internal" href="#mdbapi.musicai.MusicAI.CreateModel" title="mdbapi.musicai.MusicAI.CreateModel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CreateModel()</span></code></a>) changes the architecture of the model.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1196,7 +1192,7 @@ These logs can be used for visualization using TensorBoard.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0',
+            VERSION:'4.3.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1207,6 +1203,7 @@ These logs can be used for visualization using TensorBoard.</p>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

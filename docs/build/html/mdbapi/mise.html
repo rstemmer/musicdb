@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Micro Search Engine &mdash; MusicDB 4.0.0 documentation</title>
+  <title>Micro Search Engine &mdash; MusicDB 4.3.0 documentation</title>
   
 
   
@@ -30,12 +30,14 @@
   
 
   
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 4.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 4.3.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicAI" href="musicai.html"/>
         <link rel="prev" title="LyCra - Lyrics Crawler" href="lycra.html"/> 
 
@@ -66,7 +68,7 @@
             
             
               <div class="version">
-                4.0
+                4.3
               </div>
             
           
@@ -343,6 +345,14 @@
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#module-lib.cache">ArtworkCache Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="blacklist.html">Blacklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="blacklist.html#module-mdbapi.blacklist">Blacklist Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="blacklist.html#id1">Blacklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="blacklist.html#blacklist-interface-class">Blacklist Interface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="database.html">MusicDBDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
 </ul>
@@ -377,7 +387,7 @@
 <li class="toctree-l3"><a class="reference internal" href="musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicai.html#musicai-module">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -394,7 +404,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="randy.html">Randomizer</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="randy.html#module-mdbapi.randy">Randy Module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="randy.html#blacklist">Blacklist</a></li>
 <li class="toctree-l3"><a class="reference internal" href="randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="randy.html#database-stage">Database Stage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="randy.html#blacklist-stage">Blacklist Stage</a></li>
@@ -541,35 +550,6 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#sending-data">Sending Data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#receiving-data">Receiving Data</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#minimal-usage">Minimal usage</a></li>
-</ul>
-</li>
-</ul>
 <p class="caption"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
@@ -661,14 +641,14 @@
 <p>This module provides a class to search for songs, albums and artists.
 A fuzzy search algorithm gets used.
 This not only allows typos, it also adapts the search to the natural situation that song names are hard to remember.</p>
-<p>Before an object can be used, the <a class="reference internal" href="#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal"><span class="pre">UpdateCache()</span></code></a>
+<p>Before an object can be used, the <a class="reference internal" href="#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateCache()</span></code></a>
 method must be called to generate the cache.</p>
 <p>The cache consists of three lists of tuples. One list for Artists, Albums and Songs.
-The Tuples contain the <em>ID</em> and the <em>normalized Name</em> (see <a class="reference internal" href="#mdbapi.mise.MusicDBMicroSearchEngine.NormalizeString" title="mdbapi.mise.MusicDBMicroSearchEngine.NormalizeString"><code class="xref py py-meth docutils literal"><span class="pre">NormalizeString()</span></code></a>).</p>
+The Tuples contain the <em>ID</em> and the <em>normalized Name</em> (see <a class="reference internal" href="#mdbapi.mise.MusicDBMicroSearchEngine.NormalizeString" title="mdbapi.mise.MusicDBMicroSearchEngine.NormalizeString"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NormalizeString()</span></code></a>).</p>
 <p>If the <a class="reference external" href="https://pypi.python.org/pypi/python-Levenshtein">Levenshtein module</a> is installed, the search through all artists, albums and song is usually done in less than 100ms.
 Without this module, you better not use this module only if time does matter.</p>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">database</span> <span class="o">=</span> <span class="n">MusicDatabase</span><span class="p">(</span><span class="s2">&quot;./music.db&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">database</span> <span class="o">=</span> <span class="n">MusicDatabase</span><span class="p">(</span><span class="s2">&quot;./music.db&quot;</span><span class="p">)</span>
 <span class="n">mise</span>     <span class="o">=</span> <span class="n">MusicDBMicroSeachEngine</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
 
 <span class="n">mise</span><span class="o">.</span><span class="n">UpdateCache</span><span class="p">()</span>
@@ -684,15 +664,15 @@ Without this module, you better not use this module only if time does matter.</p
 <dl class="class">
 <dt id="mdbapi.mise.MusicDBMicroSearchEngine">
 <em class="property">class </em><code class="descclassname">mdbapi.mise.</code><code class="descname">MusicDBMicroSearchEngine</code><span class="sig-paren">(</span><em>database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/mise.html#MusicDBMicroSearchEngine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.mise.MusicDBMicroSearchEngine" title="Permalink to this definition">¶</a></dt>
-<dd><p>Before an object can be used, the <a class="reference internal" href="#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal"><span class="pre">UpdateCache()</span></code></a>
+<dd><p>Before an object can be used, the <a class="reference internal" href="#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateCache()</span></code></a>
 method must be called to generate the cache.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>database</strong> – <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal"><span class="pre">lib.db.musicdb.MusicDatabase</span></code></a> object the cache will generated from via <a class="reference internal" href="#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal"><span class="pre">UpdateCache()</span></code></a>.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>database</strong> – <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase</span></code></a> object the cache will generated from via <a class="reference internal" href="#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateCache()</span></code></a>.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When the database argument is invalid.</td>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When the database argument is invalid.</td>
 </tr>
 </tbody>
 </table>
@@ -714,7 +694,7 @@ Each list entry is a tuple of an <em>ID</em> and the <em>Confidence</em></td>
 </tbody>
 </table>
 <p>Example:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">artists</span><span class="p">,</span> <span class="n">albums</span><span class="p">,</span> <span class="n">songs</span><span class="p">)</span> <span class="o">=</span> <span class="n">mise</span><span class="o">.</span><span class="n">Find</span><span class="p">(</span><span class="s2">&quot;Rammsein&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">artists</span><span class="p">,</span> <span class="n">albums</span><span class="p">,</span> <span class="n">songs</span><span class="p">)</span> <span class="o">=</span> <span class="n">mise</span><span class="o">.</span><span class="n">Find</span><span class="p">(</span><span class="s2">&quot;Rammsein&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">artistid</span><span class="p">,</span> <span class="n">conf</span> <span class="ow">in</span> <span class="n">artists</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ID: </span><span class="si">%d</span><span class="s2">, Confidence: </span><span class="si">%d</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">artistid</span><span class="p">,</span> <span class="n">conf</span><span class="p">))</span>
 </pre></div>
@@ -759,7 +739,7 @@ The normalization is done in the following steps:</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">None</span></code></td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -805,7 +785,7 @@ The normalization is done in the following steps:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0',
+            VERSION:'4.3.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -816,6 +796,7 @@ The normalization is done in the following steps:</p>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

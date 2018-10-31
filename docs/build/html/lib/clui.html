@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Command Line User Interface &mdash; MusicDB 4.0.0 documentation</title>
+  <title>Command Line User Interface &mdash; MusicDB 4.3.0 documentation</title>
   
 
   
@@ -30,12 +30,14 @@
   
 
   
+    <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  
 
   
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 4.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 4.3.0 documentation" href="../index.html"/>
         <link rel="next" title="Configuration" href="config.html"/>
         <link rel="prev" title="Song Tracker" href="../mdbapi/tracker.html"/> 
 
@@ -66,7 +68,7 @@
             
             
               <div class="version">
-                4.0
+                4.3
               </div>
             
           
@@ -343,6 +345,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/blacklist.html">Blacklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/blacklist.html#module-mdbapi.blacklist">Blacklist Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/blacklist.html#id1">Blacklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/blacklist.html#blacklist-interface-class">Blacklist Interface Class</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/database.html">MusicDBDatabase</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/database.html#musicdbdatabase-class">MusicDBDatabase Class</a></li>
 </ul>
@@ -377,7 +387,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -394,7 +404,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#module-mdbapi.randy">Randy Module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#blacklist">Blacklist</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#song-selection-algorithm">Song Selection Algorithm</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#database-stage">Database Stage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
@@ -541,35 +550,6 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#sending-data">Sending Data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#receiving-data">Receiving Data</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#minimal-usage">Minimal usage</a></li>
-</ul>
-</li>
-</ul>
 <p class="caption"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
@@ -668,8 +648,8 @@ Handle with care and expect interface changes with the next update.</p>
 <p>The Command Line User Interface (CLUI) is an unicode based “graphical” user interface library.
 It provides some primitive UI elements documented in this section of the documentation.</p>
 <blockquote>
-<div><object data="../_images/graphviz-e49b7f65602b55113805a7d1dec42eac820b3fc2.svg" type="image/svg+xml">
-            <p class="warning">digraph hierarchy {
+<div><div class="graphviz"><object data="../_images/graphviz-ed90cafc7d4efffd6e2405d387c5d960336cca1e.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">digraph hierarchy {
    size=&quot;5,8&quot;
    node[shape=record,style=filled,fillcolor=gray95]
    edge[dir=back, arrowtail=empty]
@@ -701,7 +681,7 @@ It provides some primitive UI elements documented in this section of the documen
 
    TabGroup
 
-}</p></object>
+}</p></object></div>
 </div></blockquote>
 <div class="section" id="module-lib.clui.text">
 <span id="text"></span><h2>Text<a class="headerlink" href="#module-lib.clui.text" title="Permalink to this headline">¶</a></h2>
@@ -710,10 +690,10 @@ It provides some primitive UI elements documented in this section of the documen
 <em class="property">class </em><code class="descclassname">lib.clui.text.</code><code class="descname">Text</code><a class="reference internal" href="../_modules/lib/clui/text.html#Text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class handles the shell output.
 It sets color and cursor settings and handles the screen.</p>
-<p>The default color is gray text on black background (<code class="docutils literal"><span class="pre">0;37;40</span></code>).</p>
+<p>The default color is gray text on black background (<code class="docutils literal notranslate"><span class="pre">0;37;40</span></code>).</p>
 <p>Whenever a parameter is a color, the ANSI escape format for colors as strings were expected.
 These strings were sent to the terminal as shown in the following code example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">SetColor</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">SetColor</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[</span><span class="si">%s</span><span class="s2">m&quot;</span> <span class="o">%</span> <span class="n">color</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
 <span class="n">SetColor</span><span class="p">(</span><span class="s2">&quot;1;32&quot;</span><span class="p">)</span>    <span class="c1"># bright green text</span>
@@ -723,7 +703,7 @@ These strings were sent to the terminal as shown in the following code example:<
 <dl class="method">
 <dt id="lib.clui.text.Text.ClearScreen">
 <code class="descname">ClearScreen</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.ClearScreen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.ClearScreen" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method clears the screen using the ANSI escape squence <code class="docutils literal"><span class="pre">[2J</span></code>.</p>
+<dd><p>This method clears the screen using the ANSI escape squence <code class="docutils literal notranslate"><span class="pre">[2J</span></code>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -758,22 +738,22 @@ The key input gets not printed to the screen.</p>
 <blockquote>
 <div><ul class="simple">
 <li>The usual prinable keys</li>
-<li><code class="docutils literal"><span class="pre">escape</span></code> (Must be hit twice)</li>
-<li><code class="docutils literal"><span class="pre">enter</span></code>, <code class="docutils literal"><span class="pre">backspace</span></code>, <code class="docutils literal"><span class="pre">delete</span></code></li>
-<li><code class="docutils literal"><span class="pre">backtab</span></code> (shift+tab)</li>
-<li><code class="docutils literal"><span class="pre">up</span></code>, <code class="docutils literal"><span class="pre">down</span></code>, <code class="docutils literal"><span class="pre">left</span></code>, <code class="docutils literal"><span class="pre">right</span></code>, <code class="docutils literal"><span class="pre">end</span></code>, <code class="docutils literal"><span class="pre">home</span></code></li>
-<li><code class="docutils literal"><span class="pre">page</span> <span class="pre">down</span></code>, <code class="docutils literal"><span class="pre">page</span> <span class="pre">up</span></code></li>
-<li><code class="docutils literal"><span class="pre">Ctrl-D</span></code> (Quit), <code class="docutils literal"><span class="pre">Ctrl-W</span></code> (Delete Word), <code class="docutils literal"><span class="pre">Ctrl-U</span></code> (Delete Line)</li>
+<li><code class="docutils literal notranslate"><span class="pre">escape</span></code> (Must be hit twice)</li>
+<li><code class="docutils literal notranslate"><span class="pre">enter</span></code>, <code class="docutils literal notranslate"><span class="pre">backspace</span></code>, <code class="docutils literal notranslate"><span class="pre">delete</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">backtab</span></code> (shift+tab)</li>
+<li><code class="docutils literal notranslate"><span class="pre">up</span></code>, <code class="docutils literal notranslate"><span class="pre">down</span></code>, <code class="docutils literal notranslate"><span class="pre">left</span></code>, <code class="docutils literal notranslate"><span class="pre">right</span></code>, <code class="docutils literal notranslate"><span class="pre">end</span></code>, <code class="docutils literal notranslate"><span class="pre">home</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">page</span> <span class="pre">down</span></code>, <code class="docutils literal notranslate"><span class="pre">page</span> <span class="pre">up</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">Ctrl-D</span></code> (Quit), <code class="docutils literal notranslate"><span class="pre">Ctrl-W</span></code> (Delete Word), <code class="docutils literal notranslate"><span class="pre">Ctrl-U</span></code> (Delete Line)</li>
 </ul>
 </div></blockquote>
 <p>In case you want to get other keys, it is easy to add them by editing the code of this method.
-I just implemented the one I need for the <a class="reference internal" href="#lib.clui.listview.ListView" title="lib.clui.listview.ListView"><code class="xref py py-class docutils literal"><span class="pre">ListView</span></code></a> UI element.</p>
+I just implemented the one I need for the <a class="reference internal" href="#lib.clui.listview.ListView" title="lib.clui.listview.ListView"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListView</span></code></a> UI element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The pressed key. If it is a special key, then the name of the key gets returnd as string.
-<code class="docutils literal"><span class="pre">None</span></code> will be returnd for unknown keys.</td>
+<code class="docutils literal notranslate"><span class="pre">None</span></code> will be returnd for unknown keys.</td>
 </tr>
 </tbody>
 </table>
@@ -783,7 +763,7 @@ I just implemented the one I need for the <a class="reference internal" href="#l
 <dt id="lib.clui.text.Text.GetRawKey">
 <code class="descname">GetRawKey</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.GetRawKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.GetRawKey" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads a raw key input from the input buffer without printing it on the screen.</p>
-<p>Usually you want to use the more abstract method <a class="reference internal" href="#lib.clui.text.Text.GetKey" title="lib.clui.text.Text.GetKey"><code class="xref py py-meth docutils literal"><span class="pre">GetKey()</span></code></a></p>
+<p>Usually you want to use the more abstract method <a class="reference internal" href="#lib.clui.text.Text.GetKey" title="lib.clui.text.Text.GetKey"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetKey()</span></code></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -798,8 +778,8 @@ I just implemented the one I need for the <a class="reference internal" href="#l
 <dt id="lib.clui.text.Text.GetScreenSize">
 <code class="descname">GetScreenSize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.GetScreenSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.GetScreenSize" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the screen size as columns and rows.
-For detecting the screen size, the tool <code class="docutils literal"><span class="pre">stty</span></code> gets called:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>stty size
+For detecting the screen size, the tool <code class="docutils literal notranslate"><span class="pre">stty</span></code> gets called:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>stty size
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -817,7 +797,7 @@ For detecting the screen size, the tool <code class="docutils literal"><span cla
 <code class="descname">PrintText</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.PrintText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.PrintText" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method simply prints text to the screen.
 It does nothing more than:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>So instead of the “normal” print, there will be no line break at the end.</p>
@@ -835,7 +815,7 @@ It does nothing more than:</p>
 <dt id="lib.clui.text.Text.SetBGColor">
 <code class="descname">SetBGColor</code><span class="sig-paren">(</span><em>color=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.SetBGColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.SetBGColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets the background color.
-If the color argument is <code class="docutils literal"><span class="pre">None</span></code>, then the default background color gets used.
+If the color argument is <code class="docutils literal notranslate"><span class="pre">None</span></code>, then the default background color gets used.
 If the color argument is a color, then a new default backgound color gets defined and set.
 Next time this method gets called without an argument, this new color will be used as default.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -846,7 +826,7 @@ Next time this method gets called without an argument, this new color will be us
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When argument is set and not a string</td>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When argument is set and not a string</td>
 </tr>
 </tbody>
 </table>
@@ -855,7 +835,7 @@ Next time this method gets called without an argument, this new color will be us
 <dl class="method">
 <dt id="lib.clui.text.Text.SetColor">
 <code class="descname">SetColor</code><span class="sig-paren">(</span><em>fgcolor=None</em>, <em>bgcolor=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.SetColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.SetColor" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method calls <a class="reference internal" href="#lib.clui.text.Text.SetFGColor" title="lib.clui.text.Text.SetFGColor"><code class="xref py py-meth docutils literal"><span class="pre">SetFGColor()</span></code></a> and <a class="reference internal" href="#lib.clui.text.Text.SetBGColor" title="lib.clui.text.Text.SetBGColor"><code class="xref py py-meth docutils literal"><span class="pre">SetBGColor()</span></code></a>.</p>
+<dd><p>This method calls <a class="reference internal" href="#lib.clui.text.Text.SetFGColor" title="lib.clui.text.Text.SetFGColor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetFGColor()</span></code></a> and <a class="reference internal" href="#lib.clui.text.Text.SetBGColor" title="lib.clui.text.Text.SetBGColor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetBGColor()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -864,7 +844,7 @@ Next time this method gets called without an argument, this new color will be us
 <dd><p>This method sets the position of the curser.
 The top left corner is at position <em>x=0; y=0</em>.
 <em>y</em> represents the rows and <em>x</em> the columns.</p>
-<p>For setting the cursor the ANSI escape sequence <code class="docutils literal"><span class="pre">[y;xH</span></code> gets used.</p>
+<p>For setting the cursor the ANSI escape sequence <code class="docutils literal notranslate"><span class="pre">[y;xH</span></code> gets used.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -879,8 +859,8 @@ The top left corner is at position <em>x=0; y=0</em>.
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <em>x</em> or <em>y</em> are not of type integer</li>
-<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When <em>x</em> or <em>y</em> are negative</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When <em>x</em> or <em>y</em> are not of type integer</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – When <em>x</em> or <em>y</em> are negative</li>
 </ul>
 </td>
 </tr>
@@ -892,7 +872,7 @@ The top left corner is at position <em>x=0; y=0</em>.
 <dt id="lib.clui.text.Text.SetFGColor">
 <code class="descname">SetFGColor</code><span class="sig-paren">(</span><em>color=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.SetFGColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.SetFGColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets the foreground (text) color.
-If the color argument is <code class="docutils literal"><span class="pre">None</span></code>, then the default foreground color gets used.
+If the color argument is <code class="docutils literal notranslate"><span class="pre">None</span></code>, then the default foreground color gets used.
 If the color argument is a color, then a new default foreground color gets defined and set.
 Next time this method gets called without an argument, this new color will be used as default.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -903,7 +883,7 @@ Next time this method gets called without an argument, this new color will be us
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When argument is set and not a string</td>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When argument is set and not a string</td>
 </tr>
 </tbody>
 </table>
@@ -913,12 +893,12 @@ Next time this method gets called without an argument, this new color will be us
 <dt id="lib.clui.text.Text.ShowCursor">
 <code class="descname">ShowCursor</code><span class="sig-paren">(</span><em>show=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/text.html#Text.ShowCursor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.text.Text.ShowCursor" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method makes the cursor visible or invisible.</p>
-<p>Therefore the ANSI escape seqneces <code class="docutils literal"><span class="pre">[?25h</span></code> and <code class="docutils literal"><span class="pre">[?25l</span></code> will be used.</p>
+<p>Therefore the ANSI escape seqneces <code class="docutils literal notranslate"><span class="pre">[?25h</span></code> and <code class="docutils literal notranslate"><span class="pre">[?25l</span></code> will be used.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>show</strong> (<em>bool</em>) – <code class="docutils literal"><span class="pre">True</span></code>: Make cursor visible, <code class="docutils literal"><span class="pre">False</span></code>: Hide cursor</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>show</strong> (<em>bool</em>) – <code class="docutils literal notranslate"><span class="pre">True</span></code>: Make cursor visible, <code class="docutils literal notranslate"><span class="pre">False</span></code>: Hide cursor</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
 </tr>
@@ -936,41 +916,41 @@ Next time this method gets called without an argument, this new color will be us
 <em class="property">class </em><code class="descclassname">lib.clui.frame.</code><code class="descname">Frame</code><span class="sig-paren">(</span><em>linestyle=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/frame.html#Frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.frame.Frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides an unicode based frame that gets printed around a certain area.</p>
 <p>There are the following styles available:</p>
-<p><code class="docutils literal"><span class="pre">LINESTYLE_NORMAL</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">LINESTYLE_NORMAL</span></code>:</p>
 <blockquote>
-<div><div class="highlight-bash"><div class="highlight"><pre><span></span>┌─┐
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>┌─┐
 │ │
 └─┘
 </pre></div>
 </div>
 </div></blockquote>
-<p><code class="docutils literal"><span class="pre">LINESTYLE_BOLD</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">LINESTYLE_BOLD</span></code>:</p>
 <blockquote>
-<div><div class="highlight-bash"><div class="highlight"><pre><span></span>┏━┓
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>┏━┓
 ┃ ┃
 ┗━┛
 </pre></div>
 </div>
 </div></blockquote>
-<p><code class="docutils literal"><span class="pre">LINESTYLE_ASCII</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">LINESTYLE_ASCII</span></code>:</p>
 <blockquote>
-<div><div class="highlight-bash"><div class="highlight"><pre><span></span>+-+
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>+-+
 <span class="p">|</span> <span class="p">|</span>
 +-+
 </pre></div>
 </div>
 </div></blockquote>
-<p><code class="docutils literal"><span class="pre">LINESTYLE_DOUBLE</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">LINESTYLE_DOUBLE</span></code>:</p>
 <blockquote>
-<div><div class="highlight-bash"><div class="highlight"><pre><span></span>╔═╗
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>╔═╗
 ║ ║
 ╚═╝
 </pre></div>
 </div>
 </div></blockquote>
-<p><code class="docutils literal"><span class="pre">LINESTYLE_ROUND</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">LINESTYLE_ROUND</span></code>:</p>
 <blockquote>
-<div><div class="highlight-bash"><div class="highlight"><pre><span></span>╭─╮
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>╭─╮
 │ │
 ╰─╯
 </pre></div>
@@ -980,7 +960,7 @@ Next time this method gets called without an argument, this new color will be us
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>linestyle</strong> – The style used to draw the lines. The default linestyle is <code class="docutils literal"><span class="pre">LINESTYLE_NORMAL</span></code>.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>linestyle</strong> – The style used to draw the lines. The default linestyle is <code class="docutils literal notranslate"><span class="pre">LINESTYLE_NORMAL</span></code>.</td>
 </tr>
 </tbody>
 </table>
@@ -1007,8 +987,8 @@ So this method can also be called to draw a frame around already printed content
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When one of the arguments is not of type integer.</li>
-<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When <em>x</em> or <em>y</em> is negative.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When one of the arguments is not of type integer.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – When <em>x</em> or <em>y</em> is negative.</li>
 </ul>
 </td>
 </tr>
@@ -1020,7 +1000,7 @@ So this method can also be called to draw a frame around already printed content
 <dt id="lib.clui.frame.Frame.SetLineStyle">
 <code class="descname">SetLineStyle</code><span class="sig-paren">(</span><em>linestyle</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/frame.html#Frame.SetLineStyle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.frame.Frame.SetLineStyle" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to set a different line style.
-You may want to call <a class="reference internal" href="#lib.clui.frame.Frame.Draw" title="lib.clui.frame.Frame.Draw"><code class="xref py py-meth docutils literal"><span class="pre">Draw()</span></code></a> to redraw the frame with the new style.</p>
+You may want to call <a class="reference internal" href="#lib.clui.frame.Frame.Draw" title="lib.clui.frame.Frame.Draw"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Draw()</span></code></a> to redraw the frame with the new style.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1029,7 +1009,7 @@ You may want to call <a class="reference internal" href="#lib.clui.frame.Frame.D
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When the argument does not address a valid style</td>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – When the argument does not address a valid style</td>
 </tr>
 </tbody>
 </table>
@@ -1045,7 +1025,7 @@ You may want to call <a class="reference internal" href="#lib.clui.frame.Frame.D
 <em class="property">class </em><code class="descclassname">lib.clui.pane.</code><code class="descname">Pane</code><span class="sig-paren">(</span><em>title=None</em>, <em>x=0</em>, <em>y=0</em>, <em>w=0</em>, <em>h=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/pane.html#Pane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.pane.Pane" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class can be used to define a whole, filled are in the shell.
 The area consist of spaces in the defined color.
-Around the area, a <a class="reference internal" href="#lib.clui.frame.Frame" title="lib.clui.frame.Frame"><code class="xref py py-class docutils literal"><span class="pre">Frame</span></code></a> gets printed.</p>
+Around the area, a <a class="reference internal" href="#lib.clui.frame.Frame" title="lib.clui.frame.Frame"><code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></a> gets printed.</p>
 <p>If a title is set, then this title gets printed in the top left corner of the frame.
 The title gets surrounded by a space character.</p>
 <p>The coordinates define the placement of the frame, the usable area starts with an offset of one.</p>
@@ -1087,9 +1067,9 @@ The title gets surrounded by a space character.</p>
 <em class="property">class </em><code class="descclassname">lib.clui.buttonview.</code><code class="descname">ButtonView</code><span class="sig-paren">(</span><em>align='left'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/buttonview.html#ButtonView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.buttonview.ButtonView" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides a button view.
 It is a line where a key event is described.
-For example: <code class="docutils literal"><span class="pre">[a:Add</span> <span class="pre">element][r:Remove</span> <span class="pre">element]</span></code></p>
+For example: <code class="docutils literal notranslate"><span class="pre">[a:Add</span> <span class="pre">element][r:Remove</span> <span class="pre">element]</span></code></p>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">cli</span>  <span class="o">=</span> <span class="n">Text</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cli</span>  <span class="o">=</span> <span class="n">Text</span><span class="p">()</span>
 <span class="n">maxw</span><span class="p">,</span> <span class="n">maxh</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">GetScreenSize</span><span class="p">()</span>
 
 <span class="c1"># Place a button view in the middle of the line before the last line of the screen</span>
@@ -1103,7 +1083,7 @@ For example: <code class="docutils literal"><span class="pre">[a:Add</span> <spa
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>align</strong> (<em>str</em>) – If the buttons are <code class="docutils literal"><span class="pre">&quot;left&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;right&quot;</span></code> or <code class="docutils literal"><span class="pre">&quot;center&quot;</span></code> shall be aligned over the span of the View width.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>align</strong> (<em>str</em>) – If the buttons are <code class="docutils literal notranslate"><span class="pre">&quot;left&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;right&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;center&quot;</span></code> shall be aligned over the span of the View width.</td>
 </tr>
 </tbody>
 </table>
@@ -1125,8 +1105,8 @@ For example: <code class="docutils literal"><span class="pre">[a:Add</span> <spa
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When <code class="docutils literal"><span class="pre">key</span></code> or <code class="docutils literal"><span class="pre">name</span></code> are not a string</li>
-<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – When <code class="docutils literal"><span class="pre">key</span></code> is larger than one character</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When <code class="docutils literal notranslate"><span class="pre">key</span></code> or <code class="docutils literal notranslate"><span class="pre">name</span></code> are not a string</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – When <code class="docutils literal notranslate"><span class="pre">key</span></code> is larger than one character</li>
 </ul>
 </td>
 </tr>
@@ -1181,10 +1161,10 @@ The button gets identified by the name.</p>
 <dd><p>This class provides a ListView that shows a list the user can scroll through using the arrow keys.</p>
 <p>The data shown in the list must be a string.
 For derived classes, they can be considered abstract and contain any kind of type as long as
-you adopt the <a class="reference internal" href="#lib.clui.listview.ListView.onDrawElement" title="lib.clui.listview.ListView.onDrawElement"><code class="xref py py-meth docutils literal"><span class="pre">onDrawElement()</span></code></a> method.</p>
+you adopt the <a class="reference internal" href="#lib.clui.listview.ListView.onDrawElement" title="lib.clui.listview.ListView.onDrawElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">onDrawElement()</span></code></a> method.</p>
 <p>An example on how to use this class with complex data structures:</p>
 <blockquote>
-<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MusicView</span><span class="p">(</span><span class="n">ListView</span><span class="p">):</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MusicView</span><span class="p">(</span><span class="n">ListView</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
         <span class="n">ListView</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
 
@@ -1226,10 +1206,10 @@ you adopt the <a class="reference internal" href="#lib.clui.listview.ListView.on
 </pre></div>
 </div>
 </div></blockquote>
-<p>The elements in the list are stored in a variable <code class="docutils literal"><span class="pre">elements</span></code>.
-This list can be maintained using <a class="reference internal" href="#lib.clui.listview.ListView.SetData" title="lib.clui.listview.ListView.SetData"><code class="xref py py-meth docutils literal"><span class="pre">SetData()</span></code></a>.</p>
-<p>A second variable <code class="docutils literal"><span class="pre">linemarker</span></code> points (in form of an index) to the selected element in this list.
-The element the linemarker points to can be accessed via <a class="reference internal" href="#lib.clui.listview.ListView.GetSelectedData" title="lib.clui.listview.ListView.GetSelectedData"><code class="xref py py-meth docutils literal"><span class="pre">GetSelectedData()</span></code></a> and <a class="reference internal" href="#lib.clui.listview.ListView.SetSelectedData" title="lib.clui.listview.ListView.SetSelectedData"><code class="xref py py-meth docutils literal"><span class="pre">SetSelectedData()</span></code></a></p>
+<p>The elements in the list are stored in a variable <code class="docutils literal notranslate"><span class="pre">elements</span></code>.
+This list can be maintained using <a class="reference internal" href="#lib.clui.listview.ListView.SetData" title="lib.clui.listview.ListView.SetData"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetData()</span></code></a>.</p>
+<p>A second variable <code class="docutils literal notranslate"><span class="pre">linemarker</span></code> points (in form of an index) to the selected element in this list.
+The element the linemarker points to can be accessed via <a class="reference internal" href="#lib.clui.listview.ListView.GetSelectedData" title="lib.clui.listview.ListView.GetSelectedData"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSelectedData()</span></code></a> and <a class="reference internal" href="#lib.clui.listview.ListView.SetSelectedData" title="lib.clui.listview.ListView.SetSelectedData"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetSelectedData()</span></code></a></p>
 <p>When the list of element exceeds the height of the list, a scroll bar will be printed in place of the right frame edge.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1295,12 +1275,12 @@ The selected line gets a cyan background color.</p>
 <dt id="lib.clui.listview.ListView.HandleKey">
 <code class="descname">HandleKey</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/listview.html#ListView.HandleKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.listview.ListView.HandleKey" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method must be called whenever a key was pressed and this list view is “active”.
-It expects the key name returned by <a class="reference internal" href="#lib.clui.text.Text.GetKey" title="lib.clui.text.Text.GetKey"><code class="xref py py-meth docutils literal"><span class="pre">lib.clui.text.Text.GetKey()</span></code></a>.</p>
-<p>If the key is <code class="docutils literal"><span class="pre">&quot;up&quot;</span></code> the element above the current selected element gets selected.
-If the key is <code class="docutils literal"><span class="pre">&quot;down&quot;</span></code> the one below will be selected.
-Any other key gets passed to the <a class="reference internal" href="#lib.clui.listview.ListView.onAction" title="lib.clui.listview.ListView.onAction"><code class="xref py py-meth docutils literal"><span class="pre">onAction()</span></code></a> method.
-Read the documentation of the <a class="reference internal" href="#lib.clui.listview.ListView.onAction" title="lib.clui.listview.ListView.onAction"><code class="xref py py-meth docutils literal"><span class="pre">onAction()</span></code></a> method to see how the return value of that method gets processed.</p>
-<p>After handling an key, the <a class="reference internal" href="#lib.clui.listview.ListView.Draw" title="lib.clui.listview.ListView.Draw"><code class="xref py py-meth docutils literal"><span class="pre">Draw()</span></code></a> method gets called to refresh the view.</p>
+It expects the key name returned by <a class="reference internal" href="#lib.clui.text.Text.GetKey" title="lib.clui.text.Text.GetKey"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.clui.text.Text.GetKey()</span></code></a>.</p>
+<p>If the key is <code class="docutils literal notranslate"><span class="pre">&quot;up&quot;</span></code> the element above the current selected element gets selected.
+If the key is <code class="docutils literal notranslate"><span class="pre">&quot;down&quot;</span></code> the one below will be selected.
+Any other key gets passed to the <a class="reference internal" href="#lib.clui.listview.ListView.onAction" title="lib.clui.listview.ListView.onAction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">onAction()</span></code></a> method.
+Read the documentation of the <a class="reference internal" href="#lib.clui.listview.ListView.onAction" title="lib.clui.listview.ListView.onAction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">onAction()</span></code></a> method to see how the return value of that method gets processed.</p>
+<p>After handling an key, the <a class="reference internal" href="#lib.clui.listview.ListView.Draw" title="lib.clui.listview.ListView.Draw"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Draw()</span></code></a> method gets called to refresh the view.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1317,8 +1297,8 @@ Read the documentation of the <a class="reference internal" href="#lib.clui.list
 <dt id="lib.clui.listview.ListView.SetData">
 <code class="descname">SetData</code><span class="sig-paren">(</span><em>elements</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/listview.html#ListView.SetData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.listview.ListView.SetData" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to initialize the list of data that will be shown in the list view
-If the <a class="reference internal" href="#lib.clui.listview.ListView.onDrawElement" title="lib.clui.listview.ListView.onDrawElement"><code class="xref py py-meth docutils literal"><span class="pre">onDrawElement()</span></code></a> method is not overloaded, the list must contain strings.</p>
-<p>After setting the new <code class="docutils literal"><span class="pre">elements</span></code> list, the <code class="docutils literal"><span class="pre">linemarker</span></code> gets set to the begin of the list.</p>
+If the <a class="reference internal" href="#lib.clui.listview.ListView.onDrawElement" title="lib.clui.listview.ListView.onDrawElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">onDrawElement()</span></code></a> method is not overloaded, the list must contain strings.</p>
+<p>After setting the new <code class="docutils literal notranslate"><span class="pre">elements</span></code> list, the <code class="docutils literal notranslate"><span class="pre">linemarker</span></code> gets set to the begin of the list.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1335,7 +1315,7 @@ If the <a class="reference internal" href="#lib.clui.listview.ListView.onDrawEle
 <dt id="lib.clui.listview.ListView.SetSelectedData">
 <code class="descname">SetSelectedData</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/listview.html#ListView.SetSelectedData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.listview.ListView.SetSelectedData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replaces the selected element with a new one.
-This method can be used to interact with the list without triggering the <a class="reference internal" href="#lib.clui.listview.ListView.onAction" title="lib.clui.listview.ListView.onAction"><code class="xref py py-meth docutils literal"><span class="pre">onAction()</span></code></a> callback.</p>
+This method can be used to interact with the list without triggering the <a class="reference internal" href="#lib.clui.listview.ListView.onAction" title="lib.clui.listview.ListView.onAction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">onAction()</span></code></a> callback.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1351,14 +1331,14 @@ This method can be used to interact with the list without triggering the <a clas
 <dl class="method">
 <dt id="lib.clui.listview.ListView.onAction">
 <code class="descname">onAction</code><span class="sig-paren">(</span><em>element</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/listview.html#ListView.onAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.listview.ListView.onAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method gets called when a key gets passed to the <a class="reference internal" href="#lib.clui.listview.ListView.HandleKey" title="lib.clui.listview.ListView.HandleKey"><code class="xref py py-meth docutils literal"><span class="pre">HandleKey()</span></code></a> method.
+<dd><p>This method gets called when a key gets passed to the <a class="reference internal" href="#lib.clui.listview.ListView.HandleKey" title="lib.clui.listview.ListView.HandleKey"><code class="xref py py-meth docutils literal notranslate"><span class="pre">HandleKey()</span></code></a> method.
 It is supposed to process the selected line in the list of elements.
 In this class, nothing will be done with the data.</p>
 <p>This function must return the processed element back to the list.
 It is also possible to return a new element to replace the old one.
 When a line shall not be updated, return None.
 A case where this may be useful will be presented in the following example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">onAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">onAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
     <span class="c1"># this method manipulates a list of numbers</span>
 
     <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>      <span class="c1"># remove element</span>
@@ -1380,7 +1360,7 @@ A case where this may be useful will be presented in the following example:</p>
     <span class="k">return</span> <span class="n">element</span>
 </pre></div>
 </div>
-<p>When the last element gets removed, the <code class="docutils literal"><span class="pre">linemarker</span></code> variable gets moved to the previous line.
+<p>When the last element gets removed, the <code class="docutils literal notranslate"><span class="pre">linemarker</span></code> variable gets moved to the previous line.
 Otherwise it stays at its position that will now be the element next after the removed one.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1405,10 +1385,10 @@ Otherwise it stays at its position that will now be the element next after the r
 <dd><p>This method gets called when an element gets printed into the list view.
 To customize how elements will appear in the list, overload this method.</p>
 <p>The returned string can contain ANSI Escape Sequences for coloring.
-The number of printable character should not exceed the maximum width <code class="docutils literal"><span class="pre">maxwidth</span></code>.
-Furthermore the string should be exact <code class="docutils literal"><span class="pre">maxwidth</span></code> wide.</p>
-<p>An example how to implement a custom <code class="docutils literal"><span class="pre">onDrawElement</span></code> method can be seen in the following code example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">onDrawElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">maxwidth</span><span class="p">):</span>
+The number of printable character should not exceed the maximum width <code class="docutils literal notranslate"><span class="pre">maxwidth</span></code>.
+Furthermore the string should be exact <code class="docutils literal notranslate"><span class="pre">maxwidth</span></code> wide.</p>
+<p>An example how to implement a custom <code class="docutils literal notranslate"><span class="pre">onDrawElement</span></code> method can be seen in the following code example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">onDrawElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="n">maxwidth</span><span class="p">):</span>
     <span class="c1"># Print the element number in front of each entry.</span>
     <span class="c1"># Alternate the text color with each line. Odd lines in white, even in blue.</span>
 
@@ -1454,14 +1434,14 @@ Furthermore the string should be exact <code class="docutils literal"><span clas
 <dd><p>This class provides a dialog box that is organized like a list view.</p>
 <p>It provides one input element per line over several lines.
 The lines can be selected using the up (↑) and down (↓) key.
-Pressing the space bar on an <a class="reference internal" href="#lib.clui.boolinput.BoolInput" title="lib.clui.boolinput.BoolInput"><code class="xref py py-class docutils literal"><span class="pre">BoolInput</span></code></a> toggles its value.
+Pressing the space bar on an <a class="reference internal" href="#lib.clui.boolinput.BoolInput" title="lib.clui.boolinput.BoolInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoolInput</span></code></a> toggles its value.
 On enter (↵), the changes shoud be committed, on escape (␛) they should be rejected.</p>
-<p>Beside the list of input elements a <a class="reference internal" href="#lib.clui.buttonview.ButtonView" title="lib.clui.buttonview.ButtonView"><code class="xref py py-class docutils literal"><span class="pre">ButtonView</span></code></a> gets printed at the bottom of
+<p>Beside the list of input elements a <a class="reference internal" href="#lib.clui.buttonview.ButtonView" title="lib.clui.buttonview.ButtonView"><code class="xref py py-class docutils literal notranslate"><span class="pre">ButtonView</span></code></a> gets printed at the bottom of
 the dialog view telling the user about the key mentioned above.</p>
 <p>The dialog works on a list with each element beeing a tuple of a label, the control itself and a hint for the user.</p>
 <p>Example on using a Dialog:</p>
 <blockquote>
-<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">dialog</span>     <span class="o">=</span> <span class="n">Dialog</span><span class="p">(</span><span class="s2">&quot;Add Unicode Icon&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dialog</span>     <span class="o">=</span> <span class="n">Dialog</span><span class="p">(</span><span class="s2">&quot;Add Unicode Icon&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">nameinput</span>  <span class="o">=</span> <span class="n">TextInput</span><span class="p">()</span>
 <span class="n">iconinput</span>  <span class="o">=</span> <span class="n">TextInput</span><span class="p">()</span>
 <span class="n">varselector</span><span class="o">=</span> <span class="n">BoolInput</span><span class="p">()</span>
@@ -1488,14 +1468,14 @@ the dialog view telling the user about the key mentioned above.</p>
 <dt id="lib.clui.dialog.Dialog.AddInput">
 <code class="descname">AddInput</code><span class="sig-paren">(</span><em>label</em>, <em>control</em>, <em>hint=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/dialog.html#Dialog.AddInput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.dialog.Dialog.AddInput" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds a new control to the list of controls.
-The input control element must provide a <code class="docutils literal"><span class="pre">Draw</span></code> and a <code class="docutils literal"><span class="pre">HandleKey</span></code> method.
+The input control element must provide a <code class="docutils literal notranslate"><span class="pre">Draw</span></code> and a <code class="docutils literal notranslate"><span class="pre">HandleKey</span></code> method.
 Position and width of the control element will be calculated when they get printed.
 The label gets printed in front of the control element, the hint at the end of the list entry.</p>
 <dl class="docutils">
 <dt>The following inputs are suitable for the dialog:</dt>
 <dd><ul class="first last simple">
-<li><code class="xref py py-class docutils literal"><span class="pre">lib.clui.textinbut.TextInput</span></code></li>
-<li><a class="reference internal" href="#lib.clui.boolinput.BoolInput" title="lib.clui.boolinput.BoolInput"><code class="xref py py-class docutils literal"><span class="pre">lib.clui.boolinput.BoolInput</span></code></a></li>
+<li><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.clui.textinbut.TextInput</span></code></li>
+<li><a class="reference internal" href="#lib.clui.boolinput.BoolInput" title="lib.clui.boolinput.BoolInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.clui.boolinput.BoolInput</span></code></a></li>
 </ul>
 </dd>
 </dl>
@@ -1506,7 +1486,7 @@ The label gets printed in front of the control element, the hint at the end of t
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>label</strong> (<em>str</em>) – Label of the input element</li>
 <li><strong>control</strong> – The input element itself</li>
-<li><strong>hint</strong> (<em>str</em>) – An additional hint to the input element. <code class="docutils literal"><span class="pre">None</span></code> for no hint.</li>
+<li><strong>hint</strong> (<em>str</em>) – An additional hint to the input element. <code class="docutils literal notranslate"><span class="pre">None</span></code> for no hint.</li>
 </ul>
 </td>
 </tr>
@@ -1530,7 +1510,7 @@ The label gets printed in front of the control element, the hint at the end of t
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">NotImplementedError</span></code> – <em>alway</em></td>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code> – <em>alway</em></td>
 </tr>
 </tbody>
 </table>
@@ -1540,12 +1520,12 @@ The label gets printed in front of the control element, the hint at the end of t
 <dt id="lib.clui.dialog.Dialog.HandleKey">
 <code class="descname">HandleKey</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/dialog.html#Dialog.HandleKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.dialog.Dialog.HandleKey" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method must be called whenever a key was pressed and this dialog is “active”.
-It expects the key name returned by <a class="reference internal" href="#lib.clui.text.Text.GetKey" title="lib.clui.text.Text.GetKey"><code class="xref py py-meth docutils literal"><span class="pre">lib.clui.text.Text.GetKey()</span></code></a>.</p>
-<p>If the key is <code class="docutils literal"><span class="pre">&quot;up&quot;</span></code> the element above the current selected element gets selected.
-If the key is <code class="docutils literal"><span class="pre">&quot;down&quot;</span></code> the one below will be selected.
-This will be done by passing the <em>up</em> and <em>down</em> key to the <code class="docutils literal"><span class="pre">HandleKey</span></code> method of the base class.</p>
-<p>Any other key gets passed to the <a class="reference internal" href="#lib.clui.dialog.Dialog.onAction" title="lib.clui.dialog.Dialog.onAction"><code class="xref py py-meth docutils literal"><span class="pre">onAction()</span></code></a> method of this class.</p>
-<p>After handling an key, the <a class="reference internal" href="#lib.clui.dialog.Dialog.Draw" title="lib.clui.dialog.Dialog.Draw"><code class="xref py py-meth docutils literal"><span class="pre">Draw()</span></code></a> method gets called to refresh the view.</p>
+It expects the key name returned by <a class="reference internal" href="#lib.clui.text.Text.GetKey" title="lib.clui.text.Text.GetKey"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.clui.text.Text.GetKey()</span></code></a>.</p>
+<p>If the key is <code class="docutils literal notranslate"><span class="pre">&quot;up&quot;</span></code> the element above the current selected element gets selected.
+If the key is <code class="docutils literal notranslate"><span class="pre">&quot;down&quot;</span></code> the one below will be selected.
+This will be done by passing the <em>up</em> and <em>down</em> key to the <code class="docutils literal notranslate"><span class="pre">HandleKey</span></code> method of the base class.</p>
+<p>Any other key gets passed to the <a class="reference internal" href="#lib.clui.dialog.Dialog.onAction" title="lib.clui.dialog.Dialog.onAction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">onAction()</span></code></a> method of this class.</p>
+<p>After handling an key, the <a class="reference internal" href="#lib.clui.dialog.Dialog.Draw" title="lib.clui.dialog.Dialog.Draw"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Draw()</span></code></a> method gets called to refresh the view.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1565,7 +1545,7 @@ This will be done by passing the <em>up</em> and <em>down</em> key to the <code 
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">NotImplementedError</span></code> – <em>alway</em></td>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code> – <em>alway</em></td>
 </tr>
 </tbody>
 </table>
@@ -1578,7 +1558,7 @@ This will be done by passing the <em>up</em> and <em>down</em> key to the <code 
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">NotImplementedError</span></code> – <em>alway</em></td>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">NotImplementedError</span></code> – <em>alway</em></td>
 </tr>
 </tbody>
 </table>
@@ -1587,7 +1567,7 @@ This will be done by passing the <em>up</em> and <em>down</em> key to the <code 
 <dl class="method">
 <dt id="lib.clui.dialog.Dialog.onAction">
 <code class="descname">onAction</code><span class="sig-paren">(</span><em>element</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/dialog.html#Dialog.onAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.dialog.Dialog.onAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method gets called when a key gets passed to the <a class="reference internal" href="#lib.clui.dialog.Dialog.HandleKey" title="lib.clui.dialog.Dialog.HandleKey"><code class="xref py py-meth docutils literal"><span class="pre">HandleKey()</span></code></a> method.
+<dd><p>This method gets called when a key gets passed to the <a class="reference internal" href="#lib.clui.dialog.Dialog.HandleKey" title="lib.clui.dialog.Dialog.HandleKey"><code class="xref py py-meth docutils literal notranslate"><span class="pre">HandleKey()</span></code></a> method.
 It is supposed to get passed to the selected control element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1611,7 +1591,7 @@ It is supposed to get passed to the selected control element.</p>
 <code class="descname">onDrawElement</code><span class="sig-paren">(</span><em>element</em>, <em>number</em>, <em>maxwidth</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/dialog.html#Dialog.onDrawElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.dialog.Dialog.onDrawElement" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets called when an element gets printed into the dialog view.
 Keep in mind that the dialog element is not able to scroll.</p>
-<p>The <code class="docutils literal"><span class="pre">element</span></code> is a tuple containing the label, the control element and the hint.
+<p>The <code class="docutils literal notranslate"><span class="pre">element</span></code> is a tuple containing the label, the control element and the hint.
 If the number of characters is too high, the hints will not be printed.
 The number of printable characters gets calculated by the with of the label and hint of each row.
 It should be at least 10 characters be left for the control, and 2 for spaces around the control.</p>
@@ -1629,7 +1609,7 @@ It should be at least 10 characters be left for the control, and 2 for spaces ar
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><em>Nothing</em></p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – In case the with of the dialog is to small to print at least the label and the input control</p>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – In case the with of the dialog is to small to print at least the label and the input control</p>
 </td>
 </tr>
 </tbody>
@@ -1693,10 +1673,10 @@ The element the cursor points to has a cyan background.</p>
 <dt id="lib.clui.textinput.TextInput.HandleKey">
 <code class="descname">HandleKey</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/textinput.html#TextInput.HandleKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.textinput.TextInput.HandleKey" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method handled the users input.
-The keys are expected as the method <a class="reference internal" href="#lib.clui.text.Text.GetKey" title="lib.clui.text.Text.GetKey"><code class="xref py py-meth docutils literal"><span class="pre">lib.clui.text.Text.GetKey()</span></code></a> returns.
-With the <code class="docutils literal"><span class="pre">&quot;right&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;left&quot;</span></code> key, the user can navigate through the text.
-With <code class="docutils literal"><span class="pre">&quot;backspace&quot;</span></code> the character left to the cursor gets removed.
-With <code class="docutils literal"><span class="pre">&quot;delete&quot;</span></code> the character right below the cursor.
+The keys are expected as the method <a class="reference internal" href="#lib.clui.text.Text.GetKey" title="lib.clui.text.Text.GetKey"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.clui.text.Text.GetKey()</span></code></a> returns.
+With the <code class="docutils literal notranslate"><span class="pre">&quot;right&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;left&quot;</span></code> key, the user can navigate through the text.
+With <code class="docutils literal notranslate"><span class="pre">&quot;backspace&quot;</span></code> the character left to the cursor gets removed.
+With <code class="docutils literal notranslate"><span class="pre">&quot;delete&quot;</span></code> the character right below the cursor.
 Each printable character gets inserted left to the cursor.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1728,7 +1708,7 @@ All further manipulations of the string won’t be normalized.</p>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – When string is not of type string</td>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When string is not of type string</td>
 </tr>
 </tbody>
 </table>
@@ -1739,7 +1719,7 @@ All further manipulations of the string won’t be normalized.</p>
 <dl class="class">
 <dt id="lib.clui.textinput.NoTextInput">
 <em class="property">class </em><code class="descclassname">lib.clui.textinput.</code><code class="descname">NoTextInput</code><span class="sig-paren">(</span><em>x=0</em>, <em>y=0</em>, <em>w=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/textinput.html#NoTextInput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.textinput.NoTextInput" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a <em>read-only</em> variation of the <a class="reference internal" href="#lib.clui.textinput.TextInput" title="lib.clui.textinput.TextInput"><code class="xref py py-class docutils literal"><span class="pre">TextInput</span></code></a> element.</p>
+<dd><p>This is a <em>read-only</em> variation of the <a class="reference internal" href="#lib.clui.textinput.TextInput" title="lib.clui.textinput.TextInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextInput</span></code></a> element.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1777,13 +1757,13 @@ All further manipulations of the string won’t be normalized.</p>
 <dt id="lib.clui.boolinput.BoolInput">
 <em class="property">class </em><code class="descclassname">lib.clui.boolinput.</code><code class="descname">BoolInput</code><span class="sig-paren">(</span><em>x=0</em>, <em>y=0</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/boolinput.html#BoolInput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.boolinput.BoolInput" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides a simple boolean input element.
-<code class="docutils literal"><span class="pre">None</span></code> is also allowed!</p>
+<code class="docutils literal notranslate"><span class="pre">None</span></code> is also allowed!</p>
 <p>Default representation is:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">[✔]</span></code> True</li>
-<li><code class="docutils literal"><span class="pre">[✘]</span></code> False</li>
-<li><code class="docutils literal"><span class="pre">[❓]</span></code> None</li>
+<li><code class="docutils literal notranslate"><span class="pre">[✔]</span></code> True</li>
+<li><code class="docutils literal notranslate"><span class="pre">[✘]</span></code> False</li>
+<li><code class="docutils literal notranslate"><span class="pre">[❓]</span></code> None</li>
 </ul>
 </div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1792,7 +1772,7 @@ All further manipulations of the string won’t be normalized.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>x</strong><strong>,</strong><strong>y</strong> (<em>int</em>) – Position of the list view</li>
-<li><strong>data</strong> (<em>bool</em>) – <code class="docutils literal"><span class="pre">True</span></code>, <code class="docutils literal"><span class="pre">False</span></code> or <code class="docutils literal"><span class="pre">None</span></code> representing the input of the BoolInput element</li>
+<li><strong>data</strong> (<em>bool</em>) – <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code> representing the input of the BoolInput element</li>
 </ul>
 </td>
 </tr>
@@ -1812,7 +1792,7 @@ All further manipulations of the string won’t be normalized.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The input as bool or <code class="docutils literal"><span class="pre">None</span></code></td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The input as bool or <code class="docutils literal notranslate"><span class="pre">None</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -1822,8 +1802,8 @@ All further manipulations of the string won’t be normalized.</p>
 <dt id="lib.clui.boolinput.BoolInput.HandleKey">
 <code class="descname">HandleKey</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/boolinput.html#BoolInput.HandleKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.boolinput.BoolInput.HandleKey" title="Permalink to this definition">¶</a></dt>
 <dd><p>Space key toggles the value of the input element.
-When the previos value was <code class="docutils literal"><span class="pre">None</span></code>, <code class="docutils literal"><span class="pre">True</span></code> will be the next.
-Then it alters between <code class="docutils literal"><span class="pre">True</span></code> and <code class="docutils literal"><span class="pre">False</span></code></p>
+When the previos value was <code class="docutils literal notranslate"><span class="pre">None</span></code>, <code class="docutils literal notranslate"><span class="pre">True</span></code> will be the next.
+Then it alters between <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1844,7 +1824,7 @@ Then it alters between <code class="docutils literal"><span class="pre">True</sp
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>bool</em>) – <code class="docutils literal"><span class="pre">True</span></code>, <code class="docutils literal"><span class="pre">False</span></code> or <code class="docutils literal"><span class="pre">None</span></code> representing the input of the BoolInput element</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>bool</em>) – <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code> representing the input of the BoolInput element</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
 </tr>
@@ -1867,8 +1847,8 @@ Then it alters between <code class="docutils literal"><span class="pre">True</sp
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal"><span class="pre">TypeError</span></code> – when an argument is not <code class="docutils literal"><span class="pre">None</span></code> and not of type string</li>
-<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – when the string is larger than one character</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – when an argument is not <code class="docutils literal notranslate"><span class="pre">None</span></code> and not of type string</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – when the string is larger than one character</li>
 </ul>
 </td>
 </tr>
@@ -1885,14 +1865,14 @@ Then it alters between <code class="docutils literal"><span class="pre">True</sp
 <dt id="lib.clui.tabgroup.TabGroup">
 <em class="property">class </em><code class="descclassname">lib.clui.tabgroup.</code><code class="descname">TabGroup</code><a class="reference internal" href="../_modules/lib/clui/tabgroup.html#TabGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.tabgroup.TabGroup" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class can be used to group multiple UI elements.
-They can be selected by pressing <em>tab</em> (<code class="docutils literal"><span class="pre">&quot;</span> <span class="pre">&quot;</span></code>).
+They can be selected by pressing <em>tab</em> (<code class="docutils literal notranslate"><span class="pre">&quot;</span> <span class="pre">&quot;</span></code>).
 All other keys get passed to the selected UI element.
-The selected element gets highlighted by setting its frame line-style to <code class="docutils literal"><span class="pre">Frame.LINESTYLE_BOLD</span></code>.</p>
+The selected element gets highlighted by setting its frame line-style to <code class="docutils literal notranslate"><span class="pre">Frame.LINESTYLE_BOLD</span></code>.</p>
 <dl class="method">
 <dt id="lib.clui.tabgroup.TabGroup.AddPane">
 <code class="descname">AddPane</code><span class="sig-paren">(</span><em>pane</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/tabgroup.html#TabGroup.AddPane"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.tabgroup.TabGroup.AddPane" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a pane to the list of UI elements.
-They must provide the <code class="docutils literal"><span class="pre">HandleKey</span></code>, <code class="docutils literal"><span class="pre">Draw</span></code> and <code class="docutils literal"><span class="pre">SetLineStyle</span></code> method!</p>
+They must provide the <code class="docutils literal notranslate"><span class="pre">HandleKey</span></code>, <code class="docutils literal notranslate"><span class="pre">Draw</span></code> and <code class="docutils literal notranslate"><span class="pre">SetLineStyle</span></code> method!</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1909,12 +1889,12 @@ They must provide the <code class="docutils literal"><span class="pre">HandleKey
 <dt id="lib.clui.tabgroup.TabGroup.HandleKey">
 <code class="descname">HandleKey</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/clui/tabgroup.html#TabGroup.HandleKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.clui.tabgroup.TabGroup.HandleKey" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pass the key to the current selected pane.
-If the key is <code class="docutils literal"><span class="pre">&quot;</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;</span></code>, then the next pane in the list gets selected.</p>
+If the key is <code class="docutils literal notranslate"><span class="pre">&quot;</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;</span></code>, then the next pane in the list gets selected.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<em>str</em>) – A key name as returned by <code class="xref py py-meth docutils literal"><span class="pre">lib.clui.text.GetKey()</span></code>.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<em>str</em>) – A key name as returned by <code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.clui.text.GetKey()</span></code>.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
 </tr>
@@ -1962,7 +1942,7 @@ If the key is <code class="docutils literal"><span class="pre">&quot;</span>&#16
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.0.0',
+            VERSION:'4.3.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1973,6 +1953,7 @@ If the key is <code class="docutils literal"><span class="pre">&quot;</span>&#16
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
