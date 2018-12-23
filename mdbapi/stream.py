@@ -335,7 +335,8 @@ def StreamingThread():
             # Also update the last time played information.
             # In case the loop ended because Icecast failed, update the Status
             if icecast.IsConnected():
-                tracker.AddSong(currentsongid)
+                if not Config.debug.disabletracker:
+                    tracker.AddSong(currentsongid)
                 if not Config.debug.disablestats:
                     musicdb.UpdateSongStatistic(currentsongid, "lastplayed", int(time.time()))
             else:
