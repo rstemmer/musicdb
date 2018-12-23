@@ -35,6 +35,11 @@ div#ABVSettings, div.ABV_songsettings
     animation:      fadein            1s;
 }
 
+span.ABV_genrehighlight
+{
+    transition:     text-shadow         500ms;
+}
+
 
 div.hovpacity
 {

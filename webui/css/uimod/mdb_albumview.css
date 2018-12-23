@@ -204,6 +204,10 @@ span.ABV_songplaystate[data-playing=yes]:after
     content:        "\f01d";    /* fa-play-circle-o */
     display:        inline-block;
 }
+span.ABV_genrehighlight
+{
+    text-shadow: 0px 0px 5px;
+}
 span.ABV_songname
 {
     flex-grow:      1;

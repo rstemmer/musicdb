@@ -90,10 +90,13 @@ function ShowAlbum(parentID, MDBArtist, MDBAlbum, MDBCDs, MDBAlbumTags, currents
     }
 
     // Update album settings to the current state
+    Albumview_UpdateAlbum(MDBAlbum, MDBAlbumTags);
+    /*
     Taginput_Update("ABV_albumgenre_"    + MDBAlbum.id, MDBAlbumTags);
     Taginput_Update("ABV_albumsubgenre_" + MDBAlbum.id, MDBAlbumTags);
     Taginput_Show("AlbumGenre",    "AlbumGenreView",    MDBAlbum.id, MDBAlbumTags, "Genre", "Album");
     Taginput_Show("AlbumSubgenre", "AlbumSubgenreView", MDBAlbum.id, MDBAlbumTags, "Subgenre", "Album");
+    */
 
     // Final updates
     $(".nano").nanoScroller();          // update scrollbars
@@ -254,7 +257,7 @@ function _ABV_CreateSongEntry(MDBSong, MDBSongTags)
     html += ">";
 
     html += _ABV_CreateSongEntryNumber(MDBSong.number);
-    html += _ABV_CreateSongEntryName(MDBSong);
+    html += _ABV_CreateSongEntryName(MDBSong, MDBSongTags);
     html += _ABV_CreateSongEntryTags(MDBSongTags);
     html += _ABV_CreateSongEntryButtonbox(MDBSong);
     html += _ABV_CreateSongEntryLikeGraph(MDBSong);
@@ -319,10 +322,44 @@ function _ABV_UpdateSongSettings(MDBSong, MDBSongTags)
 
 function Albumview_UpdateAlbum(MDBAlbum, MDBAlbumTags)
 {
+    // Remove all events from tags
+    let tagbuttons;
+    tagbuttons = $("#AlbumGenreView_tags").find(".TAGI_TagElement");
+    for(let tagbutton of tagbuttons)
+        $(tagbutton).unbind("mouseenter mouseleave");
+    tagbuttons = $("#AlbumSubgenreView_tags").find(".TAGI_TagElement");
+    for(let tagbutton of tagbuttons)
+        $(tagbutton).unbind("mouseenter mouseleave");
+
+    // Update tags
     Taginput_Show("AlbumGenre",    "AlbumGenreView",    MDBAlbum.id, MDBAlbumTags, "Genre", "Album");
     Taginput_Show("AlbumSubgenre", "AlbumSubgenreView", MDBAlbum.id, MDBAlbumTags, "Subgenre", "Album");
     Taginput_Update("ABV_albumgenre_"    + MDBAlbum.id, MDBAlbumTags);
     Taginput_Update("ABV_albumsubgenre_" + MDBAlbum.id, MDBAlbumTags);
+
+    // Add new events to tags
+    tagbuttons = $("#AlbumGenreView_tags").find(".TAGI_TagElement");
+    for(let tagbutton of tagbuttons)
+    {
+        let genrename;
+        genrename = $(tagbutton).children().text();
+        $(tagbutton).hover(function () {
+                $(".genre_"+MakeSafeForCSS(genrename)).addClass("ABV_genrehighlight");
+        }, function () {
+                $(".genre_"+MakeSafeForCSS(genrename)).removeClass("ABV_genrehighlight");
+        });
+    }
+    tagbuttons = $("#AlbumSubgenreView_tags").find(".TAGI_TagElement");
+    for(let tagbutton of tagbuttons)
+    {
+        let genrename;
+        genrename = $(tagbutton).children().first().text();
+        $(tagbutton).hover(function () {
+                $(".subgenre_"+MakeSafeForCSS(genrename)).addClass("ABV_genrehighlight");
+        }, function () {
+                $(".subgenre_"+MakeSafeForCSS(genrename)).removeClass("ABV_genrehighlight");
+        });
+    }
 }
 
 /*
@@ -367,7 +404,7 @@ function _ABV_CreateSongEntryNumber(songnumber)
     else
         return "<span class=\"ABV_songnumber hlcolor\">⚪&#x0000FE0E;</span>";
 }
-function _ABV_CreateSongEntryName(MDBSong)
+function _ABV_CreateSongEntryName(MDBSong, MDBSongTags)
 {
     let songname    = MDBSong.name;
     let songid      = MDBSong.id;
@@ -379,6 +416,12 @@ function _ABV_CreateSongEntryName(MDBSong)
         color = "hlcolor";
     else
         color = "fgcolor"; 
+
+    let genreclasses = "";
+    for(let genre of MDBSongTags.genres)
+        genreclasses += " genre_" + MakeSafeForCSS(genre.name);
+    for(let genre of MDBSongTags.subgenres)
+        genreclasses += " subgenre_" + MakeSafeForCSS(genre.name);
 
     // Source: https://gist.github.com/kmaida/6045266
     let yyyy = lastplayed.getFullYear();
@@ -394,7 +437,7 @@ function _ABV_CreateSongEntryName(MDBSong)
 
     let html = "";
     html += "<span id=ABVPS_"+songid+" class=\"ABV_songplaystate hlcolor\" data-playing=\"no\"></span>";
-    html += "<span class=\"ABV_songname "+color+"\" title=\""+title+"\">"+songname+"</span>";
+    html += "<span class=\"ABV_songname " + color + genreclasses + "\" title=\""+title+"\">"+songname+"</span>";
     return html;
 }
     
