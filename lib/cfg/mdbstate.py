@@ -133,7 +133,7 @@ class MDBState(Config, object):
         This method reads the song queue from the state directory.
 
         The method returns the queue as needed inside :meth:`mdbapi.songqueue.SongQueue`:
-        A list of tuple, each containing the entryid and songid as integers.
+        A list of dictionaries, each containing the ``entryid`` and ``songid`` as integers and ``israndom`` as boolean.
 
         The UUIDs of the queue entries remain.
 
@@ -144,9 +144,17 @@ class MDBState(Config, object):
         queue = []
         for row in rows:
             try:
-                entryid = int(row["EntryID"])
-                songid  = int(row["SongID"])
-                queue.append((entryid, songid))
+                entry = {}
+                entry["entryid"]  = int( row["EntryID"])
+                entry["songid"]   = int( row["SongID"])
+                # Be backwards compatible for lists that have no IsRandom key yet.
+                # TODO: DEPRECATED: Remove in December 2019
+                if "IsRandom" in row:
+                    entry["israndom"] = bool(row["IsRandom"])
+                else:
+                    entry["israndom"] = False
+
+                queue.append(entry)
             except Exception as e:
                 logging.warning("Invalid entry in stored Song Queue: \"%s\"! \033[1;30m(Entry will be ignored)", str(row))
 
@@ -159,7 +167,7 @@ class MDBState(Config, object):
         The data structure of the queue must be exact as the one expected when the queue shall be loaded.
 
         Args:
-            queue (list): The song queue to save.
+            queue (dictionary): The song queue to save.
 
         Returns:
             *Nothing*
@@ -169,12 +177,12 @@ class MDBState(Config, object):
         rows = []
         for entry in queue:
             row = {}
-            row["EntryID"] = str(entry[0])
-            row["SongID"]  = int(entry[1])
+            row["EntryID"]  = str(entry["entryid"])
+            row["SongID"]   = int(entry["songid"])
+            row["IsRandom"] = str(entry["israndom"])
 
             rows.append(row)
 
-            #rows.append([str(entry[0]), int(entry[1])])
         self.WriteList("songqueue", rows)
         return
 

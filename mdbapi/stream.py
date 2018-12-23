@@ -252,12 +252,12 @@ def StreamingThread():
     global State
 
     # Create all interfaces that are needed by this Thread
-    musicdb = MusicDatabase(Config.database.path)
-    tracker = Tracker(Config, musicdb)
+    musicdb    = MusicDatabase(Config.database.path)
+    tracker    = Tracker(Config, musicdb)
     filesystem = Filesystem(Config.music.path)
-    queue   = SongQueue(Config, musicdb)
-    randy   = Randy(Config, musicdb)
-    icecast = IcecastInterface(
+    queue      = SongQueue(Config, musicdb)
+    randy      = Randy(Config, musicdb)
+    icecast    = IcecastInterface(
             port      = Config.icecast.port,
             user      = Config.icecast.user,
             password  = Config.icecast.password,
@@ -286,13 +286,13 @@ def StreamingThread():
 
 
         # Get current song that shall be streamed.
-        currententryid, currentsongid = queue.CurrentSong()
-        if currententryid == None:
+        queueentry = queue.CurrentSong()
+        if queueentry["entryid"] == None:
             logging.info("Waiting for 5s to try to get a new song to play.")
             time.sleep(5)
             continue
 
-        mdbsong  = musicdb.GetSongById(currentsongid)
+        mdbsong  = musicdb.GetSongById(queueentry["songid"])
         songpath = filesystem.AbsolutePath(mdbsong["path"])
 
 
@@ -336,9 +336,9 @@ def StreamingThread():
             # In case the loop ended because Icecast failed, update the Status
             if icecast.IsConnected():
                 if not Config.debug.disabletracker:
-                    tracker.AddSong(currentsongid)
+                    tracker.AddSong(queueentry["songid"])
                 if not Config.debug.disablestats:
-                    musicdb.UpdateSongStatistic(currentsongid, "lastplayed", int(time.time()))
+                    musicdb.UpdateSongStatistic(queueentry["songid"], "lastplayed", int(time.time()))
             else:
                 icecast.Mute()
                 State["isplaying"]   = False
@@ -439,7 +439,6 @@ class StreamManager(object):
 
         self.db         = database
         self.cfg        = config
-        self.songqueue  = SongQueue(self.cfg, self.db)
 
 
 

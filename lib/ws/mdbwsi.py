@@ -920,8 +920,8 @@ class MusicDBWebSocketInterface(object):
         state = {}
 
         streamstate = self.stream.GetStreamState()
-        queueentry  = self.queue.CurrentSong()   # returns (entryid, songid)
-        songid      = queueentry[1]
+        queueentry  = self.queue.CurrentSong()
+        songid      = queueentry["songid"]
         state["isconnected"] = streamstate["isconnected"]
         state["isplaying"]   = streamstate["isplaying"]
 
@@ -953,6 +953,7 @@ class MusicDBWebSocketInterface(object):
         Each entry of the list contains the following information:
 
             * **entryid:** A unique ID to identify the entry in the queue (as string because it is a 128 integer that blows JavaScripts mind)
+            * **israndom:** A boolean value set to ``true`` when the song got added randomly and not explicitly by the user
             * **song:** The song entry from the database
             * **album:** The related album entry from the database
             * **artist:** The related artist entry from the database
@@ -985,16 +986,17 @@ class MusicDBWebSocketInterface(object):
             return []
 
         queue = []
-        for entryid, songid in entries:
-            song    = self.database.GetSongById(songid)
+        for queueentry in entries:
+            song    = self.database.GetSongById(queueentry["songid"])
             album   = self.database.GetAlbumById(song["albumid"])
             artist  = self.database.GetArtistById(song["artistid"])
 
             entry = {}
-            entry["entryid"] = str(entryid)
-            entry["song"]    = song
-            entry["album"]   = album
-            entry["artist"]  = artist
+            entry["entryid"]  = str(queueentry["entryid"])
+            entry["israndom"] = bool(queueentry["israndom"])
+            entry["song"]     = song
+            entry["album"]    = album
+            entry["artist"]   = artist
 
             queue.append(entry)
 
