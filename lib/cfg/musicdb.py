@@ -191,6 +191,7 @@ class MusicDBConfig(Config):
         # [tracker]
         self.tracker = TRACKER()
         self.tracker.dbpath         = self.GetFile( "tracker",  "dbpath",       "/opt/musicdb/data/tracker.db")
+        self.tracker.cuttime        = self.Get(int, "tracker",  "cuttime",      "30")
 
 
         # [lycra]

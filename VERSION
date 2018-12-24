@@ -1,4 +1,4 @@
-4.4.0 - Tracker does not track random songs
+4.4.0 - SEE CHANGELOG
 4.3.0 - All added songs will be pushed onto the blacklist now
 4.2.0 - Replaces old imp module by importlib
 4.1.0 - Fixes problem caused by asyncio changes in Python3.7

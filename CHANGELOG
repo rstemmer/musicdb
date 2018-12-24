@@ -7,6 +7,15 @@
 
 Run  git log --oneline  for more details
 
+┍━━━━┫ 2019-01-xx ┣━━━━┫ 4.4.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ + [WebUI] Hovering over (sub)genre tags in the album-view highlights tagged song names
+│ * [Tracker] Does not track any random songs to keep the relations clean
+│
+┝━ MINOR CHANGES
+│ * [Tracker] Time to pass between two songs until there relationship gets not tracked is now configurable
+└───────────────────────────────────────╌╌
+
 
 ┍━━━━┫ 2018-07-28 ┣━━━━┫ 4.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES

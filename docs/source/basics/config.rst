@@ -131,6 +131,11 @@ tracker
 dbpath (path to file):
    Path to the tracker database
 
+cuttime (integer, time in minutes):
+   Time until a relation gets cut.
+   If there is a time gap of *cuttime* minutes or more between the current played song and the previous one,
+   the relationship gets ignored.
+
 
 lycra
 -----

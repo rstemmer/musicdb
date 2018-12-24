@@ -187,6 +187,18 @@ class upgrade(MDBModule, MusicDBDatabase):
                 return False
             version = 2
 
+        if version == 2:
+            musicdbini.set("meta", "version", "3")
+            musicdbini.set("tracker", "cuttime", "30")
+            try:
+                with open(filename, "w") as configfile:
+                    musicdbini.write(configfile)
+            except Exception as e:
+                self.PrintError(str(e))
+                return False
+            version = 3
+
+
         # Reload configuration
         self.cfg = MusicDBConfig(filename)
 
@@ -195,7 +207,6 @@ class upgrade(MDBModule, MusicDBDatabase):
 
 
 
-    # TODO: Blacklists updaten (header zeile hinzufügen
 
 
 
