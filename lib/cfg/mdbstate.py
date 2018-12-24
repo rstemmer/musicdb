@@ -295,6 +295,18 @@ class MDBState(Config, object):
     def GetFilterList(self):
         """
         This method returns a list of the activated genre
+        The list consists of the names of the genres as configured by the user.
+        That are the names returned by :meth:`lib.db.musicdb.MusicDatabase.GetAllTags`.
+
+        The available genres get compared to the ones set in the state.ini file inside the MusicDB State directory.
+        If a genre is not defined in the configuration file, its default value is ``False`` and so it is not active.
+        Before the comparison, the state file gets reloaded so that external changes get applied directly.
+
+        .. example::
+
+            filter = mdbstate.GetFilterList()
+            print(filter) # ['Metal','NDH']
+            # Metal and NDH are active, other available genres are not enabled.
 
         Returns:
             A list of main genre names that are activated

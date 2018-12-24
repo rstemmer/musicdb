@@ -119,13 +119,16 @@ class Randy(object):
         global BlacklistLock
         global Blacklist
 
+        logging.debug("Randy starts looking for a random song …")
+        t_start = datetime.datetime.now()
+
         filterlist = self.mdbstate.GetFilterList()
         if not filterlist:
             logging.warning("No Genre selected! \033[1;30m(Selecting random song from the whole collection)")
+        else:
+            logging.debug("Genre filter: %s", str(filterlist))
 
         # Get Random Song - this may take several tries 
-        logging.debug("Randy starts looking for a random song …")
-        t_start = datetime.datetime.now()
         song    = None
         while not song:
             # STAGE 1: Get Mathematical random song (under certain constraints)
@@ -141,8 +144,8 @@ class Randy(object):
 
             logging.debug("Candidate for next song: \033[0;35m" + song["path"])
 
-            # GetRandomSong only looks for album genres.
-            # The song genre may be different and not in the set of the filerlist.
+            # The MusicDatabase method GetRandomSong only looks for album genres.
+            # The song genre may be different and not in the set of the filterlist.
             try:
 
                 songgenres = self.db.GetTargetTags("song", song["id"], MusicDatabase.TAG_CLASS_GENRE)
@@ -155,17 +158,20 @@ class Randy(object):
 
                 # If the tag name set was successfully created, compare it with the selected genres
                 if tagnames:
+                    logging.debug("Checking for intersection of song-genre and active-genre: %s ∩ %s", str(tagnames), str(filterlist))
                     if not tagnames & set(filterlist):
                         logging.debug("song is of different genre than album and not in activated genres. (Song genres: %s)", str(tagnames))
                         song = None
                         continue
+                else:
+                    logging.debug("The song candidate has no genre tags. Assuming it matches the album genre.")
 
             except Exception as e:
                 logging.error("Song tag check failed with exception: \"%s\"!", str(e))
                 return None
 
 
-            # STAGE 2: Make randomness feeling random by checking if the song was recently played
+            # STAGE 2: Make randomness feeling random by checking if the song/album/artist was recently played
             if self.blacklist.CheckAllLists(song):
                 song = None
                 continue
