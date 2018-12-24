@@ -27,6 +27,7 @@ The content of those files should not be changed by any user because its content
 from lib.cfg.config import Config
 from lib.cfg.csv    import CSVFile
 from lib.db.musicdb import MusicDatabase
+import time
 import logging
 import os
 
@@ -48,9 +49,9 @@ class MDBState(Config, object):
         +------------------------+-------------------------+-------------------------+
         | artistblacklist.csv    | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |
         +------------------------+-------------------------+-------------------------+
-        | albumblacklist.csv     | :meth:`~LoadBlacklists` |                         |
+        | albumblacklist.csv     | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |
         +------------------------+-------------------------+-------------------------+
-        | songblacklist.csv      | :meth:`~LoadBlacklists` |                         |
+        | songblacklist.csv      | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |
         +------------------------+-------------------------+-------------------------+
 
     Args:
@@ -187,21 +188,93 @@ class MDBState(Config, object):
         return
 
 
-    def LoadBlacklists(self):
+    def __LoadBlacklist(self, filename, idname, length):
+        # filename: artistblacklist
+        # idname:   ArtistID
+        if filename not in ["artistblacklist","albumblacklist","songblacklist"]:
+            raise ValueError("filename must be \"artistblacklist\", \"albumblacklist\" or \"songblacklist\"")
+        if idname not in ["ArtistID","AlbumID","SongID"]:
+            raise ValueError("idname must be \"ArtistID\", \"AlbumID\" or \"SongID\"")
+
+        rows      = self.ReadList(filename)
+        rows      = rows[:length]   # Do not process more entries than necessary
+        blacklist = []
+        for row in rows:
+            try:
+                entry = {}
+                if row[idname] == "":
+                    entry["id"] = None
+                else:
+                    entry["id"] = int(row[idname])
+
+                # Be backwards compatible for lists that have no timestamp key yet.
+                # TODO: DEPRECATED: Remove in December 2019
+                if "TimeStamp" in row:
+                    if row["TimeStamp"] == "":
+                        entry["timestamp"] = None
+                    else:
+                        entry["timestamp"] = int(row["TimeStamp"])
+                else:
+                    entry["timestamp"] = int(time.time())
+
+                blacklist.append(entry)
+            except Exception as e:
+                logging.warning("Invalid entry in stored blacklist %s: \"%s\"! - Error: \"%s\" \033[1;30m(Entry will be ignored)",
+                        filename+".csv", str(row), str(e))
+
+        # Fill the rest of the blacklist, that was not stored in a file
+        diff = length - len(rows)
+        if diff > 0:
+            for _ in range(diff):
+                entry = {}
+                entry["id"]        = None
+                entry["timestamp"] = None
+                blacklist.append(entry)
+    
+        return blacklist
+
+    def LoadBlacklists(self, songbllen, albumbllen, artistbllen):
         """
-        This method returns a dictionary with the blacklist managed by :class:`mdbapi.randy.Randy`
+        This method returns a dictionary with the blacklist managed by :class:`mdbapi.randy.Randy`.
+        This method also handles the blacklist length by adding empty entries or cutting off exceeding ones.
+
+        Args:
+            songbllen (int): Number of entries the blacklist shall have
+            albumbllen (int): Number of entries the blacklist shall have
+            artistbllen (int): Number of entries the blacklist shall have
 
         Returns:
             A dictionary with the blacklists as expected by :class:`mdbapi.randy.Randy`
         """
-        blacklist = {}
-        blacklist["artists"] = [ None if x["ArtistID"] == "" else int(x["ArtistID"]) for x in self.ReadList("artistblacklist") ]
-        blacklist["albums"]  = [ None if x["AlbumID"]  == "" else int(x["AlbumID"] ) for x in self.ReadList("albumblacklist")  ]
-        blacklist["songs"]   = [ None if x["SongID"]   == "" else int(x["SongID"]  ) for x in self.ReadList("songblacklist")   ]
-        return blacklist
+
+        blacklists = {}
+        blacklists["artists"] = self.__LoadBlacklist("artistblacklist", "ArtistID", artistbllen)
+        blacklists["albums"]  = self.__LoadBlacklist("albumblacklist",  "AlbumID",  albumbllen)
+        blacklists["songs"]   = self.__LoadBlacklist("songblacklist",   "SongID",   songbllen)
+        return blacklists
 
 
-    def SaveBlacklists(self, blacklist):
+
+    def __SaveBlacklist(self, blacklist, filename, idname):
+        if filename not in ["artistblacklist","albumblacklist","songblacklist"]:
+            raise ValueError("filename must be \"artistblacklist\", \"albumblacklist\" or \"songblacklist\"")
+        if idname not in ["ArtistID","AlbumID","SongID"]:
+            raise ValueError("idname must be \"ArtistID\", \"AlbumID\" or \"SongID\"")
+
+        rows = []
+        for entry in blacklist:
+            if entry["id"] == None:
+                continue
+            row = {}
+            row[idname]      = int(entry["id"])
+            row["TimeStamp"] = int(entry["timestamp"])
+
+            rows.append(row)
+
+        self.WriteList(filename, rows)
+        return
+
+    def SaveBlacklists(self, blacklists):
         """
         This method stores the blacklist in the related CSV files.
         The data structure of the dictionary is expected to be the same, :class:`mdbapi.randy.Randy` uses.
@@ -212,12 +285,11 @@ class MDBState(Config, object):
         Returns:
             *Nothing*
         """
-        songblacklist   = [ {"SongID":   x} for x in blacklist["songs"]   ]
-        albumblacklist  = [ {"AlbumID":  x} for x in blacklist["albums"]  ]
-        artistblacklist = [ {"ArtistID": x} for x in blacklist["artists"] ]
-        self.WriteList("songblacklist",   songblacklist)
-        self.WriteList("albumblacklist",  albumblacklist)
-        self.WriteList("artistblacklist", artistblacklist)
+        self.__SaveBlacklist(blacklists["songs"],   "songblacklist",   "SongID")
+        self.__SaveBlacklist(blacklists["albums"],  "albumblacklist",  "AlbumID")
+        self.__SaveBlacklist(blacklists["artists"], "artistblacklist", "ArtistID")
+        return
+
 
 
     def GetFilterList(self):
