@@ -13,6 +13,7 @@ Run  git log --oneline  for more details
 │ * [WebUI] Search shows now all albums of found artists
 │ + [Randy] Blacklist entries older than a configured age will be removed
 │ * [Tracker] Does not track any random songs to keep the relations clean
+│ - The deprecated SIGUSR1 signal to update the caches got removed. Use the FIFO interface instead. (SIGTERM will remain)
 │
 ┝━ MINOR CHANGES
 │ * [Tracker] Time to pass between two songs until there relationship gets not tracked is now configurable

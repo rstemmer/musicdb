@@ -87,20 +87,11 @@ def SignalHandler(signum, stack):
     
     Returns: Nothing
     """
-    if signum == signal.SIGUSR1:
-        logging.debug("Got signal USR1")
-        SIGUSR1_Handler()
-    elif signum == signal.SIGTERM:
+    if signum == signal.SIGTERM:
         logging.debug("Got signal TERM")
         SIGTERM_Handler()
     else:
         logging.warning("Got unexpected signal %s"%str(signum))
-
-
-# Update Caches
-def SIGUSR1_Handler():
-    logging.info("\033[1;33m(DEPRECATED: Signals will be removed in 2019) \033[1;36mSIGUSR1:\033[1;34m Updating caches …\033[0m") # DEPRECATED 2019
-    UpdateCaches()
 
 
 def UpdateCaches():
@@ -150,7 +141,7 @@ def SIGTERM_Handler():
     This function is the handler for the system signal TERM.
     It signals the server to shut down.
     """
-    logging.info("\033[1;33m(DEPRECATED: Signals will be removed in 2019) \033[1;36mSIGTERM:\033[1;34m Initiate Shutdown …\033[0m") # DEPRECATED 2019
+    logging.info("\033[1;36mSIGTERM:\033[1;34m Initiate Shutdown …\033[0m")
     global shutdown
     shutdown = True
 
@@ -209,11 +200,7 @@ def Initialize(configobj, databaseobj):
     mise.UpdateCache()
     
     # Signal Handler
-    # Don't mention the signals - they are deprecated!
-    #logging.info("Register signals \033[0;36m(" + cfg.server.pidfile + ")\033[0m")
-    #logging.info("\t\033[1;36mUSR1:\033[1;34m Update Caches\033[0m")
-    signal.signal(signal.SIGUSR1, SignalHandler)
-    #logging.info("\t\033[1;36mTERM:\033[1;34m Shutdown Server\033[0m")
+    # The user shall use the FIFO
     signal.signal(signal.SIGTERM, SignalHandler)
 
     # Named Pipe
