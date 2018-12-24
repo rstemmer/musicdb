@@ -63,7 +63,7 @@ class MusicDBWebSocketServer(object):
         """
         This method does the server setup.
 
-        It configures the TLS encryption (TLSv1.2) and creates the event loop.
+        It configures a TLS encrypted connection and creates the event loop.
 
         Args:
             address (str): address to bind to
@@ -74,16 +74,11 @@ class MusicDBWebSocketServer(object):
         Returns:
             ``True`` on success, otherwise ``False``
         """
-        logging.info("MusicDB WebSocket Server (\033[0;32mTLSv1.2 secured\033[1;34m) listening to port \033[1;36m%s", port)
-        self.tlscontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2) # deprecated sinze 3.6 # FIXME
-        # New would be the following, but websockets crash if using this
-        # tlscontext = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-        # tlscontext.options |= ssl.OP_NO_SSLv2
-        # tlscontext.options |= ssl.OP_NO_SSLv3
-        # tlscontext.options |= ssl.OP_NO_TLSv1
-        # tlscontext.options |= ssl.OP_NO_TLSv1_1
+        logging.info("MusicDB WebSocket Server (\033[0;32mTLS secured\033[1;34m) listening to port \033[1;36m%s", port)
+        #self.tlscontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2) # deprecated since Python 3.6
+        self.tlscontext = ssl.SSLContext(ssl.PROTOCOL_TLS) # Use best supported protocol
         self.tlscontext.set_ciphers("HIGH:MEDIUM:!aNULL:!MD5")
-        self.tlscontext.verify_mode = ssl.CERT_NONE # no client side cert needed... # FIXME
+        self.tlscontext.verify_mode = ssl.CERT_NONE # no client side cert needed...
 
         try:
             self.tlscontext.load_cert_chain(cert, key)
