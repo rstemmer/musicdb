@@ -335,7 +335,7 @@ def StreamingThread():
             # Also update the last time played information.
             # In case the loop ended because Icecast failed, update the Status
             if icecast.IsConnected():
-                if not Config.debug.disabletracker and not queueentry["israndom"]:  # do not track random songs
+                if not queueentry["israndom"]:  # do not track random songs
                     tracker.AddSong(queueentry["songid"])
                 if not Config.debug.disablestats:
                     musicdb.UpdateSongStatistic(queueentry["songid"], "lastplayed", int(time.time()))
