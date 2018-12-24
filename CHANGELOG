@@ -10,6 +10,7 @@ Run  git log --oneline  for more details
 ┍━━━━┫ 2019-01-xx ┣━━━━┫ 4.4.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ + [WebUI] Hovering over (sub)genre tags in the album-view highlights tagged song names
+│ * [WebUI] Search shows now all albums of found artists
 │ + [Randy] Blacklist entries older than a configured age will be removed
 │ * [Tracker] Does not track any random songs to keep the relations clean
 │

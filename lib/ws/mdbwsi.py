@@ -1017,6 +1017,7 @@ class MusicDBWebSocketInterface(object):
                 * **artist:** The related artist entry from the database
             * **artists:** A list of artists, each entry is a dictionary with the following information:
                 * **artist:** The related artist entry from the database
+                * **albums:** A list of all albums by this artist, ordered by release year
 
         The search does not look for exact matching.
         It looks for most likeliness.
@@ -1051,24 +1052,26 @@ class MusicDBWebSocketInterface(object):
         """
         (foundartists, foundalbums, foundsongs) = self.mise.Find(searchstring)
 
-        # prepare result processing
-        artists = []
-        albums  = []
-        songs   = []
-        artistcount = min(limit, len(foundartists))
-        albumcount  = min(limit, len(foundalbums))
-        songcount   = min(limit, len(foundsongs))
 
-        # process foundartists
+        # process found artists
+        artists     = []
+        artistcount = min(limit, len(foundartists))
         for i in range(artistcount):
             artistid = foundartists[i][0]
             artist   = self.database.GetArtistById(artistid)
 
+            # Get albums by this artist and sort for release year
+            albums = self.database.GetAlbumsByArtistId(artistid)
+            albums = sorted(albums, key = lambda k: k["release"])
+
             entry = {}
             entry["artist"] = artist
+            entry["albums"] = albums
             artists.append(entry)
 
         # process found albums
+        albums     = []
+        albumcount = min(limit, len(foundalbums))
         for i in range(albumcount):
             albumid = foundalbums[i][0]
             album   = self.database.GetAlbumById(albumid)
@@ -1080,6 +1083,8 @@ class MusicDBWebSocketInterface(object):
             albums.append(entry)
 
         # process found songs
+        songs     = []
+        songcount = min(limit, len(foundsongs))
         for i in range(songcount):
             songid  = foundsongs[i][0]
             song    = self.database.GetSongById(songid)
