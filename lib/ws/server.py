@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -101,7 +101,19 @@ class MusicDBWebSocketServer(object):
         except Exception as e:
             logging.exception("Creating server task failed with exception: %s", str(e))
             return False
+
+        self.eventloop.set_exception_handler(self.ExceptionHandler)
         return True
+
+
+
+    def ExceptionHandler(self, loop, context):
+        exception = context["exception"]
+        message   = context["message"]
+        logging.warning("Unexpected %s exception in eventloop: %s - %s",
+                type(exception), str(exception), str(message))
+        return
+
 
 
     def Start(self):

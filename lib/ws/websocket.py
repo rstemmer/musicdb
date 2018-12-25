@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -256,19 +256,19 @@ class WebSocket(WebSocketServerProtocol):
         elif code == None and wasClean == True:
             logging.info("Websocket connection closed without an exit-code. \033[1;30m(Exitcode == None ; wasClean-Flag == True)")
         else:
-            logging.warning("Websocket connection closed abnormaly!")
-            logging.debug  ("\033[0;33mwasClean = %s" % wasClean)
-            logging.debug  ("\033[0;33mcode     = \033[1;33m%s" % code)
-            logging.warning("\033[0;33mreason   = \033[1;33m%s" % reason)
-            logging.debug  ("\033[0;33mclosedByMe  = %s" % self.closedByMe)
-            logging.debug  ("\033[0;33mfailedByMe  = %s" % self.failedByMe)
-            logging.debug  ("\033[0;33mdroppedByMe = %s" % self.droppedByMe)
-            logging.debug  ("\033[0;33mwasClean          = %s" % self.wasClean)
-            logging.debug  ("\033[0;33mwasNotCleanReason = \033[1;33m%s" % self.wasNotCleanReason)
-            logging.debug  ("\033[1;33mlocalCloseCode    = %s" % self.localCloseCode)
-            logging.debug  ("\033[1;33mlocalCloseReason  = %s" % self.localCloseReason)
-            logging.debug  ("\033[1;33mremoteCloseCode   = %s" % self.remoteCloseCode)
-            logging.debug  ("\033[1;33mremoteCloseReason = %s" % self.remoteCloseReason)
+            logging.warning("Websocket connection closed abnormaly! - \033[0;33m%s", self.wasNotCleanReason)
+            #logging.debug  ("\033[0;33mreason: %s", reason)
+            #logging.debug  ("\033[0;33mwasNotCleanReason: %s", self.wasNotCleanReason)
+            #logging.debug  ("\033[0;33mwasClean = %s" % wasClean)
+            #logging.debug  ("\033[0;33mcode     = \033[1;33m%s" % code)
+            #logging.debug  ("\033[0;33mclosedByMe  = %s" % self.closedByMe)
+            #logging.debug  ("\033[0;33mfailedByMe  = %s" % self.failedByMe)
+            #logging.debug  ("\033[0;33mdroppedByMe = %s" % self.droppedByMe)
+            #logging.debug  ("\033[0;33mwasClean          = %s" % self.wasClean)
+            #logging.debug  ("\033[1;33mlocalCloseCode    = %s" % self.localCloseCode)
+            #logging.debug  ("\033[1;33mlocalCloseReason  = %s" % self.localCloseReason)
+            #logging.debug  ("\033[1;33mremoteCloseCode   = %s" % self.remoteCloseCode)
+            #logging.debug  ("\033[1;33mremoteCloseReason = %s" % self.remoteCloseReason)
 
 
         #CLOSE_CODE_NORMAL              = 1000 #Normal close of connection.
@@ -287,7 +287,7 @@ class WebSocket(WebSocketServerProtocol):
 
 
     def onOpenHandshakeTimeout(self):
-        logging.error("Open-Handshake Timeout!")
+        logging.warning("Open-Handshake Timeout! \033[0;33m(Connection will be closed)")
         WebSocketServerProtocol.onOpenHandshakeTimeout(self)
 
     def onCloseHandshakeTimeout(self):
