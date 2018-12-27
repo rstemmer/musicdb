@@ -190,7 +190,7 @@ class upgrade(MDBModule, MusicDBDatabase):
         if version == 2:
             musicdbini.set("meta", "version", "3")
             musicdbini.set("tracker", "cuttime",    "30")
-            musicdbini.set("Randy",   "maxage",     "24")
+            musicdbini.set("Randy",   "maxblage",   "24")
             musicdbini.set("Randy",   "maxsonglen", "600")
             try:
                 with open(filename, "w") as configfile:

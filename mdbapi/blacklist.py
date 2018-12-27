@@ -129,7 +129,7 @@ class BlacklistInterface(object):
         if blacklistname not in ["songs", "albums", "artists"]:
             raise ValueError("blacklistname must be \"songs\", \"albums\" or \"artists\"!")
 
-        timelimit = time.time() - self.cfg.randy.maxage*60*60;
+        timelimit = time.time() - self.cfg.randy.maxblage*60*60;
 
         global BlacklistLock
         global Blacklist
