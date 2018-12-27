@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ There are 4 parameters that define the constraints applied on set of possible so
     - The activated genres as maintained by the :mod:`lib.cfg.mdbstate` module.
     - The flag if *disabled* songs shall be excluded
     - The flag if *hated* songs shall be excluded
-    - Minimum length of a song in seconds
+    - Minimum and maximum length of a song in seconds
 
 Some of them can be configured in the MusicDB configuration file:
 
@@ -106,6 +106,7 @@ class Randy(object):
         self.nodisabled  = self.cfg.randy.nodisabled
         self.nohated     = self.cfg.randy.nohated
         self.minlen      = self.cfg.randy.minsonglen
+        self.maxlen      = self.cfg.randy.maxsonglen
 
 
 
@@ -220,7 +221,7 @@ class Randy(object):
             tries += 1
             # STAGE 1: Get Mathematical random song (under certain constraints)
             try:
-                song = self.db.GetRandomSong(None, self.nodisabled, self.nohated, self.minlen, albumid)
+                song = self.db.GetRandomSong(None, self.nodisabled, self.nohated, self.minlen, self.maxlen, albumid)
             except Exception as e:
                 logging.error("Getting random song failed with error: \"%s\"!", str(e))
                 return None

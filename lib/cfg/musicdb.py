@@ -226,6 +226,7 @@ class MusicDBConfig(Config):
         self.randy.nodisabled       = self.Get(bool, "Randy",   "nodisabled",   True)
         self.randy.nohated          = self.Get(bool, "Randy",   "nohated",      True)
         self.randy.minsonglen       = self.Get(int,  "Randy",   "minsonglen",   120)
+        self.randy.maxsonglen       = self.Get(int,  "Randy",   "maxsonglen",   600)
         self.randy.songbllen        = self.Get(int,  "Randy",   "songbllen",    50)
         self.randy.albumbllen       = self.Get(int,  "Randy",   "albumbllen",   20)
         self.randy.artistbllen      = self.Get(int,  "Randy",   "artistbllen",  10)

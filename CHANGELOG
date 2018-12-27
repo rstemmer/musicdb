@@ -17,6 +17,7 @@ Run  git log --oneline  for more details
 │
 ┝━ MINOR CHANGES
 │ * [Tracker] Time to pass between two songs until there relationship gets not tracked is now configurable
+│ + [Randy] Does not add songs to the queue, that exceed a configured play time.
 │ * [Server] Made the openSSL interface future proof
 │ * [Server] Better error/warning logging
 └───────────────────────────────────────╌╌

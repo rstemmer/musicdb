@@ -224,6 +224,9 @@ nohated (boolean):
 minsonglen (number ∈ ℕ):
    Determines the minimum length of a song in seconds to be in the set of possible songs
 
+maxsonglen (number ∈ ℕ):
+   Determines the maximum length of a song in seconds to be in the set of possible songs
+
 songbllen (number ∈ ℕ):
    Blacklist length for songs (``0`` to disable the blacklist)
 
