@@ -20,6 +20,7 @@ Run  git log --oneline  for more details
 │ + [Randy] Does not add songs to the queue, that exceed a configured play time.
 │ * [Server] Made the openSSL interface future proof
 │ * [Server] Better error/warning logging
+│ + [music.db] Column added that stores the modification date of the directory when an album gets added ("added date")
 └───────────────────────────────────────╌╌
 
 

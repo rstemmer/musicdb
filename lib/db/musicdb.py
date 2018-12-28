@@ -136,9 +136,12 @@ Data structure:
     | albumid | artistid | name | path | numofsongs | numofcds | origin | release |
     +---------+----------+------+------+------------+----------+--------+---------+
 
-    +-------------+---------+---------+---------+
-    | artworkpath | bgcolor | fgcolor | hlcolor |
-    +-------------+---------+---------+---------+
+    +-------------+---------+---------+---------+-------+
+    | artworkpath | bgcolor | fgcolor | hlcolor | added |
+    +-------------+---------+---------+---------+-------+
+
+added (Integer)
+    This is the time the album got added to the collection as unixtime rounded to an integer (full seconds)
 
 Album Related Methods
 ^^^^^^^^^^^^^^^^^^^^^
@@ -398,6 +401,7 @@ class MusicDatabase(Database):
     ALBUM_BGCOLOR    = 9
     ALBUM_FGCOLOR    = 10
     ALBUM_HLCOLOR    = 11
+    ALBUM_ADDED      = 12
 
     SONG_ID         = 0
     SONG_ALBUMID    = 1
@@ -458,8 +462,8 @@ class MusicDatabase(Database):
         except Exception as e:
             raise ValueError("Unable to read version number from Music Database")
 
-        if version != 2:
-            raise ValueError("Unexpected version number of Music Database. Got %i, expected %i", version, 2)
+        if version != 3:
+            raise ValueError("Unexpected version number of Music Database. Got %i, expected %i"%(version, 3))
         
 
     def __ArtistEntryToDict(self, entry):
@@ -483,6 +487,7 @@ class MusicDatabase(Database):
         album["bgcolor"]    = entry[self.ALBUM_BGCOLOR]
         album["fgcolor"]    = entry[self.ALBUM_FGCOLOR]
         album["hlcolor"]    = entry[self.ALBUM_HLCOLOR]
+        album["added"]      = entry[self.ALBUM_ADDED]
         return album
 
     def __SongEntryToDict(self, entry):
@@ -575,7 +580,8 @@ class MusicDatabase(Database):
             artworkpath=:artworkpath,
             bgcolor=:bgcolor,
             fgcolor=:fgcolor,
-            hlcolor=:hlcolor
+            hlcolor=:hlcolor,
+            added=:added
         WHERE
             albumid=:id
         """

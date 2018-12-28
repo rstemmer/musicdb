@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -470,6 +470,7 @@ class MusicDBDatabase(object):
             #. Load the metadata from one of those songs using :meth:`lib.metatags.MetaTags.GetAllMetadata`
             #. Analyze the path of one of those songs using :meth:`~mdbapi.database.MusicDBDatabase.AnalysePath`
             #. If *artistid* is not given as parameter, it gets read from the database identifying the artist by its path.
+            #. Get modification date using :meth:`~lib.filesystem.FileSystem.GetModificationDate`
             #. Set directory attributes and ownership using :meth:`~mdbapi.database.MusicDBDatabase.FixAttributes`
             #. Create new entry for the new album in the database and get the default values
             #. Add each song of the album to the database by calling :meth:`~mdbapi.database.MusicDBDatabase.AddSong`
@@ -507,7 +508,7 @@ class MusicDBDatabase(object):
         if album != None:
             raise ValueError("Album \"" + album["name"] + "\" does already exist in the database.")
 
-        # This album dictionary gets filled with all kind of infors during this method.
+        # This album dictionary gets filled with all kind of information during this method.
         # At the end they are written into the database
         album = {}
         album["name"]       = None
@@ -528,12 +529,14 @@ class MusicDBDatabase(object):
         fsmeta  = self.AnalysePath(songpaths[0])
         if fsmeta == None:
             raise AssertionError("Analysing path \"%s\" failed!", songpaths[0])
+        moddate = self.fs.GetModificationDate(albumpath)
 
         # usually, the filesystem is always right, but in case of iTunes, the meta data are
         # FIX: NO! THEY ARE NOT! - THE FILESYSTEM IS _ALWAYS_ RIGHT!
         album["name"]    = fsmeta["album"]
         album["release"] = fsmeta["release"]
         album["origin"]  = tagmeta["origin"]
+        album["added"]   = moddate
         
         if artistid == None:
             # the artistname IS the path, because thats how the fsmeta data came from

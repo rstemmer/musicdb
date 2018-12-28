@@ -20,6 +20,7 @@ import argparse
 import configparser
 import os
 import base64
+from tqdm               import tqdm
 from lib.modapi         import MDBModule
 from lib.filesystem     import Filesystem
 from mdbapi.database    import MusicDBDatabase
@@ -60,11 +61,17 @@ class upgrade(MDBModule, MusicDBDatabase):
 
     def GetDatabaseVersion(self, database):
         try:
-            result = self.db.GetFromDatabase("SELECT value FROM meta WHERE key = 'version'")
+            result  = database.GetFromDatabase("SELECT value FROM meta WHERE key = 'version'")
             version = int(result[0][0])
         except Exception as e:
+            self.PrintError(str(e))
             version = 0
         return version
+
+    def SetDatabaseVersion(self, database, version):
+        sql = "UPDATE meta SET value = ? WHERE key = 'version'"
+        database.Execute(sql, (version,))
+        return None
 
 
     def AddMetaTableToDatabase(self, database):
@@ -81,7 +88,7 @@ class upgrade(MDBModule, MusicDBDatabase):
 
     def UpgradeMusicDB(self):
         self.PrintCheckFile("music.db")
-        newversion = 2
+        newversion = 3
 
         # Check version of MusicDB
         version = self.GetDatabaseVersion(self.db)
@@ -98,6 +105,24 @@ class upgrade(MDBModule, MusicDBDatabase):
             if not retval:
                 return False
             version = 2
+
+        # Upgrade to version 3
+        if version == 2:
+            print("Updating albums-table:\033[0;36m")
+            # Add new column to Albums-Table
+            sql = "ALTER TABLE albums ADD COLUMN added INTEGER DEFAULT 0;"
+            self.db.Execute(sql)
+            # Initialize new column
+            fs     = Filesystem(self.cfg.music.path)
+            albums = self.db.GetAlbums()
+            for album in tqdm(albums, unit="albums"):
+                moddate = fs.GetModificationDate(album["path"])
+                album["added"] = moddate
+                self.db.WriteAlbum(album)
+
+            # Update version in database
+            self.SetDatabaseVersion(self.db, 3)
+            version = 3
 
         self.PrintGood()
         return True
@@ -159,7 +184,7 @@ class upgrade(MDBModule, MusicDBDatabase):
         filename   = "/etc/musicdb.ini"
         musicdbini = configparser.ConfigParser()
         musicdbini.read(filename)
-        newversion = 2
+        newversion = 3
 
         # Check current version
         version = musicdbini.get("meta", "version", fallback="1")
