@@ -347,10 +347,6 @@ class Filesystem(object):
 
 
 
-    def GetExtension(self, xpath):
-        logging.warning("DEPRECATED: Will be renamed to GetFileExtension!")
-        return self.GetFileExtension(xpath)
-
     def GetFileExtension(self, xpath):
         """
         This method returns the file extension of the file addressed by *xpath*.
