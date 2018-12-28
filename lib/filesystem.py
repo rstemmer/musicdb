@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017, 2018  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -443,6 +443,32 @@ class Filesystem(object):
         os.chmod(abspath, mode)
         shutil.chown(abspath, owner, group)
         return None
+
+
+
+    def GetModificationDate(self, xpath):
+        """
+        This method returns the date when a file or directory was modified the last time.
+        (See `os.path.getmtime <https://docs.python.org/3/library/os.path.html#os.path.getmtime>`_)
+
+        Args:
+            xpath (str): Path to the file or directory
+
+        Returns:
+            The modification date of the file or directory as unix time value in seconds (integer)
+
+        Example:
+            
+            .. code-block:: python
+
+                fs = Filesystem("/data/music/")
+                cdate = fs.GetModificationDate("Rammstein") # Possible creation date of /data/music/Rammstein directory
+                print(cdate)
+
+        """
+        abspath = self.AbsolutePath(xpath)
+        mtime = int(os.path.getmtime(abspath))
+        return mtime
 
 
 
