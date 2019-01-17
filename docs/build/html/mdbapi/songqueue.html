@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Song Queue &mdash; MusicDB 4.3.0 documentation</title>
+  <title>MusicDB Song Queue &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Streaming Server" href="stream.html"/>
         <link rel="prev" title="MusicDB Websocket Server" href="server.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -387,7 +387,7 @@
 <li class="toctree-l3"><a class="reference internal" href="musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -550,6 +550,35 @@
 </ul>
 </li>
 </ul>
+<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#sending-data">Sending Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#receiving-data">Receiving Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#minimal-usage">Minimal usage</a></li>
+</ul>
+</li>
+</ul>
 <p class="caption"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
@@ -640,16 +669,20 @@
 <span id="musicdb-song-queue"></span><h1>MusicDB Song Queue<a class="headerlink" href="#module-mdbapi.songqueue" title="Permalink to this headline">¶</a></h1>
 <p>This module implements the Song Queue.
 The song queue consists of a global FIFO organized list.</p>
-<blockquote>
-<div><div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">When calling this method, the <a class="reference internal" href="stream.html#mdbapi.stream.StreamingThread" title="mdbapi.stream.StreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.stream.StreamingThread()</span></code></a> will never know that the current song changed!
-In context of the stream, always use the <a class="reference internal" href="stream.html#mdbapi.stream.StreamManager" title="mdbapi.stream.StreamManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.stream.StreamManager</span></code></a> methods!</p>
-</div>
-</div></blockquote>
 <div class="section" id="queue-management">
 <h2>Queue Management<a class="headerlink" href="#queue-management" title="Permalink to this headline">¶</a></h2>
-<p>An entry this queue is a tuple of an entry ID and a song ID as maintained by the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> class.</p>
+<p>An entry in this queue is a dictionary having the following keys:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>entryid:</dt>
+<dd>An entry ID that is unique for all entries at any time.
+This UUID is a 128 bit integer.</dd>
+<dt>songid:</dt>
+<dd>A song ID as maintained by the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> class.</dd>
+<dt>israndom:</dt>
+<dd>A boolean value that is set to <code class="docutils literal notranslate"><span class="pre">True</span></code> when the song was added by <a class="reference internal" href="randy.html"><span class="doc">Randomizer</span></a>.</dd>
+</dl>
+</div></blockquote>
 <p>Some features of this queue are:</p>
 <blockquote>
 <div><ul class="simple">
@@ -693,10 +726,14 @@ The second parameter contains an event specific argument, or <code class="docuti
 <span class="n">queue</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="mi">1337</span><span class="p">)</span>
 <span class="n">queue</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="mi">2342</span><span class="p">)</span>
 
-<span class="k">print</span><span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">())</span>  <span class="c1"># (*UUID*, 7357)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">())</span>  <span class="c1"># (*UUID*, 7357)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">NextSong</span><span class="p">())</span>     <span class="c1"># (*UUID*, 1337)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">())</span>  <span class="c1"># (*UUID*, 1337)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()[</span><span class="s2">&quot;songid&quot;</span><span class="p">])</span>  <span class="c1"># 7357</span>
+<span class="k">print</span><span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()[</span><span class="s2">&quot;songid&quot;</span><span class="p">])</span>  <span class="c1"># 7357</span>
+<span class="k">print</span><span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">NextSong</span><span class="p">()[</span><span class="s2">&quot;songid&quot;</span><span class="p">])</span>     <span class="c1"># 1337</span>
+<span class="k">print</span><span class="p">(</span><span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()[</span><span class="s2">&quot;songid&quot;</span><span class="p">])</span>  <span class="c1"># 1337</span>
+
+<span class="n">queueentry</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;israndom&quot;</span><span class="p">]:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Entry </span><span class="si">%d</span><span class="s2"> is a randomly added song.&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]))</span>
 </pre></div>
 </div>
 </div>
@@ -762,7 +799,7 @@ If there is no song found by Randy, then nothing gets added to the queue and <co
 
 <dl class="method">
 <dt id="mdbapi.songqueue.SongQueue.AddSong">
-<code class="descname">AddSong</code><span class="sig-paren">(</span><em>songid</em>, <em>position='last'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.AddSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.AddSong" title="Permalink to this definition">¶</a></dt>
+<code class="descname">AddSong</code><span class="sig-paren">(</span><em>songid</em>, <em>position='last'</em>, <em>israndom=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.AddSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.AddSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>With this method, a new song can be insert into the queue.</p>
 <p>The position in the queue, where the song gets insert can be changed by setting the <code class="docutils literal notranslate"><span class="pre">position</span></code> argument:</p>
 <blockquote>
@@ -782,7 +819,8 @@ The method also triggers the <code class="docutils literal notranslate"><span cl
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>songid</strong> (<em>int</em>) – The ID of the song that shall be added to the queue</li>
-<li><strong>position</strong> (<em>str</em>) – Defines the position where the song gets inserted.</li>
+<li><strong>position</strong> (<em>str</em>) – Defines the position where the song gets inserted</li>
+<li><strong>israndom</strong> (<em>bool</em>) – Defines whether the song is randomly selected or not</li>
 </ul>
 </td>
 </tr>
@@ -801,15 +839,17 @@ The method also triggers the <code class="docutils literal notranslate"><span cl
 <code class="descname">CurrentSong</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.CurrentSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.CurrentSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the current song in the queue.</p>
 <p>The method returns element 0 from the queue which is the current song that can be streamed or gets already streamed.
-The songs remain in the queue until they got completely streamed.</p>
+The song shall remain in the queue until it got completely streamed.
+Then it can be removed by calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">NetSong()</span></code>.</p>
 <p>When the queue is empty, a new random song gets added.
 This is the exact same song that then will be returned by this method.
-If adding a new song fails, <code class="docutils literal notranslate"><span class="pre">(None,</span> <span class="pre">None)</span></code> gets returned.</p>
+If adding a new song fails, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.
+This method triggers the <code class="docutils literal notranslate"><span class="pre">QueueChanged</span></code> event when the queue was empty and a new random song got added.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A tuple (entryid, songid).</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dictionary as described in the module description</td>
 </tr>
 </tbody>
 </table>
@@ -817,15 +857,22 @@ If adding a new song fails, <code class="docutils literal notranslate"><span cla
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">queue</span> <span class="o">=</span> <span class="n">SongQueue</span><span class="p">()</span>
 
 <span class="c1"># Queue will be empty after creating a SongQueue object</span>
-<span class="n">entryid</span><span class="p">,</span> <span class="n">songid</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;SongID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">)))</span> <span class="c1"># None</span>
+<span class="n">entry</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">entry</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Random SongID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">])))</span>
+<span class="k">else</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Queue is empty! - Adding random song failed!&quot;</span><span class="p">)</span>
 
 <span class="c1"># Adds two new song with ID 7357 and 1337.</span>
 <span class="c1"># Then the current song is the first song added.</span>
 <span class="n">queue</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="mi">7357</span><span class="p">)</span>
 <span class="n">queue</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="mi">1337</span><span class="p">)</span>
-<span class="n">entryid</span><span class="p">,</span> <span class="n">songid</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;SongID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">)))</span> <span class="c1"># 7357</span>
+<span class="n">entry</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">entry</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;SongID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">])))</span> <span class="c1"># 7357</span>
+<span class="k">else</span>
+    <span class="c1"># will not be reached because we explicitly added songs.</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Queue is empty! - Adding random song failed!&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -872,9 +919,8 @@ It will be returned as an integer.</p>
 <dt id="mdbapi.songqueue.SongQueue.GetQueue">
 <code class="descname">GetQueue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.GetQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.GetQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a copy of the song queue.</p>
-<p>The queue is a list of tuple.
-The tuple holds the entry ID of the queue element, and song ID
-The entry ID is a <a class="reference external" href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 Universally Unique Identifier (UUID)</a> .</p>
+<p>The queue is a list of dictionaries.
+The content of the dictionary is described in the description of this module.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -889,8 +935,9 @@ The entry ID is a <a class="reference external" href="https://en.wikipedia.org/w
 <span class="k">if</span> <span class="ow">not</span> <span class="n">queue</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;There are no songs in the queue&quot;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">entryid</span><span class="p">,</span> <span class="n">songid</span> <span class="ow">in</span> <span class="n">queue</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Element with ID </span><span class="si">%i</span><span class="s2"> holds the song with ID </span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">entryid</span><span class="p">,</span> <span class="n">songid</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">queue</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Element with ID </span><span class="si">%i</span><span class="s2"> holds the song with ID </span><span class="si">%i</span><span class="s2">&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">]))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -962,13 +1009,13 @@ When <code class="docutils literal notranslate"><span class="pre">entryid</span>
 This entry will be the next current song.</p>
 <p>The method pops the last current element from the queue.
 Then the new element at position 0, the new current element, will be returned.</p>
-<p>If the queue is empty, <code class="docutils literal notranslate"><span class="pre">(None,</span> <span class="pre">None)</span></code> gets returned.</p>
+<p>If the queue is empty, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p>In context of streaming, this method may not be the one you want to call.
 This Method drops the current song and sets the next song on top of the queue.</p>
-<p>The will not notice this, so that it continues streaming the previous song. (See <a class="reference internal" href="stream.html"><span class="doc">Streaming Server</span></a>).
-If you want to to stream the next song, call <a class="reference internal" href="stream.html#mdbapi.stream.StreamManager.PlayNextSong" title="mdbapi.stream.StreamManager.PlayNextSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.stream.StreamManager.PlayNextSong()</span></code></a>.</p>
+<p>The stream will not notice this, so that it continues streaming the previous song. (See <a class="reference internal" href="stream.html"><span class="doc">Streaming Server</span></a>).
+If you want to stream the next song, call <a class="reference internal" href="stream.html#mdbapi.stream.StreamManager.PlayNextSong" title="mdbapi.stream.StreamManager.PlayNextSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.stream.StreamManager.PlayNextSong()</span></code></a>.</p>
 <p class="last">The <a class="reference internal" href="stream.html#mdbapi.stream.StreamManager.PlayNextSong" title="mdbapi.stream.StreamManager.PlayNextSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.stream.StreamManager.PlayNextSong()</span></code></a> then makes the Streaming Thread calling this method.</p>
 </div>
 <p>This method triggers the <code class="docutils literal notranslate"><span class="pre">SongChanged</span></code> and <code class="docutils literal notranslate"><span class="pre">QueueChanged</span></code> event when the queue was not empty.
@@ -978,7 +1025,7 @@ The <code class="docutils literal notranslate"><span class="pre">SongChanged</sp
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The new current song entry in the queue as tuple <code class="docutils literal notranslate"><span class="pre">(entryid,</span> <span class="pre">songid)</span></code>.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The new current song entry in the queue as dictionary described in the module description</td>
 </tr>
 </tbody>
 </table>
@@ -989,13 +1036,13 @@ The <code class="docutils literal notranslate"><span class="pre">SongChanged</sp
 <span class="n">queue</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="mi">7357</span><span class="p">)</span>
 <span class="n">queue</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="mi">1337</span><span class="p">)</span>
 
-<span class="n">entryid</span><span class="p">,</span> <span class="n">songid</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;SongID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">)))</span> <span class="c1"># 7357</span>
+<span class="n">entry</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;SongID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">])))</span> <span class="c1"># 7357</span>
 
-<span class="n">entryid</span><span class="p">,</span> <span class="n">songid</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">NextSong</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;SongID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">)))</span> <span class="c1"># 1337</span>
-<span class="n">entryid</span><span class="p">,</span> <span class="n">songid</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;SongID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">)))</span> <span class="c1"># 1337</span>
+<span class="n">entry</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">NextSong</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;SongID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">])))</span> <span class="c1"># 1337</span>
+<span class="n">entry</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;SongID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">])))</span> <span class="c1"># 1337</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1113,7 +1160,7 @@ That argument will be <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -1135,7 +1182,7 @@ That argument will be <code class="docutils literal notranslate"><span class="pr
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

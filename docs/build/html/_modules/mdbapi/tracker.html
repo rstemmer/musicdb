@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.tracker &mdash; MusicDB 4.3.0 documentation</title>
+  <title>mdbapi.tracker &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -386,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -741,6 +741,7 @@
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">musicdb</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDatabase</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;database argument not of type MusicDatabase&quot;</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span>     <span class="o">=</span> <span class="n">config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span>   <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">disabletracker</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lastsongid</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lastaction</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -762,9 +763,10 @@
 <span class="sd">        This method tracks the relation to the given song with the last added song.</span>
 <span class="sd">        This new song should be a song that was recently and completely played.</span>
 
-<span class="sd">        If the time between this song, and the previous one exceeds 30 minutes, it gets ignored and the internal state gets reset.</span>
+<span class="sd">        If the time between this song, and the previous one exceeds *N* minutes, it gets ignored and the internal state gets reset.</span>
 <span class="sd">        So the chain of songs get cut if the time between playing them is too long.</span>
 <span class="sd">        The chain of songs gets also cut, if *songid* is ``None`` or invalid.</span>
+<span class="sd">        The amount of time until this cut takes place can be configured: :doc:`/basics/config`</span>
 
 <span class="sd">        If the given song is the same as the last song, then it gets ignored.</span>
 
@@ -788,11 +790,11 @@
             <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Song ID of new song is not an integer! The type was $s. </span><span class="se">\033</span><span class="s2">[0;33m(Ignoring the NewSong-Call and clearing tracking list)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">songid</span><span class="p">)))</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="c1"># If there is a 30 Minute gap, do not associate this song with the previous -&gt; clear list</span>
+        <span class="c1"># If there is a *cuttime* Minute gap, do not associate this song with the previous -&gt; clear list</span>
         <span class="n">timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="n">timediff</span>  <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">timestamp</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lastaction</span><span class="p">)</span>
         
-        <span class="k">if</span> <span class="n">timediff</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="o">*</span><span class="mi">60</span><span class="p">:</span>  <span class="c1"># TODO: make configurable!</span>
+        <span class="k">if</span> <span class="n">timediff</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">tracker</span><span class="o">.</span><span class="n">cuttime</span> <span class="o">*</span> <span class="mi">60</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Resetting tracker history because of a time gap greater than </span><span class="si">%i</span><span class="s2"> minutes.&quot;</span><span class="p">,</span> <span class="n">timediff</span><span class="o">//</span><span class="mi">60</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
         
@@ -860,7 +862,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -882,7 +884,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

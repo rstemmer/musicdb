@@ -158,7 +158,8 @@ class BlacklistInterface(object):
         It checks each entry in the list if it is ``None``.
         If it is ``None``, it gets ignored.
         
-        .. info::
+        .. note::
+
             This method does not check if the IDs time stamp is in a valid range.
             Call :meth:`~mdbapi.blacklist.BlacklistInterface.ValidateBlacklist` before to make sure
             all entries in the blacklist are valid.

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.randy &mdash; MusicDB 4.3.0 documentation</title>
+  <title>mdbapi.randy &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -386,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -664,7 +664,7 @@
             
   <h1>Source code for mdbapi.randy</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2017,2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -706,7 +706,7 @@
 <span class="sd">    - The activated genres as maintained by the :mod:`lib.cfg.mdbstate` module.</span>
 <span class="sd">    - The flag if *disabled* songs shall be excluded</span>
 <span class="sd">    - The flag if *hated* songs shall be excluded</span>
-<span class="sd">    - Minimum length of a song in seconds</span>
+<span class="sd">    - Minimum and maximum length of a song in seconds</span>
 
 <span class="sd">Some of them can be configured in the MusicDB configuration file:</span>
 
@@ -771,6 +771,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">nodisabled</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">nodisabled</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nohated</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">nohated</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">minlen</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">minsonglen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxlen</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">maxsonglen</span>
 
 
 
@@ -784,13 +785,16 @@
         <span class="k">global</span> <span class="n">BlacklistLock</span>
         <span class="k">global</span> <span class="n">Blacklist</span>
 
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Randy starts looking for a random song …&quot;</span><span class="p">)</span>
+        <span class="n">t_start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
         <span class="n">filterlist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span><span class="o">.</span><span class="n">GetFilterList</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">filterlist</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No Genre selected! </span><span class="se">\033</span><span class="s2">[1;30m(Selecting random song from the whole collection)&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Genre filter: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">filterlist</span><span class="p">))</span>
 
         <span class="c1"># Get Random Song - this may take several tries </span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Randy starts looking for a random song …&quot;</span><span class="p">)</span>
-        <span class="n">t_start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
         <span class="n">song</span>    <span class="o">=</span> <span class="kc">None</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">song</span><span class="p">:</span>
             <span class="c1"># STAGE 1: Get Mathematical random song (under certain constraints)</span>
@@ -806,8 +810,8 @@
 
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Candidate for next song: </span><span class="se">\033</span><span class="s2">[0;35m&quot;</span> <span class="o">+</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
 
-            <span class="c1"># GetRandomSong only looks for album genres.</span>
-            <span class="c1"># The song genre may be different and not in the set of the filerlist.</span>
+            <span class="c1"># The MusicDatabase method GetRandomSong only looks for album genres.</span>
+            <span class="c1"># The song genre may be different and not in the set of the filterlist.</span>
             <span class="k">try</span><span class="p">:</span>
 
                 <span class="n">songgenres</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetTargetTags</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">MusicDatabase</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">)</span>
@@ -820,17 +824,20 @@
 
                 <span class="c1"># If the tag name set was successfully created, compare it with the selected genres</span>
                 <span class="k">if</span> <span class="n">tagnames</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Checking for intersection of song-genre and active-genre: </span><span class="si">%s</span><span class="s2"> ∩ </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tagnames</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">filterlist</span><span class="p">))</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">tagnames</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">filterlist</span><span class="p">):</span>
                         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;song is of different genre than album and not in activated genres. (Song genres: </span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tagnames</span><span class="p">))</span>
                         <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
                         <span class="k">continue</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The song candidate has no genre tags. Assuming it matches the album genre.&quot;</span><span class="p">)</span>
 
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Song tag check failed with exception: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
                 <span class="k">return</span> <span class="kc">None</span>
 
 
-            <span class="c1"># STAGE 2: Make randomness feeling random by checking if the song was recently played</span>
+            <span class="c1"># STAGE 2: Make randomness feeling random by checking if the song/album/artist was recently played</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">blacklist</span><span class="o">.</span><span class="n">CheckAllLists</span><span class="p">(</span><span class="n">song</span><span class="p">):</span>
                 <span class="n">song</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="k">continue</span>
@@ -879,7 +886,7 @@
             <span class="n">tries</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="c1"># STAGE 1: Get Mathematical random song (under certain constraints)</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">song</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetRandomSong</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodisabled</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nohated</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minlen</span><span class="p">,</span> <span class="n">albumid</span><span class="p">)</span>
+                <span class="n">song</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetRandomSong</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodisabled</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nohated</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minlen</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxlen</span><span class="p">,</span> <span class="n">albumid</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Getting random song failed with error: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
                 <span class="k">return</span> <span class="kc">None</span>
@@ -917,7 +924,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -939,7 +946,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

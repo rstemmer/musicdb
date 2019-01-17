@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.songqueue &mdash; MusicDB 4.3.0 documentation</title>
+  <title>mdbapi.songqueue &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -386,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -682,15 +682,21 @@
 <span class="sd">This module implements the Song Queue.</span>
 <span class="sd">The song queue consists of a global FIFO organized list.</span>
 
-<span class="sd">    .. warning::</span>
-
-<span class="sd">        When calling this method, the :meth:`mdbapi.stream.StreamingThread` will never know that the current song changed!</span>
-<span class="sd">        In context of the stream, always use the :class:`mdbapi.stream.StreamManager` methods!</span>
-
 <span class="sd">Queue Management</span>
 <span class="sd">----------------</span>
 
-<span class="sd">An entry this queue is a tuple of an entry ID and a song ID as maintained by the :class:`~lib.db.musicdb.MusicDatabase` class.</span>
+<span class="sd">An entry in this queue is a dictionary having the following keys:</span>
+
+<span class="sd">    entryid:</span>
+<span class="sd">        An entry ID that is unique for all entries at any time.</span>
+<span class="sd">        This UUID is a 128 bit integer.</span>
+<span class="sd">    </span>
+<span class="sd">    songid:</span>
+<span class="sd">        A song ID as maintained by the :class:`~lib.db.musicdb.MusicDatabase` class.</span>
+
+<span class="sd">    israndom:</span>
+<span class="sd">        A boolean value that is set to ``True`` when the song was added by :doc:`/mdbapi/randy`.</span>
+
 
 <span class="sd">Some features of this queue are:</span>
 
@@ -740,10 +746,14 @@
 <span class="sd">        queue.AddSong(1337)</span>
 <span class="sd">        queue.AddSong(2342)</span>
 
-<span class="sd">        print(queue.CurrentSong())  # (*UUID*, 7357)</span>
-<span class="sd">        print(queue.CurrentSong())  # (*UUID*, 7357)</span>
-<span class="sd">        print(queue.NextSong())     # (*UUID*, 1337)</span>
-<span class="sd">        print(queue.CurrentSong())  # (*UUID*, 1337)</span>
+<span class="sd">        print(queue.CurrentSong()[&quot;songid&quot;])  # 7357</span>
+<span class="sd">        print(queue.CurrentSong()[&quot;songid&quot;])  # 7357</span>
+<span class="sd">        print(queue.NextSong()[&quot;songid&quot;])     # 1337</span>
+<span class="sd">        print(queue.CurrentSong()[&quot;songid&quot;])  # 1337</span>
+
+<span class="sd">        queueentry = queue.CurrentSong()</span>
+<span class="sd">        if queueentry[&quot;israndom&quot;]:</span>
+<span class="sd">            print(&quot;Entry %d is a randomly added song.&quot;%(queueentry[&quot;entryid&quot;]))</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -757,8 +767,8 @@
 <span class="kn">from</span> <span class="nn">mdbapi.blacklist</span>   <span class="k">import</span> <span class="n">BlacklistInterface</span>
 
 <span class="n">Queue</span>     <span class="o">=</span> <span class="kc">None</span>
-<span class="n">QueueLock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span> <span class="c1"># RLock allows nested calls. It locks only different threads.</span>
-<span class="n">Callbacks</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># For events like QueueChanged or SongChanged</span>
+<span class="n">QueueLock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span>   <span class="c1"># RLock allows nested calls. It locks only different threads.</span>
+<span class="n">Callbacks</span> <span class="o">=</span> <span class="p">[]</span>                  <span class="c1"># For events like QueueChanged or SongChanged</span>
 
 
 
@@ -957,14 +967,16 @@
 <span class="sd">        This method returns the current song in the queue.</span>
 
 <span class="sd">        The method returns element 0 from the queue which is the current song that can be streamed or gets already streamed.</span>
-<span class="sd">        The songs remain in the queue until they got completely streamed.</span>
+<span class="sd">        The song shall remain in the queue until it got completely streamed.</span>
+<span class="sd">        Then it can be removed by calling :meth:`~mdbapi.songqueue.SongQueue.NetSong`.</span>
 
 <span class="sd">        When the queue is empty, a new random song gets added.</span>
 <span class="sd">        This is the exact same song that then will be returned by this method.</span>
-<span class="sd">        If adding a new song fails, ``(None, None)`` gets returned.</span>
+<span class="sd">        If adding a new song fails, ``None`` gets returned.</span>
+<span class="sd">        This method triggers the ``QueueChanged`` event when the queue was empty and a new random song got added.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A tuple (entryid, songid).</span>
+<span class="sd">            A dictionary as described in the module description</span>
 
 <span class="sd">        Example:</span>
 
@@ -973,15 +985,22 @@
 <span class="sd">                queue = SongQueue()</span>
 
 <span class="sd">                # Queue will be empty after creating a SongQueue object</span>
-<span class="sd">                entryid, songid = queue.CurrentSong()</span>
-<span class="sd">                print(&quot;SongID: %s&quot; % (str(songid))) # None</span>
+<span class="sd">                entry = queue.CurrentSong()</span>
+<span class="sd">                if entry:</span>
+<span class="sd">                    print(&quot;Random SongID: %s&quot; % (str(entry[&quot;songid&quot;])))</span>
+<span class="sd">                else</span>
+<span class="sd">                    print(&quot;Queue is empty! - Adding random song failed!&quot;)</span>
 
 <span class="sd">                # Adds two new song with ID 7357 and 1337. </span>
 <span class="sd">                # Then the current song is the first song added.</span>
 <span class="sd">                queue.AddSong(7357)</span>
 <span class="sd">                queue.AddSong(1337)</span>
-<span class="sd">                entryid, songid = queue.CurrentSong()</span>
-<span class="sd">                print(&quot;SongID: %s&quot; % (str(songid))) # 7357</span>
+<span class="sd">                entry = queue.CurrentSong()</span>
+<span class="sd">                if entry:</span>
+<span class="sd">                    print(&quot;SongID: %s&quot; % (str(entry[&quot;songid&quot;]))) # 7357</span>
+<span class="sd">                else</span>
+<span class="sd">                    # will not be reached because we explicitly added songs.</span>
+<span class="sd">                    print(&quot;Queue is empty! - Adding random song failed!&quot;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">global</span> <span class="n">Queue</span>
@@ -991,11 +1010,12 @@
             <span class="c1"># Empty Queue? Add a random song!</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">AddRandomSong</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Event_QueueChanged</span><span class="p">()</span>
 
             <span class="c1"># Still empty (no random song found)? Then return (None, None). Nothing to do…</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;Queue run empty! </span><span class="se">\033</span><span class="s2">[1;30m(Check constraints for random song selection and check if there are songs at all)&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
 
             <span class="c1"># Select first song from queue</span>
             <span class="n">entry</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1012,15 +1032,15 @@
 <span class="sd">        The method pops the last current element from the queue.</span>
 <span class="sd">        Then the new element at position 0, the new current element, will be returned.</span>
 
-<span class="sd">        If the queue is empty, ``(None, None)`` gets returned.</span>
+<span class="sd">        If the queue is empty, ``None`` gets returned.</span>
 
 <span class="sd">        .. warning::</span>
 
 <span class="sd">            In context of streaming, this method may not be the one you want to call.</span>
 <span class="sd">            This Method drops the current song and sets the next song on top of the queue.</span>
 
-<span class="sd">            The will not notice this, so that it continues streaming the previous song. (See :doc:`/mdbapi/stream`).</span>
-<span class="sd">            If you want to to stream the next song, call :meth:`mdbapi.stream.StreamManager.PlayNextSong`.</span>
+<span class="sd">            The stream will not notice this, so that it continues streaming the previous song. (See :doc:`/mdbapi/stream`).</span>
+<span class="sd">            If you want to stream the next song, call :meth:`mdbapi.stream.StreamManager.PlayNextSong`.</span>
 
 <span class="sd">            The :meth:`mdbapi.stream.StreamManager.PlayNextSong` then makes the Streaming Thread calling this method.</span>
 
@@ -1030,7 +1050,7 @@
 <span class="sd">        When there is only one entry left in the queue - the current song - then a new one gets add via :meth:`AddRandomSong`</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            The new current song entry in the queue as tuple ``(entryid, songid)``.</span>
+<span class="sd">            The new current song entry in the queue as dictionary described in the module description</span>
 
 <span class="sd">        Example:</span>
 
@@ -1042,13 +1062,13 @@
 <span class="sd">                queue.AddSong(7357)</span>
 <span class="sd">                queue.AddSong(1337)</span>
 <span class="sd">            </span>
-<span class="sd">                entryid, songid = queue.CurrentSong()</span>
-<span class="sd">                print(&quot;SongID: %s&quot; % (str(songid))) # 7357</span>
+<span class="sd">                entry = queue.CurrentSong()</span>
+<span class="sd">                print(&quot;SongID: %s&quot; % (str(entry[&quot;songid&quot;]))) # 7357</span>
 
-<span class="sd">                entryid, songid = queue.NextSong()</span>
-<span class="sd">                print(&quot;SongID: %s&quot; % (str(songid))) # 1337</span>
-<span class="sd">                entryid, songid = queue.CurrentSong()</span>
-<span class="sd">                print(&quot;SongID: %s&quot; % (str(songid))) # 1337</span>
+<span class="sd">                entry = queue.NextSong()</span>
+<span class="sd">                print(&quot;SongID: %s&quot; % (str(entry[&quot;songid&quot;]))) # 1337</span>
+<span class="sd">                entry = queue.CurrentSong()</span>
+<span class="sd">                print(&quot;SongID: %s&quot; % (str(entry[&quot;songid&quot;]))) # 1337</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">global</span> <span class="n">Queue</span>
@@ -1056,12 +1076,12 @@
 
         <span class="k">with</span> <span class="n">QueueLock</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
 
             <span class="c1"># Get next song</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">Queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">entry</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">entry</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">else</span><span class="p">:</span>   <span class="c1"># &gt; 1</span>
                 <span class="n">Queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
                 <span class="n">entry</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1080,9 +1100,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method returns a copy of the song queue.</span>
 
-<span class="sd">        The queue is a list of tuple.</span>
-<span class="sd">        The tuple holds the entry ID of the queue element, and song ID</span>
-<span class="sd">        The entry ID is a `Version 4 Universally Unique Identifier (UUID) &lt;https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)&gt;`_ .</span>
+<span class="sd">        The queue is a list of dictionaries.</span>
+<span class="sd">        The content of the dictionary is described in the description of this module.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            The current song queue. ``None`` if there is no queue yet.</span>
@@ -1096,8 +1115,9 @@
 <span class="sd">                if not queue:</span>
 <span class="sd">                    print(&quot;There are no songs in the queue&quot;)</span>
 <span class="sd">                else:</span>
-<span class="sd">                    for entryid, songid in queue:</span>
-<span class="sd">                        print(&quot;Element with ID %i holds the song with ID %i&quot; % (entryid, songid))</span>
+<span class="sd">                    for entry in queue:</span>
+<span class="sd">                        print(&quot;Element with ID %i holds the song with ID %i&quot; </span>
+<span class="sd">                                % (entry[&quot;entryid&quot;], entry[&quot;songid&quot;]))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">global</span> <span class="n">Queue</span>
@@ -1105,7 +1125,7 @@
 
 
 
-<div class="viewcode-block" id="SongQueue.AddSong"><a class="viewcode-back" href="../../mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.AddSong">[docs]</a>    <span class="k">def</span> <span class="nf">AddSong</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="SongQueue.AddSong"><a class="viewcode-back" href="../../mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.AddSong">[docs]</a>    <span class="k">def</span> <span class="nf">AddSong</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s2">&quot;last&quot;</span><span class="p">,</span> <span class="n">israndom</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        With this method, a new song can be insert into the queue.</span>
 
@@ -1124,7 +1144,8 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            songid (int): The ID of the song that shall be added to the queue</span>
-<span class="sd">            position (str): Defines the position where the song gets inserted.</span>
+<span class="sd">            position (str): Defines the position where the song gets inserted</span>
+<span class="sd">            israndom (bool): Defines whether the song is randomly selected or not</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            *Nothing*</span>
@@ -1137,14 +1158,19 @@
 
         <span class="n">entryid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GenerateID</span><span class="p">()</span>
 
+        <span class="n">entry</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">entryid</span>
+        <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">songid</span>
+        <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;israndom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">israndom</span>
+
         <span class="k">global</span> <span class="n">Queue</span>
         <span class="k">global</span> <span class="n">QueueLock</span>
 
         <span class="k">with</span> <span class="n">QueueLock</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">position</span> <span class="o">==</span> <span class="s2">&quot;next&quot;</span><span class="p">:</span>
-                <span class="n">Queue</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">entryid</span><span class="p">,</span> <span class="n">songid</span><span class="p">))</span>
+                <span class="n">Queue</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">position</span> <span class="o">==</span> <span class="s2">&quot;last&quot;</span><span class="p">:</span>
-                <span class="n">Queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">entryid</span><span class="p">,</span> <span class="n">songid</span><span class="p">))</span>
+                <span class="n">Queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Position must have the value </span><span class="se">\&quot;</span><span class="s2">next</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">last</span><span class="se">\&quot;</span><span class="s2">. Given was </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">position</span><span class="p">))</span>
                 <span class="k">return</span>
@@ -1152,7 +1178,8 @@
         <span class="c1"># add to blacklist</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">blacklist</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">Event_QueueChanged</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Event_QueueChanged</span><span class="p">()</span>
+        <span class="k">return</span></div>
 
 
 
@@ -1194,7 +1221,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">mdbsong</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">position</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">position</span><span class="p">,</span> <span class="n">israndom</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
 
@@ -1219,9 +1246,9 @@
         <span class="k">global</span> <span class="n">QueueLock</span>
 
         <span class="k">with</span> <span class="n">QueueLock</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">eid</span><span class="p">,</span> <span class="n">songid</span> <span class="ow">in</span> <span class="n">Queue</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">eid</span> <span class="o">==</span> <span class="n">entryid</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">songid</span>
+            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">Queue</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">entryid</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">]</span>
 
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Cannot find the requested entry </span><span class="si">%s</span><span class="s2">! </span><span class="se">\033</span><span class="s2">[1;30m(Returning None)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">entryid</span><span class="p">))</span>
         <span class="k">return</span> <span class="kc">None</span></div>
@@ -1258,11 +1285,11 @@
                 <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The queue has only </span><span class="si">%i</span><span class="s2"> element. There must be at least 2 entries to be able to remove one.&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">Queue</span><span class="p">))</span>
                 <span class="k">return</span> <span class="kc">False</span>
 
-            <span class="k">if</span> <span class="n">Queue</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">entryid</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">Queue</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">entryid</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The entry ID addresses the current song. This entry cannot be removed!&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">False</span>
 
-            <span class="n">Queue</span> <span class="o">=</span> <span class="p">[</span><span class="n">entry</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">Queue</span> <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">entryid</span><span class="p">]</span>
+            <span class="n">Queue</span> <span class="o">=</span> <span class="p">[</span><span class="n">entry</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">Queue</span> <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">entryid</span><span class="p">]</span>
 
             <span class="c1"># Make sure the queue never runs empty</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
@@ -1302,19 +1329,19 @@
         <span class="k">global</span> <span class="n">QueueLock</span>
 
         <span class="k">with</span> <span class="n">QueueLock</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">Queue</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">entryid</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">Queue</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">entryid</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The entry ID addresses the current song. This entry cannot be moved!&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">False</span>
 
             <span class="c1"># Get Positions</span>
-            <span class="n">frompos</span> <span class="o">=</span> <span class="p">[</span><span class="n">pos</span> <span class="k">for</span> <span class="n">pos</span><span class="p">,</span> <span class="n">entry</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">entryid</span><span class="p">]</span>
-            <span class="n">topos</span>   <span class="o">=</span> <span class="p">[</span><span class="n">pos</span> <span class="k">for</span> <span class="n">pos</span><span class="p">,</span> <span class="n">entry</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">afterid</span><span class="p">]</span>
+            <span class="n">frompos</span> <span class="o">=</span> <span class="p">[</span><span class="n">pos</span> <span class="k">for</span> <span class="n">pos</span><span class="p">,</span> <span class="n">entry</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">entryid</span><span class="p">]</span>
+            <span class="n">topos</span>   <span class="o">=</span> <span class="p">[</span><span class="n">pos</span> <span class="k">for</span> <span class="n">pos</span><span class="p">,</span> <span class="n">entry</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">afterid</span><span class="p">]</span>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="n">frompos</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Cannot find element with entryid </span><span class="si">%i</span><span class="s2"> in the queue!</span><span class="se">\033</span><span class="s2">[1;30m (Doning nothing)&quot;</span><span class="p">,</span> <span class="n">entryid</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Cannot find element with entryid </span><span class="si">%i</span><span class="s2"> in the queue!</span><span class="se">\033</span><span class="s2">[1;30m (Doing nothing)&quot;</span><span class="p">,</span> <span class="n">entryid</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">False</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">topos</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Cannot find element with afterid </span><span class="si">%i</span><span class="s2"> in the queue!</span><span class="se">\033</span><span class="s2">[1;30m (Doning nothing)&quot;</span><span class="p">,</span> <span class="n">afterid</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Cannot find element with afterid </span><span class="si">%i</span><span class="s2"> in the queue!</span><span class="se">\033</span><span class="s2">[1;30m (Doing nothing)&quot;</span><span class="p">,</span> <span class="n">afterid</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">False</span>
 
             <span class="n">frompos</span> <span class="o">=</span> <span class="n">frompos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1349,7 +1376,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -1371,7 +1398,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

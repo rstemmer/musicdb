@@ -302,11 +302,13 @@ class MDBState(Config, object):
         If a genre is not defined in the configuration file, its default value is ``False`` and so it is not active.
         Before the comparison, the state file gets reloaded so that external changes get applied directly.
 
-        .. example::
+        Example:
 
-            filter = mdbstate.GetFilterList()
-            print(filter) # ['Metal','NDH']
-            # Metal and NDH are active, other available genres are not enabled.
+            .. code-block:: python
+
+                filter = mdbstate.GetFilterList()
+                print(filter) # ['Metal','NDH']
+                # Metal and NDH are active, other available genres are not enabled.
 
         Returns:
             A list of main genre names that are activated

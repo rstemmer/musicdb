@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.cfg.musicdb &mdash; MusicDB 4.3.0 documentation</title>
+  <title>lib.cfg.musicdb &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -386,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -856,6 +856,7 @@
         <span class="c1"># [tracker]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tracker</span> <span class="o">=</span> <span class="n">TRACKER</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tracker</span><span class="o">.</span><span class="n">dbpath</span>         <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFile</span><span class="p">(</span> <span class="s2">&quot;tracker&quot;</span><span class="p">,</span>  <span class="s2">&quot;dbpath&quot;</span><span class="p">,</span>       <span class="s2">&quot;/opt/musicdb/data/tracker.db&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tracker</span><span class="o">.</span><span class="n">cuttime</span>        <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;tracker&quot;</span><span class="p">,</span>  <span class="s2">&quot;cuttime&quot;</span><span class="p">,</span>      <span class="s2">&quot;30&quot;</span><span class="p">)</span>
 
 
         <span class="c1"># [lycra]</span>
@@ -890,9 +891,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">nodisabled</span>       <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="s2">&quot;Randy&quot;</span><span class="p">,</span>   <span class="s2">&quot;nodisabled&quot;</span><span class="p">,</span>   <span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">nohated</span>          <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="s2">&quot;Randy&quot;</span><span class="p">,</span>   <span class="s2">&quot;nohated&quot;</span><span class="p">,</span>      <span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">minsonglen</span>       <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span>  <span class="s2">&quot;Randy&quot;</span><span class="p">,</span>   <span class="s2">&quot;minsonglen&quot;</span><span class="p">,</span>   <span class="mi">120</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">maxsonglen</span>       <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span>  <span class="s2">&quot;Randy&quot;</span><span class="p">,</span>   <span class="s2">&quot;maxsonglen&quot;</span><span class="p">,</span>   <span class="mi">600</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">songbllen</span>        <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span>  <span class="s2">&quot;Randy&quot;</span><span class="p">,</span>   <span class="s2">&quot;songbllen&quot;</span><span class="p">,</span>    <span class="mi">50</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">albumbllen</span>       <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span>  <span class="s2">&quot;Randy&quot;</span><span class="p">,</span>   <span class="s2">&quot;albumbllen&quot;</span><span class="p">,</span>   <span class="mi">20</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">artistbllen</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span>  <span class="s2">&quot;Randy&quot;</span><span class="p">,</span>   <span class="s2">&quot;artistbllen&quot;</span><span class="p">,</span>  <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">maxblage</span>         <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span>  <span class="s2">&quot;Randy&quot;</span><span class="p">,</span>   <span class="s2">&quot;maxblage&quot;</span><span class="p">,</span>     <span class="mi">24</span><span class="p">)</span>
 
 
         <span class="c1"># [log]</span>
@@ -978,7 +981,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -1000,7 +1003,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

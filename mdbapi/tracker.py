@@ -101,7 +101,7 @@ class Tracker(object):
         If the time between this song, and the previous one exceeds *N* minutes, it gets ignored and the internal state gets reset.
         So the chain of songs get cut if the time between playing them is too long.
         The chain of songs gets also cut, if *songid* is ``None`` or invalid.
-        The amount of time until this cut takes place can be configured: :doc:`basics.config`
+        The amount of time until this cut takes place can be configured: :doc:`/basics/config`
 
         If the given song is the same as the last song, then it gets ignored.
 

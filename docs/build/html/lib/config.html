@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Configuration &mdash; MusicDB 4.3.0 documentation</title>
+  <title>Configuration &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Database" href="database.html"/>
         <link rel="prev" title="Command Line User Interface" href="clui.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -387,7 +387,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -547,6 +547,35 @@
 <li class="toctree-l1"><a class="reference internal" href="websockets.html">MusicDB Websocket Protocol</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="websockets.html#module-lib.ws.server">Websocket Server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="websockets.html#module-lib.ws.websocket">Websocket Protocol</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#sending-data">Sending Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#receiving-data">Receiving Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#minimal-usage">Minimal usage</a></li>
 </ul>
 </li>
 </ul>
@@ -1124,11 +1153,11 @@ The content of those files should not be changed by any user because its content
 </tr>
 <tr class="row-even"><td>albumblacklist.csv</td>
 <td><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></td>
-<td>&#160;</td>
+<td><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></td>
 </tr>
 <tr class="row-odd"><td>songblacklist.csv</td>
 <td><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></td>
-<td>&#160;</td>
+<td><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -1148,7 +1177,18 @@ The content of those files should not be changed by any user because its content
 <dl class="method">
 <dt id="lib.cfg.mdbstate.MDBState.GetFilterList">
 <code class="descname">GetFilterList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.GetFilterList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.GetFilterList" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method returns a list of the activated genre</p>
+<dd><p>This method returns a list of the activated genre
+The list consists of the names of the genres as configured by the user.
+That are the names returned by <a class="reference internal" href="musicdb.html#lib.db.musicdb.MusicDatabase.GetAllTags" title="lib.db.musicdb.MusicDatabase.GetAllTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.GetAllTags()</span></code></a>.</p>
+<p>The available genres get compared to the ones set in the state.ini file inside the MusicDB State directory.
+If a genre is not defined in the configuration file, its default value is <code class="docutils literal notranslate"><span class="pre">False</span></code> and so it is not active.
+Before the comparison, the state file gets reloaded so that external changes get applied directly.</p>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">filter</span> <span class="o">=</span> <span class="n">mdbstate</span><span class="o">.</span><span class="n">GetFilterList</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span> <span class="c1"># [&#39;Metal&#39;,&#39;NDH&#39;]</span>
+<span class="c1"># Metal and NDH are active, other available genres are not enabled.</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1161,13 +1201,22 @@ The content of those files should not be changed by any user because its content
 
 <dl class="method">
 <dt id="lib.cfg.mdbstate.MDBState.LoadBlacklists">
-<code class="descname">LoadBlacklists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method returns a dictionary with the blacklist managed by <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a></p>
+<code class="descname">LoadBlacklists</code><span class="sig-paren">(</span><em>songbllen</em>, <em>albumbllen</em>, <em>artistbllen</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns a dictionary with the blacklist managed by <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a>.
+This method also handles the blacklist length by adding empty entries or cutting off exceeding ones.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with the blacklists as expected by <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>songbllen</strong> (<em>int</em>) – Number of entries the blacklist shall have</li>
+<li><strong>albumbllen</strong> (<em>int</em>) – Number of entries the blacklist shall have</li>
+<li><strong>artistbllen</strong> (<em>int</em>) – Number of entries the blacklist shall have</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dictionary with the blacklists as expected by <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a></p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1178,7 +1227,7 @@ The content of those files should not be changed by any user because its content
 <code class="descname">LoadSongQueue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadSongQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadSongQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads the song queue from the state directory.</p>
 <p>The method returns the queue as needed inside <a class="reference internal" href="../mdbapi/songqueue.html#mdbapi.songqueue.SongQueue" title="mdbapi.songqueue.SongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.songqueue.SongQueue()</span></code></a>:
-A list of tuple, each containing the entryid and songid as integers.</p>
+A list of dictionaries, each containing the <code class="docutils literal notranslate"><span class="pre">entryid</span></code> and <code class="docutils literal notranslate"><span class="pre">songid</span></code> as integers and <code class="docutils literal notranslate"><span class="pre">israndom</span></code> as boolean.</p>
 <p>The UUIDs of the queue entries remain.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1212,7 +1261,7 @@ So deleting a file is an option to reset an internal state of MusicDB.</p>
 
 <dl class="method">
 <dt id="lib.cfg.mdbstate.MDBState.SaveBlacklists">
-<code class="descname">SaveBlacklists</code><span class="sig-paren">(</span><em>blacklist</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SaveBlacklists</code><span class="sig-paren">(</span><em>blacklists</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method stores the blacklist in the related CSV files.
 The data structure of the dictionary is expected to be the same, <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a> uses.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1236,7 +1285,7 @@ The data structure of the queue must be exact as the one expected when the queue
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>queue</strong> (<em>list</em>) – The song queue to save.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>queue</strong> (<em>dictionary</em>) – The song queue to save.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
 </tr>
@@ -1285,7 +1334,7 @@ The <code class="docutils literal notranslate"><span class="pre">listname</span>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -1307,7 +1356,7 @@ The <code class="docutils literal notranslate"><span class="pre">listname</span>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
