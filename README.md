@@ -218,7 +218,7 @@ You better not use any other branch than *master*. :wink:
 The following branches exist in the MusicDB git repository contains.
 
 <details>
-<summary> **master** - Ready to Use </summary>
+<summary> master - Ready to Use </summary>
 
 This is the main branch and contains the latest stable version of MusicDB.
 This is the version you should install.
@@ -227,7 +227,7 @@ If you want to do some changes to the code, you should branch from this branch.
 </details>
 
 <details>
-<summary> **develop** - Work in Progress </summary>
+<summary> develop - Work in Progress </summary>
 
 This branch is the branch I'm working on. It may contain incomplete features and untested code.
 If there you have trouble with the master branch, and the git log promises a solution to that problem, 
@@ -240,7 +240,7 @@ Make a backup of your MusicDB data directory before using installing MusicDB fro
 </details>
 
 <details>
-<summary> **mobileapp** - The mobile app is dead </summary>
+<summary> mobileapp - The mobile app is dead </summary>
 
 I started to build a tiny mobile app that downloads your whole music collection via WLAN onto your smartphone.
 For the app, I use the [kivy](https://kivy.org/#home) framework.
