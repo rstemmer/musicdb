@@ -920,8 +920,8 @@ class MusicDBWebSocketInterface(object):
         state = {}
 
         streamstate = self.stream.GetStreamState()
-        queueentry  = self.queue.CurrentSong()   # returns (entryid, songid)
-        songid      = queueentry[1]
+        queueentry  = self.queue.CurrentSong()
+        songid      = queueentry["songid"]
         state["isconnected"] = streamstate["isconnected"]
         state["isplaying"]   = streamstate["isplaying"]
 
@@ -953,6 +953,7 @@ class MusicDBWebSocketInterface(object):
         Each entry of the list contains the following information:
 
             * **entryid:** A unique ID to identify the entry in the queue (as string because it is a 128 integer that blows JavaScripts mind)
+            * **israndom:** A boolean value set to ``true`` when the song got added randomly and not explicitly by the user
             * **song:** The song entry from the database
             * **album:** The related album entry from the database
             * **artist:** The related artist entry from the database
@@ -985,16 +986,17 @@ class MusicDBWebSocketInterface(object):
             return []
 
         queue = []
-        for entryid, songid in entries:
-            song    = self.database.GetSongById(songid)
+        for queueentry in entries:
+            song    = self.database.GetSongById(queueentry["songid"])
             album   = self.database.GetAlbumById(song["albumid"])
             artist  = self.database.GetArtistById(song["artistid"])
 
             entry = {}
-            entry["entryid"] = str(entryid)
-            entry["song"]    = song
-            entry["album"]   = album
-            entry["artist"]  = artist
+            entry["entryid"]  = str(queueentry["entryid"])
+            entry["israndom"] = bool(queueentry["israndom"])
+            entry["song"]     = song
+            entry["album"]    = album
+            entry["artist"]   = artist
 
             queue.append(entry)
 
@@ -1015,6 +1017,7 @@ class MusicDBWebSocketInterface(object):
                 * **artist:** The related artist entry from the database
             * **artists:** A list of artists, each entry is a dictionary with the following information:
                 * **artist:** The related artist entry from the database
+                * **albums:** A list of all albums by this artist, ordered by release year
 
         The search does not look for exact matching.
         It looks for most likeliness.
@@ -1049,24 +1052,26 @@ class MusicDBWebSocketInterface(object):
         """
         (foundartists, foundalbums, foundsongs) = self.mise.Find(searchstring)
 
-        # prepare result processing
-        artists = []
-        albums  = []
-        songs   = []
-        artistcount = min(limit, len(foundartists))
-        albumcount  = min(limit, len(foundalbums))
-        songcount   = min(limit, len(foundsongs))
 
-        # process foundartists
+        # process found artists
+        artists     = []
+        artistcount = min(limit, len(foundartists))
         for i in range(artistcount):
             artistid = foundartists[i][0]
             artist   = self.database.GetArtistById(artistid)
 
+            # Get albums by this artist and sort for release year
+            albums = self.database.GetAlbumsByArtistId(artistid)
+            albums = sorted(albums, key = lambda k: k["release"])
+
             entry = {}
             entry["artist"] = artist
+            entry["albums"] = albums
             artists.append(entry)
 
         # process found albums
+        albums     = []
+        albumcount = min(limit, len(foundalbums))
         for i in range(albumcount):
             albumid = foundalbums[i][0]
             album   = self.database.GetAlbumById(albumid)
@@ -1078,6 +1083,8 @@ class MusicDBWebSocketInterface(object):
             albums.append(entry)
 
         # process found songs
+        songs     = []
+        songcount = min(limit, len(foundsongs))
         for i in range(songcount):
             songid  = foundsongs[i][0]
             song    = self.database.GetSongById(songid)

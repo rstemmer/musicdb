@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.blacklist &mdash; MusicDB 4.3.0 documentation</title>
+  <title>mdbapi.blacklist &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -386,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -664,7 +664,7 @@
             
   <h1>Source code for mdbapi.blacklist</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2017,2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -714,16 +714,26 @@
 <span class="sd">Each instance of this class accesses the same global blacklist.</span>
 
 <span class="sd">The blacklist is implemented as a dictionary with the keys ``&quot;songs&quot;``, ``&quot;albums&quot;`` and ``&quot;artists&quot;``.</span>
-<span class="sd">Their values are lists holding the IDs of the songs, albums and artists.</span>
+<span class="sd">Their values are lists of dictionaries.</span>
+<span class="sd">The key of the dictionary are:</span>
+
+<span class="sd">    id:</span>
+<span class="sd">        holding the IDs of the songs, albums and artists.</span>
+
+<span class="sd">    timestamp:</span>
+<span class="sd">        storing the UNIX time stamp when the ID got on the blacklist.</span>
+
+<span class="sd">Both entries can be ``None`` when not set.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">threading</span>        <span class="c1"># for Lock</span>
+<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">lib.cfg.musicdb</span>    <span class="k">import</span> <span class="n">MusicDBConfig</span>
 <span class="kn">from</span> <span class="nn">lib.db.musicdb</span>     <span class="k">import</span> <span class="n">MusicDatabase</span>
 <span class="kn">from</span> <span class="nn">lib.cfg.mdbstate</span>   <span class="k">import</span> <span class="n">MDBState</span>
 
-<span class="n">BlacklistLock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+<span class="n">BlacklistLock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span>
 <span class="n">Blacklist</span>     <span class="o">=</span> <span class="kc">None</span>
 
 
@@ -762,60 +772,112 @@
         <span class="k">with</span> <span class="n">BlacklistLock</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">Blacklist</span><span class="p">:</span>
                 <span class="c1"># try to load the blacklist from MusicDB State</span>
-                <span class="n">loadedlists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span><span class="o">.</span><span class="n">LoadBlacklists</span><span class="p">()</span>
+                <span class="n">Blacklist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span><span class="o">.</span><span class="n">LoadBlacklists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">albumbllen</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">artistbllen</span><span class="p">)</span>
 
-                <span class="c1"># First, create a clean blacklist</span>
-                <span class="n">Blacklist</span> <span class="o">=</span> <span class="p">{}</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">albumbllen</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">artistbllen</span>
-                
-                <span class="c1"># Now fill the blacklist considering changes in their size</span>
-                <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">loadedlists</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">,</span> <span class="s2">&quot;albums&quot;</span><span class="p">,</span> <span class="s2">&quot;artists&quot;</span><span class="p">]:</span>
-                        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Unexpected key </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> in loaded blacklist dictionary! </span><span class="se">\033</span><span class="s2">[1;30(Will be discard)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
-                        <span class="k">continue</span>
 
-                    <span class="n">dst</span> <span class="o">=</span> <span class="n">Blacklist</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-                    <span class="n">src</span> <span class="o">=</span> <span class="n">loadedlists</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">src</span><span class="p">:</span>
-                        <span class="k">continue</span>    <span class="c1"># when there are no entries loaded, keep the generated list of None-entries</span>
 
-                    <span class="c1"># The following python magic inserts as much of src at the end of dst, as fits.</span>
-                    <span class="c1"># if src must be cut, the first elements get removed</span>
-                    <span class="c1"># So, case 1: len(dst) &gt; len(src)</span>
-                    <span class="c1">#   dst = [None, None, None, None, None]</span>
-                    <span class="c1">#   src = [1, 2, 3]</span>
-                    <span class="c1">#   Results in [None, None, 1, 2, 3]</span>
-                    <span class="c1">#</span>
-                    <span class="c1"># Case 2: len(dst) &lt; len(src)</span>
-                    <span class="c1">#   dst = [None, None]</span>
-                    <span class="c1">#   src = [1, 2, 3]</span>
-                    <span class="c1">#   Results in [2, 3]</span>
-                    <span class="c1">#</span>
-                    <span class="c1"># &gt;&gt;&gt; l = [1,2,3]</span>
-                    <span class="c1"># &gt;&gt;&gt; d = [0]*3</span>
-                    <span class="c1"># &gt;&gt;&gt; d[-len(l):] = l[-len(d):]</span>
-                    <span class="c1"># &gt;&gt;&gt; l</span>
-                    <span class="c1"># [1, 2, 3]</span>
-                    <span class="c1"># &gt;&gt;&gt; d</span>
-                    <span class="c1"># [1, 2, 3]</span>
-                    <span class="c1"># &gt;&gt;&gt; d = [0]*2</span>
-                    <span class="c1"># &gt;&gt;&gt; d[-len(l):] = l[-len(d):]</span>
-                    <span class="c1"># &gt;&gt;&gt; l</span>
-                    <span class="c1"># [1, 2, 3]</span>
-                    <span class="c1"># &gt;&gt;&gt; d</span>
-                    <span class="c1"># [2, 3]</span>
-                    <span class="c1"># &gt;&gt;&gt; d = [0]*4</span>
-                    <span class="c1"># &gt;&gt;&gt; d[-len(l):] = l[-len(d):]</span>
-                    <span class="c1"># &gt;&gt;&gt; l</span>
-                    <span class="c1"># [1, 2, 3]</span>
-                    <span class="c1"># &gt;&gt;&gt; d</span>
-                    <span class="c1"># [0, 1, 2, 3]</span>
-                    <span class="c1"># &gt;&gt;&gt; </span>
-                    <span class="n">dst</span> <span class="o">=</span> <span class="n">dst</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">src</span><span class="p">):]</span> <span class="o">=</span> <span class="n">src</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">dst</span><span class="p">):]</span>
+<div class="viewcode-block" id="BlacklistInterface.ValidateBlacklist"><a class="viewcode-back" href="../../mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface.ValidateBlacklist">[docs]</a>    <span class="k">def</span> <span class="nf">ValidateBlacklist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blacklistname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method validates a specific blacklist.</span>
+<span class="sd">        It checks each entry in the list if its time stamp is still in the configured time range.</span>
+<span class="sd">        If not, the entry gets set to ``None``.</span>
 
-                    <span class="n">Blacklist</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">dst</span>
+<span class="sd">        Args:</span>
+<span class="sd">            blacklistname (str): A valid name for the blacklist. Valid names are: ``&quot;songs&quot;``, ``&quot;albums&quot;``, ``&quot;artists&quot;``</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: When blacklistname is not ``&quot;songs&quot;``, ``&quot;albums&quot;`` or ``&quot;artists&quot;``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">blacklistname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">,</span> <span class="s2">&quot;albums&quot;</span><span class="p">,</span> <span class="s2">&quot;artists&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;blacklistname must be </span><span class="se">\&quot;</span><span class="s2">songs</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">albums</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">artists</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">)</span>
+
+        <span class="n">timelimit</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">randy</span><span class="o">.</span><span class="n">maxblage</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="p">;</span>
+
+        <span class="k">global</span> <span class="n">BlacklistLock</span>
+        <span class="k">global</span> <span class="n">Blacklist</span>
+
+        <span class="n">removed</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">with</span> <span class="n">BlacklistLock</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">Blacklist</span><span class="p">[</span><span class="n">blacklistname</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">timelimit</span><span class="p">:</span>
+                    <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="kc">None</span>
+                    <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="n">removed</span>           <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">removed</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> entries from blacklist </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> removed because their lifetime exceeded&quot;</span><span class="p">,</span>
+                    <span class="n">removed</span><span class="p">,</span> <span class="n">blacklistname</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+
+
+<div class="viewcode-block" id="BlacklistInterface.GetIDsFromBlacklist"><a class="viewcode-back" href="../../mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist">[docs]</a>    <span class="k">def</span> <span class="nf">GetIDsFromBlacklist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blacklistname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a list of IDs (as Integer) from the blacklist.</span>
+<span class="sd">        It checks each entry in the list if it is ``None``.</span>
+<span class="sd">        If it is ``None``, it gets ignored.</span>
+<span class="sd">        </span>
+<span class="sd">        .. note::</span>
+
+<span class="sd">            This method does not check if the IDs time stamp is in a valid range.</span>
+<span class="sd">            Call :meth:`~mdbapi.blacklist.BlacklistInterface.ValidateBlacklist` before to make sure</span>
+<span class="sd">            all entries in the blacklist are valid.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            blacklistname (str): A valid name for the blacklist. Valid names are: ``&quot;songs&quot;``, ``&quot;albums&quot;``, ``&quot;artists&quot;``</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of valid IDs as integers.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: When blacklistname is not ``&quot;songs&quot;``, ``&quot;albums&quot;`` or ``&quot;artists&quot;``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">blacklistname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">,</span> <span class="s2">&quot;albums&quot;</span><span class="p">,</span> <span class="s2">&quot;artists&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;blacklistname must be </span><span class="se">\&quot;</span><span class="s2">songs</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">albums</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">artists</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">)</span>
+
+        <span class="k">global</span> <span class="n">BlacklistLock</span>
+        <span class="k">global</span> <span class="n">Blacklist</span>
+
+        <span class="k">with</span> <span class="n">BlacklistLock</span><span class="p">:</span>
+            <span class="n">idlist</span> <span class="o">=</span> <span class="p">[</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">Blacklist</span><span class="p">[</span><span class="n">blacklistname</span><span class="p">]</span> <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">idlist</span></div>
+
+
+
+<div class="viewcode-block" id="BlacklistInterface.GetValidIDsFromBlacklists"><a class="viewcode-back" href="../../mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface.GetValidIDsFromBlacklists">[docs]</a>    <span class="k">def</span> <span class="nf">GetValidIDsFromBlacklists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns all Song, Album and Artist IDs from the blacklist.</span>
+<span class="sd">        The IDs are separated into three lists.</span>
+<span class="sd">        This method checks the time stamp and removes all IDs that are older than configured.</span>
+
+<span class="sd">        This method combines the following methods for all three blacklists (songs, albums, artists):</span>
+<span class="sd">        </span>
+<span class="sd">            #. :meth:`~mdbapi.blacklist.BlacklistInterface.ValidateBlacklist`</span>
+<span class="sd">            #. :meth:`~mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist`</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A tupel ``(SongIDs, AlbumIDs, ArtistIDs)`` of lists of IDs that are temporal still valid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">songids</span>   <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">albumids</span>  <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">artistids</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ValidateBlacklist</span><span class="p">(</span><span class="s2">&quot;songs&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ValidateBlacklist</span><span class="p">(</span><span class="s2">&quot;albums&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ValidateBlacklist</span><span class="p">(</span><span class="s2">&quot;artists&quot;</span><span class="p">)</span>
+
+        <span class="n">songids</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetIDsFromBlacklist</span><span class="p">(</span><span class="s2">&quot;songs&quot;</span><span class="p">)</span>
+        <span class="n">albumids</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetIDsFromBlacklist</span><span class="p">(</span><span class="s2">&quot;albums&quot;</span><span class="p">)</span>
+        <span class="n">artistids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetIDsFromBlacklist</span><span class="p">(</span><span class="s2">&quot;artists&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">songids</span><span class="p">,</span> <span class="n">albumids</span><span class="p">,</span> <span class="n">artistids</span><span class="p">)</span></div>
 
 
 
@@ -844,19 +906,17 @@
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">song</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">dict</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;song argument must be of type dict or a song ID (int). Actual type was </span><span class="si">%s</span><span class="s2">!&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">song</span><span class="p">))))</span>
 
-        <span class="k">global</span> <span class="n">BlacklistLock</span>
-        <span class="k">global</span> <span class="n">Blacklist</span>
+        <span class="n">songbl</span><span class="p">,</span> <span class="n">albumbl</span><span class="p">,</span> <span class="n">artistbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValidIDsFromBlacklists</span><span class="p">()</span>
 
-        <span class="k">with</span> <span class="n">BlacklistLock</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">artistbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;artist on blacklist&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="kc">True</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">albumbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;album on blacklist&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="kc">True</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;song on blacklist&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">artistbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">artistbl</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;artist on blacklist&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">albumbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">albumbl</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;album on blacklist&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">songbl</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;song on blacklist&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
 
@@ -885,13 +945,11 @@
         <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">song</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">dict</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;song argument must be of type dict or a song ID (int). Actual type was </span><span class="si">%s</span><span class="s2">!&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">song</span><span class="p">))))</span>
 
-        <span class="k">global</span> <span class="n">BlacklistLock</span>
-        <span class="k">global</span> <span class="n">Blacklist</span>
+        <span class="n">songbl</span><span class="p">,</span> <span class="n">albumbl</span><span class="p">,</span> <span class="n">artistbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetValidIDsFromBlacklists</span><span class="p">()</span>
 
-        <span class="k">with</span> <span class="n">BlacklistLock</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;song on blacklist&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">songbl</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;song on blacklist&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
 
@@ -926,16 +984,31 @@
         <span class="k">global</span> <span class="n">BlacklistLock</span>
         <span class="k">global</span> <span class="n">Blacklist</span>
 
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting song </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> onto the blacklist.&quot;</span><span class="p">,</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
         <span class="k">with</span> <span class="n">BlacklistLock</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">artistbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">entry</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+                <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span>
                 <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
+                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">albumbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">entry</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+                <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span>
                 <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
+                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">songbllen</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">entry</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+                <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
                 <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+                <span class="n">Blacklist</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+
+            <span class="c1"># Remove outdated entries before saving</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ValidateBlacklist</span><span class="p">(</span><span class="s2">&quot;songs&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ValidateBlacklist</span><span class="p">(</span><span class="s2">&quot;albums&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ValidateBlacklist</span><span class="p">(</span><span class="s2">&quot;artists&quot;</span><span class="p">)</span>
 
             <span class="c1"># Save blacklists to files </span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mdbstate</span><span class="o">.</span><span class="n">SaveBlacklists</span><span class="p">(</span><span class="n">Blacklist</span><span class="p">)</span></div></div>
@@ -958,7 +1031,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -980,7 +1053,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

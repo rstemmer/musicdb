@@ -76,6 +76,7 @@ class Tracker(object):
         if type(musicdb) != MusicDatabase:
             raise TypeError("database argument not of type MusicDatabase")
 
+        self.config     = config
         self.disabled   = config.debug.disabletracker
         self.lastsongid = None
         self.lastaction = time.time()
@@ -97,9 +98,10 @@ class Tracker(object):
         This method tracks the relation to the given song with the last added song.
         This new song should be a song that was recently and completely played.
 
-        If the time between this song, and the previous one exceeds 30 minutes, it gets ignored and the internal state gets reset.
+        If the time between this song, and the previous one exceeds *N* minutes, it gets ignored and the internal state gets reset.
         So the chain of songs get cut if the time between playing them is too long.
         The chain of songs gets also cut, if *songid* is ``None`` or invalid.
+        The amount of time until this cut takes place can be configured: :doc:`/basics/config`
 
         If the given song is the same as the last song, then it gets ignored.
 
@@ -123,11 +125,11 @@ class Tracker(object):
             logging.warning("Song ID of new song is not an integer! The type was $s. \033[0;33m(Ignoring the NewSong-Call and clearing tracking list)", str(type(songid)))
             return False
 
-        # If there is a 30 Minute gap, do not associate this song with the previous -> clear list
+        # If there is a *cuttime* Minute gap, do not associate this song with the previous -> clear list
         timestamp = time.time()
         timediff  = int(timestamp - self.lastaction)
         
-        if timediff > 30*60:  # TODO: make configurable!
+        if timediff > self.config.tracker.cuttime * 60:
             logging.debug("Resetting tracker history because of a time gap greater than %i minutes.", timediff//60)
             self.queue = []
         

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.stream &mdash; MusicDB 4.3.0 documentation</title>
+  <title>mdbapi.stream &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -386,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -917,12 +917,12 @@
     <span class="k">global</span> <span class="n">State</span>
 
     <span class="c1"># Create all interfaces that are needed by this Thread</span>
-    <span class="n">musicdb</span> <span class="o">=</span> <span class="n">MusicDatabase</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-    <span class="n">tracker</span> <span class="o">=</span> <span class="n">Tracker</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
+    <span class="n">musicdb</span>    <span class="o">=</span> <span class="n">MusicDatabase</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">tracker</span>    <span class="o">=</span> <span class="n">Tracker</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
     <span class="n">filesystem</span> <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-    <span class="n">queue</span>   <span class="o">=</span> <span class="n">SongQueue</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
-    <span class="n">randy</span>   <span class="o">=</span> <span class="n">Randy</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
-    <span class="n">icecast</span> <span class="o">=</span> <span class="n">IcecastInterface</span><span class="p">(</span>
+    <span class="n">queue</span>      <span class="o">=</span> <span class="n">SongQueue</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
+    <span class="n">randy</span>      <span class="o">=</span> <span class="n">Randy</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
+    <span class="n">icecast</span>    <span class="o">=</span> <span class="n">IcecastInterface</span><span class="p">(</span>
             <span class="n">port</span>      <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">icecast</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
             <span class="n">user</span>      <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">icecast</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
             <span class="n">password</span>  <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">icecast</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
@@ -951,13 +951,13 @@
 
 
         <span class="c1"># Get current song that shall be streamed.</span>
-        <span class="n">currententryid</span><span class="p">,</span> <span class="n">currentsongid</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">currententryid</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">queueentry</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Waiting for 5s to try to get a new song to play.&quot;</span><span class="p">)</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
             <span class="k">continue</span>
 
-        <span class="n">mdbsong</span>  <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">currentsongid</span><span class="p">)</span>
+        <span class="n">mdbsong</span>  <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">])</span>
         <span class="n">songpath</span> <span class="o">=</span> <span class="n">filesystem</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
 
 
@@ -1000,9 +1000,10 @@
             <span class="c1"># Also update the last time played information.</span>
             <span class="c1"># In case the loop ended because Icecast failed, update the Status</span>
             <span class="k">if</span> <span class="n">icecast</span><span class="o">.</span><span class="n">IsConnected</span><span class="p">():</span>
-                <span class="n">tracker</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">currentsongid</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;israndom&quot;</span><span class="p">]:</span>  <span class="c1"># do not track random songs</span>
+                    <span class="n">tracker</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">])</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">Config</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">disablestats</span><span class="p">:</span>
-                    <span class="n">musicdb</span><span class="o">.</span><span class="n">UpdateSongStatistic</span><span class="p">(</span><span class="n">currentsongid</span><span class="p">,</span> <span class="s2">&quot;lastplayed&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+                    <span class="n">musicdb</span><span class="o">.</span><span class="n">UpdateSongStatistic</span><span class="p">(</span><span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">],</span> <span class="s2">&quot;lastplayed&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">icecast</span><span class="o">.</span><span class="n">Mute</span><span class="p">()</span>
                 <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="kc">False</span>
@@ -1103,7 +1104,6 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span>         <span class="o">=</span> <span class="n">database</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span>        <span class="o">=</span> <span class="n">config</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">songqueue</span>  <span class="o">=</span> <span class="n">SongQueue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">)</span>
 
 
 
@@ -1250,7 +1250,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -1272,7 +1272,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

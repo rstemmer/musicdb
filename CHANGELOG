@@ -7,6 +7,22 @@
 
 Run  git log --oneline  for more details
 
+┍━━━━┫ 2019-01-20 ┣━━━━┫ 5.0.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ + [WebUI] Hovering over (sub)genre tags in the album-view highlights tagged song names
+│ * [WebUI] Search shows now all albums of found artists
+│ + [Randy] Blacklist entries older than a configured age will be removed
+│ * [Tracker] Does not track any random songs to keep the relations clean
+│ - The deprecated SIGUSR1 signal to update the caches got removed. Use the FIFO interface instead. (SIGTERM will remain)
+│
+┝━ MINOR CHANGES
+│ * [Tracker] Time to pass between two songs until there relationship gets not tracked is now configurable
+│ + [Randy] Does not add songs to the queue, that exceed a configured play time.
+│ * [Server] Made the openSSL interface future proof
+│ * [Server] Better error/warning logging
+│ + [music.db] Column added that stores the modification date of the directory when an album gets added ("added date")
+└───────────────────────────────────────╌╌
+
 
 ┍━━━━┫ 2018-07-28 ┣━━━━┫ 4.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES

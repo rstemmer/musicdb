@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.database &mdash; MusicDB 4.3.0 documentation</title>
+  <title>mdbapi.database &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -386,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -664,7 +664,7 @@
             
   <h1>Source code for mdbapi.database</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2017,2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -1135,6 +1135,7 @@
 <span class="sd">            #. Load the metadata from one of those songs using :meth:`lib.metatags.MetaTags.GetAllMetadata`</span>
 <span class="sd">            #. Analyze the path of one of those songs using :meth:`~mdbapi.database.MusicDBDatabase.AnalysePath`</span>
 <span class="sd">            #. If *artistid* is not given as parameter, it gets read from the database identifying the artist by its path.</span>
+<span class="sd">            #. Get modification date using :meth:`~lib.filesystem.FileSystem.GetModificationDate`</span>
 <span class="sd">            #. Set directory attributes and ownership using :meth:`~mdbapi.database.MusicDBDatabase.FixAttributes`</span>
 <span class="sd">            #. Create new entry for the new album in the database and get the default values</span>
 <span class="sd">            #. Add each song of the album to the database by calling :meth:`~mdbapi.database.MusicDBDatabase.AddSong`</span>
@@ -1172,7 +1173,7 @@
         <span class="k">if</span> <span class="n">album</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Album </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">album</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> does already exist in the database.&quot;</span><span class="p">)</span>
 
-        <span class="c1"># This album dictionary gets filled with all kind of infors during this method.</span>
+        <span class="c1"># This album dictionary gets filled with all kind of information during this method.</span>
         <span class="c1"># At the end they are written into the database</span>
         <span class="n">album</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="kc">None</span>
@@ -1193,12 +1194,14 @@
         <span class="n">fsmeta</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AnalysePath</span><span class="p">(</span><span class="n">songpaths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">fsmeta</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Analysing path </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed!&quot;</span><span class="p">,</span> <span class="n">songpaths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">moddate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetModificationDate</span><span class="p">(</span><span class="n">albumpath</span><span class="p">)</span>
 
         <span class="c1"># usually, the filesystem is always right, but in case of iTunes, the meta data are</span>
         <span class="c1"># FIX: NO! THEY ARE NOT! - THE FILESYSTEM IS _ALWAYS_ RIGHT!</span>
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;added&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">moddate</span>
         
         <span class="k">if</span> <span class="n">artistid</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># the artistname IS the path, because thats how the fsmeta data came from</span>
@@ -1894,7 +1897,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -1916,7 +1919,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

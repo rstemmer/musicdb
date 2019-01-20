@@ -173,6 +173,17 @@ function ShowSearchResults(artists, albums, songs)
         html += "<div class=\"MDBSArtistListEntry\" onClick=\"" + onclick + "\" title=\"Scroll to this artist\">";
         html += artistname;
         html += "</div>";
+        html += "<div class=\"MDBSResultList MDBSCompactAlbumList\">";
+        for(let MDBAlbum of entry.albums)
+        {
+            html += "<div class=\"MDBSAlbumListEntry\" onClick=\"_MDBS_HideResultPopup();\" title=\"Show this album\">";
+            if(_MDBS_ResultViewState == "preview")
+                html += CreateSmallAlbumTile(MDBAlbum);
+            else
+                html += CreateAlbumTile(MDBAlbum);
+            html += "</div>";
+        }
+        html += "</div>";
     }
     html += "</div>";
 

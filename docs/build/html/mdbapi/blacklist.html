@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Blacklist &mdash; MusicDB 4.3.0 documentation</title>
+  <title>Blacklist &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDBDatabase" href="database.html"/>
         <link rel="prev" title="Artwork Management" href="artwork.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -387,7 +387,7 @@
 <li class="toctree-l3"><a class="reference internal" href="musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -550,6 +550,35 @@
 </ul>
 </li>
 </ul>
+<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#communication-with-the-server">Communication with the server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#sending-data">Sending Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webui/websockets.html#receiving-data">Receiving Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#minimal-usage">Minimal usage</a></li>
+</ul>
+</li>
+</ul>
 <p class="caption"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
@@ -667,7 +696,17 @@ When set to <code class="docutils literal notranslate"><span class="pre">0</span
 <p>The blacklists get maintained by the <code class="xref py py-class docutils literal notranslate"><span class="pre">Randy</span></code> class.
 Each instance of this class accesses the same global blacklist.</p>
 <p>The blacklist is implemented as a dictionary with the keys <code class="docutils literal notranslate"><span class="pre">&quot;songs&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;albums&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;artists&quot;</span></code>.
-Their values are lists holding the IDs of the songs, albums and artists.</p>
+Their values are lists of dictionaries.
+The key of the dictionary are:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>id:</dt>
+<dd>holding the IDs of the songs, albums and artists.</dd>
+<dt>timestamp:</dt>
+<dd>storing the UNIX time stamp when the ID got on the blacklist.</dd>
+</dl>
+</div></blockquote>
+<p>Both entries can be <code class="docutils literal notranslate"><span class="pre">None</span></code> when not set.</p>
 </div>
 </div>
 <div class="section" id="blacklist-interface-class">
@@ -754,6 +793,75 @@ If it is so, the method returns <code class="docutils literal notranslate"><span
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist">
+<code class="descname">GetIDsFromBlacklist</code><span class="sig-paren">(</span><em>blacklistname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.GetIDsFromBlacklist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns a list of IDs (as Integer) from the blacklist.
+It checks each entry in the list if it is <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+If it is <code class="docutils literal notranslate"><span class="pre">None</span></code>, it gets ignored.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method does not check if the IDs time stamp is in a valid range.
+Call <a class="reference internal" href="#mdbapi.blacklist.BlacklistInterface.ValidateBlacklist" title="mdbapi.blacklist.BlacklistInterface.ValidateBlacklist"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ValidateBlacklist()</span></code></a> before to make sure
+all entries in the blacklist are valid.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>blacklistname</strong> (<em>str</em>) – A valid name for the blacklist. Valid names are: <code class="docutils literal notranslate"><span class="pre">&quot;songs&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;albums&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;artists&quot;</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of valid IDs as integers.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – When blacklistname is not <code class="docutils literal notranslate"><span class="pre">&quot;songs&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;albums&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;artists&quot;</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdbapi.blacklist.BlacklistInterface.GetValidIDsFromBlacklists">
+<code class="descname">GetValidIDsFromBlacklists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.GetValidIDsFromBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.GetValidIDsFromBlacklists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all Song, Album and Artist IDs from the blacklist.
+The IDs are separated into three lists.
+This method checks the time stamp and removes all IDs that are older than configured.</p>
+<p>This method combines the following methods for all three blacklists (songs, albums, artists):</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><a class="reference internal" href="#mdbapi.blacklist.BlacklistInterface.ValidateBlacklist" title="mdbapi.blacklist.BlacklistInterface.ValidateBlacklist"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ValidateBlacklist()</span></code></a></li>
+<li><a class="reference internal" href="#mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist" title="mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetIDsFromBlacklist()</span></code></a></li>
+</ol>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A tupel <code class="docutils literal notranslate"><span class="pre">(SongIDs,</span> <span class="pre">AlbumIDs,</span> <span class="pre">ArtistIDs)</span></code> of lists of IDs that are temporal still valid.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mdbapi.blacklist.BlacklistInterface.ValidateBlacklist">
+<code class="descname">ValidateBlacklist</code><span class="sig-paren">(</span><em>blacklistname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.ValidateBlacklist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.ValidateBlacklist" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method validates a specific blacklist.
+It checks each entry in the list if its time stamp is still in the configured time range.
+If not, the entry gets set to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>blacklistname</strong> (<em>str</em>) – A valid name for the blacklist. Valid names are: <code class="docutils literal notranslate"><span class="pre">&quot;songs&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;albums&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;artists&quot;</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – When blacklistname is not <code class="docutils literal notranslate"><span class="pre">&quot;songs&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;albums&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;artists&quot;</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -772,7 +880,7 @@ If it is so, the method returns <code class="docutils literal notranslate"><span
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -794,7 +902,7 @@ If it is so, the method returns <code class="docutils literal notranslate"><span
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

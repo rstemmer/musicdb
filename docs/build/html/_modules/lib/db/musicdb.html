@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.db.musicdb &mdash; MusicDB 4.3.0 documentation</title>
+  <title>lib.db.musicdb &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -386,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -664,7 +664,7 @@
             
   <h1>Source code for lib.db.musicdb</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2017, 2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -801,9 +801,12 @@
 <span class="sd">    | albumid | artistid | name | path | numofsongs | numofcds | origin | release |</span>
 <span class="sd">    +---------+----------+------+------+------------+----------+--------+---------+</span>
 
-<span class="sd">    +-------------+---------+---------+---------+</span>
-<span class="sd">    | artworkpath | bgcolor | fgcolor | hlcolor |</span>
-<span class="sd">    +-------------+---------+---------+---------+</span>
+<span class="sd">    +-------------+---------+---------+---------+-------+</span>
+<span class="sd">    | artworkpath | bgcolor | fgcolor | hlcolor | added |</span>
+<span class="sd">    +-------------+---------+---------+---------+-------+</span>
+
+<span class="sd">added (Integer)</span>
+<span class="sd">    This is the time the album got added to the collection as unixtime rounded to an integer (full seconds)</span>
 
 <span class="sd">Album Related Methods</span>
 <span class="sd">^^^^^^^^^^^^^^^^^^^^^</span>
@@ -1063,6 +1066,7 @@
     <span class="n">ALBUM_BGCOLOR</span>    <span class="o">=</span> <span class="mi">9</span>
     <span class="n">ALBUM_FGCOLOR</span>    <span class="o">=</span> <span class="mi">10</span>
     <span class="n">ALBUM_HLCOLOR</span>    <span class="o">=</span> <span class="mi">11</span>
+    <span class="n">ALBUM_ADDED</span>      <span class="o">=</span> <span class="mi">12</span>
 
     <span class="n">SONG_ID</span>         <span class="o">=</span> <span class="mi">0</span>
     <span class="n">SONG_ALBUMID</span>    <span class="o">=</span> <span class="mi">1</span>
@@ -1123,8 +1127,8 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unable to read version number from Music Database&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unexpected version number of Music Database. Got </span><span class="si">%i</span><span class="s2">, expected </span><span class="si">%i</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unexpected version number of Music Database. Got </span><span class="si">%i</span><span class="s2">, expected </span><span class="si">%i</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
         
 
     <span class="k">def</span> <span class="nf">__ArtistEntryToDict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
@@ -1148,6 +1152,7 @@
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;bgcolor&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ALBUM_BGCOLOR</span><span class="p">]</span>
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;fgcolor&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ALBUM_FGCOLOR</span><span class="p">]</span>
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;hlcolor&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ALBUM_HLCOLOR</span><span class="p">]</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;added&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ALBUM_ADDED</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">album</span>
 
     <span class="k">def</span> <span class="nf">__SongEntryToDict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
@@ -1240,7 +1245,8 @@
 <span class="s2">            artworkpath=:artworkpath,</span>
 <span class="s2">            bgcolor=:bgcolor,</span>
 <span class="s2">            fgcolor=:fgcolor,</span>
-<span class="s2">            hlcolor=:hlcolor</span>
+<span class="s2">            hlcolor=:hlcolor,</span>
+<span class="s2">            added=:added</span>
 <span class="s2">        WHERE</span>
 <span class="s2">            albumid=:id</span>
 <span class="s2">        &quot;&quot;&quot;</span>
@@ -1976,7 +1982,7 @@
         <span class="k">return</span> <span class="n">songs</span></div>
 
 
-<div class="viewcode-block" id="MusicDatabase.GetRandomSong"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetRandomSong">[docs]</a>    <span class="k">def</span> <span class="nf">GetRandomSong</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filterlist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nodisabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nohated</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">minlen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">albumid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="MusicDatabase.GetRandomSong"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetRandomSong">[docs]</a>    <span class="k">def</span> <span class="nf">GetRandomSong</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filterlist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nodisabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nohated</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">minlen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">albumid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method returns a random song that fulfills several constraints.</span>
 
@@ -2031,6 +2037,7 @@
 <span class="sd">            nodisabled (bool): If ``True`` no disables songs will be selected</span>
 <span class="sd">            nohated (bool): If ``True`` no hated songs will be selected</span>
 <span class="sd">            minlen (int): If set, no songs with less than *minlen* seconds will be selected</span>
+<span class="sd">            maxlen (int): If set, no songs with more than *maxlen* seconds will be selected</span>
 <span class="sd">            albumid (int): Use album with ID ``albumid`` instead of a random album</span>
 
 <span class="sd">        Returns:</span>
@@ -2039,7 +2046,7 @@
 
 <span class="sd">        Raises:</span>
 <span class="sd">            TypeError: When *nodisabled* or *nohated* are not of type ``bool``</span>
-<span class="sd">            TypeError: When *minlen* is not ``None`` and not of type integer</span>
+<span class="sd">            TypeError: When *minlen* or *maxlen* is not ``None`` and not of type integer</span>
 <span class="sd">            TypeError: When *filterlist* is not a list and not ``None``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">nodisabled</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">bool</span><span class="p">:</span>
@@ -2050,6 +2057,8 @@
 
         <span class="k">if</span> <span class="n">minlen</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">minlen</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;minlen must be None or of type integer&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">maxlen</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">maxlen</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;maxlen must be None or of type integer&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">filterlist</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">filterlist</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2106,7 +2115,7 @@
 
         <span class="c1"># Get all Songs that may be candidate</span>
         <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
-            <span class="n">songids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSongIdsByAlbumIds</span><span class="p">(</span><span class="n">selectedalbumids</span><span class="p">,</span> <span class="n">nodisabled</span><span class="p">,</span> <span class="n">nohated</span><span class="p">,</span> <span class="n">minlen</span><span class="p">)</span>
+            <span class="n">songids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSongIdsByAlbumIds</span><span class="p">(</span><span class="n">selectedalbumids</span><span class="p">,</span> <span class="n">nodisabled</span><span class="p">,</span> <span class="n">nohated</span><span class="p">,</span> <span class="n">minlen</span><span class="p">,</span> <span class="n">maxlen</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">songids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
@@ -2117,7 +2126,7 @@
         <span class="k">return</span> <span class="n">song</span></div>
 
 
-<div class="viewcode-block" id="MusicDatabase.GetSongIdsByAlbumIds"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds">[docs]</a>    <span class="k">def</span> <span class="nf">GetSongIdsByAlbumIds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumids</span><span class="p">,</span> <span class="n">nodisabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nohated</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">minlen</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="MusicDatabase.GetSongIdsByAlbumIds"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds">[docs]</a>    <span class="k">def</span> <span class="nf">GetSongIdsByAlbumIds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumids</span><span class="p">,</span> <span class="n">nodisabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nohated</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">minlen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method returns a list of songs that belong to the albums addressed by their IDs in the *albumids* list.</span>
 <span class="sd">        The songs of the returned IDs also fulfill the constraints given by the other parameters.</span>
@@ -2127,14 +2136,16 @@
 <span class="sd">            nodisabled (bool): If ``True`` no disables songs will be selected</span>
 <span class="sd">            nohated (bool): If ``True`` no hated songs will be selected</span>
 <span class="sd">            minlen (int): If set, no songs with less than *minlen* seconds will be selected</span>
+<span class="sd">            maxlen (int): If set, no songs with more than *maxlen* seconds will be selected</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            A list of song IDs</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            TypeError: When *nodisabled* or *nohated* are not of type ``bool``</span>
-<span class="sd">            TypeError: When *minlen* is not ``None`` and not of type integer</span>
+<span class="sd">            TypeError: When *minlen* or *maxlen* is not ``None`` and not of type integer</span>
 <span class="sd">            ValueError: When minlen is less than ``0``</span>
+<span class="sd">            ValueError: When maxlen is less than ``0``</span>
 <span class="sd">            TypeError: When *albumuids* is ``None``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">nodisabled</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">bool</span><span class="p">:</span>
@@ -2145,6 +2156,8 @@
 
         <span class="k">if</span> <span class="n">minlen</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">minlen</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;minlen must be None or of type integer&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">maxlen</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">maxlen</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;maxlen must be None or of type integer&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">albumids</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;albumids must have a value!&quot;</span><span class="p">)</span>
@@ -2157,11 +2170,15 @@
         <span class="k">if</span> <span class="n">nohated</span><span class="p">:</span>
             <span class="n">sql</span> <span class="o">+=</span> <span class="s2">&quot; AND favorite &gt;= 0&quot;</span>
         <span class="k">if</span> <span class="n">minlen</span><span class="p">:</span>
-            <span class="c1"># make sure the argument does not mess up te query-string</span>
-            <span class="n">tmp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">minlen</span><span class="p">)</span>
+            <span class="c1"># make sure the argument does not mess up the query-string</span>
             <span class="k">if</span> <span class="n">minlen</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;minlen must be &gt;= 0&quot;</span><span class="p">)</span>
             <span class="n">sql</span> <span class="o">+=</span> <span class="s2">&quot; AND playtime &gt;= &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">minlen</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">maxlen</span><span class="p">:</span>
+            <span class="c1"># make sure the argument does not mess up the query-string</span>
+            <span class="k">if</span> <span class="n">maxlen</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;maxlen must be &gt;= 0&quot;</span><span class="p">)</span>
+            <span class="n">sql</span> <span class="o">+=</span> <span class="s2">&quot; AND playtime &lt;= &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">maxlen</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
             <span class="n">songids</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2876,7 +2893,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -2898,7 +2915,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

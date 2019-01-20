@@ -131,6 +131,11 @@ tracker
 dbpath (path to file):
    Path to the tracker database
 
+cuttime (integer, time in minutes):
+   Time until a relation gets cut.
+   If there is a time gap of *cuttime* minutes or more between the current played song and the previous one,
+   the relationship gets ignored.
+
 
 lycra
 -----
@@ -219,6 +224,9 @@ nohated (boolean):
 minsonglen (number ∈ ℕ):
    Determines the minimum length of a song in seconds to be in the set of possible songs
 
+maxsonglen (number ∈ ℕ):
+   Determines the maximum length of a song in seconds to be in the set of possible songs
+
 songbllen (number ∈ ℕ):
    Blacklist length for songs (``0`` to disable the blacklist)
 
@@ -227,6 +235,9 @@ albumbllen (number ∈ ℕ):
 
 artistbllen (number ∈ ℕ):
    Blacklist length for artists (``0`` to disable the blacklist)
+
+maxblage (time in hours as integer):
+   The highest age an entry in one of the three blacklist can have until it gets automatically removed.
 
 
 log

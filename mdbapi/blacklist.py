@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,16 +49,26 @@ The blacklists get maintained by the :class:`~Randy` class.
 Each instance of this class accesses the same global blacklist.
 
 The blacklist is implemented as a dictionary with the keys ``"songs"``, ``"albums"`` and ``"artists"``.
-Their values are lists holding the IDs of the songs, albums and artists.
+Their values are lists of dictionaries.
+The key of the dictionary are:
+
+    id:
+        holding the IDs of the songs, albums and artists.
+
+    timestamp:
+        storing the UNIX time stamp when the ID got on the blacklist.
+
+Both entries can be ``None`` when not set.
 """
 
 import logging
 import threading        # for Lock
+import time
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
 from lib.cfg.mdbstate   import MDBState
 
-BlacklistLock = threading.Lock()
+BlacklistLock = threading.RLock()
 Blacklist     = None
 
 
@@ -97,60 +107,112 @@ class BlacklistInterface(object):
         with BlacklistLock:
             if not Blacklist:
                 # try to load the blacklist from MusicDB State
-                loadedlists = self.mdbstate.LoadBlacklists()
+                Blacklist = self.mdbstate.LoadBlacklists(self.songbllen, self.albumbllen, self.artistbllen)
 
-                # First, create a clean blacklist
-                Blacklist = {}
-                Blacklist["songs"]   = [None] * self.songbllen
-                Blacklist["albums"]  = [None] * self.albumbllen
-                Blacklist["artists"] = [None] * self.artistbllen
-                
-                # Now fill the blacklist considering changes in their size
-                for key in loadedlists:
-                    if key not in ["songs", "albums", "artists"]:
-                        logging.error("Unexpected key \"%s\" in loaded blacklist dictionary! \033[1;30(Will be discard)", str(key))
-                        continue
 
-                    dst = Blacklist[key]
-                    src = loadedlists[key]
-                    if not src:
-                        continue    # when there are no entries loaded, keep the generated list of None-entries
 
-                    # The following python magic inserts as much of src at the end of dst, as fits.
-                    # if src must be cut, the first elements get removed
-                    # So, case 1: len(dst) > len(src)
-                    #   dst = [None, None, None, None, None]
-                    #   src = [1, 2, 3]
-                    #   Results in [None, None, 1, 2, 3]
-                    #
-                    # Case 2: len(dst) < len(src)
-                    #   dst = [None, None]
-                    #   src = [1, 2, 3]
-                    #   Results in [2, 3]
-                    #
-                    # >>> l = [1,2,3]
-                    # >>> d = [0]*3
-                    # >>> d[-len(l):] = l[-len(d):]
-                    # >>> l
-                    # [1, 2, 3]
-                    # >>> d
-                    # [1, 2, 3]
-                    # >>> d = [0]*2
-                    # >>> d[-len(l):] = l[-len(d):]
-                    # >>> l
-                    # [1, 2, 3]
-                    # >>> d
-                    # [2, 3]
-                    # >>> d = [0]*4
-                    # >>> d[-len(l):] = l[-len(d):]
-                    # >>> l
-                    # [1, 2, 3]
-                    # >>> d
-                    # [0, 1, 2, 3]
-                    # >>> 
-                    dst = dst[-len(src):] = src[-len(dst):]
+    def ValidateBlacklist(self, blacklistname):
+        """
+        This method validates a specific blacklist.
+        It checks each entry in the list if its time stamp is still in the configured time range.
+        If not, the entry gets set to ``None``.
 
-                    Blacklist[key] = dst
+        Args:
+            blacklistname (str): A valid name for the blacklist. Valid names are: ``"songs"``, ``"albums"``, ``"artists"``
+
+        Returns:
+            *Nothing*
+
+        Raises:
+            ValueError: When blacklistname is not ``"songs"``, ``"albums"`` or ``"artists"``
+        """
+        if blacklistname not in ["songs", "albums", "artists"]:
+            raise ValueError("blacklistname must be \"songs\", \"albums\" or \"artists\"!")
+
+        timelimit = time.time() - self.cfg.randy.maxblage*60*60;
+
+        global BlacklistLock
+        global Blacklist
+
+        removed = 0
+        with BlacklistLock:
+            for entry in Blacklist[blacklistname]:
+                if entry["timestamp"] == None:
+                    continue
+
+                if entry["timestamp"] < timelimit:
+                    entry["id"]        = None
+                    entry["timestamp"] = None
+                    removed           += 1
+
+        if removed > 0:
+            logging.debug("%d entries from blacklist \"%s\" removed because their lifetime exceeded",
+                    removed, blacklistname)
+        return
+
+
+
+    def GetIDsFromBlacklist(self, blacklistname):
+        """
+        This method returns a list of IDs (as Integer) from the blacklist.
+        It checks each entry in the list if it is ``None``.
+        If it is ``None``, it gets ignored.
+        
+        .. note::
+
+            This method does not check if the IDs time stamp is in a valid range.
+            Call :meth:`~mdbapi.blacklist.BlacklistInterface.ValidateBlacklist` before to make sure
+            all entries in the blacklist are valid.
+
+        Args:
+            blacklistname (str): A valid name for the blacklist. Valid names are: ``"songs"``, ``"albums"``, ``"artists"``
+
+        Returns:
+            A list of valid IDs as integers.
+
+        Raises:
+            ValueError: When blacklistname is not ``"songs"``, ``"albums"`` or ``"artists"``
+        """
+        if blacklistname not in ["songs", "albums", "artists"]:
+            raise ValueError("blacklistname must be \"songs\", \"albums\" or \"artists\"!")
+
+        global BlacklistLock
+        global Blacklist
+
+        with BlacklistLock:
+            idlist = [ entry["id"] for entry in Blacklist[blacklistname] if entry["id"] != None ]
+
+        return idlist
+
+
+
+    def GetValidIDsFromBlacklists(self):
+        """
+        Returns all Song, Album and Artist IDs from the blacklist.
+        The IDs are separated into three lists.
+        This method checks the time stamp and removes all IDs that are older than configured.
+
+        This method combines the following methods for all three blacklists (songs, albums, artists):
+        
+            #. :meth:`~mdbapi.blacklist.BlacklistInterface.ValidateBlacklist`
+            #. :meth:`~mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist`
+
+        Returns:
+            A tupel ``(SongIDs, AlbumIDs, ArtistIDs)`` of lists of IDs that are temporal still valid.
+        """
+        songids   = []
+        albumids  = []
+        artistids = []
+
+        self.ValidateBlacklist("songs")
+        self.ValidateBlacklist("albums")
+        self.ValidateBlacklist("artists")
+
+        songids   = self.GetIDsFromBlacklist("songs")
+        albumids  = self.GetIDsFromBlacklist("albums")
+        artistids = self.GetIDsFromBlacklist("artists")
+
+        return (songids, albumids, artistids)
 
 
 
@@ -179,19 +241,17 @@ class BlacklistInterface(object):
         elif type(song) != dict:
             raise TypeError("song argument must be of type dict or a song ID (int). Actual type was %s!"%(str(type(song))))
 
-        global BlacklistLock
-        global Blacklist
+        songbl, albumbl, artistbl = self.GetValidIDsFromBlacklists()
 
-        with BlacklistLock:
-            if self.artistbllen > 0 and song["artistid"] in Blacklist["artists"]:
-                logging.debug("artist on blacklist")
-                return True
-            if self.albumbllen > 0 and song["albumid"] in Blacklist["albums"]:
-                logging.debug("album on blacklist")
-                return True
-            if self.songbllen > 0 and song["id"] in Blacklist["songs"]:
-                logging.debug("song on blacklist")
-                return True
+        if self.artistbllen > 0 and song["artistid"] in artistbl:
+            logging.debug("artist on blacklist")
+            return True
+        if self.albumbllen > 0 and song["albumid"] in albumbl:
+            logging.debug("album on blacklist")
+            return True
+        if self.songbllen > 0 and song["id"] in songbl:
+            logging.debug("song on blacklist")
+            return True
         return False
 
 
@@ -220,13 +280,11 @@ class BlacklistInterface(object):
         elif type(song) != dict:
             raise TypeError("song argument must be of type dict or a song ID (int). Actual type was %s!"%(str(type(song))))
 
-        global BlacklistLock
-        global Blacklist
+        songbl, albumbl, artistbl = self.GetValidIDsFromBlacklists()
 
-        with BlacklistLock:
-            if self.songbllen > 0 and song["id"] in Blacklist["songs"]:
-                logging.debug("song on blacklist")
-                return True
+        if self.songbllen > 0 and song["id"] in songbl:
+            logging.debug("song on blacklist")
+            return True
         return False
 
 
@@ -261,16 +319,31 @@ class BlacklistInterface(object):
         global BlacklistLock
         global Blacklist
 
+        logging.debug("Setting song \"%s\" onto the blacklist.", song["path"])
         with BlacklistLock:
             if self.artistbllen > 0:
+                entry = {}
+                entry["timestamp"] = int(time.time())
+                entry["id"]        = song["artistid"]
                 Blacklist["artists"].pop(0)
-                Blacklist["artists"].append(song["artistid"])
+                Blacklist["artists"].append(entry)
             if self.albumbllen > 0:
+                entry = {}
+                entry["timestamp"] = int(time.time())
+                entry["id"]        = song["albumid"]
                 Blacklist["albums"].pop(0)
-                Blacklist["albums"].append(song["albumid"])
+                Blacklist["albums"].append(entry)
             if self.songbllen > 0:
+                entry = {}
+                entry["timestamp"] = int(time.time())
+                entry["id"]        = song["id"]
                 Blacklist["songs"].pop(0)
-                Blacklist["songs"].append(song["id"])
+                Blacklist["songs"].append(entry)
+
+            # Remove outdated entries before saving
+            self.ValidateBlacklist("songs")
+            self.ValidateBlacklist("albums")
+            self.ValidateBlacklist("artists")
 
             # Save blacklists to files 
             self.mdbstate.SaveBlacklists(Blacklist)

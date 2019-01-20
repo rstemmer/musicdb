@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.ws.server &mdash; MusicDB 4.3.0 documentation</title>
+  <title>lib.ws.server &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -386,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -664,7 +664,7 @@
             
   <h1>Source code for lib.ws.server</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2017,2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -728,7 +728,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method does the server setup.</span>
 
-<span class="sd">        It configures the TLS encryption (TLSv1.2) and creates the event loop.</span>
+<span class="sd">        It configures a TLS encrypted connection and creates the event loop.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            address (str): address to bind to</span>
@@ -739,16 +739,11 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            ``True`` on success, otherwise ``False``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;MusicDB WebSocket Server (</span><span class="se">\033</span><span class="s2">[0;32mTLSv1.2 secured</span><span class="se">\033</span><span class="s2">[1;34m) listening to port </span><span class="se">\033</span><span class="s2">[1;36m</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tlscontext</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">SSLContext</span><span class="p">(</span><span class="n">ssl</span><span class="o">.</span><span class="n">PROTOCOL_TLSv1_2</span><span class="p">)</span> <span class="c1"># deprecated sinze 3.6 # FIXME</span>
-        <span class="c1"># New would be the following, but websockets crash if using this</span>
-        <span class="c1"># tlscontext = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)</span>
-        <span class="c1"># tlscontext.options |= ssl.OP_NO_SSLv2</span>
-        <span class="c1"># tlscontext.options |= ssl.OP_NO_SSLv3</span>
-        <span class="c1"># tlscontext.options |= ssl.OP_NO_TLSv1</span>
-        <span class="c1"># tlscontext.options |= ssl.OP_NO_TLSv1_1</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;MusicDB WebSocket Server (</span><span class="se">\033</span><span class="s2">[0;32mTLS secured</span><span class="se">\033</span><span class="s2">[1;34m) listening to port </span><span class="se">\033</span><span class="s2">[1;36m</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+        <span class="c1">#self.tlscontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2) # deprecated since Python 3.6</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tlscontext</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">SSLContext</span><span class="p">(</span><span class="n">ssl</span><span class="o">.</span><span class="n">PROTOCOL_TLS</span><span class="p">)</span> <span class="c1"># Use best supported protocol</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tlscontext</span><span class="o">.</span><span class="n">set_ciphers</span><span class="p">(</span><span class="s2">&quot;HIGH:MEDIUM:!aNULL:!MD5&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tlscontext</span><span class="o">.</span><span class="n">verify_mode</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">CERT_NONE</span> <span class="c1"># no client side cert needed... # FIXME</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tlscontext</span><span class="o">.</span><span class="n">verify_mode</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">CERT_NONE</span> <span class="c1"># no client side cert needed...</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tlscontext</span><span class="o">.</span><span class="n">load_cert_chain</span><span class="p">(</span><span class="n">cert</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
@@ -771,7 +766,19 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Creating server task failed with exception: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">eventloop</span><span class="o">.</span><span class="n">set_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ExceptionHandler</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+    <span class="k">def</span> <span class="nf">ExceptionHandler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">exception</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s2">&quot;exception&quot;</span><span class="p">]</span>
+        <span class="n">message</span>   <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">]</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unexpected </span><span class="si">%s</span><span class="s2"> exception in eventloop: </span><span class="si">%s</span><span class="s2"> - </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">exception</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">exception</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+        <span class="k">return</span>
+
 
 
 <div class="viewcode-block" id="MusicDBWebSocketServer.Start"><a class="viewcode-back" href="../../../lib/websockets.html#lib.ws.server.MusicDBWebSocketServer.Start">[docs]</a>    <span class="k">def</span> <span class="nf">Start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -876,7 +883,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -898,7 +905,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

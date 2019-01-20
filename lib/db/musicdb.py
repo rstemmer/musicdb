@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017, 2018  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -136,9 +136,12 @@ Data structure:
     | albumid | artistid | name | path | numofsongs | numofcds | origin | release |
     +---------+----------+------+------+------------+----------+--------+---------+
 
-    +-------------+---------+---------+---------+
-    | artworkpath | bgcolor | fgcolor | hlcolor |
-    +-------------+---------+---------+---------+
+    +-------------+---------+---------+---------+-------+
+    | artworkpath | bgcolor | fgcolor | hlcolor | added |
+    +-------------+---------+---------+---------+-------+
+
+added (Integer)
+    This is the time the album got added to the collection as unixtime rounded to an integer (full seconds)
 
 Album Related Methods
 ^^^^^^^^^^^^^^^^^^^^^
@@ -398,6 +401,7 @@ class MusicDatabase(Database):
     ALBUM_BGCOLOR    = 9
     ALBUM_FGCOLOR    = 10
     ALBUM_HLCOLOR    = 11
+    ALBUM_ADDED      = 12
 
     SONG_ID         = 0
     SONG_ALBUMID    = 1
@@ -458,8 +462,8 @@ class MusicDatabase(Database):
         except Exception as e:
             raise ValueError("Unable to read version number from Music Database")
 
-        if version != 2:
-            raise ValueError("Unexpected version number of Music Database. Got %i, expected %i", version, 2)
+        if version != 3:
+            raise ValueError("Unexpected version number of Music Database. Got %i, expected %i"%(version, 3))
         
 
     def __ArtistEntryToDict(self, entry):
@@ -483,6 +487,7 @@ class MusicDatabase(Database):
         album["bgcolor"]    = entry[self.ALBUM_BGCOLOR]
         album["fgcolor"]    = entry[self.ALBUM_FGCOLOR]
         album["hlcolor"]    = entry[self.ALBUM_HLCOLOR]
+        album["added"]      = entry[self.ALBUM_ADDED]
         return album
 
     def __SongEntryToDict(self, entry):
@@ -575,7 +580,8 @@ class MusicDatabase(Database):
             artworkpath=:artworkpath,
             bgcolor=:bgcolor,
             fgcolor=:fgcolor,
-            hlcolor=:hlcolor
+            hlcolor=:hlcolor,
+            added=:added
         WHERE
             albumid=:id
         """
@@ -1311,7 +1317,7 @@ class MusicDatabase(Database):
         return songs
 
 
-    def GetRandomSong(self, filterlist=None, nodisabled=True, nohated=False, minlen=None, albumid=None):
+    def GetRandomSong(self, filterlist=None, nodisabled=True, nohated=False, minlen=None, maxlen=None, albumid=None):
         r"""
         This method returns a random song that fulfills several constraints.
 
@@ -1366,6 +1372,7 @@ class MusicDatabase(Database):
             nodisabled (bool): If ``True`` no disables songs will be selected
             nohated (bool): If ``True`` no hated songs will be selected
             minlen (int): If set, no songs with less than *minlen* seconds will be selected
+            maxlen (int): If set, no songs with more than *maxlen* seconds will be selected
             albumid (int): Use album with ID ``albumid`` instead of a random album
 
         Returns:
@@ -1374,7 +1381,7 @@ class MusicDatabase(Database):
 
         Raises:
             TypeError: When *nodisabled* or *nohated* are not of type ``bool``
-            TypeError: When *minlen* is not ``None`` and not of type integer
+            TypeError: When *minlen* or *maxlen* is not ``None`` and not of type integer
             TypeError: When *filterlist* is not a list and not ``None``
         """
         if type(nodisabled) != bool:
@@ -1385,6 +1392,8 @@ class MusicDatabase(Database):
 
         if minlen != None and type(minlen) != int:
             raise TypeError("minlen must be None or of type integer")
+        if maxlen != None and type(maxlen) != int:
+            raise TypeError("maxlen must be None or of type integer")
 
         if filterlist == None:
             filterlist = []
@@ -1441,7 +1450,7 @@ class MusicDatabase(Database):
 
         # Get all Songs that may be candidate
         with MusicDatabaseLock:
-            songids = self.GetSongIdsByAlbumIds(selectedalbumids, nodisabled, nohated, minlen)
+            songids = self.GetSongIdsByAlbumIds(selectedalbumids, nodisabled, nohated, minlen, maxlen)
 
         if len(songids) == 0:
             return None
@@ -1452,7 +1461,7 @@ class MusicDatabase(Database):
         return song
 
 
-    def GetSongIdsByAlbumIds(self, albumids, nodisabled=True, nohated=False, minlen=None):
+    def GetSongIdsByAlbumIds(self, albumids, nodisabled=True, nohated=False, minlen=None, maxlen=None):
         """
         This method returns a list of songs that belong to the albums addressed by their IDs in the *albumids* list.
         The songs of the returned IDs also fulfill the constraints given by the other parameters.
@@ -1462,14 +1471,16 @@ class MusicDatabase(Database):
             nodisabled (bool): If ``True`` no disables songs will be selected
             nohated (bool): If ``True`` no hated songs will be selected
             minlen (int): If set, no songs with less than *minlen* seconds will be selected
+            maxlen (int): If set, no songs with more than *maxlen* seconds will be selected
 
         Returns:
             A list of song IDs
 
         Raises:
             TypeError: When *nodisabled* or *nohated* are not of type ``bool``
-            TypeError: When *minlen* is not ``None`` and not of type integer
+            TypeError: When *minlen* or *maxlen* is not ``None`` and not of type integer
             ValueError: When minlen is less than ``0``
+            ValueError: When maxlen is less than ``0``
             TypeError: When *albumuids* is ``None``
         """
         if type(nodisabled) != bool:
@@ -1480,6 +1491,8 @@ class MusicDatabase(Database):
 
         if minlen != None and type(minlen) != int:
             raise TypeError("minlen must be None or of type integer")
+        if maxlen != None and type(maxlen) != int:
+            raise TypeError("maxlen must be None or of type integer")
 
         if albumids == None:
             raise TypeError("albumids must have a value!")
@@ -1492,11 +1505,15 @@ class MusicDatabase(Database):
         if nohated:
             sql += " AND favorite >= 0"
         if minlen:
-            # make sure the argument does not mess up te query-string
-            tmp = int(minlen)
+            # make sure the argument does not mess up the query-string
             if minlen < 0:
                 raise ValueError("minlen must be >= 0")
             sql += " AND playtime >= " + str(minlen)
+        if maxlen:
+            # make sure the argument does not mess up the query-string
+            if maxlen < 0:
+                raise ValueError("maxlen must be >= 0")
+            sql += " AND playtime <= " + str(maxlen)
 
         with MusicDatabaseLock:
             songids = []

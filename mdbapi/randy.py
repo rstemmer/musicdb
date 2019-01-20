@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ There are 4 parameters that define the constraints applied on set of possible so
     - The activated genres as maintained by the :mod:`lib.cfg.mdbstate` module.
     - The flag if *disabled* songs shall be excluded
     - The flag if *hated* songs shall be excluded
-    - Minimum length of a song in seconds
+    - Minimum and maximum length of a song in seconds
 
 Some of them can be configured in the MusicDB configuration file:
 
@@ -106,6 +106,7 @@ class Randy(object):
         self.nodisabled  = self.cfg.randy.nodisabled
         self.nohated     = self.cfg.randy.nohated
         self.minlen      = self.cfg.randy.minsonglen
+        self.maxlen      = self.cfg.randy.maxsonglen
 
 
 
@@ -119,13 +120,16 @@ class Randy(object):
         global BlacklistLock
         global Blacklist
 
+        logging.debug("Randy starts looking for a random song …")
+        t_start = datetime.datetime.now()
+
         filterlist = self.mdbstate.GetFilterList()
         if not filterlist:
             logging.warning("No Genre selected! \033[1;30m(Selecting random song from the whole collection)")
+        else:
+            logging.debug("Genre filter: %s", str(filterlist))
 
         # Get Random Song - this may take several tries 
-        logging.debug("Randy starts looking for a random song …")
-        t_start = datetime.datetime.now()
         song    = None
         while not song:
             # STAGE 1: Get Mathematical random song (under certain constraints)
@@ -141,8 +145,8 @@ class Randy(object):
 
             logging.debug("Candidate for next song: \033[0;35m" + song["path"])
 
-            # GetRandomSong only looks for album genres.
-            # The song genre may be different and not in the set of the filerlist.
+            # The MusicDatabase method GetRandomSong only looks for album genres.
+            # The song genre may be different and not in the set of the filterlist.
             try:
 
                 songgenres = self.db.GetTargetTags("song", song["id"], MusicDatabase.TAG_CLASS_GENRE)
@@ -155,17 +159,20 @@ class Randy(object):
 
                 # If the tag name set was successfully created, compare it with the selected genres
                 if tagnames:
+                    logging.debug("Checking for intersection of song-genre and active-genre: %s ∩ %s", str(tagnames), str(filterlist))
                     if not tagnames & set(filterlist):
                         logging.debug("song is of different genre than album and not in activated genres. (Song genres: %s)", str(tagnames))
                         song = None
                         continue
+                else:
+                    logging.debug("The song candidate has no genre tags. Assuming it matches the album genre.")
 
             except Exception as e:
                 logging.error("Song tag check failed with exception: \"%s\"!", str(e))
                 return None
 
 
-            # STAGE 2: Make randomness feeling random by checking if the song was recently played
+            # STAGE 2: Make randomness feeling random by checking if the song/album/artist was recently played
             if self.blacklist.CheckAllLists(song):
                 song = None
                 continue
@@ -214,7 +221,7 @@ class Randy(object):
             tries += 1
             # STAGE 1: Get Mathematical random song (under certain constraints)
             try:
-                song = self.db.GetRandomSong(None, self.nodisabled, self.nohated, self.minlen, albumid)
+                song = self.db.GetRandomSong(None, self.nodisabled, self.nohated, self.minlen, self.maxlen, albumid)
             except Exception as e:
                 logging.error("Getting random song failed with error: \"%s\"!", str(e))
                 return None

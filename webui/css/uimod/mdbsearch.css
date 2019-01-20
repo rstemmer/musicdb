@@ -113,6 +113,15 @@ div.MDBSAlbumListEntry
     display:        block;
 }
 
+div.MDBSCompactAlbumList
+{
+    border-bottom:  none;
+    border-bottom-color: inherit;
+    display:        flex;
+    flex-wrap:      wrap;
+    flex-direction: row;
+    justify-content: left;
+}
 div.MDBSAlbumList
 {
     border-bottom:  1px solid;

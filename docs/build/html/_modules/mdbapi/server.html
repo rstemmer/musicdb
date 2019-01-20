@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.server &mdash; MusicDB 4.3.0 documentation</title>
+  <title>mdbapi.server &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -386,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -752,20 +752,11 @@
 <span class="sd">    </span>
 <span class="sd">    Returns: Nothing</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">signum</span> <span class="o">==</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGUSR1</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Got signal USR1&quot;</span><span class="p">)</span>
-        <span class="n">SIGUSR1_Handler</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="n">signum</span> <span class="o">==</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">signum</span> <span class="o">==</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Got signal TERM&quot;</span><span class="p">)</span>
         <span class="n">SIGTERM_Handler</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Got unexpected signal </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="n">signum</span><span class="p">))</span></div>
-
-
-<span class="c1"># Update Caches</span>
-<span class="k">def</span> <span class="nf">SIGUSR1_Handler</span><span class="p">():</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33m(DEPRECATED: Signals will be removed in 2019) </span><span class="se">\033</span><span class="s2">[1;36mSIGUSR1:</span><span class="se">\033</span><span class="s2">[1;34m Updating caches …</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span> <span class="c1"># DEPRECATED 2019</span>
-    <span class="n">UpdateCaches</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="UpdateCaches"><a class="viewcode-back" href="../../mdbapi/server.html#mdbapi.server.UpdateCaches">[docs]</a><span class="k">def</span> <span class="nf">UpdateCaches</span><span class="p">():</span>
@@ -815,7 +806,7 @@
 <span class="sd">    This function is the handler for the system signal TERM.</span>
 <span class="sd">    It signals the server to shut down.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33m(DEPRECATED: Signals will be removed in 2019) </span><span class="se">\033</span><span class="s2">[1;36mSIGTERM:</span><span class="se">\033</span><span class="s2">[1;34m Initiate Shutdown …</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span> <span class="c1"># DEPRECATED 2019</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;36mSIGTERM:</span><span class="se">\033</span><span class="s2">[1;34m Initiate Shutdown …</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
     <span class="k">global</span> <span class="n">shutdown</span>
     <span class="n">shutdown</span> <span class="o">=</span> <span class="kc">True</span></div>
 
@@ -874,11 +865,7 @@
     <span class="n">mise</span><span class="o">.</span><span class="n">UpdateCache</span><span class="p">()</span>
     
     <span class="c1"># Signal Handler</span>
-    <span class="c1"># Don&#39;t mention the signals - they are deprecated!</span>
-    <span class="c1">#logging.info(&quot;Register signals \033[0;36m(&quot; + cfg.server.pidfile + &quot;)\033[0m&quot;)</span>
-    <span class="c1">#logging.info(&quot;\t\033[1;36mUSR1:\033[1;34m Update Caches\033[0m&quot;)</span>
-    <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGUSR1</span><span class="p">,</span> <span class="n">SignalHandler</span><span class="p">)</span>
-    <span class="c1">#logging.info(&quot;\t\033[1;36mTERM:\033[1;34m Shutdown Server\033[0m&quot;)</span>
+    <span class="c1"># The user shall use the FIFO</span>
     <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">,</span> <span class="n">SignalHandler</span><span class="p">)</span>
 
     <span class="c1"># Named Pipe</span>
@@ -1026,7 +1013,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -1048,7 +1035,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

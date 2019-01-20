@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; MusicDB 4.3.0 documentation</title>
+  <title>Index &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -38,7 +38,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="index.html"/> 
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -386,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -684,6 +684,7 @@
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
  
 </div>
@@ -826,16 +827,18 @@
 </li>
       <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface.Connect">Connect() (lib.stream.icecast.IcecastInterface method)</a>
 </li>
+      <li><a href="webui/websockets.html#ConnectToMusicDB">ConnectToMusicDB() (built-in function)</a>
+</li>
       <li><a href="lib/fileprocessing.html#lib.fileprocessing.Fileprocessing.ConvertToMP3">ConvertToMP3() (lib.fileprocessing.Fileprocessing method)</a>
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.CopyFile">CopyFile() (lib.filesystem.Filesystem method)</a>
 </li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.CopyNewSongs">CopyNewSongs() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
-      <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.CopySong">CopySong() (mdbapi.extern.MusicDBExtern method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.CopySong">CopySong() (mdbapi.extern.MusicDBExtern method)</a>
+</li>
       <li><a href="mdbapi/lycra.html#lib.crawlerapi.LycraCrawler.Crawl">Crawl() (lib.crawlerapi.LycraCrawler method)</a>
 </li>
       <li><a href="mdbapi/lycra.html#mdbapi.lycra.Lycra.CrawlForLyrics">CrawlForLyrics() (mdbapi.lycra.Lycra method)</a>
@@ -1086,9 +1089,11 @@
 </li>
       <li><a href="lib/database.html#lib.db.database.Database.GetFromDatabase">GetFromDatabase() (lib.db.database.Database method)</a>
 </li>
+      <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI.GetGenreMatrix">GetGenreMatrix() (mdbapi.musicai.MusicAI method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mdbapi/musicai.html#mdbapi.musicai.MusicAI.GetGenreMatrix">GetGenreMatrix() (mdbapi.musicai.MusicAI method)</a>
+      <li><a href="mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist">GetIDsFromBlacklist() (mdbapi.blacklist.BlacklistInterface method)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.text.Text.GetKey">GetKey() (lib.clui.text.Text method)</a>
 </li>
@@ -1105,6 +1110,8 @@
       <li><a href="mdbapi/lycra.html#lib.db.lycradb.LycraDatabase.GetLyricsFromCache">GetLyricsFromCache() (lib.db.lycradb.LycraDatabase method)</a>
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState">GetMDBState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.GetModificationDate">GetModificationDate() (lib.filesystem.Filesystem method)</a>
 </li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetOrigin">GetOrigin() (lib.metatags.MetaTags method)</a>
 </li>
@@ -1185,6 +1192,8 @@
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetTargetTags">GetTargetTags() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetTracknumber">GetTracknumber() (lib.metatags.MetaTags method)</a>
+</li>
+      <li><a href="mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface.GetValidIDsFromBlacklists">GetValidIDsFromBlacklists() (mdbapi.blacklist.BlacklistInterface method)</a>
 </li>
       <li><a href="lib/gstreamer.html#lib.stream.gstreamer.GStreamerInterface">GStreamerInterface (class in lib.stream.gstreamer)</a>
 </li>
@@ -1348,6 +1357,14 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="webui/websockets.html#MDB_ResetWebsocketWatchdog">MDB_ResetWebsocketWatchdog() (built-in function)</a>
+</li>
+      <li><a href="webui/websockets.html#MDB_SendPacket">MDB_SendPacket() (built-in function)</a>
+</li>
+      <li><a href="webui/websockets.html#MDB_StopWebsocketWatchdog">MDB_StopWebsocketWatchdog() (built-in function)</a>
+</li>
+      <li><a href="webui/websockets.html#MDB_WebsocketWatchdog">MDB_WebsocketWatchdog() (built-in function)</a>
+</li>
       <li><a href="mdbapi/artwork.html#module-mdbapi.artwork">mdbapi.artwork (module)</a>
 </li>
       <li><a href="mdbapi/blacklist.html#module-mdbapi.blacklist">mdbapi.blacklist (module)</a>
@@ -1359,6 +1376,8 @@
       <li><a href="mdbapi/lycra.html#module-mdbapi.lycra">mdbapi.lycra (module)</a>
 </li>
       <li><a href="mdbapi/mise.html#module-mdbapi.mise">mdbapi.mise (module)</a>
+</li>
+      <li><a href="mdbapi/musicai.html#module-mdbapi.musicai">mdbapi.musicai (module)</a>
 </li>
       <li><a href="mdbapi/musiccache.html#module-mdbapi.musiccache">mdbapi.musiccache (module)</a>
 </li>
@@ -1404,10 +1423,10 @@
 </li>
       <li><a href="mod/server.html#module-mod.server">mod.server (module)</a>
 </li>
-      <li><a href="mod/stats.html#module-mod.stats">mod.stats (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mod/stats.html#module-mod.stats">mod.stats (module)</a>
+</li>
       <li><a href="mod/tags.html#module-mod.tags">mod.tags (module)</a>
 </li>
       <li><a href="mod/tracker.html#module-mod.tracker">mod.tracker (module)</a>
@@ -1445,6 +1464,12 @@
       <li><a href="mdbapi/musiccache.html#mdbapi.musiccache.MusicCache">MusicCache (class in mdbapi.musiccache)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase">MusicDatabase (class in lib.db.musicdb)</a>
+</li>
+      <li><a href="webui/websockets.html#MusicDB_Broadcast">MusicDB_Broadcast() (built-in function)</a>
+</li>
+      <li><a href="webui/websockets.html#MusicDB_Call">MusicDB_Call() (built-in function)</a>
+</li>
+      <li><a href="webui/websockets.html#MusicDB_Request">MusicDB_Request() (built-in function)</a>
 </li>
       <li><a href="mdbapi/artwork.html#mdbapi.artwork.MusicDBArtwork">MusicDBArtwork (class in mdbapi.artwork)</a>
 </li>
@@ -1786,14 +1811,30 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/clui.html#lib.clui.tabgroup.TabGroup">TabGroup (class in lib.clui.tabgroup)</a>
 </li>
+      <li><a href="webui/taginput.html#Taginput_Create">Taginput_Create() (built-in function)</a>
+</li>
+      <li><a href="webui/taginput.html#Taginput_Show">Taginput_Show() (built-in function)</a>
+</li>
+      <li><a href="webui/taginput.html#Taginput_Update">Taginput_Update() (built-in function)</a>
+</li>
+      <li><a href="webui/taginput.html#Tagmanager_GetGenres">Tagmanager_GetGenres() (built-in function)</a>
+</li>
+      <li><a href="webui/taginput.html#Tagmanager_GetMoods">Tagmanager_GetMoods() (built-in function)</a>
+</li>
+      <li><a href="webui/taginput.html#Tagmanager_GetSubgenres">Tagmanager_GetSubgenres() (built-in function)</a>
+</li>
+      <li><a href="webui/taginput.html#Tagmanager_GetTags">Tagmanager_GetTags() (built-in function)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="webui/taginput.html#Tagmanager_onGetTags">Tagmanager_onGetTags() (built-in function)</a>
+</li>
       <li><a href="lib/clui.html#lib.clui.text.Text">Text (class in lib.clui.text)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.textinput.TextInput">TextInput (class in lib.clui.textinput)</a>
 </li>
       <li><a href="mdbapi/tracker.html#mdbapi.tracker.Tracker">Tracker (class in mdbapi.tracker)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mod/tracker.html#mod.tracker.tracker">tracker (class in mod.tracker)</a>
 </li>
       <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase">TrackerDatabase (class in lib.db.trackerdb)</a>
@@ -1857,6 +1898,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface.ValidateBlacklist">ValidateBlacklist() (mdbapi.blacklist.BlacklistInterface method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -1901,7 +1950,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -1923,7 +1972,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

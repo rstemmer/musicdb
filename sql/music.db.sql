@@ -28,7 +28,8 @@ CREATE TABLE IF NOT EXISTS albums
     artworkpath TEXT DEFAULT 'default.jpg',
     bgcolor     TEXT DEFAULT '#080808',
     fgcolor     TEXT DEFAULT '#F0F0F0',
-    hlcolor     TEXT DEFAULT '#909090'
+    hlcolor     TEXT DEFAULT '#909090',
+    added       INTEGER DEFAULT 0
 );
 
 

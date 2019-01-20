@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.ws.mdbwsi &mdash; MusicDB 4.3.0 documentation</title>
+  <title>lib.ws.mdbwsi &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -386,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -1585,8 +1585,8 @@
         <span class="n">state</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="n">streamstate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">GetStreamState</span><span class="p">()</span>
-        <span class="n">queueentry</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>   <span class="c1"># returns (entryid, songid)</span>
-        <span class="n">songid</span>      <span class="o">=</span> <span class="n">queueentry</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">queueentry</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>
+        <span class="n">songid</span>      <span class="o">=</span> <span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">]</span>
         <span class="n">state</span><span class="p">[</span><span class="s2">&quot;isconnected&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">streamstate</span><span class="p">[</span><span class="s2">&quot;isconnected&quot;</span><span class="p">]</span>
         <span class="n">state</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">streamstate</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span>
 
@@ -1618,6 +1618,7 @@
 <span class="sd">        Each entry of the list contains the following information:</span>
 
 <span class="sd">            * **entryid:** A unique ID to identify the entry in the queue (as string because it is a 128 integer that blows JavaScripts mind)</span>
+<span class="sd">            * **israndom:** A boolean value set to ``true`` when the song got added randomly and not explicitly by the user</span>
 <span class="sd">            * **song:** The song entry from the database</span>
 <span class="sd">            * **album:** The related album entry from the database</span>
 <span class="sd">            * **artist:** The related artist entry from the database</span>
@@ -1650,16 +1651,17 @@
             <span class="k">return</span> <span class="p">[]</span>
 
         <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">entryid</span><span class="p">,</span> <span class="n">songid</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">:</span>
-            <span class="n">song</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">queueentry</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">:</span>
+            <span class="n">song</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">])</span>
             <span class="n">album</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetAlbumById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
             <span class="n">artist</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetArtistById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
 
             <span class="n">entry</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">entryid</span><span class="p">)</span>
-            <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">song</span>
-            <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">album</span>
-            <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">artist</span>
+            <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">])</span>
+            <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;israndom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;israndom&quot;</span><span class="p">])</span>
+            <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">song</span>
+            <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">album</span>
+            <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">artist</span>
 
             <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
 
@@ -1680,6 +1682,7 @@
 <span class="sd">                * **artist:** The related artist entry from the database</span>
 <span class="sd">            * **artists:** A list of artists, each entry is a dictionary with the following information:</span>
 <span class="sd">                * **artist:** The related artist entry from the database</span>
+<span class="sd">                * **albums:** A list of all albums by this artist, ordered by release year</span>
 
 <span class="sd">        The search does not look for exact matching.</span>
 <span class="sd">        It looks for most likeliness.</span>
@@ -1714,24 +1717,26 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="p">(</span><span class="n">foundartists</span><span class="p">,</span> <span class="n">foundalbums</span><span class="p">,</span> <span class="n">foundsongs</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mise</span><span class="o">.</span><span class="n">Find</span><span class="p">(</span><span class="n">searchstring</span><span class="p">)</span>
 
-        <span class="c1"># prepare result processing</span>
-        <span class="n">artists</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">albums</span>  <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">songs</span>   <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">artistcount</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">foundartists</span><span class="p">))</span>
-        <span class="n">albumcount</span>  <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">foundalbums</span><span class="p">))</span>
-        <span class="n">songcount</span>   <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">foundsongs</span><span class="p">))</span>
 
-        <span class="c1"># process foundartists</span>
+        <span class="c1"># process found artists</span>
+        <span class="n">artists</span>     <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">artistcount</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">foundartists</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">artistcount</span><span class="p">):</span>
             <span class="n">artistid</span> <span class="o">=</span> <span class="n">foundartists</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">artist</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetArtistById</span><span class="p">(</span><span class="n">artistid</span><span class="p">)</span>
 
+            <span class="c1"># Get albums by this artist and sort for release year</span>
+            <span class="n">albums</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetAlbumsByArtistId</span><span class="p">(</span><span class="n">artistid</span><span class="p">)</span>
+            <span class="n">albums</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">albums</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">k</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">])</span>
+
             <span class="n">entry</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">artist</span>
+            <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">albums</span>
             <span class="n">artists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
 
         <span class="c1"># process found albums</span>
+        <span class="n">albums</span>     <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">albumcount</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">foundalbums</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">albumcount</span><span class="p">):</span>
             <span class="n">albumid</span> <span class="o">=</span> <span class="n">foundalbums</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">album</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetAlbumById</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span>
@@ -1743,6 +1748,8 @@
             <span class="n">albums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
 
         <span class="c1"># process found songs</span>
+        <span class="n">songs</span>     <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">songcount</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">foundsongs</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">songcount</span><span class="p">):</span>
             <span class="n">songid</span>  <span class="o">=</span> <span class="n">foundsongs</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">song</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
@@ -2406,7 +2413,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -2428,7 +2435,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

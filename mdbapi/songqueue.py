@@ -17,15 +17,21 @@
 This module implements the Song Queue.
 The song queue consists of a global FIFO organized list.
 
-    .. warning::
-
-        When calling this method, the :meth:`mdbapi.stream.StreamingThread` will never know that the current song changed!
-        In context of the stream, always use the :class:`mdbapi.stream.StreamManager` methods!
-
 Queue Management
 ----------------
 
-An entry this queue is a tuple of an entry ID and a song ID as maintained by the :class:`~lib.db.musicdb.MusicDatabase` class.
+An entry in this queue is a dictionary having the following keys:
+
+    entryid:
+        An entry ID that is unique for all entries at any time.
+        This UUID is a 128 bit integer.
+    
+    songid:
+        A song ID as maintained by the :class:`~lib.db.musicdb.MusicDatabase` class.
+
+    israndom:
+        A boolean value that is set to ``True`` when the song was added by :doc:`/mdbapi/randy`.
+
 
 Some features of this queue are:
 
@@ -75,10 +81,14 @@ Examples
         queue.AddSong(1337)
         queue.AddSong(2342)
 
-        print(queue.CurrentSong())  # (*UUID*, 7357)
-        print(queue.CurrentSong())  # (*UUID*, 7357)
-        print(queue.NextSong())     # (*UUID*, 1337)
-        print(queue.CurrentSong())  # (*UUID*, 1337)
+        print(queue.CurrentSong()["songid"])  # 7357
+        print(queue.CurrentSong()["songid"])  # 7357
+        print(queue.NextSong()["songid"])     # 1337
+        print(queue.CurrentSong()["songid"])  # 1337
+
+        queueentry = queue.CurrentSong()
+        if queueentry["israndom"]:
+            print("Entry %d is a randomly added song."%(queueentry["entryid"]))
 
 """
 
@@ -92,8 +102,8 @@ from mdbapi.randy       import Randy
 from mdbapi.blacklist   import BlacklistInterface
 
 Queue     = None
-QueueLock = threading.RLock() # RLock allows nested calls. It locks only different threads.
-Callbacks = []  # For events like QueueChanged or SongChanged
+QueueLock = threading.RLock()   # RLock allows nested calls. It locks only different threads.
+Callbacks = []                  # For events like QueueChanged or SongChanged
 
 
 
@@ -292,14 +302,16 @@ class SongQueue(object):
         This method returns the current song in the queue.
 
         The method returns element 0 from the queue which is the current song that can be streamed or gets already streamed.
-        The songs remain in the queue until they got completely streamed.
+        The song shall remain in the queue until it got completely streamed.
+        Then it can be removed by calling :meth:`~mdbapi.songqueue.SongQueue.NetSong`.
 
         When the queue is empty, a new random song gets added.
         This is the exact same song that then will be returned by this method.
-        If adding a new song fails, ``(None, None)`` gets returned.
+        If adding a new song fails, ``None`` gets returned.
+        This method triggers the ``QueueChanged`` event when the queue was empty and a new random song got added.
 
         Returns:
-            A tuple (entryid, songid).
+            A dictionary as described in the module description
 
         Example:
 
@@ -308,15 +320,22 @@ class SongQueue(object):
                 queue = SongQueue()
 
                 # Queue will be empty after creating a SongQueue object
-                entryid, songid = queue.CurrentSong()
-                print("SongID: %s" % (str(songid))) # None
+                entry = queue.CurrentSong()
+                if entry:
+                    print("Random SongID: %s" % (str(entry["songid"])))
+                else
+                    print("Queue is empty! - Adding random song failed!")
 
                 # Adds two new song with ID 7357 and 1337. 
                 # Then the current song is the first song added.
                 queue.AddSong(7357)
                 queue.AddSong(1337)
-                entryid, songid = queue.CurrentSong()
-                print("SongID: %s" % (str(songid))) # 7357
+                entry = queue.CurrentSong()
+                if entry:
+                    print("SongID: %s" % (str(entry["songid"]))) # 7357
+                else
+                    # will not be reached because we explicitly added songs.
+                    print("Queue is empty! - Adding random song failed!")
 
         """
         global Queue
@@ -326,11 +345,12 @@ class SongQueue(object):
             # Empty Queue? Add a random song!
             if len(Queue) == 0:
                 self.AddRandomSong()
+                self.Event_QueueChanged()
 
             # Still empty (no random song found)? Then return (None, None). Nothing to do…
             if len(Queue) == 0:
                 logging.critical("Queue run empty! \033[1;30m(Check constraints for random song selection and check if there are songs at all)")
-                return (None, None)
+                return None
 
             # Select first song from queue
             entry = Queue[0]
@@ -347,15 +367,15 @@ class SongQueue(object):
         The method pops the last current element from the queue.
         Then the new element at position 0, the new current element, will be returned.
 
-        If the queue is empty, ``(None, None)`` gets returned.
+        If the queue is empty, ``None`` gets returned.
 
         .. warning::
 
             In context of streaming, this method may not be the one you want to call.
             This Method drops the current song and sets the next song on top of the queue.
 
-            The will not notice this, so that it continues streaming the previous song. (See :doc:`/mdbapi/stream`).
-            If you want to to stream the next song, call :meth:`mdbapi.stream.StreamManager.PlayNextSong`.
+            The stream will not notice this, so that it continues streaming the previous song. (See :doc:`/mdbapi/stream`).
+            If you want to stream the next song, call :meth:`mdbapi.stream.StreamManager.PlayNextSong`.
 
             The :meth:`mdbapi.stream.StreamManager.PlayNextSong` then makes the Streaming Thread calling this method.
 
@@ -365,7 +385,7 @@ class SongQueue(object):
         When there is only one entry left in the queue - the current song - then a new one gets add via :meth:`AddRandomSong`
 
         Returns:
-            The new current song entry in the queue as tuple ``(entryid, songid)``.
+            The new current song entry in the queue as dictionary described in the module description
 
         Example:
 
@@ -377,13 +397,13 @@ class SongQueue(object):
                 queue.AddSong(7357)
                 queue.AddSong(1337)
             
-                entryid, songid = queue.CurrentSong()
-                print("SongID: %s" % (str(songid))) # 7357
+                entry = queue.CurrentSong()
+                print("SongID: %s" % (str(entry["songid"]))) # 7357
 
-                entryid, songid = queue.NextSong()
-                print("SongID: %s" % (str(songid))) # 1337
-                entryid, songid = queue.CurrentSong()
-                print("SongID: %s" % (str(songid))) # 1337
+                entry = queue.NextSong()
+                print("SongID: %s" % (str(entry["songid"]))) # 1337
+                entry = queue.CurrentSong()
+                print("SongID: %s" % (str(entry["songid"]))) # 1337
 
         """
         global Queue
@@ -391,12 +411,12 @@ class SongQueue(object):
 
         with QueueLock:
             if len(Queue) == 0:
-                return (None, None)
+                return None
 
             # Get next song
             if len(Queue) == 1:
                 Queue.pop(0)
-                entry = (None, None)
+                entry = None
             else:   # > 1
                 Queue.pop(0)
                 entry = Queue[0]
@@ -415,9 +435,8 @@ class SongQueue(object):
         """
         This method returns a copy of the song queue.
 
-        The queue is a list of tuple.
-        The tuple holds the entry ID of the queue element, and song ID
-        The entry ID is a `Version 4 Universally Unique Identifier (UUID) <https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)>`_ .
+        The queue is a list of dictionaries.
+        The content of the dictionary is described in the description of this module.
 
         Returns:
             The current song queue. ``None`` if there is no queue yet.
@@ -431,8 +450,9 @@ class SongQueue(object):
                 if not queue:
                     print("There are no songs in the queue")
                 else:
-                    for entryid, songid in queue:
-                        print("Element with ID %i holds the song with ID %i" % (entryid, songid))
+                    for entry in queue:
+                        print("Element with ID %i holds the song with ID %i" 
+                                % (entry["entryid"], entry["songid"]))
 
         """
         global Queue
@@ -440,7 +460,7 @@ class SongQueue(object):
 
 
 
-    def AddSong(self, songid, position="last"):
+    def AddSong(self, songid, position="last", israndom=False):
         """
         With this method, a new song can be insert into the queue.
 
@@ -459,7 +479,8 @@ class SongQueue(object):
 
         Args:
             songid (int): The ID of the song that shall be added to the queue
-            position (str): Defines the position where the song gets inserted.
+            position (str): Defines the position where the song gets inserted
+            israndom (bool): Defines whether the song is randomly selected or not
 
         Returns:
             *Nothing*
@@ -472,14 +493,19 @@ class SongQueue(object):
 
         entryid = self.GenerateID()
 
+        entry = {}
+        entry["entryid"]  = entryid
+        entry["songid"]   = songid
+        entry["israndom"] = israndom
+
         global Queue
         global QueueLock
 
         with QueueLock:
             if position == "next":
-                Queue.insert(1, (entryid, songid))
+                Queue.insert(1, entry)
             elif position == "last":
-                Queue.append((entryid, songid))
+                Queue.append(entry)
             else:
                 logging.warning("Position must have the value \"next\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
                 return
@@ -488,6 +514,7 @@ class SongQueue(object):
         self.blacklist.AddSong(songid)
 
         self.Event_QueueChanged()
+        return
 
 
 
@@ -529,7 +556,7 @@ class SongQueue(object):
         if not mdbsong:
             return False
 
-        self.AddSong(mdbsong["id"], position)
+        self.AddSong(mdbsong["id"], position, israndom=True)
         return True
 
 
@@ -554,9 +581,9 @@ class SongQueue(object):
         global QueueLock
 
         with QueueLock:
-            for eid, songid in Queue:
-                if eid == entryid:
-                    return songid
+            for entry in Queue:
+                if entry["entryid"] == entryid:
+                    return entry["songid"]
 
         logging.debug("Cannot find the requested entry %s! \033[1;30m(Returning None)", str(entryid))
         return None
@@ -593,11 +620,11 @@ class SongQueue(object):
                 logging.warning("The queue has only %i element. There must be at least 2 entries to be able to remove one.", len(Queue))
                 return False
 
-            if Queue[0][0] == entryid:
+            if Queue[0]["entryid"] == entryid:
                 logging.warning("The entry ID addresses the current song. This entry cannot be removed!")
                 return False
 
-            Queue = [entry for entry in Queue if entry[0] != entryid]
+            Queue = [entry for entry in Queue if entry["entryid"] != entryid]
 
             # Make sure the queue never runs empty
             if len(Queue) < 2:
@@ -637,19 +664,19 @@ class SongQueue(object):
         global QueueLock
 
         with QueueLock:
-            if Queue[0][0] == entryid:
+            if Queue[0]["entryid"] == entryid:
                 logging.warning("The entry ID addresses the current song. This entry cannot be moved!")
                 return False
 
             # Get Positions
-            frompos = [pos for pos, entry in enumerate(Queue) if entry[0] == entryid]
-            topos   = [pos for pos, entry in enumerate(Queue) if entry[0] == afterid]
+            frompos = [pos for pos, entry in enumerate(Queue) if entry["entryid"] == entryid]
+            topos   = [pos for pos, entry in enumerate(Queue) if entry["entryid"] == afterid]
 
             if not frompos:
-                logging.warning("Cannot find element with entryid %i in the queue!\033[1;30m (Doning nothing)", entryid)
+                logging.warning("Cannot find element with entryid %i in the queue!\033[1;30m (Doing nothing)", entryid)
                 return False
             if not topos:
-                logging.warning("Cannot find element with afterid %i in the queue!\033[1;30m (Doning nothing)", afterid)
+                logging.warning("Cannot find element with afterid %i in the queue!\033[1;30m (Doing nothing)", afterid)
                 return False
 
             frompos = frompos[0]

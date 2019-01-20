@@ -2,11 +2,11 @@
 
 # MusicDB
 
-MusicDB is a music manager with focus on remote access to your music using a WebUI
-an audio stream.
+MusicDB is a music manager with focus on remote access to your music using a WebUI to.
+manage an audio stream.
 The WebUI is more a presentation of your music than a database frontend.
 
-So, when you are listening to music, you do not work with software.
+So, when you are listening to your music, you do not work with software.
 Instead you explore your music collection.
 
 **For more details, a list of features and screenshots see the start page [rstemmer.github.io/musicdb/](https://rstemmer.github.io/musicdb/index.html).**
@@ -23,15 +23,28 @@ For news, follow [@MusicDBProject](https://twitter.com/MusicDBProject) on Twitte
 A detailed description of MusicDB and its components can be found in the documentation: [Overview of MusicDB](https://rstemmer.github.io/musicdb/build/html/basics/overview.html)
 
 
-## Breaking News
+## Important News
 
 This section contains some important information on how to update to a next major version.
 Major releases have changes that are not compatible to the previous version of MusicDB.
 Furthermore those changes may break scripts you wrote around MusicDB.
 
-Lines starting with "**:wrench: Change:**" are steps you have to do *before* updating via `install.sh` script.
+Lines starting with "**:wrench: Change:**" are steps you have to do *before* or *after* updating via `install.sh` script.
 
-### 28.07.18: 3.x.x → 4.0.0+
+<details>
+<summary> 20.01.19: 4.x.x → 5.0.0+ </summary>
+
+* Some changes in the configuration file
+  * **:wrench: Change:** Remember to call `musicdb upgrade` *after* installation when using the `update.sh` script
+* Blacklists and songqueue files in the MusicDB state directory got additional columns
+  * They will be automatically upgraded by MusicDB without any information loss
+* Changes in the WebUI
+  * **:wrench: Change:** Reload WebUI *after* update (Clear cache if necessary)
+
+</details>
+
+<details>
+<summary> 28.07.18: 3.x.x → 4.0.0+ </summary>
 
 * Rebuild of the installation process.
   * **:wrench: Change:** Make a backup of the MusicDB data directory!
@@ -51,52 +64,7 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* upd
   * Update the icecast passwort (`musicdb.ini` ↔ `icecast/config.xml`)
   * Update the WebSocket API Key (`musicdb.ini` ↔ `../server/webui/config.js`)
 
-
-### 06.05.18: 2.x.x → 3.0.0+
-
-* Two new columns added to the database: `checksum` and `lastplayed`
-  * **:wrench: Change:** After *installing via install.sh* execute [:notebook: repair](https://rstemmer.github.io/musicdb/build/html/mod/repair.html) with `--checksums` option (`musicdb repair --checksums`) to fill the new added checksum column.
-  * The date a song was last played is currently shown in the tooltip when hovering the cursor above a song in the Album-View.
-* I replaced the MPD backend with an own [Icecast](https://icecast.org/) Source Client
-  * Transcoding is done by [GStreamer](https://gstreamer.freedesktop.org/)
-  * **:wrench: Change:** New dependencies: gstreamer, gst-python and the good+bad GStreamer plugins
-  * **:wrench: Change:** The install script creates a new directory in the MusicDB data directory called `icecast`. Make sure that such a directory does not exist before running `install.sh`. If it does, rename it, and merge your setup after the installation.
-  * **:wrench: Change:** The `[mpd]` section can be removed from the MusicDB Configuration
-* MusicDB's state now gets stored with the blacklists and song queue in an extra directory.
-  * The directory can be configured: `[server] -> statedir`
-* **:wrench: Change:** New `musicdb.ini` file will be installed as `musicdb.ini.new` - check the differences.
-
-**:wrench: Update:**
-```sh
-# Backup the MusicDB Data directory!
-
-# Download latest version of MusicDB
-git checkout master
-git pull
-
-# Install latest version of MusicDB
-sudo pacman -S gst-plugins-good gst-python gst-plugins-bad
-sudo ./install.sh
-
-# Read the linked documentation of the repair module
-
-# Update old data
-newgrp musicdb
-musicdb repair --checksums
-```
-
-### 05.01.18: 1.x.x → 2.0.0+
-
-* Signals got replaced by a named pipe
-  * New configuration: `[server] -> fifofile=DATADIR/musicdb.fifo`
-  * Communication with the server via signals (`SIGTERM`, `SIGUSR1`) is deprecated. Use the named pipe instead. (Commands: `"shutdown"`, `"refresh"`)
-  * [:notebook: Details and examples](https://rstemmer.github.io/musicdb/build/html/mdbapi/server.html)
-  * **:wrench: Change:** Add the new configuration (`[server] -> fifofile=DATADIR/musicdb.fifo`) into your ini file
-
-* [:notebook: database](https://rstemmer.github.io/musicdb/build/html/mod/database.html) module updated
-  * *target* parameter removed. Target gets determined by its path.
-  * `update` command removed. Use the [:notebook: repair](https://rstemmer.github.io/musicdb/build/html/mod/repair.html) module for updating paths.
-  * `remove` command added.
+</details>
 
 
 ## Social
@@ -119,7 +87,7 @@ This section describes how to install, update and use MusicDB.
 
 I only test with the latest version of the requirements I list below.
 If MusicDB breaks when updating dependencies, it's a bug in MusicDB.
-In case MusicDB does not run on outdated operating systems, update your system ;)
+In case MusicDB does not run on outdated operating systems, update your system :wink:
 
 * A Linux operating system. Tested with:
   * [Arch Linux](https://www.archlinux.org/) for x86-64 (primary test and development system)
@@ -156,8 +124,8 @@ git clone https://github.com/rstemmer/musicdb.git
 
 To install MusicDB, read [:notebook: How to Install MusicDB](https://rstemmer.github.io/musicdb/build/html/usage/install.html) in the documentation.
 
-For updating, you can also execute `cd scripts && ./install.sh && musicdb upgrade --major`.
-Read the *Breaking News* for manual steps to do before updating to a new major release.
+For updating, you can also execute `cd scripts && ./install.sh && musicdb upgrade`.
+Read the *Important News* for manual steps to do before updating to a new major release.
 
 Updating to the next minor version can be done by simply executing `git pull && cd scripts && ./update.sh` (Be sure you are on the master branch).
 
@@ -165,7 +133,7 @@ Updating to the next minor version can be done by simply executing `git pull && 
 ## Usage
 
 The start page of [:notebook: MusicDB's Documentation](https://rstemmer.github.io/musicdb/build/html/index.html)
-should give you the help you need to start - or at least the links to the chapters they do
+should give you the help you need to start - or at least the links to the chapters that do
 (like the [:notebook: CLI MODULES chapters)](https://m45ch1n3.de/musicdb/docs/build/html/index.html#musicdb-cli).
 The documentation is made for developers, not only users. So there is much more information than you will need to use MusicDB.
 
@@ -181,9 +149,14 @@ In general, the first steps are the following, after you have done the [:noteboo
 Some helpful hints:
 
 * For security reasons, MusicDB only accepts connections from localhost by default. Change the [:notebook: WebSocket address configuration](https://rstemmer.github.io/musicdb/build/html/basics/config.html#websocket) to access your music from anywhere.
-* Don't be to specific with the genre tags. Tag albums beforehand and songs only when they are currently playing.
+* Don't be to specific with the genre tags. Define only one tag per genre like *Metal*, *Pop*, *Classic*, …
+* Use sub-genre tags for a more detailed classification.
+* Tag albums beforehand and songs only when they are currently playing.
 * Set mood-flags only for the current playing song.
 * Check the [:notebook: Configuration of Randy](https://rstemmer.github.io/musicdb/build/html/basics/config.html#randy) to make sure the random song selection can work with your music collection. When you have a small music collection, decrease the blacklist sizes.
+* In the Album-View panel, right click on the album title opens a panel for tagging and defining a color scheme for the album.
+* Right click on a song name inside the Album-View allows detailed tagging and pre"view"ing a song.
+* When defining the Album-View colors, pay attention to good contrast and follow the color scheme of the album cover.
 
 
 If there are any problems setting up MusicDB, create an issue.
@@ -232,25 +205,29 @@ The rest of the year I only want to concentrate on fixing critical bugs.
 There are no classic releases. The MusicDB core has some kind of version number (see VERSION file),
 but this number does not cover changes in the WebUI, for example.
 
+Major "releases" are not compatible with the previous version of MusicDB.
+How to update to a next major version will be described in the *Important News* section at the beginning of this README.
+
 A reliable change log can be generated by calling `git log --oneline`. :wink:
 
-It is also recommended to update whenever there are changes on *master*.
+It is recommended to update whenever there are changes on *master*.
 You better not use any other branch than *master*. :wink:
 
 **Best dates for updating MusicDB are end of January, end of May and end of September.**
 
-Major "releases" are not compatible with the previous version of MusicDB.
-How to update to a next major version will be described in the *Breaking News* section at the beginning of this README.
+The following branches exist in the MusicDB git repository contains.
 
-The following subsections describe the branches the MusicDB git repository contains.
-
-## master branch
+<details>
+<summary> master - Ready to Use </summary>
 
 This is the main branch and contains the latest stable version of MusicDB.
 This is the version you should install.
 If you want to do some changes to the code, you should branch from this branch.
 
-## develop branch
+</details>
+
+<details>
+<summary> develop - Work in Progress </summary>
 
 This branch is the branch I'm working on. It may contain incomplete features and untested code.
 If there you have trouble with the master branch, and the git log promises a solution to that problem, 
@@ -260,13 +237,20 @@ When there are lots of commits that are not yet merges with master, you should b
 I also do not guarantee that this branch is compatible with the current master branch.
 Make a backup of your MusicDB data directory before using installing MusicDB from this branch.
 
-## mobileapp branch
+</details>
 
-I'm working on a mobile app that downloads your whole music collection via WLAN onto your smartphone.
-It is still very experimental and not ready to use.
+<details>
+<summary> mobileapp - The mobile app is dead </summary>
+
+I started to build a tiny mobile app that downloads your whole music collection via WLAN onto your smartphone.
 For the app, I use the [kivy](https://kivy.org/#home) framework.
 
-Target will only be Android smartphones due to the storage limitation of iOS based devices.
+There were so many problems with the framework and the build environment that I canceled the development.
+For example, I had to use Python 2 because there was no SSL support for Python 3 included.
+The build environment used proprietary 32bit executables and may more problems like that.
+
+</details>
+
 
 ## GitHub Releases
 

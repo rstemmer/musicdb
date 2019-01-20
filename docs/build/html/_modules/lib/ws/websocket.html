@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.ws.websocket &mdash; MusicDB 4.3.0 documentation</title>
+  <title>lib.ws.websocket &mdash; MusicDB 5.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 4.3.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 5.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                4.3
+                5.0
               </div>
             
           
@@ -386,7 +386,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#musicai-module">MusicAI Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
 </ul>
 </li>
@@ -664,7 +664,7 @@
             
   <h1>Source code for lib.ws.websocket</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2017,2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -921,19 +921,19 @@
         <span class="k">elif</span> <span class="n">code</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">wasClean</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Websocket connection closed without an exit-code. </span><span class="se">\033</span><span class="s2">[1;30m(Exitcode == None ; wasClean-Flag == True)&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Websocket connection closed abnormaly!&quot;</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;33mwasClean = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">wasClean</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;33mcode     = </span><span class="se">\033</span><span class="s2">[1;33m</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">code</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;33mreason   = </span><span class="se">\033</span><span class="s2">[1;33m</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">reason</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;33mclosedByMe  = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">closedByMe</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;33mfailedByMe  = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">failedByMe</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;33mdroppedByMe = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">droppedByMe</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;33mwasClean          = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">wasClean</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;33mwasNotCleanReason = </span><span class="se">\033</span><span class="s2">[1;33m</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">wasNotCleanReason</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33mlocalCloseCode    = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">localCloseCode</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33mlocalCloseReason  = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">localCloseReason</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33mremoteCloseCode   = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">remoteCloseCode</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span>  <span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33mremoteCloseReason = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">remoteCloseReason</span><span class="p">)</span></div>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Websocket connection closed abnormaly! - </span><span class="se">\033</span><span class="s2">[0;33m</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wasNotCleanReason</span><span class="p">)</span></div>
+            <span class="c1">#logging.debug  (&quot;\033[0;33mreason: %s&quot;, reason)</span>
+            <span class="c1">#logging.debug  (&quot;\033[0;33mwasNotCleanReason: %s&quot;, self.wasNotCleanReason)</span>
+            <span class="c1">#logging.debug  (&quot;\033[0;33mwasClean = %s&quot; % wasClean)</span>
+            <span class="c1">#logging.debug  (&quot;\033[0;33mcode     = \033[1;33m%s&quot; % code)</span>
+            <span class="c1">#logging.debug  (&quot;\033[0;33mclosedByMe  = %s&quot; % self.closedByMe)</span>
+            <span class="c1">#logging.debug  (&quot;\033[0;33mfailedByMe  = %s&quot; % self.failedByMe)</span>
+            <span class="c1">#logging.debug  (&quot;\033[0;33mdroppedByMe = %s&quot; % self.droppedByMe)</span>
+            <span class="c1">#logging.debug  (&quot;\033[0;33mwasClean          = %s&quot; % self.wasClean)</span>
+            <span class="c1">#logging.debug  (&quot;\033[1;33mlocalCloseCode    = %s&quot; % self.localCloseCode)</span>
+            <span class="c1">#logging.debug  (&quot;\033[1;33mlocalCloseReason  = %s&quot; % self.localCloseReason)</span>
+            <span class="c1">#logging.debug  (&quot;\033[1;33mremoteCloseCode   = %s&quot; % self.remoteCloseCode)</span>
+            <span class="c1">#logging.debug  (&quot;\033[1;33mremoteCloseReason = %s&quot; % self.remoteCloseReason)</span>
 
 
         <span class="c1">#CLOSE_CODE_NORMAL              = 1000 #Normal close of connection.</span>
@@ -952,7 +952,7 @@
 
 
 <div class="viewcode-block" id="WebSocket.onOpenHandshakeTimeout"><a class="viewcode-back" href="../../../lib/websockets.html#lib.ws.websocket.WebSocket.onOpenHandshakeTimeout">[docs]</a>    <span class="k">def</span> <span class="nf">onOpenHandshakeTimeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Open-Handshake Timeout!&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Open-Handshake Timeout! </span><span class="se">\033</span><span class="s2">[0;33m(Connection will be closed)&quot;</span><span class="p">)</span>
         <span class="n">WebSocketServerProtocol</span><span class="o">.</span><span class="n">onOpenHandshakeTimeout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="WebSocket.onCloseHandshakeTimeout"><a class="viewcode-back" href="../../../lib/websockets.html#lib.ws.websocket.WebSocket.onCloseHandshakeTimeout">[docs]</a>    <span class="k">def</span> <span class="nf">onCloseHandshakeTimeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1028,7 +1028,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Ralf Stemmer.
+        &copy; Copyright 2018,2019 Ralf Stemmer.
 
     </p>
   </div>
@@ -1050,7 +1050,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'4.3.0',
+            VERSION:'5.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
