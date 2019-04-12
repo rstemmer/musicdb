@@ -1,3 +1,4 @@
+5.1.0 - Search will no longer show deactivated or hated songs
 5.0.0 - SEE CHANGELOG
 4.3.0 - All added songs will be pushed onto the blacklist now
 4.2.0 - Replaces old imp module by importlib

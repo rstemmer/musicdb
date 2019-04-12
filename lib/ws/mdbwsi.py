@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2019  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1023,6 +1023,8 @@ class MusicDBWebSocketInterface(object):
         It looks for most likeliness.
         So, typos or all lowercase input are no problem.
 
+        The list of songs will not contain any hated or disabled songs.
+
         Args:
             searchstring (str): The string to search for
             limit (int): max number entries that will be returned for each category
@@ -1084,10 +1086,12 @@ class MusicDBWebSocketInterface(object):
 
         # process found songs
         songs     = []
-        songcount = min(limit, len(foundsongs))
+        songcount = len(foundsongs) # Do not limit the songlist length at this point. There may be songs removed
         for i in range(songcount):
             songid  = foundsongs[i][0]
             song    = self.database.GetSongById(songid)
+            if song["disabled"] or song["favorite"] == -1:
+                continue    # Skip hated and disabled songs
             album   = self.database.GetAlbumById(song["albumid"])
             artist  = self.database.GetArtistById(song["artistid"])
 
@@ -1096,6 +1100,8 @@ class MusicDBWebSocketInterface(object):
             entry["album"]  = album
             entry["song"]   = song
             songs.append(entry)
+            if len(songs) >= limit:
+                break
 
         results = {}
         results["artists"] = artists
