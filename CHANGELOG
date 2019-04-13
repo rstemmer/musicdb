@@ -7,6 +7,15 @@
 
 Run  git log --oneline  for more details
 
+┍━━━━┫ 2019-04-xx ┣━━━━┫ 5.1.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ * [MiSE] Search will no longer show deactivated or hated songs
+│ * [WebUI] Related-Songs-List is now sorted
+│
+┝━ MINOR CHANGES
+└───────────────────────────────────────╌╌
+
+
 ┍━━━━┫ 2019-01-20 ┣━━━━┫ 5.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ + [WebUI] Hovering over (sub)genre tags in the album-view highlights tagged song names

@@ -21,6 +21,7 @@ function ShowSongRelationship(parentID, songid, MDBSonglist)
     var html = "";
     html += "<div id=SRMainBox>";
 
+    let currentartist = -1;
     for(let i in MDBSonglist)
     {
         let MDBSong     = MDBSonglist[i].song;
@@ -35,6 +36,16 @@ function ShowSongRelationship(parentID, songid, MDBSonglist)
         if(i > 0)
             html += "<div class=\"SREntrySeparator\"></div>";
 
+        // Create Artist headline
+        if(MDBArtist.id != currentartist)
+        {
+            html += "<div class=\"MDBSArtistListEntry hlcolor\" onclick=\"ScrollToArtist("+MDBArtist.id+");\" title=\"Scroll to this artist\">";
+            html += MDBArtist.name;
+            html += "</div>";
+            currentartist = MDBArtist.id;
+        }
+
+        // Create Song entry
         var opacity;
         if(weight < 5)
             opacity = weight / 5;
@@ -55,7 +66,6 @@ function ShowSongRelationship(parentID, songid, MDBSonglist)
     // Update song tags
     for(let entry of MDBSonglist)
     {
-        window.console && console.log(entry);
         let songid = entry.song.id;
         let tags   = entry.tags;
         Taginput_Show("SongTileGenre_"+songid,    "STMGI_"+songid, songid, tags, "Genre",    "Song");

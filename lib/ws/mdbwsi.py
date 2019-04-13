@@ -1374,6 +1374,14 @@ class MusicDBWebSocketInterface(object):
         Furthermore the ``weight`` is given.
         The weight indicates how often the two songs were played together.
 
+        The list of songs gets sorted by the keys in the following list: (sorted by priority)
+
+            * Artist Name
+            * Album Release
+            * Album Name
+            * Song CD
+            * Song Number
+
         The ``tags`` of that song will also be returned separated into ``genre``, ``subgenre`` and ``mood``.
         See :meth:`~GetSongTags` for details how they are returned.
 
@@ -1423,6 +1431,15 @@ class MusicDBWebSocketInterface(object):
             entry["artist"]  = self.database.GetArtistById(song["artistid"])
 
             entries.append(entry)
+
+        # Sort by Artist-ID and Album-ID
+        entries.sort(key = lambda k:( 
+            k["artist"]["name"], 
+            k["album"]["release"], 
+            k["album"]["name"], 
+            k["song"]["cd"],
+            k["song"]["number"]
+            ))
 
         packet = {}
         packet["songid"]  = parentsid
