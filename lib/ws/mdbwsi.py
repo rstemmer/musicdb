@@ -1373,6 +1373,7 @@ class MusicDBWebSocketInterface(object):
         Each lists entry is a dictionary with the related ``song``, ``album`` and ``artist`` album from the database.
         Furthermore the ``weight`` is given.
         The weight indicates how often the two songs were played together.
+        Hated and disabled songs will not appear in the list.
 
         The list of songs gets sorted by the keys in the following list: (sorted by priority)
 
@@ -1423,6 +1424,11 @@ class MusicDBWebSocketInterface(object):
             songid = result["id"]
             weight = result["weight"]
             song   = self.database.GetSongById(songid)
+
+            # Ignore hated and disabled songs
+            if song["favorite"] == -1 or song["disabled"]:
+                continue
+
             tags   = self.GetSongTags(songid)
             entry["song"]    = song
             entry["tags"]    = tags

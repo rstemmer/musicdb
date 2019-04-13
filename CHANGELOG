@@ -13,6 +13,7 @@ Run  git log --oneline  for more details
 │ * [WebUI] Related-Songs-List is now sorted
 │
 ┝━ MINOR CHANGES
+│ * [Server] Hated songs will not appear in relationship-list returned by GetSongRelationship
 └───────────────────────────────────────╌╌
 
 
