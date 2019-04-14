@@ -11,6 +11,7 @@ Run  git log --oneline  for more details
 ┝━ MAJOR CHANGES
 │ * [MiSE] Search will no longer show deactivated or hated songs
 │ * [WebUI] Related-Songs-List is now sorted
+│ * [WebUI] Related-Songs-List now makes entries of none-selected genres transparent
 │
 ┝━ MINOR CHANGES
 │ * [Server] Hated songs will not appear in relationship-list returned by GetSongRelationship

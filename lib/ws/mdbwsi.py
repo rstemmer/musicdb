@@ -835,7 +835,7 @@ class MusicDBWebSocketInterface(object):
         """
         This method returns the current global state of the MusicDB WebUIs
 
-        This includes the *End of Queue Event* and the selected Genres.
+        Currently, the only state existing is the list of selected genres.
 
         The state is a dictionary with the following information:
 

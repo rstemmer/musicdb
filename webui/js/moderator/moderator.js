@@ -110,8 +110,12 @@ function onMusicDBMessage(fnc, sig, args, pass)
             MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: args.album.id});
         }
     }
-    else if(fnc == "GetMDBState" && sig == "UpdateMDBState") {
-        Artistloader_UpdateState(args);
+    else if(fnc == "GetMDBState") {
+        if(sig == "UpdateMDBState" || sig == "UpdateRelationshipGenreHighlight")
+        {
+            Artistloader_UpdateState(args);
+            UpdateRelationshipGenreHighlight(args);
+        }
     }
     else if(fnc=="sys:refresh" && sig == "UpdateCaches") {
         MusicDB_Request("GetTags", "UpdateTagsCache");                  // Update tag cache
