@@ -1526,6 +1526,30 @@ class MusicDBWebSocketInterface(object):
 
 
     def SetAlbumColor(self, albumid, colorname, color):
+        """
+        Sets a color scheme for an album.
+        Valid color names are the following and must be given as string to the *colorname* parameter.
+        The color itself must be in HTML-Format: ``#RRGGBB``.
+        
+        The following color-names exist:
+
+            * ``"bgcolor"`` -  Background color
+            * ``"fgcolor"`` -  Primary foreground color
+            * ``"hlcolor"`` -  Secondary foreground color
+
+        Args:
+            albumid (int): ID of the album
+            colorname (str): Name of the color to set (``"fgcolor"``, ``"hlcolor"``, ``"bgcolor"``)
+            color (str): Color code in HTML notation: #RRGGBB
+
+        Return:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("SetAlbumColor", {albumid:1000, colorname:"bgcolor", color:"#42AB23"});
+        """
         if not colorname in ["bgcolor", "fgcolor", "hlcolor"]:
             logging.warning("colorname must be bgcolor, fgcolor or hlcolor");
             return False

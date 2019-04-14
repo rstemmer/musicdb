@@ -1060,9 +1060,9 @@ class MusicDatabase(Database):
         This method is for setting a color for an album.
         Valid color names are the following and must be given as string to the *colorname* parameter.
 
-        * ``"bgcolor"`` -  Background color
-        * ``"fgcolor"`` -  Primary foreground color
-        * ``"hlcolor"`` -  Secondary foreground color
+            * ``"bgcolor"`` -  Background color
+            * ``"fgcolor"`` -  Primary foreground color
+            * ``"hlcolor"`` -  Secondary foreground color
 
         The color itself must be in HTML-Format: ``#RRGGBB``.
 
