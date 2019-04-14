@@ -14,6 +14,7 @@ Run  git log --oneline  for more details
 │
 ┝━ MINOR CHANGES
 │ * [Server] Hated songs will not appear in relationship-list returned by GetSongRelationship
+│ * [WebUI] Fixed missing nano-scroll update
 └───────────────────────────────────────╌╌
 
 

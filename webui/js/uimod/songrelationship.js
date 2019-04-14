@@ -73,6 +73,7 @@ function ShowSongRelationship(parentID, songid, MDBSonglist)
     }
 
     // New elements were created, update there colors with the current style
+    $(".nano").nanoScroller();          // update scrollbars
     UpdateStyle();
 }
 
@@ -80,7 +81,7 @@ function ShowSongRelationship(parentID, songid, MDBSonglist)
 function UpdateRelationshipTileTags(inputid, MDBTags)
 {
     if(inputid.startsWith("STMGI_"))
-    Taginput_Update(inputid, MDBTags, "show");
+        Taginput_Update(inputid, MDBTags, "show");
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
