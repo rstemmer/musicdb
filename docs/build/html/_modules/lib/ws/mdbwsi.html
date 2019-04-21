@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.ws.mdbwsi &mdash; MusicDB 5.0.0 documentation</title>
+  <title>lib.ws.mdbwsi &mdash; MusicDB 5.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 5.0.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 5.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                5.0
+                5.1
               </div>
             
           
@@ -664,7 +664,7 @@
             
   <h1>Source code for lib.ws.mdbwsi</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017,2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2017-2019  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -1500,7 +1500,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method returns the current global state of the MusicDB WebUIs</span>
 
-<span class="sd">        This includes the *End of Queue Event* and the selected Genres.</span>
+<span class="sd">        Currently, the only state existing is the list of selected genres.</span>
 
 <span class="sd">        The state is a dictionary with the following information:</span>
 
@@ -1688,6 +1688,8 @@
 <span class="sd">        It looks for most likeliness.</span>
 <span class="sd">        So, typos or all lowercase input are no problem.</span>
 
+<span class="sd">        The list of songs will not contain any hated or disabled songs.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            searchstring (str): The string to search for</span>
 <span class="sd">            limit (int): max number entries that will be returned for each category</span>
@@ -1749,10 +1751,12 @@
 
         <span class="c1"># process found songs</span>
         <span class="n">songs</span>     <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">songcount</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">foundsongs</span><span class="p">))</span>
+        <span class="n">songcount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">foundsongs</span><span class="p">)</span> <span class="c1"># Do not limit the songlist length at this point. There may be songs removed</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">songcount</span><span class="p">):</span>
             <span class="n">songid</span>  <span class="o">=</span> <span class="n">foundsongs</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">song</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;disabled&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;favorite&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>    <span class="c1"># Skip hated and disabled songs</span>
             <span class="n">album</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetAlbumById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
             <span class="n">artist</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetArtistById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
 
@@ -1761,6 +1765,8 @@
             <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">album</span>
             <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">song</span>
             <span class="n">songs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">songs</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">limit</span><span class="p">:</span>
+                <span class="k">break</span>
 
         <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">results</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">artists</span>
@@ -2032,6 +2038,15 @@
 <span class="sd">        Each lists entry is a dictionary with the related ``song``, ``album`` and ``artist`` album from the database.</span>
 <span class="sd">        Furthermore the ``weight`` is given.</span>
 <span class="sd">        The weight indicates how often the two songs were played together.</span>
+<span class="sd">        Hated and disabled songs will not appear in the list.</span>
+
+<span class="sd">        The list of songs gets sorted by the keys in the following list: (sorted by priority)</span>
+
+<span class="sd">            * Artist Name</span>
+<span class="sd">            * Album Release</span>
+<span class="sd">            * Album Name</span>
+<span class="sd">            * Song CD</span>
+<span class="sd">            * Song Number</span>
 
 <span class="sd">        The ``tags`` of that song will also be returned separated into ``genre``, ``subgenre`` and ``mood``.</span>
 <span class="sd">        See :meth:`~GetSongTags` for details how they are returned.</span>
@@ -2074,6 +2089,11 @@
             <span class="n">songid</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
             <span class="n">weight</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span>
             <span class="n">song</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
+
+            <span class="c1"># Ignore hated and disabled songs</span>
+            <span class="k">if</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;favorite&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;disabled&quot;</span><span class="p">]:</span>
+                <span class="k">continue</span>
+
             <span class="n">tags</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSongTags</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
             <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">song</span>
             <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">tags</span>
@@ -2082,6 +2102,15 @@
             <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetArtistById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">])</span>
 
             <span class="n">entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+
+        <span class="c1"># Sort by Artist-ID and Album-ID</span>
+        <span class="n">entries</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">k</span><span class="p">:(</span> 
+            <span class="n">k</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> 
+            <span class="n">k</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">][</span><span class="s2">&quot;release&quot;</span><span class="p">],</span> 
+            <span class="n">k</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> 
+            <span class="n">k</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">][</span><span class="s2">&quot;cd&quot;</span><span class="p">],</span>
+            <span class="n">k</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">][</span><span class="s2">&quot;number&quot;</span><span class="p">]</span>
+            <span class="p">))</span>
 
         <span class="n">packet</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">packet</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">parentsid</span>
@@ -2161,7 +2190,31 @@
         <span class="k">return</span> <span class="kc">None</span> 
 
 
-    <span class="k">def</span> <span class="nf">SetAlbumColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">,</span> <span class="n">colorname</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+<div class="viewcode-block" id="MusicDBWebSocketInterface.SetAlbumColor"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor">[docs]</a>    <span class="k">def</span> <span class="nf">SetAlbumColor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">,</span> <span class="n">colorname</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets a color scheme for an album.</span>
+<span class="sd">        Valid color names are the following and must be given as string to the *colorname* parameter.</span>
+<span class="sd">        The color itself must be in HTML-Format: ``#RRGGBB``.</span>
+<span class="sd">        </span>
+<span class="sd">        The following color-names exist:</span>
+
+<span class="sd">            * ``&quot;bgcolor&quot;`` -  Background color</span>
+<span class="sd">            * ``&quot;fgcolor&quot;`` -  Primary foreground color</span>
+<span class="sd">            * ``&quot;hlcolor&quot;`` -  Secondary foreground color</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            albumid (int): ID of the album</span>
+<span class="sd">            colorname (str): Name of the color to set (``&quot;fgcolor&quot;``, ``&quot;hlcolor&quot;``, ``&quot;bgcolor&quot;``)</span>
+<span class="sd">            color (str): Color code in HTML notation: #RRGGBB</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            .. code-block:: javascript</span>
+
+<span class="sd">                MusicDB_Call(&quot;SetAlbumColor&quot;, {albumid:1000, colorname:&quot;bgcolor&quot;, color:&quot;#42AB23&quot;});</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">colorname</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;bgcolor&quot;</span><span class="p">,</span> <span class="s2">&quot;fgcolor&quot;</span><span class="p">,</span> <span class="s2">&quot;hlcolor&quot;</span><span class="p">]:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;colorname must be bgcolor, fgcolor or hlcolor&quot;</span><span class="p">);</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -2182,7 +2235,7 @@
                     <span class="nb">str</span><span class="p">(</span><span class="n">color</span><span class="p">))</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
 
 
 <div class="viewcode-block" id="MusicDBWebSocketInterface.SetAlbumTag"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag">[docs]</a>    <span class="k">def</span> <span class="nf">SetAlbumTag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">,</span> <span class="n">tagid</span><span class="p">):</span>
@@ -2435,7 +2488,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'5.0.0',
+            VERSION:'5.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -2446,7 +2499,7 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../../../_static/language_data.js"></script>
 
   
 
