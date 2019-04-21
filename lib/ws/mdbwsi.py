@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2019  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -835,7 +835,7 @@ class MusicDBWebSocketInterface(object):
         """
         This method returns the current global state of the MusicDB WebUIs
 
-        This includes the *End of Queue Event* and the selected Genres.
+        Currently, the only state existing is the list of selected genres.
 
         The state is a dictionary with the following information:
 
@@ -1023,6 +1023,8 @@ class MusicDBWebSocketInterface(object):
         It looks for most likeliness.
         So, typos or all lowercase input are no problem.
 
+        The list of songs will not contain any hated or disabled songs.
+
         Args:
             searchstring (str): The string to search for
             limit (int): max number entries that will be returned for each category
@@ -1084,10 +1086,12 @@ class MusicDBWebSocketInterface(object):
 
         # process found songs
         songs     = []
-        songcount = min(limit, len(foundsongs))
+        songcount = len(foundsongs) # Do not limit the songlist length at this point. There may be songs removed
         for i in range(songcount):
             songid  = foundsongs[i][0]
             song    = self.database.GetSongById(songid)
+            if song["disabled"] or song["favorite"] == -1:
+                continue    # Skip hated and disabled songs
             album   = self.database.GetAlbumById(song["albumid"])
             artist  = self.database.GetArtistById(song["artistid"])
 
@@ -1096,6 +1100,8 @@ class MusicDBWebSocketInterface(object):
             entry["album"]  = album
             entry["song"]   = song
             songs.append(entry)
+            if len(songs) >= limit:
+                break
 
         results = {}
         results["artists"] = artists
@@ -1367,6 +1373,15 @@ class MusicDBWebSocketInterface(object):
         Each lists entry is a dictionary with the related ``song``, ``album`` and ``artist`` album from the database.
         Furthermore the ``weight`` is given.
         The weight indicates how often the two songs were played together.
+        Hated and disabled songs will not appear in the list.
+
+        The list of songs gets sorted by the keys in the following list: (sorted by priority)
+
+            * Artist Name
+            * Album Release
+            * Album Name
+            * Song CD
+            * Song Number
 
         The ``tags`` of that song will also be returned separated into ``genre``, ``subgenre`` and ``mood``.
         See :meth:`~GetSongTags` for details how they are returned.
@@ -1409,6 +1424,11 @@ class MusicDBWebSocketInterface(object):
             songid = result["id"]
             weight = result["weight"]
             song   = self.database.GetSongById(songid)
+
+            # Ignore hated and disabled songs
+            if song["favorite"] == -1 or song["disabled"]:
+                continue
+
             tags   = self.GetSongTags(songid)
             entry["song"]    = song
             entry["tags"]    = tags
@@ -1417,6 +1437,15 @@ class MusicDBWebSocketInterface(object):
             entry["artist"]  = self.database.GetArtistById(song["artistid"])
 
             entries.append(entry)
+
+        # Sort by Artist-ID and Album-ID
+        entries.sort(key = lambda k:( 
+            k["artist"]["name"], 
+            k["album"]["release"], 
+            k["album"]["name"], 
+            k["song"]["cd"],
+            k["song"]["number"]
+            ))
 
         packet = {}
         packet["songid"]  = parentsid
@@ -1497,6 +1526,30 @@ class MusicDBWebSocketInterface(object):
 
 
     def SetAlbumColor(self, albumid, colorname, color):
+        """
+        Sets a color scheme for an album.
+        Valid color names are the following and must be given as string to the *colorname* parameter.
+        The color itself must be in HTML-Format: ``#RRGGBB``.
+        
+        The following color-names exist:
+
+            * ``"bgcolor"`` -  Background color
+            * ``"fgcolor"`` -  Primary foreground color
+            * ``"hlcolor"`` -  Secondary foreground color
+
+        Args:
+            albumid (int): ID of the album
+            colorname (str): Name of the color to set (``"fgcolor"``, ``"hlcolor"``, ``"bgcolor"``)
+            color (str): Color code in HTML notation: #RRGGBB
+
+        Return:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("SetAlbumColor", {albumid:1000, colorname:"bgcolor", color:"#42AB23"});
+        """
         if not colorname in ["bgcolor", "fgcolor", "hlcolor"]:
             logging.warning("colorname must be bgcolor, fgcolor or hlcolor");
             return False

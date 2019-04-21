@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Websocket API &mdash; MusicDB 5.0.0 documentation</title>
+  <title>MusicDB Websocket API &mdash; MusicDB 5.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Workflow for development" href="workflow.html"/>
         <link rel="prev" title="MusicDB Test VMs" href="testvm.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.0
+                5.1
               </div>
             
           
@@ -893,7 +893,7 @@ The arguments <em>args</em> and <em>pass</em> are optional arguments.</p>
 <li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbums()</span></code></a></li>
 <li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSortedAlbumCDs()</span></code></a></li>
 <li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbum()</span></code></a></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetAlbumColor()</span></code></li>
+<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetAlbumColor()</span></code></a></li>
 <li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddAlbumToQueue()</span></code></a></li>
 <li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.Find" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.Find"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Find()</span></code></a></li>
 </ul>
@@ -1121,6 +1121,7 @@ The returned value is a dictionary with the following entries:</p>
 <p>The search does not look for exact matching.
 It looks for most likeliness.
 So, typos or all lowercase input are no problem.</p>
+<p>The list of songs will not contain any hated or disabled songs.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1365,7 +1366,7 @@ If there are no cached lyrics, the <em>lyricscache</em> entry is <code class="do
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState">
 <code class="descname">GetMDBState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetMDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the current global state of the MusicDB WebUIs</p>
-<p>This includes the <em>End of Queue Event</em> and the selected Genres.</p>
+<p>Currently, the only state existing is the list of selected genres.</p>
 <p>The state is a dictionary with the following information:</p>
 <blockquote>
 <div><ul class="simple">
@@ -1494,7 +1495,18 @@ It is a list of songs that were played before or after the song with song ID <em
 <p>The returned dictionary contains the same song ID given as argument to this method, and list of related songs.
 Each lists entry is a dictionary with the related <code class="docutils literal notranslate"><span class="pre">song</span></code>, <code class="docutils literal notranslate"><span class="pre">album</span></code> and <code class="docutils literal notranslate"><span class="pre">artist</span></code> album from the database.
 Furthermore the <code class="docutils literal notranslate"><span class="pre">weight</span></code> is given.
-The weight indicates how often the two songs were played together.</p>
+The weight indicates how often the two songs were played together.
+Hated and disabled songs will not appear in the list.</p>
+<p>The list of songs gets sorted by the keys in the following list: (sorted by priority)</p>
+<blockquote>
+<div><ul class="simple">
+<li>Artist Name</li>
+<li>Album Release</li>
+<li>Album Name</li>
+<li>Song CD</li>
+<li>Song Number</li>
+</ul>
+</div></blockquote>
 <p>The <code class="docutils literal notranslate"><span class="pre">tags</span></code> of that song will also be returned separated into <code class="docutils literal notranslate"><span class="pre">genre</span></code>, <code class="docutils literal notranslate"><span class="pre">subgenre</span></code> and <code class="docutils literal notranslate"><span class="pre">mood</span></code>.
 See <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongTags()</span></code></a> for details how they are returned.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1894,6 +1906,42 @@ This is identical to <code class="xref py py-meth docutils literal notranslate">
 </dd></dl>
 
 <dl class="method">
+<dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor">
+<code class="descname">SetAlbumColor</code><span class="sig-paren">(</span><em>albumid</em>, <em>colorname</em>, <em>color</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetAlbumColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a color scheme for an album.
+Valid color names are the following and must be given as string to the <em>colorname</em> parameter.
+The color itself must be in HTML-Format: <code class="docutils literal notranslate"><span class="pre">#RRGGBB</span></code>.</p>
+<p>The following color-names exist:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;bgcolor&quot;</span></code> -  Background color</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;fgcolor&quot;</span></code> -  Primary foreground color</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;hlcolor&quot;</span></code> -  Secondary foreground color</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>albumid</strong> (<em>int</em>) – ID of the album</li>
+<li><strong>colorname</strong> (<em>str</em>) – Name of the color to set (<code class="docutils literal notranslate"><span class="pre">&quot;fgcolor&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hlcolor&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;bgcolor&quot;</span></code>)</li>
+<li><strong>color</strong> (<em>str</em>) – Color code in HTML notation: #RRGGBB</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;SetAlbumColor&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">albumid</span><span class="o">:</span><span class="mi">1000</span><span class="p">,</span> <span class="nx">colorname</span><span class="o">:</span><span class="s2">&quot;bgcolor&quot;</span><span class="p">,</span> <span class="nx">color</span><span class="o">:</span><span class="s2">&quot;#42AB23&quot;</span><span class="p">});</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag">
 <code class="descname">SetAlbumTag</code><span class="sig-paren">(</span><em>albumid</em>, <em>tagid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetAlbumTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a tag for an album.
@@ -2079,7 +2127,7 @@ This is important to update the HUD if the song is currently playing.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.0.0',
+            VERSION:'5.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -2090,7 +2138,7 @@ This is important to update the HUD if the song is currently playing.</p>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 
