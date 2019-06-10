@@ -42,6 +42,13 @@ div#ABVArtworkBox img
     overflow:       hidden;
 }
 
+@media only screen and (min-width: 3000px)
+{
+    div#ABVArtworkBox img
+    {
+        width:      800px;
+    }
+}
 @media only screen and (max-width: 1920px)
 {
     div#ABVArtworkBox img
