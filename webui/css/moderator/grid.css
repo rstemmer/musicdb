@@ -35,7 +35,10 @@ div.flexrow
 
 div#FXTopRow
 {
+    /*
     height: 75px;
+    */
+    height: 5em;
 }
 @media only screen and (max-height: 400px) 
 {

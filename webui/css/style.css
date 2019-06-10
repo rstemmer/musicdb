@@ -24,6 +24,13 @@
 {
     font-size:      9pt;
 }
+@media only screen and (min-width: 3000px)
+{
+    .smallfont
+    {
+        font-size:      12pt;
+    }
+}
 .tinyfont
 {
     font-family:    Silkscreen;
