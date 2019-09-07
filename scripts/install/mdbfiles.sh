@@ -24,6 +24,7 @@ function InstallMusicDBFiles {
         --exclude 'lib/crawler/' \
         --exclude 'scripts/' \
         --exclude 'docs/build/doctrees/' \
+        --exclude 'Dockerfile' \
         --exclude '.git/' \
         --exclude '.gitignore' \
         --exclude '*.swp' \
