@@ -14,11 +14,19 @@ RUN dnf -y update && dnf -y install httpd icecast sed dialog gcc clang sqlite py
 # TODO: IMPORTANT: Symlink /usr/bin/python -> /usr/bin/python3
 # IMPORTANT: in Fedora, pip is calles pip3
 
+# Copy MusicDB files into the image
+COPY ./graphics ./graphics
+COPY ./lib      ./lib
+COPY ./mdbapi   ./mdbapi
+COPY ./mod      ./mod
+COPY ./webui    ./webui
+COPY ./sql      ./sql
+COPY ./musicdb  ./musicdb
+COPY ./requirements.txt ./requirements.txt
 
-# Install MusicDB
-#RUN git clone https://github.com/rstemmer/musicdb
-#RUN cd musicdb
-#RUN pip install --trusted-host pypi.python.org -r requirements.txt
+# Install MusicDB python dependencies
+#RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
+
 #RUN cd scripts
 # TODO: create a setup script specially for the docker image
 
