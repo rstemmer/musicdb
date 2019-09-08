@@ -5,10 +5,9 @@ FROM fedora:latest
 WORKDIR /app
 
 # Prepare Fedora
-RUN dnf -y update && dnf -y install httpd icecast sed dialog gcc clang sqlite python && dnf clean all
-# TODO                                            ^^^^^^^^^^ ^^^^^^^^^
-#                                                 ||||||||||  Make id3edit optional to avoid these dependencies
-#                                                  Optimize docker image setup to not need those dependencies
+RUN dnf -y update && dnf -y install httpd gcc sqlite python3 python3-devel && dnf clean all
+# TODO Make id3edit optional to avoid clang-dependencies
+# gcc and python3-devel are needed for some python modules
 
 
 # TODO: IMPORTANT: Symlink /usr/bin/python -> /usr/bin/python3
@@ -31,27 +30,23 @@ RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
 # Setup Users and Groups
 RUN groupadd -r musicdb && useradd  -d /data -s /usr/bin/bash -g musicdb -r -M musicdb
 
+# Focus on a striped down installation of MusicDB without Icecaste, security-features, id3edit and AI support.
 # Setup most important directories (MusicAI directories not needed)
-RUN mkdir -p /data/mdbstate
-RUN mkdir -p /data/music
+RUN mkdir -p /data/{mdbstate,music}
 RUN chown -R musicdb:musicdb /data
 RUN chmod -R g+w /data
 RUN chown -R musicdb:musicdb /app
 COPY --chown=musicdb:musicdb ./share/default.jpg /data/artwork/.
+
 # TODO /data/music must be outside the container - it will keep the music and be messed up with artwork and database-files
+# TODO Problem: The container runs the server, no way to user other MusicDB modules like "add"
 
 # Setup MusicDB
 COPY ./docker/musicdb.ini /etc/musicdb.ini
-# TODO: WS API Key must be set
-
-# Setup HTTP Server
-
-# Setup Icecast Server
 
 
-#EXPOSE 443 666 9000
-#  443: Apache
-#  666: Icecast
+#EXPOSE 80 9000
+#   80: Apache
 # 9000: MusicDB WebSocket Interface
 
 # TODO: Run MusicDB Server
