@@ -5,13 +5,7 @@ FROM fedora:latest
 WORKDIR /opt/musicdb/server
 
 # Prepare Fedora
-RUN  dnf -y update && dnf -y install httpd sed rsync gcc sqlite icecast python3 python3-devel python3-gstreamer1 gstreamer1-plugins-good gstreamer1-plugins-bad-free vim && dnf clean all
-
-# TODO Make id3edit optional to avoid clang-dependencies
-# gcc and python3-devel are needed for some python modules
-
-
-# TODO: IMPORTANT: Symlink /usr/bin/python -> /usr/bin/python3
+RUN  dnf -y update && dnf -y install httpd sed rsync gcc sqlite icecast python3 python3-devel python3-gstreamer1 gstreamer1-plugins-good gstreamer1-plugins-bad-free less && dnf clean all
 
 # Copy MusicDB files into the image
 RUN  mkdir /src
@@ -33,7 +27,6 @@ COPY ./VERSION  /src/VERSION
 RUN  pip3 install --trusted-host pypi.python.org -r /src/requirements.txt
 
 # Prepare MusicDB Installation
-#COPY ./docker/musicdb.ini /etc/musicdb.ini
 ENV  TERM=xterm
 RUN  useradd -m -s /usr/bin/bash user
 RUN  mkdir -p /var/music
@@ -46,22 +39,10 @@ RUN  /usr/bin/env bash -c /src/docker/install.sh
 RUN  usermod -a -G musicdb user
 RUN  KEY="$(openssl rand -base64 32)" && sed -i -e "s;WSAPIKEY;\"$KEY\";g" /opt/musicdb/server/webui/config.js && sed -i -e "s;WSAPIKEY;$KEY;g" /opt/musicdb/data/musicdb.ini
 RUN  sed -i -e "s;address=127.0.0.1;address=0.0.0.0;g" /opt/musicdb/data/musicdb.ini
+RUN  sed -i -e "s;--verbose;;g" /opt/musicdb/server/musicdb-start.sh
 COPY ./docker/httpd.conf /etc/httpd/conf.d/musicdb.conf
+COPY ./docker/container-boot.sh /opt/musicdb/server/container-boot.sh
+RUN  chmod +x /opt/musicdb/server/container-boot.sh
 
-
-# TODO /data/music must be outside the container - it will keep the music and be messed up with artwork and database-files
-# TODO Problem: The container runs the server, no way to user other MusicDB modules like "add"
-
-#EXPOSE 80 9000
-#   80: Apache
-# 9000: MusicDB WebSocket Interface
-
-# Execute:
-# httpd
-# ./musicdb-boot.sh
-# ./musicdb-start.sh
-
-# TODO: Run MusicDB Server
-# TODO: Befor all servers get started, the databases must be created
 CMD ["bash"]
 
