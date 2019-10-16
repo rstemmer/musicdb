@@ -7,6 +7,18 @@
 
 Run  git log --oneline  for more details
 
+┍━━━━┫ 2019-??-?? ┣━━━━┫ 5.2.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ + [Docker] Added some script to build a Docker image and run the container
+│
+┝━ MINOR CHANGES
+│ * [Server/WebUI] Fixed a bug that gets triggered when the song queue is empty
+│ * [Stream] Fixed a bug that crashes the streaming process when the song queue is empty
+│ * [Installation] Fixed a bug in the database creating process that leads to a wrong version number in new databases
+│ * [Installation] Fixed a bug that gets triggered when there is more than one bash-entry in /etc/shells
+└───────────────────────────────────────╌╌
+
+
 ┍━━━━┫ 2019-04-21 ┣━━━━┫ 5.1.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ * [MiSE] Search will no longer show deactivated or hated songs
