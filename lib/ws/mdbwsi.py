@@ -921,7 +921,11 @@ class MusicDBWebSocketInterface(object):
 
         streamstate = self.stream.GetStreamState()
         queueentry  = self.queue.CurrentSong()
-        songid      = queueentry["songid"]
+        if queueentry:
+            songid  = queueentry["songid"]
+        else:
+            songid  = None
+
         state["isconnected"] = streamstate["isconnected"]
         state["isplaying"]   = streamstate["isplaying"]
 

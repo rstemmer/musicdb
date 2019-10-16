@@ -287,7 +287,7 @@ def StreamingThread():
 
         # Get current song that shall be streamed.
         queueentry = queue.CurrentSong()
-        if queueentry["entryid"] == None:
+        if queueentry == None or queueentry["entryid"] == None:
             logging.info("Waiting for 5s to try to get a new song to play.")
             time.sleep(5)
             continue

@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS meta
     key         TEXT,
     value       TEXT DEFAULT ''
 );
-INSERT INTO meta (key, value) VALUES ("version", 2);
+INSERT INTO meta (key, value) VALUES ("version", 3);
 
 
 CREATE TABLE IF NOT EXISTS artists
