@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>add - Add New Album to MusicDB &mdash; MusicDB 5.1.0 documentation</title>
+  <title>add - Add New Album to MusicDB &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="artwork - Artwork Management" href="artwork.html"/>
         <link rel="prev" title="Scripts" href="../usage/scripts.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -673,20 +679,20 @@ When the artist of the new album does not exists, it gets also added to MusicDB.
 <p>It does the following steps:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Find artists and albums that are not in the database</li>
-<li>Provide an UI to rename the files (with online validation)</li>
-<li>Normalizes the Unicode of the file names to NFC (Canonical Composition) when applying <code class="docutils literal notranslate"><span class="pre">[c]</span> <span class="pre">Clean</span> <span class="pre">name</span></code> command.</li>
-<li>Import artist and album</li>
-<li>Import artwork (if there is one in the meta data)</li>
-<li>Import lyrics (if there are some in the files meta data)</li>
-<li>Run MusicAI to determine the music genres</li>
+<li><p>Find artists and albums that are not in the database</p></li>
+<li><p>Provide an UI to rename the files (with online validation)</p></li>
+<li><p>Normalizes the Unicode of the file names to NFC (Canonical Composition) when applying <code class="docutils literal notranslate"><span class="pre">[c]</span> <span class="pre">Clean</span> <span class="pre">name</span></code> command.</p></li>
+<li><p>Import artist and album</p></li>
+<li><p>Import artwork (if there is one in the meta data)</p></li>
+<li><p>Import lyrics (if there are some in the files meta data)</p></li>
+<li><p>Run MusicAI to determine the music genres</p></li>
 </ol>
 </div></blockquote>
 <p>Press <code class="docutils literal notranslate"><span class="pre">Ctrl-D</span></code> to exit the tool and reject changes.</p>
 <p>The following sections describe how to use the Unicode based UI to import new albums to MusicDB.</p>
 <div class="section" id="select-album">
 <h2>Select Album<a class="headerlink" href="#select-album" title="Permalink to this headline">¶</a></h2>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../_images/add-select.png" src="../_images/add-select.png" />
 </div>
 <p>After calling <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">add</span></code> a list of all albums in the music collection will be shown (see screenshot above).
@@ -701,7 +707,7 @@ Select the album you want to add to the database using the arrow keys (↓ and �
 </div>
 <div class="section" id="repair-file-names">
 <h2>Repair File Names<a class="headerlink" href="#repair-file-names" title="Permalink to this headline">¶</a></h2>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../_images/add-dirty.png" src="../_images/add-dirty.png" />
 </div>
 <p>After selecting an album, the form shown on the screenshot above will be shown.
@@ -728,7 +734,7 @@ You can move the cursor using ← and →.</p>
 Each file name gets analyzed by the <em>add</em>-module and checked if the name matches the naming scheme.
 Parts of the name that does not fit gets printed in red.
 Pressing the c-key removes all red printed parts from the file names.</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../_images/add-clean.png" src="../_images/add-clean.png" />
 </div>
 <p>Pressing the e-key on a selected song entry, a dialog appears (see screenshot above) that allows you to fine tune the file name.
@@ -758,10 +764,10 @@ If you press Ctrl-d instead, the import process gets canceled and nothing will b
 <p>Depending on the checkboxes you set in the <em>Album Import</em> form, the following things will now happen:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Renaming the files and directory.</li>
-<li>Importing the album artwork.</li>
-<li>Importing the lyrics from each file into the database</li>
-<li>Determine the genres of each song using MusicAI</li>
+<li><p>Renaming the files and directory.</p></li>
+<li><p>Importing the album artwork.</p></li>
+<li><p>Importing the lyrics from each file into the database</p></li>
+<li><p>Determine the genres of each song using MusicAI</p></li>
 </ol>
 </div></blockquote>
 <p>It may happen that there is no artwork inside the song files.
@@ -804,7 +810,7 @@ In that case, you have to import an artwork manually using the <a class="referen
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

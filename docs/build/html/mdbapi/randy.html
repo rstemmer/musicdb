@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Randomizer &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Randomizer &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDB Websocket Server" href="server.html"/>
         <link rel="prev" title="MusicCache" href="musiccache.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -687,8 +693,8 @@ The selection of random songs follows certain constraints.</p>
 The first stage selects a song from a limited set of songs, the second stage checks if the song is on a blacklist.
 In each stage, a song can be rejected and the algorithm starts at the beginning.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">The process of trying to get a good song gets repeated until a good song is found.
+<p class="admonition-title">Warning</p>
+<p>The process of trying to get a good song gets repeated until a good song is found.
 If over constraint, this ends in an infinite loop!</p>
 </div>
 <div class="section" id="database-stage">
@@ -697,10 +703,10 @@ If over constraint, this ends in an infinite loop!</p>
 There are 4 parameters that define the constraints applied on set of possible songs:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The activated genres as maintained by the <a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate" title="lib.cfg.mdbstate"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lib.cfg.mdbstate</span></code></a> module.</li>
-<li>The flag if <em>disabled</em> songs shall be excluded</li>
-<li>The flag if <em>hated</em> songs shall be excluded</li>
-<li>Minimum and maximum length of a song in seconds</li>
+<li><p>The activated genres as maintained by the <a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate" title="lib.cfg.mdbstate"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lib.cfg.mdbstate</span></code></a> module.</p></li>
+<li><p>The flag if <em>disabled</em> songs shall be excluded</p></li>
+<li><p>The flag if <em>hated</em> songs shall be excluded</p></li>
+<li><p>Minimum and maximum length of a song in seconds</p></li>
 </ul>
 </div></blockquote>
 <p>Some of them can be configured in the MusicDB configuration file:</p>
@@ -732,40 +738,33 @@ So, the chosen song gets dropped and the finding-process starts again.</p>
 <h2>Randy Class<a class="headerlink" href="#randy-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mdbapi.randy.Randy">
-<em class="property">class </em><code class="descclassname">mdbapi.randy.</code><code class="descname">Randy</code><span class="sig-paren">(</span><em>config</em>, <em>database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">mdbapi.randy.</code><code class="sig-name descname">Randy</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides methods to get a random song under certain constraints.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>config</strong> – <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> object holding the MusicDB Configuration</li>
-<li><strong>database</strong> – A <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> instance</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> – <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> object holding the MusicDB Configuration</p></li>
+<li><p><strong>database</strong> – A <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> instance</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When the arguments are not of the correct type.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – When the arguments are not of the correct type.</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="mdbapi.randy.Randy.GetSong">
-<code class="descname">GetSong</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSong</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method chooses a random song in a two-stage process as described in the module description.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A song from the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> or <code class="docutils literal notranslate"><span class="pre">None</span></code> if an error occurred.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A song from the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> or <code class="docutils literal notranslate"><span class="pre">None</span></code> if an error occurred.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.randy.Randy.GetSongFromAlbum">
-<code class="descname">GetSongFromAlbum</code><span class="sig-paren">(</span><em>albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSongFromAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSongFromAlbum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSongFromAlbum</code><span class="sig-paren">(</span><em class="sig-param">albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSongFromAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSongFromAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a random song from a specific album.</p>
 <p>If the selected song is listed in the blacklist for songs, a new one will be selected.
 Entries in the album and artist blacklist will be ignored because the artist and album is forced by the user.
@@ -773,23 +772,21 @@ But the song gets added to the blacklist for songs, as well as the album and art
 <p>The genre of the song gets completely ignored.
 The user wants to have a song from the given album, so it gets one.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
+<p class="admonition-title">Warning</p>
 <p>This is a dangerous method.
 An album only has a very limited set of songs.</p>
-<p class="last">If all the songs are listed in the blacklist, the method would get caught in an infinite loop.
+<p>If all the songs are listed in the blacklist, the method would get caught in an infinite loop.
 To avoid this, there are only 10 tries to find a random song.
 If after the tenth try, the method leaves returning <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>albumid</strong> (<em>int</em>) – ID of the album the song shall come from</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A song from the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> or <code class="docutils literal notranslate"><span class="pre">None</span></code> if an error occurred.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>albumid</strong> (<em>int</em>) – ID of the album the song shall come from</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A song from the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> or <code class="docutils literal notranslate"><span class="pre">None</span></code> if an error occurred.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -832,7 +829,7 @@ If after the tenth try, the method leaves returning <code class="docutils litera
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

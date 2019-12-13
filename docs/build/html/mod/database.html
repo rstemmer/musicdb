@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>database - Music DB Management &mdash; MusicDB 5.1.0 documentation</title>
+  <title>database - Music DB Management &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="extern - Music File Uploader" href="extern.html"/>
         <link rel="prev" title="cache - Music Cache Manager" href="cache.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -674,35 +680,34 @@ A subcommand and a path to the target (artist, album, song): <code class="docuti
 The target gets determined by its path.</p>
 <p>The following subcommands are provided:</p>
 <blockquote>
-<div><dl class="docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">add</span></code>:</dt>
-<dd><p class="first">Add new artist, album or song to the database.
+<div><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">add</span></code>:</dt><dd><p>Add new artist, album or song to the database.
 Direct interface to:</p>
-<blockquote class="last">
+<blockquote>
 <div><ul class="simple">
-<li>If the path addresses a song: <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddSong" title="mdbapi.database.MusicDBDatabase.AddSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.database.MusicDBDatabase.AddSong()</span></code></a></li>
-<li>If the path addresses a album: <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddAlbum" title="mdbapi.database.MusicDBDatabase.AddAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.database.MusicDBDatabase.AddAlbum()</span></code></a></li>
-<li>If the path addresses a artist: <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddArtist" title="mdbapi.database.MusicDBDatabase.AddArtist"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.database.MusicDBDatabase.AddArtist()</span></code></a></li>
+<li><p>If the path addresses a song: <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddSong" title="mdbapi.database.MusicDBDatabase.AddSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.database.MusicDBDatabase.AddSong()</span></code></a></p></li>
+<li><p>If the path addresses a album: <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddAlbum" title="mdbapi.database.MusicDBDatabase.AddAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.database.MusicDBDatabase.AddAlbum()</span></code></a></p></li>
+<li><p>If the path addresses a artist: <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddArtist" title="mdbapi.database.MusicDBDatabase.AddArtist"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.database.MusicDBDatabase.AddArtist()</span></code></a></p></li>
 </ul>
 </div></blockquote>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">remove</span></code>:</dt>
-<dd>Removes an artist, album or song from the database.
+<dt><code class="docutils literal notranslate"><span class="pre">remove</span></code>:</dt><dd><p>Removes an artist, album or song from the database.
 Only the database entries get removed.
-The files will not be touched.</dd>
-<dt><code class="docutils literal notranslate"><span class="pre">getlyrics</span></code>:</dt>
-<dd>Search in song files for lyrics.
-This is done by calling for each song file <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddLyricsFromFile" title="mdbapi.database.MusicDBDatabase.AddLyricsFromFile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.database.MusicDBDatabase.AddLyricsFromFile()</span></code></a></dd>
-<dt><code class="docutils literal notranslate"><span class="pre">check</span></code>:</dt>
-<dd>Check the given path if it is a valid artist, album or song path.
-This is done by calling <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.TryAnalysePathFor" title="mdbapi.database.MusicDBDatabase.TryAnalysePathFor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.database.MusicDBDatabase.TryAnalysePathFor()</span></code></a>.</dd>
+The files will not be touched.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">getlyrics</span></code>:</dt><dd><p>Search in song files for lyrics.
+This is done by calling for each song file <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddLyricsFromFile" title="mdbapi.database.MusicDBDatabase.AddLyricsFromFile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.database.MusicDBDatabase.AddLyricsFromFile()</span></code></a></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">check</span></code>:</dt><dd><p>Check the given path if it is a valid artist, album or song path.
+This is done by calling <a class="reference internal" href="../mdbapi/database.html#mdbapi.database.MusicDBDatabase.TryAnalysePathFor" title="mdbapi.database.MusicDBDatabase.TryAnalysePathFor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.database.MusicDBDatabase.TryAnalysePathFor()</span></code></a>.</p>
+</dd>
 </dl>
 </div></blockquote>
 <div class="admonition attention">
-<p class="first admonition-title">Attention</p>
+<p class="admonition-title">Attention</p>
 <p>While adding a new artist, album or song to the database, the file and directory attributes
 and ownership gets changed to the configured one in the MusicDB Configuration.</p>
-<p class="last">And after adding the new data, the command (<code class="docutils literal notranslate"><span class="pre">refresh</span></code>) gets written into the servers named pipe
+<p>And after adding the new data, the command (<code class="docutils literal notranslate"><span class="pre">refresh</span></code>) gets written into the servers named pipe
 to update its cache.</p>
 </div>
 <p class="rubric">Examples</p>
@@ -748,7 +753,7 @@ musicdb database remove /data/music/Bad<span class="se">\ </span>Artist
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

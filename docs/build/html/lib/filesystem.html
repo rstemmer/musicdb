@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Filesystem Interface &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Filesystem Interface &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="GStreamer Interface" href="gstreamer.html"/>
         <link rel="prev" title="Fileprocessing Methods" href="fileprocessing.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -671,7 +677,7 @@
 <h2>Filesystem Class<a class="headerlink" href="#filesystem-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib.filesystem.Filesystem">
-<em class="property">class </em><code class="descclassname">lib.filesystem.</code><code class="descname">Filesystem</code><span class="sig-paren">(</span><em>root='/'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.filesystem.</code><code class="sig-name descname">Filesystem</code><span class="sig-paren">(</span><em class="sig-param">root='/'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides an interface to the filesystem.
 The whole class assumes that it is used with an Unicode capable unix-style filesystem.</p>
 <p>Whenever I write about <em>root director</em> the path set in this class as root is meant.
@@ -679,65 +685,60 @@ Otherwise I would call it <em>system root directory</em>.</p>
 <p>Some naming conventions:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>abspath:</strong> Absolute path. They <em>always</em> start with a <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>.</li>
-<li><strong>relpath:</strong> Relative path - Relative to the root directory. They should <em>not</em> start with a <code class="docutils literal notranslate"><span class="pre">&quot;./&quot;</span></code>. This leads to undefined behavior!</li>
-<li><strong>xpath:</strong> Can be absolute or relative.</li>
+<li><p><strong>abspath:</strong> Absolute path. They <em>always</em> start with a <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>.</p></li>
+<li><p><strong>relpath:</strong> Relative path - Relative to the root directory. They should <em>not</em> start with a <code class="docutils literal notranslate"><span class="pre">&quot;./&quot;</span></code>. This leads to undefined behavior!</p></li>
+<li><p><strong>xpath:</strong> Can be absolute or relative.</p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>root</strong> (<em>str</em>) – Path to the internal used root directory. It is allowd to start with “./”.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – if the root path does not start with <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code> or does not exist</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>root</strong> (<em>str</em>) – Path to the internal used root directory. It is allowd to start with “./”.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if the root path does not start with <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code> or does not exist</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.AbsolutePath">
-<code class="descname">AbsolutePath</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AbsolutePath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AbsolutePath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AbsolutePath</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AbsolutePath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AbsolutePath" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns an absolute path by adding the root directory to the path.
 If the path is already absolute (starts with <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>) it gets returned as it is.</p>
 <p>If the path starts with <code class="docutils literal notranslate"><span class="pre">&quot;./&quot;</span></code> the root path gets prepended.</p>
 <p>If path is exact <code class="docutils literal notranslate"><span class="pre">&quot;.&quot;</span></code>, the root path gets returned.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xpath</strong> (<em>str</em>) – A relative or absolute path</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An absolute path</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If <em>xpath</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>xpath</strong> (<em>str</em>) – A relative or absolute path</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An absolute path</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – If <em>xpath</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.AnalyseAlbumDirectoryName">
-<code class="descname">AnalyseAlbumDirectoryName</code><span class="sig-paren">(</span><em>albumdirname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseAlbumDirectoryName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseAlbumDirectoryName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AnalyseAlbumDirectoryName</code><span class="sig-paren">(</span><em class="sig-param">albumdirname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseAlbumDirectoryName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseAlbumDirectoryName" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method analyses the name of an album directory.
 If it does not follow the scheme of an album directory name, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned, otherwise the albumname and release year.</p>
 <p>The scheme is the following: <code class="docutils literal notranslate"><span class="pre">{releaseyear}</span> <span class="pre">-</span> <span class="pre">{albumname}</span></code>.</p>
 <p>The return value is a dictionay with the following keys:</p>
-<dl class="docutils">
-<dt>release:</dt>
-<dd>An integer with the release year</dd>
-<dt>name:</dt>
-<dd>A string with the album name</dd>
+<dl class="simple">
+<dt>release:</dt><dd><p>An integer with the release year</p>
+</dd>
+<dt>name:</dt><dd><p>A string with the album name</p>
+</dd>
 </dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>albumdirname</strong> (<em>str</em>) – Directory name of an album without any <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with release year and the album name, or <code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>albumdirname</strong> (<em>str</em>) – Directory name of an album without any <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary with release year and the album name, or <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">infos</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">AnalyseAlbumDirectoryName</span><span class="p">(</span><span class="s2">&quot;2000 - Testalbum&quot;</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">infos</span><span class="p">:</span>
@@ -749,31 +750,29 @@ If it does not follow the scheme of an album directory name, <code class="docuti
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.AnalyseSongFileName">
-<code class="descname">AnalyseSongFileName</code><span class="sig-paren">(</span><em>songfilename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseSongFileName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseSongFileName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AnalyseSongFileName</code><span class="sig-paren">(</span><em class="sig-param">songfilename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseSongFileName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseSongFileName" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method analyses the name of a song file.
 If it does not follow the scheme, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned, otherwise all information encoded in the name as dictionary.</p>
 <p>The scheme is the following: <code class="docutils literal notranslate"><span class="pre">{songnumber}</span> <span class="pre">{songname}.{extension}</span></code> or <code class="docutils literal notranslate"><span class="pre">{cdnumber}-{songnumber}</span> <span class="pre">{songname}.{extension}</span></code></p>
 <p>The return value is a dictionay with the following keys:</p>
-<dl class="docutils">
-<dt>cdnumber:</dt>
-<dd>CD number as integer or <code class="docutils literal notranslate"><span class="pre">1</span></code> if not given in the name</dd>
-<dt>number:</dt>
-<dd>Number of the song as integer</dd>
-<dt>name:</dt>
-<dd>A string with the song name</dd>
-<dt>extension:</dt>
-<dd>file extension as string</dd>
+<dl class="simple">
+<dt>cdnumber:</dt><dd><p>CD number as integer or <code class="docutils literal notranslate"><span class="pre">1</span></code> if not given in the name</p>
+</dd>
+<dt>number:</dt><dd><p>Number of the song as integer</p>
+</dd>
+<dt>name:</dt><dd><p>A string with the song name</p>
+</dd>
+<dt>extension:</dt><dd><p>file extension as string</p>
+</dd>
 </dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songfilename</strong> (<em>str</em>) – Filename of an song without any <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dictionary on success, otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>songfilename</strong> (<em>str</em>) – Filename of an song without any <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary on success, otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">infos</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">AnalyseSongDirectoryName</span><span class="p">(</span><span class="s2">&quot;05 This is a Song.mp3&quot;</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">infos</span><span class="p">:</span>
@@ -787,19 +786,19 @@ If it does not follow the scheme, <code class="docutils literal notranslate"><sp
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.AssertDirectory">
-<code class="descname">AssertDirectory</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AssertDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AssertDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AssertDirectory</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AssertDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AssertDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raises an AssertionError if <a class="reference internal" href="#lib.filesystem.Filesystem.IsDirectory" title="lib.filesystem.Filesystem.IsDirectory"><code class="xref py py-meth docutils literal notranslate"><span class="pre">IsDirectory()</span></code></a> fails.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.AssertFile">
-<code class="descname">AssertFile</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AssertFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AssertFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AssertFile</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AssertFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AssertFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raises an AssertionError if <a class="reference internal" href="#lib.filesystem.Filesystem.IsFile" title="lib.filesystem.Filesystem.IsFile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">IsFile()</span></code></a> fails.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.CopyFile">
-<code class="descname">CopyFile</code><span class="sig-paren">(</span><em>xsrcpath</em>, <em>xdstpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.CopyFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.CopyFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">CopyFile</code><span class="sig-paren">(</span><em class="sig-param">xsrcpath</em>, <em class="sig-param">xdstpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.CopyFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.CopyFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method copies a file.
 <strong>Handle with care!</strong></p>
 <p>If the source file does not exist, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.
@@ -810,44 +809,38 @@ The UNIX shell alternative would be like the following line:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp -p <span class="nv">$SRCPATH</span> <span class="nv">$DSTPATH</span>
 </pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>xsrcpath</strong> (<em>str</em>) – A relative or absolute path of the source</li>
-<li><strong>xdstpath</strong> (<em>str</em>) – A relative or absolute path where the source file shall be copied to</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xsrcpath</strong> (<em>str</em>) – A relative or absolute path of the source</p></li>
+<li><p><strong>xdstpath</strong> (<em>str</em>) – A relative or absolute path where the source file shall be copied to</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">False</span></code> if the file does not exist.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">False</span></code> if the file does not exist.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.CreateSubdirectory">
-<code class="descname">CreateSubdirectory</code><span class="sig-paren">(</span><em>xnewpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.CreateSubdirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.CreateSubdirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">CreateSubdirectory</code><span class="sig-paren">(</span><em class="sig-param">xnewpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.CreateSubdirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.CreateSubdirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a subdirectory.
 The directories are made recursively.
 So <em>xnewpath</em> can address the last directory of a path that will be created.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xnewpath</strong> – A path that addresses a new directory</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>xnewpath</strong> – A path that addresses a new directory</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.Execute">
-<code class="descname">Execute</code><span class="sig-paren">(</span><em>commandline</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.Execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.Execute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Execute</code><span class="sig-paren">(</span><em class="sig-param">commandline</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.Execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.Execute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Executes an external program.
 The command line is a list of arguments with the executable name as first element.
 So <code class="docutils literal notranslate"><span class="pre">commandline[0]</span></code> is the program name like <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code> and the next elements are a list of arguments to this program (like <code class="docutils literal notranslate"><span class="pre">&quot;-l&quot;,</span> <span class="pre">&quot;-h&quot;</span></code>).</p>
@@ -855,18 +848,17 @@ So <code class="docutils literal notranslate"><span class="pre">commandline[0]</
 <p>After executing the command line, a <code class="docutils literal notranslate"><span class="pre">sync</span></code> command gets executed.
 In the past there were lots of problems because a second process wanted to process data preprocessed from the first one,
 but those data were not completely written to the disk.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>commandline</strong> (<em>list</em>) – command line split into the executable name and individual arguments</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ChildProcessError</span></code> – If the return value of the executed program is not 0</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>commandline</strong> (<em>list</em>) – command line split into the executable name and individual arguments</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ChildProcessError</strong> – If the return value of the executed program is not 0</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <p>The following python code results in the following command line</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -883,53 +875,47 @@ sync
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.Exists">
-<code class="descname">Exists</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.Exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.Exists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Exists</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.Exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.Exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a path exist. It can be a file or a directory</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xpath</strong> (<em>str</em>) – A relative or absolute path</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> if the path exists, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>xpath</strong> (<em>str</em>) – A relative or absolute path</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the path exists, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.GetDirectory">
-<code class="descname">GetDirectory</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetDirectory</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the directory a file or folder is stored in.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xpath</strong> (<em>str</em>) – A path to a file (path must not exist)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The directory of that file</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>xpath</strong> (<em>str</em>) – A path to a file (path must not exist)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The directory of that file</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.GetFileExtension">
-<code class="descname">GetFileExtension</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFileExtension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFileExtension" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetFileExtension</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFileExtension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFileExtension" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the file extension of the file addressed by <em>xpath</em>.
 The file must <em>not</em> exist.</p>
 <p>If xpath does not address a file or the file does not have an extension, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.
 Otherwise only the extension without the leading <code class="docutils literal notranslate"><span class="pre">&quot;.&quot;</span></code> gets returned.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xpath</strong> (<em>str</em>) – A path or name of a file that extension shall be returned</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The file extension without the leading dot, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the file does not have an extension.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>xpath</strong> (<em>str</em>) – A path or name of a file that extension shall be returned</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The file extension without the leading dot, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the file does not have an extension.</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span>  <span class="o">=</span> <span class="n">FileSystem</span><span class="p">(</span><span class="s2">&quot;/tmp&quot;</span><span class="p">)</span>
 <span class="n">ext</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">GetFileExtension</span><span class="p">(</span><span class="s2">&quot;test.txt&quot;</span><span class="p">)</span>
@@ -941,62 +927,54 @@ Otherwise only the extension without the leading <code class="docutils literal n
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.GetFileName">
-<code class="descname">GetFileName</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFileName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFileName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetFileName</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFileName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFileName" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the file name of the file addressed by <em>xpath</em>.
 The file must <em>not</em> exist.
 The name of a file does not include the file extension.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xpath</strong> (<em>str</em>) – A path or name of a file that name shall be returned</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The name of the file.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>xpath</strong> (<em>str</em>) – A path or name of a file that name shall be returned</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The name of the file.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.GetFiles">
-<code class="descname">GetFiles</code><span class="sig-paren">(</span><em>xparents=None</em>, <em>ignore=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFiles" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetFiles</code><span class="sig-paren">(</span><em class="sig-param">xparents=None</em>, <em class="sig-param">ignore=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFiles" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a filtered list with files for one or more parent directories.
 If <em>xparents</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the root directory will be used.
 If a parent path does not exist, an exception gets raised.</p>
 <p>The <em>ignore</em> parameter is a list of names that will be ignored and won’t appear in the returned list of subdirectories.</p>
 <p>This method works like <a class="reference internal" href="#lib.filesystem.Filesystem.GetSubdirectories" title="lib.filesystem.Filesystem.GetSubdirectories"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSubdirectories()</span></code></a> but with files</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>xparents</strong> – A parent directory or a list of parent directories</li>
-<li><strong>ignore</strong> – A list of entries to ignore</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xparents</strong> – A parent directory or a list of parent directories</p></li>
+<li><p><strong>ignore</strong> – A list of entries to ignore</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A list of paths relative to the root directory, including the parent directory (“parent/filename”)</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of paths relative to the root directory, including the parent directory (“parent/filename”)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.GetModificationDate">
-<code class="descname">GetModificationDate</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetModificationDate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetModificationDate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetModificationDate</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetModificationDate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetModificationDate" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the date when a file or directory was modified the last time.
 (See <a class="reference external" href="https://docs.python.org/3/library/os.path.html#os.path.getmtime">os.path.getmtime</a>)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xpath</strong> (<em>str</em>) – Path to the file or directory</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The modification date of the file or directory as unix time value in seconds (integer)</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>xpath</strong> (<em>str</em>) – Path to the file or directory</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The modification date of the file or directory as unix time value in seconds (integer)</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span> <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="s2">&quot;/data/music/&quot;</span><span class="p">)</span>
 <span class="n">cdate</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">GetModificationDate</span><span class="p">(</span><span class="s2">&quot;Rammstein&quot;</span><span class="p">)</span> <span class="c1"># Possible creation date of /data/music/Rammstein directory</span>
@@ -1007,26 +985,22 @@ If a parent path does not exist, an exception gets raised.</p>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.GetSubdirectories">
-<code class="descname">GetSubdirectories</code><span class="sig-paren">(</span><em>xparents=None</em>, <em>ignore=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetSubdirectories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetSubdirectories" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSubdirectories</code><span class="sig-paren">(</span><em class="sig-param">xparents=None</em>, <em class="sig-param">ignore=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetSubdirectories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetSubdirectories" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a filtered list with subdirectories for one or more parent directories.
 If <em>xparents</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the root directory will be used.
 Using the root directory leads to returning absolute paths!</p>
 <p>The <em>ignore</em> parameter is a list of names that will be ignored and won’t appear in the returned list of subdirectories.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>xparents</strong> – A parent directory or a list of parent directories</li>
-<li><strong>ignore</strong> – A list of entries to ignore</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xparents</strong> – A parent directory or a list of parent directories</p></li>
+<li><p><strong>ignore</strong> – A list of entries to ignore</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A list of paths being the parent directory plus the child directory</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of paths being the parent directory plus the child directory</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <p>Get the subdirectories of the following file structure:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dir1/subdir/*
@@ -1044,164 +1018,145 @@ dir2/tmp/*
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.IsDirectory">
-<code class="descname">IsDirectory</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">IsDirectory</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a directory exists.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xpath</strong> (<em>str</em>) – A relative or absolute path to a directory</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> if the directory exists, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>xpath</strong> (<em>str</em>) – A relative or absolute path to a directory</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the directory exists, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.IsFile">
-<code class="descname">IsFile</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">IsFile</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a file exists.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xpath</strong> (<em>str</em>) – A relative or absolute path to a directory</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> if the directory exists, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>xpath</strong> (<em>str</em>) – A relative or absolute path to a directory</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the directory exists, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.ListDirectory">
-<code class="descname">ListDirectory</code><span class="sig-paren">(</span><em>xpath=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.ListDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.ListDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ListDirectory</code><span class="sig-paren">(</span><em class="sig-param">xpath=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.ListDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.ListDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of entries in the directory addressed by <em>xpath</em>.
 The list can contain files and directories.
 If <em>xpath</em> is not a directory, an empty list will be returned.
 If <em>xpath</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the root directory will be used.
 The list contains only the names including hidden files that starts with a <code class="docutils literal notranslate"><span class="pre">&quot;.&quot;</span></code>.
 The special directories <code class="docutils literal notranslate"><span class="pre">&quot;.&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;..&quot;</span></code> are not included.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xpath</strong> (<em>str</em>) – Path to a directory. If <code class="docutils literal notranslate"><span class="pre">None</span></code> the root directory will be used</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of entries in the directory.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>xpath</strong> (<em>str</em>) – Path to a directory. If <code class="docutils literal notranslate"><span class="pre">None</span></code> the root directory will be used</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of entries in the directory.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.MoveDirectory">
-<code class="descname">MoveDirectory</code><span class="sig-paren">(</span><em>xsrcpath</em>, <em>xdstpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.MoveDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.MoveDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">MoveDirectory</code><span class="sig-paren">(</span><em class="sig-param">xsrcpath</em>, <em class="sig-param">xdstpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.MoveDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.MoveDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method moves a directory in the file system.
 <strong>Handle with care!</strong></p>
 <p>If the source directory does not exist, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.
 To move files, see <a class="reference internal" href="#lib.filesystem.Filesystem.MoveFile" title="lib.filesystem.Filesystem.MoveFile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MoveFile()</span></code></a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>xsrcpath</strong> (<em>str</em>) – A relative or absolute path of the source</li>
-<li><strong>xdstpath</strong> (<em>str</em>) – A relative or absolute path where the source file shall be moves to</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xsrcpath</strong> (<em>str</em>) – A relative or absolute path of the source</p></li>
+<li><p><strong>xdstpath</strong> (<em>str</em>) – A relative or absolute path where the source file shall be moves to</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">False</span></code> if the file does not exist.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">False</span></code> if the file does not exist.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.MoveFile">
-<code class="descname">MoveFile</code><span class="sig-paren">(</span><em>xsrcpath</em>, <em>xdstpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.MoveFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.MoveFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">MoveFile</code><span class="sig-paren">(</span><em class="sig-param">xsrcpath</em>, <em class="sig-param">xdstpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.MoveFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.MoveFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method moves a file in the filesystem.
 <strong>Handle with care!</strong></p>
 <p>If the source file does not exist, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.
 To move directories, see <a class="reference internal" href="#lib.filesystem.Filesystem.MoveDirectory" title="lib.filesystem.Filesystem.MoveDirectory"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MoveDirectory()</span></code></a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>xsrcpath</strong> (<em>str</em>) – A relative or absolute path of the source</li>
-<li><strong>xdstpath</strong> (<em>str</em>) – A relative or absolute path where the source file shall be moves to</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xsrcpath</strong> (<em>str</em>) – A relative or absolute path of the source</p></li>
+<li><p><strong>xdstpath</strong> (<em>str</em>) – A relative or absolute path where the source file shall be moves to</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">False</span></code> if the file does not exist.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">False</span></code> if the file does not exist.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.RemoveDirectory">
-<code class="descname">RemoveDirectory</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveDirectory</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes a directory tree from the filesystem.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last"><strong>Handle with care!</strong></p>
+<p class="admonition-title">Warning</p>
+<p><strong>Handle with care!</strong></p>
 </div>
 <p>If the file does not exist, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xpath</strong> (<em>str</em>) – A relative or absolute path to a directory</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">False</span></code> if the directory does not exist.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>xpath</strong> (<em>str</em>) – A relative or absolute path to a directory</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">False</span></code> if the directory does not exist.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.RemoveFile">
-<code class="descname">RemoveFile</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveFile</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes a file from the filesystem.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last"><strong>Handle with care!</strong></p>
+<p class="admonition-title">Warning</p>
+<p><strong>Handle with care!</strong></p>
 </div>
 <p>If the file does not exist, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xpath</strong> (<em>str</em>) – A relative or absolute path to a file</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">False</span></code> if the file does not exist.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>xpath</strong> (<em>str</em>) – A relative or absolute path to a file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">False</span></code> if the file does not exist.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.RemoveRoot">
-<code class="descname">RemoveRoot</code><span class="sig-paren">(</span><em>abspath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveRoot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveRoot</code><span class="sig-paren">(</span><em class="sig-param">abspath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveRoot" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method makes a path relative to the root path.
 The existence of the path gets not checked!</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>abspath</strong> (<em>str</em>) – A path that shall be made relative</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A relative path to the root directory</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If the path is not inside the root path</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>abspath</strong> (<em>str</em>) – A path that shall be made relative</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A relative path to the root directory</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the path is not inside the root path</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span> <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="s2">&quot;/data/music&quot;</span><span class="p">)</span>
 
@@ -1217,26 +1172,22 @@ The existence of the path gets not checked!</p>
 
 <dl class="method">
 <dt id="lib.filesystem.Filesystem.SetAttributes">
-<code class="descname">SetAttributes</code><span class="sig-paren">(</span><em>xpath</em>, <em>owner</em>, <em>group</em>, <em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.SetAttributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.SetAttributes" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SetAttributes</code><span class="sig-paren">(</span><em class="sig-param">xpath</em>, <em class="sig-param">owner</em>, <em class="sig-param">group</em>, <em class="sig-param">mode</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.SetAttributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.SetAttributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets attributes for a file or directory.
 The <em>mode</em> is the access permissions as defined in the <em>stats</em> module.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>xpath</strong> (<em>str</em>) – Path to the file or directory</li>
-<li><strong>owner</strong> (<em>str</em>) – Name of the owner of the file or directory</li>
-<li><strong>group</strong> (<em>str</em>) – Name of the group</li>
-<li><strong>mode</strong> – Access permissions</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xpath</strong> (<em>str</em>) – Path to the file or directory</p></li>
+<li><p><strong>owner</strong> (<em>str</em>) – Name of the owner of the file or directory</p></li>
+<li><p><strong>group</strong> (<em>str</em>) – Name of the group</p></li>
+<li><p><strong>mode</strong> – Access permissions</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">stat</span>
 <span class="n">fs</span> <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="s2">&quot;/tmp&quot;</span><span class="p">)</span>
@@ -1289,7 +1240,7 @@ The <em>mode</em> is the access permissions as defined in the <em>stats</em> mod
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

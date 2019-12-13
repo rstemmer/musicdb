@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>HDF5Storage &mdash; MusicDB 5.1.0 documentation</title>
+  <title>HDF5Storage &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="Icecast Interface" href="icecast.html"/>
         <link rel="prev" title="GStreamer Interface" href="gstreamer.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -700,17 +706,17 @@ Its main advantage is to handle huge sets of binary data.</p>
 <h2>HDF5Storage Class<a class="headerlink" href="#hdf5storage-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib.hdf5storage.HDF5Storage">
-<em class="property">class </em><code class="descclassname">lib.hdf5storage.</code><code class="descname">HDF5Storage</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/hdf5storage.html#HDF5Storage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.hdf5storage.HDF5Storage" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.hdf5storage.</code><code class="sig-name descname">HDF5Storage</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/hdf5storage.html#HDF5Storage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.hdf5storage.HDF5Storage" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class handles HDF5 files for the MusicDB project.
 It opens the HDF5 file given to the constructor.
 If the file does not exist, a new one will be created.
 All datasets have the following format:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Dimension 0 defines the size of the set.</li>
-<li>The sets are unlimited</li>
-<li>The chuncksize is 1024 elements</li>
-<li>The data gets <strong>NOT</strong> compressed. - It took too much time to decompress!</li>
+<li><p>Dimension 0 defines the size of the set.</p></li>
+<li><p>The sets are unlimited</p></li>
+<li><p>The chuncksize is 1024 elements</p></li>
+<li><p>The data gets <strong>NOT</strong> compressed. - It took too much time to decompress!</p></li>
 </ul>
 </div></blockquote>
 <p>The creation of a dataset is done as shown in the following code:</p>
@@ -726,46 +732,39 @@ All datasets have the following format:</p>
         <span class="p">)</span>
 </pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – path to the HDF5 file that shall be processed. It may or may not exist.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – path to the HDF5 file that shall be processed. It may or may not exist.</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="lib.hdf5storage.HDF5Storage.Close">
-<code class="descname">Close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/hdf5storage.html#HDF5Storage.Close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.hdf5storage.HDF5Storage.Close" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/hdf5storage.html#HDF5Storage.Close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.hdf5storage.HDF5Storage.Close" title="Permalink to this definition">¶</a></dt>
 <dd><p>Close the HDF5 file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.hdf5storage.HDF5Storage.ReadDataset">
-<code class="descname">ReadDataset</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/hdf5storage.html#HDF5Storage.ReadDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.hdf5storage.HDF5Storage.ReadDataset" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ReadDataset</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/hdf5storage.html#HDF5Storage.ReadDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.hdf5storage.HDF5Storage.ReadDataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the h5py dataset with the name <em>name</em>.
 In fact, this method returns only a handler to the HDF5 reader implementation of the h5py library.
 This can be used to iterate over a large set of data.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>str</em>) – Name of the dataset that shall be read</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a h5py dataset</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AssertionError</span></code> – When file not opened or dataset does not exist</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Name of the dataset that shall be read</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a h5py dataset</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>AssertionError</strong> – When file not opened or dataset does not exist</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># print the dataset testdata</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">storage</span><span class="o">.</span><span class="n">ReadDataset</span><span class="p">(</span><span class="s2">&quot;testdata&quot;</span><span class="p">)</span>
@@ -777,28 +776,24 @@ This can be used to iterate over a large set of data.</p>
 
 <dl class="method">
 <dt id="lib.hdf5storage.HDF5Storage.WriteDataset">
-<code class="descname">WriteDataset</code><span class="sig-paren">(</span><em>name</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/hdf5storage.html#HDF5Storage.WriteDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.hdf5storage.HDF5Storage.WriteDataset" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">WriteDataset</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/hdf5storage.html#HDF5Storage.WriteDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.hdf5storage.HDF5Storage.WriteDataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Append <em>data</em> to the dataset with name <em>name</em> if it exists.
 If it does not exist it will be created.</p>
 <p>The dimension with index 0 is the number of elements in the set.
 The rest of the dimension tuple is the actual dimension of one data entry in the set.
 If the existing dataset has the dimension (z, y, x) and the <em>data</em> one (a, y, x),
 the resulting dimension is (z+a, y, x).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>name</strong> (<em>str</em>) – Name of the dataset the data shall be stored at or appended to</li>
-<li><strong>data</strong> – the <em>numpy</em> data to store</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the dataset the data shall be stored at or appended to</p></li>
+<li><p><strong>data</strong> – the <em>numpy</em> data to store</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>Nothing</em></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">entry</span>   <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span> <span class="c1"># create a 10x20 matrix with zeros</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="p">[</span><span class="n">entry</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">entry</span><span class="p">]</span> <span class="c1"># create a dataset with 3 matrices</span>
@@ -852,7 +847,7 @@ the resulting dimension is (z+a, y, x).</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>server - MusicDB Websocket Server &mdash; MusicDB 5.1.0 documentation</title>
+  <title>server - MusicDB Websocket Server &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="stats - MusicDB Song Statistic" href="stats.html"/>
         <link rel="prev" title="repair - Repair Database Entries" href="repair.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -671,12 +677,12 @@
 <p>The start is done in the following steps:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Create PID file (this will be deleted at exit)</li>
-<li>Initialize the GObject and GStreamer libraries</li>
-<li>Initialize the server by calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.Initialize()</span></code></li>
-<li>Start the websocket server by calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.StartWebSocketServer()</span></code></li>
-<li>Create a named pipe (this will be deleted at exit)</li>
-<li>Enter the event loop by running <code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.Run()</span></code></li>
+<li><p>Create PID file (this will be deleted at exit)</p></li>
+<li><p>Initialize the GObject and GStreamer libraries</p></li>
+<li><p>Initialize the server by calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.Initialize()</span></code></p></li>
+<li><p>Start the websocket server by calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.StartWebSocketServer()</span></code></p></li>
+<li><p>Create a named pipe (this will be deleted at exit)</p></li>
+<li><p>Enter the event loop by running <code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.Run()</span></code></p></li>
 </ol>
 </div></blockquote>
 <p>Read <a class="reference internal" href="../mdbapi/server.html"><span class="doc">MusicDB Websocket Server</span></a> for details</p>
@@ -733,7 +739,7 @@ su -l -c <span class="s2">&quot;musicdb --config /data/musicdb/musicdb.ini serve
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

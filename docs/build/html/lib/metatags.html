@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Meta Tags &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Meta Tags &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="MP3 File Interface" href="mp3file.html"/>
         <link rel="prev" title="Icecast Interface" href="icecast.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -668,27 +674,24 @@
   <div class="section" id="module-lib.metatags">
 <span id="meta-tags"></span><h1>Meta Tags<a class="headerlink" href="#module-lib.metatags" title="Permalink to this headline">¶</a></h1>
 <div class="admonition attention">
-<p class="first admonition-title">Attention</p>
+<p class="admonition-title">Attention</p>
 <p>Keep in mind that the main rule of MusicDB is: <strong>The Filesystem Is Always Right</strong>.</p>
-<p class="last">All data collected via this class shall only be uses as addition information, not as primary source!</p>
+<p>All data collected via this class shall only be uses as addition information, not as primary source!</p>
 </div>
 <div class="section" id="metatags-class">
 <h2>MetaTags Class<a class="headerlink" href="#metatags-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib.metatags.MetaTags">
-<em class="property">class </em><code class="descclassname">lib.metatags.</code><code class="descname">MetaTags</code><span class="sig-paren">(</span><em>root='/'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.metatags.</code><code class="sig-name descname">MetaTags</code><span class="sig-paren">(</span><em class="sig-param">root='/'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class can be used to access the metadata of the music files.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>root</strong> (<em>str</em>) – All paths used in this class are relative to this path. Default is <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>root</strong> (<em>str</em>) – All paths used in this class are relative to this path. Default is <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>.</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="lib.metatags.MetaTags.AnalysePlaytime">
-<code class="descname">AnalysePlaytime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.AnalysePlaytime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.AnalysePlaytime" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AnalysePlaytime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.AnalysePlaytime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.AnalysePlaytime" title="Permalink to this definition">¶</a></dt>
 <dd><p>Analyses the playtime of a file using <code class="docutils literal notranslate"><span class="pre">ffprobe</span></code>.</p>
 <p>The corresponding command line is the following:</p>
 <blockquote>
@@ -696,241 +699,202 @@
 </pre></div>
 </div>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The duration in seconds (as float) or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the analysis fails</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The duration in seconds (as float) or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the analysis fails</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.metatags.MetaTags.GetAlbumname">
-<code class="descname">GetAlbumname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetAlbumname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetAlbumname" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetAlbumname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetAlbumname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetAlbumname" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the name of the album</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The album name as string, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if entry does not exist</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The album name as string, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if entry does not exist</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.metatags.MetaTags.GetAllMetadata">
-<code class="descname">GetAllMetadata</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetAllMetadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetAllMetadata" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetAllMetadata</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetAllMetadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetAllMetadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method collects as much information as possible from a file.
 The information gets stored in a dictionary.</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">song</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetSongname" title="lib.metatags.MetaTags.GetSongname"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongname()</span></code></a></li>
-<li><code class="docutils literal notranslate"><span class="pre">album</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetAlbumname" title="lib.metatags.MetaTags.GetAlbumname"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbumname()</span></code></a></li>
-<li><code class="docutils literal notranslate"><span class="pre">artist</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetArtistname" title="lib.metatags.MetaTags.GetArtistname"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetArtistname()</span></code></a></li>
-<li><code class="docutils literal notranslate"><span class="pre">releaseyear</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetReleaseyear" title="lib.metatags.MetaTags.GetReleaseyear"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetReleaseyear()</span></code></a></li>
-<li><code class="docutils literal notranslate"><span class="pre">cdnumber</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetCDNumber" title="lib.metatags.MetaTags.GetCDNumber"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetCDNumber()</span></code></a></li>
-<li><code class="docutils literal notranslate"><span class="pre">songnumber</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetTracknumber" title="lib.metatags.MetaTags.GetTracknumber"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetTracknumber()</span></code></a></li>
-<li><code class="docutils literal notranslate"><span class="pre">origin</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetOrigin" title="lib.metatags.MetaTags.GetOrigin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetOrigin()</span></code></a></li>
-<li><code class="docutils literal notranslate"><span class="pre">playtime</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetPlaytime" title="lib.metatags.MetaTags.GetPlaytime"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetPlaytime()</span></code></a></li>
-<li><code class="docutils literal notranslate"><span class="pre">bitrate</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetBitrate" title="lib.metatags.MetaTags.GetBitrate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetBitrate()</span></code></a></li>
-<li><code class="docutils literal notranslate"><span class="pre">lyrics</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetLyrics" title="lib.metatags.MetaTags.GetLyrics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetLyrics()</span></code></a></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">song</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetSongname" title="lib.metatags.MetaTags.GetSongname"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongname()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">album</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetAlbumname" title="lib.metatags.MetaTags.GetAlbumname"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbumname()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">artist</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetArtistname" title="lib.metatags.MetaTags.GetArtistname"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetArtistname()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">releaseyear</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetReleaseyear" title="lib.metatags.MetaTags.GetReleaseyear"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetReleaseyear()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cdnumber</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetCDNumber" title="lib.metatags.MetaTags.GetCDNumber"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetCDNumber()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">songnumber</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetTracknumber" title="lib.metatags.MetaTags.GetTracknumber"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetTracknumber()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">origin</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetOrigin" title="lib.metatags.MetaTags.GetOrigin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetOrigin()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">playtime</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetPlaytime" title="lib.metatags.MetaTags.GetPlaytime"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetPlaytime()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bitrate</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetBitrate" title="lib.metatags.MetaTags.GetBitrate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetBitrate()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lyrics</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetLyrics" title="lib.metatags.MetaTags.GetLyrics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetLyrics()</span></code></a></p></li>
 </ul>
 </div></blockquote>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.metatags.MetaTags.GetArtistname">
-<code class="descname">GetArtistname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetArtistname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetArtistname" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetArtistname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetArtistname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetArtistname" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the name of the artist</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The artist name as string, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if entry does not exist</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The artist name as string, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if entry does not exist</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.metatags.MetaTags.GetBitrate">
-<code class="descname">GetBitrate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetBitrate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetBitrate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetBitrate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetBitrate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetBitrate" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the bitrate of the file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">bitrate as integer or <code class="docutils literal notranslate"><span class="pre">0</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>bitrate as integer or <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.metatags.MetaTags.GetCDNumber">
-<code class="descname">GetCDNumber</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetCDNumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetCDNumber" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetCDNumber</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetCDNumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetCDNumber" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the CD Number.
 The CD number is only stored in MP4 metadata.
 For all other formats, this method always returns <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The CD number as integer, or <code class="docutils literal notranslate"><span class="pre">0</span></code> if entry does not exist</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The CD number as integer, or <code class="docutils literal notranslate"><span class="pre">0</span></code> if entry does not exist</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.metatags.MetaTags.GetLyrics">
-<code class="descname">GetLyrics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetLyrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetLyrics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetLyrics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetLyrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetLyrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method tries to get lyrics from the metadata.
 If on lyrics were found, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The lyrics as string, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if entry does not exist</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The lyrics as string, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if entry does not exist</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.metatags.MetaTags.GetOrigin">
-<code class="descname">GetOrigin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetOrigin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetOrigin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetOrigin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetOrigin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetOrigin" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method tries to determine where the file come from.
 The following origins can be detected:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">&quot;iTunes&quot;</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;bandcamp&quot;</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;music163&quot;</span></code> aka 网易云音乐</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;CD&quot;</span></code> as fallback for unknown <em>flac</em> files</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;internet&quot;</span></code> as fallback for any other unknown files</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;iTunes&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;bandcamp&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;music163&quot;</span></code> aka 网易云音乐</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;CD&quot;</span></code> as fallback for unknown <em>flac</em> files</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;internet&quot;</span></code> as fallback for any other unknown files</p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Name of the origin as string</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Name of the origin as string</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.metatags.MetaTags.GetPlaytime">
-<code class="descname">GetPlaytime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetPlaytime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetPlaytime" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetPlaytime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetPlaytime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetPlaytime" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method tries to determine the playtime of a song.
 It first calls <a class="reference internal" href="#lib.metatags.MetaTags.AnalysePlaytime" title="lib.metatags.MetaTags.AnalysePlaytime"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AnalysePlaytime()</span></code></a> which gets the playtime direct form file
 using <code class="docutils literal notranslate"><span class="pre">ffprobe</span></code>.
 Only if this method fails, the playtime gets read from the meta data.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">playtime in second, or <code class="docutils literal notranslate"><span class="pre">0</span></code> if there is no way to get the time</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>playtime in second, or <code class="docutils literal notranslate"><span class="pre">0</span></code> if there is no way to get the time</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.metatags.MetaTags.GetReleaseyear">
-<code class="descname">GetReleaseyear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetReleaseyear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetReleaseyear" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetReleaseyear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetReleaseyear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetReleaseyear" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the release year</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The release year as integer, or <code class="docutils literal notranslate"><span class="pre">0</span></code> if entry does not exist</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The release year as integer, or <code class="docutils literal notranslate"><span class="pre">0</span></code> if entry does not exist</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.metatags.MetaTags.GetSongname">
-<code class="descname">GetSongname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetSongname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetSongname" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSongname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetSongname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetSongname" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the name of a song</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The song name as string, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if entry does not exist</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The song name as string, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if entry does not exist</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.metatags.MetaTags.GetTracknumber">
-<code class="descname">GetTracknumber</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetTracknumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetTracknumber" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetTracknumber</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetTracknumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetTracknumber" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the track number.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The track number as integer, or <code class="docutils literal notranslate"><span class="pre">0</span></code> if entry does not exist</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The track number as integer, or <code class="docutils literal notranslate"><span class="pre">0</span></code> if entry does not exist</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.metatags.MetaTags.Load">
-<code class="descname">Load</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.Load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.Load" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Load</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.Load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.Load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Supported file extensions:</p>
 <blockquote>
 <div><ul class="simple">
-<li>For MPEG4: <code class="docutils literal notranslate"><span class="pre">mp4</span></code>, <code class="docutils literal notranslate"><span class="pre">aac</span></code>, <code class="docutils literal notranslate"><span class="pre">m4a</span></code></li>
-<li>For MPEG3: <code class="docutils literal notranslate"><span class="pre">mp3</span></code>, <code class="docutils literal notranslate"><span class="pre">MP3</span></code></li>
-<li>For FLAC: <code class="docutils literal notranslate"><span class="pre">flac</span></code></li>
+<li><p>For MPEG4: <code class="docutils literal notranslate"><span class="pre">mp4</span></code>, <code class="docutils literal notranslate"><span class="pre">aac</span></code>, <code class="docutils literal notranslate"><span class="pre">m4a</span></code></p></li>
+<li><p>For MPEG3: <code class="docutils literal notranslate"><span class="pre">mp3</span></code>, <code class="docutils literal notranslate"><span class="pre">MP3</span></code></p></li>
+<li><p>For FLAC: <code class="docutils literal notranslate"><span class="pre">flac</span></code></p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>path</strong> (<em>str</em>) – path to the song file that shall be loaded</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><em>Nothing</em></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If path is not a string</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If file not exist or file cannot be read.</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If the file extension or file format is not supported</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – path to the song file that shall be loaded</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – If path is not a string</p></li>
+<li><p><strong>ValueError</strong> – If file not exist or file cannot be read.</p></li>
+<li><p><strong>ValueError</strong> – If the file extension or file format is not supported</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.metatags.MetaTags.StoreArtwork">
-<code class="descname">StoreArtwork</code><span class="sig-paren">(</span><em>imgfilename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.StoreArtwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.StoreArtwork" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">StoreArtwork</code><span class="sig-paren">(</span><em class="sig-param">imgfilename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.StoreArtwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.StoreArtwork" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method stores an artwork from the metadata into a file.
 If there is no artwork in the metadata, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.</p>
 <p>If the file already exists, it gets overwritten.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>imgfilename</strong> (<em>str</em>) – Absolute path to an image file to store the image at</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>imgfilename</strong> (<em>str</em>) – Absolute path to an image file to store the image at</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -973,7 +937,7 @@ If there is no artwork in the metadata, <code class="docutils literal notranslat
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

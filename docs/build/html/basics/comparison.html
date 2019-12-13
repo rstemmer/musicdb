@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Comparison to Other Tools &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Comparison to Other Tools &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="Philosophy of MusicDB" href="concept.html"/>
         <link rel="prev" title="Welcome to MusicDB’s documentation!" href="../index.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -677,12 +683,12 @@ Of cause they are all open source, too.</p>
 <h2>Introducing other tools<a class="headerlink" href="#introducing-other-tools" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference external" href="http://beets.io/">Beets</a></li>
-<li><a class="reference external" href="http://www.fomori.org/cherrymusic/index.html">CherryMusic</a></li>
-<li><a class="reference external" href="http://ampache.org/index.html">Ampache</a></li>
-<li><a class="reference external" href="https://www.sonerezh.bzh/">Sonerezh</a></li>
-<li><a class="reference external" href="https://musicpd.org/">Music Player Daemon</a></li>
-<li><a class="reference external" href="https://www.mopidy.com/">Modipy</a></li>
+<li><p><a class="reference external" href="http://beets.io/">Beets</a></p></li>
+<li><p><a class="reference external" href="http://www.fomori.org/cherrymusic/index.html">CherryMusic</a></p></li>
+<li><p><a class="reference external" href="http://ampache.org/index.html">Ampache</a></p></li>
+<li><p><a class="reference external" href="https://www.sonerezh.bzh/">Sonerezh</a></p></li>
+<li><p><a class="reference external" href="https://musicpd.org/">Music Player Daemon</a></p></li>
+<li><p><a class="reference external" href="https://www.mopidy.com/">Modipy</a></p></li>
 </ul>
 </div></blockquote>
 <p>Some tools use <a class="reference external" href="https://musicbrainz.org/">MusicBrainz</a>.
@@ -694,208 +700,208 @@ So using MusicBrainz is both, a feature and an anti feature.</p>
 <div class="section" id="metrics">
 <h2>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><dl class="docutils">
-<dt>Focus:</dt>
-<dd>What is the focus of the tool.
-Streaming, file management, tag management, …</dd>
-<dt>Information sources:</dt>
-<dd>What are the sources for the information the tool handles.
-For example file meta data, filename, external databases, …</dd>
-<dt>External sources:</dt>
-<dd>Does the tool access external sources for information collecting.</dd>
-<dt>File management:</dt>
-<dd>Does the tool manages the files in the file system (renaming, moving, <em>audio</em>-editing)</dd>
-<dt>File meta data:</dt>
-<dd>Does the tool changes the meta data of files? And when?</dd>
-<dt>Artwork management:</dt>
-<dd>Does the tool manage the artwork of albums.
+<div><dl class="simple">
+<dt>Focus:</dt><dd><p>What is the focus of the tool.
+Streaming, file management, tag management, …</p>
+</dd>
+<dt>Information sources:</dt><dd><p>What are the sources for the information the tool handles.
+For example file meta data, filename, external databases, …</p>
+</dd>
+<dt>External sources:</dt><dd><p>Does the tool access external sources for information collecting.</p>
+</dd>
+<dt>File management:</dt><dd><p>Does the tool manages the files in the file system (renaming, moving, <em>audio</em>-editing)</p>
+</dd>
+<dt>File meta data:</dt><dd><p>Does the tool changes the meta data of files? And when?</p>
+</dd>
+<dt>Artwork management:</dt><dd><p>Does the tool manage the artwork of albums.
 It should at least be possible to assign an artwork to each album.
-So inside the environment of the tool, all albums must have artworks to fulfill this metric</dd>
-<dt>Lyrics management:</dt>
-<dd>Does the tool manages the lyrics of a song.
-Similar to artworks, the assignment of lyrics to a song are important for this metric.</dd>
-<dt>Export:</dt>
-<dd>What are the possibilities to export the information inside the tool environment.
-The focus of this metric is to determine if it is possible to use the Music outside the tool.</dd>
-<dt>Streaming:</dt>
-<dd>Does the tool stream the music into the internet, and how does it do that.
+So inside the environment of the tool, all albums must have artworks to fulfill this metric</p>
+</dd>
+<dt>Lyrics management:</dt><dd><p>Does the tool manages the lyrics of a song.
+Similar to artworks, the assignment of lyrics to a song are important for this metric.</p>
+</dd>
+<dt>Export:</dt><dd><p>What are the possibilities to export the information inside the tool environment.
+The focus of this metric is to determine if it is possible to use the Music outside the tool.</p>
+</dd>
+<dt>Streaming:</dt><dd><p>Does the tool stream the music into the internet, and how does it do that.
 With streaming, a broadcast is meant. Not only accessing a file from the web browser.
-Using Music Player Daemon (MPD) for streaming is OK.</dd>
-<dt>User Interface:</dt>
-<dd>What user interfaces does the tool provide.</dd>
-<dt>Playlist:</dt>
-<dd>Organization of the playlist.</dd>
-<dt>Multiuser:</dt>
-<dd>Does it support multiple user</dd>
+Using Music Player Daemon (MPD) for streaming is OK.</p>
+</dd>
+<dt>User Interface:</dt><dd><p>What user interfaces does the tool provide.</p>
+</dd>
+<dt>Playlist:</dt><dd><p>Organization of the playlist.</p>
+</dd>
+<dt>Multiuser:</dt><dd><p>Does it support multiple user</p>
+</dd>
 </dl>
 </div></blockquote>
 </div>
 <div class="section" id="comparison">
 <h2>Comparison<a class="headerlink" href="#comparison" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="17%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
+<col style="width: 17%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Metric</th>
-<th class="head">MusicDB</th>
-<th class="head">beets</th>
-<th class="head">CherryMusic</th>
-<th class="head">Ampache</th>
-<th class="head">Sonerezh</th>
-<th class="head">Modipy</th>
-<th class="head">mpd</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Metric</p></th>
+<th class="head"><p>MusicDB</p></th>
+<th class="head"><p>beets</p></th>
+<th class="head"><p>CherryMusic</p></th>
+<th class="head"><p>Ampache</p></th>
+<th class="head"><p>Sonerezh</p></th>
+<th class="head"><p>Modipy</p></th>
+<th class="head"><p>mpd</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Focus</td>
-<td>Presenting
+<tbody>
+<tr class="row-even"><td><p>Focus</p></td>
+<td><p>Presenting
 music,
-Music queue</td>
-<td>File and
+Music queue</p></td>
+<td><p>File and
 meta data
-management</td>
-<td>Web audio
-player</td>
-<td>Remote music
+management</p></td>
+<td><p>Web audio
+player</p></td>
+<td><p>Remote music
 managing via
-WebUI</td>
-<td>Web audio
-player</td>
-<td>Streaming
+WebUI</p></td>
+<td><p>Web audio
+player</p></td>
+<td><p>Streaming
 server, web
-player (1)</td>
-<td>Streaming
+player (1)</p></td>
+<td><p>Streaming
 server and
-clients (2)</td>
+clients (2)</p></td>
 </tr>
-<tr class="row-odd"><td>Information Source</td>
-<td>Filesystem,
+<tr class="row-odd"><td><p>Information Source</p></td>
+<td><p>Filesystem,
 Analysis,
-AI</td>
-<td>Tags,
-MusicBrainz</td>
-<td>Tags</td>
-<td>Tags,
-MusicBrainz</td>
-<td>&#160;</td>
-<td>Tags</td>
-<td>Tags</td>
+AI</p></td>
+<td><p>Tags,
+MusicBrainz</p></td>
+<td><p>Tags</p></td>
+<td><p>Tags,
+MusicBrainz</p></td>
+<td></td>
+<td><p>Tags</p></td>
+<td><p>Tags</p></td>
 </tr>
-<tr class="row-even"><td>External Sources</td>
-<td>ffmpeg</td>
-<td>MusicBrainz</td>
-<td>&#160;</td>
-<td>MusicBrainz</td>
-<td>&#160;</td>
-<td>&#160;</td>
-<td>None</td>
+<tr class="row-even"><td><p>External Sources</p></td>
+<td><p>ffmpeg</p></td>
+<td><p>MusicBrainz</p></td>
+<td></td>
+<td><p>MusicBrainz</p></td>
+<td></td>
+<td></td>
+<td><p>None</p></td>
 </tr>
-<tr class="row-odd"><td>File management</td>
-<td>By user only</td>
-<td>Renameing /
-Moving</td>
-<td>None</td>
-<td>&#160;</td>
-<td>None</td>
-<td>None</td>
-<td>None</td>
+<tr class="row-odd"><td><p>File management</p></td>
+<td><p>By user only</p></td>
+<td><p>Renameing /
+Moving</p></td>
+<td><p>None</p></td>
+<td></td>
+<td><p>None</p></td>
+<td><p>None</p></td>
+<td><p>None</p></td>
 </tr>
-<tr class="row-even"><td>File meta data</td>
-<td>None</td>
-<td>Read/Write</td>
-<td>Read</td>
-<td>Read?</td>
-<td>Read?</td>
-<td>Read</td>
-<td>Read</td>
+<tr class="row-even"><td><p>File meta data</p></td>
+<td><p>None</p></td>
+<td><p>Read/Write</p></td>
+<td><p>Read</p></td>
+<td><p>Read?</p></td>
+<td><p>Read?</p></td>
+<td><p>Read</p></td>
+<td><p>Read</p></td>
 </tr>
-<tr class="row-odd"><td>Artwork managing</td>
-<td>Yes</td>
-<td>&#160;</td>
-<td>&#160;</td>
-<td>&#160;</td>
-<td>&#160;</td>
-<td>&#160;</td>
-<td>No</td>
+<tr class="row-odd"><td><p>Artwork managing</p></td>
+<td><p>Yes</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>No</p></td>
 </tr>
-<tr class="row-even"><td>Lyrics managing</td>
-<td>Yes</td>
-<td>&#160;</td>
-<td>&#160;</td>
-<td>No</td>
-<td>No</td>
-<td>&#160;</td>
-<td>No</td>
+<tr class="row-even"><td><p>Lyrics managing</p></td>
+<td><p>Yes</p></td>
+<td></td>
+<td></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+<td></td>
+<td><p>No</p></td>
 </tr>
-<tr class="row-odd"><td>Export</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
-<td>No</td>
+<tr class="row-odd"><td><p>Export</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
 </tr>
-<tr class="row-even"><td>Streaming</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>No</td>
-<td>Yes</td>
-<td>No</td>
-<td>Yes</td>
-<td>Yes</td>
+<tr class="row-even"><td><p>Streaming</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
 </tr>
-<tr class="row-odd"><td>UI</td>
-<td>CLI/WebUI</td>
-<td>CLI</td>
-<td>WebUI</td>
-<td>CLI/WebUI</td>
-<td>WebUI</td>
-<td>CLI/(1)</td>
-<td>CLI/(2)</td>
+<tr class="row-odd"><td><p>UI</p></td>
+<td><p>CLI/WebUI</p></td>
+<td><p>CLI</p></td>
+<td><p>WebUI</p></td>
+<td><p>CLI/WebUI</p></td>
+<td><p>WebUI</p></td>
+<td><p>CLI/(1)</p></td>
+<td><p>CLI/(2)</p></td>
 </tr>
-<tr class="row-even"><td>Playlist</td>
-<td>Queue,
-Random</td>
-<td>&#160;</td>
-<td>Playlist,
+<tr class="row-even"><td><p>Playlist</p></td>
+<td><p>Queue,
+Random</p></td>
+<td></td>
+<td><p>Playlist,
 Queue,
-Random</td>
-<td>Playlist,
-Random</td>
-<td>Playlist,
+Random</p></td>
+<td><p>Playlist,
+Random</p></td>
+<td><p>Playlist,
 Queue,
-Random</td>
-<td>Playlist</td>
-<td>Queue,
+Random</p></td>
+<td><p>Playlist</p></td>
+<td><p>Queue,
 Playlist,
-Random</td>
+Random</p></td>
 </tr>
-<tr class="row-odd"><td>Multiuser</td>
-<td>No</td>
-<td>&#160;</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>Yes</td>
-<td>No</td>
-<td>Yes</td>
+<tr class="row-odd"><td><p>Multiuser</p></td>
+<td><p>No</p></td>
+<td></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>Yes</p></td>
 </tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>(1):</dt>
-<dd>There are extensions to access the server from the <a class="reference external" href="https://docs.mopidy.com/en/latest/ext/web/#ext-web">web</a>.
-<em>Modipy</em> also supports <a class="reference external" href="https://docs.mopidy.com/en/latest/clients/mpd/">MPD Clients</a>.</dd>
-<dt>(2):</dt>
-<dd>There exist also <a class="reference external" href="https://www.musicpd.org/clients/">Music Player Daemon Clients</a></dd>
+<dl class="simple">
+<dt>(1):</dt><dd><p>There are extensions to access the server from the <a class="reference external" href="https://docs.mopidy.com/en/latest/ext/web/#ext-web">web</a>.
+<em>Modipy</em> also supports <a class="reference external" href="https://docs.mopidy.com/en/latest/clients/mpd/">MPD Clients</a>.</p>
+</dd>
+<dt>(2):</dt><dd><p>There exist also <a class="reference external" href="https://www.musicpd.org/clients/">Music Player Daemon Clients</a></p>
+</dd>
 </dl>
 </div>
 <div class="section" id="conclusion">
@@ -949,7 +955,7 @@ It just follows the common concepts of audio file management and audio players w
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

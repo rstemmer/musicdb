@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>repair - Repair Database Entries &mdash; MusicDB 5.1.0 documentation</title>
+  <title>repair - Repair Database Entries &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="server - MusicDB Websocket Server" href="server.html"/>
         <link rel="prev" title="musicai - MusicAI" href="musicai.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -672,8 +678,8 @@
 The following things get checked by the GUI part:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Do all artist, album and song files have an database entry</li>
-<li>Do all artist, album and song database entries have a file</li>
+<li><p>Do all artist, album and song files have an database entry</p></li>
+<li><p>Do all artist, album and song database entries have a file</p></li>
 </ol>
 </div></blockquote>
 <p>The result gets presented in two lists.
@@ -684,14 +690,14 @@ The key commands listed below are independent of the data.</p>
 <p>The update command <code class="docutils literal notranslate"><span class="pre">u</span></code> will merge the file selected in the left list with the database entry selected in the right list</p>
 <p>Press <code class="docutils literal notranslate"><span class="pre">q</span></code> key, or <code class="docutils literal notranslate"><span class="pre">Ctrl-D</span></code> to exit the tool.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Currently, only songs can be removed.</p>
+<p class="admonition-title">Warning</p>
+<p>Currently, only songs can be removed.</p>
 </div>
 <p>Beside the GUI part, there are two more features that must be enabled via command line option:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">-l</span></code>/<code class="docutils literal notranslate"><span class="pre">--lyrics</span></code>: Search for lyrics in all files. If there are lyrics in a file, that are not in the database, they will be added. But only if the lyrics state is <em>Empty</em>. If the user already changed something, the changes will not be overwritten.</li>
-<li><code class="docutils literal notranslate"><span class="pre">-c</span></code>/<code class="docutils literal notranslate"><span class="pre">--checksums</span></code>: Updates all checksum entries in the songs table.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-l</span></code>/<code class="docutils literal notranslate"><span class="pre">--lyrics</span></code>: Search for lyrics in all files. If there are lyrics in a file, that are not in the database, they will be added. But only if the lyrics state is <em>Empty</em>. If the user already changed something, the changes will not be overwritten.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-c</span></code>/<code class="docutils literal notranslate"><span class="pre">--checksums</span></code>: Updates all checksum entries in the songs table.</p></li>
 </ul>
 </div></blockquote>
 <p>These features will not be applied when the GUI mode is used.</p>
@@ -754,7 +760,7 @@ Most common are errors regarding the BOM (Byte Order Mark), because there are fa
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Test VMs &mdash; MusicDB 5.1.0 documentation</title>
+  <title>MusicDB Test VMs &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDB Websocket API" href="webapi.html"/>
         <link rel="prev" title="MusicDB Stream" href="streaming.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -692,8 +698,8 @@ chown user:user /data/vms
 <p>I use multiple images to make the test environment more composable:</p>
 <blockquote>
 <div><ul class="simple">
-<li>System image: <code class="docutils literal notranslate"><span class="pre">$DISTNAME.cow</span></code></li>
-<li>Music collection: <code class="docutils literal notranslate"><span class="pre">music.cow</span></code> (mount read only to allow multiple OSs to access that device)</li>
+<li><p>System image: <code class="docutils literal notranslate"><span class="pre">$DISTNAME.cow</span></code></p></li>
+<li><p>Music collection: <code class="docutils literal notranslate"><span class="pre">music.cow</span></code> (mount read only to allow multiple OSs to access that device)</p></li>
 </ul>
 </div></blockquote>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qemu-img create -f qcow2 /data/vms/<span class="nv">$DISTNAME</span>.cow 20G
@@ -707,20 +713,19 @@ qemu-img create -f qcow2 /data/vms/music.cow 10G
 <p>All system installations have the following setup:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Language: <code class="docutils literal notranslate"><span class="pre">English</span></code> (Location: <code class="docutils literal notranslate"><span class="pre">Germany/Berlin</span></code>, Locales: <code class="docutils literal notranslate"><span class="pre">de_DE.UTF-8</span></code>)</li>
-<li>User: <code class="docutils literal notranslate"><span class="pre">user:user</span></code> with id <code class="docutils literal notranslate"><span class="pre">1000:1000</span></code> and group</li>
-<li>Patitioning: Using the assistant; home on same partition; for the distribution recommended setup.</li>
-<li>Installation: Minimal system. No GUI if possible.</li>
+<li><p>Language: <code class="docutils literal notranslate"><span class="pre">English</span></code> (Location: <code class="docutils literal notranslate"><span class="pre">Germany/Berlin</span></code>, Locales: <code class="docutils literal notranslate"><span class="pre">de_DE.UTF-8</span></code>)</p></li>
+<li><p>User: <code class="docutils literal notranslate"><span class="pre">user:user</span></code> with id <code class="docutils literal notranslate"><span class="pre">1000:1000</span></code> and group</p></li>
+<li><p>Patitioning: Using the assistant; home on same partition; for the distribution recommended setup.</p></li>
+<li><p>Installation: Minimal system. No GUI if possible.</p></li>
 </ul>
 </div></blockquote>
 <p>Task to do for each new system:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Install: vim, git</li>
-<li><dl class="first docutils">
-<dt>edit fstap:</dt>
-<dd><ul class="first last">
-<li>music-disk: <code class="docutils literal notranslate"><span class="pre">/data/music</span></code></li>
+<li><p>Install: vim, git</p></li>
+<li><dl class="simple">
+<dt>edit fstap:</dt><dd><ul>
+<li><p>music-disk: <code class="docutils literal notranslate"><span class="pre">/data/music</span></code></p></li>
 </ul>
 </dd>
 </dl>
@@ -781,21 +786,21 @@ ssh user@localhost -p10022
 </pre></div>
 </div>
 <div class="admonition attention">
-<p class="first admonition-title">Attention</p>
+<p class="admonition-title">Attention</p>
 <p>After installing MPD, the daemon gets started via systemd (enabled!!)</p>
 <p>So, after installing MPD run the following commands:</p>
-<div class="last highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl stop mpd
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl stop mpd
 systemctl disable mpd
 </pre></div>
 </div>
 </div>
 <div class="admonition attention">
-<p class="first admonition-title">Attention</p>
-<p class="last">On Debian, the icecast executable is called <code class="docutils literal notranslate"><span class="pre">icecast2</span></code>, not <code class="docutils literal notranslate"><span class="pre">icecast</span></code></p>
+<p class="admonition-title">Attention</p>
+<p>On Debian, the icecast executable is called <code class="docutils literal notranslate"><span class="pre">icecast2</span></code>, not <code class="docutils literal notranslate"><span class="pre">icecast</span></code></p>
 </div>
 <div class="admonition attention">
-<p class="first admonition-title">Attention</p>
-<p class="last">On Debian, uses the ancient Python 2 when calling <code class="docutils literal notranslate"><span class="pre">python</span></code>! m(</p>
+<p class="admonition-title">Attention</p>
+<p>On Debian, uses the ancient Python 2 when calling <code class="docutils literal notranslate"><span class="pre">python</span></code>! m(</p>
 </div>
 </div>
 <div class="section" id="raspian">
@@ -857,7 +862,7 @@ qemu-system-x86_64 -cdrom archlinux-2017.09.01-x86_64.iso -hda arch.cow -boot <s
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

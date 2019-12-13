@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MP3 File Interface &mdash; MusicDB 5.1.0 documentation</title>
+  <title>MP3 File Interface &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="MP3 Stream Interface" href="mp3stream.html"/>
         <link rel="prev" title="Meta Tags" href="metatags.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -668,10 +674,10 @@
   <div class="section" id="mp3-file-interface">
 <h1>MP3 File Interface<a class="headerlink" href="#mp3-file-interface" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>This module will no longer be used in <em>MusicDB</em>.
 It may get removed in future.</p>
-<p class="last">What this module does is now done by <a class="reference internal" href="mp3stream.html"><span class="doc">MP3 Stream Interface</span></a>.</p>
+<p>What this module does is now done by <a class="reference internal" href="mp3stream.html"><span class="doc">MP3 Stream Interface</span></a>.</p>
 </div>
 <span class="target" id="module-lib.stream.mp3file"></span><p>This module provides a class to read mp3 files frame wise.
 Decoding is not part of it.</p>
@@ -679,19 +685,16 @@ Decoding is not part of it.</p>
 <h2>MP3File Class<a class="headerlink" href="#mp3file-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib.stream.mp3file.MP3File">
-<em class="property">class </em><code class="descclassname">lib.stream.mp3file.</code><code class="descname">MP3File</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.stream.mp3file.</code><code class="sig-name descname">MP3File</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class allows frame wise reading of an mp3 file.
 This is done by the <a class="reference internal" href="#lib.stream.mp3file.MP3File.Frames" title="lib.stream.mp3file.MP3File.Frames"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Frames()</span></code></a> generator.
 Beside the mp3 frames the generator returns lots of information extracted from the mp3 Frame Header.</p>
 <p>The class expects a valid mp3 file (MPEG Layer III) with an valid ID3 Tag (ID3v2.3.0 or ID3v2.4.0).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – An absolute path to a valid mp3 file</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – An absolute path to a valid mp3 file</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ffmpeg -filter_complex aevalsrc=0 -acodec libmp3lame -ab 320k -t 1 silence.mp3</span>
 
@@ -703,7 +706,7 @@ Beside the mp3 frames the generator returns lots of information extracted from t
 </div>
 <dl class="method">
 <dt id="lib.stream.mp3file.MP3File.AnalyzeHeader">
-<code class="descname">AnalyzeHeader</code><span class="sig-paren">(</span><em>header</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File.AnalyzeHeader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File.AnalyzeHeader" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AnalyzeHeader</code><span class="sig-paren">(</span><em class="sig-param">header</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File.AnalyzeHeader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File.AnalyzeHeader" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method analyzes a MP3 Frame Header and returns all information that are implicit included in these 4 bytes.
 It is build for the internal use inside this class.</p>
 <p>Primary source for analyzing the header is <a class="reference external" href="http://mpgedit.org/mpgedit/mpeg_format/MP3Format.html">mpgedit.org (no HTTPS)</a>
@@ -715,56 +718,50 @@ These information (and more) are returned as dictionary.
 The returned dictionary contains the following keys:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt>Relevant information:</dt>
-<dd><ul class="first last">
-<li><code class="docutils literal notranslate"><span class="pre">&quot;framesize&quot;</span></code> (int): Size of a frame in the MP3 file. This includes the 4 bytes of the MP3 Frame Header.</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;frametime&quot;</span></code> (float): The playtime of the audio in milliseconds that is encoded in one frame</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;layer&quot;</span></code> (int): MPEG layer. For MP3 it should be <code class="docutils literal notranslate"><span class="pre">3</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;mpeg</span> <span class="pre">version&quot;</span></code> (int): MPEG version. For MP3, it should be <code class="docutils literal notranslate"><span class="pre">1</span></code></li>
+<li><dl class="simple">
+<dt>Relevant information:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;framesize&quot;</span></code> (int): Size of a frame in the MP3 file. This includes the 4 bytes of the MP3 Frame Header.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;frametime&quot;</span></code> (float): The playtime of the audio in milliseconds that is encoded in one frame</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;layer&quot;</span></code> (int): MPEG layer. For MP3 it should be <code class="docutils literal notranslate"><span class="pre">3</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;mpeg</span> <span class="pre">version&quot;</span></code> (int): MPEG version. For MP3, it should be <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Further information (I have no idea what some of the information mean. They are simply not relevant anyway.):</dt>
-<dd><ul class="first last">
-<li><code class="docutils literal notranslate"><span class="pre">&quot;protection&quot;</span></code> (bool): When <code class="docutils literal notranslate"><span class="pre">True</span></code> the header has a CRC16 checksum</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;padding&quot;</span></code> (bool): When <code class="docutils literal notranslate"><span class="pre">True</span></code> the frame is padded with an extra slot. (The slot size is given in <code class="docutils literal notranslate"><span class="pre">&quot;slotsize&quot;</span></code>)</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;private&quot;</span></code> (bool): <em>free to use</em></li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;mode&quot;</span></code> (str): Channel mode: <code class="docutils literal notranslate"><span class="pre">&quot;stereo&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;joint</span> <span class="pre">stereo&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;dual</span> <span class="pre">channel&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;mono&quot;</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;modeextension&quot;</span></code> (str): For MPEG Layer 1 and 2: <code class="docutils literal notranslate"><span class="pre">&quot;4-31&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;8-31&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;12-31&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;16-31&quot;</span></code>. For MPEG Layer 3: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> (empty), <code class="docutils literal notranslate"><span class="pre">&quot;IS&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MS&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;IS+MS&quot;</span></code>. <code class="docutils literal notranslate"><span class="pre">&quot;IS&quot;</span></code> stands for <em>Intensity Stereo Mode</em>, <code class="docutils literal notranslate"><span class="pre">&quot;MS&quot;</span></code> for <em>MS Stereo Mode</em></li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;copyright&quot;</span></code> (bool): Copyrighted data</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;original&quot;</span></code> (bool): Original data</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;emphasis&quot;</span></code> (str): One of the following strings: <code class="docutils literal notranslate"><span class="pre">&quot;none&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;50/15</span> <span class="pre">ms&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;reserved&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;CCIT</span> <span class="pre">J.17&quot;</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;samples&quot;</span></code> (int): Samples per frame</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;slotsize&quot;</span></code> (int): The size of one slot</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;bitspersample&quot;</span></code> (int): Bit per sample</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;samplerate&quot;</span></code> (int): Samplerate</li>
+<li><dl class="simple">
+<dt>Further information (I have no idea what some of the information mean. They are simply not relevant anyway.):</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;protection&quot;</span></code> (bool): When <code class="docutils literal notranslate"><span class="pre">True</span></code> the header has a CRC16 checksum</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;padding&quot;</span></code> (bool): When <code class="docutils literal notranslate"><span class="pre">True</span></code> the frame is padded with an extra slot. (The slot size is given in <code class="docutils literal notranslate"><span class="pre">&quot;slotsize&quot;</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;private&quot;</span></code> (bool): <em>free to use</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;mode&quot;</span></code> (str): Channel mode: <code class="docutils literal notranslate"><span class="pre">&quot;stereo&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;joint</span> <span class="pre">stereo&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;dual</span> <span class="pre">channel&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;mono&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;modeextension&quot;</span></code> (str): For MPEG Layer 1 and 2: <code class="docutils literal notranslate"><span class="pre">&quot;4-31&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;8-31&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;12-31&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;16-31&quot;</span></code>. For MPEG Layer 3: <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> (empty), <code class="docutils literal notranslate"><span class="pre">&quot;IS&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MS&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;IS+MS&quot;</span></code>. <code class="docutils literal notranslate"><span class="pre">&quot;IS&quot;</span></code> stands for <em>Intensity Stereo Mode</em>, <code class="docutils literal notranslate"><span class="pre">&quot;MS&quot;</span></code> for <em>MS Stereo Mode</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;copyright&quot;</span></code> (bool): Copyrighted data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;original&quot;</span></code> (bool): Original data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;emphasis&quot;</span></code> (str): One of the following strings: <code class="docutils literal notranslate"><span class="pre">&quot;none&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;50/15</span> <span class="pre">ms&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;reserved&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;CCIT</span> <span class="pre">J.17&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;samples&quot;</span></code> (int): Samples per frame</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;slotsize&quot;</span></code> (int): The size of one slot</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;bitspersample&quot;</span></code> (int): Bit per sample</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;samplerate&quot;</span></code> (int): Samplerate</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>header</strong> (<em>int/bytes</em>) – The 4 byte MP3 Frame Header in bytes, or as integer (unsigned, big endian!)</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A dictionary with all information encoded in the header</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When <code class="docutils literal notranslate"><span class="pre">header</span></code> is not of type bytes or int.</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – When there are invalid information encoded in the header.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>header</strong> (<em>int/bytes</em>) – The 4 byte MP3 Frame Header in bytes, or as integer (unsigned, big endian!)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary with all information encoded in the header</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – When <code class="docutils literal notranslate"><span class="pre">header</span></code> is not of type bytes or int.</p></li>
+<li><p><strong>ValueError</strong> – When there are invalid information encoded in the header.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ...</span>
 <span class="n">header</span> <span class="o">=</span> <span class="n">mp3</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
@@ -781,25 +778,22 @@ The returned dictionary contains the following keys:</p>
 
 <dl class="method">
 <dt id="lib.stream.mp3file.MP3File.Frames">
-<code class="descname">Frames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File.Frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File.Frames" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Frames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File.Frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File.Frames" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a generator that returns a frame from the loaded mp3 file and information about that frame.</p>
 <p>The returned dictionary contains the following information:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">&quot;frame&quot;</span></code> (bytes): A complete MP3 Frame including the Frame Header and the Frame Data</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;header&quot;</span></code> (dict): The interpretation of the MP3 Frame Header as returned by <a class="reference internal" href="#lib.stream.mp3file.MP3File.AnalyzeHeader" title="lib.stream.mp3file.MP3File.AnalyzeHeader"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AnalyzeHeader()</span></code></a></li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;total&quot;</span></code> (int): The total number of frames in the mp3 file</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;count&quot;</span></code> (int): The number of this frame between <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">total</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;frame&quot;</span></code> (bytes): A complete MP3 Frame including the Frame Header and the Frame Data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;header&quot;</span></code> (dict): The interpretation of the MP3 Frame Header as returned by <a class="reference internal" href="#lib.stream.mp3file.MP3File.AnalyzeHeader" title="lib.stream.mp3file.MP3File.AnalyzeHeader"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AnalyzeHeader()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;total&quot;</span></code> (int): The total number of frames in the mp3 file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;count&quot;</span></code> (int): The number of this frame between <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">total</span></code></p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A generator that returns a dictionary including a mp3 frame</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A generator that returns a dictionary including a mp3 frame</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mp3file</span> <span class="o">=</span> <span class="n">MP3File</span><span class="p">(</span><span class="s2">&quot;./silence.mp3&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">mp3file</span><span class="o">.</span><span class="n">Frames</span><span class="p">():</span>
@@ -811,7 +805,7 @@ The returned dictionary contains the following keys:</p>
 
 <dl class="method">
 <dt id="lib.stream.mp3file.MP3File.Load">
-<code class="descname">Load</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File.Load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File.Load" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Load</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3file.html#MP3File.Load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3file.MP3File.Load" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method loads a new mp3 file.
 All information from the previous file will be discard.</p>
 <p>The method reads the whole file, analyzes each frame, and stores them in memory.
@@ -845,18 +839,17 @@ The ID3 Tag gets also read, but not further processed.</p>
 
     readmp3header   -&gt; end              [label=&quot;No further data&quot;]
 }</p></object></div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – An absolute path to a valid mp3 file</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – When there are unexpected for invalid information in the given file.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – An absolute path to a valid mp3 file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – When there are unexpected for invalid information in the given file.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -899,7 +892,7 @@ The ID3 Tag gets also read, but not further processed.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

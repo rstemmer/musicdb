@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Database &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Database &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="Fileprocessing Methods" href="fileprocessing.html"/>
         <link rel="prev" title="Configuration" href="config.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -669,24 +675,24 @@
 <h1>Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h1>
 <p>All databases have a table ‘’meta’’ with the following scheme:</p>
 <blockquote>
-<div><table border="1" class="docutils">
+<div><table class="docutils align-default">
 <colgroup>
-<col width="25%" />
-<col width="31%" />
-<col width="44%" />
+<col style="width: 25%" />
+<col style="width: 31%" />
+<col style="width: 44%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>id</td>
-<td>key</td>
-<td>value</td>
+<tbody>
+<tr class="row-odd"><td><p>id</p></td>
+<td><p>key</p></td>
+<td><p>value</p></td>
 </tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>key:</dt>
-<dd>A string to identify a meta data variable</dd>
-<dt>value:</dt>
-<dd>The value to a key as string</dd>
+<dl class="simple">
+<dt>key:</dt><dd><p>A string to identify a meta data variable</p>
+</dd>
+<dt>value:</dt><dd><p>The value to a key as string</p>
+</dd>
 </dl>
 </div></blockquote>
 <p>One important key is ‘’version’ that allows to identify old schemes and allows an easy update of the database.
@@ -695,81 +701,71 @@ There may be other keys depending on the databases. In that case they are descri
 <h2>Database Class<a class="headerlink" href="#database-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib.db.database.Database">
-<em class="property">class </em><code class="descclassname">lib.db.database.</code><code class="descname">Database</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.db.database.</code><code class="sig-name descname">Database</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the base class for all database classes in MusicDB.
 It establishes the connection to the sqlite3 databases.</p>
 <p>The connection timeout is set to <code class="docutils literal notranslate"><span class="pre">20</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – absolute path to the database file.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When <em>path</em> is not a string</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – absolute path to the database file.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – When <em>path</em> is not a string</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="lib.db.database.Database.Compress">
-<code class="descname">Compress</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Compress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.Compress" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Compress</code><span class="sig-paren">(</span><em class="sig-param">string</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Compress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.Compress" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to compress a string before storing it into the database.</p>
 <p>To keep a consistent database, use only this method and the complementary method <a class="reference internal" href="#lib.db.database.Database.Decompress" title="lib.db.database.Database.Decompress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Decompress()</span></code></a>.
 It uses <em>gzip</em> for compression.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>str</em>) – A string to compress</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A byte blob with the compresses string</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>string</strong> (<em>str</em>) – A string to compress</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A byte blob with the compresses string</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.db.database.Database.Decompress">
-<code class="descname">Decompress</code><span class="sig-paren">(</span><em>blob</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Decompress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.Decompress" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Decompress</code><span class="sig-paren">(</span><em class="sig-param">blob</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Decompress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.Decompress" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to decompress a compresses string after reading it from the database.</p>
 <p>To keep a consistent database, use only this method and the complementary method <a class="reference internal" href="#lib.db.database.Database.Compress" title="lib.db.database.Database.Compress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Compress()</span></code></a>.
 It uses <em>gzip</em> for decompression.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>blob</strong> – A byte blob with the compresses string</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The decompresses string</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>blob</strong> – A byte blob with the compresses string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The decompresses string</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.db.database.Database.Execute">
-<code class="descname">Execute</code><span class="sig-paren">(</span><em>sql</em>, <em>values=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.Execute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Execute</code><span class="sig-paren">(</span><em class="sig-param">sql</em>, <em class="sig-param">values=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.Execute" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method executes a SQL command.
 When the command fails, the database gets rolled back.
 Otherwise the changes gets committed.</p>
 <p><em>values</em> can be a single value, a list, a dictionary or a tuple.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>sql</strong> (<em>str</em>) – SQL command</li>
-<li><strong>values</strong> – Optional arguments used in the command</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sql</strong> (<em>str</em>) – SQL command</p></li>
+<li><p><strong>values</strong> – Optional arguments used in the command</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When <em>sql</em> is not a string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – When <em>sql</em> is not a string</p>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s2">&quot;test.db&quot;</span><span class="p">)</span>
 
@@ -791,7 +787,7 @@ Otherwise the changes gets committed.</p>
 
 <dl class="method">
 <dt id="lib.db.database.Database.GetFromDatabase">
-<code class="descname">GetFromDatabase</code><span class="sig-paren">(</span><em>sql</em>, <em>values=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.GetFromDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.GetFromDatabase" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetFromDatabase</code><span class="sig-paren">(</span><em class="sig-param">sql</em>, <em class="sig-param">values=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.GetFromDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.GetFromDatabase" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets values from the database by executing a SQL command and fetching the results.
 When the command fails, the database gets rolled back.</p>
 <p>values can be a single value, a list, a dictionary or a tuple.</p>
@@ -799,24 +795,20 @@ When the command fails, the database gets rolled back.</p>
 Each list element corresponds to one returned row.
 Each row is represented by a tuple of values.</p>
 <p>If only one value is expected, it is <code class="docutils literal notranslate"><span class="pre">[(x,)]</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>sql</strong> (<em>str</em>) – SQL command</li>
-<li><strong>values</strong> – Optional arguments used in the command</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sql</strong> (<em>str</em>) – SQL command</p></li>
+<li><p><strong>values</strong> – Optional arguments used in the command</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The results of the SQL command</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When <em>sql</em> is not a string</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The results of the SQL command</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – When <em>sql</em> is not a string</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="s2">&quot;test.db&quot;</span><span class="p">)</span>
 
@@ -873,7 +865,7 @@ Each row is represented by a tuple of values.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

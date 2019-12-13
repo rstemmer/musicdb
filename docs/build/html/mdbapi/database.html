@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDBDatabase &mdash; MusicDB 5.1.0 documentation</title>
+  <title>MusicDBDatabase &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDBExtern" href="extern.html"/>
         <link rel="prev" title="Blacklist" href="blacklist.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -673,224 +679,202 @@ It is the interface between the music and its entries in the database (<a class=
 <h2>MusicDBDatabase Class<a class="headerlink" href="#musicdbdatabase-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mdbapi.database.MusicDBDatabase">
-<em class="property">class </em><code class="descclassname">mdbapi.database.</code><code class="descname">MusicDBDatabase</code><span class="sig-paren">(</span><em>config</em>, <em>database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">mdbapi.database.</code><code class="sig-name descname">MusicDBDatabase</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class supports the following features</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt>File management</dt>
-<dd><ul class="first last">
-<li><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.FindLostPaths" title="mdbapi.database.MusicDBDatabase.FindLostPaths"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FindLostPaths()</span></code></a>: Check if all paths in the <em>songs</em>, <em>albums</em> and <em>artists</em> table are valid.</li>
-<li><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.FindNewPaths" title="mdbapi.database.MusicDBDatabase.FindNewPaths"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FindNewPaths()</span></code></a>: Check if there are new songs, albums or artists in the music collection that are not in the database.</li>
-<li><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.FixAttributes" title="mdbapi.database.MusicDBDatabase.FixAttributes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FixAttributes()</span></code></a>: Change the access mode and ownership of the music to match the configutation</li>
-<li><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AnalysePath" title="mdbapi.database.MusicDBDatabase.AnalysePath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AnalysePath()</span></code></a>: Extract song information from its file path</li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">TyrAnalysePathFor()</span></code>: Check if the given path is valid for an artist, album or song</li>
+<li><dl class="simple">
+<dt>File management</dt><dd><ul>
+<li><p><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.FindLostPaths" title="mdbapi.database.MusicDBDatabase.FindLostPaths"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FindLostPaths()</span></code></a>: Check if all paths in the <em>songs</em>, <em>albums</em> and <em>artists</em> table are valid.</p></li>
+<li><p><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.FindNewPaths" title="mdbapi.database.MusicDBDatabase.FindNewPaths"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FindNewPaths()</span></code></a>: Check if there are new songs, albums or artists in the music collection that are not in the database.</p></li>
+<li><p><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.FixAttributes" title="mdbapi.database.MusicDBDatabase.FixAttributes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FixAttributes()</span></code></a>: Change the access mode and ownership of the music to match the configutation</p></li>
+<li><p><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AnalysePath" title="mdbapi.database.MusicDBDatabase.AnalysePath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AnalysePath()</span></code></a>: Extract song information from its file path</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">TyrAnalysePathFor()</span></code>: Check if the given path is valid for an artist, album or song</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Database management</dt>
-<dd><ul class="first last">
-<li><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddArtist" title="mdbapi.database.MusicDBDatabase.AddArtist"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddArtist()</span></code></a>, <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddAlbum" title="mdbapi.database.MusicDBDatabase.AddAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddAlbum()</span></code></a>, <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddSong" title="mdbapi.database.MusicDBDatabase.AddSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSong()</span></code></a>: Adds a new artist, album or song to the database</li>
-<li><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateArtist" title="mdbapi.database.MusicDBDatabase.UpdateArtist"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateArtist()</span></code></a>, <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateAlbum" title="mdbapi.database.MusicDBDatabase.UpdateAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateAlbum()</span></code></a>, <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateSong" title="mdbapi.database.MusicDBDatabase.UpdateSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateSong()</span></code></a>: Updates a artist, album or song path in the database</li>
-<li><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.RemoveArtist" title="mdbapi.database.MusicDBDatabase.RemoveArtist"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveArtist()</span></code></a>, <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.RemoveAlbum" title="mdbapi.database.MusicDBDatabase.RemoveAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveAlbum()</span></code></a>, <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.RemoveSong" title="mdbapi.database.MusicDBDatabase.RemoveSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSong()</span></code></a>: Removes a artist, album or song from the database</li>
+<li><dl class="simple">
+<dt>Database management</dt><dd><ul>
+<li><p><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddArtist" title="mdbapi.database.MusicDBDatabase.AddArtist"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddArtist()</span></code></a>, <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddAlbum" title="mdbapi.database.MusicDBDatabase.AddAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddAlbum()</span></code></a>, <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddSong" title="mdbapi.database.MusicDBDatabase.AddSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSong()</span></code></a>: Adds a new artist, album or song to the database</p></li>
+<li><p><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateArtist" title="mdbapi.database.MusicDBDatabase.UpdateArtist"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateArtist()</span></code></a>, <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateAlbum" title="mdbapi.database.MusicDBDatabase.UpdateAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateAlbum()</span></code></a>, <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateSong" title="mdbapi.database.MusicDBDatabase.UpdateSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateSong()</span></code></a>: Updates a artist, album or song path in the database</p></li>
+<li><p><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.RemoveArtist" title="mdbapi.database.MusicDBDatabase.RemoveArtist"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveArtist()</span></code></a>, <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.RemoveAlbum" title="mdbapi.database.MusicDBDatabase.RemoveAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveAlbum()</span></code></a>, <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.RemoveSong" title="mdbapi.database.MusicDBDatabase.RemoveSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSong()</span></code></a>: Removes a artist, album or song from the database</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Add information into the database</dt>
-<dd><ul class="first last">
-<li><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddLyricsFromFile" title="mdbapi.database.MusicDBDatabase.AddLyricsFromFile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddLyricsFromFile()</span></code></a>: Read lyrics from the meta data of a song file into the database</li>
-<li><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateChecksum" title="mdbapi.database.MusicDBDatabase.UpdateChecksum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateChecksum()</span></code></a>: Calculates and adds the checksum of a song file into the database</li>
+<li><dl class="simple">
+<dt>Add information into the database</dt><dd><ul>
+<li><p><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddLyricsFromFile" title="mdbapi.database.MusicDBDatabase.AddLyricsFromFile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddLyricsFromFile()</span></code></a>: Read lyrics from the meta data of a song file into the database</p></li>
+<li><p><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateChecksum" title="mdbapi.database.MusicDBDatabase.UpdateChecksum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateChecksum()</span></code></a>: Calculates and adds the checksum of a song file into the database</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Other</dt>
-<dd><ul class="first last">
-<li><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateServerCache" title="mdbapi.database.MusicDBDatabase.UpdateServerCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateServerCache()</span></code></a>: Signals the WebSocket Server to refresh its internal caches</li>
+<li><dl class="simple">
+<dt>Other</dt><dd><ul>
+<li><p><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateServerCache" title="mdbapi.database.MusicDBDatabase.UpdateServerCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateServerCache()</span></code></a>: Signals the WebSocket Server to refresh its internal caches</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>config</strong> – MusicDB configuration object</li>
-<li><strong>database</strong> – MusicDB database</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> – MusicDB configuration object</p></li>
+<li><p><strong>database</strong> – MusicDB database</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – when <em>config</em> or <em>database</em> not of type <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> or <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – when <em>config</em> or <em>database</em> not of type <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> or <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a></p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.AddAlbum">
-<code class="descname">AddAlbum</code><span class="sig-paren">(</span><em>albumpath</em>, <em>artistid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddAlbum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AddAlbum</code><span class="sig-paren">(</span><em class="sig-param">albumpath</em>, <em class="sig-param">artistid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds an album to the database in the following steps:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Check if the album already exists in the database</li>
-<li>Get all songs of the album by getting all files inside the directory except those on the <em>ignoresongs</em>-list.</li>
-<li>Load the metadata from one of those songs using <a class="reference internal" href="../lib/metatags.html#lib.metatags.MetaTags.GetAllMetadata" title="lib.metatags.MetaTags.GetAllMetadata"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.metatags.MetaTags.GetAllMetadata()</span></code></a></li>
-<li>Analyze the path of one of those songs using <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AnalysePath" title="mdbapi.database.MusicDBDatabase.AnalysePath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AnalysePath()</span></code></a></li>
-<li>If <em>artistid</em> is not given as parameter, it gets read from the database identifying the artist by its path.</li>
-<li>Get modification date using <code class="xref py py-meth docutils literal notranslate"><span class="pre">GetModificationDate()</span></code></li>
-<li>Set directory attributes and ownership using <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.FixAttributes" title="mdbapi.database.MusicDBDatabase.FixAttributes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FixAttributes()</span></code></a></li>
-<li>Create new entry for the new album in the database and get the default values</li>
-<li>Add each song of the album to the database by calling <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddSong" title="mdbapi.database.MusicDBDatabase.AddSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSong()</span></code></a></li>
-<li>Write all collected information of the album into the database</li>
+<li><p>Check if the album already exists in the database</p></li>
+<li><p>Get all songs of the album by getting all files inside the directory except those on the <em>ignoresongs</em>-list.</p></li>
+<li><p>Load the metadata from one of those songs using <a class="reference internal" href="../lib/metatags.html#lib.metatags.MetaTags.GetAllMetadata" title="lib.metatags.MetaTags.GetAllMetadata"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.metatags.MetaTags.GetAllMetadata()</span></code></a></p></li>
+<li><p>Analyze the path of one of those songs using <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AnalysePath" title="mdbapi.database.MusicDBDatabase.AnalysePath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AnalysePath()</span></code></a></p></li>
+<li><p>If <em>artistid</em> is not given as parameter, it gets read from the database identifying the artist by its path.</p></li>
+<li><p>Get modification date using <code class="xref py py-meth docutils literal notranslate"><span class="pre">GetModificationDate()</span></code></p></li>
+<li><p>Set directory attributes and ownership using <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.FixAttributes" title="mdbapi.database.MusicDBDatabase.FixAttributes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FixAttributes()</span></code></a></p></li>
+<li><p>Create new entry for the new album in the database and get the default values</p></li>
+<li><p>Add each song of the album to the database by calling <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddSong" title="mdbapi.database.MusicDBDatabase.AddSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSong()</span></code></a></p></li>
+<li><p>Write all collected information of the album into the database</p></li>
 </ol>
 </div></blockquote>
 <p>If adding the songs to the database raises an exception, that song gets skipped.
 The <em>numofsongs</em> value for the album is the number of actual existing songs for this album in the database.
 It is save to add the failed song later by using the <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddSong" title="mdbapi.database.MusicDBDatabase.AddSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSong()</span></code></a> method.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>albumpath</strong> (<em>str</em>) – Absolute path, or path relative to the music root directory, to the album that shall be added to the database.</li>
-<li><strong>artistid</strong> (<em>int</em>) – Optional, default value is <code class="docutils literal notranslate"><span class="pre">None</span></code>. The ID of the artist this album belongs to.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>albumpath</strong> (<em>str</em>) – Absolute path, or path relative to the music root directory, to the album that shall be added to the database.</p></li>
+<li><p><strong>artistid</strong> (<em>int</em>) – Optional, default value is <code class="docutils literal notranslate"><span class="pre">None</span></code>. The ID of the artist this album belongs to.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If the path does not address a directory</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If album already exists in the database</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">AssertionError</span></code> – If there is no artist for this album in the database</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">AssertionError</span></code> – If loading metadata from one of the song files failed</li>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If the path does not address a directory</p></li>
+<li><p><strong>ValueError</strong> – If album already exists in the database</p></li>
+<li><p><strong>AssertionError</strong> – If there is no artist for this album in the database</p></li>
+<li><p><strong>AssertionError</strong> – If loading metadata from one of the song files failed</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.AddArtist">
-<code class="descname">AddArtist</code><span class="sig-paren">(</span><em>artistpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddArtist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AddArtist</code><span class="sig-paren">(</span><em class="sig-param">artistpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddArtist" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <em>AddArtist</em> method adds a new artist to the database.
 This is done in the following steps:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Check if the artist path is inside the music root directory</li>
-<li>Check if the artist is already in the database</li>
-<li>Extract the artist name from the path</li>
-<li>Set directory attributes and ownership using <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.FixAttributes" title="mdbapi.database.MusicDBDatabase.FixAttributes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FixAttributes()</span></code></a></li>
-<li>Add artist to database</li>
-<li>Call <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddAlbum" title="mdbapi.database.MusicDBDatabase.AddAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddAlbum()</span></code></a> for all subdirectories of the artistpath. (Except for the directory-names in the <em>ignorealbum</em> list)</li>
+<li><p>Check if the artist path is inside the music root directory</p></li>
+<li><p>Check if the artist is already in the database</p></li>
+<li><p>Extract the artist name from the path</p></li>
+<li><p>Set directory attributes and ownership using <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.FixAttributes" title="mdbapi.database.MusicDBDatabase.FixAttributes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FixAttributes()</span></code></a></p></li>
+<li><p>Add artist to database</p></li>
+<li><p>Call <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddAlbum" title="mdbapi.database.MusicDBDatabase.AddAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddAlbum()</span></code></a> for all subdirectories of the artistpath. (Except for the directory-names in the <em>ignorealbum</em> list)</p></li>
 </ol>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>artistpath</strong> (<em>str</em>) – Absolute or relative (to the music directory) path to the artist that shall be added to the database.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If the path does not address a directory</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If artist is already in the database</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>artistpath</strong> (<em>str</em>) – Absolute or relative (to the music directory) path to the artist that shall be added to the database.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If the path does not address a directory</p></li>
+<li><p><strong>ValueError</strong> – If artist is already in the database</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.AddLyricsFromFile">
-<code class="descname">AddLyricsFromFile</code><span class="sig-paren">(</span><em>songpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddLyricsFromFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddLyricsFromFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AddLyricsFromFile</code><span class="sig-paren">(</span><em class="sig-param">songpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddLyricsFromFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddLyricsFromFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to add lyrics from the file of a song into the database.
 It tries to load the metadata from the song file.
 If that succeeds, the song entry gets loaded from the database and the lyrics state of that entry gets checked.
 The lyrics from the file gets stored in the song database in case the current lyrics state is <em>empty</em>.
 Otherwise the files lyrics get rejected.</p>
 <p>This method returns <code class="docutils literal notranslate"><span class="pre">True</span></code> when <em>new</em> lyrics were added. If there already exist lyrics <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songpath</strong> (<em>str</em>) – Absolute song path, or relative to the music root directory.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>songpath</strong> (<em>str</em>) – Absolute song path, or relative to the music root directory.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.AddSong">
-<code class="descname">AddSong</code><span class="sig-paren">(</span><em>songpath</em>, <em>artistid=None</em>, <em>albumid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AddSong</code><span class="sig-paren">(</span><em class="sig-param">songpath</em>, <em class="sig-param">artistid=None</em>, <em class="sig-param">albumid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds a song to the MusicDB database.
 To do so, the following steps were done:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Check if the song already exists in the database</li>
-<li>Load the metadata from the song using <a class="reference internal" href="../lib/metatags.html#lib.metatags.MetaTags.GetAllMetadata" title="lib.metatags.MetaTags.GetAllMetadata"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.metatags.MetaTags.GetAllMetadata()</span></code></a></li>
-<li>Analyze the path of one of the song using <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AnalysePath" title="mdbapi.database.MusicDBDatabase.AnalysePath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AnalysePath()</span></code></a></li>
-<li>If <em>artistid</em> is not given as parameter, it gets read from the database identifying the artist by its path.</li>
-<li>If <em>albumid</em> is not given as parameter, it gets read from the database identifying the album by its path.</li>
-<li>Set file attributes and ownership using <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.FixAttributes" title="mdbapi.database.MusicDBDatabase.FixAttributes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FixAttributes()</span></code></a></li>
-<li>Add song to database</li>
-<li>If the parameter <em>albumid</em> was <code class="docutils literal notranslate"><span class="pre">None</span></code> the <em>numofsongs</em> entry of the determined album gets incremented</li>
-<li>If there are lyrics in the song file, they get also inserted into the database</li>
+<li><p>Check if the song already exists in the database</p></li>
+<li><p>Load the metadata from the song using <a class="reference internal" href="../lib/metatags.html#lib.metatags.MetaTags.GetAllMetadata" title="lib.metatags.MetaTags.GetAllMetadata"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.metatags.MetaTags.GetAllMetadata()</span></code></a></p></li>
+<li><p>Analyze the path of one of the song using <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AnalysePath" title="mdbapi.database.MusicDBDatabase.AnalysePath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AnalysePath()</span></code></a></p></li>
+<li><p>If <em>artistid</em> is not given as parameter, it gets read from the database identifying the artist by its path.</p></li>
+<li><p>If <em>albumid</em> is not given as parameter, it gets read from the database identifying the album by its path.</p></li>
+<li><p>Set file attributes and ownership using <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.FixAttributes" title="mdbapi.database.MusicDBDatabase.FixAttributes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FixAttributes()</span></code></a></p></li>
+<li><p>Add song to database</p></li>
+<li><p>If the parameter <em>albumid</em> was <code class="docutils literal notranslate"><span class="pre">None</span></code> the <em>numofsongs</em> entry of the determined album gets incremented</p></li>
+<li><p>If there are lyrics in the song file, they get also inserted into the database</p></li>
 </ol>
 </div></blockquote>
 <p>In case the album ID is set, this method assumes that its database entry gets managed by the <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddAlbum" title="mdbapi.database.MusicDBDatabase.AddAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddAlbum()</span></code></a> method.
 So, nothing will be changed regarding the album.
 If album ID was <code class="docutils literal notranslate"><span class="pre">None</span></code>, this method also updates the album-entry, namely the <em>numofsongs</em> value gets incremented.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>songpath</strong> (<em>str</em>) – Absolute path, or path relative to the music root directory, to the song that shall be added to the database.</li>
-<li><strong>artistid</strong> (<em>int</em>) – Optional, default value is <code class="docutils literal notranslate"><span class="pre">None</span></code>. The ID of the artist this song belongs to.</li>
-<li><strong>albumid</strong> (<em>int</em>) – Optional, default value is <code class="docutils literal notranslate"><span class="pre">None</span></code>. The ID of the album this song belongs to.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>songpath</strong> (<em>str</em>) – Absolute path, or path relative to the music root directory, to the song that shall be added to the database.</p></li>
+<li><p><strong>artistid</strong> (<em>int</em>) – Optional, default value is <code class="docutils literal notranslate"><span class="pre">None</span></code>. The ID of the artist this song belongs to.</p></li>
+<li><p><strong>albumid</strong> (<em>int</em>) – Optional, default value is <code class="docutils literal notranslate"><span class="pre">None</span></code>. The ID of the album this song belongs to.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – If song already exists in the database</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">AssertionError</span></code> – If analyzing the path fails</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">AssertionError</span></code> – If there is no album for this song in the database</li>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If song already exists in the database</p></li>
+<li><p><strong>AssertionError</strong> – If analyzing the path fails</p></li>
+<li><p><strong>AssertionError</strong> – If there is no album for this song in the database</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.AnalysePath">
-<code class="descname">AnalysePath</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AnalysePath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AnalysePath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AnalysePath</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AnalysePath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AnalysePath" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method analyses a path to a song and extracts all the information encoded in the path.
 The path must consist of three parts: The artist directory, the album directory and the song file.</p>
 <p>A valid path has one the following structures:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">{artistname}/{albumrelease}</span> <span class="pre">-</span> <span class="pre">{albumname}/{songnumber}</span> <span class="pre">{songname}.{extension}</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">{artistname}/{albumrelease}</span> <span class="pre">-</span> <span class="pre">{albumname}/{cdnumber}-{songnumber}</span> <span class="pre">{songname}.{extension}</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{artistname}/{albumrelease}</span> <span class="pre">-</span> <span class="pre">{albumname}/{songnumber}</span> <span class="pre">{songname}.{extension}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{artistname}/{albumrelease}</span> <span class="pre">-</span> <span class="pre">{albumname}/{cdnumber}-{songnumber}</span> <span class="pre">{songname}.{extension}</span></code></p></li>
 </ul>
 </div></blockquote>
 <p>The returned dictionary holds all the extracted information.
@@ -898,38 +882,33 @@ In case there is no <em>cdnumber</em>, this entry is <code class="docutils liter
 The names can have all printable Unicode characters and of cause spaces.</p>
 <p>If an error occurs because the path does not follow the scheme, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.
 This method does not check if the path exists!</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – A path of a song including artist and album directory.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">On success, a dictionary with information about the artist, album and song.
-Otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – A path of a song including artist and album directory.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>On success, a dictionary with information about the artist, album and song.
+Otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.FindLostPaths">
-<code class="descname">FindLostPaths</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.FindLostPaths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.FindLostPaths" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">FindLostPaths</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.FindLostPaths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.FindLostPaths" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks all artist, album and song entries if the paths to their related directories and files are still valid.
 Entries with invalid paths gets returned in three lists: <code class="docutils literal notranslate"><span class="pre">artists,</span> <span class="pre">albums,</span> <span class="pre">songs</span></code></p>
 <p>This method does not check if the song is cached in the Song Cache.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A three lists of database entries with invalid paths. Empty lists if there is no invalid entrie.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A three lists of database entries with invalid paths. Empty lists if there is no invalid entrie.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.FindNewPaths">
-<code class="descname">FindNewPaths</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.FindNewPaths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.FindNewPaths" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">FindNewPaths</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.FindNewPaths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.FindNewPaths" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method searches inside the music directory for valid artist, album and song paths.
 If those paths are not in the database, they will be returned.
 So this method returns three lists: <code class="docutils literal notranslate"><span class="pre">artistpaths,</span> <span class="pre">albumpaths,</span> <span class="pre">songpaths</span></code>.
@@ -942,327 +921,296 @@ The user may want to check if the results of this method are valid for him.</p>
 <p>Further more this method is error tolerant. This means, if in the database is an invalid entry,
 this does not lead to errors. For example, if an album path gets renamed, this path will be returned.
 It does not lead to an error that the old path is still in the database.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A three lists of paths that are valid but unknown by the database. Empty lists if there is no invalid entrie.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A three lists of paths that are valid but unknown by the database. Empty lists if there is no invalid entrie.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.FixAttributes">
-<code class="descname">FixAttributes</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.FixAttributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.FixAttributes" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">FixAttributes</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.FixAttributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.FixAttributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method changes the access permissions and ownership of a file or directory.
 Only the addressed files or directory’s permissions gets changed, not their parents.</p>
 <blockquote>
 <div><ul class="simple">
-<li>File permissions: <code class="docutils literal notranslate"><span class="pre">rw-rw-r--</span></code></li>
-<li>Directory permissions: <code class="docutils literal notranslate"><span class="pre">rwxrwxr-x</span></code></li>
-<li>Ownership as configured in the settings: <code class="docutils literal notranslate"><span class="pre">[music]-&gt;owner</span></code>:<code class="docutils literal notranslate"><span class="pre">[music]-&gt;group</span></code></li>
+<li><p>File permissions: <code class="docutils literal notranslate"><span class="pre">rw-rw-r--</span></code></p></li>
+<li><p>Directory permissions: <code class="docutils literal notranslate"><span class="pre">rwxrwxr-x</span></code></p></li>
+<li><p>Ownership as configured in the settings: <code class="docutils literal notranslate"><span class="pre">[music]-&gt;owner</span></code>:<code class="docutils literal notranslate"><span class="pre">[music]-&gt;group</span></code></p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – Path to an artist, album or song, relative to the music directory</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body">ValueError if path is neither a file nor a directory.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Path to an artist, album or song, relative to the music directory</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError if path is neither a file nor a directory.</strong> – </p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.RemoveAlbum">
-<code class="descname">RemoveAlbum</code><span class="sig-paren">(</span><em>albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveAlbum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveAlbum</code><span class="sig-paren">(</span><em class="sig-param">albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes an album from the database.
 The files gets not touched, and so it does not matter if they even exists.
 All related information will also be removed.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">For all songs in this album, the <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.RemoveSong" title="mdbapi.database.MusicDBDatabase.RemoveSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSong()</span></code></a> method gets called!</p>
+<p class="admonition-title">Warning</p>
+<p>For all songs in this album, the <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.RemoveSong" title="mdbapi.database.MusicDBDatabase.RemoveSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSong()</span></code></a> method gets called!</p>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This is not a <em>“set the deleted flag”</em> method.
+<p class="admonition-title">Warning</p>
+<p>This is not a <em>“set the deleted flag”</em> method.
 The data gets actually removed from the database.
 No recovery possible!</p>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>albumid</strong> (<em>int</em>) – ID of the album that shall be removed from database</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>albumid</strong> (<em>int</em>) – ID of the album that shall be removed from database</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.RemoveArtist">
-<code class="descname">RemoveArtist</code><span class="sig-paren">(</span><em>artistid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveArtist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveArtist</code><span class="sig-paren">(</span><em class="sig-param">artistid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveArtist" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes an artist from the database.
 The files gets not touched, and so it does not matter if they even exists.
 All related information will also be removed.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">For all artists albums, the <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.RemoveAlbum" title="mdbapi.database.MusicDBDatabase.RemoveAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveAlbum()</span></code></a> method gets called!</p>
+<p class="admonition-title">Warning</p>
+<p>For all artists albums, the <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.RemoveAlbum" title="mdbapi.database.MusicDBDatabase.RemoveAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveAlbum()</span></code></a> method gets called!</p>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This is not a <em>“set the deleted flag”</em> method.
+<p class="admonition-title">Warning</p>
+<p>This is not a <em>“set the deleted flag”</em> method.
 The data gets actually removed from the database.
 No recovery possible!</p>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>artistid</strong> (<em>int</em>) – ID of the artist that shall be removed from database</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>artistid</strong> (<em>int</em>) – ID of the artist that shall be removed from database</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.RemoveSong">
-<code class="descname">RemoveSong</code><span class="sig-paren">(</span><em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveSong</code><span class="sig-paren">(</span><em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removed a song from the database.
 The file gets not touched, and so it does not matter if it even exists.
 All related information will also be removed.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This is not a <em>“set the deleted flag”</em> method.
+<p class="admonition-title">Warning</p>
+<p>This is not a <em>“set the deleted flag”</em> method.
 The data gets actually removed from the database.
 No recovery possible!</p>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songid</strong> (<em>int</em>) – ID of the song that shall be removed from database</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>songid</strong> (<em>int</em>) – ID of the song that shall be removed from database</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.TryAnalysePathFor">
-<code class="descname">TryAnalysePathFor</code><span class="sig-paren">(</span><em>target='all'</em>, <em>path=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.TryAnalysePathFor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.TryAnalysePathFor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">TryAnalysePathFor</code><span class="sig-paren">(</span><em class="sig-param">target='all'</em>, <em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.TryAnalysePathFor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.TryAnalysePathFor" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a path is valid for a specific target.</p>
 <p>The check is done in the following steps:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Get all song paths</li>
-<li>Apply an information extraction on all found song paths using <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AnalysePath" title="mdbapi.database.MusicDBDatabase.AnalysePath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AnalysePath()</span></code></a></li>
+<li><p>Get all song paths</p></li>
+<li><p>Apply an information extraction on all found song paths using <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AnalysePath" title="mdbapi.database.MusicDBDatabase.AnalysePath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AnalysePath()</span></code></a></p></li>
 </ol>
 </div></blockquote>
 <p>This guarantees, that all files are valid to process with MusicDB.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>target</strong> (<em>str</em>) – Optional, default value is <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>. One of the following targets: <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;artist&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;album&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code></li>
-<li><strong>path</strong> (<em>str</em>) – Optional, default value is <code class="docutils literal notranslate"><span class="pre">None</span></code>. Path to an artist, album or song. If target is <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>, path can be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<em>str</em>) – Optional, default value is <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>. One of the following targets: <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;artist&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;album&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code></p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Optional, default value is <code class="docutils literal notranslate"><span class="pre">None</span></code>. Path to an artist, album or song. If target is <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>, path can be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">True</span></code> If the path is valid for the given target. Otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – when <em>target</em> is not <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;artist&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;album&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> If the path is valid for the given target. Otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – when <em>target</em> is not <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;artist&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;album&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.UpdateAlbum">
-<code class="descname">UpdateAlbum</code><span class="sig-paren">(</span><em>albumid</em>, <em>newpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateAlbum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">UpdateAlbum</code><span class="sig-paren">(</span><em class="sig-param">albumid</em>, <em class="sig-param">newpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates an already existing album entry in the database.
 So in case some information in the filesystem were changed (renaming, new files, …) the database gets updated.
 The following steps will be done to do this:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Update the <em>path</em> entry of the album to the new path</li>
-<li>Reading a song file inside the directory to load meta data</li>
-<li>Analyse the path to collect further information from the filesystem</li>
-<li>Update database entry for the album with the new collected information</li>
+<li><p>Update the <em>path</em> entry of the album to the new path</p></li>
+<li><p>Reading a song file inside the directory to load meta data</p></li>
+<li><p>Analyse the path to collect further information from the filesystem</p></li>
+<li><p>Update database entry for the album with the new collected information</p></li>
 </ol>
 </div></blockquote>
 <p>Updates information are:</p>
 <blockquote>
 <div><ul class="simple">
-<li>path</li>
-<li>name</li>
-<li>release date</li>
-<li>origin</li>
+<li><p>path</p></li>
+<li><p>name</p></li>
+<li><p>release date</p></li>
+<li><p>origin</p></li>
 </ul>
 </div></blockquote>
 <p>All albums and songs of this artist will also be updated using
 <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateSong" title="mdbapi.database.MusicDBDatabase.UpdateSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateSong()</span></code></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>albumid</strong> (<em>int</em>) – ID of the album entry that shall be updated</li>
-<li><strong>newpath</strong> (<em>str</em>) – Relative path to the new album</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>albumid</strong> (<em>int</em>) – ID of the album entry that shall be updated</p></li>
+<li><p><strong>newpath</strong> (<em>str</em>) – Relative path to the new album</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AssertionError</span></code> – When the new path is invalid</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>AssertionError</strong> – When the new path is invalid</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.UpdateArtist">
-<code class="descname">UpdateArtist</code><span class="sig-paren">(</span><em>artistid</em>, <em>newpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateArtist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">UpdateArtist</code><span class="sig-paren">(</span><em class="sig-param">artistid</em>, <em class="sig-param">newpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateArtist" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates an already existing artist entry in the database.</p>
 <p>Updates information are:</p>
 <blockquote>
 <div><ul class="simple">
-<li>path</li>
-<li>name</li>
+<li><p>path</p></li>
+<li><p>name</p></li>
 </ul>
 </div></blockquote>
 <p>All albums and songs of this artist will also be updated using
 <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateAlbum" title="mdbapi.database.MusicDBDatabase.UpdateAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateAlbum()</span></code></a> and <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateSong" title="mdbapi.database.MusicDBDatabase.UpdateSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateSong()</span></code></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>artistid</strong> (<em>int</em>) – ID of the artist entry that shall be updated</li>
-<li><strong>newpath</strong> (<em>str</em>) – Relative path to the new artist</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>artistid</strong> (<em>int</em>) – ID of the artist entry that shall be updated</p></li>
+<li><p><strong>newpath</strong> (<em>str</em>) – Relative path to the new artist</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.UpdateChecksum">
-<code class="descname">UpdateChecksum</code><span class="sig-paren">(</span><em>songpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateChecksum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateChecksum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">UpdateChecksum</code><span class="sig-paren">(</span><em class="sig-param">songpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateChecksum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateChecksum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to add or update the checksum of the file of a song into the database.
 The method does not care if there is already a checksum.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last"><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddSong" title="mdbapi.database.MusicDBDatabase.AddSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSong()</span></code></a> and <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateSong" title="mdbapi.database.MusicDBDatabase.UpdateSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateSong()</span></code></a> also update the checksum.
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#mdbapi.database.MusicDBDatabase.AddSong" title="mdbapi.database.MusicDBDatabase.AddSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSong()</span></code></a> and <a class="reference internal" href="#mdbapi.database.MusicDBDatabase.UpdateSong" title="mdbapi.database.MusicDBDatabase.UpdateSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateSong()</span></code></a> also update the checksum.
 So after calling that methods, calling this <code class="docutils literal notranslate"><span class="pre">AddChecksum</span></code> method is not necessary.</p>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songpath</strong> (<em>str</em>) – Absolute song path, or relative to the music root directory.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>songpath</strong> (<em>str</em>) – Absolute song path, or relative to the music root directory.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.UpdateServerCache">
-<code class="descname">UpdateServerCache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateServerCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateServerCache" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">UpdateServerCache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateServerCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateServerCache" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method signals the MusicDB Websocket Server to update its caches by writing <code class="docutils literal notranslate"><span class="pre">refresh</span></code> into its named pipe.
 This should always be called when there are new artists, albums or songs added to the database.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.UpdateSong">
-<code class="descname">UpdateSong</code><span class="sig-paren">(</span><em>songid</em>, <em>newpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">UpdateSong</code><span class="sig-paren">(</span><em class="sig-param">songid</em>, <em class="sig-param">newpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates a song entry and parts of the related album entry.
 The following steps will be done to do this:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Update the <em>path</em> entry of the album to the new path</li>
-<li>Reading the song files meta data</li>
-<li>Analyse the path to collect further information from the filesystem</li>
-<li>Update database entry with the new collected information</li>
+<li><p>Update the <em>path</em> entry of the album to the new path</p></li>
+<li><p>Reading the song files meta data</p></li>
+<li><p>Analyse the path to collect further information from the filesystem</p></li>
+<li><p>Update database entry with the new collected information</p></li>
 </ol>
 </div></blockquote>
 <p>Updates information are:</p>
 <blockquote>
 <div><ul class="simple">
-<li>path</li>
-<li>name</li>
-<li>song number</li>
-<li>cd number</li>
-<li>playtime</li>
-<li>bitrate</li>
-<li>checksum</li>
+<li><p>path</p></li>
+<li><p>name</p></li>
+<li><p>song number</p></li>
+<li><p>cd number</p></li>
+<li><p>playtime</p></li>
+<li><p>bitrate</p></li>
+<li><p>checksum</p></li>
 </ul>
 </div></blockquote>
 <p>Further more the following album information get updted:</p>
 <blockquote>
 <div><ul class="simple">
-<li>numofsongs</li>
-<li>numofcds</li>
+<li><p>numofsongs</p></li>
+<li><p>numofcds</p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>songid</strong> (<em>int</em>) – ID of the song entry that shall be updated</li>
-<li><strong>newpath</strong> (<em>str</em>) – Relative path to the new album</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>songid</strong> (<em>int</em>) – ID of the song entry that shall be updated</p></li>
+<li><p><strong>newpath</strong> (<em>str</em>) – Relative path to the new album</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">AssertionError</span></code> – When the new path is invalid</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code> – When loading the meta data failes</li>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>AssertionError</strong> – When the new path is invalid</p></li>
+<li><p><strong>Exception</strong> – When loading the meta data failes</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.database.MusicDBDatabase.UpdateSongPath">
-<code class="descname">UpdateSongPath</code><span class="sig-paren">(</span><em>newsongpath</em>, <em>oldsongpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateSongPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateSongPath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">UpdateSongPath</code><span class="sig-paren">(</span><em class="sig-param">newsongpath</em>, <em class="sig-param">oldsongpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateSongPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateSongPath" title="Permalink to this definition">¶</a></dt>
 <dd><div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This method is deprecated!
+<p class="admonition-title">Warning</p>
+<p>This method is deprecated!
 It will be removed in April 2019!</p>
 </div>
 <p>This method can be used to update a song.</p>
@@ -1271,40 +1219,36 @@ It is OK when the songs file name changes, as long as the cd and track number ar
 <p>The following steps will be done:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Get database entry from old song</li>
-<li>Analyse new songs metatags and file name</li>
-<li>Check if it is a valid replacement</li>
-<li>Replace files (and creating a backup of the old song)</li>
-<li>Try to set file attributes</li>
-<li>Update database</li>
+<li><p>Get database entry from old song</p></li>
+<li><p>Analyse new songs metatags and file name</p></li>
+<li><p>Check if it is a valid replacement</p></li>
+<li><p>Replace files (and creating a backup of the old song)</p></li>
+<li><p>Try to set file attributes</p></li>
+<li><p>Update database</p></li>
 </ol>
 </div></blockquote>
 <div class="admonition attention">
-<p class="first admonition-title">Attention</p>
-<p class="last">If something went wrong, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.
+<p class="admonition-title">Attention</p>
+<p>If something went wrong, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.
 Then only the new file must be replaced by the backup file.
 The database is still consistent.</p>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
+<p class="admonition-title">Warning</p>
 <p>A single CD song cannot be updated to a multi CD one</p>
-<p class="last">The old and new song must have the same track number</p>
+<p>The old and new song must have the same track number</p>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>newsongpath</strong> (<em>str</em>) – Absolute path to the new song</li>
-<li><strong>oldsongpath</strong> (<em>str</em>) – Absolute path to the current song</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>newsongpath</strong> (<em>str</em>) – Absolute path to the new song</p></li>
+<li><p><strong>oldsongpath</strong> (<em>str</em>) – Absolute path to the current song</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># replace an old mp3 by a new flac file</span>
 <span class="n">db</span><span class="o">.</span><span class="n">UpdateSongPath</span><span class="p">(</span><span class="s2">&quot;/tmp/downloads/23 Is Everywhere.flac&quot;</span><span class="p">,</span> <span class="s2">&quot;/data/music/Illuminati/2023 - Sheeple/23 Is Everwhere.mp3&quot;</span><span class="p">)</span>
@@ -1352,7 +1296,7 @@ The database is still consistent.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

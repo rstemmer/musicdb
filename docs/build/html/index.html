@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to MusicDB’s documentation! &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Welcome to MusicDB’s documentation! &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="#"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="#"/>
         <link rel="next" title="Comparison to Other Tools" href="basics/comparison.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -212,6 +212,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -689,24 +695,24 @@ In the <a class="reference internal" href="basics/comparison.html"><span class="
 <p>See the <a class="reference internal" href="basics/concept.html"><span class="doc">Philosophy of MusicDB</span></a> chapter and  <a class="reference internal" href="basics/overview.html"><span class="doc">Overview of MusicDB</span></a> to get an idea what it is like to use <em>MusicDB</em>.</p>
 <hr class="docutils" />
 <p>MusicDB has several abstraction layers shown in the following table:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="50%" />
-<col width="50%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Bash Scripts</td>
-<td>HTML Documents</td>
+<tbody>
+<tr class="row-odd"><td><p>Bash Scripts</p></td>
+<td><p>HTML Documents</p></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#musicdb-cli">MusicDB CLI</a></td>
-<td><a class="reference internal" href="#musicdb-webui">MusicDB WebUI</a></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#musicdb-cli">MusicDB CLI</a></p></td>
+<td><p><a class="reference internal" href="#musicdb-webui">MusicDB WebUI</a></p></td>
 </tr>
-<tr class="row-odd"><td colspan="2"><a class="reference internal" href="#musicdb-api">MusicDB API</a></td>
+<tr class="row-odd"><td colspan="2"><p><a class="reference internal" href="#musicdb-api">MusicDB API</a></p></td>
 </tr>
-<tr class="row-even"><td colspan="2"><a class="reference internal" href="#musicdb-libraries">MusicDB Libraries</a></td>
+<tr class="row-even"><td colspan="2"><p><a class="reference internal" href="#musicdb-libraries">MusicDB Libraries</a></p></td>
 </tr>
-<tr class="row-odd"><td>Python</td>
-<td>Linux Tools</td>
+<tr class="row-odd"><td><p>Python</p></td>
+<td><p>Linux Tools</p></td>
 </tr>
 </tbody>
 </table>
@@ -737,6 +743,7 @@ Those chapters are for users as well as for developers.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="usage/docker.html">Docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage/install.html">Installation &amp; Update</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage/music.html">Music</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage/scripts.html">Scripts</a></li>
@@ -803,11 +810,11 @@ Then a section with all API modules follows</p>
 <p>Here are some links to places worth reading before starting improving MusicDB:</p>
 <blockquote>
 <div><ul class="simple">
-<li>An overview of the whole MusicDB Environment: <a class="reference internal" href="basics/overview.html"><span class="doc">Overview of MusicDB</span></a></li>
-<li>Adding a new column into the music database: <a class="reference internal" href="lib/musicdb.html#module-lib.db.musicdb" title="lib.db.musicdb"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lib.db.musicdb</span></code></a></li>
-<li>Creating a new command line module: <a class="reference internal" href="basics/mods.html"><span class="doc">MusicDB Commandline Modules</span></a></li>
-<li>Creating a new MusicDB API module: Place the file at <code class="docutils literal notranslate"><span class="pre">mdbapi/*.py</span></code> and follow <a class="reference internal" href="basics/concept.html"><span class="doc">Philosophy of MusicDB</span></a></li>
-<li>Adding a new option to the MusicDB Configuration: <a class="reference internal" href="lib/config.html#module-lib.cfg.musicdb" title="lib.cfg.musicdb"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lib.cfg.musicdb</span></code></a></li>
+<li><p>An overview of the whole MusicDB Environment: <a class="reference internal" href="basics/overview.html"><span class="doc">Overview of MusicDB</span></a></p></li>
+<li><p>Adding a new column into the music database: <a class="reference internal" href="lib/musicdb.html#module-lib.db.musicdb" title="lib.db.musicdb"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lib.db.musicdb</span></code></a></p></li>
+<li><p>Creating a new command line module: <a class="reference internal" href="basics/mods.html"><span class="doc">MusicDB Commandline Modules</span></a></p></li>
+<li><p>Creating a new MusicDB API module: Place the file at <code class="docutils literal notranslate"><span class="pre">mdbapi/*.py</span></code> and follow <a class="reference internal" href="basics/concept.html"><span class="doc">Philosophy of MusicDB</span></a></p></li>
+<li><p>Adding a new option to the MusicDB Configuration: <a class="reference internal" href="lib/config.html#module-lib.cfg.musicdb" title="lib.cfg.musicdb"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lib.cfg.musicdb</span></code></a></p></li>
 </ul>
 </div></blockquote>
 <p>The best way to start learning how a feature works is by starting reading the UI module description.
@@ -879,27 +886,27 @@ JavaScript is simply not the right language for such a complex application.</p>
 <p>There are lots of tools used by MusicDB’s modules.
 Whenever a method or function uses an external program, it is mentioned in the documentation.
 Some of them are developed by myself:</p>
-<dl class="docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">ID3Edit</span></code>:</dt>
-<dd>Is a tool that is used by MusicDB to edit and repair <a class="reference external" href="http://id3.org/">ID3 Tags (no HTTPS)</a> in mp3-files.
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">ID3Edit</span></code>:</dt><dd><p>Is a tool that is used by MusicDB to edit and repair <a class="reference external" href="http://id3.org/">ID3 Tags (no HTTPS)</a> in mp3-files.
 Type <code class="docutils literal notranslate"><span class="pre">id3edit</span> <span class="pre">--help</span></code> for a short help. There is no more documentation yet, sorry.
-Source code can be found at <a class="reference external" href="https://github.com/rstemmer/id3edit">GitHub</a></dd>
-<dt><code class="docutils literal notranslate"><span class="pre">libprinthex</span></code>:</dt>
-<dd>Supports ID3Edit with fancy hexadecimal outputs for debugging invalid ID3 tags.
-Source code and documentation can be found at <a class="reference external" href="https://github.com/rstemmer/libprinthex">GitHub</a></dd>
+Source code can be found at <a class="reference external" href="https://github.com/rstemmer/id3edit">GitHub</a></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">libprinthex</span></code>:</dt><dd><p>Supports ID3Edit with fancy hexadecimal outputs for debugging invalid ID3 tags.
+Source code and documentation can be found at <a class="reference external" href="https://github.com/rstemmer/libprinthex">GitHub</a></p>
+</dd>
 </dl>
 <div class="section" id="third-party-resources">
 <h2>Third Party Resources<a class="headerlink" href="#third-party-resources" title="Permalink to this headline">¶</a></h2>
 <p>The following free third party components are included in MusicDB:</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference external" href="https://jquery.com/">jQuery 3</a></li>
-<li><a class="reference external" href="https://jqueryui.com/">jQuery UI</a></li>
-<li><a class="reference external" href="https://jamesflorentino.github.io/nanoScrollerJS/">jQuery nanoScroller.js</a></li>
-<li><a class="reference external" href="https://www.kottke.org/plus/type/silkscreen/index.html">Silkscreen</a></li>
-<li><a class="reference external" href="https://github.com/adobe-fonts/source-sans-pro">Source Sans Pro</a> and <a class="reference external" href="https://github.com/adobe-fonts/source-serif-pro">Source Serif Pro</a></li>
-<li><a class="reference external" href="https://github.com/dejavu-fonts/dejavu-fonts">DejaVuSans</a></li>
-<li><a class="reference external" href="https://fontawesome.io/">Font Awesome</a></li>
+<li><p><a class="reference external" href="https://jquery.com/">jQuery 3</a></p></li>
+<li><p><a class="reference external" href="https://jqueryui.com/">jQuery UI</a></p></li>
+<li><p><a class="reference external" href="https://jamesflorentino.github.io/nanoScrollerJS/">jQuery nanoScroller.js</a></p></li>
+<li><p><a class="reference external" href="https://www.kottke.org/plus/type/silkscreen/index.html">Silkscreen</a></p></li>
+<li><p><a class="reference external" href="https://github.com/adobe-fonts/source-sans-pro">Source Sans Pro</a> and <a class="reference external" href="https://github.com/adobe-fonts/source-serif-pro">Source Serif Pro</a></p></li>
+<li><p><a class="reference external" href="https://github.com/dejavu-fonts/dejavu-fonts">DejaVuSans</a></p></li>
+<li><p><a class="reference external" href="https://fontawesome.io/">Font Awesome</a></p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -908,8 +915,8 @@ Source code and documentation can be found at <a class="reference external" href
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 </ul>
 </div></blockquote>
 <div class="toctree-wrapper compound">
@@ -956,7 +963,7 @@ Source code and documentation can be found at <a class="reference external" href
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

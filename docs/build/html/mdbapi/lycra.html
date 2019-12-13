@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>LyCra - Lyrics Crawler &mdash; MusicDB 5.1.0 documentation</title>
+  <title>LyCra - Lyrics Crawler &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="Micro Search Engine" href="mise.html"/>
         <link rel="prev" title="MusicDBExtern" href="extern.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -705,96 +711,83 @@ The constructor must have one parameter for a <code class="xref py py-class docu
 <span id="lycra-api-class"></span><h2>Lycra API Class<a class="headerlink" href="#module-mdbapi.lycra" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mdbapi.lycra.Lycra">
-<em class="property">class </em><code class="descclassname">mdbapi.lycra.</code><code class="descname">Lycra</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">mdbapi.lycra.</code><code class="sig-name descname">Lycra</code><span class="sig-paren">(</span><em class="sig-param">config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class does the main lyrics management.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> – MusicDB Configuration object.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – when <em>config</em> is not of type <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> – MusicDB Configuration object.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – when <em>config</em> is not of type <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a></p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="mdbapi.lycra.Lycra.CrawlForLyrics">
-<code class="descname">CrawlForLyrics</code><span class="sig-paren">(</span><em>artistname</em>, <em>albumname</em>, <em>songname</em>, <em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.CrawlForLyrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.CrawlForLyrics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">CrawlForLyrics</code><span class="sig-paren">(</span><em class="sig-param">artistname</em>, <em class="sig-param">albumname</em>, <em class="sig-param">songname</em>, <em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.CrawlForLyrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.CrawlForLyrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads all crawler from the crawler directory via <a class="reference internal" href="#mdbapi.lycra.Lycra.LoadCrawlers" title="mdbapi.lycra.Lycra.LoadCrawlers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadCrawlers()</span></code></a>
 and runs them via <a class="reference internal" href="#mdbapi.lycra.Lycra.RunCrawler" title="mdbapi.lycra.Lycra.RunCrawler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RunCrawler()</span></code></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>artistname</strong> (<em>str</em>) – The name of the artist as stored in the music database</li>
-<li><strong>albumname</strong> (<em>str</em>) – The name of the album as stored in the music database</li>
-<li><strong>songname</strong> (<em>str</em>) – The name of the song as stored in the music database</li>
-<li><strong>songid</strong> (<em>int</em>) – The ID of the song to associate the lyrics with the song</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>artistname</strong> (<em>str</em>) – The name of the artist as stored in the music database</p></li>
+<li><p><strong>albumname</strong> (<em>str</em>) – The name of the album as stored in the music database</p></li>
+<li><p><strong>songname</strong> (<em>str</em>) – The name of the song as stored in the music database</p></li>
+<li><p><strong>songid</strong> (<em>int</em>) – The ID of the song to associate the lyrics with the song</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">False</span></code> if something went wrong. Otherwise <code class="docutils literal notranslate"><span class="pre">True</span></code>. (This is <em>no</em> indication that there were lyrics found!)</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">False</span></code> if something went wrong. Otherwise <code class="docutils literal notranslate"><span class="pre">True</span></code>. (This is <em>no</em> indication that there were lyrics found!)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.lycra.Lycra.GetLyrics">
-<code class="descname">GetLyrics</code><span class="sig-paren">(</span><em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.GetLyrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.GetLyrics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetLyrics</code><span class="sig-paren">(</span><em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.GetLyrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.GetLyrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the lyrics of a song.
 See <a class="reference internal" href="#lib.db.lycradb.LycraDatabase.GetLyricsFromCache" title="lib.db.lycradb.LycraDatabase.GetLyricsFromCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.lycradb.LycraDatabase.GetLyricsFromCache()</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.lycra.Lycra.LoadCrawlers">
-<code class="descname">LoadCrawlers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.LoadCrawlers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.LoadCrawlers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">LoadCrawlers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.LoadCrawlers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.LoadCrawlers" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method loads all crawlers inside the crawler directory.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Changes at crawler may not be recognized until the whole application gets restarted.
+<p class="admonition-title">Warning</p>
+<p>Changes at crawler may not be recognized until the whole application gets restarted.
 Only new added crawler gets loaded.
 Already loaded crawler are stuck at Pythons module cache.</p>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.lycra.Lycra.RunCrawler">
-<code class="descname">RunCrawler</code><span class="sig-paren">(</span><em>crawler</em>, <em>artistname</em>, <em>albumname</em>, <em>songname</em>, <em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.RunCrawler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.RunCrawler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RunCrawler</code><span class="sig-paren">(</span><em class="sig-param">crawler</em>, <em class="sig-param">artistname</em>, <em class="sig-param">albumname</em>, <em class="sig-param">songname</em>, <em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.RunCrawler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.RunCrawler" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method runs a specific crawler.
 This crawler gets all information available to search for a specific songs lyric.</p>
 <p>This method is for class internal use.
 When using this class, call <a class="reference internal" href="#mdbapi.lycra.Lycra.CrawlForLyrics" title="mdbapi.lycra.Lycra.CrawlForLyrics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CrawlForLyrics()</span></code></a> instead of calling this method directly.
 Before calling this method, <a class="reference internal" href="#mdbapi.lycra.Lycra.LoadCrawlers" title="mdbapi.lycra.Lycra.LoadCrawlers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadCrawlers()</span></code></a> must be called.</p>
 <p>The crawler base class <a class="reference internal" href="#lib.crawlerapi.LycraCrawler" title="lib.crawlerapi.LycraCrawler"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.crawlerapi.LycraCrawler</span></code></a> catches all exceptions so that they do not net to be executed in an try-except environment.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>crawler</strong> (<em>str</em>) – Name of the crawler. If it addresses the file <code class="docutils literal notranslate"><span class="pre">lib/crawler/example.py</span></code> the name is <code class="docutils literal notranslate"><span class="pre">example</span></code></li>
-<li><strong>artistname</strong> (<em>str</em>) – The name of the artist as stored in the MusicDatabase</li>
-<li><strong>albumname</strong> (<em>str</em>) – The name of the album as stored in the MusicDatabase</li>
-<li><strong>songname</strong> (<em>str</em>) – The name of the song as stored in the MusicDatabase</li>
-<li><strong>songid</strong> (<em>int</em>) – The ID of the song to associate the lyrics with the song</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>crawler</strong> (<em>str</em>) – Name of the crawler. If it addresses the file <code class="docutils literal notranslate"><span class="pre">lib/crawler/example.py</span></code> the name is <code class="docutils literal notranslate"><span class="pre">example</span></code></p></li>
+<li><p><strong>artistname</strong> (<em>str</em>) – The name of the artist as stored in the MusicDatabase</p></li>
+<li><p><strong>albumname</strong> (<em>str</em>) – The name of the album as stored in the MusicDatabase</p></li>
+<li><p><strong>songname</strong> (<em>str</em>) – The name of the song as stored in the MusicDatabase</p></li>
+<li><p><strong>songid</strong> (<em>int</em>) – The ID of the song to associate the lyrics with the song</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -804,73 +797,61 @@ Before calling this method, <a class="reference internal" href="#mdbapi.lycra.Ly
 <h2>Crawler Base Class<a class="headerlink" href="#crawler-base-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib.crawlerapi.LycraCrawler">
-<em class="property">class </em><code class="descclassname">lib.crawlerapi.</code><code class="descname">LycraCrawler</code><span class="sig-paren">(</span><em>db</em>, <em>name</em>, <em>version</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/crawlerapi.html#LycraCrawler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.crawlerapi.LycraCrawler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.crawlerapi.</code><code class="sig-name descname">LycraCrawler</code><span class="sig-paren">(</span><em class="sig-param">db</em>, <em class="sig-param">name</em>, <em class="sig-param">version</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/crawlerapi.html#LycraCrawler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.crawlerapi.LycraCrawler" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the base class for all crawler.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>db</strong> – A <code class="xref py py-class docutils literal notranslate"><span class="pre">LycraDatabase</span></code> database object.</li>
-<li><strong>name</strong> (<em>str</em>) – Name of the crawler. It should be the same name the class and file have.</li>
-<li><strong>version</strong> (<em>str</em>) – A version number in format major.minor.patchlevel as string. For example <code class="docutils literal notranslate"><span class="pre">&quot;1.0.0&quot;</span></code></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>db</strong> – A <code class="xref py py-class docutils literal notranslate"><span class="pre">LycraDatabase</span></code> database object.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Name of the crawler. It should be the same name the class and file have.</p></li>
+<li><p><strong>version</strong> (<em>str</em>) – A version number in format major.minor.patchlevel as string. For example <code class="docutils literal notranslate"><span class="pre">&quot;1.0.0&quot;</span></code></p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If the <em>db</em> argument is not of type <code class="xref py py-class docutils literal notranslate"><span class="pre">LycraDatabase</span></code></li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – If name or version number are not of type <code class="docutils literal notranslate"><span class="pre">str</span></code></li>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If the <em>db</em> argument is not of type <code class="xref py py-class docutils literal notranslate"><span class="pre">LycraDatabase</span></code></p></li>
+<li><p><strong>TypeError</strong> – If name or version number are not of type <code class="docutils literal notranslate"><span class="pre">str</span></code></p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="lib.crawlerapi.LycraCrawler.Crawl">
-<code class="descname">Crawl</code><span class="sig-paren">(</span><em>artistname</em>, <em>albumname</em>, <em>songname</em>, <em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/crawlerapi.html#LycraCrawler.Crawl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.crawlerapi.LycraCrawler.Crawl" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Crawl</code><span class="sig-paren">(</span><em class="sig-param">artistname</em>, <em class="sig-param">albumname</em>, <em class="sig-param">songname</em>, <em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/crawlerapi.html#LycraCrawler.Crawl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.crawlerapi.LycraCrawler.Crawl" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets called by the lyrics manager <a class="reference internal" href="#mdbapi.lycra.Lycra" title="mdbapi.lycra.Lycra"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.lycra.Lycra</span></code></a>.
 It provides a small environment to fit the crawler into MusicDBs infrastructure.
 It catches exceptions and measures the time the crawler needs to run.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>artistname</strong> (<em>str</em>) – The name of the artist as stored in the MusicDatabase</li>
-<li><strong>albumname</strong> (<em>str</em>) – The name of the album as stored in the MusicDatabase</li>
-<li><strong>songname</strong> (<em>str</em>) – The name of the song as stored in the MusicDatabase</li>
-<li><strong>songid</strong> (<em>int</em>) – The ID of the song to associate the lyrics with the song</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>artistname</strong> (<em>str</em>) – The name of the artist as stored in the MusicDatabase</p></li>
+<li><p><strong>albumname</strong> (<em>str</em>) – The name of the album as stored in the MusicDatabase</p></li>
+<li><p><strong>songname</strong> (<em>str</em>) – The name of the song as stored in the MusicDatabase</p></li>
+<li><p><strong>songid</strong> (<em>int</em>) – The ID of the song to associate the lyrics with the song</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">True</span></code> if the crawler found lyrics, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the crawler found lyrics, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.crawlerapi.LycraCrawler.DoCrawl">
-<code class="descname">DoCrawl</code><span class="sig-paren">(</span><em>artistname</em>, <em>albumname</em>, <em>songname</em>, <em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/crawlerapi.html#LycraCrawler.DoCrawl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.crawlerapi.LycraCrawler.DoCrawl" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">DoCrawl</code><span class="sig-paren">(</span><em class="sig-param">artistname</em>, <em class="sig-param">albumname</em>, <em class="sig-param">songname</em>, <em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/crawlerapi.html#LycraCrawler.DoCrawl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.crawlerapi.LycraCrawler.DoCrawl" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the prototype the derived class has to implement for crawling.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>artistname</strong> (<em>str</em>) – The name of the artist as stored in the music database</li>
-<li><strong>albumname</strong> (<em>str</em>) – The name of the album as stored in the music database</li>
-<li><strong>songname</strong> (<em>str</em>) – The name of the song as stored in the music database</li>
-<li><strong>songid</strong> (<em>int</em>) – The ID of the song to associate the lyrics with the song</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>artistname</strong> (<em>str</em>) – The name of the artist as stored in the music database</p></li>
+<li><p><strong>albumname</strong> (<em>str</em>) – The name of the album as stored in the music database</p></li>
+<li><p><strong>songname</strong> (<em>str</em>) – The name of the song as stored in the music database</p></li>
+<li><p><strong>songid</strong> (<em>int</em>) – The ID of the song to associate the lyrics with the song</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">True</span></code> if the crawler found lyrics, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the crawler found lyrics, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -880,90 +861,82 @@ It catches exceptions and measures the time the crawler needs to run.</p>
 <span id="lycra-database"></span><h2>Lycra Database<a class="headerlink" href="#module-lib.db.lycradb" title="Permalink to this headline">¶</a></h2>
 <p>Lyrics cache entry:</p>
 <blockquote>
-<div><table border="1" class="docutils">
+<div><table class="docutils align-default">
 <colgroup>
-<col width="9%" />
-<col width="20%" />
-<col width="17%" />
-<col width="26%" />
-<col width="11%" />
-<col width="17%" />
+<col style="width: 9%" />
+<col style="width: 20%" />
+<col style="width: 17%" />
+<col style="width: 26%" />
+<col style="width: 11%" />
+<col style="width: 17%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>id</td>
-<td>crawler</td>
-<td>songid</td>
-<td>updatetime</td>
-<td>url</td>
-<td>lyrics</td>
+<tbody>
+<tr class="row-odd"><td><p>id</p></td>
+<td><p>crawler</p></td>
+<td><p>songid</p></td>
+<td><p>updatetime</p></td>
+<td><p>url</p></td>
+<td><p>lyrics</p></td>
 </tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>crawler:</dt>
-<dd>Name of the crawler</dd>
-<dt>updatetime:</dt>
-<dd>Unix timestamp when this crawler entry was updated the last time</dd>
-<dt>url:</dt>
-<dd>URL from that the lyrics were loaded</dd>
-<dt>lyrics:</dt>
-<dd>The lyrics itself.
-This entry will be compressed using the <a class="reference internal" href="../lib/database.html#lib.db.database.Database.Compress" title="lib.db.database.Database.Compress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.database.Database.Compress()</span></code></a> method.</dd>
+<dl class="simple">
+<dt>crawler:</dt><dd><p>Name of the crawler</p>
+</dd>
+<dt>updatetime:</dt><dd><p>Unix timestamp when this crawler entry was updated the last time</p>
+</dd>
+<dt>url:</dt><dd><p>URL from that the lyrics were loaded</p>
+</dd>
+<dt>lyrics:</dt><dd><p>The lyrics itself.
+This entry will be compressed using the <a class="reference internal" href="../lib/database.html#lib.db.database.Database.Compress" title="lib.db.database.Database.Compress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.database.Database.Compress()</span></code></a> method.</p>
+</dd>
 </dl>
 </div></blockquote>
 <dl class="class">
 <dt id="lib.db.lycradb.LycraDatabase">
-<em class="property">class </em><code class="descclassname">lib.db.lycradb.</code><code class="descname">LycraDatabase</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/lycradb.html#LycraDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.lycradb.LycraDatabase" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.db.lycradb.</code><code class="sig-name descname">LycraDatabase</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/lycradb.html#LycraDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.lycradb.LycraDatabase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derived from <a class="reference internal" href="../lib/database.html#lib.db.database.Database" title="lib.db.database.Database"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.db.database.Database</span></code></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – Absolute path to the LyCra database file.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – When the version of the database does not match the expected version. (Updating MusicDB may failed)</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Absolute path to the LyCra database file.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – When the version of the database does not match the expected version. (Updating MusicDB may failed)</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="lib.db.lycradb.LycraDatabase.GetLyricsFromCache">
-<code class="descname">GetLyricsFromCache</code><span class="sig-paren">(</span><em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/lycradb.html#LycraDatabase.GetLyricsFromCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.lycradb.LycraDatabase.GetLyricsFromCache" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetLyricsFromCache</code><span class="sig-paren">(</span><em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/lycradb.html#LycraDatabase.GetLyricsFromCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.lycradb.LycraDatabase.GetLyricsFromCache" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of all entries from the cache, that matches the <em>songid</em>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songid</strong> (<em>int</em>) – ID of a song</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of entries with lyrics, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if nothing found.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>songid</strong> (<em>int</em>) – ID of a song</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of entries with lyrics, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if nothing found.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.db.lycradb.LycraDatabase.WriteLyricsToCache">
-<code class="descname">WriteLyricsToCache</code><span class="sig-paren">(</span><em>crawler</em>, <em>songid</em>, <em>lyrics</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/lycradb.html#LycraDatabase.WriteLyricsToCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.lycradb.LycraDatabase.WriteLyricsToCache" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">WriteLyricsToCache</code><span class="sig-paren">(</span><em class="sig-param">crawler</em>, <em class="sig-param">songid</em>, <em class="sig-param">lyrics</em>, <em class="sig-param">url</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/lycradb.html#LycraDatabase.WriteLyricsToCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.lycradb.LycraDatabase.WriteLyricsToCache" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method writes the lyrics a crawler found into the database.
 If there is already an entry for the combination of <em>songid</em> and <em>crawler</em>, this entry gets updated.</p>
 <p>The lyrics will be compressed.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>crawler</strong> (<em>str</em>) – Name of the crawler that found the lyrics</li>
-<li><strong>songid</strong> (<em>int</em>) – ID of the song of that the lyrics are</li>
-<li><strong>lyrics</strong> (<em>str</em>) – The lyrics that shall be stored</li>
-<li><strong>url</strong> (<em>str</em>) – The source of the lyrics</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>crawler</strong> (<em>str</em>) – Name of the crawler that found the lyrics</p></li>
+<li><p><strong>songid</strong> (<em>int</em>) – ID of the song of that the lyrics are</p></li>
+<li><p><strong>lyrics</strong> (<em>str</em>) – The lyrics that shall be stored</p></li>
+<li><p><strong>url</strong> (<em>str</em>) – The source of the lyrics</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1006,7 +979,7 @@ If there is already an entry for the combination of <em>songid</em> and <em>craw
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

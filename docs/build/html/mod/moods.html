@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>moods - Mood Tag Manager with CLUI &mdash; MusicDB 5.1.0 documentation</title>
+  <title>moods - Mood Tag Manager with CLUI &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="musicai - MusicAI" href="musicai.html"/>
         <link rel="prev" title="mise - Micro Search Engine" href="mise.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -674,7 +680,7 @@ Press <code class="docutils literal notranslate"><span class="pre">Ctrl-D</span>
 The implementation is pretty general so that they can be used to annotate any kind of information to a song.
 Only restriction is, that they can be represented with “one single” (after rendering) Unicode character.</p>
 <p>After executing <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">moods</span></code> the UI shown on the following screenshot appears:</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../_images/moods.png" src="../_images/moods.png" />
 </div>
 <p>In that form, Mood flags are represented as
@@ -690,30 +696,29 @@ On the right side are the coordinates of the moods in the <a class="reference in
 Currently, only Unicode icons (txt) are implemented.</p>
 <p>In the Mood List pane you can add, edit or remove mood tag.
 When you add or edit a flag, the dialog shown on the next screenshot appears.</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../_images/moods-edit.png" src="../_images/moods-edit.png" />
 </div>
 <p>The input forms can be accessed using the arrow keys ↑ and ↓.
 The inputs have the following meanings:</p>
 <blockquote>
-<div><dl class="docutils">
-<dt>Name:</dt>
-<dd>Name of the tag. This will be visible to the user via tool tips.
-This name should be short but meaningful.</dd>
-<dt>Icon:</dt>
-<dd>An Unicode icon.
+<div><dl class="simple">
+<dt>Name:</dt><dd><p>Name of the tag. This will be visible to the user via tool tips.
+This name should be short but meaningful.</p>
+</dd>
+<dt>Icon:</dt><dd><p>An Unicode icon.
 This can be any printable Unicode character.
 It can also be extended with combining characters.
 This value gets stored as string.
-As long as it will be rendered as a single character, everything is fine.</dd>
-<dt>U+FE0E:</dt>
-<dd>If this checkbox is set, the Unicode character <em>VARIATION SELECTOR-15</em> gets append to the icon.
+As long as it will be rendered as a single character, everything is fine.</p>
+</dd>
+<dt>U+FE0E:</dt><dd><p>If this checkbox is set, the Unicode character <em>VARIATION SELECTOR-15</em> gets append to the icon.
 This forces the software that displays the icon (In this case the web browser or shell) to use the
 text representation of the Unicode character and not replace it with a “fancy” image.
 Set this flag in case a browser or shell you use does this.
-The problem with replacing the character by an Image is, that it destroys the color scheme of the Web UI.</dd>
-<dt>Color:</dt>
-<dd>Here you can specify a color to highlight an Icon.
+The problem with replacing the character by an Image is, that it destroys the color scheme of the Web UI.</p>
+</dd>
+<dt>Color:</dt><dd><p>Here you can specify a color to highlight an Icon.
 This should only be done in exceptional cases.
 To color must start with a hash (#) followed by a two hexadecimal number for the red value, then the green value, then blue.
 For example (“#0080FF”) is 0% red, 50% green and 100% blue.
@@ -721,12 +726,13 @@ Most color wheels have a HTML color representation.
 So for choosing a color you can use for example <em>GIMP</em>.
 Forcing an icon to not follow the color scheme of the Web UI can lead to ugly side effects.
 Just imagine you have a red heart icon on a red background.
-The excessive use of explicit colors in the example shown on the screenshot is how <em>not</em> to use this feature ;)</dd>
-<dt>X/Y:</dt>
-<dd>This is the position in the <a class="reference internal" href="#mood-grid">Mood Grid</a>. Details are explained below.
+The excessive use of explicit colors in the example shown on the screenshot is how <em>not</em> to use this feature ;)</p>
+</dd>
+<dt>X/Y:</dt><dd><p>This is the position in the <a class="reference internal" href="#mood-grid">Mood Grid</a>. Details are explained below.
 When you add a new Icon, you must give it some initial values.
 They can be anywhere in the grid where no other icon is.
-You should not exceed 2 lines (so only <code class="docutils literal notranslate"><span class="pre">y=0</span></code> and <code class="docutils literal notranslate"><span class="pre">y=1</span></code> should be used).</dd>
+You should not exceed 2 lines (so only <code class="docutils literal notranslate"><span class="pre">y=0</span></code> and <code class="docutils literal notranslate"><span class="pre">y=1</span></code> should be used).</p>
+</dd>
 </dl>
 </div></blockquote>
 <p>Pressing enter (↵) writes the changes to the database.
@@ -739,12 +745,12 @@ This is the same grid used in the WebUI to show the tags in the HUD as shown on 
 Furthermore you can see, that in the WebUI, the color gets not used inside the mood grid in the HUD.
 When a mood gets assigned to a song, than the icon is visible on the right part of the song entry in the Album View (bottom part of the screenshot).
 There, the icons color will be used to highlight special flags.</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../_images/moods-webui.png" src="../_images/moods-webui.png" />
 </div>
 <p>You can use the arrow keys (↑↓←→) to move the rectangle around the icons in the Mood Gird.
 When pressing space, the rectangle changes to arrows and + signs (See following screenshot) and you can mode the icon itself.</p>
-<div class="figure">
+<div class="figure align-default">
 <img alt="../_images/mood-grid.png" src="../_images/mood-grid.png" />
 </div>
 <p>As you can see on the screenshot, you can exchange the positions of the sun with the heart by pressing ← or snow flake by pressing ↑.
@@ -758,10 +764,10 @@ Feel free to place the icons to intuitive places.</p>
 <h2>Style Guide<a class="headerlink" href="#style-guide" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>Only use colors in exceptional cases.</li>
-<li>Give meaningful but short names.</li>
-<li>Arrange icons to intuitive places.</li>
-<li>Do not add too much mood tags. (It should not exceed 8 or 10 max)</li>
+<li><p>Only use colors in exceptional cases.</p></li>
+<li><p>Give meaningful but short names.</p></li>
+<li><p>Arrange icons to intuitive places.</p></li>
+<li><p>Do not add too much mood tags. (It should not exceed 8 or 10 max)</p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -802,7 +808,7 @@ Feel free to place the icons to intuitive places.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

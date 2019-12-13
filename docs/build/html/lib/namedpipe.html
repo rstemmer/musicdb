@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>NamedPipe &mdash; MusicDB 5.1.0 documentation</title>
+  <title>NamedPipe &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="PID File Handling" href="pidfile.html"/>
         <link rel="prev" title="MusicDatabase" href="musicdb.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -671,69 +677,60 @@
 <h2>NamedPipe Class<a class="headerlink" href="#namedpipe-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib.namedpipe.NamedPipe">
-<em class="property">class </em><code class="descclassname">lib.namedpipe.</code><code class="descname">NamedPipe</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.namedpipe.</code><code class="sig-name descname">NamedPipe</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe" title="Permalink to this definition">¶</a></dt>
 <dd><p>This module provides a class for getting command from a named pipe (FIFO).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – absolute path where the FIFO is, or shall be created</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – when <code class="docutils literal notranslate"><span class="pre">path</span></code> is not of type <code class="docutils literal notranslate"><span class="pre">str</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – absolute path where the FIFO is, or shall be created</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – when <code class="docutils literal notranslate"><span class="pre">path</span></code> is not of type <code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="lib.namedpipe.NamedPipe.Create">
-<code class="descname">Create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the FIFO file if if does not exist.</p>
 <p>The access permissions are Read/Write for all (<code class="docutils literal notranslate"><span class="pre">0666</span></code>)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code> – Except when the FIFO already exists.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><em>Nothing</em></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>OSError</strong> – Except when the FIFO already exists.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.namedpipe.NamedPipe.Delete">
-<code class="descname">Delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Delete" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function removes the named FIFO.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pidfile</strong> (<em>str</em>) – Absolute path of a file to remove</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pidfile</strong> (<em>str</em>) – Absolute path of a file to remove</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.namedpipe.NamedPipe.Exists">
-<code class="descname">Exists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Exists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Exists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if the FIFO file for the named pipe exists.
 It not only checks the existence of the file but also if the file is a FIFO.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> When the FIFO exists (and is a valid FIFO), otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> When the FIFO exists (and is a valid FIFO), otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.namedpipe.NamedPipe.ReadLine">
-<code class="descname">ReadLine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.ReadLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.ReadLine" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ReadLine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.ReadLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.ReadLine" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads a line from the FIFO, if there is a line.
 If nothing got written to the FIFO, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.
 The line does not have a trailing <code class="docutils literal notranslate"><span class="pre">\n</span></code>.</p>
@@ -750,19 +747,16 @@ The line does not have a trailing <code class="docutils literal notranslate"><sp
 </pre></div>
 </div>
 <p>The file gets opened with <code class="docutils literal notranslate"><span class="pre">O_NONBLOCK</span></code> flag (non blocking read) and line buffering strategy.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A line from the pipe or <code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A line from the pipe or <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.namedpipe.NamedPipe.WriteLine">
-<code class="descname">WriteLine</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.WriteLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.WriteLine" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">WriteLine</code><span class="sig-paren">(</span><em class="sig-param">line</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.WriteLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.WriteLine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write a line into the named pipe.
 This method checks if the FIFO exists and rejects the line if not.
 If line is <code class="docutils literal notranslate"><span class="pre">None</span></code> or an empty string, nothing will be done.</p>
@@ -772,16 +766,14 @@ If line is <code class="docutils literal notranslate"><span class="pre">None</sp
 <span class="n">pipe</span><span class="o">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s2">&quot;refresh&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>line</strong> (<em>str</em>) – Line to write into the named pipe (Without <code class="docutils literal notranslate"><span class="pre">\n</span></code>!)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>line</strong> (<em>str</em>) – Line to write into the named pipe (Without <code class="docutils literal notranslate"><span class="pre">\n</span></code>!)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -824,7 +816,7 @@ If line is <code class="docutils literal notranslate"><span class="pre">None</sp
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

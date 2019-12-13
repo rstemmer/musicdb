@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MP3 Transcoder &mdash; MusicDB 5.1.0 documentation</title>
+  <title>MP3 Transcoder &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDatabase" href="musicdb.html"/>
         <link rel="prev" title="MP3 Stream Interface" href="mp3stream.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -733,17 +739,15 @@ To safely work with the <a class="reference internal" href="#lib.stream.mp3trans
 <h2>MP3Transcoder Class<a class="headerlink" href="#mp3transcoder-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib.stream.mp3transcoder.MP3Transcoder">
-<em class="property">class </em><code class="descclassname">lib.stream.mp3transcoder.</code><code class="descname">MP3Transcoder</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – The absolute path of the audio file that shall be transcoded</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When path is not of type string</td>
-</tr>
-</tbody>
-</table>
+<em class="property">class </em><code class="sig-prename descclassname">lib.stream.mp3transcoder.</code><code class="sig-name descname">MP3Transcoder</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – The absolute path of the audio file that shall be transcoded</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – When path is not of type string</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">MP3Transcoder</span><span class="p">(</span><span class="s2">&quot;/tmp/test.flac&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">transcoder</span><span class="p">:</span>
     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
@@ -754,14 +758,14 @@ To safely work with the <a class="reference internal" href="#lib.stream.mp3trans
 </div>
 <dl class="method">
 <dt id="lib.stream.mp3transcoder.MP3Transcoder.Cancel">
-<code class="descname">Cancel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.Cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.Cancel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Cancel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.Cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.Cancel" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method cancels a currently running transcoding process.
 If there is no transcoding going on, nothing happens.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.stream.mp3transcoder.MP3Transcoder.GetChunk">
-<code class="descname">GetChunk</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.GetChunk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.GetChunk" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetChunk</code><span class="sig-paren">(</span><em class="sig-param">size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.GetChunk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.GetChunk" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads a chunk of data that gets provided by the GStreamer <code class="docutils literal notranslate"><span class="pre">fdsink</span></code> element from the GStreamer Pipeline.
 This element writes into a UNIX Pipe.
 It tries to read <code class="docutils literal notranslate"><span class="pre">size</span></code> bytes of data.</p>
@@ -802,16 +806,14 @@ When there were less than <code class="docutils literal notranslate"><span class
     bytesremaining  -&gt; end              [label=&quot;no&quot;]
 
 }</p></object></div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>int</em>) – Number of bytes to read</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A chunk of data as type <code class="docutils literal notranslate"><span class="pre">bytes</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>size</strong> (<em>int</em>) – Number of bytes to read</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A chunk of data as type <code class="docutils literal notranslate"><span class="pre">bytes</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;36mTranscoding </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
 <span class="n">sinkpath</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.mp3&quot;</span>
@@ -835,21 +837,18 @@ When there were less than <code class="docutils literal notranslate"><span class
 
 <dl class="method">
 <dt id="lib.stream.mp3transcoder.MP3Transcoder.Transcode">
-<code class="descname">Transcode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.Transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.Transcode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Transcode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.Transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.Transcode" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method starts the transcoding process of a file as thread.
 After setting the <code class="docutils literal notranslate"><span class="pre">path</span></code> as source for the audio data,
 a thread gets started that runs the GStreamer Pipeline.
 Before leaving, the method ensures that the GStreamer Pipeline is running.
 If an error occurs <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned, otherwise <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 <p>When calling this method, a previous started transcoding process gets canceled.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">If an error occurs <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned, otherwise <code class="docutils literal notranslate"><span class="pre">True</span></code>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>If an error occurs <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned, otherwise <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">transcoder</span> <span class="o">=</span> <span class="n">MP3Transcoder</span><span class="p">(</span><span class="s2">&quot;/tmp/test.flac&quot;</span><span class="p">)</span>
 
@@ -862,7 +861,7 @@ If an error occurs <code class="docutils literal notranslate"><span class="pre">
 
 <dl class="method">
 <dt id="lib.stream.mp3transcoder.MP3Transcoder.onDecoderPadAdded">
-<code class="descname">onDecoderPadAdded</code><span class="sig-paren">(</span><em>dbin</em>, <em>pad</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.onDecoderPadAdded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.onDecoderPadAdded" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">onDecoderPadAdded</code><span class="sig-paren">(</span><em class="sig-param">dbin</em>, <em class="sig-param">pad</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.onDecoderPadAdded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.onDecoderPadAdded" title="Permalink to this definition">¶</a></dt>
 <dd><p>Args:</p>
 <p>Returns:</p>
 <p class="rubric">Example</p>
@@ -911,7 +910,7 @@ If an error occurs <code class="docutils literal notranslate"><span class="pre">
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
