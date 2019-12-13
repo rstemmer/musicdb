@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Workflow for development &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Workflow for development &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
-        <link rel="next" title="Installation &amp; Update" href="../usage/install.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
+        <link rel="next" title="Docker" href="../usage/docker.html"/>
         <link rel="prev" title="MusicDB Websocket API" href="webapi.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -686,23 +692,23 @@ Then commit the whole build directory.</p>
 <h2>Using git<a class="headerlink" href="#using-git" title="Permalink to this headline">¶</a></h2>
 <p>In the repository, there are can appear the following branches:</p>
 <blockquote>
-<div><dl class="docutils">
-<dt>origin/<em>master</em>:</dt>
-<dd>This is the release branch, always containing a stable version of MusicDB, ready to install and run.</dd>
-<dt>origin/<em>develop</em>:</dt>
-<dd>All development will take place in the this branch.
+<div><dl class="simple">
+<dt>origin/<em>master</em>:</dt><dd><p>This is the release branch, always containing a stable version of MusicDB, ready to install and run.</p>
+</dd>
+<dt>origin/<em>develop</em>:</dt><dd><p>All development will take place in the this branch.
 It should be in a state that the code will run and will not break anything.
 It is OK and should be considered that there are new features with an unstable interfaces.
 You should <em>not</em> run the <code class="docutils literal notranslate"><span class="pre">install.sh</span></code> script when you are in the <em>develop</em> branch.
-This branch is for integration of new features and bugfixes</dd>
-<dt>origin/<em>sprint-$SPRINT</em>:</dt>
-<dd>Similar to <em>develop</em>.
+This branch is for integration of new features and bugfixes</p>
+</dd>
+<dt>origin/<em>sprint-$SPRINT</em>:</dt><dd><p>Similar to <em>develop</em>.
 In this branch I work on holiday to improve MusicDB and add new feature.
 Never install this code or run it.
-It may work on data and database schemes that are not yet compatible with other installations than my hand crafted one.</dd>
-<dt>local/<em>hotfix-$HOTFIX</em>:</dt>
-<dd>This is for hotfixes.
-It gets branched from <em>master</em> and merged into <em>master</em> and <em>develop</em>.</dd>
+It may work on data and database schemes that are not yet compatible with other installations than my hand crafted one.</p>
+</dd>
+<dt>local/<em>hotfix-$HOTFIX</em>:</dt><dd><p>This is for hotfixes.
+It gets branched from <em>master</em> and merged into <em>master</em> and <em>develop</em>.</p>
+</dd>
 </dl>
 </div></blockquote>
 <p>When the <em>develop</em> or <em>sprint-$SPRINT</em> branch reaches a stable point, they gets merged to <em>master</em>, and a new release tag gets set.</p>
@@ -714,16 +720,16 @@ So, each bugfix and improvement should be committed independently.</p>
 <div><p><strong>Wrong</strong> commit:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Fixes two bugs, improves the documentation of feature X and optimizes feature Y</li>
+<li><p>Fixes two bugs, improves the documentation of feature X and optimizes feature Y</p></li>
 </ul>
 </div></blockquote>
 <p><strong>Correct</strong> commit:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Fixes bug #42 by implementing the TOA</li>
-<li>Fixes bug #23 - it was a typo in a variable name</li>
-<li>Improves the documentation of feature X by adding a ToC</li>
-<li>Optimizes feature Y by using algorithm Z</li>
+<li><p>Fixes bug #42 by implementing the TOA</p></li>
+<li><p>Fixes bug #23 - it was a typo in a variable name</p></li>
+<li><p>Improves the documentation of feature X by adding a ToC</p></li>
+<li><p>Optimizes feature Y by using algorithm Z</p></li>
 </ul>
 </div></blockquote>
 </div></blockquote>
@@ -769,11 +775,11 @@ git tag -a <span class="s2">&quot;v</span><span class="nv">$major</span><span cl
 <p>The following things need to be updated for a new release:</p>
 <blockquote>
 <div><ul class="simple">
-<li>CHANGELOG file must be up to date</li>
-<li>VERSION file must be up to date</li>
-<li>docs/source/conf.py: update <code class="docutils literal notranslate"><span class="pre">version</span></code> and <code class="docutils literal notranslate"><span class="pre">release</span></code> variable</li>
-<li>merge branch to master</li>
-<li>build the new documentation</li>
+<li><p>CHANGELOG file must be up to date</p></li>
+<li><p>VERSION file must be up to date</p></li>
+<li><p>docs/source/conf.py: update <code class="docutils literal notranslate"><span class="pre">version</span></code> and <code class="docutils literal notranslate"><span class="pre">release</span></code> variable</p></li>
+<li><p>merge branch to master</p></li>
+<li><p>build the new documentation</p></li>
 </ul>
 </div></blockquote>
 <p>Further more, the <em>develop</em> and <em>master</em> branch must be merged and tagged when it is not just a bugfix.</p>
@@ -817,7 +823,7 @@ Tags follow the scheme <code class="docutils literal notranslate"><span class="p
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

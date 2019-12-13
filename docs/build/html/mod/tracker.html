@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>tracker - Song Tracker &mdash; MusicDB 5.1.0 documentation</title>
+  <title>tracker - Song Tracker &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="Artwork Management" href="../mdbapi/artwork.html"/>
         <link rel="prev" title="tags - MusicDB Tag Manager" href="tags.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -676,8 +682,8 @@ All options set will be applied on that song or artist.
 The following options are available:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li><code class="docutils literal notranslate"><span class="pre">--dot</span></code>: <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenerateDotFile()</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">--show</span></code>: <code class="xref py py-meth docutils literal notranslate"><span class="pre">ShowRelations()</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--dot</span></code>: <code class="xref py py-meth docutils literal notranslate"><span class="pre">GenerateDotFile()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--show</span></code>: <code class="xref py py-meth docutils literal notranslate"><span class="pre">ShowRelations()</span></code></p></li>
 </ol>
 </div></blockquote>
 <p class="rubric">Examples</p>
@@ -691,55 +697,47 @@ neato -Tpng graph.dot &gt; graph.png
 <h2>Class Description<a class="headerlink" href="#class-description" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mod.tracker.tracker">
-<em class="property">class </em><code class="descclassname">mod.tracker.</code><code class="descname">tracker</code><span class="sig-paren">(</span><em>config</em>, <em>database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/tracker.html#tracker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.tracker.tracker" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">mod.tracker.</code><code class="sig-name descname">tracker</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/tracker.html#tracker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.tracker.tracker" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="mod.tracker.tracker.GenerateDotFile">
-<code class="descname">GenerateDotFile</code><span class="sig-paren">(</span><em>target</em>, <em>targetid</em>, <em>relations</em>, <em>dotfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/tracker.html#tracker.GenerateDotFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.tracker.tracker.GenerateDotFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GenerateDotFile</code><span class="sig-paren">(</span><em class="sig-param">target</em>, <em class="sig-param">targetid</em>, <em class="sig-param">relations</em>, <em class="sig-param">dotfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/tracker.html#tracker.GenerateDotFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.tracker.tracker.GenerateDotFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method generates a dot file visualizing the relations between the target and the related songs or artists.
 Also, the weights get visualized by the thickness of the edges of the generated graph.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">If the file exists, its content gets replaced!</p>
+<p class="admonition-title">Warning</p>
+<p>If the file exists, its content gets replaced!</p>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>target</strong> (<em>str</em>) – The target all IDs apply to. Can be <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;artist&quot;</span></code>.</li>
-<li><strong>targetid</strong> (<em>int</em>) – ID of the song or artists, the relations belong to</li>
-<li><strong>relations</strong> – A list of relations as returned by <code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.tracker.TrackerDatabase.GetRelations()</span></code></li>
-<li><strong>dotfile</strong> (<em>str</em>) – A path to write the dotfile to.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<em>str</em>) – The target all IDs apply to. Can be <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;artist&quot;</span></code>.</p></li>
+<li><p><strong>targetid</strong> (<em>int</em>) – ID of the song or artists, the relations belong to</p></li>
+<li><p><strong>relations</strong> – A list of relations as returned by <code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.tracker.TrackerDatabase.GetRelations()</span></code></p></li>
+<li><p><strong>dotfile</strong> (<em>str</em>) – A path to write the dotfile to.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success. If there is any error, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success. If there is any error, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mod.tracker.tracker.ShowRelations">
-<code class="descname">ShowRelations</code><span class="sig-paren">(</span><em>target</em>, <em>targetid</em>, <em>relations</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/tracker.html#tracker.ShowRelations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.tracker.tracker.ShowRelations" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ShowRelations</code><span class="sig-paren">(</span><em class="sig-param">target</em>, <em class="sig-param">targetid</em>, <em class="sig-param">relations</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/tracker.html#tracker.ShowRelations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.tracker.tracker.ShowRelations" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method lists all entries in the relations list returned by the database for the given target ID</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>target</strong> (<em>str</em>) – The target all IDs apply to. Can be <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;artist&quot;</span></code>.</li>
-<li><strong>targetid</strong> (<em>int</em>) – ID of the song or artists, the relations belong to</li>
-<li><strong>relations</strong> – A list of relations as returned by <code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.tracker.TrackerDatabase.GetRelations()</span></code></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<em>str</em>) – The target all IDs apply to. Can be <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;artist&quot;</span></code>.</p></li>
+<li><p><strong>targetid</strong> (<em>int</em>) – ID of the song or artists, the relations belong to</p></li>
+<li><p><strong>relations</strong> – A list of relations as returned by <code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.tracker.TrackerDatabase.GetRelations()</span></code></p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success. If there is any error, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success. If there is any error, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -782,7 +780,7 @@ Also, the weights get visualized by the thickness of the edges of the generated 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

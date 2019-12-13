@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Philosophy of MusicDB &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Philosophy of MusicDB &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDB Configuration" href="config.html"/>
         <link rel="prev" title="Comparison to Other Tools" href="comparison.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -673,36 +679,41 @@ They define what MusicDB is, and what it isn’t.
 The order of the rules defines their priority.
 The nested list elements highlight some important implications of the philosophy.</p>
 <ol class="arabic simple">
-<li>The filesystem is always right<ul>
-<li>Meta data in files have to be considered wrong</li>
-<li>The filesystem must be able to handle file names with Unicode</li>
-<li>The user has to care about a proper naming of the files</li>
-<li>The database is just for cache and augmentation</li>
+<li><p>The filesystem is always right</p>
+<ul class="simple">
+<li><p>Meta data in files have to be considered wrong</p></li>
+<li><p>The filesystem must be able to handle file names with Unicode</p></li>
+<li><p>The user has to care about a proper naming of the files</p></li>
+<li><p>The database is just for cache and augmentation</p></li>
 </ul>
 </li>
-<li>The show must go on<ul>
-<li>when errors occur, the software has to go back to a save state and ignore the action that causes the error</li>
-<li>If one feature is broken, the rest of the software must be able to continue its work</li>
+<li><p>The show must go on</p>
+<ul class="simple">
+<li><p>when errors occur, the software has to go back to a save state and ignore the action that causes the error</p></li>
+<li><p>If one feature is broken, the rest of the software must be able to continue its work</p></li>
 </ul>
 </li>
-<li>Bugs must be fixable in less than 15 minutes<ul>
-<li>If the <em>Show must go on</em> rule fails, it must be possible to identify and fix the bug in less 15 minutes</li>
-<li>Log everything the software does</li>
-<li>The code must be easy to read, not sophisticated</li>
+<li><p>Bugs must be fixable in less than 15 minutes</p>
+<ul class="simple">
+<li><p>If the <em>Show must go on</em> rule fails, it must be possible to identify and fix the bug in less 15 minutes</p></li>
+<li><p>Log everything the software does</p></li>
+<li><p>The code must be easy to read, not sophisticated</p></li>
 </ul>
 </li>
-<li>The GUI is not for managing music, it is for presenting the music<ul>
-<li>No control/management buttons if not absolutely necessary</li>
-<li>The current playing song is the “hero” and in focus of the presentation</li>
-<li>No playlist management, only an easy to handle queue.</li>
-<li>Management shall be done via command line tools</li>
+<li><p>The GUI is not for managing music, it is for presenting the music</p>
+<ul class="simple">
+<li><p>No control/management buttons if not absolutely necessary</p></li>
+<li><p>The current playing song is the “hero” and in focus of the presentation</p></li>
+<li><p>No playlist management, only an easy to handle queue.</p></li>
+<li><p>Management shall be done via command line tools</p></li>
 </ul>
 </li>
-<li>The user is always right. Software is just a tool under full control of the user.<ul>
-<li>The software must follow the users decision and not question it</li>
-<li>AI and other algorithms shall not replace the users action and decision, just give hints and good defaults</li>
-<li>Every decision made by AI must be approved or denied by the user</li>
-<li>The source music collection of the user shall be considered read-only</li>
+<li><p>The user is always right. Software is just a tool under full control of the user.</p>
+<ul class="simple">
+<li><p>The software must follow the users decision and not question it</p></li>
+<li><p>AI and other algorithms shall not replace the users action and decision, just give hints and good defaults</p></li>
+<li><p>Every decision made by AI must be approved or denied by the user</p></li>
+<li><p>The source music collection of the user shall be considered read-only</p></li>
 </ul>
 </li>
 </ol>
@@ -743,7 +754,7 @@ The nested list elements highlight some important implications of the philosophy
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

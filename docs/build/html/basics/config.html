@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Configuration &mdash; MusicDB 5.1.0 documentation</title>
+  <title>MusicDB Configuration &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="Handling log-files" href="logging.html"/>
         <link rel="prev" title="Philosophy of MusicDB" href="concept.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -669,31 +675,31 @@
 <h1>MusicDB Configuration<a class="headerlink" href="#musicdb-configuration" title="Permalink to this headline">¶</a></h1>
 <p>The following sections represent the sections of the MusicDB Configuration file.
 The sections have the following structure:</p>
-<dl class="docutils">
-<dt>option (type):</dt>
-<dd>description</dd>
+<dl class="simple">
+<dt>option (type):</dt><dd><p>description</p>
+</dd>
 </dl>
 <div class="section" id="meta">
 <h2>meta<a class="headerlink" href="#meta" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>version (integer):</dt>
-<dd>This is the version number of configuration.
+<dl class="simple">
+<dt>version (integer):</dt><dd><p>This is the version number of configuration.
 This number is used <em>internal</em> to check if the configuration file provides the sections and key expected by MusicDB.
 When new sections or keys are added (or old ones removed), the version number gets incremented.
-After updating MusicDB compare your configuration with the new one and update the file by yourself (including the version number)</dd>
+After updating MusicDB compare your configuration with the new one and update the file by yourself (including the version number)</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="server">
 <h2>server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>pidfile (path to file):</dt>
-<dd>This is the place where the PID file gets placed</dd>
-<dt>statedir (path to a directory):</dt>
-<dd>In this directory the current global state of MusicDB is stored.
-More details can be found in the documentation for the state-file: <a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate" title="lib.cfg.mdbstate"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mdbstate</span></code></a></dd>
-<dt>fifofile (path to file):</dt>
-<dd>This file will be used to communicate with the WebSocket servers internals.
-Read <a class="reference internal" href="../mod/server.html"><span class="doc">server - MusicDB Websocket Server</span></a> for details.</dd>
+<dl class="simple">
+<dt>pidfile (path to file):</dt><dd><p>This is the place where the PID file gets placed</p>
+</dd>
+<dt>statedir (path to a directory):</dt><dd><p>In this directory the current global state of MusicDB is stored.
+More details can be found in the documentation for the state-file: <a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate" title="lib.cfg.mdbstate"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mdbstate</span></code></a></p>
+</dd>
+<dt>fifofile (path to file):</dt><dd><p>This file will be used to communicate with the WebSocket servers internals.
+Read <a class="reference internal" href="../mod/server.html"><span class="doc">server - MusicDB Websocket Server</span></a> for details.</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="websocket">
@@ -701,103 +707,102 @@ Read <a class="reference internal" href="../mod/server.html"><span class="doc">s
 <p>Please keep in mind that websockets are secured.
 TLS is always enabled.
 So, the protocol is <code class="docutils literal notranslate"><span class="pre">wss</span></code>.</p>
-<dl class="docutils">
-<dt>address (URL / IP address):</dt>
-<dd>The address the server is listening to.
-For example, <code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code> for global listening.</dd>
-<dt>port (socket port):</dt>
-<dd><p class="first">The number of the port, the server is listening on.</p>
+<dl>
+<dt>address (URL / IP address):</dt><dd><p>The address the server is listening to.
+For example, <code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code> for global listening.</p>
+</dd>
+<dt>port (socket port):</dt><dd><p>The number of the port, the server is listening on.</p>
 <p>Here are some lists with restricted ports:</p>
-<blockquote class="last">
+<blockquote>
 <div><ul class="simple">
-<li><cite>FireFox &lt;https://www-archive.mozilla.org/projects/netlib/PortBanning.html#portlist&gt;</cite></li>
-<li><cite>Chrome &lt;https://src.chromium.org/viewvc/chrome/trunk/src/net/base/net_util.cc?view=markup&gt;</cite></li>
+<li><p><cite>FireFox &lt;https://www-archive.mozilla.org/projects/netlib/PortBanning.html#portlist&gt;</cite></p></li>
+<li><p><cite>Chrome &lt;https://src.chromium.org/viewvc/chrome/trunk/src/net/base/net_util.cc?view=markup&gt;</cite></p></li>
 </ul>
 </div></blockquote>
 </dd>
-<dt>url (URL):</dt>
-<dd><strong>TODO</strong></dd>
-<dt>opentimeout (time in seconds):</dt>
-<dd>Time until the connection to the websocket server raises a timeout exception</dd>
-<dt>closetimeout (time in seconds):</dt>
-<dd>Time until the disconnection process of the websocket server raises a timeout exception</dd>
-<dt>key (base64 encoded key):</dt>
-<dd>A key that is used to identify clients that are allowed to use the websocket interface.</dd>
+<dt>url (URL):</dt><dd><p><strong>TODO</strong></p>
+</dd>
+<dt>opentimeout (time in seconds):</dt><dd><p>Time until the connection to the websocket server raises a timeout exception</p>
+</dd>
+<dt>closetimeout (time in seconds):</dt><dd><p>Time until the disconnection process of the websocket server raises a timeout exception</p>
+</dd>
+<dt>key (base64 encoded key):</dt><dd><p>A key that is used to identify clients that are allowed to use the websocket interface.</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="tls">
 <h2>TLS<a class="headerlink" href="#tls" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>cert (path to SSL Certificate file):</dt>
-<dd>File to the certificate used for the TLS secured websockets</dd>
-<dt>key (path to SSL Key file):</dt>
-<dd>File of the key for the certificate</dd>
+<dl class="simple">
+<dt>cert (path to SSL Certificate file):</dt><dd><p>File to the certificate used for the TLS secured websockets</p>
+</dd>
+<dt>key (path to SSL Key file):</dt><dd><p>File of the key for the certificate</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="database">
 <h2>database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>path (path to file):</dt>
-<dd>Path to the MusicDB Database file</dd>
+<dl class="simple">
+<dt>path (path to file):</dt><dd><p>Path to the MusicDB Database file</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="music">
 <h2>music<a class="headerlink" href="#music" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>path (path to directory):</dt>
-<dd>Path to the music collection.
-In this directory, the Artist-directories are stored.</dd>
-<dt>owner (UNIX user name):</dt>
-<dd>Name of the user that shall be the owner of the music files</dd>
-<dt>group (UNIX group name):</dt>
-<dd>Name of the group that shall be the owner of the music files</dd>
-<dt>cache (path to directory):</dt>
-<dd>This is the place where MusicDB caches all songs as clean tagged mp3 files.</dd>
+<dl class="simple">
+<dt>path (path to directory):</dt><dd><p>Path to the music collection.
+In this directory, the Artist-directories are stored.</p>
+</dd>
+<dt>owner (UNIX user name):</dt><dd><p>Name of the user that shall be the owner of the music files</p>
+</dd>
+<dt>group (UNIX group name):</dt><dd><p>Name of the group that shall be the owner of the music files</p>
+</dd>
+<dt>cache (path to directory):</dt><dd><p>This is the place where MusicDB caches all songs as clean tagged mp3 files.</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="artwork">
 <h2>artwork<a class="headerlink" href="#artwork" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>path (path to directory):</dt>
-<dd>Path to the artwork root directory where all artworks are stored at</dd>
-<dt>scales (list of numbers ∈ ℕ):</dt>
-<dd>A list of scales that will be used to create thumbnails.
-At least <code class="docutils literal notranslate"><span class="pre">&quot;50,</span> <span class="pre">150,</span> <span class="pre">500&quot;</span></code> should appear in the list because those are used by the MusicDB WebUI</dd>
-<dt>manifesttemplate (path to file):</dt>
-<dd>Name of the template for the manifest file to tell the browser to cache the artwork</dd>
-<dt>manifest (path to file):</dt>
-<dd>Name where the manifest file to tell the browser to cache the artwork will be generated at</dd>
+<dl class="simple">
+<dt>path (path to directory):</dt><dd><p>Path to the artwork root directory where all artworks are stored at</p>
+</dd>
+<dt>scales (list of numbers ∈ ℕ):</dt><dd><p>A list of scales that will be used to create thumbnails.
+At least <code class="docutils literal notranslate"><span class="pre">&quot;50,</span> <span class="pre">150,</span> <span class="pre">500&quot;</span></code> should appear in the list because those are used by the MusicDB WebUI</p>
+</dd>
+<dt>manifesttemplate (path to file):</dt><dd><p>Name of the template for the manifest file to tell the browser to cache the artwork</p>
+</dd>
+<dt>manifest (path to file):</dt><dd><p>Name where the manifest file to tell the browser to cache the artwork will be generated at</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="extern">
 <h2>extern<a class="headerlink" href="#extern" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>configtemplate (path to file):</dt>
-<dd>Path to the template configuration for external storages</dd>
-<dt>statedir (directory name):</dt>
-<dd>Name of the directory on an external storage in that the configuration and state file is stored</dd>
-<dt>configfile (filename):</dt>
-<dd>Name of the configuration file inside the state directory</dd>
-<dt>songmap (filename):</dt>
-<dd>Name of the map-file of the stored music</dd>
+<dl class="simple">
+<dt>configtemplate (path to file):</dt><dd><p>Path to the template configuration for external storages</p>
+</dd>
+<dt>statedir (directory name):</dt><dd><p>Name of the directory on an external storage in that the configuration and state file is stored</p>
+</dd>
+<dt>configfile (filename):</dt><dd><p>Name of the configuration file inside the state directory</p>
+</dd>
+<dt>songmap (filename):</dt><dd><p>Name of the map-file of the stored music</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="tracker">
 <h2>tracker<a class="headerlink" href="#tracker" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>dbpath (path to file):</dt>
-<dd>Path to the tracker database</dd>
-<dt>cuttime (integer, time in minutes):</dt>
-<dd>Time until a relation gets cut.
+<dl class="simple">
+<dt>dbpath (path to file):</dt><dd><p>Path to the tracker database</p>
+</dd>
+<dt>cuttime (integer, time in minutes):</dt><dd><p>Time until a relation gets cut.
 If there is a time gap of <em>cuttime</em> minutes or more between the current played song and the previous one,
-the relationship gets ignored.</dd>
+the relationship gets ignored.</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="lycra">
 <h2>lycra<a class="headerlink" href="#lycra" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>dbpath (path to file):</dt>
-<dd>Path to the database the lyrics will be cached at</dd>
+<dl class="simple">
+<dt>dbpath (path to file):</dt><dd><p>Path to the database the lyrics will be cached at</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="icecast">
@@ -805,107 +810,107 @@ the relationship gets ignored.</dd>
 <p>The default values all match the default Icecast configuration provided by MusicDB.
 The password got generated during the installation process and can be considered as secure.
 The only reason to change something in this section is, that the Icecast server gets shared with multiple sources.</p>
-<dl class="docutils">
-<dt>port (number ∈ ℕ):</dt>
-<dd>Port where Icecast is listening at.
-This is the none SSL secured port.</dd>
-<dt>user (string):</dt>
-<dd>This is the <em>source user</em> MusicDB uses to connect to Icecast.
-By default, <code class="docutils literal notranslate"><span class="pre">source</span></code> is the user name.</dd>
-<dt>password (string):</dt>
-<dd>The password MusicDB needs to authenticate as a valid source for the Icecast server.
-The default password was generated during the installation process of MusicDB and is secure.</dd>
-<dt>mountname (string starting with <code class="docutils literal notranslate"><span class="pre">/</span></code>):</dt>
-<dd>This is the name of the mount MusicDB uses.</dd>
+<dl class="simple">
+<dt>port (number ∈ ℕ):</dt><dd><p>Port where Icecast is listening at.
+This is the none SSL secured port.</p>
+</dd>
+<dt>user (string):</dt><dd><p>This is the <em>source user</em> MusicDB uses to connect to Icecast.
+By default, <code class="docutils literal notranslate"><span class="pre">source</span></code> is the user name.</p>
+</dd>
+<dt>password (string):</dt><dd><p>The password MusicDB needs to authenticate as a valid source for the Icecast server.
+The default password was generated during the installation process of MusicDB and is secure.</p>
+</dd>
+<dt>mountname (string starting with <code class="docutils literal notranslate"><span class="pre">/</span></code>):</dt><dd><p>This is the name of the mount MusicDB uses.</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="musicai">
 <h2>MusicAI<a class="headerlink" href="#musicai" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>modelpath (path to directory):</dt>
-<dd>Directory where the models and training data are stored</dd>
-<dt>tmppath (path to directory):</dt>
-<dd>A path to store temporary data.</dd>
-<dt>logpath (path to directory):</dt>
-<dd>Path for logfiles of training runs</dd>
-<dt>spectrogrampath (path to directory):</dt>
-<dd>Temporary path for generated spectrograms
+<dl class="simple">
+<dt>modelpath (path to directory):</dt><dd><p>Directory where the models and training data are stored</p>
+</dd>
+<dt>tmppath (path to directory):</dt><dd><p>A path to store temporary data.</p>
+</dd>
+<dt>logpath (path to directory):</dt><dd><p>Path for logfiles of training runs</p>
+</dd>
+<dt>spectrogrampath (path to directory):</dt><dd><p>Temporary path for generated spectrograms
 This path should survives reboots.
 Because the data generation takes much time,
 it is better to have a “backup” of the temporary data.
 So, they must not be generated again after changes or crashes.
-If the model is trained, they can be removed.</dd>
-<dt>genrelist (a list of genrenames):</dt>
-<dd>These are the genres the AI will use.
+If the model is trained, they can be removed.</p>
+</dd>
+<dt>genrelist (a list of genrenames):</dt><dd><p>These are the genres the AI will use.
 They must have the same name as they are listed in the database.
 <strong>Once this value is set, it should never be changed because it destroys the datasets and models the list was used for.</strong>
-<strong>This entry is bound to the model name</strong></dd>
-<dt>modelname (string):</dt>
-<dd>Name of the model.
+<strong>This entry is bound to the model name</strong></p>
+</dd>
+<dt>modelname (string):</dt><dd><p>Name of the model.
 <strong>This entry is bound to the genre list.</strong>
 All data is bound to the model name.
-Different CDNNs can be trained/used by changing this name.</dd>
-<dt>slicesize (number ∈ ℕ):</dt>
-<dd>Size of a slice of a spectrogram to work with</dd>
-<dt>epoch (number ∈ ℕ):</dt>
-<dd>Number of epoch for the training</dd>
-<dt>batchsize (number ∈ ℕ):</dt>
-<dd>Size of one training batch - This should be as much as the GPUs Memory can hold, but not one byte more.</dd>
-<dt>usegpu (boolean):</dt>
-<dd>Can be used to disable using the GPU - Not recommended!</dd>
+Different CDNNs can be trained/used by changing this name.</p>
+</dd>
+<dt>slicesize (number ∈ ℕ):</dt><dd><p>Size of a slice of a spectrogram to work with</p>
+</dd>
+<dt>epoch (number ∈ ℕ):</dt><dd><p>Number of epoch for the training</p>
+</dd>
+<dt>batchsize (number ∈ ℕ):</dt><dd><p>Size of one training batch - This should be as much as the GPUs Memory can hold, but not one byte more.</p>
+</dd>
+<dt>usegpu (boolean):</dt><dd><p>Can be used to disable using the GPU - Not recommended!</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="randy">
 <h2>Randy<a class="headerlink" href="#randy" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>nodisabled (boolean):</dt>
-<dd>If <code class="docutils literal notranslate"><span class="pre">true</span></code> no disabled songs will be chosen</dd>
-<dt>nohated (boolean):</dt>
-<dd>If <code class="docutils literal notranslate"><span class="pre">true</span></code> no hated songs will be chosen</dd>
-<dt>minsonglen (number ∈ ℕ):</dt>
-<dd>Determines the minimum length of a song in seconds to be in the set of possible songs</dd>
-<dt>maxsonglen (number ∈ ℕ):</dt>
-<dd>Determines the maximum length of a song in seconds to be in the set of possible songs</dd>
-<dt>songbllen (number ∈ ℕ):</dt>
-<dd>Blacklist length for songs (<code class="docutils literal notranslate"><span class="pre">0</span></code> to disable the blacklist)</dd>
-<dt>albumbllen (number ∈ ℕ):</dt>
-<dd>Blacklist length for albums (<code class="docutils literal notranslate"><span class="pre">0</span></code> to disable the blacklist)</dd>
-<dt>artistbllen (number ∈ ℕ):</dt>
-<dd>Blacklist length for artists (<code class="docutils literal notranslate"><span class="pre">0</span></code> to disable the blacklist)</dd>
-<dt>maxblage (time in hours as integer):</dt>
-<dd>The highest age an entry in one of the three blacklist can have until it gets automatically removed.</dd>
+<dl class="simple">
+<dt>nodisabled (boolean):</dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">true</span></code> no disabled songs will be chosen</p>
+</dd>
+<dt>nohated (boolean):</dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">true</span></code> no hated songs will be chosen</p>
+</dd>
+<dt>minsonglen (number ∈ ℕ):</dt><dd><p>Determines the minimum length of a song in seconds to be in the set of possible songs</p>
+</dd>
+<dt>maxsonglen (number ∈ ℕ):</dt><dd><p>Determines the maximum length of a song in seconds to be in the set of possible songs</p>
+</dd>
+<dt>songbllen (number ∈ ℕ):</dt><dd><p>Blacklist length for songs (<code class="docutils literal notranslate"><span class="pre">0</span></code> to disable the blacklist)</p>
+</dd>
+<dt>albumbllen (number ∈ ℕ):</dt><dd><p>Blacklist length for albums (<code class="docutils literal notranslate"><span class="pre">0</span></code> to disable the blacklist)</p>
+</dd>
+<dt>artistbllen (number ∈ ℕ):</dt><dd><p>Blacklist length for artists (<code class="docutils literal notranslate"><span class="pre">0</span></code> to disable the blacklist)</p>
+</dd>
+<dt>maxblage (time in hours as integer):</dt><dd><p>The highest age an entry in one of the three blacklist can have until it gets automatically removed.</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="log">
 <h2>log<a class="headerlink" href="#log" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>logfile (path to file):</dt>
-<dd>Output for the logs. Can also be <code class="docutils literal notranslate"><span class="pre">stdout</span></code> or <code class="docutils literal notranslate"><span class="pre">stderr</span></code></dd>
-<dt>loglevel (Loglevel name):</dt>
-<dd>Log level to run the logger at. Can be one of the following: <code class="docutils literal notranslate"><span class="pre">INFO</span></code>, <code class="docutils literal notranslate"><span class="pre">WARNING</span></code>, <code class="docutils literal notranslate"><span class="pre">ERROR</span></code></dd>
-<dt>debugfile (path to file):</dt>
-<dd>File to also store all logs at log level <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code>.
-If no file shall be created, use <code class="docutils literal notranslate"><span class="pre">none</span></code></dd>
-<dt>ignore (list of python module names):</dt>
-<dd>List of modules to ignore in the logs.
-At least <code class="docutils literal notranslate"><span class="pre">requests,</span> <span class="pre">urllib3,</span> <span class="pre">PIL,</span> <span class="pre">tensorflow</span></code> is recommended</dd>
+<dl class="simple">
+<dt>logfile (path to file):</dt><dd><p>Output for the logs. Can also be <code class="docutils literal notranslate"><span class="pre">stdout</span></code> or <code class="docutils literal notranslate"><span class="pre">stderr</span></code></p>
+</dd>
+<dt>loglevel (Loglevel name):</dt><dd><p>Log level to run the logger at. Can be one of the following: <code class="docutils literal notranslate"><span class="pre">INFO</span></code>, <code class="docutils literal notranslate"><span class="pre">WARNING</span></code>, <code class="docutils literal notranslate"><span class="pre">ERROR</span></code></p>
+</dd>
+<dt>debugfile (path to file):</dt><dd><p>File to also store all logs at log level <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code>.
+If no file shall be created, use <code class="docutils literal notranslate"><span class="pre">none</span></code></p>
+</dd>
+<dt>ignore (list of python module names):</dt><dd><p>List of modules to ignore in the logs.
+At least <code class="docutils literal notranslate"><span class="pre">requests,</span> <span class="pre">urllib3,</span> <span class="pre">PIL,</span> <span class="pre">tensorflow</span></code> is recommended</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="debug">
 <h2>debug<a class="headerlink" href="#debug" title="Permalink to this headline">¶</a></h2>
 <p>These flags can be used to prevent damage or messing up data while debugging or testing.
 Furthermore, it can be used to disable some features that do not work.</p>
-<dl class="docutils">
-<dt>disablestats (number ∈ {0,1}):</dt>
-<dd>Ignore statistic changes for songs (Like, Dislike…).
-They will not be written to the database.</dd>
-<dt>disabletracker (number ∈ {0,1}):</dt>
-<dd>Do not track the songs that were played</dd>
-<dt>disableai (number ∈ {0,1}):</dt>
-<dd>Do not use AI related things.
-On weak computers this should be <code class="docutils literal notranslate"><span class="pre">1</span></code>.</dd>
-<dt>disabletagging (number ∈ {0,1}):</dt>
-<dd>Do not set or remove any tags for songs or albums</dd>
+<dl class="simple">
+<dt>disablestats (number ∈ {0,1}):</dt><dd><p>Ignore statistic changes for songs (Like, Dislike…).
+They will not be written to the database.</p>
+</dd>
+<dt>disabletracker (number ∈ {0,1}):</dt><dd><p>Do not track the songs that were played</p>
+</dd>
+<dt>disableai (number ∈ {0,1}):</dt><dd><p>Do not use AI related things.
+On weak computers this should be <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+</dd>
+<dt>disabletagging (number ∈ {0,1}):</dt><dd><p>Do not set or remove any tags for songs or albums</p>
+</dd>
 </dl>
 </div>
 </div>
@@ -945,7 +950,7 @@ On weak computers this should be <code class="docutils literal notranslate"><spa
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

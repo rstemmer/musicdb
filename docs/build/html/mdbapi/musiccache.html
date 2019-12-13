@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicCache &mdash; MusicDB 5.1.0 documentation</title>
+  <title>MusicCache &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="Randomizer" href="randy.html"/>
         <link rel="prev" title="MusicAI" href="musicai.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -668,34 +674,33 @@
   <div class="section" id="musiccache">
 <h1>MusicCache<a class="headerlink" href="#musiccache" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This module gets not used in <em>MusicDB</em>.
+<p class="admonition-title">Note</p>
+<p>This module gets not used in <em>MusicDB</em>.
 It may get removed in future.</p>
 </div>
 <span class="target" id="module-mdbapi.musiccache"></span><p>This class manages the music cache.
 This cache is used for the following features of MusicDB:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li><strong>Streaming:</strong> Instead of on-the-fly transcoding, MusicDB uses this cache.</li>
-<li><strong>Export:</strong> This cache can be used as a clean base for exporting music to other devices. (The mobile app will use this cache as source)</li>
-<li><strong>HTML5-Source:</strong> The WebUI can use this cache as clean source to access the music via HTML5-Audio-Tags.</li>
+<li><p><strong>Streaming:</strong> Instead of on-the-fly transcoding, MusicDB uses this cache.</p></li>
+<li><p><strong>Export:</strong> This cache can be used as a clean base for exporting music to other devices. (The mobile app will use this cache as source)</p></li>
+<li><p><strong>HTML5-Source:</strong> The WebUI can use this cache as clean source to access the music via HTML5-Audio-Tags.</p></li>
 </ol>
 </div></blockquote>
 <div class="section" id="features-and-constraints">
 <h2>Features and Constraints<a class="headerlink" href="#features-and-constraints" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt>Audio files are 320kbps mp3 files</dt>
-<dd><ul class="first last">
-<li>They have clean and valid Unicode ID3v2.3 tags</li>
-<li>They have artworks with a resolution of 500x500 pixels</li>
+<li><dl class="simple">
+<dt>Audio files are 320kbps mp3 files</dt><dd><ul>
+<li><p>They have clean and valid Unicode ID3v2.3 tags</p></li>
+<li><p>They have artworks with a resolution of 500x500 pixels</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>File names have the following scheme: <code class="docutils literal notranslate"><span class="pre">ArtistID/AlbumID/SongID:Checksum.mp3</span></code></li>
-<li>All files in the cache are managed by MusicDB and should not be accessed by any user or other software</li>
+<li><p>File names have the following scheme: <code class="docutils literal notranslate"><span class="pre">ArtistID/AlbumID/SongID:Checksum.mp3</span></code></p></li>
+<li><p>All files in the cache are managed by MusicDB and should not be accessed by any user or other software</p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -759,70 +764,62 @@ Only the place where the cached files will be stored can be defined in the <em>m
 <h2>MusicCache Class<a class="headerlink" href="#musiccache-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mdbapi.musiccache.MusicCache">
-<em class="property">class </em><code class="descclassname">mdbapi.musiccache.</code><code class="descname">MusicCache</code><span class="sig-paren">(</span><em>config</em>, <em>database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musiccache.html#MusicCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musiccache.MusicCache" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>config</strong> – MusicDB configuration object</li>
-<li><strong>database</strong> – MusicDB database</li>
+<em class="property">class </em><code class="sig-prename descclassname">mdbapi.musiccache.</code><code class="sig-name descname">MusicCache</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musiccache.html#MusicCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musiccache.MusicCache" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> – MusicDB configuration object</p></li>
+<li><p><strong>database</strong> – MusicDB database</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – when <em>config</em> or <em>database</em> not of type <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> or <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – when <em>config</em> or <em>database</em> not of type <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> or <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a></p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="mdbapi.musiccache.MusicCache.Add">
-<code class="descname">Add</code><span class="sig-paren">(</span><em>mdbsong</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musiccache.html#MusicCache.Add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musiccache.MusicCache.Add" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Add</code><span class="sig-paren">(</span><em class="sig-param">mdbsong</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musiccache.html#MusicCache.Add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musiccache.MusicCache.Add" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if the song exists in the cache.
 When it doesn’t, the file will be created (this may take some time!!).</p>
 <p>This process is done in the following steps:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Check if song already cached. If it does, the method returns with <code class="docutils literal notranslate"><span class="pre">True</span></code></li>
-<li>Create directory tree if it does not exist. (<code class="docutils literal notranslate"><span class="pre">ArtistID/AlbumID/</span></code>)</li>
-<li>Convert song to mp3 (320kbp/s) and write it into the cache.</li>
-<li>Update ID3 tags. (ID3v2.3.0, 500x500 pixel artworks)</li>
+<li><p>Check if song already cached. If it does, the method returns with <code class="docutils literal notranslate"><span class="pre">True</span></code></p></li>
+<li><p>Create directory tree if it does not exist. (<code class="docutils literal notranslate"><span class="pre">ArtistID/AlbumID/</span></code>)</p></li>
+<li><p>Convert song to mp3 (320kbp/s) and write it into the cache.</p></li>
+<li><p>Update ID3 tags. (ID3v2.3.0, 500x500 pixel artworks)</p></li>
 </ol>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mdbsong</strong> – Dictionary representing a song entry form the Music Database</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mdbsong</strong> – Dictionary representing a song entry form the Music Database</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.musiccache.MusicCache.GetAllCachedFiles">
-<code class="descname">GetAllCachedFiles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musiccache.html#MusicCache.GetAllCachedFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musiccache.MusicCache.GetAllCachedFiles" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetAllCachedFiles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musiccache.html#MusicCache.GetAllCachedFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musiccache.MusicCache.GetAllCachedFiles" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns three lists of paths of all files inside the cache.
 The tree lists are the following:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>All artist directories</li>
-<li>All album paths</li>
-<li>All song paths</li>
+<li><p>All artist directories</p></li>
+<li><p>All album paths</p></li>
+<li><p>All song paths</p></li>
 </ol>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(Artist-Paths, Album-Paths, Song-Paths)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A tuple of three lists</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>(Artist-Paths, Album-Paths, Song-Paths)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>A tuple of three lists</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">artists</span><span class="p">,</span> <span class="n">albums</span><span class="p">,</span> <span class="n">songs</span><span class="p">)</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">GetAllCachedFiles</span><span class="p">()</span>
 
@@ -840,52 +837,44 @@ The tree lists are the following:</p>
 
 <dl class="method">
 <dt id="mdbapi.musiccache.MusicCache.GetSongPath">
-<code class="descname">GetSongPath</code><span class="sig-paren">(</span><em>mdbsong</em>, <em>absolute=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musiccache.html#MusicCache.GetSongPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musiccache.MusicCache.GetSongPath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSongPath</code><span class="sig-paren">(</span><em class="sig-param">mdbsong</em>, <em class="sig-param">absolute=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musiccache.html#MusicCache.GetSongPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musiccache.MusicCache.GetSongPath" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a path following the naming scheme for cached songs (<code class="docutils literal notranslate"><span class="pre">ArtistID/AlbumID/SongID:Checksum.mp3</span></code>).
 It is not guaranteed that the file actually exists.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>mdbsong</strong> – Dictionary representing a song entry form the Music Database</li>
-<li><strong>absolute</strong> – Optional argument that can be set to <code class="docutils literal notranslate"><span class="pre">True</span></code> to get an absolute path, not relative to the cache directory.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mdbsong</strong> – Dictionary representing a song entry form the Music Database</p></li>
+<li><p><strong>absolute</strong> – Optional argument that can be set to <code class="docutils literal notranslate"><span class="pre">True</span></code> to get an absolute path, not relative to the cache directory.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A (possible) path to the cached song (relative to the cache directory, <code class="docutils literal notranslate"><span class="pre">absolute</span></code> got not set to <code class="docutils literal notranslate"><span class="pre">True</span></code>).
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A (possible) path to the cached song (relative to the cache directory, <code class="docutils literal notranslate"><span class="pre">absolute</span></code> got not set to <code class="docutils literal notranslate"><span class="pre">True</span></code>).
 <code class="docutils literal notranslate"><span class="pre">None</span></code> when there is no checksum available. The checksum is part of the file name.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.musiccache.MusicCache.RemoveOldAlbums">
-<code class="descname">RemoveOldAlbums</code><span class="sig-paren">(</span><em>calbumpaths</em>, <em>mdbalbums</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musiccache.html#MusicCache.RemoveOldAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musiccache.MusicCache.RemoveOldAlbums" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveOldAlbums</code><span class="sig-paren">(</span><em class="sig-param">calbumpaths</em>, <em class="sig-param">mdbalbums</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musiccache.html#MusicCache.RemoveOldAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musiccache.MusicCache.RemoveOldAlbums" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method compares the available album paths from the cache with the entries from the Music Database.
 If there are albums that do not match the database entries, then the cached album will be removed.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>calbumpaths</strong> (<em>list</em>) – a list of album directories in the cache (scheme: “ArtistID/AlbumID”)</li>
-<li><strong>mdbalbums</strong> (<em>list</em>) – A list of album rows from the Music Database</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>calbumpaths</strong> (<em>list</em>) – a list of album directories in the cache (scheme: “ArtistID/AlbumID”)</p></li>
+<li><p><strong>mdbalbums</strong> (<em>list</em>) – A list of album rows from the Music Database</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>Nothing</em></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.musiccache.MusicCache.RemoveOldArtists">
-<code class="descname">RemoveOldArtists</code><span class="sig-paren">(</span><em>cartistpaths</em>, <em>mdbartists</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musiccache.html#MusicCache.RemoveOldArtists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musiccache.MusicCache.RemoveOldArtists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveOldArtists</code><span class="sig-paren">(</span><em class="sig-param">cartistpaths</em>, <em class="sig-param">mdbartists</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musiccache.html#MusicCache.RemoveOldArtists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musiccache.MusicCache.RemoveOldArtists" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes all cached artists when they are not included in the artist list from the database.</p>
 <p><code class="docutils literal notranslate"><span class="pre">cartistpaths</span></code> must be a list of artist directories with the artist ID as directory name.
 From these paths, a list of available artist ids is made and compared to the artist ids from the list of artists returned by the database (stored in <code class="docutils literal notranslate"><span class="pre">mdbartists</span></code>)</p>
@@ -898,43 +887,35 @@ The pseudo code can look like this:</p>
 </pre></div>
 </div>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cartistpaths</strong> (<em>list</em>) – a list of artist directories in the cache</li>
-<li><strong>mdbartists</strong> (<em>list</em>) – A list of artist rows from the Music Database</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cartistpaths</strong> (<em>list</em>) – a list of artist directories in the cache</p></li>
+<li><p><strong>mdbartists</strong> (<em>list</em>) – A list of artist rows from the Music Database</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>Nothing</em></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.musiccache.MusicCache.RemoveOldSongs">
-<code class="descname">RemoveOldSongs</code><span class="sig-paren">(</span><em>csongpaths</em>, <em>mdbsongs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musiccache.html#MusicCache.RemoveOldSongs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musiccache.MusicCache.RemoveOldSongs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveOldSongs</code><span class="sig-paren">(</span><em class="sig-param">csongpaths</em>, <em class="sig-param">mdbsongs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/musiccache.html#MusicCache.RemoveOldSongs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.musiccache.MusicCache.RemoveOldSongs" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method compares the available song paths from the cache with the entries from the Music Database.
 If there are songs that do not match the database entries, then the cached song will be removed.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>csongpaths</strong> (<em>list</em>) – a list of song files in the cache (scheme: “ArtistID/AlbumID/SongID:Checksum.mp3”)</li>
-<li><strong>mdbsongs</strong> (<em>list</em>) – A list of song rows from the Music Database</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>csongpaths</strong> (<em>list</em>) – a list of song files in the cache (scheme: “ArtistID/AlbumID/SongID:Checksum.mp3”)</p></li>
+<li><p><strong>mdbsongs</strong> (<em>list</em>) – A list of song rows from the Music Database</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>Nothing</em></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -977,7 +958,7 @@ If there are songs that do not match the database entries, then the cached song 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

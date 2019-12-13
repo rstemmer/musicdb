@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>musicai - MusicAI &mdash; MusicDB 5.1.0 documentation</title>
+  <title>musicai - MusicAI &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="repair - Repair Database Entries" href="repair.html"/>
         <link rel="prev" title="moods - Mood Tag Manager with CLUI" href="moods.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -675,22 +681,22 @@ Details of how to visualize the results can be found in <a class="reference inte
 All flags can be combined, but should not if they do not make sense.</p>
 <p>The arguments of this module gets checked in the following order</p>
 <ol class="arabic simple">
-<li><code class="docutils literal notranslate"><span class="pre">--feature</span></code>: <a class="reference internal" href="#mod.musicai.musicai.GenerateFeatureset" title="mod.musicai.musicai.GenerateFeatureset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GenerateFeatureset()</span></code></a></li>
-<li><code class="docutils literal notranslate"><span class="pre">--genre</span></code>: <a class="reference internal" href="#mod.musicai.musicai.GenerateTrainingset" title="mod.musicai.musicai.GenerateTrainingset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GenerateTrainingset()</span></code></a></li>
-<li><code class="docutils literal notranslate"><span class="pre">--train</span></code>: <a class="reference internal" href="#mod.musicai.musicai.PerformTraining" title="mod.musicai.musicai.PerformTraining"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PerformTraining()</span></code></a></li>
-<li><code class="docutils literal notranslate"><span class="pre">--predict</span></code>: <a class="reference internal" href="#mod.musicai.musicai.PerformPrediction" title="mod.musicai.musicai.PerformPrediction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PerformPrediction()</span></code></a></li>
-<li><code class="docutils literal notranslate"><span class="pre">--stats</span></code>: <a class="reference internal" href="#mod.musicai.musicai.ShowStatistics" title="mod.musicai.musicai.ShowStatistics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ShowStatistics()</span></code></a></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--feature</span></code>: <a class="reference internal" href="#mod.musicai.musicai.GenerateFeatureset" title="mod.musicai.musicai.GenerateFeatureset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GenerateFeatureset()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--genre</span></code>: <a class="reference internal" href="#mod.musicai.musicai.GenerateTrainingset" title="mod.musicai.musicai.GenerateTrainingset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GenerateTrainingset()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--train</span></code>: <a class="reference internal" href="#mod.musicai.musicai.PerformTraining" title="mod.musicai.musicai.PerformTraining"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PerformTraining()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--predict</span></code>: <a class="reference internal" href="#mod.musicai.musicai.PerformPrediction" title="mod.musicai.musicai.PerformPrediction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PerformPrediction()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--stats</span></code>: <a class="reference internal" href="#mod.musicai.musicai.ShowStatistics" title="mod.musicai.musicai.ShowStatistics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ShowStatistics()</span></code></a></p></li>
 </ol>
 <p>The genre argument for <code class="docutils literal notranslate"><span class="pre">--genre</span></code> must be one of the genres configured in the MusicDB Configuration under <code class="docutils literal notranslate"><span class="pre">[MusicAI]-&gt;genrelist</span></code>.
 For example: <code class="docutils literal notranslate"><span class="pre">&quot;Metal&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;Classic&quot;</span></code>.</p>
 <p>The action for the <code class="docutils literal notranslate"><span class="pre">--predict</span></code> option must be <code class="docutils literal notranslate"><span class="pre">&quot;show&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;store&quot;</span></code>.</p>
 <blockquote>
-<div><dl class="docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">show</span></code>:</dt>
-<dd>Show the results on the screen</dd>
-<dt><code class="docutils literal notranslate"><span class="pre">store</span></code>:</dt>
-<dd>Write the results to the database.
-It sets the genre tags for each song with setting <em>approval</em> to 0 (Tag set by AI) and <em>confidence</em> to the prediction confidence.</dd>
+<div><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">show</span></code>:</dt><dd><p>Show the results on the screen</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">store</span></code>:</dt><dd><p>Write the results to the database.
+It sets the genre tags for each song with setting <em>approval</em> to 0 (Tag set by AI) and <em>confidence</em> to the prediction confidence.</p>
+</dd>
 </dl>
 </div></blockquote>
 <p class="rubric">Examples</p>
@@ -728,103 +734,89 @@ musicdb -q musicai -s
 <h2>Class Description<a class="headerlink" href="#class-description" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mod.musicai.musicai">
-<em class="property">class </em><code class="descclassname">mod.musicai.</code><code class="descname">musicai</code><span class="sig-paren">(</span><em>config</em>, <em>database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">mod.musicai.</code><code class="sig-name descname">musicai</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="mod.musicai.musicai.AnalysisThread">
-<code class="descname">AnalysisThread</code><span class="sig-paren">(</span><em>songid</em>, <em>songpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.AnalysisThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.AnalysisThread" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AnalysisThread</code><span class="sig-paren">(</span><em class="sig-param">songid</em>, <em class="sig-param">songpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.AnalysisThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.AnalysisThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls the function <a class="reference internal" href="../mdbapi/musicai.html#mdbapi.musicai.MusicAI.CreateFeatureset" title="mdbapi.musicai.MusicAI.CreateFeatureset"><code class="xref py py-func docutils literal notranslate"><span class="pre">CreateFeatureset()</span></code></a>.
 This function is made to be used concurrently.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>songid</strong> (<em>int</em>) – ID of the song that shall be analyzed</li>
-<li><strong>songpath</strong> (<em>str</em>) – Path to the song that shall be analyzed</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>songid</strong> (<em>int</em>) – ID of the song that shall be analyzed</p></li>
+<li><p><strong>songpath</strong> (<em>str</em>) – Path to the song that shall be analyzed</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">status from the CreateFeatureset-call</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>status from the CreateFeatureset-call</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mod.musicai.musicai.GenerateFeatureset">
-<code class="descname">GenerateFeatureset</code><span class="sig-paren">(</span><em>mdbsongs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.GenerateFeatureset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.GenerateFeatureset" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GenerateFeatureset</code><span class="sig-paren">(</span><em class="sig-param">mdbsongs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.GenerateFeatureset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.GenerateFeatureset" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates feature sets for a list of songs.
 If one of the songs already has a feature set the song gets skipped.</p>
 <p>The creation is done by calling <a class="reference internal" href="#mod.musicai.musicai.AnalysisThread" title="mod.musicai.musicai.AnalysisThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AnalysisThread()</span></code></a> in 6 threads in parallel.
 If an analysis fails the song gets skipped.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mdbsongs</strong> – A list of MusicDB song dictionaries</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mdbsongs</strong> – A list of MusicDB song dictionaries</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mod.musicai.musicai.GenerateTrainingset">
-<code class="descname">GenerateTrainingset</code><span class="sig-paren">(</span><em>mdbsongs</em>, <em>genre</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.GenerateTrainingset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.GenerateTrainingset" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GenerateTrainingset</code><span class="sig-paren">(</span><em class="sig-param">mdbsongs</em>, <em class="sig-param">genre</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.GenerateTrainingset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.GenerateTrainingset" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates training sets out of the feature set by augmenting them with a genre.
 If a song already has a training set, or no feature set it is skipped.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>mdbsongs</strong> – A list of MusicDB song dictionaries</li>
-<li><strong>genre</strong> (<em>str</em>) – The genre the songs belong to</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mdbsongs</strong> – A list of MusicDB song dictionaries</p></li>
+<li><p><strong>genre</strong> (<em>str</em>) – The genre the songs belong to</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mod.musicai.musicai.GetSongsFromPath">
-<code class="descname">GetSongsFromPath</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.GetSongsFromPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.GetSongsFromPath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSongsFromPath</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.GetSongsFromPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.GetSongsFromPath" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of MusicDB songs depending if the path points to a single song, an album or an artist.
 If the path is invalid <code class="docutils literal notranslate"><span class="pre">None</span></code> will be returned.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – a path to a song, an album or an artist</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">List of MusicDB songs if <em>path</em> is valid, otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – a path to a song, an album or an artist</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of MusicDB songs if <em>path</em> is valid, otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mod.musicai.musicai.PerformPrediction">
-<code class="descname">PerformPrediction</code><span class="sig-paren">(</span><em>mdbsongs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.PerformPrediction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.PerformPrediction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">PerformPrediction</code><span class="sig-paren">(</span><em class="sig-param">mdbsongs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.PerformPrediction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.PerformPrediction" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method performs a prediction on a list of songs.
 For each song the method <a class="reference internal" href="../mdbapi/musicai.html#mdbapi.musicai.MusicAI.PerformPrediction" title="mdbapi.musicai.MusicAI.PerformPrediction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.musicai.MusicAI.PerformPrediction()</span></code></a> gets called.</p>
 <p>When calling this method after a CUDA update, the prediction of the first song will take some minutes because the network gets recompiled for the new libraries.</p>
 <p>The results will be returned and can then be used.
 It is a list of predictions. Each prediction is a tuple of <em>songid</em> and <em>confidence</em>.
 The confidence is a list with each element representing the confidence of one of the genres in the genre list.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mdbsongs</strong> – A list of MusicDB song dictionaries</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A set of values representing the prediction</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mdbsongs</strong> – A list of MusicDB song dictionaries</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A set of values representing the prediction</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predictionset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PerformPrediction</span><span class="p">(</span><span class="n">songs</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">genreindex</span><span class="p">,</span> <span class="n">genrename</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">musicai</span><span class="o">.</span><span class="n">genrelist</span><span class="p">):</span>
@@ -838,72 +830,60 @@ The confidence is a list with each element representing the confidence of one of
 
 <dl class="method">
 <dt id="mod.musicai.musicai.PerformTraining">
-<code class="descname">PerformTraining</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.PerformTraining"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.PerformTraining" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">PerformTraining</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.PerformTraining"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.PerformTraining" title="Permalink to this definition">¶</a></dt>
 <dd><p>Direct interface to <a class="reference internal" href="../mdbapi/musicai.html#mdbapi.musicai.MusicAI.PerformTraining" title="mdbapi.musicai.MusicAI.PerformTraining"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.musicai.MusicAI.PerformTraining()</span></code></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mod.musicai.musicai.ShowPrediction">
-<code class="descname">ShowPrediction</code><span class="sig-paren">(</span><em>mdbsongs</em>, <em>predictionset</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.ShowPrediction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.ShowPrediction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ShowPrediction</code><span class="sig-paren">(</span><em class="sig-param">mdbsongs</em>, <em class="sig-param">predictionset</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.ShowPrediction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.ShowPrediction" title="Permalink to this definition">¶</a></dt>
 <dd><p>The results will be printed in a table.
 The table shows the confidence of a song (abscissa) for each genre (ordinate).
 The last column shows the mean value of all songs that can be seen as genre-prediction for an Album or an Artist.</p>
 <p>The predictionset must be a list of tuple <em>(Song ID , Confidence)</em></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>mdbsongs</strong> – A list of MusicDB song dictionaries</li>
-<li><strong>predictionset</strong> – Set of predictions as returned by <a class="reference internal" href="#mod.musicai.musicai.PerformPrediction" title="mod.musicai.musicai.PerformPrediction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PerformPrediction()</span></code></a></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mdbsongs</strong> – A list of MusicDB song dictionaries</p></li>
+<li><p><strong>predictionset</strong> – Set of predictions as returned by <a class="reference internal" href="#mod.musicai.musicai.PerformPrediction" title="mod.musicai.musicai.PerformPrediction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PerformPrediction()</span></code></a></p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>Nothing</em></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mod.musicai.musicai.ShowStatistics">
-<code class="descname">ShowStatistics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.ShowStatistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.ShowStatistics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ShowStatistics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.ShowStatistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.ShowStatistics" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method prints the number of songs in the training set and the size of the training sets.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mod.musicai.musicai.StorePrediction">
-<code class="descname">StorePrediction</code><span class="sig-paren">(</span><em>predictionset</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.StorePrediction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.StorePrediction" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">StorePrediction</code><span class="sig-paren">(</span><em class="sig-param">predictionset</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/musicai.html#musicai.StorePrediction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.musicai.musicai.StorePrediction" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method stores the predicted genres into the MusicDatabase.
 Son´, for each song, its genre gets stored with <em>approval</em> set to 0 (Tag set by AI), and the <em>confidence</em> set to the prediction confidence of the AI.
 The threshold of confidence so that the tag gets set is 0.3.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>predictionset</strong> – Set of predictions as returned by <a class="reference internal" href="#mod.musicai.musicai.PerformPrediction" title="mod.musicai.musicai.PerformPrediction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PerformPrediction()</span></code></a></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>predictionset</strong> – Set of predictions as returned by <a class="reference internal" href="#mod.musicai.musicai.PerformPrediction" title="mod.musicai.musicai.PerformPrediction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PerformPrediction()</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -946,7 +926,7 @@ The threshold of confidence so that the tag gets set is 0.3.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

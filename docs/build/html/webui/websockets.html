@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Websocket Connection &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Websocket Connection &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="Impressum" href="../other/impressum.html"/>
         <link rel="prev" title="Tag Management" href="taginput.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -674,9 +680,9 @@ Reading the concept page first will help to understand this page.</p>
 <h2>Connection Process<a class="headerlink" href="#connection-process" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li>green: functions inside the <em>musicdb.js</em> file</li>
-<li>blue: methods of the <a class="reference external" href="https://developer.mozilla.org/de/docs/Web/API/WebSocket">JavaScript WebSocket class</a>. The implementation is in the <em>musicdb.js</em> file anyway.</li>
-<li>red: callbacks that must be implemented by the user. The names are shorted. The “…” stands for “onMusicDB”</li>
+<li><p>green: functions inside the <em>musicdb.js</em> file</p></li>
+<li><p>blue: methods of the <a class="reference external" href="https://developer.mozilla.org/de/docs/Web/API/WebSocket">JavaScript WebSocket class</a>. The implementation is in the <em>musicdb.js</em> file anyway.</p></li>
+<li><p>red: callbacks that must be implemented by the user. The names are shorted. The “…” stands for “onMusicDB”</p></li>
 </ul>
 <div class="graphviz"><object data="../_images/graphviz-4a4295c9de60ee3748759e5cfa7b0aee2a48d056.svg" type="image/svg+xml" class="graphviz">
 <p class="warning">digraph controlflow{
@@ -742,30 +748,6 @@ Reading the concept page first will help to understand this page.</p>
 
 }</p></object></div>
 </div></blockquote>
-<dl class="function">
-<dt id="ConnectToMusicDB">
-<code class="descname">ConnectToMusicDB</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ConnectToMusicDB" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function established a connection to the server.
-If there is already a connection, it will be closed first.</p>
-<p>This function also implements the following methods of the WebSocket class as also shown in the picture above:</p>
-<blockquote>
-<div><ul class="simple">
-<li>onopen</li>
-<li>onclose</li>
-<li>onerror</li>
-<li>onmessage</li>
-</ul>
-</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>nothing</em></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 <div class="section" id="watchdog">
 <h2>Watchdog<a class="headerlink" href="#watchdog" title="Permalink to this headline">¶</a></h2>
@@ -782,146 +764,26 @@ The MusicDB Server send in a period of several seconds (max 3) the state of the 
 On Windows systems, packages can be stuck inside Windows internal buffers for a long time (several seconds).
 Keep this in mind when configuring the Watchdog.</p>
 <p>To configure the watchdog set the following variables in the <em>musicdb.js</em> file:</p>
-<dl class="docutils">
-<dt>WATCHDOG_RUN (boolean):</dt>
-<dd>If <code class="docutils literal notranslate"><span class="pre">true</span></code> the watchdog function checks if there is still a connection the server.</dd>
-<dt>WATCHDOG_INTERVAL (integer):</dt>
-<dd>If there is no sign that the connection is active for <em>interval</em> milliseconds, the watchdog will recognize it.</dd>
+<dl class="simple">
+<dt>WATCHDOG_RUN (boolean):</dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">true</span></code> the watchdog function checks if there is still a connection the server.</p>
+</dd>
+<dt>WATCHDOG_INTERVAL (integer):</dt><dd><p>If there is no sign that the connection is active for <em>interval</em> milliseconds, the watchdog will recognize it.</p>
+</dd>
 </dl>
 <p>The following functions implement the Watchdog.
 They are used internal by the socket object as shown in the figure above.
 Usualy they need not to be called from the user of the <em>musicdb.js</em> file.</p>
-<dl class="function">
-<dt id="MDB_WebsocketWatchdog">
-<code class="descname">MDB_WebsocketWatchdog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MDB_WebsocketWatchdog" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is the callback funtion of the timer.
-On timeout, this function gets called.
-It first calles the <code class="docutils literal notranslate"><span class="pre">onMusicDBWatchdogBarks</span></code> function that must be implemented by the user.
-Next a reconnection gets triggerd calling <a class="reference internal" href="#ConnectToMusicDB" title="ConnectToMusicDB"><code class="xref js js-func docutils literal notranslate"><span class="pre">ConnectToMusicDB()</span></code></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>nothing</em></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="MDB_StopWebsocketWatchdog">
-<code class="descname">MDB_StopWebsocketWatchdog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MDB_StopWebsocketWatchdog" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method stops the watchdog timer.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>nothing</em></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="MDB_ResetWebsocketWatchdog">
-<code class="descname">MDB_ResetWebsocketWatchdog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MDB_ResetWebsocketWatchdog" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method starts and resets the watchdog timer if <code class="docutils literal notranslate"><span class="pre">WATCHDOG_RUN</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>.
-The interval is determined by <code class="docutils literal notranslate"><span class="pre">WATCHDOG_INTERVAL</span></code>.
-When the timer gets not reset until the interval is over, the <a class="reference internal" href="#MDB_WebsocketWatchdog" title="MDB_WebsocketWatchdog"><code class="xref js js-func docutils literal notranslate"><span class="pre">MDB_WebsocketWatchdog()</span></code></a> function gets called.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>nothing</em></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 <div class="section" id="communication-with-the-server">
 <h2>Communication with the server<a class="headerlink" href="#communication-with-the-server" title="Permalink to this headline">¶</a></h2>
 <p>The address of the server can be set in the following variable in <em>musicdb.js</em>:</p>
-<dl class="docutils">
-<dt>WEBSOCKET_URL (string):</dt>
-<dd>The URL to the websocket server. For example: <code class="docutils literal notranslate"><span class="pre">&quot;wss://testserver.org:9000&quot;</span></code>.
-By default, the domain of the website with port <code class="docutils literal notranslate"><span class="pre">9001</span></code> will be used.</dd>
+<dl class="simple">
+<dt>WEBSOCKET_URL (string):</dt><dd><p>The URL to the websocket server. For example: <code class="docutils literal notranslate"><span class="pre">&quot;wss://testserver.org:9000&quot;</span></code>.
+By default, the domain of the website with port <code class="docutils literal notranslate"><span class="pre">9001</span></code> will be used.</p>
+</dd>
 </dl>
 <div class="section" id="sending-data">
 <h3>Sending Data<a class="headerlink" href="#sending-data" title="Permalink to this headline">¶</a></h3>
-<dl class="function">
-<dt id="MusicDB_Call">
-<code class="descname">MusicDB_Call</code><span class="sig-paren">(</span><em>fncname</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#MusicDB_Call" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function calls a function on the MusicDB server using the MusicDB WebSocket API.
-It uses the method <em>call</em>, so <em>fncsig</em> and <em>pass</em> are <code class="docutils literal notranslate"><span class="pre">null</span></code> by default.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
-<li><strong>fncname</strong> (<em>string</em>) – Name of the function that shall be called</li>
-<li><strong>args</strong> (<em>object</em>) – optional object with all argumens for the called function</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>nothing</em></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="MusicDB_Request">
-<code class="descname">MusicDB_Request</code><span class="sig-paren">(</span><em>fncname</em>, <em>fncsig</em>, <em>args</em>, <em>pass</em><span class="sig-paren">)</span><a class="headerlink" href="#MusicDB_Request" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function calls a function on the MusicDB server using the MusicDB WebSocket API.
-It uses the <em>request</em> method so that the server responses to this call.</p>
-<p>The <em>fncsig</em> helps to associate the response with the call.
-It furthermore can be used to define how the response shall be processed.</p>
-<p>The <em>pass</em> argument can be used to pass data through the server back to the response handler.
-For example an element ID of the DOM, in that a result shall be printed.</p>
-<p>If <em>fncsig</em> or <em>pass</em> are not set (undefined) they will be set to the valid value <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
-<li><strong>fncname</strong> (<em>string</em>) – Name of the function that shall be called</li>
-<li><strong>fncsig</strong> (<em>string</em>) – signature string of the function that made the request</li>
-<li><strong>args</strong> (<em>object</em>) – optional object with all argumens for the called function</li>
-<li><strong>pass</strong> (<em>object</em>) – optional object with data hat will be passed throug the server and will be part of the response.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>nothing</em></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="MusicDB_Broadcast">
-<code class="descname">MusicDB_Broadcast</code><span class="sig-paren">(</span><em>fncname</em>, <em>fncsig</em>, <em>args</em>, <em>pass</em><span class="sig-paren">)</span><a class="headerlink" href="#MusicDB_Broadcast" title="Permalink to this definition">¶</a></dt>
-<dd><p>Similar to <a class="reference internal" href="#MusicDB_Request" title="MusicDB_Request"><code class="xref js js-func docutils literal notranslate"><span class="pre">MusicDB_Request()</span></code></a>.
-The response will be send to all connected clients, not just to the caller.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="MDB_SendPacket">
-<code class="descname">MDB_SendPacket</code><span class="sig-paren">(</span><em>packet</em><span class="sig-paren">)</span><a class="headerlink" href="#MDB_SendPacket" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is an internal function used by <a class="reference internal" href="#MusicDB_Call" title="MusicDB_Call"><code class="xref js js-func docutils literal notranslate"><span class="pre">MusicDB_Call()</span></code></a>, <a class="reference internal" href="#MusicDB_Request" title="MusicDB_Request"><code class="xref js js-func docutils literal notranslate"><span class="pre">MusicDB_Request()</span></code></a> and <a class="reference internal" href="#MusicDB_Broadcast" title="MusicDB_Broadcast"><code class="xref js js-func docutils literal notranslate"><span class="pre">MusicDB_Broadcast()</span></code></a>.
-It implements the low level send function that creates a JSON string which will be send to the MusicDB server using WebSockets.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>boolean</strong> – <code class="docutils literal notranslate"><span class="pre">true</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 <div class="section" id="receiving-data">
 <h3>Receiving Data<a class="headerlink" href="#receiving-data" title="Permalink to this headline">¶</a></h3>
@@ -1016,7 +878,7 @@ For a general message the function <code class="docutils literal notranslate"><s
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

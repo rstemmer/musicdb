@@ -23,6 +23,19 @@ For news, follow [@MusicDBProject](https://twitter.com/MusicDBProject) on Twitte
 A detailed description of MusicDB and its components can be found in the documentation: [Overview of MusicDB](https://rstemmer.github.io/musicdb/build/html/basics/overview.html)
 
 
+## Docker-Bases Demo
+
+It is possible to run a Demo installation via Docker container.
+Just clone this repository and execute the scripts in the docker sub-directory.
+
+```sh
+git clone https://github.com/rstemmer/musicdb.git
+cd musicdb
+./docker/build.sh
+./docker/run.sh
+```
+
+
 ## Important News
 
 This section contains some important information on how to update to a next major version.

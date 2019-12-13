@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Icecast Interface &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Icecast Interface &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="Meta Tags" href="metatags.html"/>
         <link rel="prev" title="HDF5Storage" href="hdf5storage.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -675,14 +681,14 @@ from the <a class="reference external" href="https://icecast.org/">Icecast</a> p
 <h2>Introduction to Icecast<a class="headerlink" href="#introduction-to-icecast" title="Permalink to this headline">¶</a></h2>
 <p>A setup using Icecast consist of three components. Using Icecast’s terms, the are the following:</p>
 <blockquote>
-<div><dl class="docutils">
-<dt>Source Client:</dt>
-<dd>This the software that provides the music. In this setup, it is <em>MusicDB</em>.
-It is called client, because it connects to Icecast that can manage multiple source clients.</dd>
-<dt>Icecast Server:</dt>
-<dd>This is <em>Icecast</em> itself. It servers the audio stream to the world.</dd>
-<dt>Listener:</dt>
-<dd>The listener is the receiver of the stream. For example VLC.</dd>
+<div><dl class="simple">
+<dt>Source Client:</dt><dd><p>This the software that provides the music. In this setup, it is <em>MusicDB</em>.
+It is called client, because it connects to Icecast that can manage multiple source clients.</p>
+</dd>
+<dt>Icecast Server:</dt><dd><p>This is <em>Icecast</em> itself. It servers the audio stream to the world.</p>
+</dd>
+<dt>Listener:</dt><dd><p>The listener is the receiver of the stream. For example VLC.</p>
+</dd>
 </dl>
 </div></blockquote>
 <p>Icecast can handle multiple sources.
@@ -696,10 +702,10 @@ All <em>Listeners</em> that want to access the audio stream receives the data fr
 There is a good example configuration provided by MusicDB.
 The following list addresses the settings in the XML file for the Icecast configration.</p>
 <blockquote>
-<div><dl class="docutils">
-<dt>icecast/authentication/source-password:</dt>
-<dd>This is the password <em>MusicDB</em> needs to know to connect to Icecast.
-So this password must be the same as in MusicDB Configuration <code class="docutils literal notranslate"><span class="pre">[icecast]-&gt;password</span></code>.</dd>
+<div><dl class="simple">
+<dt>icecast/authentication/source-password:</dt><dd><p>This is the password <em>MusicDB</em> needs to know to connect to Icecast.
+So this password must be the same as in MusicDB Configuration <code class="docutils literal notranslate"><span class="pre">[icecast]-&gt;password</span></code>.</p>
+</dd>
 </dl>
 </div></blockquote>
 <p>There are two ports needed for the MusicDB/Icecast setup.
@@ -722,11 +728,11 @@ The other port (666) can be open to the world because it will be encrypted and p
 <span class="nt">&lt;/listen-socket&gt;</span>
 </pre></div>
 </div>
-<dl class="docutils">
-<dt>icecast/listen-socket/shoutcast-mount:</dt>
-<dd>This setting defines the <em>Mountpoint</em> name (starting with “/”).
+<dl class="simple">
+<dt>icecast/listen-socket/shoutcast-mount:</dt><dd><p>This setting defines the <em>Mountpoint</em> name (starting with “/”).
 It must be the same like the one set in MusicDB’s configuration: <code class="docutils literal notranslate"><span class="pre">[icecast]-&gt;mountname</span></code>
-Further more it must be equal to the name definded in the detailed mount specification: <code class="docutils literal notranslate"><span class="pre">icecast/mount/mount-name</span></code>.</dd>
+Further more it must be equal to the name definded in the detailed mount specification: <code class="docutils literal notranslate"><span class="pre">icecast/mount/mount-name</span></code>.</p>
+</dd>
 </dl>
 </div></blockquote>
 </div>
@@ -735,67 +741,67 @@ Further more it must be equal to the name definded in the detailed mount specifi
 <h2>Icecast Class<a class="headerlink" href="#icecast-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib.stream.icecast.IcecastInterface">
-<em class="property">class </em><code class="descclassname">lib.stream.icecast.</code><code class="descname">IcecastInterface</code><span class="sig-paren">(</span><em>port</em>, <em>user</em>, <em>password</em>, <em>mountname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.stream.icecast.</code><code class="sig-name descname">IcecastInterface</code><span class="sig-paren">(</span><em class="sig-param">port</em>, <em class="sig-param">user</em>, <em class="sig-param">password</em>, <em class="sig-param">mountname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface" title="Permalink to this definition">¶</a></dt>
 <dd><p>This Icecast interface manages the connection to the Icecast server.</p>
 <p>The following values for setting up the connection via libshout are hard coded.
 They can easily be changed in the Icecast configuration in the <code class="docutils literal notranslate"><span class="pre">icecast/mount</span></code> section.</p>
 <blockquote>
-<div><table border="1" class="docutils">
+<div><table class="docutils align-default">
 <colgroup>
-<col width="12%" />
-<col width="23%" />
-<col width="65%" />
+<col style="width: 12%" />
+<col style="width: 23%" />
+<col style="width: 65%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Parameter</th>
-<th class="head">Value</th>
-<th class="head">Comment</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Comment</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>protocol</td>
-<td><code class="docutils literal notranslate"><span class="pre">SHOUT_PROTOCOL_HTTP</span></code></td>
-<td>The native and recommended format for Icecast 2</td>
+<tbody>
+<tr class="row-even"><td><p>protocol</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SHOUT_PROTOCOL_HTTP</span></code></p></td>
+<td><p>The native and recommended format for Icecast 2</p></td>
 </tr>
-<tr class="row-odd"><td>format</td>
-<td><code class="docutils literal notranslate"><span class="pre">SHOUT_FORMAT_MP3</span></code></td>
-<td>Obvious. MusicDB streams mp3 files</td>
+<tr class="row-odd"><td><p>format</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SHOUT_FORMAT_MP3</span></code></p></td>
+<td><p>Obvious. MusicDB streams mp3 files</p></td>
 </tr>
-<tr class="row-even"><td>public</td>
-<td><code class="docutils literal notranslate"><span class="pre">0</span></code></td>
-<td>For security and privacy reasons</td>
+<tr class="row-even"><td><p>public</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p>For security and privacy reasons</p></td>
 </tr>
-<tr class="row-odd"><td>host</td>
-<td><code class="docutils literal notranslate"><span class="pre">&quot;localhost&quot;</span></code></td>
-<td>For security reasons MusicDB and Icecast must run on the same computer</td>
+<tr class="row-odd"><td><p>host</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;localhost&quot;</span></code></p></td>
+<td><p>For security reasons MusicDB and Icecast must run on the same computer</p></td>
 </tr>
-<tr class="row-even"><td>name</td>
-<td><code class="docutils literal notranslate"><span class="pre">&quot;MusicDB</span> <span class="pre">Stream&quot;</span></code></td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;MusicDB</span> <span class="pre">Stream&quot;</span></code></p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>dumpfile</td>
-<td><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-<td>Storing the stream does not make sense for non-moderated streams</td>
+<tr class="row-odd"><td><p>dumpfile</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p>Storing the stream does not make sense for non-moderated streams</p></td>
 </tr>
-<tr class="row-even"><td>url</td>
-<td><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-<td>There is no website for the stream, because it is a private stream</td>
+<tr class="row-even"><td><p>url</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p>There is no website for the stream, because it is a private stream</p></td>
 </tr>
-<tr class="row-odd"><td>genre</td>
-<td><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-<td>Not relevant for private streams</td>
+<tr class="row-odd"><td><p>genre</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p>Not relevant for private streams</p></td>
 </tr>
-<tr class="row-even"><td>description</td>
-<td><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-<td>Not relevant for private streams</td>
+<tr class="row-even"><td><p>description</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p>Not relevant for private streams</p></td>
 </tr>
-<tr class="row-odd"><td>agent</td>
-<td><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-<td>Not relevant</td>
+<tr class="row-odd"><td><p>agent</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p>Not relevant</p></td>
 </tr>
-<tr class="row-even"><td>audio_info</td>
-<td><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-<td>Not relevant</td>
+<tr class="row-even"><td><p>audio_info</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p>Not relevant</p></td>
 </tr>
 </tbody>
 </table>
@@ -805,20 +811,16 @@ In general this should be not necessary!
 Instead only use the <a class="reference internal" href="#lib.stream.icecast.IcecastInterface.StreamFile" title="lib.stream.icecast.IcecastInterface.StreamFile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamFile()</span></code></a> method that streams a mp3 file addressed by its path.
 Advantage of the <a class="reference internal" href="#lib.stream.icecast.IcecastInterface.StreamFile" title="lib.stream.icecast.IcecastInterface.StreamFile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamFile()</span></code></a> is, beside a clean frame wise transfer of the data to the server,
 that the stream can be muted via <a class="reference internal" href="#lib.stream.icecast.IcecastInterface.Mute" title="lib.stream.icecast.IcecastInterface.Mute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Mute()</span></code></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>port</strong> (<em>int</em>) – port number for the <em>Source Client</em> connection</li>
-<li><strong>user</strong> (<em>str</em>) – Name of the source user</li>
-<li><strong>password</strong> (<em>str</em>) – The password of the source user</li>
-<li><strong>mountname</strong> (<em>str</em>) – Name of the mountpoint to use.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>port</strong> (<em>int</em>) – port number for the <em>Source Client</em> connection</p></li>
+<li><p><strong>user</strong> (<em>str</em>) – Name of the source user</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password of the source user</p></li>
+<li><p><strong>mountname</strong> (<em>str</em>) – Name of the mountpoint to use.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create IcecastInterface object</span>
 <span class="n">icecast</span> <span class="o">=</span> <span class="n">IcecastInterface</span><span class="p">(</span><span class="mi">666</span><span class="p">,</span> <span class="s2">&quot;source&quot;</span><span class="p">,</span> <span class="s2">&quot;hackme&quot;</span><span class="p">,</span> <span class="s2">&quot;/stream&quot;</span><span class="p">)</span>
@@ -836,85 +838,73 @@ that the stream can be muted via <a class="reference internal" href="#lib.stream
 </div>
 <dl class="method">
 <dt id="lib.stream.icecast.IcecastInterface.Connect">
-<code class="descname">Connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Connect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tries to connect to Icecast.</p>
 <p>If already connected, only <code class="docutils literal notranslate"><span class="pre">True</span></code> gets returned with out opening again.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.stream.icecast.IcecastInterface.Disconnect">
-<code class="descname">Disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Disconnect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Disconnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tries to close the Icecast connection.</p>
 <p>If already disconnected, only <code class="docutils literal notranslate"><span class="pre">True</span></code> gets returned with out disconnecting again.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.stream.icecast.IcecastInterface.IsConnected">
-<code class="descname">IsConnected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.IsConnected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.IsConnected" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> if connected to Icecase. <code class="docutils literal notranslate"><span class="pre">False</span></code> of not connected.</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">IsConnected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.IsConnected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.IsConnected" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if connected to Icecase. <code class="docutils literal notranslate"><span class="pre">False</span></code> of not connected.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.stream.icecast.IcecastInterface.Mute">
-<code class="descname">Mute</code><span class="sig-paren">(</span><em>state=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Mute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Mute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Mute</code><span class="sig-paren">(</span><em class="sig-param">state=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Mute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Mute" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets the Icecast Interface into a mute state (when <code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">==</span> <span class="pre">True</span></code>).
 Then, the method <a class="reference internal" href="#lib.stream.icecast.IcecastInterface.StreamFile" title="lib.stream.icecast.IcecastInterface.StreamFile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamFile()</span></code></a> streams silence instead of the file content.
 After leaving the mute state, the file streaming continues at the position it got muted (=paused)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>bool</em>) – Mute stream when <code class="docutils literal notranslate"><span class="pre">True</span></code>, otherwise continue streaming audio</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>bool</em>) – Mute stream when <code class="docutils literal notranslate"><span class="pre">True</span></code>, otherwise continue streaming audio</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.stream.icecast.IcecastInterface.StreamChunk">
-<code class="descname">StreamChunk</code><span class="sig-paren">(</span><em>chunk</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.StreamChunk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.StreamChunk" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">StreamChunk</code><span class="sig-paren">(</span><em class="sig-param">chunk</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.StreamChunk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.StreamChunk" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method send a chunk of a file to the Icecast server.
 The method synchronizes with Icecast before sending the data.
 This is a blocking process!</p>
 <p>When sending a chunk of data to Icecast fails,
 the method disconnects from the Server.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>chunk</strong> (<em>bytes</em>) – A chunk of a file to stream to Icecast</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When <code class="docutils literal notranslate"><span class="pre">chunk</span></code> is not of type bytes</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>chunk</strong> (<em>bytes</em>) – A chunk of a file to stream to Icecast</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – When <code class="docutils literal notranslate"><span class="pre">chunk</span></code> is not of type bytes</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">mp3</span><span class="p">:</span>
     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
@@ -933,7 +923,7 @@ the method disconnects from the Server.</p>
 
 <dl class="method">
 <dt id="lib.stream.icecast.IcecastInterface.StreamFile">
-<code class="descname">StreamFile</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.StreamFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.StreamFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">StreamFile</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.StreamFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.StreamFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a generator that sends a mp3 file to the Icecast server.
 The mp3 file gets split into its frames, and sent frame wise.</p>
 <p>After sending one chunk, the generator returns a dictionary with exact the keys and values
@@ -983,16 +973,14 @@ ffmpeg -i monosilence.mp3 -ab 320k -ac <span class="m">2</span> stereosilence.mp
 </pre></div>
 </div>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – Absolute path to the mp3 file to stream. The encoding must be the same for all files!</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a generator that returns the currently streamed frame.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Absolute path to the mp3 file to stream. The encoding must be the same for all files!</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns a generator that returns the currently streamed frame.</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">frameinfo</span> <span class="ow">in</span> <span class="n">icecast</span><span class="o">.</span><span class="n">StreamFile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">frameinfo</span><span class="p">[</span><span class="s2">&quot;muted&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
@@ -1010,20 +998,19 @@ ffmpeg -i monosilence.mp3 -ab 320k -ac <span class="m">2</span> stereosilence.mp
 
 <dl class="method">
 <dt id="lib.stream.icecast.IcecastInterface.UpdateTitle">
-<code class="descname">UpdateTitle</code><span class="sig-paren">(</span><em>title</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.UpdateTitle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.UpdateTitle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">UpdateTitle</code><span class="sig-paren">(</span><em class="sig-param">title</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.UpdateTitle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.UpdateTitle" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates the stream title.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>title</strong> (<em>str</em>) – A string as new title for the stream - for example the song name</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When <code class="docutils literal notranslate"><span class="pre">title</span></code> is not of type string</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>title</strong> (<em>str</em>) – A string as new title for the stream - for example the song name</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – When <code class="docutils literal notranslate"><span class="pre">title</span></code> is not of type string</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1066,7 +1053,7 @@ ffmpeg -i monosilence.mp3 -ab 320k -ac <span class="m">2</span> stereosilence.mp
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

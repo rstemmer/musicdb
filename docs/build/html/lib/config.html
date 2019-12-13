@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Configuration &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Configuration &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="Database" href="database.html"/>
         <link rel="prev" title="Command Line User Interface" href="clui.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -703,24 +709,22 @@ The definition of names is shown in the ini file example below.</p>
 </div></blockquote>
 <dl class="class">
 <dt id="lib.cfg.config.Config">
-<em class="property">class </em><code class="descclassname">lib.cfg.config.</code><code class="descname">Config</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.config.</code><code class="sig-name descname">Config</code><span class="sig-paren">(</span><em class="sig-param">filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="lib.cfg.config.Config.AllowNoneValue">
-<code class="descname">AllowNoneValue</code><span class="sig-paren">(</span><em>allow=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.AllowNoneValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.AllowNoneValue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AllowNoneValue</code><span class="sig-paren">(</span><em class="sig-param">allow=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.AllowNoneValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.AllowNoneValue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method enables the possibility to configure (read) a <code class="docutils literal notranslate"><span class="pre">None</span></code> value.
 In case a value has the string <code class="docutils literal notranslate"><span class="pre">&quot;None&quot;</span></code>, the <a class="reference internal" href="#lib.cfg.config.Config.Get" title="lib.cfg.config.Config.Get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Get()</span></code></a> method returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.
 The upper case N is important!</p>
 <p>Default behavior of this class is to return the string <code class="docutils literal notranslate"><span class="pre">&quot;None&quot;</span></code> as regular string.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>allow</strong> (<em>bool</em>) – if <code class="docutils literal notranslate"><span class="pre">True</span></code> none values are allowed, otherwise the string <code class="docutils literal notranslate"><span class="pre">&quot;None&quot;</span></code> gets returned as a string</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>allow</strong> (<em>bool</em>) – if <code class="docutils literal notranslate"><span class="pre">True</span></code> none values are allowed, otherwise the string <code class="docutils literal notranslate"><span class="pre">&quot;None&quot;</span></code> gets returned as a string</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[test]</span>
 <span class="na">option</span> <span class="o">=</span> <span class="s">None</span>
@@ -741,7 +745,7 @@ The upper case N is important!</p>
 
 <dl class="method">
 <dt id="lib.cfg.config.Config.Get">
-<code class="descname">Get</code><span class="sig-paren">(</span><em>datatype</em>, <em>section</em>, <em>option</em>, <em>default=None</em>, <em>islist=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Get" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Get</code><span class="sig-paren">(</span><em class="sig-param">datatype</em>, <em class="sig-param">section</em>, <em class="sig-param">option</em>, <em class="sig-param">default=None</em>, <em class="sig-param">islist=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Get" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads a value from the configuration.
 The values in the file are all stored as string.
 Using the <em>datatype</em> parameter will convert that string into a python data type.</p>
@@ -750,24 +754,20 @@ This value can be of a different type than defined by the datatype parameter.</p
 <p>If the value of an option is <code class="docutils literal notranslate"><span class="pre">&quot;None&quot;</span></code>, and none type is allowed by calling <a class="reference internal" href="#lib.cfg.config.Config.AllowNoneValue" title="lib.cfg.config.Config.AllowNoneValue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AllowNoneValue()</span></code></a>, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</p>
 <p>If the <em>islist</em> parameter is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the read value gets interpreted as comma separated list and split.
 A list of the striped values (without leading or trailing spaces) gets returned casted to the data type given by the <em>datatype</em> parameter.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>datatype</strong> – The data type of the value. This can be <code class="docutils literal notranslate"><span class="pre">bool</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>.</li>
-<li><strong>section</strong> (<em>str</em>) – Name of the section to read from</li>
-<li><strong>option</strong> (<em>str</em>) – Name of the option to read</li>
-<li><strong>default</strong> – Default value in case the option does not exist</li>
-<li><strong>islist</strong> (<em>bool</em>) – Interpret the value as a comma separated list</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datatype</strong> – The data type of the value. This can be <code class="docutils literal notranslate"><span class="pre">bool</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>.</p></li>
+<li><p><strong>section</strong> (<em>str</em>) – Name of the section to read from</p></li>
+<li><p><strong>option</strong> (<em>str</em>) – Name of the option to read</p></li>
+<li><p><strong>default</strong> – Default value in case the option does not exist</p></li>
+<li><p><strong>islist</strong> (<em>bool</em>) – Interpret the value as a comma separated list</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of an option</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of an option</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[test]</span>
 <span class="na">integer</span> <span class="o">=</span> <span class="s">1000</span>
@@ -790,54 +790,49 @@ A list of the striped values (without leading or trailing spaces) gets returned 
 
 <dl class="method">
 <dt id="lib.cfg.config.Config.Load">
-<code class="descname">Load</code><span class="sig-paren">(</span><em>path=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Load" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Load</code><span class="sig-paren">(</span><em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Load" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method loads a configuration file.
 If the <em>path</em> parameter is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, the path given while instantiating the class will be overwritten.
 If the file was already loaded, it gets reloaded.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – Absolute path to an ini file</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AssertionError</span></code> – If internal path variable and parameter is <code class="docutils literal notranslate"><span class="pre">None</span></code>. (No path given)</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Absolute path to an ini file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>AssertionError</strong> – If internal path variable and parameter is <code class="docutils literal notranslate"><span class="pre">None</span></code>. (No path given)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.cfg.config.Config.OptionAvailable">
-<code class="descname">OptionAvailable</code><span class="sig-paren">(</span><em>section</em>, <em>option</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.OptionAvailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.OptionAvailable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">OptionAvailable</code><span class="sig-paren">(</span><em class="sig-param">section</em>, <em class="sig-param">option</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.OptionAvailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.OptionAvailable" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to check if an option exists in the configuration file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>section</strong> (<em>str</em>) – Name of the section</li>
-<li><strong>option</strong> (<em>str</em>) – Name of the option</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>section</strong> (<em>str</em>) – Name of the section</p></li>
+<li><p><strong>option</strong> (<em>str</em>) – Name of the option</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">True</span></code> if the option exists, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the option exists, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.cfg.config.Config.Reload">
-<code class="descname">Reload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Reload" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Reload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Reload" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method just calls <a class="reference internal" href="#lib.cfg.config.Config.Load" title="lib.cfg.config.Config.Load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Load()</span></code></a> without a path argument.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.cfg.config.Config.Save">
-<code class="descname">Save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Save" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Save" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method saves all set values back to the configuration file.</p>
 <p>Changing configuration can be prevented by setting the file attributes to read only.</p>
 <p>If writing fails not because of missing write permission, an exception gets raised.</p>
@@ -845,28 +840,24 @@ If the file was already loaded, it gets reloaded.</p>
 
 <dl class="method">
 <dt id="lib.cfg.config.Config.Set">
-<code class="descname">Set</code><span class="sig-paren">(</span><em>section</em>, <em>option</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Set" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Set</code><span class="sig-paren">(</span><em class="sig-param">section</em>, <em class="sig-param">option</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Set" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets an option.
 The value gets casted to a string.
 If the section or option does not exist, it will be created.</p>
 <p>After setting the option, the <a class="reference internal" href="#lib.cfg.config.Config.Save" title="lib.cfg.config.Config.Save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Save()</span></code></a> method gets called to store the changes.
 This is necessary because there is no reliable destructor in python to.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>section</strong> (<em>str</em>) – Section to write at</li>
-<li><strong>option</strong> (<em>str</em>) – Name of the option to set</li>
-<li><strong>value</strong> – Value to store</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>section</strong> (<em>str</em>) – Section to write at</p></li>
+<li><p><strong>option</strong> (<em>str</em>) – Name of the option to set</p></li>
+<li><p><strong>value</strong> – Value to store</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>Nothing</em></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -877,7 +868,7 @@ This is necessary because there is no reliable destructor in python to.</p>
 <p>This module handles the reading and writing of csv-files.</p>
 <dl class="class">
 <dt id="lib.cfg.csv.CSVFile">
-<em class="property">class </em><code class="descclassname">lib.cfg.csv.</code><code class="descname">CSVFile</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.csv.</code><code class="sig-name descname">CSVFile</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class reads <a class="reference external" href="https://tools.ietf.org/html/rfc4180">Comma Separated Value (CSV)</a> files as used by MusicDB.</p>
 <p>The class does not cache the files content.
 Every read access accesses the actual file.
@@ -885,29 +876,26 @@ Writing does the file update.</p>
 <p>The csv files this class works with must have the following dialect:</p>
 <blockquote>
 <div><ul class="simple">
-<li>first line is a header line</li>
-<li>delimiter:  <code class="docutils literal notranslate"><span class="pre">,</span></code></li>
-<li>escapechar: <code class="docutils literal notranslate"><span class="pre">\</span></code></li>
-<li>quotechar:  <code class="docutils literal notranslate"><span class="pre">&quot;</span></code></li>
-<li>quoting:    <code class="docutils literal notranslate"><span class="pre">csv.QUOTE_NONNUMERIC</span></code></li>
-<li>line break: <code class="docutils literal notranslate"><span class="pre">\n</span></code></li>
+<li><p>first line is a header line</p></li>
+<li><p>delimiter:  <code class="docutils literal notranslate"><span class="pre">,</span></code></p></li>
+<li><p>escapechar: <code class="docutils literal notranslate"><span class="pre">\</span></code></p></li>
+<li><p>quotechar:  <code class="docutils literal notranslate"><span class="pre">&quot;</span></code></p></li>
+<li><p>quoting:    <code class="docutils literal notranslate"><span class="pre">csv.QUOTE_NONNUMERIC</span></code></p></li>
+<li><p>line break: <code class="docutils literal notranslate"><span class="pre">\n</span></code></p></li>
 </ul>
 </div></blockquote>
 <p>It is allowed to modify the CSV files with external programs, but not guaranteed that
 MusicDB will not overwrite the changes.
 It is recommended to only read the files outside of MusicDB.
 Do not change the layout of the files!</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) – Absolute path of the csv file the class works with</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Absolute path of the csv file the class works with</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="lib.cfg.csv.CSVFile.Read">
-<code class="descname">Read</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Read" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Read</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Read" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads the file and returns its a table represented as a list of dictionaries.
 The dictionary has a key for each column in the header of the file.
 So each entry in the list represents one row of the file,
@@ -930,21 +918,19 @@ and each entry in the dictionary represents one cell or column in that row.</p>
 <span class="p">]</span>
 </pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of dictionaries with one entry or each cell. When the file does not exist, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">StopIteration</span></code> – When the CSV file is empty</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A list of dictionaries with one entry or each cell. When the file does not exist, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>StopIteration</strong> – When the CSV file is empty</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.cfg.csv.CSVFile.Write">
-<code class="descname">Write</code><span class="sig-paren">(</span><em>table</em>, <em>header=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Write" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Write</code><span class="sig-paren">(</span><em class="sig-param">table</em>, <em class="sig-param">header=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Write" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write rows into the csv file.
 The first row will be the header of the table.</p>
 <p class="rubric">Example</p>
@@ -966,29 +952,25 @@ The first row will be the header of the table.</p>
 <span class="nx">c</span><span class="p">,</span> <span class="mi">3</span>
 </pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>table</strong> (<em>list</em>) – A list with dictionaries of values for each column</li>
-<li><strong>header</strong> (<em>list</em>) – The header of the CSV file. Each entry must also be a key in the <code class="docutils literal notranslate"><span class="pre">table</span></code> dictionary! If <code class="docutils literal notranslate"><span class="pre">None</span></code>, then all keys of the dictionaries will be used.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> (<em>list</em>) – A list with dictionaries of values for each column</p></li>
+<li><p><strong>header</strong> (<em>list</em>) – The header of the CSV file. Each entry must also be a key in the <code class="docutils literal notranslate"><span class="pre">table</span></code> dictionary! If <code class="docutils literal notranslate"><span class="pre">None</span></code>, then all keys of the dictionaries will be used.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – when <code class="docutils literal notranslate"><span class="pre">table</span></code> is not a list</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code> – when the <code class="docutils literal notranslate"><span class="pre">table</span></code> list has not at least one entry</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – when the <code class="docutils literal notranslate"><span class="pre">table</span></code> list elements are not dictionaries</li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – when <code class="docutils literal notranslate"><span class="pre">header</span></code> is not a list and not <code class="docutils literal notranslate"><span class="pre">None</span></code></li>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – when <code class="docutils literal notranslate"><span class="pre">table</span></code> is not a list</p></li>
+<li><p><strong>ValueError</strong> – when the <code class="docutils literal notranslate"><span class="pre">table</span></code> list has not at least one entry</p></li>
+<li><p><strong>TypeError</strong> – when the <code class="docutils literal notranslate"><span class="pre">table</span></code> list elements are not dictionaries</p></li>
+<li><p><strong>TypeError</strong> – when <code class="docutils literal notranslate"><span class="pre">header</span></code> is not a list and not <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1002,9 +984,9 @@ The first row will be the header of the table.</p>
 <p>To create a new entry for the MusicDB Configuration the following steps must be done:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Set the section and option in the configuration file as well as in the template in the share directory</li>
-<li>In case a new section shall be created, create an empty class for this section inside this module</li>
-<li>Read the option in the constructor of the <a class="reference internal" href="#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> class</li>
+<li><p>Set the section and option in the configuration file as well as in the template in the share directory</p></li>
+<li><p>In case a new section shall be created, create an empty class for this section inside this module</p></li>
+<li><p>Read the option in the constructor of the <a class="reference internal" href="#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> class</p></li>
 </ol>
 </div></blockquote>
 <p>For example, the following option shall be added:</p>
@@ -1039,58 +1021,50 @@ The read value must be writen into an attribute named as the option, inside an i
 </div></blockquote>
 <dl class="class">
 <dt id="lib.cfg.musicdb.MusicDBConfig">
-<em class="property">class </em><code class="descclassname">lib.cfg.musicdb.</code><code class="descname">MusicDBConfig</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.musicdb.</code><code class="sig-name descname">MusicDBConfig</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides the access to the MusicDB configuration file.</p>
 <dl class="method">
 <dt id="lib.cfg.musicdb.MusicDBConfig.GetDirectory">
-<code class="descname">GetDirectory</code><span class="sig-paren">(</span><em>section</em>, <em>option</em>, <em>default</em>, <em>logger=&lt;function error&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig.GetDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig.GetDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetDirectory</code><span class="sig-paren">(</span><em class="sig-param">section</em>, <em class="sig-param">option</em>, <em class="sig-param">default</em>, <em class="sig-param">logger=&lt;function error&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig.GetDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig.GetDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets a string from the config file and checks if it is an existing directory.
 If not it prints an error.
 Except printing the error nothing is done.
 The “invalid” will be returned anyway, because it may be OK that the directory does not exist yet.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>section</strong> (<em>str</em>) – Section of an ini-file</li>
-<li><strong>option</strong> (<em>str</em>) – Option inside the section of an ini-file</li>
-<li><strong>default</strong> (<em>str</em>) – Default directory if option is not set in the file</li>
-<li><strong>logger</strong> – Logging-handler. Default is logging.error. logging.warning can be more appropriate in some situations.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>section</strong> (<em>str</em>) – Section of an ini-file</p></li>
+<li><p><strong>option</strong> (<em>str</em>) – Option inside the section of an ini-file</p></li>
+<li><p><strong>default</strong> (<em>str</em>) – Default directory if option is not set in the file</p></li>
+<li><p><strong>logger</strong> – Logging-handler. Default is logging.error. logging.warning can be more appropriate in some situations.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the option set in the config-file or the default value.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the option set in the config-file or the default value.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.cfg.musicdb.MusicDBConfig.GetFile">
-<code class="descname">GetFile</code><span class="sig-paren">(</span><em>section</em>, <em>option</em>, <em>default</em>, <em>logger=&lt;function error&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig.GetFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig.GetFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetFile</code><span class="sig-paren">(</span><em class="sig-param">section</em>, <em class="sig-param">option</em>, <em class="sig-param">default</em>, <em class="sig-param">logger=&lt;function error&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig.GetFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig.GetFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets a string from the config file and checks if it is an existing file.
 If not it prints an error.
 Except printing the error nothing is done.
 The “invalid” will be returned anyway, because it may be OK that the file does not exist yet.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>section</strong> (<em>str</em>) – Section of an ini-file</li>
-<li><strong>option</strong> (<em>str</em>) – Option inside the section of an ini-file</li>
-<li><strong>default</strong> (<em>str</em>) – Default file path if option is not set in the file</li>
-<li><strong>logger</strong> – Logging-handler. Default is logging.error. logging.warning can be more appropriate in some situations.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>section</strong> (<em>str</em>) – Section of an ini-file</p></li>
+<li><p><strong>option</strong> (<em>str</em>) – Option inside the section of an ini-file</p></li>
+<li><p><strong>default</strong> (<em>str</em>) – Default file path if option is not set in the file</p></li>
+<li><p><strong>logger</strong> – Logging-handler. Default is logging.error. logging.warning can be more appropriate in some situations.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the option set in the config-file or the default value.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value of the option set in the config-file or the default value.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1112,7 +1086,7 @@ If values get changed, they will not be stored!</p>
 </div>
 <dl class="class">
 <dt id="lib.cfg.extern.ExternConfig">
-<em class="property">class </em><code class="descclassname">lib.cfg.extern.</code><code class="descname">ExternConfig</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/extern.html#ExternConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.extern.ExternConfig" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.extern.</code><code class="sig-name descname">ExternConfig</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/extern.html#ExternConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.extern.ExternConfig" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -1126,57 +1100,53 @@ Each read or write process to the files that hold the state will be triggered by
 The content of those files should not be changed by any user because its content gets not validated.</p>
 <dl class="class">
 <dt id="lib.cfg.mdbstate.MDBState">
-<em class="property">class </em><code class="descclassname">lib.cfg.mdbstate.</code><code class="descname">MDBState</code><span class="sig-paren">(</span><em>path</em>, <em>musicdb=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.mdbstate.</code><code class="sig-name descname">MDBState</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">musicdb=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class holds the MusicDB internal state.</p>
 <p>The following table shows which method is responsible for which file in the MusicDB State Directory.</p>
 <blockquote>
-<div><table border="1" class="docutils">
+<div><table class="docutils align-default">
 <colgroup>
-<col width="32%" />
-<col width="34%" />
-<col width="34%" />
+<col style="width: 32%" />
+<col style="width: 34%" />
+<col style="width: 34%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">File Name</th>
-<th class="head">Read Method</th>
-<th class="head">Write Method</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>File Name</p></th>
+<th class="head"><p>Read Method</p></th>
+<th class="head"><p>Write Method</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>songqueue.csv</td>
-<td><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadSongQueue" title="lib.cfg.mdbstate.MDBState.LoadSongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadSongQueue()</span></code></a></td>
-<td><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveSongQueue" title="lib.cfg.mdbstate.MDBState.SaveSongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveSongQueue()</span></code></a></td>
+<tbody>
+<tr class="row-even"><td><p>songqueue.csv</p></td>
+<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadSongQueue" title="lib.cfg.mdbstate.MDBState.LoadSongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadSongQueue()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveSongQueue" title="lib.cfg.mdbstate.MDBState.SaveSongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveSongQueue()</span></code></a></p></td>
 </tr>
-<tr class="row-odd"><td>artistblacklist.csv</td>
-<td><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></td>
-<td><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></td>
+<tr class="row-odd"><td><p>artistblacklist.csv</p></td>
+<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></p></td>
 </tr>
-<tr class="row-even"><td>albumblacklist.csv</td>
-<td><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></td>
-<td><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></td>
+<tr class="row-even"><td><p>albumblacklist.csv</p></td>
+<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></p></td>
 </tr>
-<tr class="row-odd"><td>songblacklist.csv</td>
-<td><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></td>
-<td><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></td>
+<tr class="row-odd"><td><p>songblacklist.csv</p></td>
+<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="lib.cfg.mdbstate.MDBState.LoadBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadBlacklists()</span></code></a></p></td>
+<td><p><a class="reference internal" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="lib.cfg.mdbstate.MDBState.SaveBlacklists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SaveBlacklists()</span></code></a></p></td>
 </tr>
 </tbody>
 </table>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>path</strong> – Absolute path to the MusicDB state directory</li>
-<li><strong>musicdb</strong> – Instance of the MusicDB Database (can be None)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – Absolute path to the MusicDB state directory</p></li>
+<li><p><strong>musicdb</strong> – Instance of the MusicDB Database (can be None)</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="lib.cfg.mdbstate.MDBState.GetFilterList">
-<code class="descname">GetFilterList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.GetFilterList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.GetFilterList" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetFilterList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.GetFilterList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.GetFilterList" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of the activated genre
 The list consists of the names of the genres as configured by the user.
 That are the names returned by <a class="reference internal" href="musicdb.html#lib.db.musicdb.MusicDatabase.GetAllTags" title="lib.db.musicdb.MusicDatabase.GetAllTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.GetAllTags()</span></code></a>.</p>
@@ -1189,131 +1159,111 @@ Before the comparison, the state file gets reloaded so that external changes get
 <span class="c1"># Metal and NDH are active, other available genres are not enabled.</span>
 </pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of main genre names that are activated</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A list of main genre names that are activated</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.cfg.mdbstate.MDBState.LoadBlacklists">
-<code class="descname">LoadBlacklists</code><span class="sig-paren">(</span><em>songbllen</em>, <em>albumbllen</em>, <em>artistbllen</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">LoadBlacklists</code><span class="sig-paren">(</span><em class="sig-param">songbllen</em>, <em class="sig-param">albumbllen</em>, <em class="sig-param">artistbllen</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a dictionary with the blacklist managed by <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a>.
 This method also handles the blacklist length by adding empty entries or cutting off exceeding ones.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>songbllen</strong> (<em>int</em>) – Number of entries the blacklist shall have</li>
-<li><strong>albumbllen</strong> (<em>int</em>) – Number of entries the blacklist shall have</li>
-<li><strong>artistbllen</strong> (<em>int</em>) – Number of entries the blacklist shall have</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>songbllen</strong> (<em>int</em>) – Number of entries the blacklist shall have</p></li>
+<li><p><strong>albumbllen</strong> (<em>int</em>) – Number of entries the blacklist shall have</p></li>
+<li><p><strong>artistbllen</strong> (<em>int</em>) – Number of entries the blacklist shall have</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dictionary with the blacklists as expected by <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary with the blacklists as expected by <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.cfg.mdbstate.MDBState.LoadSongQueue">
-<code class="descname">LoadSongQueue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadSongQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadSongQueue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">LoadSongQueue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadSongQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadSongQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads the song queue from the state directory.</p>
 <p>The method returns the queue as needed inside <a class="reference internal" href="../mdbapi/songqueue.html#mdbapi.songqueue.SongQueue" title="mdbapi.songqueue.SongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.songqueue.SongQueue()</span></code></a>:
 A list of dictionaries, each containing the <code class="docutils literal notranslate"><span class="pre">entryid</span></code> and <code class="docutils literal notranslate"><span class="pre">songid</span></code> as integers and <code class="docutils literal notranslate"><span class="pre">israndom</span></code> as boolean.</p>
 <p>The UUIDs of the queue entries remain.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A stored song queue</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A stored song queue</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.cfg.mdbstate.MDBState.ReadList">
-<code class="descname">ReadList</code><span class="sig-paren">(</span><em>listname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.ReadList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.ReadList" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ReadList</code><span class="sig-paren">(</span><em class="sig-param">listname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.ReadList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.ReadList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a list from the mdbstate directory.
 The <code class="docutils literal notranslate"><span class="pre">listname</span></code> argument defines which file gets read: <code class="docutils literal notranslate"><span class="pre">config.server.statedir/listname.csv</span></code>.</p>
 <p>This method should only be used by class internal methods.
 When a file can not be accessed, an empty list gets returned.
 So deleting a file is an option to reset an internal state of MusicDB.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>listname</strong> (<em>str</em>) – Name of the list to read without trailing .csv</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of rows from the file. When reading the list fails, an empty list gets returned.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>listname</strong> (<em>str</em>) – Name of the list to read without trailing .csv</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of rows from the file. When reading the list fails, an empty list gets returned.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.cfg.mdbstate.MDBState.SaveBlacklists">
-<code class="descname">SaveBlacklists</code><span class="sig-paren">(</span><em>blacklists</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SaveBlacklists</code><span class="sig-paren">(</span><em class="sig-param">blacklists</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method stores the blacklist in the related CSV files.
 The data structure of the dictionary is expected to be the same, <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a> uses.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>blacklist</strong> (<em>dict</em>) – A dictionary of blacklists.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>blacklist</strong> (<em>dict</em>) – A dictionary of blacklists.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.cfg.mdbstate.MDBState.SaveSongQueue">
-<code class="descname">SaveSongQueue</code><span class="sig-paren">(</span><em>queue</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveSongQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveSongQueue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SaveSongQueue</code><span class="sig-paren">(</span><em class="sig-param">queue</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveSongQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveSongQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method saves a song queue.
 The data structure of the queue must be exact as the one expected when the queue shall be loaded.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>queue</strong> (<em>dictionary</em>) – The song queue to save.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>queue</strong> (<em>dictionary</em>) – The song queue to save.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.cfg.mdbstate.MDBState.WriteList">
-<code class="descname">WriteList</code><span class="sig-paren">(</span><em>listname</em>, <em>rows</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.WriteList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.WriteList" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">WriteList</code><span class="sig-paren">(</span><em class="sig-param">listname</em>, <em class="sig-param">rows</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.WriteList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.WriteList" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method write a list of rows into the related file.
 The <code class="docutils literal notranslate"><span class="pre">listname</span></code> argument defines which file gets written: <code class="docutils literal notranslate"><span class="pre">config.server.statedir/listname.csv</span></code>.</p>
 <p>This method should only be used by class internal methods.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>listname</strong> (<em>str</em>) – Name of the list to read without trailing .csv</li>
-<li><strong>rows</strong> (<em>list</em>) – The list that shall be stored</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>listname</strong> (<em>str</em>) – Name of the list to read without trailing .csv</p></li>
+<li><p><strong>rows</strong> (<em>list</em>) – The list that shall be stored</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1356,7 +1306,7 @@ The <code class="docutils literal notranslate"><span class="pre">listname</span>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

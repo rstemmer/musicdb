@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>GStreamer Interface &mdash; MusicDB 5.1.0 documentation</title>
+  <title>GStreamer Interface &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="HDF5Storage" href="hdf5storage.html"/>
         <link rel="prev" title="Filesystem Interface" href="filesystem.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -688,26 +694,26 @@
 <h2>GStreamerInterface Class<a class="headerlink" href="#gstreamerinterface-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lib.stream.gstreamer.GStreamerInterface">
-<em class="property">class </em><code class="descclassname">lib.stream.gstreamer.</code><code class="descname">GStreamerInterface</code><span class="sig-paren">(</span><em>pipelinename='pipeline'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.stream.gstreamer.</code><code class="sig-name descname">GStreamerInterface</code><span class="sig-paren">(</span><em class="sig-param">pipelinename='pipeline'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides a simple abstraction to the GStreamer Python module.
 The class is made to manage one pipeline that can be executed in a thread.
 Therefore a state machine is implemented providing the following states.
 The state represent the state of the pipeline execution process.
 The current state can be checked by calling <a class="reference internal" href="#lib.stream.gstreamer.GStreamerInterface.GetState" title="lib.stream.gstreamer.GStreamerInterface.GetState"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetState()</span></code></a></p>
-<dl class="docutils">
-<dt>IDLE:</dt>
-<dd>After instantiating the state machine is in IDLE state, as well as after the pipeline was completely executed.</dd>
-<dt>RUNNING:</dt>
-<dd>When the pipeline gets executed, the state machine is in RUNNING state.
+<dl class="simple">
+<dt>IDLE:</dt><dd><p>After instantiating the state machine is in IDLE state, as well as after the pipeline was completely executed.</p>
+</dd>
+<dt>RUNNING:</dt><dd><p>When the pipeline gets executed, the state machine is in RUNNING state.
 This happens when the blocking method <a class="reference internal" href="#lib.stream.gstreamer.GStreamerInterface.Execute" title="lib.stream.gstreamer.GStreamerInterface.Execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Execute()</span></code></a> got called.
-This method is thread save an can be executed concurrently.</dd>
-<dt>CANCEL:</dt>
-<dd>When the state machine is in this state, the RUNNING state will be left.
-This is state that can be forced by calling <a class="reference internal" href="#lib.stream.gstreamer.GStreamerInterface.Cancel" title="lib.stream.gstreamer.GStreamerInterface.Cancel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Cancel()</span></code></a>.</dd>
+This method is thread save an can be executed concurrently.</p>
+</dd>
+<dt>CANCEL:</dt><dd><p>When the state machine is in this state, the RUNNING state will be left.
+This is state that can be forced by calling <a class="reference internal" href="#lib.stream.gstreamer.GStreamerInterface.Cancel" title="lib.stream.gstreamer.GStreamerInterface.Cancel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Cancel()</span></code></a>.</p>
+</dd>
 </dl>
 <div class="admonition error">
-<p class="first admonition-title">Error</p>
-<p class="last">When an error occures, the state machine goes into the ERROR state.
+<p class="admonition-title">Error</p>
+<p>When an error occures, the state machine goes into the ERROR state.
 This state will never be left!</p>
 </div>
 <div class="graphviz"><object data="../_images/graphviz-f8f63040edca1749341a9c783e1aa92b1607f968.svg" type="image/svg+xml" class="graphviz">
@@ -729,17 +735,14 @@ This state will never be left!</p>
 
 }</p></object></div>
 <p>These state machine is independent from the <a class="reference external" href="https://gstreamer.freedesktop.org/documentation/design/states.html">GStreamer Pipeline State Machine</a>!</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pipelinename</strong> (<em>str</em>) – Optional name for the pipeline</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pipelinename</strong> (<em>str</em>) – Optional name for the pipeline</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="lib.stream.gstreamer.GStreamerInterface.Cancel">
-<code class="descname">Cancel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.Cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.Cancel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Cancel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.Cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.Cancel" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method cancels the current running execution of the GStreamer Pipeline.
 It sets the state to CANCEL only when the current state is RUNNING.
 Otherwise nothing will be changed.</p>
@@ -747,25 +750,21 @@ Otherwise nothing will be changed.</p>
 
 <dl class="method">
 <dt id="lib.stream.gstreamer.GStreamerInterface.CreateElement">
-<code class="descname">CreateElement</code><span class="sig-paren">(</span><em>elementname</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.CreateElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.CreateElement" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">CreateElement</code><span class="sig-paren">(</span><em class="sig-param">elementname</em>, <em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.CreateElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.CreateElement" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds a GStreamer Element to the GStreamer Pipeline.
 When the element exists and gets added successfully, its instance gets returned.
 Otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code> will be returned.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>elementname</strong> (<em>str</em>) – name of the GStreamer Element as it is used by GStreamer</li>
-<li><strong>name</strong> (<em>str</em>) – A unique name for the instance of the element that gets added to the Pipeline</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>elementname</strong> (<em>str</em>) – name of the GStreamer Element as it is used by GStreamer</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – A unique name for the instance of the element that gets added to the Pipeline</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code> on error, otherwise the instance of the added GStreamer Element.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code> on error, otherwise the instance of the added GStreamer Element.</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <p>Creates a new pipeline named <code class="docutils literal notranslate"><span class="pre">&quot;example&quot;</span></code>.
 Then two elements from the GStreamer core elements called <code class="docutils literal notranslate"><span class="pre">filesrc</span></code> and <code class="docutils literal notranslate"><span class="pre">decodebin</span></code> gets added to the Pipeline.
@@ -788,7 +787,7 @@ gst-inspect-1.0 decodebin
 
 <dl class="method">
 <dt id="lib.stream.gstreamer.GStreamerInterface.Execute">
-<code class="descname">Execute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.Execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.Execute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Execute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.Execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.Execute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Only call this method when the pipeline execution is in IDLE state!</p>
 <p>Args:</p>
 <p>Returns:</p>
@@ -817,15 +816,12 @@ gst-inspect-1.0 decodebin
 
 <dl class="method">
 <dt id="lib.stream.gstreamer.GStreamerInterface.GetState">
-<code class="descname">GetState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.GetState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.GetState" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The current state of the GStreamer Pipeline execution as string</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname">GetState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.GetState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.GetState" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The current state of the GStreamer Pipeline execution as string</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -868,7 +864,7 @@ gst-inspect-1.0 decodebin
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

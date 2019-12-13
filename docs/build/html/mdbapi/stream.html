@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Streaming Server &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Streaming Server &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDBTags" href="tags.html"/>
         <link rel="prev" title="MusicDB Song Queue" href="songqueue.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -674,9 +680,9 @@ Further more this module provides some callback interfaces to inform the rest of
 <p>So this module consist of the following parts:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The <a class="reference internal" href="#streaming-thread">Streaming Thread</a> that manages the Song Stream.</li>
-<li>An <a class="reference internal" href="#event-management">Event Management</a> that provides a callback interface to get updated about what’s going on in the Streaming Thread.</li>
-<li>The <a class="reference internal" href="#mdbapi.stream.StreamManager" title="mdbapi.stream.StreamManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamManager</span></code></a> that does management behind streaming.</li>
+<li><p>The <a class="reference internal" href="#streaming-thread">Streaming Thread</a> that manages the Song Stream.</p></li>
+<li><p>An <a class="reference internal" href="#event-management">Event Management</a> that provides a callback interface to get updated about what’s going on in the Streaming Thread.</p></li>
+<li><p>The <a class="reference internal" href="#mdbapi.stream.StreamManager" title="mdbapi.stream.StreamManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamManager</span></code></a> that does management behind streaming.</p></li>
 </ul>
 </div></blockquote>
 <div class="section" id="interface">
@@ -689,9 +695,9 @@ All functions work on the settings in the <a class="reference internal" href="..
 </pre></div>
 </div>
 <ul class="simple">
-<li><a class="reference internal" href="#mdbapi.stream.StartStreamingThread" title="mdbapi.stream.StartStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StartStreamingThread()</span></code></a> starts the Streaming Thread that manages the streaming. It also establishes a connection to the Icecast server.</li>
-<li><a class="reference internal" href="#mdbapi.stream.StopStreamingThread" title="mdbapi.stream.StopStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StopStreamingThread()</span></code></a> disconnects MusicDB from Icecast and stops the Streaming Thread</li>
-<li><a class="reference internal" href="#mdbapi.stream.StreamManager" title="mdbapi.stream.StreamManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamManager</span></code></a> is the class to manage the Stream.</li>
+<li><p><a class="reference internal" href="#mdbapi.stream.StartStreamingThread" title="mdbapi.stream.StartStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StartStreamingThread()</span></code></a> starts the Streaming Thread that manages the streaming. It also establishes a connection to the Icecast server.</p></li>
+<li><p><a class="reference internal" href="#mdbapi.stream.StopStreamingThread" title="mdbapi.stream.StopStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StopStreamingThread()</span></code></a> disconnects MusicDB from Icecast and stops the Streaming Thread</p></li>
+<li><p><a class="reference internal" href="#mdbapi.stream.StreamManager" title="mdbapi.stream.StreamManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamManager</span></code></a> is the class to manage the Stream.</p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -707,8 +713,8 @@ This will only be updated by the StreamingThread.
 It contains the following information:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">isconnected</span></code> (bool): <code class="docutils literal notranslate"><span class="pre">True</span></code> when connected to Icecast, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">isplaying</span></code> (bool): <code class="docutils literal notranslate"><span class="pre">True</span></code> when streaming, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">isconnected</span></code> (bool): <code class="docutils literal notranslate"><span class="pre">True</span></code> when connected to Icecast, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">isplaying</span></code> (bool): <code class="docutils literal notranslate"><span class="pre">True</span></code> when streaming, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -721,13 +727,13 @@ For the whole Module, there is only one global Command Queue.</p>
 The <a class="reference internal" href="#mdbapi.stream.StreamingThread" title="mdbapi.stream.StreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamingThread()</span></code></a> reads the command from that queue and processes them.</p>
 <p>The following commands are available:</p>
 <blockquote>
-<div><dl class="docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">Play</span></code> (<a class="reference internal" href="#mdbapi.stream.StreamManager.Play" title="mdbapi.stream.StreamManager.Play"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamManager.Play()</span></code></a>):</dt>
-<dd>If state is <code class="docutils literal notranslate"><span class="pre">True</span></code> the current song from the Song Queue gets streamed to Icecast.
-If state is <code class="docutils literal notranslate"><span class="pre">False</span></code> the audio stream gets paused.</dd>
-<dt><code class="docutils literal notranslate"><span class="pre">PlayNextSong</span></code> (<a class="reference internal" href="#mdbapi.stream.StreamManager.PlayNextSong" title="mdbapi.stream.StreamManager.PlayNextSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamManager.PlayNextSong()</span></code></a>):</dt>
-<dd>Stops streaming the current song, and starts with the next song.
-If streaming is paused, only the next song gets selected as new current song.</dd>
+<div><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">Play</span></code> (<a class="reference internal" href="#mdbapi.stream.StreamManager.Play" title="mdbapi.stream.StreamManager.Play"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamManager.Play()</span></code></a>):</dt><dd><p>If state is <code class="docutils literal notranslate"><span class="pre">True</span></code> the current song from the Song Queue gets streamed to Icecast.
+If state is <code class="docutils literal notranslate"><span class="pre">False</span></code> the audio stream gets paused.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">PlayNextSong</span></code> (<a class="reference internal" href="#mdbapi.stream.StreamManager.PlayNextSong" title="mdbapi.stream.StreamManager.PlayNextSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamManager.PlayNextSong()</span></code></a>):</dt><dd><p>Stops streaming the current song, and starts with the next song.
+If streaming is paused, only the next song gets selected as new current song.</p>
+</dd>
 </dl>
 </div></blockquote>
 </div>
@@ -737,8 +743,8 @@ If streaming is paused, only the next song gets selected as new current song.</d
 <p>The following two functions can be used to register or remove a callback function:</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="#mdbapi.stream.StreamManager.RegisterCallback" title="mdbapi.stream.StreamManager.RegisterCallback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RegisterCallback()</span></code></a></li>
-<li><a class="reference internal" href="#mdbapi.stream.StreamManager.RemoveCallback" title="mdbapi.stream.StreamManager.RemoveCallback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveCallback()</span></code></a></li>
+<li><p><a class="reference internal" href="#mdbapi.stream.StreamManager.RegisterCallback" title="mdbapi.stream.StreamManager.RegisterCallback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RegisterCallback()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#mdbapi.stream.StreamManager.RemoveCallback" title="mdbapi.stream.StreamManager.RemoveCallback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveCallback()</span></code></a></p></li>
 </ul>
 </div></blockquote>
 <p>Functions that get called must provide two parameters.
@@ -747,12 +753,12 @@ The second parameter contains an event specific argument, or <code class="docuti
 <p>A return value gets not handled.</p>
 <p>The following events exist:</p>
 <blockquote>
-<div><dl class="docutils">
-<dt>StatusChanged:</dt>
-<dd>Gets triggered when the connection status to Icecast or the play status changed.</dd>
-<dt>TimeChanged:</dt>
-<dd>The time of the current playing position of a song changed.
-Argument is the current playtime of the song in seconds.</dd>
+<div><dl class="simple">
+<dt>StatusChanged:</dt><dd><p>Gets triggered when the connection status to Icecast or the play status changed.</p>
+</dd>
+<dt>TimeChanged:</dt><dd><p>The time of the current playing position of a song changed.
+Argument is the current playtime of the song in seconds.</p>
+</dd>
 </dl>
 </div></blockquote>
 <p class="rubric">Example</p>
@@ -770,49 +776,42 @@ Argument is the current playtime of the song in seconds.</dd>
 </div>
 <dl class="function">
 <dt id="mdbapi.stream.StartStreamingThread">
-<code class="descclassname">mdbapi.stream.</code><code class="descname">StartStreamingThread</code><span class="sig-paren">(</span><em>config</em>, <em>musicdb</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StartStreamingThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StartStreamingThread" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mdbapi.stream.</code><code class="sig-name descname">StartStreamingThread</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">musicdb</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StartStreamingThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StartStreamingThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function starts the Streaming Thread <code class="xref py py-mod docutils literal notranslate"><span class="pre">StreamingThread</span></code>.
 You should use this function instead of calling the Streaming Thread function directly.</p>
 <p>By calling this function, the global state of this module gets reset.
 This included removing all commands from the Command Queue.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>config</strong> – <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> object holding the MusicDB Configuration</li>
-<li><strong>database</strong> – A <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> instance</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> – <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> object holding the MusicDB Configuration</p></li>
+<li><p><strong>database</strong> – A <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> instance</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">True</span></code> on Success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When the arguments are not of the correct type.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on Success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – When the arguments are not of the correct type.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="mdbapi.stream.StopStreamingThread">
-<code class="descclassname">mdbapi.stream.</code><code class="descname">StopStreamingThread</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StopStreamingThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StopStreamingThread" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mdbapi.stream.</code><code class="sig-name descname">StopStreamingThread</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StopStreamingThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StopStreamingThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function stops the Streaming Thread.
 The function is blocking and waits until the thread is closed.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="mdbapi.stream.StreamingThread">
-<code class="descclassname">mdbapi.stream.</code><code class="descname">StreamingThread</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamingThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamingThread" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mdbapi.stream.</code><code class="sig-name descname">StreamingThread</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamingThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamingThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>This thread manages the streaming of the songs from the Song Queue to the Icecast server.</p>
 <p>The thread tracks the played song using the <a class="reference internal" href="tracker.html"><span class="doc">Song Tracker</span></a> module.
 It also tracks randomly added songs assuming the user skips or removes songs that don’t fit.
@@ -821,8 +820,8 @@ Skipped songs will be ignored.</p>
 <p>The thread triggers the following events:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">StatusChanged</span></code>: When the play-state</li>
-<li><code class="docutils literal notranslate"><span class="pre">TimeChanged</span></code>: To update the current streaming progress of a song</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">StatusChanged</span></code>: When the play-state</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TimeChanged</span></code>: To update the current streaming progress of a song</p></li>
 </ul>
 </div></blockquote>
 <p>The <code class="docutils literal notranslate"><span class="pre">TimeChanged</span></code> event gets triggered approximately every second.</p>
@@ -833,7 +832,7 @@ Skipped songs will be ignored.</p>
 <h2>Stream Manager Class<a class="headerlink" href="#stream-manager-class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mdbapi.stream.StreamManager">
-<em class="property">class </em><code class="descclassname">mdbapi.stream.</code><code class="descname">StreamManager</code><span class="sig-paren">(</span><em>config</em>, <em>database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">mdbapi.stream.</code><code class="sig-name descname">StreamManager</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides an interface to the Streaming Thread (<a class="reference internal" href="#mdbapi.stream.StreamingThread" title="mdbapi.stream.StreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamingThread()</span></code></a>) and the Song Queue that will be streamed.</p>
 <p>The communication is implemented with a command queue.
 More details about those commands can be found in the <a class="reference internal" href="#mdbapi.stream.StreamingThread" title="mdbapi.stream.StreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamingThread()</span></code></a> description.
@@ -841,134 +840,114 @@ Anyway, the details of the command queue are not important to know.
 They get hide by this class.
 Only important thing to know is, that when multiple instances of this class are used, the actions follow the <em>First Come First Server</em> protocol.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p><strong>Important for developer:</strong></p>
-<p class="last">Never call the <a class="reference internal" href="songqueue.html#mdbapi.songqueue.SongQueue.NextSong" title="mdbapi.songqueue.SongQueue.NextSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.songqueue.SongQueue.NextSong()</span></code></a> method directly from this class!
+<p>Never call the <a class="reference internal" href="songqueue.html#mdbapi.songqueue.SongQueue.NextSong" title="mdbapi.songqueue.SongQueue.NextSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.songqueue.SongQueue.NextSong()</span></code></a> method directly from this class!
 Send the <code class="docutils literal notranslate"><span class="pre">&quot;PlayNextSong&quot;</span></code> command to the <a class="reference internal" href="#mdbapi.stream.StreamingThread" title="mdbapi.stream.StreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamingThread()</span></code></a> instead.
 The thread handles the skip to the next song and starts streaming the new file.</p>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>config</strong> – <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> object holding the MusicDB Configuration</li>
-<li><strong>database</strong> – A <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> instance</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> – <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> object holding the MusicDB Configuration</p></li>
+<li><p><strong>database</strong> – A <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> instance</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When the arguments are not of the correct type.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – When the arguments are not of the correct type.</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="mdbapi.stream.StreamManager.GetStreamState">
-<code class="descname">GetStreamState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.GetStreamState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.GetStreamState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetStreamState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.GetStreamState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.GetStreamState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the current state of the Streaming Thread as a dictionary.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A copy of the Stream state. See the top of the documentation for details of the Stream State.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A copy of the Stream state. See the top of the documentation for details of the Stream State.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.stream.StreamManager.Play">
-<code class="descname">Play</code><span class="sig-paren">(</span><em>play=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.Play"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.Play" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Play</code><span class="sig-paren">(</span><em class="sig-param">play=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.Play"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.Play" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the play-state.</p>
 <blockquote>
 <div><ul class="simple">
-<li>If <code class="docutils literal notranslate"><span class="pre">play</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code> (default value), the Streaming Thread streams audio file data to Icecast.</li>
-<li>If <code class="docutils literal notranslate"><span class="pre">play</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code>, the stream gets paused.</li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">play</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code> (default value), the Streaming Thread streams audio file data to Icecast.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">play</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code>, the stream gets paused.</p></li>
 </ul>
 </div></blockquote>
 <p>This function is forcing the state. It does not care about the current playing state.</p>
 <p>When the command got successful executed,
 the <a class="reference internal" href="#mdbapi.stream.StreamingThread" title="mdbapi.stream.StreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamingThread()</span></code></a> will trigger the <code class="docutils literal notranslate"><span class="pre">StatusChanged</span></code> event.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>play</strong> (<em>bool</em>) – Playstate the Streaming Thread shall get</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success. When <code class="docutils literal notranslate"><span class="pre">play</span></code> is not a Boolean, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>play</strong> (<em>bool</em>) – Playstate the Streaming Thread shall get</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success. When <code class="docutils literal notranslate"><span class="pre">play</span></code> is not a Boolean, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.stream.StreamManager.PlayNextSong">
-<code class="descname">PlayNextSong</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.PlayNextSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.PlayNextSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">PlayNextSong</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.PlayNextSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.PlayNextSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function triggers the Streaming Thread to play the next song in the queue.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.stream.StreamManager.PushCommand">
-<code class="descname">PushCommand</code><span class="sig-paren">(</span><em>command</em>, <em>argument=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.PushCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.PushCommand" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">PushCommand</code><span class="sig-paren">(</span><em class="sig-param">command</em>, <em class="sig-param">argument=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.PushCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.PushCommand" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class internal interface to the <a class="reference internal" href="#command-queue">Command Queue</a> used to communicate with the <a class="reference internal" href="#mdbapi.stream.StreamingThread" title="mdbapi.stream.StreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamingThread()</span></code></a>.
 You should not access the queue directly, because the Streaming Thread expects valid data inside the queue.
 This is guaranteed by the methods that use this method.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>command</strong> (<em>str</em>) – A command to the Streaming Thread. Valid commands are listed in the <a class="reference internal" href="#mdbapi.stream.StreamingThread" title="mdbapi.stream.StreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamingThread()</span></code></a> section of the documentation.</li>
-<li><strong>argument</strong> – An argument to the command.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>command</strong> (<em>str</em>) – A command to the Streaming Thread. Valid commands are listed in the <a class="reference internal" href="#mdbapi.stream.StreamingThread" title="mdbapi.stream.StreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamingThread()</span></code></a> section of the documentation.</p></li>
+<li><p><strong>argument</strong> – An argument to the command.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, <code class="docutils literal notranslate"><span class="pre">False</span></code> when the Streaming Thread is not running.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, <code class="docutils literal notranslate"><span class="pre">False</span></code> when the Streaming Thread is not running.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.stream.StreamManager.RegisterCallback">
-<code class="descname">RegisterCallback</code><span class="sig-paren">(</span><em>function</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.RegisterCallback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.RegisterCallback" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RegisterCallback</code><span class="sig-paren">(</span><em class="sig-param">function</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.RegisterCallback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.RegisterCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a callback function that reacts on Streaming related events.
 For more details see the module description at the top of this document.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>function</strong> – A function that shall be called on an event.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>function</strong> – A function that shall be called on an event.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mdbapi.stream.StreamManager.RemoveCallback">
-<code class="descname">RemoveCallback</code><span class="sig-paren">(</span><em>function</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.RemoveCallback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.RemoveCallback" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveCallback</code><span class="sig-paren">(</span><em class="sig-param">function</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.RemoveCallback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.RemoveCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a function from the list of callback functions.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>function</strong> – A function that shall be called removed.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>function</strong> – A function that shall be called removed.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1011,7 +990,7 @@ For more details see the module description at the top of this document.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

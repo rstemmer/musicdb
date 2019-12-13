@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>artwork - Artwork Management &mdash; MusicDB 5.1.0 documentation</title>
+  <title>artwork - Artwork Management &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="cache - Music Cache Manager" href="cache.html"/>
         <link rel="prev" title="add - Add New Album to MusicDB" href="add.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -696,41 +702,34 @@ If no artwork is given, or if the whole cache shall be updated, the artwork insi
 <h2>class<a class="headerlink" href="#class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mod.artwork.artwork">
-<em class="property">class </em><code class="descclassname">mod.artwork.</code><code class="descname">artwork</code><span class="sig-paren">(</span><em>config</em>, <em>database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/artwork.html#artwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.artwork.artwork" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">mod.artwork.</code><code class="sig-name descname">artwork</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/artwork.html#artwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.artwork.artwork" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="mod.artwork.artwork.UpdateAlbum">
-<code class="descname">UpdateAlbum</code><span class="sig-paren">(</span><em>albumpath</em>, <em>artworkpath=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/artwork.html#artwork.UpdateAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.artwork.artwork.UpdateAlbum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">UpdateAlbum</code><span class="sig-paren">(</span><em class="sig-param">albumpath</em>, <em class="sig-param">artworkpath=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/artwork.html#artwork.UpdateAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.artwork.artwork.UpdateAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method does partial update and can be used to force a specific artwork.
 If <em>artworkpath</em> is given, that artwork will be copied to the cache instead of extraction one from the metadata.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>albumpath</strong> (<em>str</em>) – Path to an album. This can be absolute or relative to the music directory.</li>
-<li><strong>artworkpath</strong> (<em>str / NoneType</em>) – Absolute path to the artwork that shall be used if given.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>albumpath</strong> (<em>str</em>) – Path to an album. This can be absolute or relative to the music directory.</p></li>
+<li><p><strong>artworkpath</strong> (<em>str / NoneType</em>) – Absolute path to the artwork that shall be used if given.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mod.artwork.artwork.UpdateArtist">
-<code class="descname">UpdateArtist</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/artwork.html#artwork.UpdateArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.artwork.artwork.UpdateArtist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">UpdateArtist</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/artwork.html#artwork.UpdateArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.artwork.artwork.UpdateArtist" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method does an update for all artists in the music collection.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -773,7 +772,7 @@ If <em>artworkpath</em> is given, that artwork will be copied to the cache inste
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

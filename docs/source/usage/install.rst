@@ -39,9 +39,14 @@ First, you need to install some dependencies using your systems package manager:
    * sed
    * git
    * icecast
-   * gstreamer (gst-python, gst-plugins-good, gst-plugins-bad)
+   * gstreamer
    * dialog
    * gcc and clang
+
+required gstreamer packages:
+
+   * **Arch Linux:** gst-python, gst-plugins-good, gst-plugins-bad
+   * **Fedora:** python3-gstreamer1 gstreamer1-plugins-good gstreamer1-plugins-bad-free
 
 Executing the install.sh Script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

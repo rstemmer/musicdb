@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Websocket Server &mdash; MusicDB 5.1.0 documentation</title>
+  <title>MusicDB Websocket Server &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDB Song Queue" href="songqueue.html"/>
         <link rel="prev" title="Randomizer" href="randy.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -680,8 +686,8 @@
 MusicDB Server handles the following commands when written into its named pipe:</p>
 <blockquote>
 <div><ul class="simple">
-<li>refresh:  <a class="reference internal" href="#mdbapi.server.UpdateCaches" title="mdbapi.server.UpdateCaches"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateCaches()</span></code></a> - Update server caches and inform clients to update their caches</li>
-<li>shutdown: <a class="reference internal" href="#mdbapi.server.Shutdown" title="mdbapi.server.Shutdown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Shutdown()</span></code></a> - Shut down the server</li>
+<li><p>refresh:  <a class="reference internal" href="#mdbapi.server.UpdateCaches" title="mdbapi.server.UpdateCaches"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateCaches()</span></code></a> - Update server caches and inform clients to update their caches</p></li>
+<li><p>shutdown: <a class="reference internal" href="#mdbapi.server.Shutdown" title="mdbapi.server.Shutdown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Shutdown()</span></code></a> - Shut down the server</p></li>
 </ul>
 </div></blockquote>
 <p>Further more does this module maintain global instances of the following classes.
@@ -691,9 +697,9 @@ Using these objects saves a lot of memory.
 If the server is not started, the objects are all <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase</span></code></a> as <code class="docutils literal notranslate"><span class="pre">database</span></code></li>
-<li><a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine" title="mdbapi.mise.MusicDBMicroSearchEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine</span></code></a> as <code class="docutils literal notranslate"><span class="pre">mise</span></code></li>
-<li><a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.cfg.musicdb.MusicDBConfig</span></code></a> as <code class="docutils literal notranslate"><span class="pre">cfg</span></code></li>
+<li><p><a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase</span></code></a> as <code class="docutils literal notranslate"><span class="pre">database</span></code></p></li>
+<li><p><a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine" title="mdbapi.mise.MusicDBMicroSearchEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine</span></code></a> as <code class="docutils literal notranslate"><span class="pre">mise</span></code></p></li>
+<li><p><a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.cfg.musicdb.MusicDBConfig</span></code></a> as <code class="docutils literal notranslate"><span class="pre">cfg</span></code></p></li>
 </ul>
 </div></blockquote>
 <p>The following example shows how to use the pipe interface:</p>
@@ -708,93 +714,82 @@ If the server is not started, the objects are all <code class="docutils literal 
 </div></blockquote>
 <dl class="function">
 <dt id="mdbapi.server.SignalHandler">
-<code class="descclassname">mdbapi.server.</code><code class="descname">SignalHandler</code><span class="sig-paren">(</span><em>signum</em>, <em>stack</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#SignalHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.SignalHandler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mdbapi.server.</code><code class="sig-name descname">SignalHandler</code><span class="sig-paren">(</span><em class="sig-param">signum</em>, <em class="sig-param">stack</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#SignalHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.SignalHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the general signal handle for the MusicDB Server.
 This function reacts on system signals and calls the handler of a specific signal.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>signum</strong> – signal number</li>
-<li><strong>stack</strong> – current stack frame</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signum</strong> – signal number</p></li>
+<li><p><strong>stack</strong> – current stack frame</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>Returns: Nothing</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="mdbapi.server.SIGTERM_Handler">
-<code class="descclassname">mdbapi.server.</code><code class="descname">SIGTERM_Handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#SIGTERM_Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.SIGTERM_Handler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mdbapi.server.</code><code class="sig-name descname">SIGTERM_Handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#SIGTERM_Handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.SIGTERM_Handler" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is the handler for the system signal TERM.
 It signals the server to shut down.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="mdbapi.server.Initialize">
-<code class="descclassname">mdbapi.server.</code><code class="descname">Initialize</code><span class="sig-paren">(</span><em>configobj</em>, <em>databaseobj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#Initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.Initialize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mdbapi.server.</code><code class="sig-name descname">Initialize</code><span class="sig-paren">(</span><em class="sig-param">configobj</em>, <em class="sig-param">databaseobj</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#Initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.Initialize" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function initializes the whole server.
 It initializes lots of global objects that get shared between multiple connections.</p>
 <p>The following things happen when this method gets called:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Assign the <em>configobj</em> and <em>databaseobj</em> to global variables <code class="docutils literal notranslate"><span class="pre">cfg</span></code> and <code class="docutils literal notranslate"><span class="pre">database</span></code> to share them between multiple connections</li>
-<li>Seed Python’s random number generator</li>
-<li>Instantiate a global <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine" title="mdbapi.mise.MusicDBMicroSearchEngine"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine()</span></code></a> object</li>
-<li>Start the Streaming Thread via <a class="reference internal" href="stream.html#mdbapi.stream.StartStreamingThread" title="mdbapi.stream.StartStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.stream.StartStreamingThread()</span></code></a> (see <a class="reference internal" href="stream.html"><span class="doc">Streaming Server</span></a> for details)</li>
-<li>Update MiSE cache via <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache()</span></code></a></li>
-<li>Create FIFO file for named pipe</li>
+<li><p>Assign the <em>configobj</em> and <em>databaseobj</em> to global variables <code class="docutils literal notranslate"><span class="pre">cfg</span></code> and <code class="docutils literal notranslate"><span class="pre">database</span></code> to share them between multiple connections</p></li>
+<li><p>Seed Python’s random number generator</p></li>
+<li><p>Instantiate a global <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine" title="mdbapi.mise.MusicDBMicroSearchEngine"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine()</span></code></a> object</p></li>
+<li><p>Start the Streaming Thread via <a class="reference internal" href="stream.html#mdbapi.stream.StartStreamingThread" title="mdbapi.stream.StartStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.stream.StartStreamingThread()</span></code></a> (see <a class="reference internal" href="stream.html"><span class="doc">Streaming Server</span></a> for details)</p></li>
+<li><p>Update MiSE cache via <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache()</span></code></a></p></li>
+<li><p>Create FIFO file for named pipe</p></li>
 </ol>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>configobj</strong> – <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> that gets shared between connections</li>
-<li><strong>databaseobj</strong> – <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> that gets shared between connections</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>configobj</strong> – <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> that gets shared between connections</p></li>
+<li><p><strong>databaseobj</strong> – <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> that gets shared between connections</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When <em>configobj</em> is not of type <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a></li>
-<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code> – When <em>databaseobj</em> is not of type <code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></li>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – When <em>configobj</em> is not of type <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a></p></li>
+<li><p><strong>TypeError</strong> – When <em>databaseobj</em> is not of type <code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="mdbapi.server.StartWebSocketServer">
-<code class="descclassname">mdbapi.server.</code><code class="descname">StartWebSocketServer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#StartWebSocketServer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.StartWebSocketServer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mdbapi.server.</code><code class="sig-name descname">StartWebSocketServer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#StartWebSocketServer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.StartWebSocketServer" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function creates and starts a the actual MusicDB Websocket Server.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="mdbapi.server.UpdateCaches">
-<code class="descclassname">mdbapi.server.</code><code class="descname">UpdateCaches</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#UpdateCaches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.UpdateCaches" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mdbapi.server.</code><code class="sig-name descname">UpdateCaches</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#UpdateCaches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.UpdateCaches" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function handles the <em>refresh</em> command from the named pipe.
 Its task is to trigger updating the servers cache and to inform the clients to update.</p>
 <p>On server side:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The MiSE Cache gets updated by calling <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache()</span></code></a></li>
+<li><p>The MiSE Cache gets updated by calling <a class="reference internal" href="mise.html#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache()</span></code></a></p></li>
 </ul>
 </div></blockquote>
 <p>To inform the clients a broadcast packet get sent with the following content: <code class="docutils literal notranslate"><span class="pre">{method:&quot;broadcast&quot;,</span> <span class="pre">fncname:&quot;sys:refresh&quot;,</span> <span class="pre">fncsig:&quot;UpdateCaches&quot;,</span> <span class="pre">arguments:null,</span> <span class="pre">pass:null}</span></code></p>
@@ -809,14 +804,14 @@ Its task is to trigger updating the servers cache and to inform the clients to u
 
 <dl class="function">
 <dt id="mdbapi.server.Shutdown">
-<code class="descclassname">mdbapi.server.</code><code class="descname">Shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#Shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.Shutdown" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mdbapi.server.</code><code class="sig-name descname">Shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#Shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.Shutdown" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function stops the server and all its dependent threads.</p>
 <p>The following things happen when this function gets called:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Stop the Streaming Thread via <a class="reference internal" href="stream.html#mdbapi.stream.StopStreamingThread" title="mdbapi.stream.StopStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.stream.StopStreamingThread()</span></code></a></li>
-<li>Removing FIFO file for named pipe</li>
-<li>Stop the websocket server</li>
+<li><p>Stop the Streaming Thread via <a class="reference internal" href="stream.html#mdbapi.stream.StopStreamingThread" title="mdbapi.stream.StopStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.stream.StopStreamingThread()</span></code></a></p></li>
+<li><p>Removing FIFO file for named pipe</p></li>
+<li><p>Stop the websocket server</p></li>
 </ol>
 </div></blockquote>
 <p>At the end, the program gets terminated. So, this function gets never left.</p>
@@ -827,7 +822,7 @@ If the shutdown got forced, for example due to a critical error, the exit code i
 
 <dl class="function">
 <dt id="mdbapi.server.Run">
-<code class="descclassname">mdbapi.server.</code><code class="descname">Run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#Run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.Run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mdbapi.server.</code><code class="sig-name descname">Run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#Run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.server.Run" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the servers main loop.</p>
 <p>Inside the loop all MusicDB Websocket Server events get handled by calling <a class="reference internal" href="../lib/websockets.html#lib.ws.server.MusicDBWebSocketServer.HandleEvents" title="lib.ws.server.MusicDBWebSocketServer.HandleEvents"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.ws.server.MusicDBWebSocketServer.HandleEvents()</span></code></a>.
 When a shutdown gets triggered the <a class="reference internal" href="#mdbapi.server.Shutdown" title="mdbapi.server.Shutdown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Shutdown()</span></code></a> function gets called and the server stops.</p>
@@ -872,7 +867,7 @@ When a shutdown gets triggered the <a class="reference internal" href="#mdbapi.s
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

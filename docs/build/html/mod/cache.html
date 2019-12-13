@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>cache - Music Cache Manager &mdash; MusicDB 5.1.0 documentation</title>
+  <title>cache - Music Cache Manager &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="database - Music DB Management" href="database.html"/>
         <link rel="prev" title="artwork - Artwork Management" href="artwork.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -668,16 +674,16 @@
   <div class="section" id="cache-music-cache-manager">
 <h1>cache - Music Cache Manager<a class="headerlink" href="#cache-music-cache-manager" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This module gets not used in <em>MusicDB</em>.
+<p class="admonition-title">Note</p>
+<p>This module gets not used in <em>MusicDB</em>.
 It may get removed in future.</p>
 </div>
 <span class="target" id="module-mod.cache"></span><p>This module manages the mp3 cache used by MusicDB.
 It does the following things:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Remove old files from the cache</li>
-<li>Cache new files</li>
+<li><p>Remove old files from the cache</p></li>
+<li><p>Cache new files</p></li>
 </ul>
 </div></blockquote>
 <p>Caching new files means, that they will be transcoded into the mp3 file format.
@@ -691,30 +697,27 @@ Furthermore the ID3 tags will be updated with clean information.</p>
 <h2>class<a class="headerlink" href="#class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mod.cache.cache">
-<em class="property">class </em><code class="descclassname">mod.cache.</code><code class="descname">cache</code><span class="sig-paren">(</span><em>config</em>, <em>database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/cache.html#cache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.cache.cache" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">mod.cache.</code><code class="sig-name descname">cache</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/cache.html#cache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.cache.cache" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="mod.cache.cache.UpdateCache">
-<code class="descname">UpdateCache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/cache.html#cache.UpdateCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.cache.cache.UpdateCache" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">UpdateCache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/cache.html#cache.UpdateCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.cache.cache.UpdateCache" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks for all songs in the database, if they are cached.
 If not, they will be.</p>
 <p>Files inside the cache that are not needed anymore will be removed.</p>
 <p>The process is done in the following steps:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Find all files inside the cache using <a class="reference internal" href="../mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.GetAllCachedFiles" title="mdbapi.musiccache.MusicCache.GetAllCachedFiles"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.musiccache.MusicCache.GetAllCachedFiles()</span></code></a></li>
-<li>Getting all artists, albums and songs from the Music Database</li>
-<li>Removing old artists, albums and songs from the cache using <a class="reference internal" href="../mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.RemoveOldArtists" title="mdbapi.musiccache.MusicCache.RemoveOldArtists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.musiccache.MusicCache.RemoveOldArtists()</span></code></a>. <a class="reference internal" href="../mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.RemoveOldAlbums" title="mdbapi.musiccache.MusicCache.RemoveOldAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.musiccache.MusicCache.RemoveOldAlbums()</span></code></a> and <a class="reference internal" href="../mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.RemoveOldSongs" title="mdbapi.musiccache.MusicCache.RemoveOldSongs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.musiccache.MusicCache.RemoveOldSongs()</span></code></a></li>
-<li>Calling for each song in the database <a class="reference internal" href="../mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.Add" title="mdbapi.musiccache.MusicCache.Add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.musiccache.MusicCache.Add()</span></code></a> which adds none existing songs into the cache.</li>
+<li><p>Find all files inside the cache using <a class="reference internal" href="../mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.GetAllCachedFiles" title="mdbapi.musiccache.MusicCache.GetAllCachedFiles"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.musiccache.MusicCache.GetAllCachedFiles()</span></code></a></p></li>
+<li><p>Getting all artists, albums and songs from the Music Database</p></li>
+<li><p>Removing old artists, albums and songs from the cache using <a class="reference internal" href="../mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.RemoveOldArtists" title="mdbapi.musiccache.MusicCache.RemoveOldArtists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.musiccache.MusicCache.RemoveOldArtists()</span></code></a>. <a class="reference internal" href="../mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.RemoveOldAlbums" title="mdbapi.musiccache.MusicCache.RemoveOldAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.musiccache.MusicCache.RemoveOldAlbums()</span></code></a> and <a class="reference internal" href="../mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.RemoveOldSongs" title="mdbapi.musiccache.MusicCache.RemoveOldSongs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.musiccache.MusicCache.RemoveOldSongs()</span></code></a></p></li>
+<li><p>Calling for each song in the database <a class="reference internal" href="../mdbapi/musiccache.html#mdbapi.musiccache.MusicCache.Add" title="mdbapi.musiccache.MusicCache.Add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.musiccache.MusicCache.Add()</span></code></a> which adds none existing songs into the cache.</p></li>
 </ol>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><em>Nothing</em></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><em>Nothing</em></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -757,7 +760,7 @@ If not, they will be.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

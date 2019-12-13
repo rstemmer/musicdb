@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PID File Handling &mdash; MusicDB 5.1.0 documentation</title>
+  <title>PID File Handling &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDB Websocket Protocol" href="websockets.html"/>
         <link rel="prev" title="NamedPipe" href="namedpipe.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -669,27 +675,23 @@
 <span id="pid-file-handling"></span><h1>PID File Handling<a class="headerlink" href="#module-lib.pidfile" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="lib.pidfile.CreatePIDFile">
-<code class="descclassname">lib.pidfile.</code><code class="descname">CreatePIDFile</code><span class="sig-paren">(</span><em>pidfile</em>, <em>pid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/pidfile.html#CreatePIDFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.pidfile.CreatePIDFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lib.pidfile.</code><code class="sig-name descname">CreatePIDFile</code><span class="sig-paren">(</span><em class="sig-param">pidfile</em>, <em class="sig-param">pid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/pidfile.html#CreatePIDFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.pidfile.CreatePIDFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function creates a PID file.
 If the process ID is not given via <em>pid</em>-argument, the current PID will be determined.</p>
 <p>The PID gets written into the file addressed by the <em>pidfile</em> parameter.
 If the file does not exist (it should not) a new one will be created.
 The path shall be absolute!</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pidfile</strong> (<em>str</em>) – absolute path for the PID file.</li>
-<li><strong>pid</strong> – The Process ID. If <code class="docutils literal notranslate"><span class="pre">None</span></code> the PID gets determined.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pidfile</strong> (<em>str</em>) – absolute path for the PID file.</p></li>
+<li><p><strong>pid</strong> – The Process ID. If <code class="docutils literal notranslate"><span class="pre">None</span></code> the PID gets determined.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">CreatePIDFile</span><span class="p">(</span><span class="s2">&quot;/tmp/test.pid&quot;</span><span class="p">)</span>
 <span class="n">CreatePIDFile</span><span class="p">(</span><span class="s2">&quot;/tmp/fake.pid&quot;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
@@ -699,37 +701,33 @@ The path shall be absolute!</p>
 
 <dl class="function">
 <dt id="lib.pidfile.DeletePIDFile">
-<code class="descclassname">lib.pidfile.</code><code class="descname">DeletePIDFile</code><span class="sig-paren">(</span><em>pidfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/pidfile.html#DeletePIDFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.pidfile.DeletePIDFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lib.pidfile.</code><code class="sig-name descname">DeletePIDFile</code><span class="sig-paren">(</span><em class="sig-param">pidfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/pidfile.html#DeletePIDFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.pidfile.DeletePIDFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function removes the PID file (or any other file) addressed by an absolute path in <em>pidfile</em>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pidfile</strong> (<em>str</em>) – Absolute path of a file to remove</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pidfile</strong> (<em>str</em>) – Absolute path of a file to remove</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="lib.pidfile.CheckPIDFile">
-<code class="descclassname">lib.pidfile.</code><code class="descname">CheckPIDFile</code><span class="sig-paren">(</span><em>pidfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/pidfile.html#CheckPIDFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.pidfile.CheckPIDFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lib.pidfile.</code><code class="sig-name descname">CheckPIDFile</code><span class="sig-paren">(</span><em class="sig-param">pidfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/pidfile.html#CheckPIDFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.pidfile.CheckPIDFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function checks whether a PID file exists or not.
 If the file <em>pidfile</em> does exist its content, a process ID, gets read and returned.
 If the file does not exist, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pidfile</strong> (<em>str</em>) – Absolute path to a PID file</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The stored process ID if the file exists, otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code>.
-The PID is of type int.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pidfile</strong> (<em>str</em>) – Absolute path to a PID file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The stored process ID if the file exists, otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+The PID is of type int.</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="o">=</span> <span class="n">CheckPIDFile</span><span class="p">(</span><span class="s2">&quot;/tmp/server.pid&quot;</span><span class="p">):</span>
 <span class="k">if</span> <span class="n">server</span><span class="p">:</span>
@@ -777,7 +775,7 @@ The PID is of type int.</td>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

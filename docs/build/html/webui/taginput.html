@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tag Management &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Tag Management &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="Websocket Connection" href="websockets.html"/>
         <link rel="prev" title="MusicDB Websocket Protocol" href="../lib/websockets.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -691,18 +697,18 @@
 <h3>MusicDB Interface<a class="headerlink" href="#musicdb-interface" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetSongTag()</span></code></a></li>
-<li><a class="reference internal" href="../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetAlbumTag()</span></code></a></li>
-<li><a class="reference internal" href="../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSongTag()</span></code></a></li>
-<li><a class="reference internal" href="../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveAlbumTag()</span></code></a></li>
+<li><p><a class="reference internal" href="../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetSongTag()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetAlbumTag()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSongTag()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveAlbumTag()</span></code></a></p></li>
 </ul>
 </div></blockquote>
 <p>Every call is a <em>Request</em> with signature <code class="docutils literal notranslate"><span class="pre">&quot;UpdateTagInput&quot;</span></code> and a pass through variable <code class="docutils literal notranslate"><span class="pre">taginputid</span></code> that identifies the Taginput element.</p>
-<dl class="docutils">
-<dt>On <code class="docutils literal notranslate"><span class="pre">fnc</span> <span class="pre">==</span> <span class="pre">&quot;GetSong&quot;</span> <span class="pre">&amp;&amp;</span> <span class="pre">sig</span> <span class="pre">==</span> <span class="pre">&quot;UpdateTagInput&quot;</span></code>:</dt>
-<dd>Call <code class="docutils literal notranslate"><span class="pre">Taginput_Update</span></code></dd>
-<dt>On <code class="docutils literal notranslate"><span class="pre">fnc</span> <span class="pre">==</span> <span class="pre">&quot;GetAlbum&quot;</span> <span class="pre">&amp;&amp;</span> <span class="pre">sig</span> <span class="pre">==</span> <span class="pre">&quot;UpdateTagInput&quot;</span></code>:</dt>
-<dd>Call <code class="docutils literal notranslate"><span class="pre">Taginput_Update</span></code></dd>
+<dl class="simple">
+<dt>On <code class="docutils literal notranslate"><span class="pre">fnc</span> <span class="pre">==</span> <span class="pre">&quot;GetSong&quot;</span> <span class="pre">&amp;&amp;</span> <span class="pre">sig</span> <span class="pre">==</span> <span class="pre">&quot;UpdateTagInput&quot;</span></code>:</dt><dd><p>Call <code class="docutils literal notranslate"><span class="pre">Taginput_Update</span></code></p>
+</dd>
+<dt>On <code class="docutils literal notranslate"><span class="pre">fnc</span> <span class="pre">==</span> <span class="pre">&quot;GetAlbum&quot;</span> <span class="pre">&amp;&amp;</span> <span class="pre">sig</span> <span class="pre">==</span> <span class="pre">&quot;UpdateTagInput&quot;</span></code>:</dt><dd><p>Call <code class="docutils literal notranslate"><span class="pre">Taginput_Update</span></code></p>
+</dd>
 </dl>
 <p>Example:</p>
 <blockquote>
@@ -719,74 +725,6 @@
 </div>
 <div class="section" id="functions">
 <h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
-<dl class="function">
-<dt id="Taginput_Create">
-<code class="descname">Taginput_Create</code><span class="sig-paren">(</span><em>taginputid</em>, <em>targetid</em>, <em>tagclass</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#Taginput_Create" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
-<li><strong>taginputid</strong> (<em>string</em>) – id of the input element</li>
-<li><strong>targetid</strong> (<em>integer</em>) – songid or albumid (to bind this element with a song</li>
-<li><strong>tagclass</strong> (<em>string</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;Genre&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;Subgenre&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;Mood&quot;</span></code></li>
-<li><strong>target</strong> (<em>string</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;Song&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;Album&quot;</span></code></li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>string</strong> – HTML code of the Taginput control</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="Taginput_Show">
-<code class="descname">Taginput_Show</code><span class="sig-paren">(</span><em>taginputid</em>, <em>targetid</em>, <em>taglist</em>, <em>tagclass</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#Taginput_Show" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a light version to just show the tags (exept approval for AI set tags)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
-<li><strong>taginputid</strong> (<em>string</em>) – id of the input element</li>
-<li><strong>targetid</strong> (<em>integer</em>) – songid or albumid (to bind this element with a song</li>
-<li><strong>taglist</strong> (<em>MDBTag-list</em>) – list of tags that shall be shown (all classes)</li>
-<li><strong>tagclass</strong> (<em>string</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;Genre&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;Subgenre&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;Mood&quot;</span></code></li>
-<li><strong>target</strong> (<em>string</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;Song&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;Album&quot;</span></code></li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>nothing</em></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="Taginput_Update">
-<code class="descname">Taginput_Update</code><span class="sig-paren">(</span><em>taginputid</em>, <em>MDBTags</em>, <em>mode</em><span class="sig-paren">)</span><a class="headerlink" href="#Taginput_Update" title="Permalink to this definition">¶</a></dt>
-<dd><p>TODO: mode: “show” or “edit” - default is “edit” if mode gets not set</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
-<li><strong>taginputid</strong> (<em>string</em>) – ID of the taginput that shall be updated</li>
-<li><strong>MDBTags</strong> (<em>object</em>) – MusicDB Tags either from an Album or a Song, including all tagclasses</li>
-<li><strong>mode</strong> (<em>string</em>) – The mode the taginput element shall be used in. Default is <code class="docutils literal notranslate"><span class="pre">&quot;edit&quot;</span></code>.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>nothing</em></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 </div>
 <div class="section" id="tagmanager-js">
@@ -799,9 +737,9 @@
 </div>
 <div class="section" id="id2">
 <h3>MusicDB Interface<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<dl class="docutils">
-<dt>On <code class="docutils literal notranslate"><span class="pre">fnc</span> <span class="pre">==</span> <span class="pre">&quot;GetTags&quot;</span></code>:</dt>
-<dd>Call <code class="docutils literal notranslate"><span class="pre">Tagmanager_onGetTags</span></code></dd>
+<dl class="simple">
+<dt>On <code class="docutils literal notranslate"><span class="pre">fnc</span> <span class="pre">==</span> <span class="pre">&quot;GetTags&quot;</span></code>:</dt><dd><p>Call <code class="docutils literal notranslate"><span class="pre">Tagmanager_onGetTags</span></code></p>
+</dd>
 </dl>
 <p>Example:</p>
 <blockquote>
@@ -824,80 +762,6 @@ The signature should be ignored in case there is another trigger that updates th
 </div>
 <div class="section" id="id3">
 <h3>Functions<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<dl class="function">
-<dt id="Tagmanager_onGetTags">
-<code class="descname">Tagmanager_onGetTags</code><span class="sig-paren">(</span><em>MDBTags</em><span class="sig-paren">)</span><a class="headerlink" href="#Tagmanager_onGetTags" title="Permalink to this definition">¶</a></dt>
-<dd><p>This Method updates the tags-cache that hold all available tags.</p>
-<p>This method should be called whenever the MusicDB server responses with the <em>fnc</em> name set to “GetTags”.</p>
-<p>The genres get sorted by its posx attribute</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first simple">
-<li><strong>MDBTags</strong> (<em>MDBTags</em>) – A Dictionary with lists of tags for each class</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><em>nothing</em></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="Tagmanager_GetTags">
-<code class="descname">Tagmanager_GetTags</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Tagmanager_GetTags" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>MDBTag-list</strong> – This method returns <em>all tags</em> that are available in the music database separated by tagclass</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="Tagmanager_GetGenres">
-<code class="descname">Tagmanager_GetGenres</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Tagmanager_GetGenres" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>MDBTag-list</strong> – This method returns the list of <em>genres</em> that are available in the music database</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="Tagmanager_GetSubgenres">
-<code class="descname">Tagmanager_GetSubgenres</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Tagmanager_GetSubgenres" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>MDBTag-list</strong> – This method returns the list of <em>subgenres</em> that are available in the music database</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="Tagmanager_GetMoods">
-<code class="descname">Tagmanager_GetMoods</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Tagmanager_GetMoods" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>MDBTag-list</strong> – This method returns the list of <em>moods</em> that are available in the music database</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 </div>
 </div>
@@ -937,7 +801,7 @@ The signature should be ignored in case there is another trigger that updates th
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

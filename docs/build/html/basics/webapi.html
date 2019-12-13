@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Websocket API &mdash; MusicDB 5.1.0 documentation</title>
+  <title>MusicDB Websocket API &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="Workflow for development" href="workflow.html"/>
         <link rel="prev" title="MusicDB Test VMs" href="testvm.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -680,26 +686,26 @@ To give the argument <code class="docutils literal notranslate"><span class="pre
 <div class="section" id="packet-format">
 <h3>Packet format<a class="headerlink" href="#packet-format" title="Permalink to this headline">¶</a></h3>
 <p>A packet is a JSON string with the following entries:</p>
-<dl class="docutils">
-<dt>method:</dt>
-<dd>Different methods to communicate with the server</dd>
-<dt>fncname:</dt>
-<dd>The name of the function that shall be called on the server</dd>
-<dt>fncsig:</dt>
-<dd>A function signature. If there is a response, this signature can be used to tell the client what function to call next.
-This entry is not used by the server and can be <code class="docutils literal notranslate"><span class="pre">null</span></code>.</dd>
-<dt>arguments:</dt>
-<dd>These are the arguments to the called function.
+<dl class="simple">
+<dt>method:</dt><dd><p>Different methods to communicate with the server</p>
+</dd>
+<dt>fncname:</dt><dd><p>The name of the function that shall be called on the server</p>
+</dd>
+<dt>fncsig:</dt><dd><p>A function signature. If there is a response, this signature can be used to tell the client what function to call next.
+This entry is not used by the server and can be <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+</dd>
+<dt>arguments:</dt><dd><p>These are the arguments to the called function.
 It is an object or list of objects with each element addressing one argument of the called method on the server.
-On received packets, this are the returned values.</dd>
-<dt>pass:</dt>
-<dd>A place for pass-through arguments.
+On received packets, this are the returned values.</p>
+</dd>
+<dt>pass:</dt><dd><p>A place for pass-through arguments.
 The server will not touch this entry and returns it as it is.
-This may be useful to give the receiving client some context.</dd>
-<dt>key:</dt>
-<dd>This entry holds the WebSocket API key.
+This may be useful to give the receiving client some context.</p>
+</dd>
+<dt>key:</dt><dd><p>This entry holds the WebSocket API key.
 If this key does not match with the key configured for the running server in the MusicDB Configuration (<code class="docutils literal notranslate"><span class="pre">[websocket]-&gt;apikey</span></code>), then the packet gets dropped.
-Its value gets set by the JavaScript implementation right before the packet gets send to the server.</dd>
+Its value gets set by the JavaScript implementation right before the packet gets send to the server.</p>
+</dd>
 </dl>
 <p>The following code show an abstract of the implementation:</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// method and fncname are mandatory, the other entries are optional</span>
@@ -734,24 +740,24 @@ Its value gets set by the JavaScript implementation right before the packet gets
 </div>
 <div class="section" id="methods">
 <h3>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h3>
-<dl class="docutils">
-<dt>call:</dt>
-<dd>A call of a function on the server.
-There will be no response from the server.</dd>
-<dt>request:</dt>
-<dd>A request of data from the server.
+<dl class="simple">
+<dt>call:</dt><dd><p>A call of a function on the server.
+There will be no response from the server.</p>
+</dd>
+<dt>request:</dt><dd><p>A request of data from the server.
 The returned value are stored in the arguments entry.
-The method entry gets set to <em>response</em> by the server.</dd>
-<dt>reponse:</dt>
-<dd>This marks a direct response from the server to the client who requested data.
-<em>This method should only be used by the server!</em></dd>
-<dt>broadcast:</dt>
-<dd>A broadcast is a packet from the server that got send to all connected clients.
-If the client uses the <em>broadcast</em> method, the response gets send to all clients as broadcast as well.</dd>
-<dt>notification:</dt>
-<dd>An notification is similar to a broadcast with the main difference that there was no client side action before.
+The method entry gets set to <em>response</em> by the server.</p>
+</dd>
+<dt>reponse:</dt><dd><p>This marks a direct response from the server to the client who requested data.
+<em>This method should only be used by the server!</em></p>
+</dd>
+<dt>broadcast:</dt><dd><p>A broadcast is a packet from the server that got send to all connected clients.
+If the client uses the <em>broadcast</em> method, the response gets send to all clients as broadcast as well.</p>
+</dd>
+<dt>notification:</dt><dd><p>An notification is similar to a broadcast with the main difference that there was no client side action before.
 Notifications can result of internal state changes of the server.
-<em>This method should only be used by the server!</em></dd>
+<em>This method should only be used by the server!</em></p>
+</dd>
 </dl>
 <p>There is a special <em>broadcast</em> triggered whenever the server gets triggered to update its caches by system signal <em>USR1</em>.
 This broadcast should be used to update the caches on client side.
@@ -762,7 +768,7 @@ It has the following signature: <code class="docutils literal notranslate"><span
 <h2>Client side interface<a class="headerlink" href="#client-side-interface" title="Permalink to this headline">¶</a></h2>
 <p>The MusicDB interface on client side is implemented in the file <em>musicdb.js</em>.
 This file is documented under <a class="reference internal" href="../webui/websockets.html"><span class="doc">Websocket Connection</span></a>.
-The connection can be started by calling <a class="reference internal" href="../webui/websockets.html#ConnectToMusicDB" title="ConnectToMusicDB"><code class="xref js js-func docutils literal notranslate"><span class="pre">ConnectToMusicDB()</span></code></a>.
+The connection can be started by calling <code class="xref js js-func docutils literal notranslate"><span class="pre">ConnectToMusicDB()</span></code>.
 Then there can be used several functions and callback routines to communicate with the MusicDB Websocket Server.</p>
 <p>To establish a connection on startup, just wait for the <code class="docutils literal notranslate"><span class="pre">onload</span></code> event from the browser:</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span>
@@ -772,8 +778,8 @@ Then there can be used several functions and callback routines to communicate wi
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The configuration must be done inside the file musicdb.js.
+<p class="admonition-title">Note</p>
+<p>The configuration must be done inside the file musicdb.js.
 Read the <a class="reference internal" href="../webui/websockets.html"><span class="doc">Websocket Connection</span></a> documentation for setting up the watchdog and the address of the websocket server!
 See the sections for the watchdog and the communication to the server.</p>
 </div>
@@ -781,12 +787,12 @@ See the sections for the watchdog and the communication to the server.</p>
 <h3>Callback functions<a class="headerlink" href="#callback-functions" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
-<li>onMusicDBConnectionOpen()</li>
-<li>onMusicDBConnectionError()</li>
-<li>onMusicDBWatchdogBarks()</li>
-<li>onMusicDBConnectionClosed()</li>
-<li>onMusicDBNotification(fnc, sig, rawdata)</li>
-<li>onMusicDBMessage(fnc, sig, args, pass)</li>
+<li><p>onMusicDBConnectionOpen()</p></li>
+<li><p>onMusicDBConnectionError()</p></li>
+<li><p>onMusicDBWatchdogBarks()</p></li>
+<li><p>onMusicDBConnectionClosed()</p></li>
+<li><p>onMusicDBNotification(fnc, sig, rawdata)</p></li>
+<li><p>onMusicDBMessage(fnc, sig, args, pass)</p></li>
 </ul>
 </div></blockquote>
 <p>A minimal implementation may look like this:</p>
@@ -832,9 +838,9 @@ The arguments <em>args</em> and <em>pass</em> are optional arguments.</p>
 <p>The documentation of these function are linked in the following list:</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="../webui/websockets.html#MusicDB_Call" title="MusicDB_Call"><code class="xref js js-func docutils literal notranslate"><span class="pre">MusicDB_Call()</span></code></a></li>
-<li><a class="reference internal" href="../webui/websockets.html#MusicDB_Request" title="MusicDB_Request"><code class="xref js js-func docutils literal notranslate"><span class="pre">MusicDB_Request()</span></code></a></li>
-<li><a class="reference internal" href="../webui/websockets.html#MusicDB_Broadcast" title="MusicDB_Broadcast"><code class="xref js js-func docutils literal notranslate"><span class="pre">MusicDB_Broadcast()</span></code></a></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">MusicDB_Call()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">MusicDB_Request()</span></code></p></li>
+<li><p><code class="xref js js-func docutils literal notranslate"><span class="pre">MusicDB_Broadcast()</span></code></p></li>
 </ul>
 </div></blockquote>
 <p>Example:</p>
@@ -850,24 +856,22 @@ The arguments <em>args</em> and <em>pass</em> are optional arguments.</p>
 <p>The package has the following information:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>method:</strong> notification</li>
-<li><strong>pass:</strong> <code class="docutils literal notranslate"><span class="pre">null</span></code></li>
-<li><dl class="first docutils">
-<dt>Event triggered by <a class="reference internal" href="../mdbapi/stream.html"><span class="doc">Streaming Server</span></a></dt>
-<dd><ul class="first last">
-<li><strong>fncname:</strong> <code class="docutils literal notranslate"><span class="pre">&quot;MusicDB:Stream&quot;</span></code></li>
-<li><strong>fncsig:</strong> <code class="docutils literal notranslate"><span class="pre">&quot;onStatusChanged&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;onTimeChanged&quot;</span></code></li>
-<li><strong>argument:</strong> The playtime of the current song in seconds, when the <em>fncsig</em> is <code class="docutils literal notranslate"><span class="pre">&quot;onTimeChanged&quot;</span></code></li>
+<li><p><strong>method:</strong> notification</p></li>
+<li><p><strong>pass:</strong> <code class="docutils literal notranslate"><span class="pre">null</span></code></p></li>
+<li><dl class="simple">
+<dt>Event triggered by <a class="reference internal" href="../mdbapi/stream.html"><span class="doc">Streaming Server</span></a></dt><dd><ul>
+<li><p><strong>fncname:</strong> <code class="docutils literal notranslate"><span class="pre">&quot;MusicDB:Stream&quot;</span></code></p></li>
+<li><p><strong>fncsig:</strong> <code class="docutils literal notranslate"><span class="pre">&quot;onStatusChanged&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;onTimeChanged&quot;</span></code></p></li>
+<li><p><strong>argument:</strong> The playtime of the current song in seconds, when the <em>fncsig</em> is <code class="docutils literal notranslate"><span class="pre">&quot;onTimeChanged&quot;</span></code></p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Event triggered by <a class="reference internal" href="../mdbapi/songqueue.html"><span class="doc">MusicDB Song Queue</span></a></dt>
-<dd><ul class="first last">
-<li><strong>fncname:</strong> <code class="docutils literal notranslate"><span class="pre">&quot;MusicDB:Queue&quot;</span></code></li>
-<li><strong>fncsig:</strong> <code class="docutils literal notranslate"><span class="pre">&quot;onQueueChanged&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;onSongChanged&quot;</span></code></li>
-<li><strong>argument:</strong> <code class="docutils literal notranslate"><span class="pre">None</span></code></li>
+<li><dl class="simple">
+<dt>Event triggered by <a class="reference internal" href="../mdbapi/songqueue.html"><span class="doc">MusicDB Song Queue</span></a></dt><dd><ul>
+<li><p><strong>fncname:</strong> <code class="docutils literal notranslate"><span class="pre">&quot;MusicDB:Queue&quot;</span></code></p></li>
+<li><p><strong>fncsig:</strong> <code class="docutils literal notranslate"><span class="pre">&quot;onQueueChanged&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;onSongChanged&quot;</span></code></p></li>
+<li><p><strong>argument:</strong> <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
 </ul>
 </dd>
 </dl>
@@ -882,101 +886,99 @@ The arguments <em>args</em> and <em>pass</em> are optional arguments.</p>
 <div class="section" id="artists">
 <h3>Artists<a class="headerlink" href="#artists" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetArtists()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetArtistsWithAlbums()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.Find" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.Find"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Find()</span></code></a></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetArtists()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetArtistsWithAlbums()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.Find" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.Find"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Find()</span></code></a></p></li>
 </ul>
 </div>
 <div class="section" id="albums">
 <h3>Albums<a class="headerlink" href="#albums" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbums()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSortedAlbumCDs()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbum()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetAlbumColor()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddAlbumToQueue()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.Find" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.Find"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Find()</span></code></a></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbums()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSortedAlbumCDs()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbum()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetAlbumColor()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddAlbumToQueue()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.Find" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.Find"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Find()</span></code></a></p></li>
 </ul>
 </div>
 <div class="section" id="songs">
 <h3>Songs<a class="headerlink" href="#songs" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSong()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PlayNextSong()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSongToQueue()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddRandomSongToQueue()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSongFromQueue()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MoveSongInQueue()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongRelationship()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateSongStatistic()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CutSongRelationship()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.Find" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.Find"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Find()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PlayNextSong()</span></code></a></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSong()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PlayNextSong()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSongToQueue()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddRandomSongToQueue()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSongFromQueue()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MoveSongInQueue()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongRelationship()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateSongStatistic()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CutSongRelationship()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.Find" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.Find"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Find()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PlayNextSong()</span></code></a></p></li>
 </ul>
 </div>
 <div class="section" id="queue">
 <h3>Queue<a class="headerlink" href="#queue" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetQueue()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSongToQueue()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddRandomSongToQueue()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddAlbumToQueue()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSongFromQueue()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MoveSongInQueue()</span></code></a></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetQueue()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSongToQueue()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddRandomSongToQueue()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddAlbumToQueue()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSongFromQueue()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MoveSongInQueue()</span></code></a></p></li>
 </ul>
 </div>
 <div class="section" id="tag-related">
 <h3>Tag related<a class="headerlink" href="#tag-related" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetTags()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongTags()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbumTags()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetAlbumTag()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveAlbumTag()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetSongTag()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSongTag()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSubgenre" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSubgenre"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSubgenre()</span></code></a></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetTags()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongTags()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbumTags()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetAlbumTag()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveAlbumTag()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetSongTag()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSongTag()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSubgenre" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSubgenre"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSubgenre()</span></code></a></p></li>
 </ul>
 </div>
 <div class="section" id="lyrics">
 <h3>Lyrics<a class="headerlink" href="#lyrics" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongLyrics()</span></code></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetLyricsCrawlerCache" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetLyricsCrawlerCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetLyricsCrawlerCache()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RunLyricsCrawler" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.RunLyricsCrawler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RunLyricsCrawler()</span></code></a></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetSongLyrics()</span></code></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongLyrics()</span></code></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetLyricsCrawlerCache" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetLyricsCrawlerCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetLyricsCrawlerCache()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RunLyricsCrawler" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.RunLyricsCrawler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RunLyricsCrawler()</span></code></a></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetSongLyrics()</span></code></p></li>
 </ul>
 </div>
 <div class="section" id="other">
 <h3>Other<a class="headerlink" href="#other" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetStreamState()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetStreamState()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PlayNextSong()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetMDBState()</span></code></a></li>
-<li><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetMDBState()</span></code></a></li>
-<li><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetTables()</span></code></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetStreamState()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetStreamState()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PlayNextSong()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetMDBState()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetMDBState()</span></code></a></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetTables()</span></code></p></li>
 </ul>
 </div>
 <dl class="class">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface">
-<em class="property">class </em><code class="descclassname">lib.ws.mdbwsi.</code><code class="descname">MusicDBWebSocketInterface</code><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.ws.mdbwsi.</code><code class="sig-name descname">MusicDBWebSocketInterface</code><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue">
-<code class="descname">AddAlbumToQueue</code><span class="sig-paren">(</span><em>albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddAlbumToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AddAlbumToQueue</code><span class="sig-paren">(</span><em class="sig-param">albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddAlbumToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds all songs of an album (from all CDs) at the end of the queue.</p>
 <p>The <em>adds</em>-statistic gets <strong>not</strong> incremented when a whole album gets add to the queue.</p>
 <p>If a song is flagged as “hated” or disabled, than it gets discarded.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>albumid</strong> (<em>int</em>) – ID of the album that shall be added</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>albumid</strong> (<em>int</em>) – ID of the album that shall be added</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;AddAlbumToQueue&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">albumid</span><span class="o">:</span><span class="mi">23</span><span class="p">});</span>
 </pre></div>
@@ -985,27 +987,23 @@ The arguments <em>args</em> and <em>pass</em> are optional arguments.</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue">
-<code class="descname">AddRandomSongToQueue</code><span class="sig-paren">(</span><em>position</em>, <em>albumid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddRandomSongToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AddRandomSongToQueue</code><span class="sig-paren">(</span><em class="sig-param">position</em>, <em class="sig-param">albumid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddRandomSongToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Similar to <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSongToQueue()</span></code></a>.
 Instead of a specific song, a random song gets chosen by the random-song manager <em>Randy</em> (See <a class="reference internal" href="../mdbapi/randy.html"><span class="doc">Randomizer</span></a>).
 This is done using the <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy.GetSong" title="mdbapi.randy.Randy.GetSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.randy.Randy.GetSong()</span></code></a> method.</p>
 <p>If an album ID is given, the new song will be added from that album
 using <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy.GetSongFromAlbum" title="mdbapi.randy.Randy.GetSongFromAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.randy.Randy.GetSongFromAlbum()</span></code></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>position</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;next&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code> - Determines where the song gets added</li>
-<li><strong>albumid</strong> (<em>int</em>) – Optional album ID from that the song shall be</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;next&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code> - Determines where the song gets added</p></li>
+<li><p><strong>albumid</strong> (<em>int</em>) – Optional album ID from that the song shall be</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;AddRandomSongToQueue&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">position</span><span class="o">:</span><span class="s2">&quot;last&quot;</span><span class="p">});</span>
 <span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;AddRandomSongToQueue&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">albumid</span><span class="o">:</span><span class="s2">&quot;42&quot;</span><span class="p">,</span> <span class="nx">position</span><span class="o">:</span><span class="s2">&quot;next&quot;</span><span class="p">});</span>
@@ -1015,27 +1013,23 @@ using <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Rand
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue">
-<code class="descname">AddSongToQueue</code><span class="sig-paren">(</span><em>songid</em>, <em>position</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddSongToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AddSongToQueue</code><span class="sig-paren">(</span><em class="sig-param">songid</em>, <em class="sig-param">position</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddSongToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds a new song to the queue of songs that will be streamed.</p>
 <p>The song gets address by its ID.
 The position can be <code class="docutils literal notranslate"><span class="pre">&quot;next&quot;</span></code> if the song shall be places behind the current playing song.
 So, the new added song will be played next.
 Alternative <code class="docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code> can be used to place the song at the end of the queue.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>songid</strong> (<em>int</em>) – ID of the song that shall be added</li>
-<li><strong>position</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;next&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code> - Determines where the song gets added</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>songid</strong> (<em>int</em>) – ID of the song that shall be added</p></li>
+<li><p><strong>position</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;next&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code> - Determines where the song gets added</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;AddSongToQueue&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">songid</span><span class="o">:</span><span class="mi">1000</span><span class="p">,</span> <span class="nx">position</span><span class="o">:</span><span class="s2">&quot;next&quot;</span><span class="p">});</span>
 </pre></div>
@@ -1044,74 +1038,63 @@ Alternative <code class="docutils literal notranslate"><span class="pre">&quot;l
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSubgenre">
-<code class="descname">AddSubgenre</code><span class="sig-paren">(</span><em>name</em>, <em>parentname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddSubgenre"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSubgenre" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AddSubgenre</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">parentname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddSubgenre"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSubgenre" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a new subgenre.</p>
 <p>If tagging is disabled nothing will be done.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> (<em>str</em>) – Name of the new subgenre</li>
-<li><strong>parentname</strong> (<em>str</em>) – Name of the main genre</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the new subgenre</p></li>
+<li><p><strong>parentname</strong> (<em>str</em>) – Name of the main genre</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship">
-<code class="descname">CutSongRelationship</code><span class="sig-paren">(</span><em>songid</em>, <em>relatedsongid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.CutSongRelationship"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">CutSongRelationship</code><span class="sig-paren">(</span><em class="sig-param">songid</em>, <em class="sig-param">relatedsongid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.CutSongRelationship"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes the relation between two songs.</p>
 <p>After executing this method, the MusicDB server broadcasts the result of <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongRelationship()</span></code></a>. (<code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;broadcast&quot;,</span> <span class="pre">fncname</span> <span class="pre">=</span> <span class="pre">&quot;GetSongRelationship&quot;</span></code>)
 So each client gets informed about the changes made.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>songid</strong> (<em>int</em>) – ID of one song</li>
-<li><strong>relatedsongid</strong> (<em>int</em>) – ID of the related song</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>songid</strong> (<em>int</em>) – ID of one song</p></li>
+<li><p><strong>relatedsongid</strong> (<em>int</em>) – ID of the related song</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.Find">
-<code class="descname">Find</code><span class="sig-paren">(</span><em>searchstring</em>, <em>limit</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.Find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.Find" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Find</code><span class="sig-paren">(</span><em class="sig-param">searchstring</em>, <em class="sig-param">limit</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.Find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.Find" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method starts a search for <em>searchstring</em> on songnames, albumnames and artistnames.
 The returned value is a dictionary with the following entries:</p>
 <blockquote>
 <div><ul class="simple">
-<li><dl class="first docutils">
-<dt><strong>songs:</strong> A list of songs, each entry is a dictionary with the following information:</dt>
-<dd><ul class="first last">
-<li><strong>song:</strong> The song entry from the database</li>
-<li><strong>album:</strong> The related album entry from the database</li>
-<li><strong>artist:</strong> The related artist entry from the database</li>
+<li><dl class="simple">
+<dt><strong>songs:</strong> A list of songs, each entry is a dictionary with the following information:</dt><dd><ul>
+<li><p><strong>song:</strong> The song entry from the database</p></li>
+<li><p><strong>album:</strong> The related album entry from the database</p></li>
+<li><p><strong>artist:</strong> The related artist entry from the database</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><strong>albums:</strong> A list of albums, each entry is a dictionary with the following information:</dt>
-<dd><ul class="first last">
-<li><strong>album:</strong> The related album entry from the database</li>
-<li><strong>artist:</strong> The related artist entry from the database</li>
+<li><dl class="simple">
+<dt><strong>albums:</strong> A list of albums, each entry is a dictionary with the following information:</dt><dd><ul>
+<li><p><strong>album:</strong> The related album entry from the database</p></li>
+<li><p><strong>artist:</strong> The related artist entry from the database</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt><strong>artists:</strong> A list of artists, each entry is a dictionary with the following information:</dt>
-<dd><ul class="first last">
-<li><strong>artist:</strong> The related artist entry from the database</li>
-<li><strong>albums:</strong> A list of all albums by this artist, ordered by release year</li>
+<li><dl class="simple">
+<dt><strong>artists:</strong> A list of artists, each entry is a dictionary with the following information:</dt><dd><ul>
+<li><p><strong>artist:</strong> The related artist entry from the database</p></li>
+<li><p><strong>albums:</strong> A list of all albums by this artist, ordered by release year</p></li>
 </ul>
 </dd>
 </dl>
@@ -1122,21 +1105,17 @@ The returned value is a dictionary with the following entries:</p>
 It looks for most likeliness.
 So, typos or all lowercase input are no problem.</p>
 <p>The list of songs will not contain any hated or disabled songs.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>searchstring</strong> (<em>str</em>) – The string to search for</li>
-<li><strong>limit</strong> (<em>int</em>) – max number entries that will be returned for each category</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>searchstring</strong> (<em>str</em>) – The string to search for</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – max number entries that will be returned for each category</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dictionary with the search-results</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary with the search-results</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;Find&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowResults&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">searchstring</span><span class="o">:</span><span class="s2">&quot;cake&quot;</span><span class="p">,</span> <span class="nx">limit</span><span class="o">:</span><span class="mi">5</span><span class="p">});</span>
 
@@ -1160,27 +1139,25 @@ So, typos or all lowercase input are no problem.</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum">
-<code class="descname">GetAlbum</code><span class="sig-paren">(</span><em>albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetAlbum</code><span class="sig-paren">(</span><em class="sig-param">albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns an album and its songs, separated by CDs.</p>
 <p>GetAlbum returns a dictionary with the following keys:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>artist:</strong> database entry of the artist of the album</li>
-<li><strong>album:</strong> the database entry of the album itself</li>
-<li><strong>tags:</strong> a list of tags as returned by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbumTags()</span></code></a></li>
-<li><strong>cds:</strong> a list of CDs that contains a list of songs for each CD. See <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSortedAlbumCDs()</span></code></a> for details.</li>
+<li><p><strong>artist:</strong> database entry of the artist of the album</p></li>
+<li><p><strong>album:</strong> the database entry of the album itself</p></li>
+<li><p><strong>tags:</strong> a list of tags as returned by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbumTags()</span></code></a></p></li>
+<li><p><strong>cds:</strong> a list of CDs that contains a list of songs for each CD. See <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSortedAlbumCDs()</span></code></a> for details.</p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>albumid</strong> (<em>int</em>) – The ID of that album that shall be returned</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with information of the requested album, its tags and songs</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>albumid</strong> (<em>int</em>) – The ID of that album that shall be returned</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary with information of the requested album, its tags and songs</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetAlbum&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowAlbum&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">albumid</span><span class="o">:</span><span class="nx">albumid</span><span class="p">});</span>
 
@@ -1210,39 +1187,35 @@ So, typos or all lowercase input are no problem.</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags">
-<code class="descname">GetAlbumTags</code><span class="sig-paren">(</span><em>albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetAlbumTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetAlbumTags</code><span class="sig-paren">(</span><em class="sig-param">albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetAlbumTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="Permalink to this definition">¶</a></dt>
 <dd><p>Similar to <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongTags()</span></code></a>.
 This method returns the tags for an Album.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums">
-<code class="descname">GetAlbums</code><span class="sig-paren">(</span><em>artistid</em>, <em>applyfilter=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetAlbums</code><span class="sig-paren">(</span><em class="sig-param">artistid</em>, <em class="sig-param">applyfilter=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums" title="Permalink to this definition">¶</a></dt>
 <dd><p>GetAlbums returns a list of albums of an artist.
 The list is sorted by release date of the album, starting with the earliest one.
 Each entry in the list has the following two elements:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>album:</strong> An album entry from the database.</li>
-<li><strong>tags:</strong> The returned tag entry by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbumTags()</span></code></a></li>
+<li><p><strong>album:</strong> An album entry from the database.</p></li>
+<li><p><strong>tags:</strong> The returned tag entry by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbumTags()</span></code></a></p></li>
 </ul>
 </div></blockquote>
 <p>The filter gets applied to only the <em>genre</em> tags.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>artistid</strong> (<em>int</em>) – ID of the artist whose albums shall be returned</li>
-<li><strong>applyfilter</strong> (<em>bool</em>) – Default value is <code class="docutils literal notranslate"><span class="pre">False</span></code></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>artistid</strong> (<em>int</em>) – ID of the artist whose albums shall be returned</p></li>
+<li><p><strong>applyfilter</strong> (<em>bool</em>) – Default value is <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A list of albums and their tags</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of albums and their tags</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetAlbums&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowAlbums&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">artistid</span><span class="o">:</span><span class="nx">artistid</span><span class="p">,</span> <span class="nx">applyfilter</span><span class="o">:</span><span class="kc">false</span><span class="p">});</span>
 
@@ -1269,58 +1242,53 @@ Each entry in the list has the following two elements:</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists">
-<code class="descname">GetArtists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetArtists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetArtists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetArtists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of artists.
 This list is sorted by the name of the artist.</p>
 <p>A list entry contains the following values:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>id:</strong> Artist ID</li>
-<li><strong>name:</strong> Artist name</li>
-<li><strong>path:</strong> Relative path to the artist directory</li>
+<li><p><strong>id:</strong> Artist ID</p></li>
+<li><p><strong>name:</strong> Artist name</p></li>
+<li><p><strong>path:</strong> Relative path to the artist directory</p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of artists</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A list of artists</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums">
-<code class="descname">GetArtistsWithAlbums</code><span class="sig-paren">(</span><em>applyfilter=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetArtistsWithAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetArtistsWithAlbums</code><span class="sig-paren">(</span><em class="sig-param">applyfilter=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetArtistsWithAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of artists and their albums.
 Each entry in this list contains the following two elements:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>artist:</strong> An entry like the list entries of <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetArtists()</span></code></a></li>
-<li><strong>albums:</strong> A list of albums that was returned by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbums()</span></code></a> for the related artist.</li>
+<li><p><strong>artist:</strong> An entry like the list entries of <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetArtists()</span></code></a></p></li>
+<li><p><strong>albums:</strong> A list of albums that was returned by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbums()</span></code></a> for the related artist.</p></li>
 </ul>
 </div></blockquote>
 <p>Artists without albums or albums that got filters out will not appear in the list.</p>
 <div class="admonition attention">
-<p class="first admonition-title">Attention</p>
+<p class="admonition-title">Attention</p>
 <p>The JavaScript API uses the following aliases:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">GetArtistsWithAlbums</span></code>: Without arguments, and so without applying the filter.</li>
-<li><code class="docutils literal notranslate"><span class="pre">GetFilteredArtistsWithAlbums</span></code>: With applying the filter option.</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetArtistsWithAlbums</span></code>: Without arguments, and so without applying the filter.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GetFilteredArtistsWithAlbums</span></code>: With applying the filter option.</p></li>
 </ul>
-<p class="last">So, from JavaScripts point of view this method does not have any parameters.</p>
+<p>So, from JavaScripts point of view this method does not have any parameters.</p>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>applyfilter</strong> (<em>bool</em>) – Default value is <code class="docutils literal notranslate"><span class="pre">False</span></code></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of artists and their albums</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>applyfilter</strong> (<em>bool</em>) – Default value is <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of artists and their albums</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetFilteredArtistsWithAlbums&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowArtists&quot;</span><span class="p">);</span>
 
@@ -1344,43 +1312,38 @@ Each entry in this list contains the following two elements:</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetLyricsCrawlerCache">
-<code class="descname">GetLyricsCrawlerCache</code><span class="sig-paren">(</span><em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetLyricsCrawlerCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetLyricsCrawlerCache" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetLyricsCrawlerCache</code><span class="sig-paren">(</span><em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetLyricsCrawlerCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetLyricsCrawlerCache" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns all cached lyrics for a song.</p>
 <p>A dictionary with two entries gets returned, the <em>songid</em> is the same the argument is.
 The second key is <em>lyricscache</em> that holds the values from the lyrics cache.
 It is a list of dictionaries representing a lyric cache database entry. (See <a class="reference internal" href="../mdbapi/lycra.html"><span class="doc">LyCra - Lyrics Crawler</span></a> for details)
 If there are no cached lyrics, the <em>lyricscache</em> entry is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songid</strong> (<em>int</em>) – ID of the song that lyrics cache shall be returned</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The songid and a list of cached lyrics.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>songid</strong> (<em>int</em>) – ID of the song that lyrics cache shall be returned</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The songid and a list of cached lyrics.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState">
-<code class="descname">GetMDBState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetMDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetMDBState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetMDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the current global state of the MusicDB WebUIs</p>
 <p>Currently, the only state existing is the list of selected genres.</p>
 <p>The state is a dictionary with the following information:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>albumfilter:</strong> a list of tag-names of class Genre</li>
+<li><p><strong>albumfilter:</strong> a list of tag-names of class Genre</p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Current global MusicDB WebUI state</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Current global MusicDB WebUI state</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetMDBState&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowMDBState&quot;</span><span class="p">);</span>
 
@@ -1402,27 +1365,24 @@ If there are no cached lyrics, the <em>lyricscache</em> entry is <code class="do
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue">
-<code class="descname">GetQueue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetQueue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of songs, albums and artists for each song in the song queue.
 If there are no songs in the queue, an empty list gets returned.</p>
 <p>Each entry of the list contains the following information:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>entryid:</strong> A unique ID to identify the entry in the queue (as string because it is a 128 integer that blows JavaScripts mind)</li>
-<li><strong>israndom:</strong> A boolean value set to <code class="docutils literal notranslate"><span class="pre">true</span></code> when the song got added randomly and not explicitly by the user</li>
-<li><strong>song:</strong> The song entry from the database</li>
-<li><strong>album:</strong> The related album entry from the database</li>
-<li><strong>artist:</strong> The related artist entry from the database</li>
+<li><p><strong>entryid:</strong> A unique ID to identify the entry in the queue (as string because it is a 128 integer that blows JavaScripts mind)</p></li>
+<li><p><strong>israndom:</strong> A boolean value set to <code class="docutils literal notranslate"><span class="pre">true</span></code> when the song got added randomly and not explicitly by the user</p></li>
+<li><p><strong>song:</strong> The song entry from the database</p></li>
+<li><p><strong>album:</strong> The related album entry from the database</p></li>
+<li><p><strong>artist:</strong> The related artist entry from the database</p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of song, album and artist information for each song in the song queue</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A list of song, album and artist information for each song in the song queue</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetQueue&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowQueue&quot;</span><span class="p">);</span>
 
@@ -1444,27 +1404,25 @@ If there are no songs in the queue, an empty list gets returned.</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong">
-<code class="descname">GetSong</code><span class="sig-paren">(</span><em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSong</code><span class="sig-paren">(</span><em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the information of a song, its album and artist, and its tags.</p>
 <p>The returned dictionary has the following keys:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>song:</strong> the database entry of the song itself.</li>
-<li><strong>artist:</strong> database entry of the artist of the song</li>
-<li><strong>album:</strong> the database entry of the album in that the song is listed</li>
-<li><strong>tags:</strong> a list of tags as returned by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongTags()</span></code></a></li>
+<li><p><strong>song:</strong> the database entry of the song itself.</p></li>
+<li><p><strong>artist:</strong> database entry of the artist of the song</p></li>
+<li><p><strong>album:</strong> the database entry of the album in that the song is listed</p></li>
+<li><p><strong>tags:</strong> a list of tags as returned by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongTags()</span></code></a></p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songid</strong> (<em>int</em>) – ID of the song</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with information of the song</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>songid</strong> (<em>int</em>) – ID of the song</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary with information of the song</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetSong&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowSong&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">songid</span><span class="o">:</span><span class="nx">songid</span><span class="p">});</span>
 
@@ -1489,7 +1447,7 @@ If there are no songs in the queue, an empty list gets returned.</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship">
-<code class="descname">GetSongRelationship</code><span class="sig-paren">(</span><em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSongRelationship"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSongRelationship</code><span class="sig-paren">(</span><em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSongRelationship"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the relationship of a song.
 It is a list of songs that were played before or after the song with song ID <em>songid</em>.</p>
 <p>The returned dictionary contains the same song ID given as argument to this method, and list of related songs.
@@ -1500,25 +1458,23 @@ Hated and disabled songs will not appear in the list.</p>
 <p>The list of songs gets sorted by the keys in the following list: (sorted by priority)</p>
 <blockquote>
 <div><ul class="simple">
-<li>Artist Name</li>
-<li>Album Release</li>
-<li>Album Name</li>
-<li>Song CD</li>
-<li>Song Number</li>
+<li><p>Artist Name</p></li>
+<li><p>Album Release</p></li>
+<li><p>Album Name</p></li>
+<li><p>Song CD</p></li>
+<li><p>Song Number</p></li>
 </ul>
 </div></blockquote>
 <p>The <code class="docutils literal notranslate"><span class="pre">tags</span></code> of that song will also be returned separated into <code class="docutils literal notranslate"><span class="pre">genre</span></code>, <code class="docutils literal notranslate"><span class="pre">subgenre</span></code> and <code class="docutils literal notranslate"><span class="pre">mood</span></code>.
 See <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongTags()</span></code></a> for details how they are returned.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songid</strong> (<em>int</em>) – ID so a song</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of related songs</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>songid</strong> (<em>int</em>) – ID so a song</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of related songs</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetSongRelationship&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowRelations&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">songid</span><span class="o">:</span><span class="nx">songid</span><span class="p">});</span>
 
@@ -1540,28 +1496,26 @@ See <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags">
-<code class="descname">GetSongTags</code><span class="sig-paren">(</span><em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSongTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSongTags</code><span class="sig-paren">(</span><em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSongTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a dictionary with the following keys:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>songid:</strong> The same ID as given as argument</li>
-<li><strong>genres:</strong> A list of tags of class <em>Genre</em></li>
-<li><strong>subgenres:</strong> A list of tags of class <em>Subgenre</em></li>
-<li><strong>moods:</strong> A list of tags of class <em>Mood</em></li>
+<li><p><strong>songid:</strong> The same ID as given as argument</p></li>
+<li><p><strong>genres:</strong> A list of tags of class <em>Genre</em></p></li>
+<li><p><strong>subgenres:</strong> A list of tags of class <em>Subgenre</em></p></li>
+<li><p><strong>moods:</strong> A list of tags of class <em>Mood</em></p></li>
 </ul>
 </div></blockquote>
 <p>Each entry of the dict is a list with tags.
 Each tag is a dictionary as returned by <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetTargetTags" title="lib.db.musicdb.MusicDatabase.GetTargetTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.GetTargetTags()</span></code></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songid</strong> (<em>int</em>) – ID of the song for which the tags are requested</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dict of tags sorted by classes</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>songid</strong> (<em>int</em>) – ID of the song for which the tags are requested</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dict of tags sorted by classes</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetSongTags&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowSongTags&quot;</span><span class="p">);</span>
 
@@ -1591,58 +1545,53 @@ Each tag is a dictionary as returned by <a class="reference internal" href="../l
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs">
-<code class="descname">GetSortedAlbumCDs</code><span class="sig-paren">(</span><em>albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSortedAlbumCDs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSortedAlbumCDs</code><span class="sig-paren">(</span><em class="sig-param">albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSortedAlbumCDs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a sorted list of CDs of an album.
 Each CD entry is a further sorted list of songs.
 Each song-entry is a dictionary with the following keys:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>song:</strong> The database entry of the song</li>
-<li><strong>tags:</strong> a list of tags as returned by <code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongTags()</span></code></li>
+<li><p><strong>song:</strong> The database entry of the song</p></li>
+<li><p><strong>tags:</strong> a list of tags as returned by <code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongTags()</span></code></p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>albumid</strong> (<em>int</em>) – ID of the album that CD and songs shall be returned</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A sorted list of CDs, its songs and their tags</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>albumid</strong> (<em>int</em>) – ID of the album that CD and songs shall be returned</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A sorted list of CDs, its songs and their tags</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState">
-<code class="descname">GetStreamState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetStreamState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetStreamState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetStreamState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the state of the Streaming Thread. (See <a class="reference internal" href="../mdbapi/stream.html"><span class="doc">Streaming Server</span></a>)</p>
 <p>The state is a dictionary that has always the following information:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>isconnected:</strong> <code class="docutils literal notranslate"><span class="pre">True</span></code> if MusicDB is connected to Icecast, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></li>
-<li><strong>isplaying:</strong> <code class="docutils literal notranslate"><span class="pre">True</span></code> if the Streaming Thread is in <em>playing</em>-mode, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></li>
-<li><strong>hasqueue:</strong> <code class="docutils literal notranslate"><span class="pre">True</span></code> when there is at least one song in the queue. When <code class="docutils literal notranslate"><span class="pre">False</span></code>, the following song information are <em>not</em> included!</li>
+<li><p><strong>isconnected:</strong> <code class="docutils literal notranslate"><span class="pre">True</span></code> if MusicDB is connected to Icecast, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><strong>isplaying:</strong> <code class="docutils literal notranslate"><span class="pre">True</span></code> if the Streaming Thread is in <em>playing</em>-mode, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><strong>hasqueue:</strong> <code class="docutils literal notranslate"><span class="pre">True</span></code> when there is at least one song in the queue. When <code class="docutils literal notranslate"><span class="pre">False</span></code>, the following song information are <em>not</em> included!</p></li>
 </ul>
 </div></blockquote>
 <p>In case there is a at least one song in the queue, this current streamed song gets returned with the following information:</p>
 <blockquote>
 <div><ul class="simple">
-<li><strong>song:</strong> The song entry from the database for the song that is currently playing</li>
-<li><strong>album:</strong> The related album entry from the database</li>
-<li><strong>artist:</strong> The related artist entry from the database</li>
-<li><strong>songtags:</strong> a list of tags as returned by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongTags()</span></code></a></li>
-<li><strong>albumtags:</strong> a list of tags as returned by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbumTags()</span></code></a></li>
+<li><p><strong>song:</strong> The song entry from the database for the song that is currently playing</p></li>
+<li><p><strong>album:</strong> The related album entry from the database</p></li>
+<li><p><strong>artist:</strong> The related artist entry from the database</p></li>
+<li><p><strong>songtags:</strong> a list of tags as returned by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongTags()</span></code></a></p></li>
+<li><p><strong>albumtags:</strong> a list of tags as returned by <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbumTags()</span></code></a></p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The current state of the streaming thread</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The current state of the streaming thread</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetStreamState&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowStreamState&quot;</span><span class="p">);</span>
 
@@ -1668,16 +1617,13 @@ Each song-entry is a dictionary with the following keys:</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags">
-<code class="descname">GetTags</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetTags</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns all tags that are available, separated by the tag classes.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dictionary of all classes with lists of all available tags</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A dictionary of all classes with lists of all available tags</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Request</span><span class="p">(</span><span class="s2">&quot;GetTags&quot;</span><span class="p">,</span> <span class="s2">&quot;ShowTags&quot;</span><span class="p">);</span>
 
@@ -1706,50 +1652,46 @@ Each song-entry is a dictionary with the following keys:</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue">
-<code class="descname">MoveSongInQueue</code><span class="sig-paren">(</span><em>entryid</em>, <em>afterid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.MoveSongInQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">MoveSongInQueue</code><span class="sig-paren">(</span><em class="sig-param">entryid</em>, <em class="sig-param">afterid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.MoveSongInQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a direct interface to <a class="reference internal" href="../mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.MoveSong" title="mdbapi.songqueue.SongQueue.MoveSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.songqueue.SongQueue.MoveSong()</span></code></a>.
 It moves a song from one position in the queue to another one.</p>
 <p>It is not allowed to move the current playing song (index 0).
 When this is tried, nothing happens.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>entryid</strong> (<em>str</em>) – Position of the song</li>
-<li><strong>afterid</strong> (<em>str</em>) – The position the song shall be moved to</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entryid</strong> (<em>str</em>) – Position of the song</p></li>
+<li><p><strong>afterid</strong> (<em>str</em>) – The position the song shall be moved to</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <p>Assuming the following queue:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="53%" />
-<col width="47%" />
+<col style="width: 53%" />
+<col style="width: 47%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">entry ID</th>
-<th class="head">song ID</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>entry ID</p></th>
+<th class="head"><p>song ID</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>1337</td>
-<td>1</td>
+<tbody>
+<tr class="row-even"><td><p>1337</p></td>
+<td><p>1</p></td>
 </tr>
-<tr class="row-odd"><td>7357</td>
-<td>2</td>
+<tr class="row-odd"><td><p>7357</p></td>
+<td><p>2</p></td>
 </tr>
-<tr class="row-even"><td>2323</td>
-<td>3</td>
+<tr class="row-even"><td><p>2323</p></td>
+<td><p>3</p></td>
 </tr>
-<tr class="row-odd"><td>4242</td>
-<td>4</td>
+<tr class="row-odd"><td><p>4242</p></td>
+<td><p>4</p></td>
 </tr>
 </tbody>
 </table>
@@ -1762,28 +1704,28 @@ The next one moves song 2 to the end of the queue.</p>
 </pre></div>
 </div>
 <p>So after processing the two calls, the queue looks like this:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="53%" />
-<col width="47%" />
+<col style="width: 53%" />
+<col style="width: 47%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">entry ID</th>
-<th class="head">song ID</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>entry ID</p></th>
+<th class="head"><p>song ID</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>1337</td>
-<td>1</td>
+<tbody>
+<tr class="row-even"><td><p>1337</p></td>
+<td><p>1</p></td>
 </tr>
-<tr class="row-odd"><td>2323</td>
-<td>3</td>
+<tr class="row-odd"><td><p>2323</p></td>
+<td><p>3</p></td>
 </tr>
-<tr class="row-even"><td>4242</td>
-<td>4</td>
+<tr class="row-even"><td><p>4242</p></td>
+<td><p>4</p></td>
 </tr>
-<tr class="row-odd"><td>7357</td>
-<td>2</td>
+<tr class="row-odd"><td><p>7357</p></td>
+<td><p>2</p></td>
 </tr>
 </tbody>
 </table>
@@ -1791,17 +1733,14 @@ The next one moves song 2 to the end of the queue.</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong">
-<code class="descname">PlayNextSong</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.PlayNextSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">PlayNextSong</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.PlayNextSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method skips the current playing song.
 If there is no song that can be skipped, the Song Queue or Streaming Thread will handle this properly.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;PlayNextSong&quot;</span><span class="p">);</span>
 </pre></div>
@@ -1810,24 +1749,20 @@ If there is no song that can be skipped, the Song Queue or Streaming Thread will
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag">
-<code class="descname">RemoveAlbumTag</code><span class="sig-paren">(</span><em>albumid</em>, <em>tagid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RemoveAlbumTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveAlbumTag</code><span class="sig-paren">(</span><em class="sig-param">albumid</em>, <em class="sig-param">tagid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RemoveAlbumTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a tag from an album</p>
 <p>If tagging is disabled nothing will be done.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>albumid</strong> (<em>int</em>) – ID of the album</li>
-<li><strong>tagid</strong> (<em>int</em>) – ID of the tag</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>albumid</strong> (<em>int</em>) – ID of the album</p></li>
+<li><p><strong>tagid</strong> (<em>int</em>) – ID of the tag</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;RemoveAlbumTag&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">albumid</span><span class="o">:</span><span class="nx">albumid</span><span class="p">,</span> <span class="nx">tagid</span><span class="o">:</span><span class="nx">tagid</span><span class="p">});</span>
 </pre></div>
@@ -1836,19 +1771,17 @@ If there is no song that can be skipped, the Song Queue or Streaming Thread will
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue">
-<code class="descname">RemoveSongFromQueue</code><span class="sig-paren">(</span><em>entryid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RemoveSongFromQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveSongFromQueue</code><span class="sig-paren">(</span><em class="sig-param">entryid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RemoveSongFromQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes a song from song queue.
 The song gets identified by the entry ID of the queue entry.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entryid</strong> (<em>str</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>entryid</strong> (<em>str</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;RemoveSongFromQueue&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">entryid</span><span class="o">:</span><span class="s2">&quot;82390194629402649&quot;</span><span class="p">});</span>
 </pre></div>
@@ -1857,7 +1790,7 @@ The song gets identified by the entry ID of the queue entry.</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag">
-<code class="descname">RemoveSongTag</code><span class="sig-paren">(</span><em>songid</em>, <em>tagid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RemoveSongTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveSongTag</code><span class="sig-paren">(</span><em class="sig-param">songid</em>, <em class="sig-param">tagid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RemoveSongTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a tag from a song</p>
 <p>If tagging is disabled nothing will be done.</p>
 <p>After executing this method, the MusicDB server broadcasts the result of <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSong()</span></code></a>. (<code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;broadcast&quot;,</span> <span class="pre">fncname</span> <span class="pre">=</span> <span class="pre">&quot;GetSong&quot;</span></code>)
@@ -1866,21 +1799,17 @@ This is important to update the HUD if the song is currently playing.</p>
 <p>After setting the new tag for the song,
 the album tags get updated using <a class="reference internal" href="../mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeriveAlbumTags" title="mdbapi.tags.MusicDBTags.DeriveAlbumTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.tags.MusicDBTags.DeriveAlbumTags()</span></code></a>.
 So when changing a genre or sub genre, then they get suggested as album genre or sub genre</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>songid</strong> (<em>int</em>) – ID of the song</li>
-<li><strong>tagid</strong> (<em>int</em>) – ID of the tag</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>songid</strong> (<em>int</em>) – ID of the song</p></li>
+<li><p><strong>tagid</strong> (<em>int</em>) – ID of the tag</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;RemoveSongTag&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">songid</span><span class="o">:</span><span class="nx">songid</span><span class="p">,</span> <span class="nx">tagid</span><span class="o">:</span><span class="nx">tagid</span><span class="p">});</span>
 </pre></div>
@@ -1889,52 +1818,46 @@ So when changing a genre or sub genre, then they get suggested as album genre or
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.RunLyricsCrawler">
-<code class="descname">RunLyricsCrawler</code><span class="sig-paren">(</span><em>songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RunLyricsCrawler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RunLyricsCrawler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RunLyricsCrawler</code><span class="sig-paren">(</span><em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RunLyricsCrawler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RunLyricsCrawler" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method starts the process of crawling for lyrics. (See <a class="reference internal" href="../mdbapi/lycra.html"><span class="doc">LyCra - Lyrics Crawler</span></a> for details)</p>
 <p>After all available crawler run, the method returns the current lyrics cache.
 This is identical to <code class="xref py py-meth docutils literal notranslate"><span class="pre">GetLyricsCrawlerCache()</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>songid</strong> (<em>int</em>) – ID of the song that lyrics cache shall be returned</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The songid and a list of cached lyrics.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>songid</strong> (<em>int</em>) – ID of the song that lyrics cache shall be returned</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The songid and a list of cached lyrics.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor">
-<code class="descname">SetAlbumColor</code><span class="sig-paren">(</span><em>albumid</em>, <em>colorname</em>, <em>color</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetAlbumColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SetAlbumColor</code><span class="sig-paren">(</span><em class="sig-param">albumid</em>, <em class="sig-param">colorname</em>, <em class="sig-param">color</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetAlbumColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a color scheme for an album.
 Valid color names are the following and must be given as string to the <em>colorname</em> parameter.
 The color itself must be in HTML-Format: <code class="docutils literal notranslate"><span class="pre">#RRGGBB</span></code>.</p>
 <p>The following color-names exist:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">&quot;bgcolor&quot;</span></code> -  Background color</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;fgcolor&quot;</span></code> -  Primary foreground color</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;hlcolor&quot;</span></code> -  Secondary foreground color</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;bgcolor&quot;</span></code> -  Background color</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;fgcolor&quot;</span></code> -  Primary foreground color</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;hlcolor&quot;</span></code> -  Secondary foreground color</p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>albumid</strong> (<em>int</em>) – ID of the album</li>
-<li><strong>colorname</strong> (<em>str</em>) – Name of the color to set (<code class="docutils literal notranslate"><span class="pre">&quot;fgcolor&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hlcolor&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;bgcolor&quot;</span></code>)</li>
-<li><strong>color</strong> (<em>str</em>) – Color code in HTML notation: #RRGGBB</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>albumid</strong> (<em>int</em>) – ID of the album</p></li>
+<li><p><strong>colorname</strong> (<em>str</em>) – Name of the color to set (<code class="docutils literal notranslate"><span class="pre">&quot;fgcolor&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hlcolor&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;bgcolor&quot;</span></code>)</p></li>
+<li><p><strong>color</strong> (<em>str</em>) – Color code in HTML notation: #RRGGBB</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;SetAlbumColor&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">albumid</span><span class="o">:</span><span class="mi">1000</span><span class="p">,</span> <span class="nx">colorname</span><span class="o">:</span><span class="s2">&quot;bgcolor&quot;</span><span class="p">,</span> <span class="nx">color</span><span class="o">:</span><span class="s2">&quot;#42AB23&quot;</span><span class="p">});</span>
 </pre></div>
@@ -1943,26 +1866,22 @@ The color itself must be in HTML-Format: <code class="docutils literal notransla
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag">
-<code class="descname">SetAlbumTag</code><span class="sig-paren">(</span><em>albumid</em>, <em>tagid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetAlbumTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SetAlbumTag</code><span class="sig-paren">(</span><em class="sig-param">albumid</em>, <em class="sig-param">tagid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetAlbumTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a tag for an album.
 This method sets the approval-level to 1 (Set by User) and confidence to 1.0 for this tag.
 So, this method can also be used to approve an AI set tag.</p>
 <p>If tagging is disabled nothing will be done.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>albumid</strong> (<em>int</em>) – ID of the album</li>
-<li><strong>tagid</strong> (<em>int</em>) – ID of the tag</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>albumid</strong> (<em>int</em>) – ID of the album</p></li>
+<li><p><strong>tagid</strong> (<em>int</em>) – ID of the tag</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;SetAlbumTag&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">albumid</span><span class="o">:</span><span class="nx">albumid</span><span class="p">,</span> <span class="nx">tagid</span><span class="o">:</span><span class="nx">tagid</span><span class="p">});</span>
 </pre></div>
@@ -1971,7 +1890,7 @@ So, this method can also be used to approve an AI set tag.</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState">
-<code class="descname">SetMDBState</code><span class="sig-paren">(</span><em>category</em>, <em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetMDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SetMDBState</code><span class="sig-paren">(</span><em class="sig-param">category</em>, <em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetMDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets the global state of MDB clients</p>
 <p>If the state is not available in the global state settings, it will be created.</p>
 <p>When the <em>category</em> is <code class="docutils literal notranslate"><span class="pre">&quot;albumfilter&quot;</span></code>,
@@ -1980,22 +1899,18 @@ If a genre gets set to true, all albums for that genre are included in the list 
 <p>After executing this method, the MusicDB server broadcasts the result of <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetMDBState()</span></code></a>. (<code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;broadcast&quot;,</span> <span class="pre">fncname</span> <span class="pre">=</span> <span class="pre">&quot;GetMDBState&quot;</span></code>)
 So each client gets informed about the new state.</p>
 <p>The category must be <code class="docutils literal notranslate"><span class="pre">&quot;albumfilter&quot;</span></code>!</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>category</strong> (<em>str</em>) – Category of the state</li>
-<li><strong>name</strong> (<em>str</em>) – Name of the sate</li>
-<li><strong>value</strong> – Value of the state</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>category</strong> (<em>str</em>) – Category of the state</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Name of the sate</p></li>
+<li><p><strong>value</strong> – Value of the state</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;SetMDBState&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">category</span><span class="o">:</span><span class="s2">&quot;albumfilter&quot;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span><span class="s2">&quot;Metal&quot;</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span><span class="kc">true</span><span class="p">});</span>
 </pre></div>
@@ -2004,7 +1919,7 @@ So each client gets informed about the new state.</p>
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag">
-<code class="descname">SetSongTag</code><span class="sig-paren">(</span><em>songid</em>, <em>tagid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetSongTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SetSongTag</code><span class="sig-paren">(</span><em class="sig-param">songid</em>, <em class="sig-param">tagid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetSongTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a tag for a song.
 This method sets the approval-level to 1 (Set by User) and confidence to 1.0 for this tag.
 So, this method can also be used to approve an AI set tag.</p>
@@ -2015,21 +1930,17 @@ This is important to update the HUD if the song is currently playing.</p>
 <p>After setting the new tag for the song,
 the album tags get updated using <a class="reference internal" href="../mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeriveAlbumTags" title="mdbapi.tags.MusicDBTags.DeriveAlbumTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.tags.MusicDBTags.DeriveAlbumTags()</span></code></a>.
 So when changing a genre or sub genre, then they get suggested as album genre or sub genre</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>songid</strong> (<em>int</em>) – ID of the song</li>
-<li><strong>tagid</strong> (<em>int</em>) – ID of the tag</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>songid</strong> (<em>int</em>) – ID of the song</p></li>
+<li><p><strong>tagid</strong> (<em>int</em>) – ID of the tag</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;SetSongTag&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">songid</span><span class="o">:</span><span class="nx">songid</span><span class="p">,</span> <span class="nx">tagid</span><span class="o">:</span><span class="nx">tagid</span><span class="p">});</span>
 </pre></div>
@@ -2052,26 +1963,24 @@ So when changing a genre or sub genre, then they get suggested as album genre or
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState">
-<code class="descname">SetStreamState</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetStreamState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SetStreamState</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetStreamState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to set the  <em>playing</em>-state of the stream (see <a class="reference internal" href="../mdbapi/stream.html"><span class="doc">Streaming Server</span></a>)</p>
 <p>The following arguments are possible:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">&quot;play&quot;</span></code>: Set state to <em>playing</em>. If there are songs in the queue, MusicDB starts streaming.</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;pause&quot;</span></code>: Set state to <em>pause</em>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;playpause&quot;</span></code>: Toggle between <em>playing</em> and <em>pause</em></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;play&quot;</span></code>: Set state to <em>playing</em>. If there are songs in the queue, MusicDB starts streaming.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;pause&quot;</span></code>: Set state to <em>pause</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;playpause&quot;</span></code>: Toggle between <em>playing</em> and <em>pause</em></p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<em>str</em>) – New playing-state for the Streamin Thread. <em>state</em> must be one of the following strings: <code class="docutils literal notranslate"><span class="pre">&quot;playpause&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;play&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;pause&quot;</span></code>.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">None</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>str</em>) – New playing-state for the Streamin Thread. <em>state</em> must be one of the following strings: <code class="docutils literal notranslate"><span class="pre">&quot;playpause&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;play&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;pause&quot;</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">MusicDB_Call</span><span class="p">(</span><span class="s2">&quot;SetStreamState&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">state</span><span class="o">:</span><span class="s2">&quot;playpause&quot;</span><span class="p">});</span>
 </pre></div>
@@ -2080,7 +1989,7 @@ So when changing a genre or sub genre, then they get suggested as album genre or
 
 <dl class="method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic">
-<code class="descname">UpdateSongStatistic</code><span class="sig-paren">(</span><em>songid</em>, <em>statistic</em>, <em>modifier</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.UpdateSongStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">UpdateSongStatistic</code><span class="sig-paren">(</span><em class="sig-param">songid</em>, <em class="sig-param">statistic</em>, <em class="sig-param">modifier</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.UpdateSongStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic" title="Permalink to this definition">¶</a></dt>
 <dd><p>When this method got called direct via the JavaScript API, the MusicDB server broadcasts the result of <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSong()</span></code></a>. (<code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;broadcast&quot;,</span> <span class="pre">fncname</span> <span class="pre">=</span> <span class="pre">&quot;GetSong&quot;</span></code>)
 So each client gets informed about the changes made.
 This is important to update the HUD if the song is currently playing.</p>
@@ -2127,7 +2036,7 @@ This is important to update the HUD if the song is currently playing.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

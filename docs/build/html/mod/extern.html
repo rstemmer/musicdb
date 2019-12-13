@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>extern - Music File Uploader &mdash; MusicDB 5.1.0 documentation</title>
+  <title>extern - Music File Uploader &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="genres - Genre Manager with CLUI" href="genres.html"/>
         <link rel="prev" title="database - Music DB Management" href="database.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -673,10 +679,10 @@ During the copy process, transcoding and fixing invalid meta-tags will be done.
 To use this module properly, the following workflow is recommended:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Mount device. The <em>by-id</em> method is recommended.</li>
-<li>Make sure to have write permission to the related directories</li>
-<li>Run <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">extern</span></code></li>
-<li>Unmount the device</li>
+<li><p>Mount device. The <em>by-id</em> method is recommended.</p></li>
+<li><p>Make sure to have write permission to the related directories</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">extern</span></code></p></li>
+<li><p>Unmount the device</p></li>
 </ol>
 </div></blockquote>
 <p>To initialize a storage device, the <code class="docutils literal notranslate"><span class="pre">-i</span></code>/<code class="docutils literal notranslate"><span class="pre">--init</span></code> flag must be set.
@@ -686,8 +692,8 @@ It is also possible to apply both flags.
 When using both flags at the same time, you are not able to apply any configuration changes before uploading the music file!</p>
 <p>Be sure to have write permission for the related directories.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">If <code class="docutils literal notranslate"><span class="pre">-i</span></code> is set, the device gets initialized, even if it already is!</p>
+<p class="admonition-title">Warning</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">-i</span></code> is set, the device gets initialized, even if it already is!</p>
 </div>
 <p class="rubric">Examples</p>
 <p>Initialize a new storage:</p>
@@ -714,7 +720,7 @@ umount /mnt
 <h2>class<a class="headerlink" href="#class" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mod.extern.extern">
-<em class="property">class </em><code class="descclassname">mod.extern.</code><code class="descname">extern</code><span class="sig-paren">(</span><em>config</em>, <em>database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/extern.html#extern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.extern.extern" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">mod.extern.</code><code class="sig-name descname">extern</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mod/extern.html#extern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mod.extern.extern" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -781,7 +787,7 @@ sudo umount /mnt
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

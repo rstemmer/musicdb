@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Music &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Music &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="Scripts" href="scripts.html"/>
         <link rel="prev" title="Installation &amp; Update" href="install.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="install.html#install-dependencies">Install Dependencies</a></li>
@@ -704,9 +710,9 @@ In case the album has multiple dist, the disk number is set in front of the song
 <p>There are three ways to import music:</p>
 <blockquote>
 <div><ul class="simple">
-<li>The <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">add</span></code> command: <a class="reference internal" href="../mod/add.html"><span class="doc">add - Add New Album to MusicDB</span></a> (the semi-automatic way)</li>
-<li>The <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">database</span></code> command: <a class="reference internal" href="../mod/database.html"><span class="doc">database - Music DB Management</span></a> (the hard way)</li>
-<li>The <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">repair</span></code> command: <a class="reference internal" href="../mod/repair.html"><span class="doc">repair - Repair Database Entries</span></a> (not recommended - it was not made for importing)</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">add</span></code> command: <a class="reference internal" href="../mod/add.html"><span class="doc">add - Add New Album to MusicDB</span></a> (the semi-automatic way)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">database</span></code> command: <a class="reference internal" href="../mod/database.html"><span class="doc">database - Music DB Management</span></a> (the hard way)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">repair</span></code> command: <a class="reference internal" href="../mod/repair.html"><span class="doc">repair - Repair Database Entries</span></a> (not recommended - it was not made for importing)</p></li>
 </ul>
 </div></blockquote>
 <p>After adding the music via <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">database</span></code> or <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">repair</span></code>,
@@ -809,7 +815,7 @@ For further details see <a class="reference internal" href="../mod/repair.html">
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

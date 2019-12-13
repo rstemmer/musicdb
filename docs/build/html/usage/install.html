@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &amp; Update &mdash; MusicDB 5.1.0 documentation</title>
+  <title>Installation &amp; Update &mdash; MusicDB 5.2.0 documentation</title>
   
 
   
@@ -37,9 +37,9 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
         <link rel="next" title="Music" href="music.html"/>
-        <link rel="prev" title="Workflow for development" href="../basics/workflow.html"/> 
+        <link rel="prev" title="Docker" href="docker.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.1
+                5.2
               </div>
             
           
@@ -213,6 +213,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#prepare-environment">Prepare Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#build-the-image">Build the Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#using-the-image">Using the Image</a></li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#install-dependencies">Install Dependencies</a></li>
@@ -669,20 +675,20 @@
 <h1>Installation &amp; Update<a class="headerlink" href="#installation-update" title="Permalink to this headline">¶</a></h1>
 <p>The following sections describe how to install MusicDB and its dependencies.</p>
 <div class="admonition attention">
-<p class="first admonition-title">Attention</p>
+<p class="admonition-title">Attention</p>
 <ul class="simple">
-<li>This is a one-man hobby project.</li>
-<li>I cannot guarantee anything.</li>
-<li>Whatever you do, first do a backup.</li>
-<li>Please <a class="reference external" href="https://github.com/rstemmer/musicdb/issues">Create a new issue on GitHub</a> if there are any problems with MusicDB.</li>
+<li><p>This is a one-man hobby project.</p></li>
+<li><p>I cannot guarantee anything.</p></li>
+<li><p>Whatever you do, first do a backup.</p></li>
+<li><p>Please <a class="reference external" href="https://github.com/rstemmer/musicdb/issues">Create a new issue on GitHub</a> if there are any problems with MusicDB.</p></li>
 </ul>
-<p class="last">I guess everyone reads this part of the documentation, so hopefully this is the most read text of the whole project.</p>
+<p>I guess everyone reads this part of the documentation, so hopefully this is the most read text of the whole project.</p>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
+<p class="admonition-title">Warning</p>
 <p>Before installing or updating MusicDB, <strong>update your system</strong>.
 MusicDB does not support outdated dependencies.</p>
-<p class="last">Before updating MusicDB <strong>backup the MusicDB Data directory</strong>.
+<p>Before updating MusicDB <strong>backup the MusicDB Data directory</strong>.
 Major updates change the configuration file and the database scheme.</p>
 </div>
 <div class="section" id="installation-automatic">
@@ -695,14 +701,21 @@ The following subsections explain how to install MusicDB using this script.</p>
 <p>First, you need to install some dependencies using your systems package manager:</p>
 <blockquote>
 <div><ul class="simple">
-<li>openssl</li>
-<li>sqlite3</li>
-<li>sed</li>
-<li>git</li>
-<li>icecast</li>
-<li>gstreamer (gst-python, gst-plugins-good, gst-plugins-bad)</li>
-<li>dialog</li>
-<li>gcc and clang</li>
+<li><p>openssl</p></li>
+<li><p>sqlite3</p></li>
+<li><p>sed</p></li>
+<li><p>git</p></li>
+<li><p>icecast</p></li>
+<li><p>gstreamer</p></li>
+<li><p>dialog</p></li>
+<li><p>gcc and clang</p></li>
+</ul>
+</div></blockquote>
+<p>required gstreamer packages:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Arch Linux:</strong> gst-python, gst-plugins-good, gst-plugins-bad</p></li>
+<li><p><strong>Fedora:</strong> python3-gstreamer1 gstreamer1-plugins-good gstreamer1-plugins-bad-free</p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -728,21 +741,21 @@ It also recognizes if this is a new installation or an update by checking for th
 Then it opens a dialog where these variables can be confirmed or modified.</p>
 <p>The following settings must be configured for the installation (and will be recognized when MusicDB shall only be updated):</p>
 <blockquote>
-<div><dl class="docutils">
-<dt>Source directory:</dt>
-<dd>The git repository with the source code.</dd>
-<dt>Server directory:</dt>
-<dd>In this directory will the MusicDB code be installed</dd>
-<dt>Data directory:</dt>
-<dd>The directory for MusicDB’s data and configuration as wall as the data and configuration for its dependencies</dd>
-<dt>Music directory:</dt>
-<dd>The music collection following the <a class="reference internal" href="music.html"><span class="doc">Music</span></a> naming scheme</dd>
-<dt>HTTP group:</dt>
-<dd>The Unix group for HTTP documents necessary to access the WebUI</dd>
-<dt>SSL Certificate:</dt>
-<dd>Certificate file for the SSL encryption of the WebSocket communication</dd>
-<dt>SSL Key:</dt>
-<dd>Key file for the WebSocket SSL certificate</dd>
+<div><dl class="simple">
+<dt>Source directory:</dt><dd><p>The git repository with the source code.</p>
+</dd>
+<dt>Server directory:</dt><dd><p>In this directory will the MusicDB code be installed</p>
+</dd>
+<dt>Data directory:</dt><dd><p>The directory for MusicDB’s data and configuration as wall as the data and configuration for its dependencies</p>
+</dd>
+<dt>Music directory:</dt><dd><p>The music collection following the <a class="reference internal" href="music.html"><span class="doc">Music</span></a> naming scheme</p>
+</dd>
+<dt>HTTP group:</dt><dd><p>The Unix group for HTTP documents necessary to access the WebUI</p>
+</dd>
+<dt>SSL Certificate:</dt><dd><p>Certificate file for the SSL encryption of the WebSocket communication</p>
+</dd>
+<dt>SSL Key:</dt><dd><p>Key file for the WebSocket SSL certificate</p>
+</dd>
 </dl>
 </div></blockquote>
 <p>During the installation process, SSL certificates gets generated for the WebSocket connection.
@@ -772,110 +785,110 @@ Furthermore you should check <code class="docutils literal notranslate"><span cl
 <div class="section" id="installation-manually">
 <h2>Installation (Manually)<a class="headerlink" href="#installation-manually" title="Permalink to this headline">¶</a></h2>
 <p>The whole installation and updating process can be concluded into the steps in the table below.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="21%" />
-<col width="39%" />
-<col width="39%" />
+<col style="width: 21%" />
+<col style="width: 39%" />
+<col style="width: 39%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Step</th>
-<th class="head">Installation</th>
-<th class="head">Update</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Step</p></th>
+<th class="head"><p>Installation</p></th>
+<th class="head"><p>Update</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>MusicDB User</td>
-<td><ul class="first last simple">
-<li>Create <code class="docutils literal notranslate"><span class="pre">musicdb</span></code> User and Group</li>
-<li>Add music owner to <code class="docutils literal notranslate"><span class="pre">musicdb</span></code> group</li>
+<tbody>
+<tr class="row-even"><td><p>MusicDB User</p></td>
+<td><ul class="simple">
+<li><p>Create <code class="docutils literal notranslate"><span class="pre">musicdb</span></code> User and Group</p></li>
+<li><p>Add music owner to <code class="docutils literal notranslate"><span class="pre">musicdb</span></code> group</p></li>
 </ul>
 </td>
-<td>&#160;</td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>Generate SSL Key</td>
-<td><ul class="first last simple">
-<li>Generate an SSL certificate and key</li>
+<tr class="row-odd"><td><p>Generate SSL Key</p></td>
+<td><ul class="simple">
+<li><p>Generate an SSL certificate and key</p></li>
 </ul>
 </td>
-<td>&#160;</td>
+<td></td>
 </tr>
-<tr class="row-even"><td>Create directory tree</td>
-<td><ul class="first last simple">
-<li>Create data and server base directory</li>
-<li>Create MusicAI tree</li>
-<li>Create Artwork Cache</li>
+<tr class="row-even"><td><p>Create directory tree</p></td>
+<td><ul class="simple">
+<li><p>Create data and server base directory</p></li>
+<li><p>Create MusicAI tree</p></li>
+<li><p>Create Artwork Cache</p></li>
 </ul>
 </td>
-<td><ul class="first last simple">
-<li>Update <code class="docutils literal notranslate"><span class="pre">artwork/default.jpg</span></code></li>
-</ul>
-</td>
-</tr>
-<tr class="row-odd"><td>MusicDB Configuration</td>
-<td><ul class="first last simple">
-<li>Install <code class="docutils literal notranslate"><span class="pre">musicdb.ini</span></code></li>
-<li>Set default parameters</li>
-<li>Create symlink to <code class="docutils literal notranslate"><span class="pre">/etc/musicdb.ini</span></code></li>
-</ul>
-</td>
-<td><ul class="first last simple">
-<li>Update <code class="docutils literal notranslate"><span class="pre">musicdb.ini</span></code></li>
+<td><ul class="simple">
+<li><p>Update <code class="docutils literal notranslate"><span class="pre">artwork/default.jpg</span></code></p></li>
 </ul>
 </td>
 </tr>
-<tr class="row-even"><td>Create databases</td>
-<td><ul class="first last simple">
-<li>Create all databases</li>
+<tr class="row-odd"><td><p>MusicDB Configuration</p></td>
+<td><ul class="simple">
+<li><p>Install <code class="docutils literal notranslate"><span class="pre">musicdb.ini</span></code></p></li>
+<li><p>Set default parameters</p></li>
+<li><p>Create symlink to <code class="docutils literal notranslate"><span class="pre">/etc/musicdb.ini</span></code></p></li>
 </ul>
 </td>
-<td><ul class="first last simple">
-<li>Update database schemes</li>
-</ul>
-</td>
-</tr>
-<tr class="row-odd"><td>Icecast Configuration</td>
-<td><ul class="first last simple">
-<li>Create icecast user and group</li>
-<li>Create icecast configuration</li>
-<li>Copy SSL certificates</li>
-<li>Generate icecast passwords</li>
-<li>Update <code class="docutils literal notranslate"><span class="pre">musicdb.ini</span></code> with source PW</li>
-</ul>
-</td>
-<td><ul class="first last simple">
-<li>Update icecast configuration</li>
+<td><ul class="simple">
+<li><p>Update <code class="docutils literal notranslate"><span class="pre">musicdb.ini</span></code></p></li>
 </ul>
 </td>
 </tr>
-<tr class="row-even"><td>System environment</td>
-<td><ul class="first last simple">
-<li>Install logrotate configuration</li>
-<li>Install shell profile</li>
+<tr class="row-even"><td><p>Create databases</p></td>
+<td><ul class="simple">
+<li><p>Create all databases</p></li>
 </ul>
 </td>
-<td><ul class="first last simple">
-<li>Update logrotate configuration</li>
-</ul>
-</td>
-</tr>
-<tr class="row-odd"><td>ID3Edit Installation</td>
-<td><ul class="first last simple">
-<li>Install ID3Edit</li>
-</ul>
-</td>
-<td><ul class="first last simple">
-<li>Update ID3Edit</li>
+<td><ul class="simple">
+<li><p>Update database schemes</p></li>
 </ul>
 </td>
 </tr>
-<tr class="row-even"><td>MusicDB Installation</td>
-<td><ul class="first last simple">
-<li>Install MusicDB</li>
+<tr class="row-odd"><td><p>Icecast Configuration</p></td>
+<td><ul class="simple">
+<li><p>Create icecast user and group</p></li>
+<li><p>Create icecast configuration</p></li>
+<li><p>Copy SSL certificates</p></li>
+<li><p>Generate icecast passwords</p></li>
+<li><p>Update <code class="docutils literal notranslate"><span class="pre">musicdb.ini</span></code> with source PW</p></li>
 </ul>
 </td>
-<td><ul class="first last simple">
-<li>Update MusicDB</li>
+<td><ul class="simple">
+<li><p>Update icecast configuration</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>System environment</p></td>
+<td><ul class="simple">
+<li><p>Install logrotate configuration</p></li>
+<li><p>Install shell profile</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>Update logrotate configuration</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>ID3Edit Installation</p></td>
+<td><ul class="simple">
+<li><p>Install ID3Edit</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>Update ID3Edit</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>MusicDB Installation</p></td>
+<td><ul class="simple">
+<li><p>Install MusicDB</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>Update MusicDB</p></li>
 </ul>
 </td>
 </tr>
@@ -886,12 +899,12 @@ Furthermore you should check <code class="docutils literal notranslate"><span cl
 <h3>System Preparation<a class="headerlink" href="#system-preparation" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
-<li>create a user <code class="docutils literal notranslate"><span class="pre">musicdb</span></code> and a group <code class="docutils literal notranslate"><span class="pre">musicdb</span></code></li>
-<li>add your user (here called <code class="docutils literal notranslate"><span class="pre">user</span></code>) to group <code class="docutils literal notranslate"><span class="pre">musicdb</span></code> so you can access the files created by MusicDB as user.
-MusicDB will set music and artwork files ownerships to <code class="docutils literal notranslate"><span class="pre">user:musicdb</span></code>, other files are <code class="docutils literal notranslate"><span class="pre">musicdb:musicdb</span></code>.</li>
-<li>Create a directory for MusicDB installation (here <code class="docutils literal notranslate"><span class="pre">/srv/musicdb</span></code>) and for MusicDB’s data (here <code class="docutils literal notranslate"><span class="pre">/data/musicdb</span></code>).
-The ownership must be <code class="docutils literal notranslate"><span class="pre">musicdb:musicdb</span></code>.</li>
-<li>Create a music-directory (here <code class="docutils literal notranslate"><span class="pre">/data/music</span></code>) and set the ownership to <code class="docutils literal notranslate"><span class="pre">user:musicdb</span></code></li>
+<li><p>create a user <code class="docutils literal notranslate"><span class="pre">musicdb</span></code> and a group <code class="docutils literal notranslate"><span class="pre">musicdb</span></code></p></li>
+<li><p>add your user (here called <code class="docutils literal notranslate"><span class="pre">user</span></code>) to group <code class="docutils literal notranslate"><span class="pre">musicdb</span></code> so you can access the files created by MusicDB as user.
+MusicDB will set music and artwork files ownerships to <code class="docutils literal notranslate"><span class="pre">user:musicdb</span></code>, other files are <code class="docutils literal notranslate"><span class="pre">musicdb:musicdb</span></code>.</p></li>
+<li><p>Create a directory for MusicDB installation (here <code class="docutils literal notranslate"><span class="pre">/srv/musicdb</span></code>) and for MusicDB’s data (here <code class="docutils literal notranslate"><span class="pre">/data/musicdb</span></code>).
+The ownership must be <code class="docutils literal notranslate"><span class="pre">musicdb:musicdb</span></code>.</p></li>
+<li><p>Create a music-directory (here <code class="docutils literal notranslate"><span class="pre">/data/music</span></code>) and set the ownership to <code class="docutils literal notranslate"><span class="pre">user:musicdb</span></code></p></li>
 </ul>
 </div></blockquote>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># as root in /</span>
@@ -910,20 +923,20 @@ mkdir /data/music   <span class="o">&amp;&amp;</span> chown -R user:musicdb    /
 <h3>Install dependencies<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>Some: <code class="docutils literal notranslate"><span class="pre">git</span></code>, <code class="docutils literal notranslate"><span class="pre">gcc</span></code>, <code class="docutils literal notranslate"><span class="pre">python</span></code>, <code class="docutils literal notranslate"><span class="pre">pip</span></code></p>
 <div class="admonition attention">
-<p class="first admonition-title">Attention</p>
-<p class="last">On Debian the <code class="docutils literal notranslate"><span class="pre">python</span></code> command runs the ancient Python 2.
+<p class="admonition-title">Attention</p>
+<p>On Debian the <code class="docutils literal notranslate"><span class="pre">python</span></code> command runs the ancient Python 2.
 Whenever this documentation is talking about Python, Python 3 is meant!</p>
 </div>
 <p>Further more, everything <code class="docutils literal notranslate"><span class="pre">check</span></code> tells you is missing.
 The following list gives you some details about the listed modules.</p>
 <blockquote>
 <div><ul class="simple">
-<li>If an optional dependency is missing, read the <code class="docutils literal notranslate"><span class="pre">check.sh</span></code> script. The comments help you to decide if you need them.</li>
-<li>The <em>PIL</em> module can be found as <code class="docutils literal notranslate"><span class="pre">pillow</span></code>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">icecast</span></code> won’t be detected on Debian because there it is called <code class="docutils literal notranslate"><span class="pre">icecast2</span></code> (This has no impact).</li>
-<li><code class="docutils literal notranslate"><span class="pre">apachectl</span></code> my be not found if it is only available for root user. Or you simply use another HTTP server.</li>
-<li><code class="docutils literal notranslate"><span class="pre">jsdoc</span></code> can be installed via <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">-g</span> <span class="pre">jsdoc</span></code>.</li>
-<li>The following modules are optional in case you don’t want to use the AI infrastructure: <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">h5py</span></code>, <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code>, <code class="docutils literal notranslate"><span class="pre">tflearn</span></code></li>
+<li><p>If an optional dependency is missing, read the <code class="docutils literal notranslate"><span class="pre">check.sh</span></code> script. The comments help you to decide if you need them.</p></li>
+<li><p>The <em>PIL</em> module can be found as <code class="docutils literal notranslate"><span class="pre">pillow</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">icecast</span></code> won’t be detected on Debian because there it is called <code class="docutils literal notranslate"><span class="pre">icecast2</span></code> (This has no impact).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">apachectl</span></code> my be not found if it is only available for root user. Or you simply use another HTTP server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jsdoc</span></code> can be installed via <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">-g</span> <span class="pre">jsdoc</span></code>.</p></li>
+<li><p>The following modules are optional in case you don’t want to use the AI infrastructure: <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">h5py</span></code>, <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code>, <code class="docutils literal notranslate"><span class="pre">tflearn</span></code></p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -1016,10 +1029,10 @@ The update process saves the lines with the configuration and restores them afte
 <p>The web server must provide the following virtual directories:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">/musicdb/</span></code> pointing to the WebUI directory (<code class="docutils literal notranslate"><span class="pre">$SERVERDIR/webui</span></code>)</li>
-<li><code class="docutils literal notranslate"><span class="pre">/musicdb/artwork/</span></code> pointing to the artwork directory (<code class="docutils literal notranslate"><span class="pre">$DATADIR/artwork</span></code>)</li>
-<li><code class="docutils literal notranslate"><span class="pre">/musicdb/music/</span></code> pointing to the music source directory (<code class="docutils literal notranslate"><span class="pre">*/music</span></code>)</li>
-<li><code class="docutils literal notranslate"><span class="pre">/musicdb/docs/</span></code> pointing to the documentation directory (<code class="docutils literal notranslate"><span class="pre">$SERVERDIR/docs</span></code>)</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/</span></code> pointing to the WebUI directory (<code class="docutils literal notranslate"><span class="pre">$SERVERDIR/webui</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/artwork/</span></code> pointing to the artwork directory (<code class="docutils literal notranslate"><span class="pre">$DATADIR/artwork</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/music/</span></code> pointing to the music source directory (<code class="docutils literal notranslate"><span class="pre">*/music</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/docs/</span></code> pointing to the documentation directory (<code class="docutils literal notranslate"><span class="pre">$SERVERDIR/docs</span></code>)</p></li>
 </ul>
 </div></blockquote>
 <p>An example <a class="reference external" href="https://httpd.apache.org/">Apache</a> configuration can look like this:</p>
@@ -1058,9 +1071,9 @@ The update process saves the lines with the configuration and restores them afte
 <div class="section" id="cuda-for-musicai">
 <h2>CUDA for MusicAI<a class="headerlink" href="#cuda-for-musicai" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p><strong>MusicAI is optional!</strong></p>
-<p class="last">You only should consider using MusicAI if you know how to handle Neural Networks - or if you are willing to learn.
+<p>You only should consider using MusicAI if you know how to handle Neural Networks - or if you are willing to learn.
 This feature is very computation intensive and requires expensive hardware to be usable.
 You should first read the <a class="reference internal" href="../mdbapi/musicai.html"><span class="doc">MusicAI</span></a> documentation.
 If you still think working with a Convolutional Deep Neural Network is a good idea, then you should give it a try.
@@ -1099,11 +1112,11 @@ So if your WebSocket address is <code class="docutils literal notranslate"><span
 <div class="section" id="update">
 <h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
+<p class="admonition-title">Warning</p>
 <p>The MusicDB installation script cannot be tested as good as it should be tested.
 There may be some problems in special cases.
 Espacially when you use it for updating MusicDB, it could happen that you loose some configuration or in worts case your database.</p>
-<p class="last">You really should <strong>make a backup</strong> of the MusicDB data directory!</p>
+<p>You really should <strong>make a backup</strong> of the MusicDB data directory!</p>
 </div>
 <p>After updating <em>CUDA</em>, <em>TensorFlow</em> must be updated, too.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install --upgrade tensorflow
@@ -1159,7 +1172,7 @@ su                   <span class="c1"># you must be root for the updating proces
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.1.0',
+            VERSION:'5.2.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
