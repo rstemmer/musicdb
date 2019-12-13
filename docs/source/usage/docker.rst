@@ -4,6 +4,13 @@ Docker
 
 This chapter explains how to build and use the Docker based demo
 
+Prepare Environment
+-------------------
+
+1. Go into the docker subdirectory: ``cd docker``
+2. Start Docker Daemon: ``systemctl start docker``
+3. Change group: ``newgrp docker`` (If the user is not in the docker-group enter ``usermod -a -G docker USERNAME`` before.)
+
 Build the Image
 ---------------
 
@@ -13,8 +20,12 @@ The ``build.sh`` script creates the Docker image, the ``run.sh`` script executes
 Before you execute the scripts, please read the ``README`` file inside the docker directory.
 Also, follow the instruction prompted by the executed scripts.
 
+To build the image, execute the ``build.sh`` script.
+
 Using the Image
 ---------------
+
+To run the image, execute the ``run.sh`` script.
 
 When the container gets started via the ``run.sh`` script, 
 some important information get print into the shell and
