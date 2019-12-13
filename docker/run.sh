@@ -31,7 +31,7 @@ echo -e "\t\e[1;30mTo edit genres execute \e[1;30m musicdb genres \e[1;30m (see 
 echo -e "\e[0m"
 
 mkdir -p $DEMOMUSICDIR
-docker run --publish=$HTTP:80 --publish=$AUDIO:666 --publish=$WSS:9000 --mount type=bind,source=$DEMOMUSICDIR,target=/var/music -it 'musicdb:0.0.1'
+docker run --publish=$HTTP:80 --publish=$AUDIO:666 --publish=$WSS:9000 --mount type=bind,source=$DEMOMUSICDIR,target=/var/music -it 'musicdb:5.2.0'
 echo -e -n "\e[1;33m"
 rmdir $DEMOMUSICDIR
 echo -e -n "\e[0m"
