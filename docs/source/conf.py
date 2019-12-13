@@ -38,8 +38,8 @@ extensions = ['sphinx.ext.autodoc',
     'sphinx.ext.imgmath',
     'sphinx.ext.ifconfig',
     'sphinx.ext.graphviz',
-    'sphinx_js',
     'sphinx.ext.viewcode']
+    #'sphinx_js',
 
 
 root_for_relative_js_paths = "../webui/js"
