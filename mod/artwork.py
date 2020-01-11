@@ -52,6 +52,10 @@ Examples:
     .. code-block:: bash
 
         musicdb artwork --artwork $Artworkpath --album $Albumpath -u
+
+        # For example:
+        wget -O ~/tmp.jpg https://some.url/artworks?id=37693cfc748049e45d87b8c7d8b9aacd
+        musicdb artwork -u --album /data/music/Lindemann/2019\ -\ F\ \&\ M\ \(Deluxe\) --artwork ~/tmp.jpg
 """
 
 import argparse
@@ -122,15 +126,10 @@ class artwork(MDBModule, MusicDBArtwork):
             print("\033[1;31mInvalid albumpath: \"%s\". \033[0;31m(No album with this path in database.)\033[0m" % (albumpath))
             return False
 
-        if not artworkpath:
-            self.UpdateAlbumArtwork(album)
-        else:
-            artist    = self.db.GetArtistById(album["artistid"])
-            imagename = self.CreateArtworkName(artist["name"], album["name"])
-            retval    = self.SetArtwork(album["id"], artworkpath, imagename)
-            if retval == False:
-                print("\033[1;31mSetting artwork failed!\033[0m")
-                return False
+        retval = self.UpdateAlbumArtwork(album, artworkpath)
+        if retval == False:
+            print("\033[1;31mSetting artwork failed!\033[0m")
+            return False
 
         return True
 

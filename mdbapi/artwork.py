@@ -332,6 +332,7 @@ class MusicDBArtwork(object):
                 artworkpath = None
 
         # Set new artwork
+        logging.info("Updating artwork for album \"%s\" to \"%s\" at \"%s\".", album["name"], imagename, artworkpath)
         retval = self.SetArtwork(album["id"], artworkpath, imagename)
         return retval
 
