@@ -138,12 +138,6 @@ class artwork(MDBModule, MusicDBArtwork):
 
     def MDBM_Main(self, args):
 
-        # Make paths absolute when they were given
-        if args.album:
-            args.album = os.path.absolute(args.album)
-        if args.artwork:
-            args.artwork = os.path.absolute(args.artwork)
-
         # Update Cache and Manifest
         if args.update:
             if args.album:
