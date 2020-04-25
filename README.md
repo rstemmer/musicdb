@@ -2,38 +2,22 @@
 
 # MusicDB
 
-MusicDB is a music manager with focus on remote access to your music using a WebUI to.
-manage an audio stream.
-The WebUI is more a presentation of your music than a database frontend.
+MusicDB is a music manager with focus on remote access to your music collection using a WebUI.
+It allows you to manage an audio stream based on a song-queue.
+The WebUI is focusing on being a presentation of your music rather than being a database frontend.
 
 So, when you are listening to your music, you do not work with software.
 Instead you explore your music collection.
 
-**For more details, a list of features and screenshots see the start page [rstemmer.github.io/musicdb/](https://rstemmer.github.io/musicdb/index.html).**
-
----
-
-Until now I spent over 6 years for developing this awesome software.
+I started this project on 4th January 2014.
 Since I finished a first test version, I use it nearly every day.
 Time to share it with the world. :smiley:
 
-For news, follow [@MusicDBProject](https://twitter.com/MusicDBProject) on Twitter.
-
+**For more details, a list of features and screenshots see the start page [rstemmer.github.io/musicdb/](https://rstemmer.github.io/musicdb/index.html).**
 
 A detailed description of MusicDB and its components can be found in the documentation: [Overview of MusicDB](https://rstemmer.github.io/musicdb/build/html/basics/overview.html)
 
-
-## Docker-Bases Demo
-
-It is possible to run a Demo installation via Docker container.
-Just clone this repository and execute the scripts in the docker sub-directory.
-
-```sh
-git clone https://github.com/rstemmer/musicdb.git
-cd musicdb
-./docker/build.sh
-./docker/run.sh
-```
+For news, follow [@MusicDBProject](https://twitter.com/MusicDBProject) on Twitter.
 
 
 ## Important News
@@ -173,6 +157,19 @@ Some helpful hints:
 
 
 If there are any problems setting up MusicDB, create an issue.
+
+
+## Docker-Based Demo
+
+It is possible to run a Demo installation via Docker container.
+Just clone this repository and execute the scripts in the docker sub-directory.
+
+```sh
+git clone https://github.com/rstemmer/musicdb.git
+cd musicdb
+./docker/build.sh
+./docker/run.sh
+```
 
 
 # Development
