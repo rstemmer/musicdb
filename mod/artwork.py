@@ -103,6 +103,8 @@ class artwork(MDBModule, MusicDBArtwork):
         This method does partial update and can be used to force a specific artwork.
         If *artworkpath* is given, that artwork will be copied to the cache instead of extraction one from the metadata.
 
+        This method expects absolute paths or paths relative to the music root directory.
+
         Args:
             albumpath (str): Path to an album. This can be absolute or relative to the music directory.
             artworkpath (str / NoneType): Absolute path to the artwork that shall be used if given.
@@ -136,6 +138,18 @@ class artwork(MDBModule, MusicDBArtwork):
 
 
     def MDBM_Main(self, args):
+        # Make user paths absolute and check if they exist
+        if args.artwork:
+            args.artwork = os.path.abspath(args.artwork)
+            if not os.path.exists(args.artwork):
+                print("\033[1;31mERROR: Artwork path "+args.artwork+" does not exist!\033[0m")
+                return 1
+
+        if args.album:
+            args.album = os.path.abspath(args.album)
+            if not os.path.exists(args.album):
+                print("\033[1;31mERROR: Album path "+args.album+" does not exist!\033[0m")
+                return 1
 
         # Update Cache and Manifest
         if args.update:
