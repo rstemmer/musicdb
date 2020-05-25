@@ -192,7 +192,10 @@ class SongView(ListView, ButtonView):
         self.dialog.AddInput("Song name:",   self.nameinput,   "Correct name only")
         self.dialog.AddInput("Song number:", self.numberinput, "Song number only")
         self.dialog.AddInput("CD number:",   self.cdnuminput,  "CD number or nothing")
-        self.dialogmode = False
+
+        # Internal states
+        self.dialogmode        = False
+        self.allsongnamesvalid = False
 
 
     def FindSongs(self):
@@ -268,6 +271,7 @@ class SongView(ListView, ButtonView):
         # Render validation
         if not analresult:
             validation = "\033[1;31m ✘ "
+            self.allsongnamesvalid = False
         else:
             validation = "\033[1;32m ✔ "
         width -= 3
@@ -292,6 +296,7 @@ class SongView(ListView, ButtonView):
         if self.dialogmode == True:
             pass
         else:
+            self.allsongnamesvalid = True  # Will be updated by ListView.Draw() call
             ListView.Draw(self)
             x = self.x + 1
             y = self.y + self.h - 1
@@ -533,6 +538,7 @@ class add(MDBModule, MusicDBDatabase):
             validation = "\033[1;32m✔ "
         else:
             validation = "\033[1;31m✘ "
+
         self.cli.PrintText(validation)
         width -= 2
 
@@ -569,6 +575,23 @@ class add(MDBModule, MusicDBDatabase):
         self.cli.PrintText(note)
 
 
+    def ShowSongValidation(self, valid, x, y, w):
+        width = w
+        self.cli.SetCursor(x, y)
+
+        if valid:
+            label = "\033[1;32m✔ "
+            note  = "\033[0;32m(Valid)                                 " # FIXME: This is a hack to overwrite the "invalid" note
+        else:
+            label = "\033[1;31m✘ "
+            note  = "\033[0;31m(Invalid names - please edit song names)"
+        label += "\033[1;34mSong file names: " + note
+
+        #label = label[:width]
+        #label = label.ljust(width)
+        self.cli.PrintText(label)
+
+
     def ShowImportDialog(self, albumpath):
         self.cli.ShowCursor(False)
         self.cli.ClearScreen()
@@ -586,7 +609,7 @@ class add(MDBModule, MusicDBDatabase):
 
         # Calculate the positions of the UI element
         headh   = 5 # n lines high headline
-        pathh   = 2
+        pathh   = 3
         dialogx = 1
         dialogy = 2 + headh
         dialogw = self.maxw-2
@@ -687,6 +710,13 @@ class add(MDBModule, MusicDBDatabase):
             albumdialog.Draw()
             self.ShowArtistValidation(artistname, pathx, pathy, pathw)
             self.ShowAlbumValidation(artistname, albumname, releasedate, pathx, pathy+1, pathw)
+            self.ShowSongValidation(songview.allsongnamesvalid, pathx, pathy+2, pathw)
+            #if songview.allsongnamesvalid:
+            #    validation = "\033[1;32m✔ "
+            #else:
+            #    validation = "\033[1;31m✘ "
+            #self.cli.PrintText(validation)
+
             self.cli.FlushScreen()
 
             # Handle keys
