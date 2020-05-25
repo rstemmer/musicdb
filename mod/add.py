@@ -783,7 +783,10 @@ class add(MDBModule, MusicDBDatabase):
             return
         else:
             self.cli.PrintText("\033[1;34mImport album \033[0;36m%s\n"%(newalbumpath))
-            self.AddAlbum(newalbumpath, artist["id"])
+            try:
+                self.AddAlbum(newalbumpath, artist["id"])
+            except Exception as e:
+                self.cli.PrintText("\033[1;31mImporting album failed with exception %s!\033[1;30m (Nothing bad happened, just try to solve the issue and repeat. Were all Paths and file names valid?)\n"%(str(e)))
 
         # set origin
         album = self.db.GetAlbumByPath(newalbumpath)
