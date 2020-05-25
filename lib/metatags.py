@@ -148,7 +148,10 @@ class MetaTags(object):
         try:
             if self.ftype == "mp3":
                 # Source: http://stackoverflow.com/questions/6171565/how-do-i-read-album-artwork-using-python
-                artwork = self.file["APIC:"] # access APIC frame and grab the image
+                #artwork = self.file["APIC:"] # access APIC frame and grab the image
+                # The suggested API seems to be broken.
+                # This is why I go deeper into the mutagen-classes to get the image:
+                artwork = self.file.tags.getall("APIC")[0]
                 with open(imgfilename, "wb") as img:
                     img.write(artwork.data)
                 return True

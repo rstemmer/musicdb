@@ -11,6 +11,7 @@ Run  git log --oneline  for more details
 ┝━ MAJOR CHANGES
 │
 ┝━ MINOR CHANGES
+│ * [Artwork] Fixes issue with mutagenx package and importing artworks from mp3 files
 └───────────────────────────────────────╌╌
 
 
