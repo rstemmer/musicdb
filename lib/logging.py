@@ -41,11 +41,11 @@ class MBDLogFormatter(logging.Formatter):
     short    = "\033[0;35m%(filename)s\033[1;34m: "
 
     #debug_format    = "\033[1;34m LOG[\033[0;35mDEBUG\033[1;34m] " + file_format + "\033[1;30m%(message)s [%(module)s]"
-    debug_format    = start_fmt + "\033[0;35mDEBUG\033[1;34m] " + file_fmt + "\033[1;30m%(message)s"
-    info_format     = start_fmt + "\033[0;36mINFO \033[1;34m] " + short    + "\033[1;34m%(message)s"
-    warning_format  = start_fmt + "\033[0;33mWARN \033[1;34m] " + file_fmt + "\033[1;33m%(message)s"
-    error_format    = start_fmt + "\033[0;31mERROR\033[1;34m] " + file_fmt + "\033[1;31m%(message)s"
-    critical_format = start_fmt + "\033[1;31mFATAL\033[1;34m] " + file_fmt + "\033[1;31m%(message)s"
+    debug_format    = start_fmt + "\033[0;35mDEBUG\033[1;34m] " + file_fmt + "\033[1;30m%(message)s\033[0m"
+    info_format     = start_fmt + "\033[0;36mINFO \033[1;34m] " + short    + "\033[1;34m%(message)s\033[0m"
+    warning_format  = start_fmt + "\033[0;33mWARN \033[1;34m] " + file_fmt + "\033[1;33m%(message)s\033[0m"
+    error_format    = start_fmt + "\033[0;31mERROR\033[1;34m] " + file_fmt + "\033[1;31m%(message)s\033[0m"
+    critical_format = start_fmt + "\033[1;31mFATAL\033[1;34m] " + file_fmt + "\033[1;31m%(message)s\033[0m"
     # %(asctime)s
 
 

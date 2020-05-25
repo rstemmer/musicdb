@@ -11,6 +11,7 @@ Run  git log --oneline  for more details
 ┝━ MAJOR CHANGES
 │
 ┝━ MINOR CHANGES
+│ * Log output ends with setting terminal color to default (\e[0m)
 │ * [Artwork] Fixes issue with mutagenx package and importing artworks from mp3 files
 └───────────────────────────────────────╌╌
 
