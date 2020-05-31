@@ -22,6 +22,8 @@ Run  git log --oneline  for more details
 │ - [MDBWSI] Deprecated function removed: GetMPDState, SetMPDState
 │ * [MDBWSI] Bugfix in warning inside SetStreamState
 │ - [database] Deprecated function removed: UpdateSongPath
+│ - [Installation] All MusicAI related tasks removed
+│ - [Configuration] All MusicAI related settings removed
 └───────────────────────────────────────╌╌
 
 
