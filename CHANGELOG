@@ -9,12 +9,14 @@ Run  git log --oneline  for more details
 
 ┍━━━━┫ 2020-??-?? ┣━━━━┫ 5.3.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
+│ - [MusicAI] Removed (The framework I used is no longer maintained and does not work with modern Tensorflow anymore)
 │
 ┝━ MINOR CHANGES
 │ * Log output ends with setting terminal color to default (\e[0m)
 │ * [Artwork] Fixes issue with mutagenx package and importing artworks from mp3 files
 │ * [Add] Highlight in the summary when there are invalid song names
 │ * [Add] Exceptions during album import were captured to create better error messages
+│ - [Add] MusicAI processing removed
 │ - [mdbstate] Deprecated check/warning removed: israndom is now a mandatory key for song queue files 
 │ - [mdbstate] Deprecated check/warning removed: timestamp is now a mandatory key for blacklist files 
 │ - [MDBWSI] Deprecated function removed: GetMPDState, SetMPDState

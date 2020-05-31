@@ -26,7 +26,6 @@ It does the following steps:
     #. Import artist and album
     #. Import artwork (if there is one in the meta data)
     #. Import lyrics (if there are some in the files meta data)
-    #. Run MusicAI to determine the music genres
 
 Press ``Ctrl-D`` to exit the tool and reject changes.
 
@@ -68,7 +67,7 @@ Album Import Form
 
 The artist and album directory names gets generated out of the artist name, album name and release year.
 Those names and values can be changed in the *Album Import* form list.
-Furthermore the can be selected if the artwork shall be imported as well, the lyrics if available and if the genres shall be predicted by the MusicAI.
+Furthermore it the can be selected if the artwork shall be imported as well, the lyrics if available.
 If there is an artwork file embedded in the song files, the import artwork checkbox gets set automatically.
 In case there are lyrics in the file, the checkbox gets set as well.
 
@@ -122,7 +121,6 @@ Depending on the checkboxes you set in the *Album Import* form, the following th
     #. Renaming the files and directory.
     #. Importing the album artwork.
     #. Importing the lyrics from each file into the database
-    #. Determine the genres of each song using MusicAI
 
 It may happen that there is no artwork inside the song files.
 In that case, you have to import an artwork manually using the :doc:`/mod/artwork` module.
@@ -148,7 +146,6 @@ from lib.clui.boolinput import BoolInput
 from lib.clui.buttonview import ButtonView
 from lib.clui.tabgroup  import TabGroup
 
-from mod.musicai        import musicai as musicai_module
 
 class FileNameInput(TextInput):
     def __init__(self, x=0, y=0, w=0):
@@ -613,7 +610,7 @@ class add(MDBModule, MusicDBDatabase):
         dialogx = 1
         dialogy = 2 + headh
         dialogw = self.maxw-2
-        dialogh = 9
+        dialogh = 8
         listx   = 1
         listy   = dialogy + dialogh + 1
         listw   = self.maxw-2
@@ -633,7 +630,6 @@ class add(MDBModule, MusicDBDatabase):
         releaseinput   = TextInput()
         origininput    = TextInput()
         artworkinput   = BoolInput()
-        musicaiinput   = BoolInput()
         lyricsinput    = BoolInput()
 
         albumdialog.AddInput("Artist name:", artistinput, "Correct name of the album artist")
@@ -642,7 +638,6 @@ class add(MDBModule, MusicDBDatabase):
         albumdialog.AddInput("Origin:", origininput, "\"iTunes\", \"bandcamp\", \"CD\", \"internet\", \"music163\"")
         albumdialog.AddInput("Import artwork:", artworkinput, "Import the artwork to MusicDB")
         albumdialog.AddInput("Import lyrics:", lyricsinput, "Try to import lyrics from file")
-        albumdialog.AddInput("Predict genre:", musicaiinput, "Runs MusicAI to predict the song genres")
 
         # Initialize dialog
         albumdirname = os.path.split(albumpath)[1]
@@ -669,11 +664,6 @@ class add(MDBModule, MusicDBDatabase):
         releaseinput.SetData(release)
         origininput.SetData(origin)
         artworkinput.SetData(True)
-
-        if self.cfg.debug.disableai:
-            musicaiinput.SetData(False)
-        else:
-            musicaiinput.SetData(True)
 
         if metadata["lyrics"]:
             lyricsinput.SetData(True)
@@ -703,7 +693,6 @@ class add(MDBModule, MusicDBDatabase):
             origin      = origininput.GetData()
             artwork     = artworkinput.GetData()
             lyrics      = lyricsinput.GetData()
-            musicai     = musicaiinput.GetData()
 
             # Show everything
             songview.Draw()
@@ -734,7 +723,6 @@ class add(MDBModule, MusicDBDatabase):
                 data["origin"]      = origin
                 data["runartwork"]  = artwork
                 data["runlyrics"]   = lyrics
-                data["runmusicai"]  = musicai
                 data["songs"]       = songview.GetData()
                 return data
 
@@ -821,18 +809,6 @@ class add(MDBModule, MusicDBDatabase):
                 if lyrics:
                     self.db.SetLyrics(songid, lyrics, SONG_LYRICSSTATE_FROMFILE)
 
-        if data["runmusicai"]:
-            self.cli.PrintText("\033[1;37mRun MusicAI\n")
-            absalbumpath = self.fs.AbsolutePath(newalbumpath)
-            musicai      = musicai_module(self.cfg, self.db)
-            mdbsongs     = musicai.GetSongsFromPath(absalbumpath)
-            if not mdbsongs:
-                self.cli.PrintText("\033[1;31mNo songs to analyze found in %s! \033[1;30m\033[0m"%(absalbumpath))
-                return
-            
-            musicai.GenerateFeatureset(mdbsongs)
-            prediction = musicai.PerformPrediction(mdbsongs)
-            musicai.StorePrediction(prediction)
 
     # return exit-code
     def MDBM_Main(self, args):
