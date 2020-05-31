@@ -17,6 +17,8 @@ Run  git log --oneline  for more details
 │ * [Add] Exceptions during album import were captured to create better error messages
 │ - [mdbstate] Deprecated check/warning removed: israndom is now a mandatory key for song queue files 
 │ - [mdbstate] Deprecated check/warning removed: timestamp is now a mandatory key for blacklist files 
+│ - [MDBWSI] Deprecated function removed: GetMPDState, SetMPDState
+│ * [MDBWSI] Bugfix in warning inside SetStreamState
 └───────────────────────────────────────╌╌
 
 
