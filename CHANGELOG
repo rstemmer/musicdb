@@ -19,6 +19,7 @@ Run  git log --oneline  for more details
 │ - [mdbstate] Deprecated check/warning removed: timestamp is now a mandatory key for blacklist files 
 │ - [MDBWSI] Deprecated function removed: GetMPDState, SetMPDState
 │ * [MDBWSI] Bugfix in warning inside SetStreamState
+│ - [database] Deprecated function removed: UpdateSongPath
 └───────────────────────────────────────╌╌
 
 
