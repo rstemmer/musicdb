@@ -103,7 +103,7 @@ The name is the last parameter for ``musicdb``, all following parameters are par
 
    # Show help for musicdb, and after that, for the musicai-module
    musicdb --help
-   musicdb musicai --help
+   musicdb artwork --help
 
    # List all availabe modules
    musicdb --version

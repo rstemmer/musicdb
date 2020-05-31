@@ -167,51 +167,6 @@ mountname (string starting with ``/``):
    This is the name of the mount MusicDB uses.
 
 
-MusicAI
--------
-
-modelpath (path to directory):
-   Directory where the models and training data are stored
-
-tmppath (path to directory):
-   A path to store temporary data.
-
-logpath (path to directory):
-   Path for logfiles of training runs
-
-spectrogrampath (path to directory):
-   Temporary path for generated spectrograms
-   This path should survives reboots.
-   Because the data generation takes much time,
-   it is better to have a "backup" of the temporary data.
-   So, they must not be generated again after changes or crashes.
-   If the model is trained, they can be removed.
-
-genrelist (a list of genrenames):
-   These are the genres the AI will use.
-   They must have the same name as they are listed in the database.
-   **Once this value is set, it should never be changed because it destroys the datasets and models the list was used for.**
-   **This entry is bound to the model name**
-
-modelname (string):
-   Name of the model.
-   **This entry is bound to the genre list.**
-   All data is bound to the model name.
-   Different CDNNs can be trained/used by changing this name.
-
-slicesize (number ∈ ℕ):
-   Size of a slice of a spectrogram to work with
-
-epoch (number ∈ ℕ):
-   Number of epoch for the training
-
-batchsize (number ∈ ℕ):
-   Size of one training batch - This should be as much as the GPUs Memory can hold, but not one byte more.
-
-usegpu (boolean):
-   Can be used to disable using the GPU - Not recommended!
-
-
 Randy
 -----
 
@@ -255,7 +210,7 @@ debugfile (path to file):
 
 ignore (list of python module names):
    List of modules to ignore in the logs.
-   At least ``requests, urllib3, PIL, tensorflow`` is recommended
+   At least ``requests, urllib3, PIL`` is recommended
 
 
 debug
