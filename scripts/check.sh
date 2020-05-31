@@ -46,7 +46,6 @@ CheckBinaryExistence "ffmpeg"
 CheckBinaryExistence "apachectl" opt    # other servers are also possible
 CheckBinaryExistence "openssl"
 CheckBinaryExistence "sqlite3"
-CheckBinaryExistence "sox" opt      # for MusicAI
 CheckBinaryExistence "rsync" opt    # for source update
 CheckBinaryExistence "latex" opt    # for documentation
 CheckBinaryExistence "jsdoc" opt    # for documentation
@@ -67,10 +66,6 @@ CheckPythonModuleExistence "fuzzywuzzy"
 CheckPythonModuleExistence "unicodedata"
 CheckPythonModuleExistence "asyncio"
 CheckPythonModuleExistence "autobahn.asyncio.websocket"
-CheckPythonModuleExistence "numpy"      opt # for MusicAI
-CheckPythonModuleExistence "h5py"       opt # for MusicAI
-CheckPythonModuleExistence "tensorflow" opt # for MusicAI
-CheckPythonModuleExistence "tflearn"    opt # for MusicAI
 CheckPythonModuleExistence "PIL"            # aka pillow
 CheckPythonModuleExistence "tqdm"
 CheckPythonModuleExistence "sphinx" opt     # for documentation
