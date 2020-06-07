@@ -88,7 +88,7 @@ class upgrade(MDBModule, MusicDBDatabase):
 
     def UpgradeMusicDB(self):
         self.PrintCheckFile("music.db")
-        newversion = 3
+        newversion = 4
 
         # Check version of MusicDB
         version = self.GetDatabaseVersion(self.db)
@@ -122,9 +122,67 @@ class upgrade(MDBModule, MusicDBDatabase):
 
             # Update version in database
             self.SetDatabaseVersion(self.db, 3)
+            self.PrintGood()
             version = 3
 
-        self.PrintGood()
+        # Upgrade to version 4
+        if version == 3:
+            print("\033[1;34mRemoving unused song statistics columns: ")
+            sql  = "BEGIN TRANSACTION;"
+            sql += " CREATE TABLE songs_new"
+            sql += " ("
+            sql += "     songid      INTEGER PRIMARY KEY AUTOINCREMENT,"
+            sql += "     albumid     INTEGER,"
+            sql += "     artistid    INTEGER,"
+            sql += "     name        TEXT,"
+            sql += "     path        TEXT,"
+            sql += "     number      INTEGER,"
+            sql += "     cd          INTEGER,"
+            sql += "     disabled    INTEGER,"
+            sql += "     playtime    INTEGER,"
+            sql += "     bitrate     INTEGER,"
+            sql += "     likes       INTEGER DEFAULT 0,"
+            sql += "     dislikes    INTEGER DEFAULT 0,"
+            sql += "     favorite    INTEGER DEFAULT 0,"
+            sql += "     lyricsstate INTEGER DEFAULT 0,"
+            sql += "     checksum    TEXT    DEFAULT \"\","
+            sql += "     lastplayed  INTEGER DEFAULT 0"
+            sql += " );"
+            sql += " INSERT INTO songs_new SELECT songid,albumid,artistid,name,path,number,cd,disabled,playtime,bitrate,likes,dislikes,favorite,lyricsstate,checksum,lastplayed FROM songs;"
+            sql += " DROP TABLE songs;"
+            sql += " CREATE TABLE songs"
+            sql += " ("
+            sql += "     songid      INTEGER PRIMARY KEY AUTOINCREMENT,"
+            sql += "     albumid     INTEGER,"
+            sql += "     artistid    INTEGER,"
+            sql += "     name        TEXT,"
+            sql += "     path        TEXT,"
+            sql += "     number      INTEGER,"
+            sql += "     cd          INTEGER,"
+            sql += "     disabled    INTEGER,"
+            sql += "     playtime    INTEGER,"
+            sql += "     bitrate     INTEGER,"
+            sql += "     likes       INTEGER DEFAULT 0,"
+            sql += "     dislikes    INTEGER DEFAULT 0,"
+            sql += "     favorite    INTEGER DEFAULT 0,"
+            sql += "     lyricsstate INTEGER DEFAULT 0,"
+            sql += "     checksum    TEXT    DEFAULT \"\","
+            sql += "     lastplayed  INTEGER DEFAULT 0"
+            sql += " );"
+            sql += " INSERT INTO songs SELECT songid,albumid,artistid,name,path,number,cd,disabled,playtime,bitrate,likes,dislikes,favorite,lyricsstate,checksum,lastplayed FROM songs_new;"
+            sql += " COMMIT;"
+
+            try:
+                self.db.ExecuteScript(sql)
+            except Exception as e:
+                self.PrintError(str(e))
+                return False
+
+            # Update version in database
+            self.SetDatabaseVersion(self.db, 4)
+            self.PrintGood()
+            version = 4
+
         return True
 
 

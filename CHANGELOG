@@ -7,9 +7,10 @@
 
 Run  git log --oneline  for more details
 
-┍━━━━┫ 2020-??-?? ┣━━━━┫ 5.3.0 ┣━━━━━━━━╍╍
+┍━━━━┫ 2020-??-?? ┣━━━━┫ 6.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ - [MusicAI] Removed (The framework I used is no longer maintained and does not work with modern Tensorflow anymore)
+│ - [MusicDB] Removed unused columns: qskips, qadds, qremoves, qrndadds
 │
 ┝━ MINOR CHANGES
 │ * Log output ends with setting terminal color to default (\e[0m)

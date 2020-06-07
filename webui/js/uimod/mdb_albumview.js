@@ -512,10 +512,6 @@ function _ABV_CreateSongEntryLikeGraph(MDBSong)
     var l       = MDBSong.likes;
     var d       = MDBSong.dislikes;
     var fav     = MDBSong.favorite
-    var adds    = MDBSong.qadds;
-    var radds   = MDBSong.qrndadds;
-    var removes = MDBSong.qremoves;
-    var skips   = MDBSong.qskips;
     
     // Make tooltip including some stats
     var tooltip = "";

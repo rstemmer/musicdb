@@ -731,11 +731,7 @@ class MusicDBDatabase(object):
         song["bitrate"]     = tagmeta["bitrate"]
         song["likes"]       = 0
         song["dislikes"]    = 0
-        song["qskips"]      = 0
-        song["qadds"]       = 0
-        song["qremoves"]    = 0
         song["favorite"]    = 0
-        song["qrndadds"]    = 0
         song["lyricsstate"] = SONG_LYRICSSTATE_EMPTY
         song["checksum"]    = self.fs.Checksum(songpath)
         song["lastplayed"]  = 0
