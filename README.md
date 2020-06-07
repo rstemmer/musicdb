@@ -28,6 +28,13 @@ Furthermore those changes may break scripts you wrote around MusicDB.
 
 Lines starting with "**:wrench: Change:**" are steps you have to do *before* or *after* updating via `install.sh` script.
 
+**20.xx.xx: 5.x.x → 6.0.0+**
+
+* Changes in the configuration file and music database (See CHANGELOG for details)
+  * **:wrench: Change:** Remember to call `musicdb upgrade` *after* installation when using the `update.sh` script
+  * **:wrench: Change:** Reload WebUI *after* update
+* MusicAI will no longer work. Everything related to MusicAI got removed. Reason: The used framework _tflearn_ is no longer under development and got not ported to TensorFlow 2.0.
+
 <details>
 <summary> 20.01.19: 4.x.x → 5.0.0+ </summary>
 
