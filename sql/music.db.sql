@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS albums
     origin      TEXT,
     release     INTEGER,
     artworkpath TEXT DEFAULT 'default.jpg',
-    bgcolor     TEXT DEFAULT '#080808',
+    bgcolor     TEXT DEFAULT '#101010',
     fgcolor     TEXT DEFAULT '#F0F0F0',
     hlcolor     TEXT DEFAULT '#909090',
     added       INTEGER DEFAULT 0
@@ -47,11 +47,7 @@ CREATE TABLE IF NOT EXISTS songs
     bitrate     INTEGER,
     likes       INTEGER DEFAULT 0,
     dislikes    INTEGER DEFAULT 0,
---    qskips      INTEGER DEFAULT 0,
---    qadds       INTEGER DEFAULT 0,
---    qremoves    INTEGER DEFAULT 0,
     favorite    INTEGER DEFAULT 0,
---    qrndadds    INTEGER DEFAULT 0,
     lyricsstate INTEGER DEFAULT 0,
     checksum    TEXT    DEFAULT "",
     lastplayed  INTEGER DEFAULT 0
