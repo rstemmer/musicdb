@@ -168,7 +168,7 @@ If there are any problems setting up MusicDB, create an issue.
 
 ## Docker-Based Demo
 
-It is possible to run a Demo installation via Docker container.
+It is possible to run a *Demo* installation via Docker container.
 Just clone this repository and execute the scripts in the docker sub-directory.
 
 ```sh
@@ -177,6 +177,10 @@ cd musicdb
 ./docker/build.sh
 ./docker/run.sh
 ```
+
+**Important:** I do not longer support docker and will no longer update or test the files in the docker directory.
+I let the scripts untouched as they were for version 5.2.2.
+In case they do not work with later versions of MusicDB please create an Issue.
 
 
 # Development
