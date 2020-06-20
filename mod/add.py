@@ -281,9 +281,13 @@ class SongView(ListView, ButtonView):
         filename   = self.fs.GetFileName(path)
         extension  = self.fs.GetFileExtension(path)
         analresult = self.fs.AnalyseSongFileName(filename + "." + extension)
+        seg        = self.FileNameSegments(filename)
 
         # Render validation
         if not analresult:
+            validation = "\033[1;31m ✘ "
+            self.allsongnamesvalid = False
+        elif seg["number"] != 0 or seg["gap"] != seg["name"] or seg["end"] != len(filename):
             validation = "\033[1;31m ✘ "
             self.allsongnamesvalid = False
         else:
@@ -294,7 +298,6 @@ class SongView(ListView, ButtonView):
         # Render file name
         renderedname  = ""
         width        -= len(filename)
-        seg           = self.FileNameSegments(filename)
         renderedname += "\033[1;31m\033[4m" + filename[0:seg["number"]] + "\033[24m"
         renderedname += "\033[1;34m" + filename[seg["number"]:seg["gap"]]
         renderedname += "\033[1;31m\033[4m" + filename[seg["gap"]:seg["name"]] + "\033[24m"
