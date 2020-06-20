@@ -226,7 +226,7 @@ class SongView(ListView, ButtonView):
             seg        = self.FileNameSegments(filename)
 
             newfilename  = filename[seg["number"]:seg["gap"]]
-            newfilename += filename[seg["name"]:]
+            newfilename += filename[seg["name"]:seg["end"]]
             newfilename  = unicodedata.normalize("NFC", newfilename)
 
             newpath = os.path.join(directory, newfilename + "." + extension)
@@ -258,6 +258,13 @@ class SongView(ListView, ButtonView):
             seg["name"] = seg["gap"] + m.start()
         else:
             seg["name"] = seg["gap"]
+
+        # Find end of song name (before " [Explicit]")
+        i = filename.rfind(" [Explicit]")
+        if i > 0:
+            seg["end"] = i
+        else:
+            seg["end"] = len(filename)
 
         return seg 
 
@@ -291,7 +298,8 @@ class SongView(ListView, ButtonView):
         renderedname += "\033[1;31m\033[4m" + filename[0:seg["number"]] + "\033[24m"
         renderedname += "\033[1;34m" + filename[seg["number"]:seg["gap"]]
         renderedname += "\033[1;31m\033[4m" + filename[seg["gap"]:seg["name"]] + "\033[24m"
-        renderedname += "\033[1;34m" + filename[seg["name"]:]
+        renderedname += "\033[1;34m" + filename[seg["name"]:seg["end"]]
+        renderedname += "\033[1;31m\033[4m" + filename[seg["end"]:] + "\033[24m"
 
         # Render file extension
         fileextension = "." + extension
