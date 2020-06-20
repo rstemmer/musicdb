@@ -17,9 +17,10 @@ Run  git log --oneline  for more details
 │ * [Artwork] Fixes issue with mutagenx package and importing artworks from mp3 files
 │ * [Add] Highlight in the summary when there are invalid song names
 │ * [Add] Exceptions during album import were captured to create better error messages
-│ - [Add] MusicAI processing removed
 │ + [Add] In case there is invalid unicode in a song file name, the module exits immediately
 │ + [Add] Detect and remove " [Explicit]" tags from song names
+│ + [Add] Add amazon as possible song origin
+│ - [Add] MusicAI processing removed
 │ - [mdbstate] Deprecated check/warning removed: israndom is now a mandatory key for song queue files 
 │ - [mdbstate] Deprecated check/warning removed: timestamp is now a mandatory key for blacklist files 
 │ - [MDBWSI] Deprecated function removed: GetMPDState, SetMPDState

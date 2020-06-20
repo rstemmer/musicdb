@@ -389,6 +389,7 @@ class MetaTags(object):
 
             * ``"iTunes"``
             * ``"bandcamp"``
+            * ``"anazon"``
             * ``"music163"`` aka 网易云音乐
             * ``"CD"`` as fallback for unknown *flac* files
             * ``"internet"`` as fallback for any other unknown files
@@ -426,6 +427,8 @@ class MetaTags(object):
                         return "music163"
                     elif "bandcamp" in self.file["COMM::\'eng\'"][0]:
                         return "bandcamp"
+                    elif "Amazon" in self.file["COMM::\'eng\'"][0]:
+                        return "Amazon"
             except KeyError:
                 pass
 

@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -656,7 +656,7 @@ class add(MDBModule, MusicDBDatabase):
         albumdialog.AddInput("Artist name:", artistinput, "Correct name of the album artist")
         albumdialog.AddInput("Album name:", nameinput, "Correct name of the album (no release year)")
         albumdialog.AddInput("Release date:", releaseinput, "Year with 4 digits like \"2017\"")
-        albumdialog.AddInput("Origin:", origininput, "\"iTunes\", \"bandcamp\", \"CD\", \"internet\", \"music163\"")
+        albumdialog.AddInput("Origin:", origininput, "\"iTunes\", \"bandcamp\", \"Amazon\", \"CD\", \"internet\"")
         albumdialog.AddInput("Import artwork:", artworkinput, "Import the artwork to MusicDB")
         albumdialog.AddInput("Import lyrics:", lyricsinput, "Try to import lyrics from file")
 
