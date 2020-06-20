@@ -202,6 +202,16 @@ class SongView(ListView, ButtonView):
         for f in files:
             extension = self.fs.GetFileExtension(f)
             if extension in ["mp3","flac","m4a","aac"]:
+                # Check if the name has valid Unicode.
+                # Some strange music stores have strange Unicode issues
+                try:
+                    f.encode("utf-8")
+                except UnicodeEncodeError as e:
+                    print("\n\033[1;31mThere is a file with a name that contains invalid utf-8 code.")
+                    print("Please navigate to the album %s and rename strange looking files.\033[0m"%(self.albumpath))
+                    print("\033[1;30mIf there is no cursor visible, execute \033[0;36mreset\033[0m")
+                    exit(1)
+
                 songs.append((f,f))
         return songs
 
