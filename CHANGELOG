@@ -31,6 +31,7 @@ Run  git log --oneline  for more details
 │ - [Configuration] All MusicAI related settings removed
 │ * [MP3Transcoder] File descriptor leak fixed. GStreamer pipes get closed after file transcoding.
 │ * [MP3Transcoder] File descriptor leak fixed. GStreamer object got not garbage-collected and left a file handler open
+│ * [lib/metadata] Detect CD information from mp3 files
 └───────────────────────────────────────╌╌
 
 

@@ -323,7 +323,7 @@ class MetaTags(object):
     def GetCDNumber(self):
         """
         This method returns the CD Number.
-        The CD number is only stored in MP4 metadata.
+        The CD number is only read from MP4 and MP3 metadata.
         For all other formats, this method always returns ``0``
 
         Returns:
@@ -334,9 +334,15 @@ class MetaTags(object):
             try:
                 number = self.file[b"disk"][0][0]
             except KeyError as e:
-                pass
+                number = 0
+
         elif self.ftype == "mp3":
-            return 0
+            try:
+                # Possible formats: "x/y" or "x"
+                number = self.file["TPOS"][0].split("/")[0]
+            except KeyError as e:
+                number = 0
+
         elif self.ftype == "flac":
             return 0
 
