@@ -395,7 +395,8 @@ class MetaTags(object):
 
             * ``"iTunes"``
             * ``"bandcamp"``
-            * ``"anazon"``
+            * ``"Amazon"``
+            * ``"Google"``
             * ``"music163"`` aka 网易云音乐
             * ``"CD"`` as fallback for unknown *flac* files
             * ``"internet"`` as fallback for any other unknown files
@@ -426,7 +427,7 @@ class MetaTags(object):
                     return "music163"
             except KeyError:
                 pass
-            # … but not always :( - There is a secound way: COMM contains a key
+            # … but not always :( - There is a second way: COMM contains a key
             try:
                 if "COMM::\'eng\'" in self.file:
                     if "163 key" in self.file["COMM::\'eng\'"][0]:
@@ -436,6 +437,13 @@ class MetaTags(object):
                     elif "Amazon" in self.file["COMM::\'eng\'"][0]:
                         return "Amazon"
             except KeyError:
+                pass
+            # … there is also a third way to identify the origin
+            try:
+                priv = self.file.tags.getall("PRIV")[0].owner
+                if priv.split("/")[0] == "Google":
+                    return "Google"
+            except:
                 pass
 
         # Check flac

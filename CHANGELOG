@@ -19,7 +19,6 @@ Run  git log --oneline  for more details
 │ * [Add] Exceptions during album import were captured to create better error messages
 │ + [Add] In case there is invalid unicode in a song file name, the module exits immediately
 │ + [Add] Detect and remove " [Explicit]" tags from song names
-│ + [Add] Add amazon as possible song origin
 │ * [Add] Fix a bug that get triggered when a song file comes with no meta data
 │ - [Add] MusicAI processing removed
 │ - [mdbstate] Deprecated check/warning removed: israndom is now a mandatory key for song queue files 
@@ -31,6 +30,7 @@ Run  git log --oneline  for more details
 │ - [Configuration] All MusicAI related settings removed
 │ * [MP3Transcoder] File descriptor leak fixed. GStreamer pipes get closed after file transcoding.
 │ * [MP3Transcoder] File descriptor leak fixed. GStreamer object got not garbage-collected and left a file handler open
+│ + [lib/metadata] Detect Amazon and Google as possible song origin
 │ * [lib/metadata] Detect CD information from mp3 files
 └───────────────────────────────────────╌╌
 
