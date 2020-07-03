@@ -154,6 +154,22 @@ class MP3Transcoder(object):
 
         # Close GStreamer pipeline
         self.gstreamer = None   # Force Garbage Collection
+        # HACK:
+        # I observed the following behavior.
+        # There were some file handler that get not closed.
+        # GStreamer did not close the file handler for the file to transcode.
+        # 
+        # Closing them explicitly in python using the deref() method lead to the following issue:
+        # Exiting the server lead to lots of "GLib-GObject-CRITICAL"-Errors.
+        # These errors where produced in the PyFinalizex-function.
+        # After some tries I figured out that all unref-falls needed by GStreamer
+        # are done by Pythons garbage collector.
+        # This is what I originally assumed and why I never called unref.
+        #
+        # Strange is, that the GStreamer object got garbage collected when the whole software exits
+        # and not, before. For example when an instance of this class get destroyed.
+        #
+        # Setting the reference explicitly to None solved the problem for now.
 
 
 
