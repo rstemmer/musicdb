@@ -666,8 +666,14 @@ class add(MDBModule, MusicDBDatabase):
         metadata     = self.GetAlbumMetadata(albumpath)
         if metadata:
             origin   = str(metadata["origin"])
-        else:
+
+            if metadata["lyrics"]:
+                lyricsinput.SetData(True)
+            else:
+                lyricsinput.SetData(False)
+        else: # No meta data available
             origin   = "Internet"
+
         analresult   = self.fs.AnalyseAlbumDirectoryName(albumdirname)
         if analresult:
             release   = str(analresult["release"])
@@ -685,11 +691,6 @@ class add(MDBModule, MusicDBDatabase):
         releaseinput.SetData(release)
         origininput.SetData(origin)
         artworkinput.SetData(True)
-
-        if metadata["lyrics"]:
-            lyricsinput.SetData(True)
-        else:
-            lyricsinput.SetData(False)
 
         # Initialize list
         songview.UpdateUI()
