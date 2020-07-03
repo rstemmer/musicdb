@@ -152,6 +152,9 @@ class MP3Transcoder(object):
         os.close(self.unixpipesource)
         os.close(self.unixpipesink)
 
+        # Close GStreamer pipeline
+        self.gstreamer = None   # Force Garbage Collection
+
 
 
     def onDecoderPadAdded(self, dbin, pad):
