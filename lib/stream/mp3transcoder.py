@@ -205,7 +205,7 @@ class MP3Transcoder(object):
             if gstate == "IDLE":
                 break
             elif gstate == "ERROR":
-                logging.error("GStreamerInterface is in ERROR state!", gstate)
+                logging.error("GStreamerInterface is in ERROR state!")
                 break
             time.sleep(0.1)
 
