@@ -28,6 +28,7 @@ Run  git log --oneline  for more details
 │ - [database] Deprecated function removed: UpdateSongPath
 │ - [Installation] All MusicAI related tasks removed
 │ - [Configuration] All MusicAI related settings removed
+│ * [MP3Transcoder] File descriptor leak fixed. GStreamer pipes get closed after file transcoding.
 └───────────────────────────────────────╌╌
 
 

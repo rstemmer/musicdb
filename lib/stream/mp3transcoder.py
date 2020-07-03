@@ -145,7 +145,12 @@ class MP3Transcoder(object):
 
 
     def __exit__(self, exc_type, exc_value, traceback):
-        self.Cancel()       # stop transcoding
+        # Stop transcoding
+        self.Cancel()
+
+        # Close Unix pipes to GStreamer
+        os.close(self.unixpipesource)
+        os.close(self.unixpipesink)
 
 
 
@@ -170,6 +175,9 @@ class MP3Transcoder(object):
         """
         This method cancels a currently running transcoding process.
         If there is no transcoding going on, nothing happens.
+
+        The GStreamer object gets set into CANCEL state.
+        The connection to GStreamer stays established!
         """
         # Cancel when there is still a transcoding process
         self.gstreamer.Cancel()
