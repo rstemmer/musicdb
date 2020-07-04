@@ -11,6 +11,7 @@ Run  git log --oneline  for more details
 ┝━ MAJOR CHANGES
 │ - [MusicAI] Removed (The framework I used is no longer maintained and does not work with modern Tensorflow anymore)
 │ - [MusicDB] Removed unused columns: qskips, qadds, qremoves, qrndadds
+│ + [MSBWSI/WebUI] In packages, all values behind the name key get beautified (U+2215->"/", "-"->N-Dash)
 │
 ┝━ MINOR CHANGES
 │ * Log output ends with setting terminal color to default (\e[0m)
