@@ -242,7 +242,7 @@ class upgrade(MDBModule, MusicDBDatabase):
         filename   = "/etc/musicdb.ini"
         musicdbini = configparser.ConfigParser()
         musicdbini.read(filename)
-        newversion = 3
+        newversion = 4
 
         # Check current version
         version = musicdbini.get("meta", "version", fallback="1")
@@ -283,6 +283,28 @@ class upgrade(MDBModule, MusicDBDatabase):
                 return False
             version = 3
 
+        if version == 3:
+            musicdbini.set("meta", "version", "4")
+            musicdbini.set("debug", "disableai", "1")
+            musicdbini.remove_option("MusicAI", "modelpath")
+            musicdbini.remove_option("MusicAI", "tmppath")
+            musicdbini.remove_option("MusicAI", "logpath")
+            musicdbini.remove_option("MusicAI", "spectrogrampath")
+            musicdbini.remove_option("MusicAI", "slicesize")
+            musicdbini.remove_option("MusicAI", "batchsize")
+            musicdbini.remove_option("MusicAI", "epoch")
+            musicdbini.remove_option("MusicAI", "usegpu")
+            musicdbini.remove_option("MusicAI", "modelname")
+            musicdbini.remove_option("MusicAI", "genrelist")
+            musicdbini.remove_section("MusicAI")
+            try:
+                with open(filename, "w") as configfile:
+                    musicdbini.write(configfile)
+            except Exception as e:
+                self.PrintError(str(e))
+                return False
+            version = 4
+
 
         # Reload configuration
         self.cfg = MusicDBConfig(filename)
@@ -321,9 +343,9 @@ class upgrade(MDBModule, MusicDBDatabase):
     def MDBM_Main(self, args):
 
         self.UpgradeConfiguration()
-        self.UpgradeMusicDB()
-        self.UpgradeTrackerDB()
-        self.UpgradeLycraDB()
+        # self.UpgradeMusicDB()
+        # self.UpgradeTrackerDB()
+        # self.UpgradeLycraDB()
         #self.UpgradeWebUIConfiguration()
         return 0
 
