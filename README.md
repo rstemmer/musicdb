@@ -279,3 +279,12 @@ Some special old releases are tagged in the git repository.
 They can be found in [GitHubs Releases Section](https://github.com/rstemmer/musicdb/releases).
 These are not the latest version of MusicDB and I do not recommend to use them.
 
+
+## Future Work and Ideas
+
+A list of things I plan to address after I finished my PhD Thesis.
+
+* Next generation of *MusicAI*. I already miss the old one that was surprisingly helpful tagging songs. The next generation might be based on TensorFlow 2.0 directly. I will have the same or similar architecture since it worked in the past.
+
+* New Frontend. Early ideas are around WebAssembly based technology or a native client.
+
