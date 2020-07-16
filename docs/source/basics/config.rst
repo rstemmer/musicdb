@@ -90,8 +90,14 @@ owner (UNIX user name):
 group (UNIX group name):
    Name of the group that shall be the owner of the music files
 
-cache (path to directory):
-   This is the place where MusicDB caches all songs as clean tagged mp3 files.
+ignoreartists (/ separated list of directory names):
+   Ignore these directory names when looking for artists
+
+ignorealbums (/ separated list of directory names):
+   Ignore these directory names when looking for albums
+
+ignoresongs (/ separated list of file names):
+   Ignore these files names when looking for songs
    
 artwork
 -------
