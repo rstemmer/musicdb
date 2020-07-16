@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2018-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,9 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 This class manages the music cache.
-This cache is used for the following features of MusicDB:
+This cache can be used for the following features of MusicDB.
 
-    #. **Streaming:** Instead of on-the-fly transcoding, MusicDB uses this cache.
+Currently the cache is not used - it is a dead feature.
+
+    #. **Streaming:** Instead of on-the-fly transcoding, MusicDB may use this cache. (Currently it does not)
     #. **Export:** This cache can be used as a clean base for exporting music to other devices. (The mobile app will use this cache as source)
     #. **HTML5-Source:** The WebUI can use this cache as clean source to access the music via HTML5-Audio-Tags.
 
