@@ -196,7 +196,7 @@ class database(MDBModule, MusicDBDatabase):
             return "video"
 
         else:
-            print("\033[1;31mERROR: Path does not address a Song, Album or Artist\033[0m")
+            print("\033[1;31mERROR: Path does not address a Song, Album, Artist or Video\033[0m")
             return None
 
 
@@ -246,6 +246,7 @@ class database(MDBModule, MusicDBDatabase):
         try:
             target = self.GetTargetByPath(args.path)
         except Exception as e:
+            traceback.print_exc()
             print("\033[1;31mDetermine target by path failed with exception \"%s\"!\033[0m"%(str(e)))
             return 1
 
