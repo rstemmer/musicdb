@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS meta
     key         TEXT,
     value       TEXT DEFAULT ''
 );
-INSERT INTO meta (key, value) VALUES ("version", 4);
+INSERT INTO meta (key, value) VALUES ("version", 5);
 
 
 CREATE TABLE IF NOT EXISTS artists
@@ -52,6 +52,34 @@ CREATE TABLE IF NOT EXISTS songs
     checksum    TEXT    DEFAULT "",
     lastplayed  INTEGER DEFAULT 0
 );
+
+
+CREATE TABLE IF NOT EXISTS videos
+(
+    videoid     INTEGER PRIMARY KEY AUTOINCREMENT,
+    songid      INTEGER DEFAULT NULL,
+    albumid     INTEGER DEFAULT NULL,
+    artistid    INTEGER,
+    name        TEXT,
+    path        TEXT,
+    disabled    INTEGER DEFAULT 0,
+    playtime    INTEGER,
+    origin      TEXT,
+    release     INTEGER,
+    added       INTEGER,
+    codec       TEXT,
+    xresolution INTEGER,
+    yresolution INTEGER,
+    thumbnailpath TEXT  DEFAULT "default.jpg",
+    likes       INTEGER DEFAULT 0,
+    dislikes    INTEGER DEFAULT 0,
+    favorite    INTEGER DEFAULT 0,
+    livevideo   INTEGER DEFAULT 0,
+    badaudio    INTEGER DEFAULT 0,
+    checksum    TEXT    DEFAULT "",
+    lastplayed  INTEGER DEFAULT 0
+);
+
 
 CREATE TABLE IF NOT EXISTS lyrics
 (

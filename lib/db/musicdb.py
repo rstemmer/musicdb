@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017, 2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ It caches information from the filesystem and provides augmentation of those fil
 This database handles the following components:
 
     * `Songs`_
+    * `Videos`_
     * `Albums`_
     * `Artists`_
     * `Artworks`_
@@ -99,7 +100,7 @@ checksum (Text)
 
 lastplayed (Integer)
     This value holds the information, when the song was played the last time.
-    The thime gets represented as an integer (unixtime).
+    The time gets represented as an integer (unixtime).
 
 
 Song Relates Methods
@@ -121,6 +122,80 @@ The following methods exist to handle song entries in the database:
     * :meth:`~lib.db.musicdb.MusicDatabase.RemoveSong`
 
 
+Videos
+------
+
+The columns of the videos table are the following:
+
+    +---------+--------+---------+----------+------+------+
+    | videoid | songid | albumid | artistid | name | path |
+    +---------+--------+---------+----------+------+------+
+
+    +----------+----------+--------+---------+-------+
+    | disabled | playtime | origin | release | added |
+    +----------+----------+--------+---------+-------+
+
+    +-------+-------------+-------------+---------------+
+    | codec | xresolution | yresolution | thumbnailpath |
+    +-------+-------------+-------------+---------------+
+
+    +-------+----------+----------+-----------+----------+
+    | likes | dislikes | favorite | livevideo | badaudio |
+    +-------+----------+----------+-----------+----------+
+
+    +----------+------------+
+    | checksum | lastplayed |
+    +----------+------------+
+
+songid, albumid (Integer)
+    These are references to an album the videos was included in,
+    and/or the song the video belongs to.
+    In case the album and/or song is not included in the collection,
+    these values can be ``NULL``.
+
+added (Integer)
+    Unix-Time when the video was added to the database
+
+release (Integer)
+    Year when the video was released. This year may be different to the
+    release year of the album or song
+
+codec (Text)
+    Like ``"h264"``
+
+
+checksum (Text)
+    This is the *sha256* hash value of the file addressed by ``path``.
+    The checksum will be calculated like shown in the following example:
+
+    .. code-block:: python
+
+        videopath = video["path"]
+        videofile = open(videopath, "rb")
+        
+        with open(videopath, "rb") as videofile:
+            checksum = hashlib.sha256(videofile.read()).hexdigest()
+
+        video["checksum"] = checksum
+
+    The hash function will not be changed in future.
+    This is OK as long as the hash value will not be used for security related things!
+
+    It can happen, that the value is empty (``""``).
+    This only means that the checksum of the song was not calculated yet.
+    In this case, just calculate it, and write it into the database.
+
+lastplayed (Integer)
+    This value holds the information, when the song was played the last time.
+    The time gets represented as an integer (unixtime).
+
+
+Video Relates Methods
+^^^^^^^^^^^^^^^^^^^^^
+
+The following methods exist to handle video entries in the database:
+
+    * ...
 
 
 Albums
