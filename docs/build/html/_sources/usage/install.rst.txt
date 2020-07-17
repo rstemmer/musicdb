@@ -138,7 +138,6 @@ The whole installation and updating process can be concluded into the steps in t
 | Generate SSL Key      | - Generate an SSL certificate and key    |                                          |
 +-----------------------+------------------------------------------+------------------------------------------+
 | Create directory tree | - Create data and server base directory  | - Update ``artwork/default.jpg``         |
-|                       | - Create MusicAI tree                    |                                          |
 |                       | - Create Artwork Cache                   |                                          |
 +-----------------------+------------------------------------------+------------------------------------------+
 | MusicDB Configuration | - Install ``musicdb.ini``                | - Update ``musicdb.ini``                 |
@@ -206,7 +205,6 @@ The following list gives you some details about the listed modules.
    * ``icecast`` won't be detected on Debian because there it is called ``icecast2`` (This has no impact).
    * ``apachectl`` my be not found if it is only available for root user. Or you simply use another HTTP server.
    * ``jsdoc`` can be installed via ``npm install -g jsdoc``.
-   * The following modules are optional in case you don't want to use the AI infrastructure: ``numpy``, ``h5py``, ``tensorflow``, ``tflearn``
 
 Basic packages
 ^^^^^^^^^^^^^^
@@ -282,10 +280,6 @@ musicdb
    cp ~/projects/musicdb/share/default.jpg artwork/default.jpg
    chown musicdb:musicdb artwork/default.jpg 
     
-   # MusicAI
-   mkdir -p musicai/{models,log,spectrograms,tmp}
-   chown -R musicdb:musicdb musicai
-    
    # logfile
    touch debuglog.ansi && chown musicdb:musicdb debuglog.ansi
     
@@ -354,43 +348,6 @@ When everything is correct, and the server is running, the WebUI can be reached 
 
 
 
-CUDA for MusicAI
-----------------
-
-.. note::
-
-   **MusicAI is optional!**
-
-   You only should consider using MusicAI if you know how to handle Neural Networks - or if you are willing to learn.
-   This feature is very computation intensive and requires expensive hardware to be usable.
-   You should first read the :doc:`/mdbapi/musicai` documentation.
-   If you still think working with a Convolutional Deep Neural Network is a good idea, then you should give it a try.
-   For me it works well and it has a coolness level over 9000.
-
-When you want to use :doc:`/mdbapi/musicai` you need a working `TensorFlow <https://www.tensorflow.org/>`_ environment 
-with `CUDA <https://developer.nvidia.com/cuda-zone>`_ support:
-
-.. code-block:: bash
-
-   pacman -S nvidia
-   shutdown -r now
-   pacman -S opencl-nvidia opencl-headers cuda
-
-   pip install tensorflow
-   pip install tflearn
-
-The `CuDNN <https://developer.nvidia.com/cudnn>`_ libraries are needed by *TensorFlow*.
-To download them you need a `NVidia Developer Account <https://developer.nvidia.com/rdp/form/cudnn-download-survey>`_.
-
-.. code-block:: bash
-
-   cp cudnn-8.0-linux-x64-v6.0.tgz /opt
-   cd /opt
-   tar xf cudnn-8.0-linux-x64-v6.0.tgz
-   echo 'export LD_LIBRARY_PATH=/opt/cuda/lib64:$LD_LIBRARY_PATH' >> /etc/profile.d/cuda.sh
-
-
-
 First Run
 ---------
 
@@ -418,14 +375,6 @@ Update
 
    You really should **make a backup** of the MusicDB data directory!
 
-After updating *CUDA*, *TensorFlow* must be updated, too.
-
-.. code-block:: bash
-
-   pip install --upgrade tensorflow
-   pip install --upgrade tflearn
-
-
 If you want to update MusicDB, pull the latest version from GitHub, and execute the ``install.sh`` script.
 Make sure the detected settings that are displayed in the dialog are correct.
 For minor release updates, the ``quickupdate.sh`` is also OK (It just updates MusicDB without checking the environment).
@@ -438,8 +387,5 @@ For minor release updates, the ``quickupdate.sh`` is also OK (It just updates Mu
    cd scripts           # go into the scripts directory
    su                   # you must be root for the updating process
    ./update.sh --major  # update
-
-
-
 
 

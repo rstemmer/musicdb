@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Websocket API &mdash; MusicDB 5.2.0 documentation</title>
+  <title>MusicDB Websocket API &mdash; MusicDB 6.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 6.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Workflow for development" href="workflow.html"/>
         <link rel="prev" title="MusicDB Test VMs" href="testvm.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.2
+                6.0
               </div>
             
           
@@ -114,7 +114,6 @@
 <li class="toctree-l2"><a class="reference internal" href="config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#lycra">lycra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#icecast">Icecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#debug">debug</a></li>
@@ -238,7 +237,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#cuda-for-musicai">CUDA for MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a></li>
 </ul>
@@ -285,10 +283,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
@@ -309,11 +303,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-list">Mood List</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-grid">Mood Grid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#style-guide">Style Guide</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/musicai.html">musicai - MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#module-mod.musicai">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
@@ -382,30 +371,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/mise.html">Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicai.html">MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#training-time">Training Time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#featureset">Featureset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#trainingset">Trainingset</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musiccache.html">MusicCache</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
@@ -489,10 +454,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../lib/hdf5storage.html">HDF5Storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/icecast.html">Icecast Interface</a><ul>
@@ -962,12 +923,12 @@ The arguments <em>args</em> and <em>pass</em> are optional arguments.</p>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetTables()</span></code></p></li>
 </ul>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface">
 <em class="property">class </em><code class="sig-prename descclassname">lib.ws.mdbwsi.</code><code class="sig-name descname">MusicDBWebSocketInterface</code><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue">
-<code class="sig-name descname">AddAlbumToQueue</code><span class="sig-paren">(</span><em class="sig-param">albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddAlbumToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AddAlbumToQueue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddAlbumToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds all songs of an album (from all CDs) at the end of the queue.</p>
 <p>The <em>adds</em>-statistic gets <strong>not</strong> incremented when a whole album gets add to the queue.</p>
 <p>If a song is flagged as “hated” or disabled, than it gets discarded.</p>
@@ -985,9 +946,9 @@ The arguments <em>args</em> and <em>pass</em> are optional arguments.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue">
-<code class="sig-name descname">AddRandomSongToQueue</code><span class="sig-paren">(</span><em class="sig-param">position</em>, <em class="sig-param">albumid=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddRandomSongToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AddRandomSongToQueue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">position</span></em>, <em class="sig-param"><span class="n">albumid</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddRandomSongToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Similar to <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSongToQueue()</span></code></a>.
 Instead of a specific song, a random song gets chosen by the random-song manager <em>Randy</em> (See <a class="reference internal" href="../mdbapi/randy.html"><span class="doc">Randomizer</span></a>).
 This is done using the <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy.GetSong" title="mdbapi.randy.Randy.GetSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.randy.Randy.GetSong()</span></code></a> method.</p>
@@ -1011,9 +972,9 @@ using <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Rand
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue">
-<code class="sig-name descname">AddSongToQueue</code><span class="sig-paren">(</span><em class="sig-param">songid</em>, <em class="sig-param">position</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddSongToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AddSongToQueue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em>, <em class="sig-param"><span class="n">position</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddSongToQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds a new song to the queue of songs that will be streamed.</p>
 <p>The song gets address by its ID.
 The position can be <code class="docutils literal notranslate"><span class="pre">&quot;next&quot;</span></code> if the song shall be places behind the current playing song.
@@ -1036,9 +997,9 @@ Alternative <code class="docutils literal notranslate"><span class="pre">&quot;l
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSubgenre">
-<code class="sig-name descname">AddSubgenre</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">parentname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddSubgenre"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSubgenre" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AddSubgenre</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">parentname</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.AddSubgenre"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSubgenre" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a new subgenre.</p>
 <p>If tagging is disabled nothing will be done.</p>
 <dl class="field-list simple">
@@ -1051,9 +1012,9 @@ Alternative <code class="docutils literal notranslate"><span class="pre">&quot;l
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship">
-<code class="sig-name descname">CutSongRelationship</code><span class="sig-paren">(</span><em class="sig-param">songid</em>, <em class="sig-param">relatedsongid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.CutSongRelationship"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">CutSongRelationship</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em>, <em class="sig-param"><span class="n">relatedsongid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.CutSongRelationship"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes the relation between two songs.</p>
 <p>After executing this method, the MusicDB server broadcasts the result of <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongRelationship()</span></code></a>. (<code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;broadcast&quot;,</span> <span class="pre">fncname</span> <span class="pre">=</span> <span class="pre">&quot;GetSongRelationship&quot;</span></code>)
 So each client gets informed about the changes made.</p>
@@ -1067,9 +1028,9 @@ So each client gets informed about the changes made.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.Find">
-<code class="sig-name descname">Find</code><span class="sig-paren">(</span><em class="sig-param">searchstring</em>, <em class="sig-param">limit</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.Find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.Find" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Find</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">searchstring</span></em>, <em class="sig-param"><span class="n">limit</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.Find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.Find" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method starts a search for <em>searchstring</em> on songnames, albumnames and artistnames.
 The returned value is a dictionary with the following entries:</p>
 <blockquote>
@@ -1137,9 +1098,9 @@ So, typos or all lowercase input are no problem.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum">
-<code class="sig-name descname">GetAlbum</code><span class="sig-paren">(</span><em class="sig-param">albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetAlbum</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns an album and its songs, separated by CDs.</p>
 <p>GetAlbum returns a dictionary with the following keys:</p>
 <blockquote>
@@ -1185,16 +1146,16 @@ So, typos or all lowercase input are no problem.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags">
-<code class="sig-name descname">GetAlbumTags</code><span class="sig-paren">(</span><em class="sig-param">albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetAlbumTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetAlbumTags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetAlbumTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags" title="Permalink to this definition">¶</a></dt>
 <dd><p>Similar to <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongTags()</span></code></a>.
 This method returns the tags for an Album.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums">
-<code class="sig-name descname">GetAlbums</code><span class="sig-paren">(</span><em class="sig-param">artistid</em>, <em class="sig-param">applyfilter=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetAlbums</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span></em>, <em class="sig-param"><span class="n">applyfilter</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums" title="Permalink to this definition">¶</a></dt>
 <dd><p>GetAlbums returns a list of albums of an artist.
 The list is sorted by release date of the album, starting with the earliest one.
 Each entry in the list has the following two elements:</p>
@@ -1240,7 +1201,7 @@ Each entry in the list has the following two elements:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists">
 <code class="sig-name descname">GetArtists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetArtists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of artists.
@@ -1260,9 +1221,9 @@ This list is sorted by the name of the artist.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums">
-<code class="sig-name descname">GetArtistsWithAlbums</code><span class="sig-paren">(</span><em class="sig-param">applyfilter=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetArtistsWithAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetArtistsWithAlbums</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">applyfilter</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetArtistsWithAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of artists and their albums.
 Each entry in this list contains the following two elements:</p>
 <blockquote>
@@ -1310,9 +1271,9 @@ Each entry in this list contains the following two elements:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetLyricsCrawlerCache">
-<code class="sig-name descname">GetLyricsCrawlerCache</code><span class="sig-paren">(</span><em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetLyricsCrawlerCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetLyricsCrawlerCache" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetLyricsCrawlerCache</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetLyricsCrawlerCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetLyricsCrawlerCache" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns all cached lyrics for a song.</p>
 <p>A dictionary with two entries gets returned, the <em>songid</em> is the same the argument is.
 The second key is <em>lyricscache</em> that holds the values from the lyrics cache.
@@ -1328,7 +1289,7 @@ If there are no cached lyrics, the <em>lyricscache</em> entry is <code class="do
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState">
 <code class="sig-name descname">GetMDBState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetMDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the current global state of the MusicDB WebUIs</p>
@@ -1363,7 +1324,7 @@ If there are no cached lyrics, the <em>lyricscache</em> entry is <code class="do
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue">
 <code class="sig-name descname">GetQueue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of songs, albums and artists for each song in the song queue.
@@ -1402,9 +1363,9 @@ If there are no songs in the queue, an empty list gets returned.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong">
-<code class="sig-name descname">GetSong</code><span class="sig-paren">(</span><em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSong</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the information of a song, its album and artist, and its tags.</p>
 <p>The returned dictionary has the following keys:</p>
 <blockquote>
@@ -1445,9 +1406,9 @@ If there are no songs in the queue, an empty list gets returned.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship">
-<code class="sig-name descname">GetSongRelationship</code><span class="sig-paren">(</span><em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSongRelationship"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSongRelationship</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSongRelationship"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the relationship of a song.
 It is a list of songs that were played before or after the song with song ID <em>songid</em>.</p>
 <p>The returned dictionary contains the same song ID given as argument to this method, and list of related songs.
@@ -1494,9 +1455,9 @@ See <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags">
-<code class="sig-name descname">GetSongTags</code><span class="sig-paren">(</span><em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSongTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSongTags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSongTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a dictionary with the following keys:</p>
 <blockquote>
 <div><ul class="simple">
@@ -1543,9 +1504,9 @@ Each tag is a dictionary as returned by <a class="reference internal" href="../l
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs">
-<code class="sig-name descname">GetSortedAlbumCDs</code><span class="sig-paren">(</span><em class="sig-param">albumid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSortedAlbumCDs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSortedAlbumCDs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetSortedAlbumCDs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a sorted list of CDs of an album.
 Each CD entry is a further sorted list of songs.
 Each song-entry is a dictionary with the following keys:</p>
@@ -1565,7 +1526,7 @@ Each song-entry is a dictionary with the following keys:</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState">
 <code class="sig-name descname">GetStreamState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetStreamState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the state of the Streaming Thread. (See <a class="reference internal" href="../mdbapi/stream.html"><span class="doc">Streaming Server</span></a>)</p>
@@ -1615,7 +1576,7 @@ Each song-entry is a dictionary with the following keys:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags">
 <code class="sig-name descname">GetTags</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.GetTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns all tags that are available, separated by the tag classes.</p>
@@ -1650,9 +1611,9 @@ Each song-entry is a dictionary with the following keys:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue">
-<code class="sig-name descname">MoveSongInQueue</code><span class="sig-paren">(</span><em class="sig-param">entryid</em>, <em class="sig-param">afterid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.MoveSongInQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">MoveSongInQueue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">entryid</span></em>, <em class="sig-param"><span class="n">afterid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.MoveSongInQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a direct interface to <a class="reference internal" href="../mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.MoveSong" title="mdbapi.songqueue.SongQueue.MoveSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.songqueue.SongQueue.MoveSong()</span></code></a>.
 It moves a song from one position in the queue to another one.</p>
 <p>It is not allowed to move the current playing song (index 0).
@@ -1731,7 +1692,7 @@ The next one moves song 2 to the end of the queue.</p>
 </table>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong">
 <code class="sig-name descname">PlayNextSong</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.PlayNextSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method skips the current playing song.
@@ -1747,9 +1708,9 @@ If there is no song that can be skipped, the Song Queue or Streaming Thread will
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag">
-<code class="sig-name descname">RemoveAlbumTag</code><span class="sig-paren">(</span><em class="sig-param">albumid</em>, <em class="sig-param">tagid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RemoveAlbumTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveAlbumTag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em>, <em class="sig-param"><span class="n">tagid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RemoveAlbumTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a tag from an album</p>
 <p>If tagging is disabled nothing will be done.</p>
 <dl class="field-list simple">
@@ -1769,9 +1730,9 @@ If there is no song that can be skipped, the Song Queue or Streaming Thread will
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue">
-<code class="sig-name descname">RemoveSongFromQueue</code><span class="sig-paren">(</span><em class="sig-param">entryid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RemoveSongFromQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveSongFromQueue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">entryid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RemoveSongFromQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes a song from song queue.
 The song gets identified by the entry ID of the queue entry.</p>
 <dl class="field-list simple">
@@ -1788,9 +1749,9 @@ The song gets identified by the entry ID of the queue entry.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag">
-<code class="sig-name descname">RemoveSongTag</code><span class="sig-paren">(</span><em class="sig-param">songid</em>, <em class="sig-param">tagid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RemoveSongTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveSongTag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em>, <em class="sig-param"><span class="n">tagid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RemoveSongTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a tag from a song</p>
 <p>If tagging is disabled nothing will be done.</p>
 <p>After executing this method, the MusicDB server broadcasts the result of <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSong()</span></code></a>. (<code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;broadcast&quot;,</span> <span class="pre">fncname</span> <span class="pre">=</span> <span class="pre">&quot;GetSong&quot;</span></code>)
@@ -1816,9 +1777,9 @@ So when changing a genre or sub genre, then they get suggested as album genre or
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.RunLyricsCrawler">
-<code class="sig-name descname">RunLyricsCrawler</code><span class="sig-paren">(</span><em class="sig-param">songid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RunLyricsCrawler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RunLyricsCrawler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RunLyricsCrawler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.RunLyricsCrawler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.RunLyricsCrawler" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method starts the process of crawling for lyrics. (See <a class="reference internal" href="../mdbapi/lycra.html"><span class="doc">LyCra - Lyrics Crawler</span></a> for details)</p>
 <p>After all available crawler run, the method returns the current lyrics cache.
 This is identical to <code class="xref py py-meth docutils literal notranslate"><span class="pre">GetLyricsCrawlerCache()</span></code>.</p>
@@ -1832,9 +1793,9 @@ This is identical to <code class="xref py py-meth docutils literal notranslate">
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor">
-<code class="sig-name descname">SetAlbumColor</code><span class="sig-paren">(</span><em class="sig-param">albumid</em>, <em class="sig-param">colorname</em>, <em class="sig-param">color</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetAlbumColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SetAlbumColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em>, <em class="sig-param"><span class="n">colorname</span></em>, <em class="sig-param"><span class="n">color</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetAlbumColor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a color scheme for an album.
 Valid color names are the following and must be given as string to the <em>colorname</em> parameter.
 The color itself must be in HTML-Format: <code class="docutils literal notranslate"><span class="pre">#RRGGBB</span></code>.</p>
@@ -1864,9 +1825,9 @@ The color itself must be in HTML-Format: <code class="docutils literal notransla
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag">
-<code class="sig-name descname">SetAlbumTag</code><span class="sig-paren">(</span><em class="sig-param">albumid</em>, <em class="sig-param">tagid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetAlbumTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SetAlbumTag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em>, <em class="sig-param"><span class="n">tagid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetAlbumTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a tag for an album.
 This method sets the approval-level to 1 (Set by User) and confidence to 1.0 for this tag.
 So, this method can also be used to approve an AI set tag.</p>
@@ -1888,9 +1849,9 @@ So, this method can also be used to approve an AI set tag.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState">
-<code class="sig-name descname">SetMDBState</code><span class="sig-paren">(</span><em class="sig-param">category</em>, <em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetMDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SetMDBState</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">category</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetMDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets the global state of MDB clients</p>
 <p>If the state is not available in the global state settings, it will be created.</p>
 <p>When the <em>category</em> is <code class="docutils literal notranslate"><span class="pre">&quot;albumfilter&quot;</span></code>,
@@ -1917,9 +1878,9 @@ So each client gets informed about the new state.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag">
-<code class="sig-name descname">SetSongTag</code><span class="sig-paren">(</span><em class="sig-param">songid</em>, <em class="sig-param">tagid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetSongTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SetSongTag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em>, <em class="sig-param"><span class="n">tagid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetSongTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a tag for a song.
 This method sets the approval-level to 1 (Set by User) and confidence to 1.0 for this tag.
 So, this method can also be used to approve an AI set tag.</p>
@@ -1961,9 +1922,9 @@ So when changing a genre or sub genre, then they get suggested as album genre or
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState">
-<code class="sig-name descname">SetStreamState</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetStreamState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SetStreamState</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">state</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.SetStreamState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to set the  <em>playing</em>-state of the stream (see <a class="reference internal" href="../mdbapi/stream.html"><span class="doc">Streaming Server</span></a>)</p>
 <p>The following arguments are possible:</p>
 <blockquote>
@@ -1987,9 +1948,9 @@ So when changing a genre or sub genre, then they get suggested as album genre or
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic">
-<code class="sig-name descname">UpdateSongStatistic</code><span class="sig-paren">(</span><em class="sig-param">songid</em>, <em class="sig-param">statistic</em>, <em class="sig-param">modifier</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.UpdateSongStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">UpdateSongStatistic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em>, <em class="sig-param"><span class="n">statistic</span></em>, <em class="sig-param"><span class="n">modifier</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/mdbwsi.html#MusicDBWebSocketInterface.UpdateSongStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic" title="Permalink to this definition">¶</a></dt>
 <dd><p>When this method got called direct via the JavaScript API, the MusicDB server broadcasts the result of <a class="reference internal" href="#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong" title="lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSong()</span></code></a>. (<code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">&quot;broadcast&quot;,</span> <span class="pre">fncname</span> <span class="pre">=</span> <span class="pre">&quot;GetSong&quot;</span></code>)
 So each client gets informed about the changes made.
 This is important to update the HUD if the song is currently playing.</p>
@@ -2014,7 +1975,7 @@ This is important to update the HUD if the song is currently playing.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
 
     </p>
   </div>
@@ -2036,7 +1997,7 @@ This is important to update the HUD if the song is currently playing.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.2.0',
+            VERSION:'6.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

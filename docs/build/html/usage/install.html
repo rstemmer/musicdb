@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &amp; Update &mdash; MusicDB 5.2.0 documentation</title>
+  <title>Installation &amp; Update &mdash; MusicDB 6.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 6.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Music" href="music.html"/>
         <link rel="prev" title="Docker" href="docker.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.2
+                6.0
               </div>
             
           
@@ -114,7 +114,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#icecast">Icecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
@@ -238,7 +237,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#cuda-for-musicai">CUDA for MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#update">Update</a></li>
 </ul>
@@ -285,10 +283,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
@@ -309,11 +303,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-list">Mood List</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-grid">Mood Grid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#style-guide">Style Guide</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/musicai.html">musicai - MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#module-mod.musicai">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
@@ -382,30 +371,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/mise.html">Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicai.html">MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#training-time">Training Time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#featureset">Featureset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#trainingset">Trainingset</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musiccache.html">MusicCache</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
@@ -489,10 +454,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../lib/hdf5storage.html">HDF5Storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/icecast.html">Icecast Interface</a><ul>
@@ -816,7 +777,6 @@ Furthermore you should check <code class="docutils literal notranslate"><span cl
 <tr class="row-even"><td><p>Create directory tree</p></td>
 <td><ul class="simple">
 <li><p>Create data and server base directory</p></li>
-<li><p>Create MusicAI tree</p></li>
 <li><p>Create Artwork Cache</p></li>
 </ul>
 </td>
@@ -936,7 +896,6 @@ The following list gives you some details about the listed modules.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">icecast</span></code> won’t be detected on Debian because there it is called <code class="docutils literal notranslate"><span class="pre">icecast2</span></code> (This has no impact).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">apachectl</span></code> my be not found if it is only available for root user. Or you simply use another HTTP server.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">jsdoc</span></code> can be installed via <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">-g</span> <span class="pre">jsdoc</span></code>.</p></li>
-<li><p>The following modules are optional in case you don’t want to use the AI infrastructure: <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">h5py</span></code>, <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code>, <code class="docutils literal notranslate"><span class="pre">tflearn</span></code></p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -1003,10 +962,6 @@ chmod -R g+w artwork
 cp ~/projects/musicdb/share/default.jpg artwork/default.jpg
 chown musicdb:musicdb artwork/default.jpg
 
-<span class="c1"># MusicAI</span>
-mkdir -p musicai/<span class="o">{</span>models,log,spectrograms,tmp<span class="o">}</span>
-chown -R musicdb:musicdb musicai
-
 <span class="c1"># logfile</span>
 touch debuglog.ansi <span class="o">&amp;&amp;</span> chown musicdb:musicdb debuglog.ansi
 
@@ -1068,36 +1023,6 @@ The update process saves the lines with the configuration and restores them afte
 </div>
 <p>When everything is correct, and the server is running, the WebUI can be reached via <code class="docutils literal notranslate"><span class="pre">http://localhost/musicdb/webui/moderator.html</span></code></p>
 </div>
-<div class="section" id="cuda-for-musicai">
-<h2>CUDA for MusicAI<a class="headerlink" href="#cuda-for-musicai" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><strong>MusicAI is optional!</strong></p>
-<p>You only should consider using MusicAI if you know how to handle Neural Networks - or if you are willing to learn.
-This feature is very computation intensive and requires expensive hardware to be usable.
-You should first read the <a class="reference internal" href="../mdbapi/musicai.html"><span class="doc">MusicAI</span></a> documentation.
-If you still think working with a Convolutional Deep Neural Network is a good idea, then you should give it a try.
-For me it works well and it has a coolness level over 9000.</p>
-</div>
-<p>When you want to use <a class="reference internal" href="../mdbapi/musicai.html"><span class="doc">MusicAI</span></a> you need a working <a class="reference external" href="https://www.tensorflow.org/">TensorFlow</a> environment
-with <a class="reference external" href="https://developer.nvidia.com/cuda-zone">CUDA</a> support:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pacman -S nvidia
-shutdown -r now
-pacman -S opencl-nvidia opencl-headers cuda
-
-pip install tensorflow
-pip install tflearn
-</pre></div>
-</div>
-<p>The <a class="reference external" href="https://developer.nvidia.com/cudnn">CuDNN</a> libraries are needed by <em>TensorFlow</em>.
-To download them you need a <a class="reference external" href="https://developer.nvidia.com/rdp/form/cudnn-download-survey">NVidia Developer Account</a>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp cudnn-8.0-linux-x64-v6.0.tgz /opt
-<span class="nb">cd</span> /opt
-tar xf cudnn-8.0-linux-x64-v6.0.tgz
-<span class="nb">echo</span> <span class="s1">&#39;export LD_LIBRARY_PATH=/opt/cuda/lib64:$LD_LIBRARY_PATH&#39;</span> &gt;&gt; /etc/profile.d/cuda.sh
-</pre></div>
-</div>
-</div>
 <div class="section" id="first-run">
 <h2>First Run<a class="headerlink" href="#first-run" title="Permalink to this headline">¶</a></h2>
 <p>For starting and stopping the MusicDB WebSocket Server and its dependent processes,
@@ -1117,11 +1042,6 @@ So if your WebSocket address is <code class="docutils literal notranslate"><span
 There may be some problems in special cases.
 Espacially when you use it for updating MusicDB, it could happen that you loose some configuration or in worts case your database.</p>
 <p>You really should <strong>make a backup</strong> of the MusicDB data directory!</p>
-</div>
-<p>After updating <em>CUDA</em>, <em>TensorFlow</em> must be updated, too.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install --upgrade tensorflow
-pip install --upgrade tflearn
-</pre></div>
 </div>
 <p>If you want to update MusicDB, pull the latest version from GitHub, and execute the <code class="docutils literal notranslate"><span class="pre">install.sh</span></code> script.
 Make sure the detected settings that are displayed in the dialog are correct.
@@ -1150,7 +1070,7 @@ su                   <span class="c1"># you must be root for the updating proces
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
 
     </p>
   </div>
@@ -1172,7 +1092,7 @@ su                   <span class="c1"># you must be root for the updating proces
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.2.0',
+            VERSION:'6.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
