@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,7 +15,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 This module manages the music database.
-Its main task is to add new albums or artist to the Music Database.
+Its main task is to add new albums, artists or music videos to the Music Database.
+This module can also be seen as the low level interface compared to :doc:`/mod/add`.
+
+.. attention::
+
+    The addressed paths must follow the naming scheme.
+    See :doc:`/usage/music` for details.
 
 This command line interface expects two positional arguments. 
 A subcommand and a path to the target (artist, album, song): ``musicdb database $SUBCOMMAND $PATH``.
@@ -24,12 +30,13 @@ The target gets determined by its path.
 The following subcommands are provided:
 
     ``add``: 
-        Add new artist, album or song to the database.
+        Add new artist, album, song or video to the database.
         Direct interface to:
 
             * If the path addresses a song: :meth:`mdbapi.database.MusicDBDatabase.AddSong`
             * If the path addresses a album: :meth:`mdbapi.database.MusicDBDatabase.AddAlbum`
             * If the path addresses a artist: :meth:`mdbapi.database.MusicDBDatabase.AddArtist`
+            * If the path addresses a video: :meth:`mdbapi.database.MusicDBDatabase.AddVideo`
 
     ``remove``:
         Removes an artist, album or song from the database.
@@ -61,6 +68,8 @@ Examples:
 
         musicdb database remove /data/music/Bad\ Artist
 
+        musicdb database add /data/music/Artist/2000\ -\ Video.m4v
+
 
 """
 
@@ -84,8 +93,10 @@ class database(MDBModule, MusicDBDatabase):
             self.AddAlbum(path)
         elif target == "song":
             self.AddSong(path)
+        elif target == "video":
+            self.AddVideo(path)
         else:
-            raise ValueError("Invalid target! Target must be \"artist\", \"album\" or \"song\".")
+            raise ValueError("Invalid target! Target must be \"artist\", \"album\", \"song\" or \"video\".")
         print("\033[1;32mdone")
 
         # propagate changes
@@ -158,7 +169,7 @@ class database(MDBModule, MusicDBDatabase):
 
 
     def GetTargetByPath(self, abspath):
-        # returns "album", "artist" or "song" or None if path is invalid
+        # returns "album", "artist", "song", "video" or None if path is invalid
 
         try:
             path = self.fs.RemoveRoot(abspath)
@@ -180,6 +191,10 @@ class database(MDBModule, MusicDBDatabase):
             print("\033[1;34mWorking on Song-path")
             return "song"
 
+        elif self.fs.IsVideoPath(path):
+            print("\033[1;34mWorking on Video-path")
+            return "video"
+
         else:
             print("\033[1;31mERROR: Path does not address a Song, Album or Artist\033[0m")
             return None
@@ -194,7 +209,7 @@ class database(MDBModule, MusicDBDatabase):
         subp   = parser.add_subparsers(title="Commands", metavar="command", help="database commands")
         
         addparser = subp.add_parser("add", help="add target to database")
-        addparser.add_argument("path", help="path to an artist, album or song")
+        addparser.add_argument("path", help="path to an artist, album, song or video")
         addparser.set_defaults(command="Add")
 
         addparser = subp.add_parser("remove", help="remove target from database")

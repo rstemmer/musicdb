@@ -42,6 +42,16 @@ In case the album has multiple dist, the disk number is set in front of the song
 
 A complete path to a song file would be: ``$Artistname/$Release - $Albumname/$Songnumber $Songname.$Fileextension``. For example: ``Rammstein/2005 - Rosenrot/01 Benzin.flac``
 
+Music Video File Name
+^^^^^^^^^^^^^^^^^^^^^
+
+The music video files are placed in the artists directory beneath the album directories.
+They also follow a similar naming scheme: ``$Release - $Videoname.$Fileextension``.
+Where ``$Release`` is the year the video was released.
+This may be a different year than a corresponding album or song was released.
+Separated by a space surrounded dash, the name of song or music video is required.
+Then, separated by a dot, the file extension.
+A complete path to the music video *Sonne* by *Rammstein* would be: ``Rammstein/2001 - Sonne.m4v``
 
 Importing Albums to MusicDB
 ---------------------------
@@ -77,11 +87,11 @@ For details see :doc:`/mod/database`.
 .. code-block:: bash
 
    # add an artist (and all albums and songs)
-   musicdb database add artist $MusicPath/$ArtistName
+   musicdb database add $MusicPath/$ArtistName
    musicdb artwork -u
 
    # add an album (and all songs)
-   musicdb database add album $MusicPath/$ArtistName/$Release\ -\ $AlbumName
+   musicdb database add $MusicPath/$ArtistName/$Release\ -\ $AlbumName
    musicdb artwork -u
 
 
