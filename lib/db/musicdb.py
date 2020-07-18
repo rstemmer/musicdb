@@ -195,7 +195,9 @@ Video Relates Methods
 
 The following methods exist to handle video entries in the database:
 
-    * ...
+    * :meth:`~lib.db.musicdb.MusicDatabase.AddVideo`
+    * :meth:`~lib.db.musicdb.MusicDatabase.AddFullVideo`
+    * :meth:`~lib.db.musicdb.MusicDatabase.GetVideoByPath`
 
 
 Albums
@@ -491,6 +493,29 @@ class MusicDatabase(Database):
     SONG_CHECKSUM   = 14
     SONG_LASTPLAYED = 15
 
+    VIDEO_ID            = 0
+    VIDEO_SONGID        = 1
+    VIDEO_ALBUMID       = 2
+    VIDEO_ARTISTID      = 3
+    VIDEO_NAME          = 4
+    VIDEO_PATH          = 5
+    VIDEO_DISABLED      = 6
+    VIDEO_PLAYTIME      = 7
+    VIDEO_ORIGIN        = 8 # iTunes, YouTube, Amazon
+    VIDEO_RELEASE       = 9
+    VIDEO_ADDED         = 10
+    VIDEO_CODEC         = 11
+    VIDEO_XRESOLUTION   = 12
+    VIDEO_YRESOLUTION   = 13
+    VIDEO_THUMBNAILPATH = 14
+    VIDEO_LIKES         = 15
+    VIDEO_DISLIKES      = 16
+    VIDEO_FAVORITE      = 17
+    VIDEO_LIVEVIDEO     = 18
+    VIDEO_BADAUDIO      = 19
+    VIDEO_CHECKSUM      = 20
+    VIDEO_LASTPLAYED    = 21
+
     TAG_ID          = 0
     TAG_NAME        = 1
     TAG_CLASS       = 2
@@ -528,7 +553,7 @@ class MusicDatabase(Database):
         except Exception as e:
             raise ValueError("Unable to read version number from Music Database")
 
-        if version != 4:
+        if version != 5:
             logging.error("Unexpected version number of Music Database. Got %i, expected %i"%(version, 3))
             raise ValueError("Unexpected version number of Music Database. Got %i, expected %i"%(version, 3))
         
@@ -576,6 +601,32 @@ class MusicDatabase(Database):
         song["checksum"]    = entry[self.SONG_CHECKSUM]
         song["lastplayed"]  = entry[self.SONG_LASTPLAYED]
         return song
+
+    def __VideoEntryToDict(self, entry):
+        video = {}
+        video["id"]            = entry[self.VIDEO_ID            ]
+        video["songid"]        = entry[self.VIDEO_SONGID        ]
+        video["albumid"]       = entry[self.VIDEO_ALBUMID       ]
+        video["artistid"]      = entry[self.VIDEO_ARTISTID      ]
+        video["name"]          = entry[self.VIDEO_NAME          ]
+        video["path"]          = entry[self.VIDEO_PATH          ]
+        video["disabled"]      = entry[self.VIDEO_DISABLED      ]
+        video["playtime"]      = entry[self.VIDEO_PLAYTIME      ]
+        video["origin"]        = entry[self.VIDEO_ORIGIN        ]
+        video["release"]       = entry[self.VIDEO_RELEASE       ]
+        video["added"]         = entry[self.VIDEO_ADDED         ]
+        video["codec"]         = entry[self.VIDEO_CODEC         ]
+        video["xresolution"]   = entry[self.VIDEO_XRESOLUTION   ]
+        video["yresolution"]   = entry[self.VIDEO_YRESOLUTION   ]
+        video["thumbnailpath"] = entry[self.VIDEO_THUMBNAILPATH ]
+        video["likes"]         = entry[self.VIDEO_LIKES         ]
+        video["dislikes"]      = entry[self.VIDEO_DISLIKES      ]
+        video["favorite"]      = entry[self.VIDEO_FAVORITE      ]
+        video["livevideo"]     = entry[self.VIDEO_LIVEVIDEO     ]
+        video["badaudio"]      = entry[self.VIDEO_BADAUDIO      ]
+        video["checksum"]      = entry[self.VIDEO_CHECKSUM      ]
+        video["lastplayed"]    = entry[self.VIDEO_LASTPLAYED    ]
+        return video
 
     def __TagEntryToDict(self, entry):
         tag = {}
@@ -684,6 +735,47 @@ class MusicDatabase(Database):
         """
         with MusicDatabaseLock:
             self.Execute(sql, song)
+        return None
+
+    def WriteVideo(self, video):
+        """
+        Updates the whole row for a video.
+
+        Args:
+            video: A dictionary representing a whole row in the videos table
+
+        Returns:
+            ``None``
+        """
+        sql = """
+        UPDATE videos SET
+            id            = :id            ,
+            songid        = :songid        ,
+            albumid       = :albumid       ,
+            artistid      = :artistid      ,
+            name          = :name          ,
+            path          = :path          ,
+            disabled      = :disabled      ,
+            playtime      = :playtime      ,
+            origin        = :origin        ,
+            release       = :release       ,
+            added         = :added         ,
+            codec         = :codec         ,
+            xresolution   = :xresolution   ,
+            yresolution   = :yresolution   ,
+            thumbnailpath = :thumbnailpath ,
+            likes         = :likes         ,
+            dislikes      = :dislikes      ,
+            favorite      = :favorite      ,
+            livevideo     = :livevideo     ,
+            badaudio      = :badaudio      ,
+            checksum      = :checksum      ,
+            lastplayed    = :lastplayed    ,
+        WHERE
+            videoid=:id
+        """
+        with MusicDatabaseLock:
+            self.Execute(sql, video)
         return None
 
     def WriteTag(self, tag):
@@ -1810,6 +1902,123 @@ class MusicDatabase(Database):
             self.Execute(sql, songid)
 
         return None
+
+
+    ##########################################################################
+    # VIDEOS                                                                 #
+    ##########################################################################
+
+
+    def AddVideo(self, artistid, name, path):
+        """
+        This method creates a new database entry for a video and sets the most important values (Artistid, name and path).
+
+        If a video with the same path is already in the database, its *artistid*, *path* and *name* gets compared to the arguments.
+        If they match, everything is fine and the method returns.
+        If they differ, an AssertionError gets raised.
+        Adding an existing video is a bug!
+        Even if this method allows it under some conditions, this should not be exploited!
+
+        Args:
+            artistid (int): ID of the artist of this video
+            name (string): Name of the video
+            path (string): Path of the video file relative to the music root directory
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: If one of the arguments is ``None``
+            ValueError: If song is already in the database **and** does not match the other parameters
+        """
+        if artistid == None or name == None or path == None:
+            raise TypeError("All parameters must have a value!")
+
+        # Check if video already exists
+        with MusicDatabaseLock:
+            video = self.GetVideoByPath(path)
+            if video:
+                if video["artistid"] != artistid or video["path"] != path or video["name"] != name:
+                    raise ValueError("There is a video with the same path already exists in the database but with other attributes!")
+
+                # even if it works, adding an already existing song is a bug. Inform the programmer/user
+                logging.warning("Video with path %s does already exist in database. \033[1;30m(It matches the artist ID and album ID so everything is fine right now)", path)
+                return None
+
+            sql = "INSERT INTO videos (artistid, name, path) VALUES (?, ?, ?)"
+            self.Execute(sql, (artistid, name, path))
+        return None
+
+
+    def AddFullVideo(self, video):
+        """
+        This method creates a new entry for a video and adds all its attributes into the database.
+        Creating the song is video by calling :meth:`~lib.db.musicdb.MusicDatabase.AddVideo`.
+        When the video was added a new song ID is generated by the database engine.
+        The new entry gets read from the database.
+        Then, the new ID is set as song ID to the dictionary given as argument.
+        After that, the whole song dictionary gets written to the database via :meth:`~lib.db.musicdb.MusicDatabase.WriteVideo`
+
+        In case adding the video fails on half the way, the new added entry gets deleted.
+        As long as nothing references the video entry, it is no problem to remove it.
+        So, when this method returns ``False`` Nothing changed in the database.
+
+        Args:
+            video: A complete dictionary with all keys of a MusicDB Song entry for the database
+
+        Returns:
+            ``True`` on success, otherwise ``False`` which indicates that nothing changed in the database.
+        """
+        with MusicDatabaseLock:
+            self.AddSong(video["artistid"], video["name"], video["path"])
+
+            try:
+                entry = self.GetVideoByPath(video["path"])
+                video["id"] = entry["id"]
+                self.WriteVideo(video)
+            except Exception as e:
+                logging.critical("The following Exception occurred: \"%s\". Trying to delete the half added video \"%s\" from database as long as this is save.", str(e), video["path"] )
+            
+                # At this point, it is better to only rely on the path
+                sql = "DELETE FROM videos WHERE path = ?"
+                self.Execute(sql, video["path"])
+                return False
+
+        return True
+
+
+    def GetVideoByPath(self, path):
+        """
+        Returns a video from the database that matches the *path*
+
+        Args:
+            path (str): A video path relative to the music root directory
+
+        Returns:
+            A MusicDB Video dictionary or ``None`` if there is no video with that path
+
+        Raises:
+            TypeError: If *path* is ``None``
+            AssertionError: If there is more than one video with the same path
+        """
+        if type(path) != str:
+            raise TypeError("Path must have a value of type string!")
+
+        sql = "SELECT * FROM videos WHERE path = ?"
+        with MusicDatabaseLock:
+            result = self.GetFromDatabase(sql, (path))
+
+        # check result
+        if not result:
+            return None
+
+        if len(result) > 1:
+            raise AssertionError("Multiple video entries for one path in the database! (" + path + ")")
+
+        entry  = result[0]
+        retval = self.__VideoEntryToDict(entry)
+        return retval
+
 
     ####################################
     # TAG HANDLING

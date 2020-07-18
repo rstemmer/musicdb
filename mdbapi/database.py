@@ -914,7 +914,7 @@ class MusicDBDatabase(object):
             pass
 
         # Check if the video already exists in the database
-        video = self.db.GetVideoByPath(videopath)    # TODO: Implement
+        video = self.db.GetVideoByPath(videopath)
         if video != None:
             raise ValueError("Video \"" + video["name"] + "\" does already exist in the database.")
 
@@ -965,7 +965,7 @@ class MusicDBDatabase(object):
                     str(e))
 
         # add to database
-        retval = self.db.AddFullVideo(video) # TODO: Implement
+        retval = self.db.AddFullVideo(video)
         if retval == False:
             raise AssertionError("Adding video %s failed!", video["path"])
 
