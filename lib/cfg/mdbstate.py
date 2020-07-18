@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -54,6 +54,20 @@ class MDBState(Config, object):
         | songblacklist.csv      | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |
         +------------------------+-------------------------+-------------------------+
 
+    Additional this class allows to access the file ``state.ini`` in the MusicDB State Directory.
+    The file can be accessed via :meth:`~lib.cfg.config.Config.Set` and :meth:`~lib.cfg.config.Config.Get`.
+    The section ``meta`` is reserved for this ``MDBState`` class.
+
+    Another section is ``MusicDB`` that represents the state of the MusicDB WebUI (and possibly backend in future).
+    One key is ``uimode`` that can be set via :meth:`~SetUIMode` and read via :meth:`~GetUIMode`.
+    The value for this key is a string and can be ``"audio"`` or ``"video"``.
+    The value represents if the user interface is in audio-mode to manage an audio stream or video-mode to present music videos.
+
+    The method :meth:`~GetFilterList` accesses a section ``albumfiler``.
+    Each key in this section represents a main genre (all characters lower case) tag and can have the value ``True`` or ``False``.
+    If a genre is not listed in this section, it is assumed to have the value ``False``.
+    As soon as the genre gets activated via the WebUIs genre selection interface, it appears in the albumfiler-list.
+
     Args:
         path: Absolute path to the MusicDB state directory
         musicdb: Instance of the MusicDB Database (can be None)
@@ -70,6 +84,10 @@ class MDBState(Config, object):
         if self.meta.version < 2:
             logging.info("Updating mdbstate/state.ini to version 2")
             self.Set("meta", "version", 2)
+        if self.meta.version < 3:
+            logging.info("Updating mdbstate/state.ini to version 3")
+            self.Set("meta", "version", 3)
+            self.Set("MusicDB", "uimode", "audio")
 
 
     def ReadList(self, listname):
@@ -315,6 +333,21 @@ class MDBState(Config, object):
                 filterlist.append(tag["name"])
 
         return filterlist
+
+
+    def GetUIMode(self):
+        """
+        TODO
+        """
+        # TODO
+        pass
+
+    def SetUIMode(self, mode):
+        """
+        TODO
+        """
+        # TODO
+        pass
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
