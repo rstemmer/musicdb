@@ -94,7 +94,9 @@ class database(MDBModule, MusicDBDatabase):
         elif target == "song":
             self.AddSong(path)
         elif target == "video":
-            self.AddVideo(path)
+            if not self.AddVideo(path):
+                print("\033[1;31mfailed")
+                return None
         else:
             raise ValueError("Invalid target! Target must be \"artist\", \"album\", \"song\" or \"video\".")
         print("\033[1;32mdone")

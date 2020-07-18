@@ -898,7 +898,7 @@ class MusicDBDatabase(object):
             artistid (int): Optional, default value is ``None``. The ID of the artist this video belongs to.
 
         Returns:
-            ``None``
+            ``True`` on success, otherwise ``False`` (or it raises an exception)
 
         Raises:
             ValueError: If video already exists in the database
@@ -924,7 +924,7 @@ class MusicDBDatabase(object):
         except Exception:
             logging.debug("Meta data of file %s cannot be load. Assuming this is not a video file!", str(videopath))
             # Ignore this file, it is not a valid song file
-            return None
+            return False
 
         tagmeta = self.meta.GetAllMetadata()
         fsmeta  = self.AnalysePath(videopath)   # TODO: Update for video paths
@@ -969,7 +969,7 @@ class MusicDBDatabase(object):
         if retval == False:
             raise AssertionError("Adding video %s failed!", video["path"])
 
-        return None
+        return True
 
 
 
