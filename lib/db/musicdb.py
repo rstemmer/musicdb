@@ -554,8 +554,8 @@ class MusicDatabase(Database):
             raise ValueError("Unable to read version number from Music Database")
 
         if version != 5:
-            logging.error("Unexpected version number of Music Database. Got %i, expected %i"%(version, 3))
-            raise ValueError("Unexpected version number of Music Database. Got %i, expected %i"%(version, 3))
+            logging.error("Unexpected version number of Music Database. Got %i, expected %i"%(version, 5))
+            raise ValueError("Unexpected version number of Music Database. Got %i, expected %i"%(version, 5))
         
 
     def __ArtistEntryToDict(self, entry):

@@ -183,6 +183,46 @@ class upgrade(MDBModule, MusicDBDatabase):
             self.PrintGood()
             version = 4
 
+        # Upgrade to version 4
+        if version == 4:
+
+            sql  = ""
+            sql += "CREATE TABLE IF NOT EXISTS videos"
+            sql += "("
+            sql += "    videoid     INTEGER PRIMARY KEY AUTOINCREMENT,"
+            sql += "    songid      INTEGER DEFAULT NULL,"
+            sql += "    albumid     INTEGER DEFAULT NULL,"
+            sql += "    artistid    INTEGER,"
+            sql += "    name        TEXT,"
+            sql += "    path        TEXT,"
+            sql += "    disabled    INTEGER DEFAULT 0,"
+            sql += "    playtime    INTEGER,"
+            sql += "    origin      TEXT,"
+            sql += "    release     INTEGER,"
+            sql += "    added       INTEGER,"
+            sql += "    codec       TEXT,"
+            sql += "    xresolution INTEGER,"
+            sql += "    yresolution INTEGER,"
+            sql += "    thumbnailpath TEXT  DEFAULT \"default.jpg\","
+            sql += "    likes       INTEGER DEFAULT 0,"
+            sql += "    dislikes    INTEGER DEFAULT 0,"
+            sql += "    favorite    INTEGER DEFAULT 0,"
+            sql += "    livevideo   INTEGER DEFAULT 0,"
+            sql += "    badaudio    INTEGER DEFAULT 0,"
+            sql += "    checksum    TEXT    DEFAULT \"\","
+            sql += "    lastplayed  INTEGER DEFAULT 0"
+            sql += ");"
+            try:
+                self.db.Execute(sql)
+            except Exception as e:
+                self.PrintError(str(e))
+                return False
+
+            # Update version in database
+            self.SetDatabaseVersion(self.db, 5)
+            self.PrintGood()
+            version = 5
+
         return True
 
 
