@@ -970,10 +970,7 @@ class MusicDBDatabase(object):
             return False
 
         tagmeta = self.meta.GetAllMetadata()
-        fsmeta  = self.AnalysePath(videopath)   # TODO: Update for video paths
-        print(tagmeta)
-        print(fsmeta)
-        return False    # TODO: FOR DEBUGGING
+        fsmeta  = self.AnalysePath(videopath)
         if fsmeta == None:
             raise AssertionError("Invalid path-format: " + videopath)
 
@@ -988,12 +985,15 @@ class MusicDBDatabase(object):
             artistid = artist["id"]
 
         # Collect all data needed for the song-entry (except the song ID)
-        # Columns that have default values are not handled here. They get set by the database system
         # Remember! The file system is always right!
         video = {}
+        video["id"]          = None     # Not yet known. Will be inserted by AddFullVideo
+        video["songid"]      = None
+        video["albumid"]     = None
         video["artistid"]    = artistid
         video["name"]        = fsmeta["video"]
         video["path"]        = videopath
+        video["disabled"]    = 0
         video["playtime"]    = tagmeta["playtime"]
         video["origin"]      = tagmeta["origin"]
         video["release"]     = fsmeta["release"]
@@ -1001,7 +1001,14 @@ class MusicDBDatabase(object):
         video["codec"]       = tagmeta["codec"]
         video["xresolution"] = tagmeta["xresolution"]
         video["yresolution"] = tagmeta["yresolution"]
+        video["thumbnailpath"]  = "default.jpg"
+        video["likes"]       = 0
+        video["dislikes"]    = 0
+        video["favorite"]    = 0
+        video["livevideo"]   = 0
+        video["badaudio"]    = 0
         video["checksum"]    = self.fs.Checksum(videopath)
+        video["lastplayed"]  = 0
 
         # Fix attributes to fit in MusicDB environment before adding it to the database
         try:

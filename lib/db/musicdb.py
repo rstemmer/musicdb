@@ -749,7 +749,7 @@ class MusicDatabase(Database):
         """
         sql = """
         UPDATE videos SET
-            id            = :id            ,
+            videoid       = :id            ,
             songid        = :songid        ,
             albumid       = :albumid       ,
             artistid      = :artistid      ,
@@ -770,7 +770,7 @@ class MusicDatabase(Database):
             livevideo     = :livevideo     ,
             badaudio      = :badaudio      ,
             checksum      = :checksum      ,
-            lastplayed    = :lastplayed    ,
+            lastplayed    = :lastplayed
         WHERE
             videoid=:id
         """
@@ -1964,17 +1964,18 @@ class MusicDatabase(Database):
         So, when this method returns ``False`` Nothing changed in the database.
 
         Args:
-            video: A complete dictionary with all keys of a MusicDB Song entry for the database
+            video: A **complete** dictionary with all keys of a MusicDB Song entry for the database
 
         Returns:
             ``True`` on success, otherwise ``False`` which indicates that nothing changed in the database.
         """
         with MusicDatabaseLock:
-            self.AddSong(video["artistid"], video["name"], video["path"])
+            self.AddVideo(video["artistid"], video["name"], video["path"])
 
             try:
                 entry = self.GetVideoByPath(video["path"])
                 video["id"] = entry["id"]
+                print(video)
                 self.WriteVideo(video)
             except Exception as e:
                 logging.critical("The following Exception occurred: \"%s\". Trying to delete the half added video \"%s\" from database as long as this is save.", str(e), video["path"] )
