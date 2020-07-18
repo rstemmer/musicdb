@@ -126,24 +126,40 @@ class MetaTags(object):
             * ``album``: :meth:`~lib.metatags.MetaTags.GetAlbumname`
             * ``artist``: :meth:`~lib.metatags.MetaTags.GetArtistname`
             * ``releaseyear``: :meth:`~lib.metatags.MetaTags.GetReleaseyear`
-            * ``cdnumber``: :meth:`~lib.metatags.MetaTags.GetCDNumber`
-            * ``songnumber``: :meth:`~lib.metatags.MetaTags.GetTracknumber`
             * ``origin``: :meth:`~lib.metatags.MetaTags.GetOrigin`
             * ``playtime``: :meth:`~lib.metatags.MetaTags.GetPlaytime`
-            * ``bitrate``: :meth:`~lib.metatags.MetaTags.GetBitrate`
+
+        Additional information for audio files
+            * ``cdnumber``: :meth:`~lib.metatags.MetaTags.GetCDNumber`
+            * ``songnumber``: :meth:`~lib.metatags.MetaTags.GetTracknumber`
             * ``lyrics``: :meth:`~lib.metatags.MetaTags.GetLyrics`
+            * ``bitrate``: :meth:`~lib.metatags.MetaTags.GetBitrate`
+
+        Additional information for video files
+            * ``codec``: :meth:`~lib.metatags.MetaTags.GetVideoCodec`
+            * ``xresolution``, ``yresolution``: :meth:`~lib.metatags.MetaTags.GetVideoResolution`
         """
         metadata = {}
+
         metadata["song"]        = self.GetSongname()
         metadata["album"]       = self.GetAlbumname()
         metadata["artist"]      = self.GetArtistname()
         metadata["releaseyear"] = self.GetReleaseyear()
-        metadata["cdnumber"]    = self.GetCDNumber()
-        metadata["songnumber"]  = self.GetTracknumber()
         metadata["origin"]      = self.GetOrigin()
         metadata["playtime"]    = self.GetPlaytime()
-        metadata["bitrate"]     = self.GetBitrate()
-        metadata["lyrics"]      = self.GetLyrics()
+
+        if self.ftype in ["flac", "mp3", "m4a"]:
+            metadata["cdnumber"]    = self.GetCDNumber()
+            metadata["songnumber"]  = self.GetTracknumber()
+            metadata["bitrate"]     = self.GetBitrate()
+            metadata["lyrics"]      = self.GetLyrics()
+
+        elif self.ftype in ["m4v"]:
+            metadata["codec"]      = self.GetVideoCodec()
+            x,y = self.GetVideoResolution()
+            metadata["xresolution"] = x
+            metadata["yresolution"] = y
+
         return metadata
 
 
@@ -571,6 +587,81 @@ class MetaTags(object):
         logging.debug("Analysis returned duration of %fs", retval)
         return retval
 
+
+    def GetVideoCodec(self):
+        """
+        Tries to identify the video codec of a video file.
+
+        The corresponding command line is the following:
+
+            .. code-block:: bash
+
+                ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 $PATH
+
+        Returns:
+            A string with the identified codec like ``"h264"`` or ``None``
+        """
+        # via https://stackoverflow.com/questions/2869281/how-to-determine-video-codec-of-a-file-with-ffmpeg
+        process = [
+                "ffprobe",
+                "-v", "error",
+                "-select_streams", "v:0",
+                "-show_entries", "stream=codec_name",
+                "-of", "default=noprint_wrappers=1:nokey=1",
+                self.path
+                ]
+
+        logging.debug("Running codec analysis: %s", str(process))
+        try:
+            retval = subprocess.check_output(process)
+            logging.debug("Analysis returned %s", str(retval))
+            retval = retval.decode("utf-8")
+            retval = retval.strip()
+        except Exception as e:
+            logging.error("Error \"%s\" while executing: %s", str(e), str(process))
+            return None
+
+        logging.debug("Analysis returned the codec %s", retval)
+        return retval
+
+
+    def GetVideoResolution(self):
+        """
+        Tries to identify the video resolution of a video file.
+
+        The corresponding command line is the following:
+
+            .. code-block:: bash
+
+                ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 $PATH
+
+        Returns:
+            A tuple ``(x,y)`` with the identified resolution like ``(1920, 1080)`` or ``None``
+        """
+        # via https://stackoverflow.com/questions/684015/how-can-i-get-the-resolution-width-and-height-for-a-video-file-from-a-linux-co
+        process = [
+                "ffprobe",
+                "-v", "error",
+                "-select_streams", "v:0",
+                "-show_entries", "stream=width,height",
+                "-of", "csv=s=x:p=0",
+                self.path
+                ]
+
+        logging.debug("Running resolution analysis: %s", str(process))
+        try:
+            retval = subprocess.check_output(process)
+            logging.debug("Analysis returned %s", str(retval))
+            retval = retval.decode("utf-8");
+            x,y = retval.split("x")
+            x = int(x)
+            y = int(y)
+        except Exception as e:
+            logging.error("Error \"%s\" while executing: %s", str(e), str(process))
+            return None
+
+        logging.debug("Analysis returned the resolution %i x %i", x, y)
+        return x, y
 
 
     def GetBitrate(self):
