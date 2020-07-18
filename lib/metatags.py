@@ -47,11 +47,19 @@ class MetaTags(object):
 
     def Load(self, path):
         """
-        Supported file extensions:
+        Supported file extensions for audio files:
 
-            * For MPEG4: ``mp4``, ``aac``, ``m4a``
+            * For MPEG4: ``aac``, ``m4a``
             * For MPEG3: ``mp3``, ``MP3``
             * For FLAC: ``flac``
+
+        Supported file extensions for video files:
+
+            * For MPEG4: ``m4v``
+
+        The corner case of an ``mp4`` file gets not handled because it is not clear if it shall be handled as audio
+        or video file.
+        A warning gets written into the log and a ``ValueError`` exception raised.
 
         Args:
             path (str): path to the song file that shall be loaded
@@ -77,15 +85,21 @@ class MetaTags(object):
         self.extension = self.fs.GetFileExtension(self.path)
 
         # normalize the extension
-        if self.extension in ["mp4", "aac", "m4a"]:
+        if self.extension in ["mp4"]:
+            logging.warning("A file with extension \"mp4\" shall be loaded. It is not clear if it should be loaded as video or audio file. Please rename the file \"%\" and be more specific using \"m4a\" for audio, or \"m4v\" for video.", path)
+            self.path = None
+            raise ValueError("Unspecific file extension \"%s\" of \"%s\""%(self.extension, path))
+        elif self.extension in ["aac", "m4a"]:
             self.ftype = "m4a"
+        elif self.extension in ["m4v"]:
+            self.ftype = "m4v"
         elif self.extension == "flac":
             self.ftype = "flac"
         elif self.extension in ["mp3", "MP3"]:
             self.ftype = "mp3"
         else:
             self.path = None
-            raise ValueError("Unsupported file-extension \"%s\" of \"%s\""%(self.extension, path))
+            raise ValueError("Unsupported file extension \"%s\" of \"%s\""%(self.extension, path))
 
         logging.debug("Loading file of type %s from \"%s\"", self.ftype, self.path)
 
@@ -95,6 +109,8 @@ class MetaTags(object):
         elif self.ftype == "mp3":
             self.file = MP3(self.path)
         elif self.ftype == "m4a":
+            self.file = MP4(self.path)
+        elif self.ftype == "m4v":
             self.file = MP4(self.path)
         else:
             self.path = None
@@ -186,7 +202,7 @@ class MetaTags(object):
             The song name as string, or ``None`` if entry does not exist
         """
         try:
-            if self.ftype == "m4a":
+            if self.ftype == "m4a" or self.ftype == "m4v":
                 return self.file[b"\xa9nam"][0]
 
             elif self.ftype == "mp3":
@@ -217,7 +233,7 @@ class MetaTags(object):
         Returns:
             The album name as string, or ``None`` if entry does not exist
         """
-        if self.ftype == "m4a":
+        if self.ftype == "m4a" or self.ftype == "m4v":
             if b"\xa9alb" in self.file:
                 return self.file[b"\xa9alb"][0]
             else:
@@ -256,7 +272,7 @@ class MetaTags(object):
             The artist name as string, or ``None`` if entry does not exist
         """
         try:
-            if self.ftype == "m4a":
+            if self.ftype == "m4a" or self.ftype == "m4v":
                 return self.file[b"\xa9ART"][0]
 
             elif self.ftype == "mp3":
@@ -287,7 +303,7 @@ class MetaTags(object):
         """
         date = 0
         try:
-            if self.ftype == "m4a":
+            if self.ftype == "m4a" or self.ftype == "m4v":
                 date = self.file[b"\xa9day"][0]
                 date = date.split("-")[0]   # get just the year
 
@@ -405,7 +421,7 @@ class MetaTags(object):
             Name of the origin as string
         """
         # check m4a
-        if self.ftype == "m4a":
+        if self.ftype == "m4a" or self.ftype == "m4v":
             if b"----:com.apple.iTunes:iTunNORM" in self.file:
                 return "iTunes"
             if b"----:com.apple.iTunes:iTunSMPB" in self.file:
@@ -504,7 +520,7 @@ class MetaTags(object):
         """
         time = 0
 
-        if self.ftype in ["m4a", "mp3", "flac"]:
+        if self.ftype in ["m4a", "m4v", "mp3", "flac"]:
             try:
                 analtime = round(self.AnalysePlaytime())
             except:
