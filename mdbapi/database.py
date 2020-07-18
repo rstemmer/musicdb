@@ -216,75 +216,118 @@ class MusicDBDatabase(object):
 
     def AnalysePath(self, path):
         """
-        This method analyses a path to a song and extracts all the information encoded in the path.
+        This method analyses a path to a song or video and extracts all the information encoded in the path.
         The path must consist of three parts: The artist directory, the album directory and the song file.
+        For videos only two parts are expected: The artist directory and the video file
 
         A valid path has one the following structures: 
         
             * ``{artistname}/{albumrelease} - {albumname}/{songnumber} {songname}.{extension}``
             * ``{artistname}/{albumrelease} - {albumname}/{cdnumber}-{songnumber} {songname}.{extension}``
+            * ``{artistname}/{videorelease} - {videoname}.{extension}``
 
-        The returned dictionary holds all the extracted information.
-        In case there is no *cdnumber*, this entry is ``1``.
+        The returned dictionary holds all the extracted information from the scheme listed above.
+        The following entries exists but may be ``None`` depending if the path addresses a video or song.
+
+            * artist
+            * release
+            * album
+            * song
+            * video
+            * songnumber
+            * cdnumber
+            * extension
+
+        In case there is no *cdnumber* specified for a song, this entry is ``1``.
         The names can have all printable Unicode characters and of cause spaces.
 
         If an error occurs because the path does not follow the scheme, ``None`` gets returned.
         This method does not check if the path exists!
 
         Args:
-            path (str): A path of a song including artist and album directory.
+            path (str): A path of a song including artist and album directory or a video including the artists directory.
 
         Returns:
-            On success, a dictionary with information about the artist, album and song.
+            On success, a dictionary with information about the artist, album and song or video is returned.
             Otherwise ``None`` gets returned.
         """
+        # Define all possibly used variables to a avoid undefined behavior
         result = {}
+        result["artist"]    = None
+        result["album"]     = None
+        result["song"]      = None
+        result["video"]     = None
+        result["release"]   = None
+        result["songnumber"]= None
+        result["cdnumber"]  = None
+        result["extension"] = None
+        artist = None
+        album  = None
+        song   = None
+        video  = None
 
-        # separate the artist album and song name stored in the filesystem
-        try:
+        # separate parts of the path
+        parts = path.count("/")
+        if parts == 1:  # This my be a video
+            [artist, video] = path.split("/")[-2:]
+        elif parts == 2: # This may be a song
             [artist, album, song] = path.split("/")[-3:]
-        except:
+        else:
             logging.warning("Analysing \"%s\" failed!", path)
-            logging.warning("path cannot be split into three parts: {artist}/{album}/{song}")
+            logging.warning("Path cannot be split into three parts {artist}/{album}/{song} or two parts {artist}/{video}")
             return None
 
-        # analyse the artist-infos
+        # analyze the artist information
         result["artist"] = artist
 
-        # analyse the album-infos
-        albuminfos = self.fs.AnalyseAlbumDirectoryName(album)
-        if albuminfos == None:
-            logging.warning("Analysing \"%s\" failed!", path)
-            logging.warning("Unexpected album directory name. Expecting \"{year} - {name}\"")
-            return None
+        # analyze the album information
+        if album:
+            albuminfos = self.fs.AnalyseAlbumDirectoryName(album)
+            if albuminfos == None:
+                logging.warning("Analysing \"%s\" failed!", path)
+                logging.warning("Unexpected album directory name. Expecting \"{year} - {name}\"")
+                return None
 
-        result["release"] = albuminfos["release"]
-        result["album"]   = albuminfos["name"]
+            result["release"] = albuminfos["release"]
+            result["album"]   = albuminfos["name"]
 
-        # analyse the song-infos
-        try:
-            songname   = song.split(" ")[1:]
-            songnumber = song.split(" ")[0]
-
+        # analyze the song information
+        if song:
             try:
-                [cdnumber, songnumber] = songnumber.split("-")
+                songname   = song.split(" ")[1:]
+                songnumber = song.split(" ")[0]
+
+                try:
+                    [cdnumber, songnumber] = songnumber.split("-")
+                except:
+                    cdnumber = 1
+
+                songnumber = int(songnumber)
+                cdnumber   = int(cdnumber)
+                songname   = " ".join(songname)
+                extension  = os.path.splitext(songname)[1][1:]  # get extension without leading "."
+                songname   = os.path.splitext(songname)[0]      # remove extension
             except:
-                cdnumber = 1
+                logging.warning("Analysing \"%s\" failed!", path)
+                logging.warning("Unexpected song file name. Expected \"[{cdnumber}-]{songnumber} {songname}.{ending}\".")
+                return None
 
-            songnumber = int(songnumber)
-            cdnumber   = int(cdnumber)
-            songname   = " ".join(songname)
-            extension  = os.path.splitext(songname)[1][1:]  # get extension without leading "."
-            songname   = os.path.splitext(songname)[0]      # remove extension
-        except:
-            logging.warning("Analysing \"%s\" failed!", path)
-            logging.warning("Unexpected song file name. Expected \"[{cdnumber}-]{songnumber} {songname}.{ending}\".")
-            return None
+            result["song"]       = songname
+            result["songnumber"] = songnumber
+            result["cdnumber"]   = cdnumber
+            result["extension"]  = extension
 
-        result["song"]       = songname
-        result["songnumber"] = songnumber
-        result["cdnumber"]   = cdnumber
-        result["extension"]  = extension
+        # analyze the video information
+        if video:
+            videoinfos = self.fs.AnalyseVideoFileName(video)
+            if videoinfos == None:
+                logging.warning("Analyzing \"%s\" failed!", path)
+                logging.warning("Unexpected video file name. Expecting \"{year} - {name}.{extension}\"")
+                return None
+
+            result["release"]   = videoinfos["release"]
+            result["video"]     = videoinfos["name"]
+            result["extension"] = videoinfos["extension"]
 
         return result
 
@@ -920,7 +963,7 @@ class MusicDBDatabase(object):
 
         # Get all information from the video path and its meta data
         try:
-            self.meta.Load(videopath)   # TODO: Check that it works with video files
+            self.meta.Load(videopath)
         except Exception:
             logging.debug("Meta data of file %s cannot be load. Assuming this is not a video file!", str(videopath))
             # Ignore this file, it is not a valid song file
@@ -928,6 +971,9 @@ class MusicDBDatabase(object):
 
         tagmeta = self.meta.GetAllMetadata()
         fsmeta  = self.AnalysePath(videopath)   # TODO: Update for video paths
+        print(tagmeta)
+        print(fsmeta)
+        return False    # TODO: FOR DEBUGGING
         if fsmeta == None:
             raise AssertionError("Invalid path-format: " + videopath)
 
