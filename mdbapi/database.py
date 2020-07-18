@@ -878,6 +878,101 @@ class MusicDBDatabase(object):
 
 
 
+    def AddVideo(self, videopath, artistid=None):
+        """
+        This method adds a video to the MusicDB database.
+        To do so, the following steps were done:
+
+            #. Check if the video already exists in the database
+            #. Load the metadata from the video using :meth:`lib.metatags.MetaTags.GetAllMetadata`
+            #. Analyze the path of one of the video using :meth:`~mdbapi.database.MusicDBDatabase.AnalysePath`
+            #. If *artistid* is not given as parameter, it gets read from the database identifying the artist by its path.
+            #. Set file attributes and ownership using :meth:`~mdbapi.database.MusicDBDatabase.FixAttributes`
+            #. Add video to database
+
+        This method assumes that the artist the video belongs to exists in the database.
+        If not, an ``AssertionError`` exception gets raised.
+
+        Args:
+            videopath (str): Absolute path, or path relative to the music root directory, to the video that shall be added to the database.
+            artistid (int): Optional, default value is ``None``. The ID of the artist this video belongs to.
+
+        Returns:
+            ``None``
+
+        Raises:
+            ValueError: If video already exists in the database
+            AssertionError: If analyzing the path fails
+            AssertionError: If artist does not exists in the database
+            AssertionError: If adding the video to the database fails
+        """
+        # do some checks
+        # remove the root-path to the music directory
+        try:
+            videopath = self.fs.RemoveRoot(videopath) # remove the path to the music directory
+        except:
+            pass
+
+        # Check if the video already exists in the database
+        video = self.db.GetVideoByPath(videopath)    # TODO: Implement
+        if video != None:
+            raise ValueError("Video \"" + video["name"] + "\" does already exist in the database.")
+
+        # Get all information from the video path and its meta data
+        try:
+            self.meta.Load(videopath)   # TODO: Check that it works with video files
+        except Exception:
+            logging.debug("Meta data of file %s cannot be load. Assuming this is not a video file!", str(videopath))
+            # Ignore this file, it is not a valid song file
+            return None
+
+        tagmeta = self.meta.GetAllMetadata()
+        fsmeta  = self.AnalysePath(videopath)   # TODO: Update for video paths
+        if fsmeta == None:
+            raise AssertionError("Invalid path-format: " + videopath)
+
+        moddate = self.fs.GetModificationDate(videopath)
+
+        # artistid may be not given by the arguments of this method.
+        # In this case, it must be searched in the database
+        if artistid == None:
+            artist = self.db.GetArtistByPath(fsmeta["artist"])
+            if artist == None:
+                raise AssertionError("Artist for the video \"" + videopath + "\" is not available in the database.")
+            artistid = artist["id"]
+
+        # Collect all data needed for the song-entry (except the song ID)
+        # Columns that have default values are not handled here. They get set by the database system
+        # Remember! The file system is always right!
+        video = {}
+        video["artistid"]    = artistid
+        video["name"]        = fsmeta["video"]
+        video["path"]        = videopath
+        video["playtime"]    = tagmeta["playtime"]
+        video["origin"]      = tagmeta["origin"]
+        video["release"]     = fsmeta["release"]
+        video["added"]       = moddate
+        video["codec"]       = tagmeta["codec"]
+        video["xresolution"] = tagmeta["xresolution"]
+        video["yresolution"] = tagmeta["yresolution"]
+        video["checksum"]    = self.fs.Checksum(videopath)
+
+        # Fix attributes to fit in MusicDB environment before adding it to the database
+        try:
+            self.FixAttributes(videopath)
+        except Exception as e:
+            logging.warning("Fixing file attributes failed with error: %s \033[1;30m(leaving permissions as they are)",
+                    str(e))
+
+        # add to database
+        retval = self.db.AddFullVideo(video) # TODO: Implement
+        if retval == False:
+            raise AssertionError("Adding video %s failed!", video["path"])
+
+        return None
+
+
+
     def RemoveSong(self, songid):
         """
         This method removed a song from the database.
