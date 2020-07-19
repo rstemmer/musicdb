@@ -145,8 +145,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
         ShowQueue("RightContentBox", args);
 
     else if(fnc == "GetVideo" && sig == "ShowVideo") {
-        window.console && console.log(args);
-        //ShowVideo("MiddleContentBox", args.artist, args.album, args.video, args.tags);
+        ShowVideo("MiddleContentBox", args.artist, args.album, args.song, args.video, args.tags);
     }
 
     else if(fnc == "GetAlbum" && sig == "ShowAlbum") {
