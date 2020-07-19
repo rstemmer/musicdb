@@ -26,9 +26,11 @@ function CreateDirectoryTree {
     ###################
 
     # The music directory should already exist
+    # If not, just create it - better than exiting
     if [ ! -d "$MUSICDIR" ]; then
-        echo -e "\e[1;31mMusic directory \e[0;36m$MUSICDIR\e[1;31m does not exist!\e[0m"
-        exit 1
+        echo -e "\e[1;33mMusic directory \e[0;36m$MUSICDIR\e[1;33m does not exist!\e[0m"
+        echo -e "\e[1;30mCreating $MUSICDIR.\e[0m"
+        mkdir -p $MUSICDIR
     fi
 
     chown -R $MUSICUSER:$MDBGROUP $MUSICDIR
