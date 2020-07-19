@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017, 2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -454,8 +454,8 @@ class MusicDatabase(Database):
             raise ValueError("Unable to read version number from Music Database")
 
         if version != 4:
-            logging.error("Unexpected version number of Music Database. Got %i, expected %i"%(version, 3))
-            raise ValueError("Unexpected version number of Music Database. Got %i, expected %i"%(version, 3))
+            logging.error("Unexpected version number of Music Database. Got %i, expected %i"%(version, 4))
+            raise ValueError("Unexpected version number of Music Database. Got %i, expected %i"%(version, 4))
         
 
     def __ArtistEntryToDict(self, entry):
