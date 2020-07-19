@@ -24,6 +24,7 @@ from tqdm               import tqdm
 from lib.modapi         import MDBModule
 from lib.filesystem     import Filesystem
 from mdbapi.database    import MusicDBDatabase
+from lib.db.database    import Database
 from lib.db.trackerdb   import TrackerDatabase
 from lib.db.lycradb     import LycraDatabase
 from lib.cfg.musicdb    import MusicDBConfig
