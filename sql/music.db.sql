@@ -123,5 +123,14 @@ CREATE TABLE IF NOT EXISTS songtags
     approval    INTEGER DEFAULT 1
 );
 
+CREATE TABLE IF NOT EXISTS videotags
+(
+    entryid     INTEGER PRIMARY KEY AUTOINCREMENT,
+    videoid     INTEGER,
+    tagid       INTEGER,
+    confidence  REAL    DEFAULT 1.0,
+    approval    INTEGER DEFAULT 1
+);
+
 -- vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

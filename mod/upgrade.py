@@ -191,7 +191,7 @@ class upgrade(MDBModule, MusicDBDatabase):
         # Upgrade to version 4
         if version == 4:
 
-            sql  = ""
+            sql  = "BEGIN TRANSACTION;"
             sql += "CREATE TABLE IF NOT EXISTS videos"
             sql += "("
             sql += "    videoid     INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -217,8 +217,17 @@ class upgrade(MDBModule, MusicDBDatabase):
             sql += "    checksum    TEXT    DEFAULT \"\","
             sql += "    lastplayed  INTEGER DEFAULT 0"
             sql += ");"
+            sql += "CREATE TABLE IF NOT EXISTS videotags"
+            sql += "("
+            sql += "    entryid     INTEGER PRIMARY KEY AUTOINCREMENT,"
+            sql += "    videoid     INTEGER,"
+            sql += "    tagid       INTEGER,"
+            sql += "    confidence  REAL    DEFAULT 1.0,"
+            sql += "    approval    INTEGER DEFAULT 1"
+            sql += ");"
+            sql += " COMMIT;"
             try:
-                self.db.Execute(sql)
+                self.db.ExecuteScript(sql)
             except Exception as e:
                 self.PrintError(str(e))
                 return False
