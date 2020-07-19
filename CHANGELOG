@@ -34,9 +34,10 @@ Run  git log --oneline  for more details
 │ * [MP3Transcoder] File descriptor leak fixed. GStreamer object got not garbage-collected and left a file handler open
 │ + [lib/metadata] Detect Amazon and Google as possible song origin
 │ * [lib/metadata] Detect CD information from mp3 files
-│ + [install-scrips] check.sh prints some helpful hints
-│ * [install-scrips] Select correct music owner
-│ * [install-scrips] Create music directory when it does not exists
+│ + [install-scripts] check.sh prints some helpful hints
+│ * [install-scripts] Select correct music owner
+│ * [install-scripts] Create music directory when it does not exists
+│ * [upgrade] Upgrade CLI-Module does not load and use MusicDatabase (Fixes version conflicts)
 └───────────────────────────────────────╌╌
 
 
