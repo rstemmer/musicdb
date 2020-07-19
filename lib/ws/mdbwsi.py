@@ -812,7 +812,9 @@ class MusicDBWebSocketInterface(object):
         After executing this method, the MusicDB server broadcasts the result of :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState`. (``method = "broadcast", fncname = "GetMDBState"``)
         So each client gets informed about the new state.
 
-        The category must be ``"albumfilter"``!
+        The category must be ``"albumfilter"`` or ``"MusicDB"`` with name ``"uimode"``!
+        To set the album filter, :meth:`~lib.cfg.config.Config.Set` is used.
+        For setting the UI mode, :meth:`~lib.cfg.mdbstate.MDBState.SetUIMode` is called. Details of valid modes are listed there as well.
 
         Args:
             category (str): Category of the state
@@ -827,7 +829,15 @@ class MusicDBWebSocketInterface(object):
 
                 MusicDB_Call("SetMDBState", {category:"albumfilter", name:"Metal", value:true});
         """
-        self.mdbstate.Set(category, name, value)
+        if category == "albumfilter":
+            self.mdbstate.Set(category, name, value)
+        elif category == "MusicDB" and name == "uimode":
+            try:
+                self.mdbstate.SetUIMode(value)
+            except Exception as e:
+                logging.warning("Setting MusicDB UI Mode failed with errror \"%s\"", str(e))
+                pass
+
         return None
 
 
@@ -840,6 +850,8 @@ class MusicDBWebSocketInterface(object):
         The state is a dictionary with the following information:
 
             * **albumfilter:** a list of tag-names of class Genre
+            * **MusicDB:**
+                * *uimode*: Defines if UI is in ``"audio"`` or ``"video"`` mode
 
         Returns:
             Current global MusicDB WebUI state
@@ -866,6 +878,8 @@ class MusicDBWebSocketInterface(object):
 
         state = {}
         state["albumfilter"] = albumfilter
+        state["MusicDB"] = {}
+        state["MusicDB"]["uimode"] = self.mdbstate.GetUIMode()
         return state
 
 

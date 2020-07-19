@@ -337,17 +337,38 @@ class MDBState(Config, object):
 
     def GetUIMode(self):
         """
-        TODO
+        This method simply returns the content of ``[MusicDB]->uimode`` in the state.ini file.
+        In case the value is not set, ``"audio"`` gets returned.
+
+        Returns:
+            A string ``"audio"`` or ``"video"``
         """
-        # TODO
-        pass
+        mode = self.Get(str, "MusicDB", "uimode", "audio")
+        return mode
 
     def SetUIMode(self, mode):
         """
-        TODO
+        Sets the UI mode in the state.ini file.
+        Before writing the data ``mode`` gets checked if it contains a valid value.
+        If mode is an invalid argument, an exception gets raised.
+
+        Args:
+            mode (str): ``"audio"`` or ``"video"`` mode
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: When mode is not of type string
+            ValueError: When mode contains an invalid string
         """
-        # TODO
-        pass
+        if type(mode) is not str:
+            raise TypeError("Mode must be a string")
+        if not mode in ["audio", "video"]:
+            raise ValueError("Mode must be \"audio\" or \"video\"")
+
+        self.Set("MusicDB", "uimode", mode) 
+        return None
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
