@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo -e "\e[1;31mMusicDB-Check [\e[1;34m2.0.0\e[1;31m]\e[0m"
+echo -e "\e[1;31mMusicDB-Check [\e[1;34m2.1.0\e[1;31m]\e[0m"
 
 if [ $EUID -eq 0 ]; then
     echo -e "\e[1;33mYou shoud NOT have root permissions. MusicDB will not have them, too"
@@ -42,6 +42,7 @@ function CheckPythonModuleExistence
 }
 
 echo -e "\e[1;34mChecking programs …"
+CheckBinaryExistence "python"
 CheckBinaryExistence "icecast"
 CheckBinaryExistence "gst-inspect-1.0"
 CheckBinaryExistence "id3edit"   inc
