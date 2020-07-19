@@ -33,7 +33,11 @@ class upgrade(MDBModule, MusicDBDatabase):
     def __init__(self, config, database):
         MDBModule.__init__(self)
 
-        self.db  = database
+        # The MusicDatabase object should not be used
+        # because the database may be outdated when calling upgrade
+        # Use the low level interface instead
+        #self.db  = database
+        self.db  = Database(config.database.path)
         self.cfg = config
         self.fs  = None
 
@@ -343,9 +347,9 @@ class upgrade(MDBModule, MusicDBDatabase):
     def MDBM_Main(self, args):
 
         self.UpgradeConfiguration()
-        # self.UpgradeMusicDB()
-        # self.UpgradeTrackerDB()
-        # self.UpgradeLycraDB()
+        self.UpgradeMusicDB()
+        self.UpgradeTrackerDB()
+        self.UpgradeLycraDB()
         #self.UpgradeWebUIConfiguration()
         return 0
 
