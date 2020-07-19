@@ -28,11 +28,11 @@ function CreateSmallVideoTile(MDBVideo)
 function _CreateVideoTile(MDBVideo, size)
 {
     let html        = "";
-    let imgpath     = EncodeVideoThumbnailPath(MDBVideo.thumbnailpath, "150x150"); // TODO
+    let imgpath     = EncodeVideoThumbnailPath(MDBVideo.thumbnailpath, "150x150");
     let videoid     = MDBVideo.id;
     let videoname   = MDBVideo.name;
     let videorelease= MDBVideo.release;
-    let videorequest= "MusicDB_Request(\'GetVideo\', \'ShowVideo\', {videoid:"+videoid+"});"; // TODO
+    let videorequest= "MusicDB_Request(\'GetVideo\', \'ShowVideo\', {videoid:"+videoid+"});";
     let datawidth   = "data-size=\"" + size + "\"";
 
     html += "<div";

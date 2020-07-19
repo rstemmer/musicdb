@@ -49,6 +49,7 @@ Songs
 Videos
 ^^^^^^
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideos`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideo`
 
 Queue
 ^^^^^
@@ -180,6 +181,10 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetAlbums(args["artistid"], args["applyfilter"])
         elif fncname == "GetAlbum":
             retval = self.GetAlbum(args["albumid"])
+        elif fncname == "GetVideos":
+            retval = self.GetVideos(args["artistid"])
+        elif fncname == "GetVideo":
+            retval = self.GetVideo(args["videoid"])
         elif fncname == "GetSortedAlbumCDs":
             retval = self.GetSortedAlbumCDs(args["albumid"])
         elif fncname == "GetSong":
@@ -605,6 +610,64 @@ class MusicDBWebSocketInterface(object):
             videolist.append(entry)
 
         return videolist
+
+
+    def GetVideo(self, videoid):
+        """
+        This method returns a video entry from the Music Database.
+
+        GetVideo returns a dictionary with the following keys:
+
+            * **artist:** A Database entry of the artist of the video
+            * **album:** The database entry of the album of the video, if known. Can be ``None``.
+            * **song:** The database entry of the song related to the video, if known. Can be ``None``.
+            * **video:** The video with the ``videoid`` of the request
+            * **tags:** A list of tags as returned by :meth:`~GetVideoTags`
+
+        Args:
+            videoid (int): The ID of that video that shall be returned
+
+        Returns:
+            A dictionary with information of the requested video
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Request("GetVideo", "ShowVideo", {videoid:1000});
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "GetVideo" && sig == "ShowVideo")
+                    {
+                        console.log("Artist: " + args.artist.name);
+                        console.log("Video:  " + args.video.name);
+                    }
+                }
+        """
+        video   = self.database.GetVideoById(videoid)
+        artist  = self.database.GetArtistById(video["artistid"])
+        tags    = self.GetVideoTags(videoid)
+
+        if video["albumid"]:
+            album = self.database.GetAlbumById(video["albumid"])
+        else:
+            album = None
+
+        if video["songid"]:
+            song = self.database.GetSongById(video["songid"])
+        else:
+            song = None
+
+        # send the data to the client
+        retval = {}
+        retval["artist"]  = artist
+        retval["album"]   = album
+        retval["song"]    = song
+        retval["video"]   = video
+        retval["tags"]    = tags
+        return retval
 
 
     def GetSortedAlbumCDs(self, albumid):

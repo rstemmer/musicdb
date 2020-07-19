@@ -198,6 +198,7 @@ The following methods exist to handle video entries in the database:
     * :meth:`~lib.db.musicdb.MusicDatabase.AddVideo`
     * :meth:`~lib.db.musicdb.MusicDatabase.AddFullVideo`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetVideoByPath`
+    * :meth:`~lib.db.musicdb.MusicDatabase.GetVideoById`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetVideosByArtistId`
 
 
@@ -2018,6 +2019,39 @@ class MusicDatabase(Database):
             raise AssertionError("Multiple video entries for one path in the database! (" + path + ")")
 
         entry  = result[0]
+        retval = self.__VideoEntryToDict(entry)
+        return retval
+
+
+    def GetVideoById(self, videoid):
+        """
+        Returns an video entry if available
+
+        Args:
+            videoid: entry ID of the video in the video table
+
+        Returns:
+            An video entry or ``None`` it the video does not exits
+
+        Raises:
+            TypeError: If ``videoid`` is not set
+            AssertionError: If there is more than one video with the given ID
+        """
+        if type(videoid) != str and type(videoid) != int:
+            raise TypeError("AlbumID must have a decimal value!")
+
+        sql = "SELECT * FROM videos WHERE videoid = ?"
+        with MusicDatabaseLock:
+            result = self.GetFromDatabase(sql, videoid)
+
+        # check result
+        if not result:
+            return None
+
+        if len(result) > 1:
+            raise AssertionError("Multiple Videos entries for one ID in the database!")
+
+        entry = result[0]
         retval = self.__VideoEntryToDict(entry)
         return retval
 

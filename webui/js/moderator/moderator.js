@@ -144,6 +144,11 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetQueue" && sig == "ShowQueue")
         ShowQueue("RightContentBox", args);
 
+    else if(fnc == "GetVideo" && sig == "ShowVideo") {
+        window.console && console.log(args);
+        //ShowVideo("MiddleContentBox", args.artist, args.album, args.video, args.tags);
+    }
+
     else if(fnc == "GetAlbum" && sig == "ShowAlbum") {
         ShowAlbum("MiddleContentBox", args.artist, args.album, args.cds, args.tags, currentsongid);
         currentalbumid = args.album.id;
