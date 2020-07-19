@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="2.0.0"
+SCRIPTVERSION="2.1.0"
 echo -e "\e[1;31mMusicDB-Install [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
@@ -116,7 +116,7 @@ dialog --backtitle "$FORMTITLE" --title "Installation Setup" \
     "Music directory:"   4 1 "$MUSICDIR"     4 20 45 0 \
     "MusicDB group:"     5 1 "$MDBGROUP"     5 20 45 0 \
     "MusicDB user:"      6 1 "$MDBUSER"      6 20 45 0 \
-    "Music owner (you):" 7 1 "$MDBUSER"      7 20 45 0 \
+    "Music owner (you):" 7 1 "$USER"         7 20 45 0 \
     "HTTP group:"        8 1 "$HTTPGROUP"    8 20 45 0 \
     "SSL key file:"      9 1 "$SSLKEY"       9 20 45 0 \
     "SSL certificate"   10 1 "$SSLCRT"      10 20 45 0 \
