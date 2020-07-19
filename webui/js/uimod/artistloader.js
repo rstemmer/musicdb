@@ -112,7 +112,7 @@ function Artistloader_UpdateState(MDBState)
 {
     // Get selected mode
     MDBMODE = MDBState.MusicDB.uimode;
-    console.log(MDBState);
+
     // Get selected genres
     var filter;
     filter = MDBState.albumfilter;

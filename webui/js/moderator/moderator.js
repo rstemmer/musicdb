@@ -159,6 +159,8 @@ function onMusicDBMessage(fnc, sig, args, pass)
 
     else if(fnc == "GetFilteredArtistsWithAlbums" && sig == "ShowArtists")
         ShowArtists("LeftContentBox", args);
+    else if(fnc == "GetFilteredArtistsWithVideos" && sig == "ShowArtists")
+        ShowArtists("LeftContentBox", args);
 
     else if(fnc == "GetSongRelationship" && sig == "ShowSongRelationship")
         ShowSongRelationship("MiddleContentBox", args.songid, args.songs);

@@ -25,11 +25,22 @@ function ShowArtists(parentID, MDBArtistList)
     var firstchar  = " ";   // track first letter of the artistname to set jumpmarks
     for(var i in MDBArtistList)
     {
-        var MDBArtist    = MDBArtistList[i].artist;
-        var MDBAlbumList = MDBArtistList[i].albums;
+        let MDBArtist      = MDBArtistList[i].artist;
+        let MDBContentList = undefined;
+        let MDBContentType = undefined;
+        if(MDBArtistList[i].albums !== undefined)
+        {
+            MDBContentList = MDBArtistList[i].albums;
+            MDBContentType = "audio";
+        }
+        else if(MDBArtistList[i].videos !== undefined)
+        {
+            MDBContentList = MDBArtistList[i].videos;
+            MDBContentType = "video";
+        }
 
-        // if there are no albums, skip this artist
-        if(MDBAlbumList.length == 0)
+        // if there is no content, skip this artist (This should not happen with modern backend)
+        if(MDBContentList.length == 0)
             continue;
 
         // Set jump mark if this is the first artist of a letter in the alphabet
@@ -40,7 +51,10 @@ function ShowArtists(parentID, MDBArtistList)
             html += "<div id="+firstchar+"_mark class=\"ATV_mark\"></div>";
         }
 
-        html += _ATV_CreateArtistEntry(MDBArtist, MDBAlbumList);
+        if(MDBContentType == "audio")
+            html += _ATV_CreateArtistEntryWithAlbums(MDBArtist, MDBContentList);
+        else if(MDBContentType == "video")
+            html += _ATV_CreateArtistEntryWithVideos(MDBArtist, MDBContentList);
     }
     
     html += "<span id=BTM_mark class=\"ATV_mark\"></span>";
@@ -52,7 +66,7 @@ function ShowArtists(parentID, MDBArtistList)
 }
 
 
-function _ATV_CreateArtistEntry(MDBArtist, MDBAlbumList)
+function _ATV_CreateArtistEntryWithAlbums(MDBArtist, MDBAlbumList)
 {
     var html = "";
     var label= "Artist_" + MDBArtist.id;    // Label for ScrollToArtist
@@ -69,6 +83,33 @@ function _ATV_CreateArtistEntry(MDBArtist, MDBAlbumList)
     {
         var MDBAlbum   = MDBAlbumList[i].album;
         html += CreateAlbumTile(MDBAlbum);
+    }
+    html += "</div>"; // close albumlist div
+
+    html += "</div>"; // close artistentry div
+
+    return html;
+}
+
+
+function _ATV_CreateArtistEntryWithVideos(MDBArtist, MDBVideoList)
+{
+    var html = "";
+    var label= "Artist_" + MDBArtist.id;    // Label for ScrollToArtist
+
+    html += "<div id=" + label + " class=\"ATV_artistentry\">";
+
+    html += "<span class=\"ATV_artistname fgcolor\">";
+    html += MDBArtist.name;
+    html += "</span>";
+   
+    // Create the overview of the artists albums
+    html += "<div class=\"ATV_albumlist\">"; // FIXME: A different class may be better
+    for(var i in MDBVideoList)
+    {
+        let MDBVideo = MDBVideoList[i].video;
+        //html += CreateVideoTile(MDBVideo);
+        html += MDBVideo.name;
     }
     html += "</div>"; // close albumlist div
 

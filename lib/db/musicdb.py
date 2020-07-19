@@ -198,6 +198,7 @@ The following methods exist to handle video entries in the database:
     * :meth:`~lib.db.musicdb.MusicDatabase.AddVideo`
     * :meth:`~lib.db.musicdb.MusicDatabase.AddFullVideo`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetVideoByPath`
+    * :meth:`~lib.db.musicdb.MusicDatabase.GetVideosByArtistId`
 
 
 Albums
@@ -2021,6 +2022,44 @@ class MusicDatabase(Database):
         return retval
 
 
+    def GetVideosByArtistId(self, artistid):
+        """
+        This method returns an unsorted list with all videos of an artist.
+
+        Example:
+
+            The following example prints all videos of the artist with the ID ``1000``
+
+            .. code-block:: python
+
+                albums = musicdb.GetVideosByArtistId(artistid = 1000)
+                for video in videos:
+                    print(video["name"])
+
+        Args:
+            artistid: ID for an artist whose videos shall be returned.
+
+        Returns:
+            A list with all videos of an artist.
+
+        Raises:
+            TypeError: If *withsongs* is not of type ``bool``
+        """
+        sql   = "SELECT * FROM videos WHERE artistid = ?"
+        value = int(artistid)
+
+        with MusicDatabaseLock:
+            result = self.GetFromDatabase(sql, value)
+
+        videos = []
+        for entry in result:
+            video = self.__VideoEntryToDict(entry)
+
+            videos.append(video)
+
+        return videos
+
+
     ####################################
     # TAG HANDLING
     ####################################
@@ -2308,7 +2347,7 @@ class MusicDatabase(Database):
     def GetTargetTags(self, target, targetid, tagclass=None):
         """
         Returns a list of all tags of a target.
-        A target can be a song (``target = "song"``) or an album (``target = "album"``).
+        A target can be a song (``target = "song"``) an album (``target = "album"``) or a video (``target = "video"``).
         This list contains all classes of tags if *tagclass* is ``None``, otherwise only of type *tagclass*.
 
         The returned list is the target-tag-mapping augmented with the tag-entry.
@@ -2317,17 +2356,17 @@ class MusicDatabase(Database):
         The ID of the ID of the entry in the mapping-table is ``entryid``.
         
         Args:
-            target (str):   Target that shall be tagged (``"song"`` for a song, ``"album"`` for an album)
-            targetid (int): ID of the target that tags shall be returned (song ID or album ID)
+            target (str):   Target that shall be tagged (``"song"``, ``"album"`` or ``"video"``)
+            targetid (int): ID of the target that tags shall be returned (song, album or video ID)
             tagclass (int): If not ``None`` only tags of a specific class will be returned
 
         Returns:
             A list of tags or ``None`` if there are no tags
 
         Raises:
-            TypeError: If *songid* is ``None``
+            TypeError: If *targetid* is ``None``
             ValueError: If *tagclass* is set to an invalid value (``None`` is valid)
-            ValueError: If *target* not in *{"song", "album"}*
+            ValueError: If *target* not in *{"song", "album", "video"}*
 
         Example:
 
@@ -2350,11 +2389,14 @@ class MusicDatabase(Database):
         if target == "song":
             tablename = "songtags"
             idname    = "songid"
+        elif target == "video":
+            tablename = "videotags"
+            idname    = "videoid"
         elif target == "album":
             tablename = "albumtags"
             idname    = "albumid"
         else:
-            raise ValueError("target must be \"song\" or \"album\"!")
+            raise ValueError("target must be \"song\", \"video\" or \"album\"!")
 
         with MusicDatabaseLock:
             # get all tagids assigned to the target

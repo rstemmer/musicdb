@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017-2019  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@ Artists
 ^^^^^^^
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithVideos`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.Find`
 
 Albums
@@ -45,6 +46,10 @@ Songs
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.Find`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`
 
+Videos
+^^^^^^
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideos`
+
 Queue
 ^^^^^
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue`
@@ -59,6 +64,7 @@ Tag related
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoTags`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag`
@@ -168,6 +174,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetArtistsWithAlbums()
         elif fncname == "GetFilteredArtistsWithAlbums":
             retval = self.GetArtistsWithAlbums(applyfilter=True)
+        elif fncname == "GetFilteredArtistsWithVideos":
+            retval = self.GetFilteredArtistsWithVideos()
         elif fncname == "GetAlbums":
             retval = self.GetAlbums(args["artistid"], args["applyfilter"])
         elif fncname == "GetAlbum":
@@ -399,6 +407,60 @@ class MusicDBWebSocketInterface(object):
         return artistlist 
 
 
+    def GetFilteredArtistsWithVideos(self):
+        """
+        This method returns a list of artists and their videos.
+        The genre-filter gets applied to the videos.
+        Each entry in this list contains the following two elements:
+
+            * **artist:** An entry like the list entries of :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists`
+            * **videos:** A list of videos
+
+        Artists without videos or videos that got filters out will not appear in the list.
+
+            
+        Returns:
+            A list of artists and their videos
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "GetFilteredArtistsWithVideos" && sig == "ShowArtists")
+                    {
+                        for(let artist of args)
+                        {
+                            console.log("Artist: " + artist.name);
+                            for(let video of artist.videos)
+                                console.log(" -> " + video.name);
+                        }
+                    }
+                }
+        """
+        # Get artist-list
+        artists = self.GetArtists()
+
+        # Get videos for each artist
+        artistlist = []
+        for artist in artists:
+            videos = self.GetVideos(artist["id"], applyfilter=True)
+
+            # filter artists with no relevant videos
+            if videos == []:
+                continue
+
+            entry = {}
+            entry["artist"] = artist
+            entry["videos"] = videos
+            artistlist.append(entry)
+        return artistlist 
+
+
     def GetAlbums(self, artistid, applyfilter=False):
         """
         GetAlbums returns a list of albums of an artist.
@@ -470,6 +532,79 @@ class MusicDBWebSocketInterface(object):
             albumlist.append(entry)
 
         return albumlist
+
+
+    def GetVideos(self, artistid, applyfilter=False):
+        """
+        GetVideos returns a list of videos of an artist.
+        The list is sorted by release date of the video, starting with the earliest one.
+        Each entry in the list has the following two elements:
+
+            * **video:** A video entry from the database.
+            * **tags:** The returned tag entry by :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoTags`
+
+        The filter gets applied to only the *genre* tags.
+
+        Args:
+            artistid (int): ID of the artist whose videos shall be returned
+            applyfilter (bool): Default value is ``False``
+
+        Returns:
+            A list of videos and their tags
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Request("GetVideos", "ShowVideos", {artistid:artistid, applyfilter:false});
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "GetVideos" && sig == "ShowVideos")
+                    {
+                        for(let listentry of args)
+                        {
+                            let video, tags;
+                            video = listentry.video;
+                            tags  = listentry.tags;
+
+                            console.log("Tags of " + video.name + ":");
+                            console.log(tags);
+                        }
+                    }
+                }
+        """
+        # Get videos by this artist
+        videos = self.database.GetVideosByArtistId(artistid)
+
+        # sort videos for release year
+        videos = sorted(videos, key = lambda k: k["release"])
+
+        if applyfilter:
+            filterset = set(self.mdbstate.GetFilterList())
+
+        # assign tags to videos
+        videolist = []
+        for video in videos:
+            tags   = self.GetVideoTags(video["id"])
+            genres = tags["genres"]
+
+            # if no tags are available, show the album!
+            if applyfilter and genres:
+                genreset = { genre["name"] for genre in genres }
+
+                # do not continue with this album,
+                # if there is no unionset of genres
+                if not filterset & genreset:
+                    continue
+
+            entry = {}
+            entry["video"]   = video
+            entry["tags"]    = tags
+            videolist.append(entry)
+
+        return videolist
 
 
     def GetSortedAlbumCDs(self, albumid):
@@ -742,6 +877,21 @@ class MusicDBWebSocketInterface(object):
         genres, subgenres, moods = self.database.SplitTagsByClass(tags)
         tags = {}
         tags["albumid"]   = albumid  # this is necessary to not loose context
+        tags["genres"]    = genres
+        tags["subgenres"] = subgenres
+        tags["moods"]     = moods
+        return tags
+
+
+    def GetVideoTags(self, videoid):
+        """
+        Similar to :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags`.
+        This method returns the tags for a Video.
+        """
+        tags = self.database.GetTargetTags("video", videoid)
+        genres, subgenres, moods = self.database.SplitTagsByClass(tags)
+        tags = {}
+        tags["videoid"]   = videoid  # this is necessary to not loose context
         tags["genres"]    = genres
         tags["subgenres"] = subgenres
         tags["moods"]     = moods
