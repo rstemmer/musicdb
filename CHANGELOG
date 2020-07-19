@@ -7,6 +7,15 @@
 
 Run  git log --oneline  for more details
 
+┍━━━━┫ 202?-??-?? ┣━━━━┫ 7.0.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ + Support for music videos integraded 
+│ + [database] musicdb database add allows adding videos to the music collection
+│
+┝━ MINOR CHANGES
+└───────────────────────────────────────╌╌
+
+
 ┍━━━━┫ 2020-08-01 ┣━━━━┫ 6.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ - [MusicAI] Removed (The framework I used is no longer maintained and does not work with modern Tensorflow anymore)
