@@ -72,6 +72,12 @@ div#ArtistControlButton_Reload:before
 {
     content: "\f021";   /*fa-refresh*/
 }
+div#ArtistControlButton_Mode:before
+{
+    font-weight: bold;
+    /*content: "⮔";*/
+    content: "↹";
+}
 
 
 

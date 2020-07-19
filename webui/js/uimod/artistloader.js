@@ -21,17 +21,18 @@
  *
  */
 
-// Gets triggered when the gnere were changed.
-// on timeout the artistlists well be requested
+// Gets triggered when the genres were changed.
+// on timeout the artist lists will be requested
 var RELOAD_INTERVAL      = 1000; //ms
 var reloadtimeouthandler = null;
+var MDBMODE = "audio";  // audio/video
 
 /*
  * This function creates the Artistloader View.
  * The genre buttons were not created. This is done by the Artistloader_Update function.
  * So the View can be created and rendered before the genre tags were loaded.
  *
- * This function can be calles on window.onload event.
+ * This function can be calls on window.onload event.
  */
 function Artistloader_Show(parentID)
 {
@@ -56,6 +57,15 @@ function Artistloader_Show(parentID)
     html += " onClick=\"_AL_onToggleControlButton(\'Reload\');\"";
     html += ">";
     html += "Reload";
+    html += "</div>";
+    // Mode Select
+    html += "<div";
+    html += " title=\"Switch between Audio/Video mode\"";
+    html += " id=ArtistControlButton_Mode";
+    html += " class=\"AL_controlbutton hlcolor smallfont\"";
+    html += " onClick=\"_AL_onToggleControlButton(\'Mode\');\"";
+    html += ">";
+    html += "Switch Mode";
     html += "</div>";
     html += "</div>";
     
@@ -100,6 +110,9 @@ function Artistloader_UpdateControl()
 
 function Artistloader_UpdateState(MDBState)
 {
+    // Get selected mode
+    MDBMODE = MDBState.MusicDB.uimode;
+    console.log(MDBState);
     // Get selected genres
     var filter;
     filter = MDBState.albumfilter;
@@ -177,13 +190,49 @@ function _AL_onToggleControlButton(name)
         }
         _AL_RequestArtistlist();
     }
+    else if(name == "Mode")
+    {
+        // Switch mode
+        if(MDBMODE == "audio")
+        {
+            MDBMODE = "video";
+        }
+        else
+        {
+            MDBMODE = "audio";
+        }
+
+        // Reset genre-selection timer
+        if(reloadtimeouthandler !== null)
+        {
+            clearTimeout(reloadtimeouthandler);
+            reloadtimeouthandler = null;
+        }
+
+        // Force reloading artist list for new mode
+        _AL_RequestArtistlist();
+        
+        // Inform everyone about the mode change
+        // The Call will trigger a broadcast of GetMDBState
+        // By making a Request and giving a function signature the broadcast
+        // gets handled exactly like a GetMDBState request
+        MusicDB_Request("SetMDBState", "UpdateMDBState",
+            {category:"MusicDB", name:"uimode", value:MDBMODE});
+    }
 }
 
 
-//var reloadtimeouthandler = null;
+
 function _AL_RequestArtistlist()
 {
-    MusicDB_Broadcast("GetFilteredArtistsWithAlbums", "ShowArtists");
+    if(MDBMODE == "audio")
+    {
+        MusicDB_Broadcast("GetFilteredArtistsWithAlbums", "ShowArtists");
+    }
+    else if(MDBMODE == "video")
+    {
+        MusicDB_Broadcast("GetFilteredArtistsWithVideos", "ShowArtists");
+    }
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
