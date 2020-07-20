@@ -110,9 +110,6 @@ function Artistloader_UpdateControl()
 
 function Artistloader_UpdateState(MDBState)
 {
-    // Get selected mode
-    MDBMODE = MDBState.MusicDB.uimode;
-
     // Get selected genres
     var filter;
     filter = MDBState.albumfilter;
@@ -126,6 +123,13 @@ function Artistloader_UpdateState(MDBState)
     // Update the state of each tag
     for(let genre of genres)
         _AL_SetTagState(genre.name, (filter.indexOf(genre.name) >= 0));
+
+    // Check and update UI Mode
+    if(MDBMODE != MDBState.MusicDB.uimode)
+    {
+        MDBMODE = MDBState.MusicDB.uimode;
+        _AL_RequestArtistlist();    // Reload Artist list for new Mode
+    }    
 }
 
 function _AL_SetTagState(name, state)
@@ -176,7 +180,7 @@ function _AL_onToggleTagButton(tagname)
         clearTimeout(reloadtimeouthandler);
         reloadtimeouthandler = null;
     }
-    reloadtimeouthandler = setTimeout("_AL_RequestArtistlist()", RELOAD_INTERVAL);
+    reloadtimeouthandler = setTimeout("_AL_BroadcastRequestArtistlist()", RELOAD_INTERVAL);
 }
 
 function _AL_onToggleControlButton(name)
@@ -188,7 +192,7 @@ function _AL_onToggleControlButton(name)
             clearTimeout(reloadtimeouthandler);
             reloadtimeouthandler = null;
         }
-        _AL_RequestArtistlist();
+        _AL_BroadcastRequestArtistlist();
     }
     else if(name == "Mode")
     {
@@ -209,8 +213,10 @@ function _AL_onToggleControlButton(name)
             reloadtimeouthandler = null;
         }
 
-        // Force reloading artist list for new mode
+        // Get artist list for new mode
         _AL_RequestArtistlist();
+        // The UpdateMDBState signal make other clients to request the data by them self.
+        // So there is no need for a Broadcast-Request
         
         // Inform everyone about the mode change
         // The Call will trigger a broadcast of GetMDBState
@@ -223,7 +229,7 @@ function _AL_onToggleControlButton(name)
 
 
 
-function _AL_RequestArtistlist()
+function _AL_BroadcastRequestArtistlist(type)
 {
     if(MDBMODE == "audio")
     {
@@ -232,6 +238,17 @@ function _AL_RequestArtistlist()
     else if(MDBMODE == "video")
     {
         MusicDB_Broadcast("GetFilteredArtistsWithVideos", "ShowArtists");
+    }
+}
+function _AL_RequestArtistlist(type)
+{
+    if(MDBMODE == "audio")
+    {
+        MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+    }
+    else if(MDBMODE == "video")
+    {
+        MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
     }
 }
 
