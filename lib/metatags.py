@@ -628,22 +628,31 @@ class MetaTags(object):
     def GetVideoResolution(self):
         """
         Tries to identify the video resolution of a video file.
+        There may be differences between the given resolution and the actual resolution of the video in the video player.
+        This is due to the Sample Aspect Ratio (SAR).
+        This method considers the SAR by returning the width multiplied by this ratio:
+
+        .. math::
+
+            width_{correct} = width_{meta} \cdot SAR
+
+        The height will not be changed.
 
         The corresponding command line is the following:
 
-            .. code-block:: bash
+        .. code-block:: bash
 
-                ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 $PATH
+            ffprobe -v error -select_streams v:0 -show_entries stream=width,height,sample_aspect_ratio -of csv=s=x:p=0 $PATH
 
         Returns:
-            A tuple ``(x,y)`` with the identified resolution like ``(1920, 1080)`` or ``None``
+            A tuple ``(width,height)`` with the identified resolution like ``(1920, 1080)`` or ``None``
         """
         # via https://stackoverflow.com/questions/684015/how-can-i-get-the-resolution-width-and-height-for-a-video-file-from-a-linux-co
         process = [
                 "ffprobe",
                 "-v", "error",
                 "-select_streams", "v:0",
-                "-show_entries", "stream=width,height",
+                "-show_entries", "stream=width,height,sample_aspect_ratio",
                 "-of", "csv=s=x:p=0",
                 self.path
                 ]
@@ -653,15 +662,23 @@ class MetaTags(object):
             retval = subprocess.check_output(process)
             logging.debug("Analysis returned %s", str(retval))
             retval = retval.decode("utf-8");
-            x,y = retval.split("x")
+            x,y,sar = retval.split("x")
             x = int(x)
             y = int(y)
+            sar_x,sar_y = sar.split(":")
+            sar_x = float(sar_x)
+            sar_y = float(sar_y)
         except Exception as e:
             logging.error("Error \"%s\" while executing: %s", str(e), str(process))
             return None
 
-        logging.debug("Analysis returned the resolution %i x %i", x, y)
-        return x, y
+        sar = sar_x / sar_y
+        w   = int(x * sar)
+        h   = int(y)
+
+
+        logging.debug("Analysis returned the resolution %i x %i", w, h)
+        return w, h
 
 
     def GetBitrate(self):
