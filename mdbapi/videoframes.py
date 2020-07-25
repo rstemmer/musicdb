@@ -28,7 +28,7 @@ thumbnail:
     File format is JPEG.
 
 preview:
-    A short gif-animation consisting of several frames of the video.
+    A short WebP-animation consisting of several frames of the video.
     This animation will can be played when the cursor hovers above the video.
 
 
@@ -58,7 +58,7 @@ To use the artwork inside a web frontend, the HTTPS server needs access to this 
 
 Relative to the frames root directory are the frames paths stored in the database.
 For each video a sub directory exists.
-Source-frames and all scaled frames as well as gif animations are stored in this sub directory.
+Source-frames and all scaled frames as well as WebP animations are stored in this sub directory.
 
 The name of the frames directory for a video, consists of the artist name and video name:
 ``$Artistname/$Videoname``.
@@ -81,13 +81,13 @@ frame-$i ($s×$s).jpg:
     Multiple scales are possible.
     For example, the name of the 5th frame scaled down to a size of max 100px would be ``frame-5 (100×100).jpg``
 
-preview.gif:
+preview.webp:
     A preview of the video as animation.
     All source frames available as JPEG are combined to the GIF animation.
     The amount of frames can be configured, as well as the animation length.
     The frames are uniform distributed over the animation length.
 
-preview-$i ($s×$s).gif:
+preview-$i ($s×$s).webp:
     A scaled version of the preview animation.
 
 The sub directory name for each video gets created by
@@ -133,9 +133,9 @@ An example configuration can look like the following one:
 
 Under these conditions, a 150×150 pixels preview animation of a video "Sonne" from "Rammstein"
 would have the following absolute path:
-``/data/musicdb/videoframes/Rammstein/Sonne/preview (150×150).gif``.
+``/data/musicdb/videoframes/Rammstein/Sonne/preview (150×150).webp``.
 Inside the database, this path is stored as ``Ramstein - Sonne``.
-Inside the HTML code of the WebUI the following path would be used: ``Rammstein/Sonne/preview (150×150).gif``.
+Inside the HTML code of the WebUI the following path would be used: ``Rammstein/Sonne/preview (150×150).webp``.
 
 
 Algorithm
@@ -162,6 +162,7 @@ from lib.filesystem     import Filesystem
 from lib.metatags       import MetaTags
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import *
+from PIL                import Image
 
 class VideoFrames(object):
     """
@@ -190,6 +191,7 @@ class VideoFrames(object):
         self.framesroot = Filesystem(self.cfg.videoframes.path)
         self.metadata   = MetaTags(self.cfg.music.path)
         self.maxframes  = self.cfg.videoframes.frames
+        self.previewlength = self.cfg.videoframes.previewlength
 
         # Check if all paths exist that have to exist
         pathlist = []
@@ -277,6 +279,10 @@ class VideoFrames(object):
 
         The total length of the video gets determined by :meth:`~lib.metatags.MetaTags.GetPlaytime`
 
+        Args:
+            dirname (str): Name/Path of the directory to store the generated frames
+            videopath (str): Path to the video that gets processed
+
         Returns:
             ``True`` on success, otherwise ``False``
         """
@@ -302,7 +308,7 @@ class VideoFrames(object):
             framepath = dirname + "/" + framename
 
             # Run ffmpeg - use absolute paths
-            absframepath = self.framesroot.AbsolutePath(dirname + "/" + framename)
+            absframepath = self.framesroot.AbsolutePath(framepath)
             absvideopath = self.musicroot.AbsolutePath(videopath)
             process = ["ffmpeg",
                     "-ss", str(moment),
@@ -319,7 +325,6 @@ class VideoFrames(object):
 
             # TODO: Scale down the frame
             logging.warning("TODO: Scaling not yet implemented")
-            #break # FIXME: FOR DEBUGGING
 
         return True
 
@@ -327,10 +332,56 @@ class VideoFrames(object):
 
     def GeneratePreviews(self, dirname):
         """
-        This method creates all preview animations, including scaled versions, from frames.
+        This method creates all preview animations (.webp), including scaled versions, from frames.
         The frames can be generated via :meth:`~GenerateFrames`.
+
+        Args:
+            dirname (str): Name/Path of the directory to store the generated frames
+
+        Returns:
+            ``True`` on success, otherwise ``False``
         """
-        logging.warning("TODO: Generating previews not yet implemented")
+
+        # Load all frames
+        frames = []
+        for framenumber in range(self.maxframes):
+            # Create absolute frame file path
+            framename    = "frame-%02d.jpg"%(framenumber+1)
+            relframepath = dirname + "/" + framename
+            absframepath = self.framesroot.AbsolutePath(relframepath)
+
+            # Open image
+            try:
+                frame = Image.open(absframepath)
+            except FileNotFoundError as e:
+                logging.warning("Unable to load frame \"$s\": %s \033[1;30m(Frame will be ignored)", absframepath, str(e))
+                continue
+
+            frames.append(frame)
+
+        # Check if enough frames for a preview have been loaded
+        if len(frames) < 2:
+            logging.error("Not enough frames were loaded. Cannot create a preview animation. \033[1;30m(%d < 2)", len(frames))
+            return False
+
+        # Create absolute animation file path
+        relpreviewpath = dirname + "/preview.webp"
+        abspreviewpath = self.framesroot.AbsolutePath(relpreviewpath)
+
+        # Calculate time for each frame in ms being visible
+        duration = int((self.previewlength * 1000) / self.maxframes)
+
+        # Store as WebP animation
+        preview = frames[0]                 # Start with frame 0
+        preview.save(abspreviewpath, 
+                save_all=True,              # Save all frames
+                append_images=frames[1:],   # Save these frames
+                duration=duration,          # Display time for each frame
+                loop=0,                     # Show in infinite loop
+                method=6)                   # Slower but better method [1]
+
+        # [1] https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html#webp
+
         return True
 
 
@@ -367,157 +418,6 @@ class VideoFrames(object):
         if retval == False:
             return False
         return True
-
-
-#######################################################################################
-# OLD
-
-    def GetArtworkFromFile(self, album, tmpawfile):
-        """
-        This method tries to get an artwork from the metadata of the first song of an album.
-        With the first song, the first one in the database related to the album is meant.
-        The metadata gets loaded and the artwork stored to a temporary file using the method
-        :meth:`lib.metatags.MetaTags.StoreArtwork`.
-
-        Args:
-            album: Album entry from the MusicDB Database
-            tmpawfile (str): Temporary artwork path (incl filename) to which the artwork shall be written
-
-        Returns:
-            ``True`` on success, otherwise ``False``
-        """
-        # Load the first files metadata
-        songs = self.db.GetSongsByAlbumId(album["id"])
-        firstsong = songs[0]
-
-        self.meta.Load(firstsong["path"])
-        retval = self.meta.StoreArtwork(tmpawfile)
-        return retval
-
-
-    def SetArtwork(self, albumid, artworkpath, artworkname):
-        """
-        This method sets a new artwork for an album.
-        It does the following things:
-
-            #. Copy the artwork from *artworkpath* to the artwork root directory under the name *artworkname*
-            #. Create scaled Versions of the artwork by calling :meth:`lib.cache.ArtworkCache.GetArtwork` for each resolution.
-            #. Update entry in the database
-
-        All new creates files ownership will be set to ``[music]->owner:[music]->group`` and gets the permission ``rw-rw-r--``
-
-        Args:
-            albumid: ID of the Album that artwork shall be set
-            artworkpath (str, NoneType): The absolute path of an artwork that shall be added to the database. If ``None`` the method assumes that the default artwork shall be set. *artworkname* will be ignored in this case.
-            artworkname (str): The relative path of the final artwork.
-
-        Returns:
-            ``True`` on success, otherwise ``False``
-
-        Examples:
-            
-            .. code-block:: python
-
-                # Copy from metadata extracted temporary artwork to the artwork directory
-                self.SetArtwork(albumid, "/tmp/musicdbtmpartwork.jpg", "Artist - Album.jpg")
-
-                # Copy a user-defined artwork to the artwork directory
-                self.SetArtwork(albumid, "/home/username/downloads/fromzeintanetz.jpg", "Artist - Album.jpg")
-
-                # Set the default artwork
-                self.SetArtwork(albumid, None, any)
-        """
-        if artworkpath:
-            abssrcpath = self.fs.AbsolutePath(artworkpath)
-            absdstpath = self.artworkroot.AbsolutePath(artworkname)
-
-            # Copy file
-            logging.debug("Copying file from \"%s\" to \"%s\"", abssrcpath, absdstpath)
-            self.artworkroot.CopyFile(abssrcpath, absdstpath)
-
-            # Set permissions to -rw-rw-r--
-            try:
-                self.artworkroot.SetAttributes(artworkname, self.cfg.music.owner, self.cfg.music.group, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH)
-            except Exception as e:
-                logging.warning("Setting artwork file attributes failed with error %s. \033[1;30m(Leaving them as they are)", str(e))
-
-        if not self.artworkroot.Exists(artworkname):
-            logging.error("Artwork \"%s\" does not exist but was expected to exist!", artworkname)
-            return False
-
-        # Scale file
-        # convert edge-size to resolution
-        # [10, 20, 30] -> ["10x10", "20x20", "30x30"]
-        resolutions = [ str(s)+"x"+str(s) for s in self.cfg.artwork.scales ]
-
-        for resolution in resolutions:
-            relpath = self.awcache.GetArtwork(artworkname, resolution)
-
-            if not self.artworkroot.Exists(relpath):
-                logging.error("Artwork \"%s\" does not exist but was expected to exist!", relpath)
-                return False
-
-            # Set permissions to -rw-rw-r--
-            try:
-                self.artworkroot.SetAttributes(relpath, self.cfg.music.owner, self.cfg.music.group, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH)
-            except Exception as e:
-                logging.warning("Setting artwork file attributes failed with error %s. \033[1;30m(Leaving them as they are)", str(e))
-
-        # Update database entry
-        self.db.SetArtwork(albumid, artworkname)
-
-        return True
-
-
-    def UpdateAlbumArtwork(self, album, artworkpath=None):
-        """
-        This method updates the artwork path entry of an album and the artwork files in the artwork directory.
-        If a specific artwork shall be forced to use, *artworkpath* can be set to this artwork file.
-        Following the concept *The Filesystem Is Always Right* and *Do Not Trust Metadata*, the user specified artwork path has higher priority.
-        Metadata will only be processed if *artworkpath* is ``None``
-
-        So an update takes place if *at least one* of the following condition is true:
-
-            #. The database entry points to ``default.jpg``
-            #. *artworkpath* is not ``None``
-            #. If the database entry points to a nonexistent file
-
-        Args:
-            album: An Album Entry from the MusicDB Database
-            artworkpath (str, NoneType): Absolute path of an artwork that shall be used as album artwork. If ``None`` the Method tries to extract the artwork from the meta data of an albums song.
-
-        Returns:
-            ``True`` If either the update was successful or there was no update necessary.
-            ``False`` If the update failed. Reasons can be an invalid *artworkpath*-Argument
-        """
-        # Create relative artwork path
-        artist    = self.db.GetArtistById(album["artistid"])
-        imagename = self.CreateArtworkName(artist["name"], album["name"])
-
-        # Check if there is no update necessary
-        dbentry   = album["artworkpath"]
-        if dbentry != "default.jpg" and artworkpath == None:
-            if self.artworkroot.IsFile(dbentry):    # If the file does not extist, it must be updated!
-                return True
-
-        # Check if the user given artworkpath is valid
-        if artworkpath and not self.fs.IsFile(artworkpath):
-            logging.error("The artworkpath that shall be forces is invalid (\"%s\")! \033[1;30m(Artwork update will be canceled)", str(artworkpath))
-            return False
-
-        # If there is no suggested artwork, try to get one from the meta data
-        # In case this failes, use the default artwork
-        if not artworkpath:
-            artworkpath = "/tmp/musicdbtmpartwork.jpg"  # FIXME: Hardcoded usually sucks
-            retval      = self.GetArtworkFromFile(album, artworkpath)
-            if not retval:
-                imagename   = "default.jpg"
-                artworkpath = None
-
-        # Set new artwork
-        logging.info("Updating artwork for album \"%s\" to \"%s\" at \"%s\".", album["name"], imagename, artworkpath)
-        retval = self.SetArtwork(album["id"], artworkpath, imagename)
-        return retval
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
