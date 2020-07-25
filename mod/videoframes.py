@@ -81,7 +81,9 @@ class videoframes(MDBModule, VideoFrames):
         for artist in tqdm(artists, unit="Artists"):
             videos = self.db.GetVideosByArtistId(artist["id"])
             for video in videos:
-                self.UpdateVideoFrames(video)
+                retval = self.UpdateVideoFrames(video)
+                if retval == False:
+                    print("\033[1;31mGenerating video Frames and Preview failed for %s!\033[0m"%(video["path"]))
 
 
 
