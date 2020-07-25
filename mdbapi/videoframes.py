@@ -269,6 +269,8 @@ class VideoFrames(object):
         ``videoframes`` is the root directory for the video frames as configured in the MusicDB Configuration file.
         ``time`` is a moment in time in the video at which the frame gets selected.
         This value gets calculated depending of the videos length and amount of frames that shall be generated.
+        The file name of the frames will be ``frame-xx.jpg`` where ``xx`` represents the frame number.
+        The number is decimal, has two digits and starts with 01.
 
         The scale solves the differences between the Display Aspect Ratio (DAR) and the Sample Aspect Ratio (SAR).
         By using a scale of image width multiplied by the SAR, the resulting frame has the same ratio as the video in the video player.
@@ -296,7 +298,7 @@ class VideoFrames(object):
             moment = sliceoffset + slicelength * framenumber
 
             # Define destination path
-            framename = "frame-%02d.jpg"%(framenumber)
+            framename = "frame-%02d.jpg"%(framenumber+1)
             framepath = dirname + "/" + framename
 
             # Run ffmpeg - use absolute paths
