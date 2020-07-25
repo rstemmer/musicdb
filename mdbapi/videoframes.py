@@ -129,7 +129,7 @@ An example configuration can look like the following one:
     path=/data/musicdb/videoframes  ; Path to the sub directories for videos
     frames=5                        ; Grab 5 frames from the video
     scales=50, 150                  ; Provide scales of 50px and 150px
-    previewlength=3
+    previewlength=3                 ; Create GIF-Animations with 3 second loop length
 
 Under these conditions, a 150×150 pixels preview animation of a video "Sonne" from "Rammstein"
 would have the following absolute path:
@@ -159,11 +159,15 @@ TODO
 import os
 import stat
 from lib.filesystem     import Filesystem
+from lib.metatags       import MetaTags
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import *
 
 class VideoFrames(object):
     """
+    This class implements the concept described above.
+    The most important method is :meth:`~UpdateVideoFrames` that generates all frames and previews for a given video.
+
     Args:
         config: MusicDB configuration object
         database: MusicDB database
@@ -184,6 +188,8 @@ class VideoFrames(object):
         self.fs     = Filesystem()
         self.musicroot  = Filesystem(self.cfg.music.path)
         self.framesroot = Filesystem(self.cfg.videoframes.path)
+        self.metadata   = MetaTags(self.cfg.music.path)
+        self.maxframes  = self.cfg.videoframes.frames
 
         # Check if all paths exist that have to exist
         pathlist = []
@@ -196,7 +202,7 @@ class VideoFrames(object):
 
 
 
-    def CreateFramesDirectoryName(self, artistname, videoame):
+    def CreateFramesDirectoryName(self, artistname, videoname):
         """
         This method creates the name for a frames directory regarding the following schema:
         ``$Artistname/$Videoname``.
@@ -252,8 +258,68 @@ class VideoFrames(object):
         """
         This method creates all frame files, including scaled frames, from a video.
         After generating the frames, animations can be generated via :meth:`~GeneratePreviews`.
+
+        To generate the frames, ``ffmpeg`` is used in the following way:
+
+        .. code-block:: bash
+
+            ffmpeg -ss $time -i $videopath -vf scale=iw*sar:ih -vframes 1 $videoframes/$dirname/frame-xx.jpg
+
+        ``videopath`` and ``dirname`` are the parameters of this method.
+        ``videoframes`` is the root directory for the video frames as configured in the MusicDB Configuration file.
+        ``time`` is a moment in time in the video at which the frame gets selected.
+        This value gets calculated depending of the videos length and amount of frames that shall be generated.
+
+        The scale solves the differences between the Display Aspect Ratio (DAR) and the Sample Aspect Ratio (SAR).
+        By using a scale of image width multiplied by the SAR, the resulting frame has the same ratio as the video in the video player.
+
+        The total length of the video gets determined by :meth:`~lib.metatags.MetaTags.GetPlaytime`
+
+        Returns:
+            ``True`` on success, otherwise ``False``
         """
-        pass
+        
+        # Determine length of the video in seconds
+        try:
+            self.metadata.Load(videopath)
+            videolength = self.metadata.GetPlaytime()
+        except Exception as e:
+            logging.exception("Generating frames for video \"%s\" failed with error: %s", videopath, str(e))
+            return False
+
+        slicelength = videolength / (self.maxframes+1)
+        sliceoffset = slicelength / 2
+
+        for framenumber in range(self.maxframes):
+            # Calculate time point of the frame in seconds
+            #moment = (videolength / self.maxframes) * framenumber
+            moment = sliceoffset + slicelength * framenumber
+
+            # Define destination path
+            framename = "frame-%02d.jpg"%(framenumber)
+            framepath = dirname + "/" + framename
+
+            # Run ffmpeg - use absolute paths
+            absframepath = self.framesroot.AbsolutePath(dirname + "/" + framename)
+            absvideopath = self.musicroot.AbsolutePath(videopath)
+            process = ["ffmpeg",
+                    "-ss", str(moment),
+                    "-i", absvideopath,
+                    "-vf", "scale=iw*sar:ih",   # Make sure the aspect ration is correct
+                    "-vframes", "1",
+                    absframepath]
+            logging.debug("Getting frame via %s", str(process))
+            try:
+                self.fs.Execute(process)
+            except Exception as e:
+                logging.exception("Generating frame for video \"%s\" failed with error: %s", videopath, str(e))
+                return False
+
+            # TODO: Scale down the frame
+            logging.warning("TODO: Scaling not yet implemented")
+            #break # FIXME: FOR DEBUGGING
+
+        return True
 
 
 
@@ -262,7 +328,43 @@ class VideoFrames(object):
         This method creates all preview animations, including scaled versions, from frames.
         The frames can be generated via :meth:`~GenerateFrames`.
         """
-        pass
+        logging.warning("TODO: Generating previews not yet implemented")
+        return True
+
+
+
+    def UpdateVideoFrames(self, video):
+        """
+        #. Create frames directory (:meth:`~CreateFramesDirectory`)
+        #. Generate frames (:meth:`~GenerateFrames`)
+        #. Generate previews (:meth:`~GeneratePreviews`)
+
+        Args:
+            video: Database entry for the video for that the frames and preview animation shall be updated
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+        """
+        logging.info("Updating frames and previews for %s", video["path"])
+
+        artist     = self.db.GetArtistById(video["artistid"])
+        artistname = artist["name"]
+        videopath  = video["path"]
+        videoname  = video["name"]
+
+        # Prepare everything to start generating frames and previews
+        framesdir  = self.CreateFramesDirectory(artistname, videoname)
+
+        # Generate Frames
+        retval = self.GenerateFrames(framesdir, videopath)
+        if retval == False:
+            return False
+
+        # Generate Preview
+        retval = self.GeneratePreviews(framesdir)
+        if retval == False:
+            return False
+        return True
 
 
 #######################################################################################
