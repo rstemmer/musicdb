@@ -46,9 +46,7 @@ framespath:
     The path to a frame relative to the thumbnails root directory set in the MusicDB Configuration.
     To access a scaled version of the artwork, the scale as prefix can be used.
 
-    For example, to access a thumbnail, the absolute path would be ``/$THUMBNAILCACHE/$THUMBNAILPATH``,
-    a scaled version can be found in ``$THUMBNAILCACHE/50x50/$THUMBNAILPATH``.
-    Of cause only if the scale of 50x50 is supported (= configured in the Config-File).
+    For example, to access a thumbnail, the absolute path would be ``/$THUMBNAILCACHE/$THUMBNAILPATH``.
 
 
 Path structure
@@ -63,7 +61,7 @@ For each video a sub directory exists.
 Source-frames and all scaled frames as well as gif animations are stored in this sub directory.
 
 The name of the frames directory for a video, consists of the artist name and video name:
-``$Artistname - $Videoname``.
+``$Artistname/$Videoname``.
 This guarantees unique file names that are human readable at the same time.
 
 Inside this sub directory the following files exists:
@@ -115,7 +113,9 @@ For example, to generate 50x50, 100x100 and 500x500 versions of a frame,
 the configuration would look like this: ``scales=50, 100, 500``
 The scaled frames get stored as progressive JPEGs to get a better responsiveness for the WebUI.
 
-Usually videos do not have a ration of 1:1. TODO
+Usually videos do not have a ration of 1:1.
+The scale value is interpreted as the width of the video in pixels.
+The height follows the original ration.
 
 
 Configuration
@@ -133,9 +133,9 @@ An example configuration can look like the following one:
 
 Under these conditions, a 150×150 pixels preview animation of a video "Sonne" from "Rammstein"
 would have the following absolute path:
-``/data/musicdb/videoframes/Rammstein - Sonne/preview (150×150).gif``.
+``/data/musicdb/videoframes/Rammstein/Sonne/preview (150×150).gif``.
 Inside the database, this path is stored as ``Ramstein - Sonne``.
-Inside the HTML code of the WebUI the following path would be used: ``Rammstein - Sonne/preview (150×150).gif``.
+Inside the HTML code of the WebUI the following path would be used: ``Rammstein/Sonne/preview (150×150).gif``.
 
 
 Algorithm
@@ -199,7 +199,7 @@ class VideoFrames(object):
     def CreateFramesDirectoryName(self, artistname, videoame):
         """
         This method creates the name for a frames directory regarding the following schema:
-        ``$Artistname - $Videoname``.
+        ``$Artistname/$Videoname``.
         If there is a ``/`` in the name, it gets replaced by ``∕`` (U+2215, DIVISION SLASH)
 
         Args:
@@ -211,7 +211,7 @@ class VideoFrames(object):
         """
         artistname = artistname.replace("/", "∕")
         videoname  = videoname.replace( "/", "∕")
-        dirname    = artistname + " - " + videoname
+        dirname    = artistname + "/" + videoname
         return dirname
 
 
@@ -233,7 +233,7 @@ class VideoFrames(object):
         dirname = self.CreateFramesDirectoryName(artistname, videoname)
 
         # Create directory
-        self.framesroot.CreateSubDirectory(dirname)
+        self.framesroot.CreateSubdirectory(dirname)
 
         # Set permissions to -rwxrwxr-x
         try:
