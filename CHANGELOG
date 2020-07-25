@@ -11,6 +11,7 @@ Run  git log --oneline  for more details
 ┝━ MAJOR CHANGES
 │ + Support for music videos integraded 
 │ + [database] musicdb database add allows adding videos to the music collection
+│ + [videoframes] musicdb videoframes is a command line module for managing video frames and previews
 │
 ┝━ MINOR CHANGES
 └───────────────────────────────────────╌╌
