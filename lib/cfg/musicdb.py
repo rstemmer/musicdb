@@ -76,6 +76,8 @@ class MUSIC:
     pass
 class ARTWORK:
     pass
+class VIDEOFRAMES:
+    pass
 class EXTERN:
     pass
 class TRACKER:
@@ -176,6 +178,17 @@ class MusicDBConfig(Config):
                 logging.error("Missing scale in [artwork]->scales: The web UI expects a scale of %d (res: %dx%d)", s, s, s)
         self.artwork.manifesttemplate=self.GetFile( "artwork",  "manifesttemplate", "/opt/musicdb/server/manifest.txt", logging.warning) # a missing manifest does not affect the main functionality
         self.artwork.manifest       = self.Get(str, "artwork",  "manifest",     "/opt/musicdb/server/webui/manifest.appcache")
+
+
+        # [videoframes]
+        self.videoframes = VIDEOFRAMES()
+        self.videoframes.path           = self.GetDirectory("videoframes",  "path",     "/opt/musicdb/data/videoframes")
+        self.videoframes.frames         = self.Get(int, "videoframes",  "frames",       "5")
+        self.videoframes.previewlength  = self.Get(int, "videoframes",  "previewlength","3")
+        self.videoframes.scales         = self.Get(int, "videoframes",  "scales",       "50, 150", islist=True)
+        for s in [50, 150]:
+            if not s in self.videoframes.scales:
+                logging.error("Missing scale in [videoframes]->scales: The web UI expects a scale of %d (res: %dx%d)", s, s, s)
 
 
         # [extern]
