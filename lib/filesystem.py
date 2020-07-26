@@ -880,6 +880,7 @@ class Filesystem(object):
 
         # Extract name and extension
         try:
+            videofilename      = videofilename.split(" - ")[1]   # remove release part
             video["name"]      = self.GetFileName(videofilename)
             video["extension"] = self.GetFileExtension(videofilename)
         except:

@@ -41,7 +41,7 @@ class MusicDBDatabase(object):
             * :meth:`~AnalysePath`: Extract song information from its file path
             * :meth:`~TyrAnalysePathFor`: Check if the given path is valid for an artist, album or song
         * Database management
-            * :meth:`~AddArtist`, :meth:`~AddAlbum`, :meth:`~AddSong`: Adds a new artist, album or song to the database
+            * :meth:`~AddArtist`, :meth:`~AddAlbum`, :meth:`~AddSong`, :meth:`~AddVideo`: Adds a new artist, album, song video to the database
             * :meth:`~UpdateArtist`, :meth:`~UpdateAlbum`, :meth:`~UpdateSong`: Updates a artist, album or song path in the database
             * :meth:`~RemoveArtist`, :meth:`~RemoveAlbum`, :meth:`~RemoveSong`: Removes a artist, album or song from the database
         * Add information into the database
@@ -1001,7 +1001,9 @@ class MusicDBDatabase(object):
         video["codec"]       = tagmeta["codec"]
         video["xresolution"] = tagmeta["xresolution"]
         video["yresolution"] = tagmeta["yresolution"]
-        video["thumbnailpath"]  = "default.jpg"
+        video["framesdirectory"] = ""
+        video["thumbnailfile"]   = ""
+        video["previewfile"] = ""
         video["likes"]       = 0
         video["dislikes"]    = 0
         video["favorite"]    = 0
