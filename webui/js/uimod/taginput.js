@@ -14,7 +14,7 @@
  * @param {string} taginputid - id of the input element
  * @param {integer} targetid - songid or albumid (to bind this element with a song
  * @param {string} tagclass - ``"Genre"``, ``"Subgenre"``, ``"Mood"``
- * @param {string} target - ``"Song"``, ``"Album"``
+ * @param {string} target - ``"Song"``, ``"Album"``, ``"Video"``
  *
  * @returns {string} HTML code of the Taginput control
  */
@@ -81,13 +81,22 @@ function Taginput_Update(taginputid, MDBTags, mode)
     var tagclass = $(jqid).attr("data-tagclass");
     var target   = $("#"+taginputid).attr("data-target");
 
-    // Make sure that there are no foreign tags - this may happen due to race coditions. Just be sure.
+    // Make sure that there are no foreign tags - this may happen due to race conditions. Just be sure.
     if(target === "Song")
     {
         if(MDBTags.songid != targetid)
         {
             window.console && console.log("ERROR: The tags to update are for a different Song!");
             window.console && console.log("  This target: " + targetid + "; Received tags: " + MDBTags.songid);
+            return;
+        }
+    }
+    else if(target === "Video")
+    {
+        if(MDBTags.videoid != targetid)
+        {
+            window.console && console.log("ERROR: The tags to update are for a different Video!");
+            window.console && console.log("  This target: " + targetid + "; Received tags: " + MDBTags.videoid);
             return;
         }
     }
@@ -115,7 +124,7 @@ function Taginput_Update(taginputid, MDBTags, mode)
  * @param {integer} targetid - songid or albumid (to bind this element with a song
  * @param {MDBTag-list} taglist - list of tags that shall be shown (all classes)
  * @param {string} tagclass - ``"Genre"``, ``"Subgenre"``, ``"Mood"``
- * @param {string} target - ``"Song"``, ``"Album"``
+ * @param {string} target - ``"Song"``, ``"Album"``, ``"Video"``
  *
  * @returns *nothing*
  */
@@ -289,7 +298,9 @@ function _TAGI_onApproveTag(taginputid, tagid)
     // So by just calling SetSongTag, the song gets updated as intended.
     
     if(target === "Song")
-        MusicDB_Request("SetSongTag", "UpdateTagInput", {songid:targetid, tagid:tagid}, {taginputid:taginputid});
+        MusicDB_Request("SetSongTag",  "UpdateTagInput", {songid:targetid,  tagid:tagid}, {taginputid:taginputid});
+    else if(target === "Video")
+        MusicDB_Request("SetVideoTag", "UpdateTagInput", {videoid:targetid, tagid:tagid}, {taginputid:taginputid});
     else if(target === "Album")
         MusicDB_Request("SetAlbumTag", "UpdateTagInput", {albumid:targetid, tagid:tagid}, {taginputid:taginputid});
 }
@@ -299,7 +310,9 @@ function _TAGI_onRemoveTag(taginputid, tagid)
     var target   = $("#"+taginputid).attr("data-target");
 
     if(target === "Song")
-        MusicDB_Request("RemoveSongTag", "UpdateTagInput", {songid:targetid, tagid:tagid}, {taginputid:taginputid});
+        MusicDB_Request("RemoveSongTag",  "UpdateTagInput", {songid:targetid,  tagid:tagid}, {taginputid:taginputid});
+    else if(target === "Video")
+        MusicDB_Request("RemoveVideoTag", "UpdateTagInput", {videoid:targetid, tagid:tagid}, {taginputid:taginputid});
     else if(target === "Album")
         MusicDB_Request("RemoveAlbumTag", "UpdateTagInput", {albumid:targetid, tagid:tagid}, {taginputid:taginputid});
 }
@@ -310,7 +323,9 @@ function _TAGI_onAddTag(taginputid, tagid)
     var tagclass = $("#"+taginputid).attr("data-tagclass");
 
     if(target === "Song")
-        MusicDB_Request("SetSongTag", "UpdateTagInput", {songid:targetid, tagid:tagid}, {taginputid:taginputid});
+        MusicDB_Request("SetSongTag",  "UpdateTagInput", {songid:targetid,  tagid:tagid}, {taginputid:taginputid});
+    if(target === "Video")
+        MusicDB_Request("SetVideoTag", "UpdateTagInput", {videoid:targetid, tagid:tagid}, {taginputid:taginputid});
     else if(target === "Album")
         MusicDB_Request("SetAlbumTag", "UpdateTagInput", {albumid:targetid, tagid:tagid}, {taginputid:taginputid});
 

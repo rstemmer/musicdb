@@ -45,11 +45,7 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
     // Show settings
     let settingsid = "VV_videosettings_" + MDBVideo.id;
     html += "    <div id=\"" + settingsid + "\" class=\"VV_videosettings fmcolor frame\">";
-    html += "        <div class=\"VV_videosettings_row\">";
     html += _VV_CreateVideoSettings(MDBVideo, MDBTags);
-    html += "        </div>";
-    html += "    <div class=\"VV_videosettings_row\">";
-    html += "    </div>";
     html += "    </div>";
 
     html += "</div>"; // VVVideo
@@ -108,14 +104,18 @@ function _VV_CreateVideoSettings(MDBVideo, MDBVideoTags)
     let propboxid = "VVS_propbox_" + videoid;
     let tagsboxid = "VVS_tagsbox_" + videoid;
 
-    html += "<div id=\""+moodboxid+"\" class=\"VVS_moodbox hlcolor\">"
+    html += "<div class=\"VV_videosettings_row\">";
+    html += "    <div id=\""+moodboxid+"\" class=\"VVS_moodbox hlcolor\">"
+    html += "    </div>";
+    html += "    <div id=\""+propboxid+"\" class=\"VVS_propbox hlcolor\">";
+    html += "    </div>";
     html += "</div>";
-    html += "<div id=\""+propboxid+"\" class=\"VVS_propbox hlcolor\">";
+    html += "<div class=\"VV_videosettings_row\">";
+    html += "    <div id=\""+tagsboxid+"\" class=\"VVS_tagsbox\">";
+    html += Taginput_Create("VVS_genre_"    + videoid, videoid, "Genre",    "Video");
+    html += Taginput_Create("VVS_subgenre_" + videoid, videoid, "Subgenre", "Video");
+    html += "    </div>";
     html += "</div>";
-    //html += "<div id=\""+tagsboxid+"\" class=\"VVS_tagsbox\">";
-    //html += Taginput_Create("VVS_genre_"    + videoid, videoid, "Genre",    "Song");
-    //html += Taginput_Create("VVS_subgenre_" + videoid, videoid, "Subgenre", "Song");
-    //html += "</div>";
 
     return html;
 }
@@ -137,8 +137,8 @@ function UpdateVideoSettings(MDBVideo, MDBVideoTags, initialize)
 
     Videoproperties_UpdateControl(propboxid, MDBVideo, initialize); // true: initialize and reset like/dislike buttons
 
-    //Taginput_Update("VVS_genre_"    + videoid, MDBVideoTags);
-    //Taginput_Update("VVS_subgenre_" + videoid, MDBVideoTags);
+    Taginput_Update("VVS_genre_"    + videoid, MDBVideoTags);
+    Taginput_Update("VVS_subgenre_" + videoid, MDBVideoTags);
 }
 
 
