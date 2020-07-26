@@ -226,6 +226,7 @@ class VideoFrames(object):
         This method creates the directory that contains all frames and previews for a video.
         The ownership of the created directory will be the music user and music group set in the configuration file.
         The permissions will be set to ``rwxrwxr-x``.
+        If the directory already exists, only the attributes will be updated.
 
         Args:
             artistname (str): Name of an artist
@@ -237,8 +238,11 @@ class VideoFrames(object):
         # Determine directory name
         dirname = self.CreateFramesDirectoryName(artistname, videoname)
 
-        # Create directory
-        self.framesroot.CreateSubdirectory(dirname)
+        # Create directory if it does not yet exist
+        if self.framesroot.IsDirectory(dirname):
+            logging.debug("Frame directory \"%s\" already exists.", dirname)
+        else:
+            self.framesroot.CreateSubdirectory(dirname)
 
         # Set permissions to -rwxrwxr-x
         try:
@@ -277,6 +281,11 @@ class VideoFrames(object):
 
         The total length of the video gets determined by :meth:`~lib.metatags.MetaTags.GetPlaytime`
 
+        When there are already frames existing, nothing will be done.
+        This implies that it is mandatory to remove existing frames manually when there are changes in the configuration.
+        For example when increasing or decreasing the amount of frames to consider for the animation.
+        The method will return ``True`` in this case, because there are frames existing.
+
         Args:
             dirname (str): Name/Path of the directory to store the generated frames
             videopath (str): Path to the video that gets processed
@@ -284,7 +293,12 @@ class VideoFrames(object):
         Returns:
             ``True`` on success, otherwise ``False``
         """
-        
+        # Check if there are already frames.
+        framepath = dirname + "/frame-01.jpg"
+        if self.framesroot.IsFile(framepath):
+            logging.debug("There are already frames in \"%s\" (Skipping frame generation process)", dirname)
+            return True
+
         # Determine length of the video in seconds
         try:
             self.metadata.Load(videopath)
@@ -333,12 +347,19 @@ class VideoFrames(object):
         This method creates all preview animations (.webp), including scaled versions, from frames.
         The frames can be generated via :meth:`~GenerateFrames`.
 
+        In case there is already a preview file, the method returns ``True`` without doing anything.
+
         Args:
             dirname (str): Name/Path of the directory to store the generated frames
 
         Returns:
             ``True`` on success, otherwise ``False``
         """
+        # Check if there are already frames.
+        previewpath = dirname + "/preview.webp"
+        if self.framesroot.IsFile(previewpath):
+            logging.debug("There is already a preview.webp in \"%s\" (Skipping frame generation process)", dirname)
+            return True
 
         # Load all frames
         frames = []
