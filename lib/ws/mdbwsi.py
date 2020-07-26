@@ -71,6 +71,8 @@ Tag related
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveAlbumTag`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetVideoTag`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveVideoTag`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSubgenre`
 
 Lyrics
@@ -230,6 +232,16 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetSong(args["songid"])
             method = "broadcast"
             fncname= "GetSong"
+        elif fncname == "SetVideoTag":
+            retval = self.SetVideoTag(args["videoid"], args["tagid"])
+            retval = self.GetVideo(args["videoid"])
+            method = "broadcast"
+            fncname= "GetVideo"
+        elif fncname == "RemoveVideoTag":
+            retval = self.RemoveVideoTag(args["videoid"], args["tagid"])
+            retval = self.GetVideo(args["videoid"])
+            method = "broadcast"
+            fncname= "GetVideo"
         elif fncname == "AddSubgenre":
             retval = self.AddSubgenre(args["name"], args["parentname"])
         elif fncname == "SetAlbumTag":
@@ -1963,6 +1975,83 @@ class MusicDBWebSocketInterface(object):
         self.database.RemoveTargetTag("song", songid, tagid)
         albumid = self.database.GetSongById(songid)["albumid"]
         self.tags.DeriveAlbumTags(albumid)
+        return None
+
+
+    def SetVideoTag(self, videoid, tagid):
+        """
+        Sets a tag for a video.
+        This method sets the approval-level to 1 (Set by User) and confidence to 1.0 for this tag.
+        So, this method can also be used to approve an AI set tag.
+
+        If tagging is disabled nothing will be done. 
+
+        After executing this method, the MusicDB server broadcasts the result of :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideo`. (``method = "broadcast", fncname = "GetVideo"``)
+        So each client gets informed about the changes made.
+        This is important to update the HUD if the video is currently playing.
+        
+        Args:
+            videoid (int): ID of the video
+            tagid (int): ID of the tag
+
+        Return:
+            ``None``
+
+        Examples:
+            .. code-block:: javascript
+
+                MusicDB_Call("SetVideoTag", {videoid:videoid, tagid:tagid});
+
+            .. code-block:: javascript
+
+                MusicDB_Request("SetVideoTag", "UpdateTagInput", {videoid:videoid, tagid:tagid}, {taginputid:taginputid});
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "GetVideo" && sig == "UpdateTagInput")
+                    {
+                        console.log("Updating " + pass.taginputid + " for video " + args.video.name);
+                        Taginput_Update(pass.taginputid, args.tags);
+                    }
+                }
+        """
+        if self.cfg.debug.disabletagging:
+            logging.info("Changing tags disabled. \033[1;33m!!")
+            return None
+
+        self.database.SetTargetTag("video", videoid, tagid)
+        return None
+
+
+    def RemoveVideoTag(self, videoid, tagid):
+        """
+        Removes a tag from a video.
+
+        If tagging is disabled nothing will be done. 
+
+        After executing this method, the MusicDB server broadcasts the result of :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideo`. (``method = "broadcast", fncname = "GetVideo"``)
+        So each client gets informed about the changes made.
+        This is important to update the HUD if the video is currently playing.
+        
+        Args:
+            videoid (int): ID of the video
+            tagid (int): ID of the tag
+
+        Return:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("RemoveVideoTag", {videoid:videoid, tagid:tagid});
+        """
+        if self.cfg.debug.disabletagging:
+            logging.info("Changing tags disabled. \033[1;33m!!")
+            return None
+
+        self.database.RemoveTargetTag("video", videoid, tagid)
         return None
 
 

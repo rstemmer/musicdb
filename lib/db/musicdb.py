@@ -2371,7 +2371,7 @@ class MusicDatabase(Database):
     def SetTargetTag(self, target, targetid, tagid, approval=1, confidence=None):
         """
         This method sets a tag for a target. 
-        A target can be a song (``target = "song"``) or an album (``target = "album"``).
+        A target can be a song (``target = "song"``), a video (``target = "video"``) or an album (``target = "album"``).
 
         The defaults for this method assume that the tag got set by a user.
 
@@ -2382,8 +2382,8 @@ class MusicDatabase(Database):
         But only if the new approval level is greater or equal to the already set one.
 
         Args:
-            target (str):   Target that shall be tagged (``"song"`` for a song, ``"album"`` for an album)
-            songid (int):   ID of the target that shall be tagged. (a song ID or an album ID)
+            target (str):   Target that shall be tagged (``"song"`` for a song, ``"video"`` for a video, ``"album"`` for an album)
+            targetid (int): ID of the target that shall be tagged. (a song ID, videoid or an album ID)
             tagid (int):    ID of the tag that shall be associated with the target
             approval (int): Approval of the association. Default is ``1`` - "Set by User"
             confidence (float): Confidence of the association in case *approval* is ``0`` - "Set by AI"
@@ -2392,14 +2392,14 @@ class MusicDatabase(Database):
             ``None``
 
         Raises:
-            TypeError: If *target* not in *{"song", "album"}*
+            ValueError: If ``target`` not in ``{"song", "album", "video"}``
             TypeError: If ``approval == 0 and confidence == None``
-            ValueError: If *approval* not in *{0,1,2}*
-            ValueError: If ``songid == None or tagid == None``
+            ValueError: If ``approval`` not in ``{0,1,2}``
+            ValueError: If ``targetid == None or tagid == None``
             AssertionError: If there already exists more than one entry
         """
         if targetid == None or tagid == None:
-            raise TypeError("SongID and TagID must have a value!")
+            raise TypeError("Target ID and Tag ID must have a value!")
 
         if approval == 1 or approval == 2:
             confidence = 1.0
@@ -2413,11 +2413,14 @@ class MusicDatabase(Database):
         if target == "song":
             tablename = "songtags"
             idname    = "songid"
+        elif target == "video":
+            tablename = "videotags"
+            idname    = "videoid"
         elif target == "album":
             tablename = "albumtags"
             idname    = "albumid"
         else:
-            raise ValueError("target must be \"song\" or \"album\"!")
+            raise ValueError("target must be \"song\", \"video\" or \"album\"!")
 
         # check if already tagged
         sql = "SELECT * FROM " + tablename + " WHERE " + idname + " = ? AND tagid = ?"
@@ -2453,18 +2456,19 @@ class MusicDatabase(Database):
 
     def RemoveTargetTag(self, target, targetid, tagid):
         """
-        Removes an association between a target and a tag in the tag map - Or short: Removes a tag from a song or an album.
+        Removes an association between a target and a tag in the tag map.
+        In short: Removes a tag from a song, a video or an album.
 
         Args:
-            target (str):   Target that shall be tagged (``"song"`` for a song, ``"album"`` for an album)
-            targetid (int): ID of the target that shall be tagged. (a song ID or an album ID)
+            target (str):   Target that shall be tagged (``"song"`` for a song, ``"video"`` for a video, ``"album"`` for an album)
+            targetid (int): ID of the target that shall be tagged. (a song ID, video ID or an album ID)
             tagid (int):    ID of the tag that shall be associated with the target
 
         Return:
             ``None``
 
         Raises:
-            ValueError: If *target* not in *{"song", "album"}*
+            ValueError: If ``target`` not in ``{"song", "video", "album"}``
             TypeError: If ``songid == None or tagid == None``
         """
         if targetid == None or tagid == None:
@@ -2474,11 +2478,14 @@ class MusicDatabase(Database):
         if target == "song":
             tablename = "songtags"
             idname    = "songid"
+        elif target == "video":
+            tablename = "videotags"
+            idname    = "videoid"
         elif target == "album":
             tablename = "albumtags"
             idname    = "albumid"
         else:
-            raise ValueError("target must be \"song\" or \"album\"!")
+            raise ValueError("target must be \"song\", \"video\" or \"album\"!")
 
         sql = "DELETE FROM " + tablename + " WHERE " + idname + " = ? AND tagid = ?"
         with MusicDatabaseLock:
