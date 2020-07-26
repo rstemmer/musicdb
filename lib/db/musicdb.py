@@ -2004,7 +2004,6 @@ class MusicDatabase(Database):
             try:
                 entry = self.GetVideoByPath(video["path"])
                 video["id"] = entry["id"]
-                print(video)
                 self.WriteVideo(video)
             except Exception as e:
                 logging.critical("The following Exception occurred: \"%s\". Trying to delete the half added video \"%s\" from database as long as this is save.", str(e), video["path"] )
