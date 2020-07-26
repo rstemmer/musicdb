@@ -51,6 +51,8 @@ CREATE TABLE IF NOT EXISTS songs
     lyricsstate INTEGER DEFAULT 0,
     checksum    TEXT    DEFAULT "",
     lastplayed  INTEGER DEFAULT 0
+    liverecording   INTEGER DEFAULT 0,
+    badaudio    INTEGER DEFAULT 0
 );
 
 
@@ -76,7 +78,7 @@ CREATE TABLE IF NOT EXISTS videos
     likes       INTEGER DEFAULT 0,
     dislikes    INTEGER DEFAULT 0,
     favorite    INTEGER DEFAULT 0,
-    livevideo   INTEGER DEFAULT 0,
+    liverecording   INTEGER DEFAULT 0,
     badaudio    INTEGER DEFAULT 0,
     checksum    TEXT    DEFAULT "",
     lastplayed  INTEGER DEFAULT 0

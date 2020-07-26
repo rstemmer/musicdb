@@ -89,9 +89,9 @@ The columns of the songs table are the following:
     | likes | dislikes | favorite |
     +-------+----------+----------+
 
-    +-------------+----------+------------+
-    | lyricsstate | checksum | lastplayed |
-    +-------------+----------+------------+
+    +-------------+----------+------------+---------------+----------+
+    | lyricsstate | checksum | lastplayed | liverecording | badaudio |
+    +-------------+----------+------------+---------------+----------+
 
 
 checksum (Text)
@@ -160,9 +160,9 @@ The columns of the videos table are the following:
     | framesdirectory | thumbnailfile | previewfile |
     +-----------------+---------------+-------------+
 
-    +-------+----------+----------+-----------+----------+
-    | likes | dislikes | favorite | livevideo | badaudio |
-    +-------+----------+----------+-----------+----------+
+    +-------+----------+----------+---------------+----------+
+    | likes | dislikes | favorite | liverecording | badaudio |
+    +-------+----------+----------+---------------+----------+
 
     +----------+------------+
     | checksum | lastplayed |
@@ -516,6 +516,8 @@ class MusicDatabase(Database):
     SONG_LYRICSSTATE = 13
     SONG_CHECKSUM   = 14
     SONG_LASTPLAYED = 15
+    SONG_LIVERECORDING = 16
+    SONG_BADAUDIO   = 17
 
     VIDEO_ID            = 0
     VIDEO_SONGID        = 1
@@ -537,7 +539,7 @@ class MusicDatabase(Database):
     VIDEO_LIKES         = 17
     VIDEO_DISLIKES      = 18
     VIDEO_FAVORITE      = 19
-    VIDEO_LIVEVIDEO     = 20
+    VIDEO_LIVERECORDING = 20
     VIDEO_BADAUDIO      = 21
     VIDEO_CHECKSUM      = 22
     VIDEO_LASTPLAYED    = 23
@@ -626,6 +628,8 @@ class MusicDatabase(Database):
         song["lyricsstate"] = entry[self.SONG_LYRICSSTATE]
         song["checksum"]    = entry[self.SONG_CHECKSUM]
         song["lastplayed"]  = entry[self.SONG_LASTPLAYED]
+        song["liverecording"]=entry[self.SONG_LIVERECORDING]
+        song["badaudio"]    = entry[self.SONG_BADAUDIO]
         return song
 
     def __VideoEntryToDict(self, entry):
@@ -650,7 +654,7 @@ class MusicDatabase(Database):
         video["likes"]         = entry[self.VIDEO_LIKES         ]
         video["dislikes"]      = entry[self.VIDEO_DISLIKES      ]
         video["favorite"]      = entry[self.VIDEO_FAVORITE      ]
-        video["livevideo"]     = entry[self.VIDEO_LIVEVIDEO     ]
+        video["liverecording"] = entry[self.VIDEO_LIVERECORDING ]
         video["badaudio"]      = entry[self.VIDEO_BADAUDIO      ]
         video["checksum"]      = entry[self.VIDEO_CHECKSUM      ]
         video["lastplayed"]    = entry[self.VIDEO_LASTPLAYED    ]
@@ -757,7 +761,9 @@ class MusicDatabase(Database):
             favorite=:favorite,
             lyricsstate=:lyricsstate,
             checksum=:checksum,
-            lastplayed=:lastplayed
+            lastplayed=:lastplayed,
+            liverecording=:liverecording,
+            badaudio=:badaudio
         WHERE
             songid=:id
         """
@@ -797,7 +803,7 @@ class MusicDatabase(Database):
             likes         = :likes         ,
             dislikes      = :dislikes      ,
             favorite      = :favorite      ,
-            livevideo     = :livevideo     ,
+            liverecording = :liverecording ,
             badaudio      = :badaudio      ,
             checksum      = :checksum      ,
             lastplayed    = :lastplayed
@@ -1819,29 +1825,29 @@ class MusicDatabase(Database):
 
     def UpdateVideoStatistic(self, videoid, stat, value):
         """
-        Alias to :meth:`~UpdateMusicStatistic` with last parameter ``musictype = "video"``.
+        Alias to :meth:`~UpdateMusicProperty` with last parameter ``musictype = "video"``.
         """
-        return self.UpdateMusicStatistic(videoid, stat, value, "video")
+        return self.UpdateMusicProperty(videoid, stat, value, "video")
 
     def UpdateSongStatistic(self, songid, stat, value):
         """
-        Alias to :meth:`~UpdateMusicStatistic` with last parameter ``musictype = "song"``.
+        Alias to :meth:`~UpdateMusicProperty` with last parameter ``musictype = "song"``.
         """
-        return self.UpdateMusicStatistic(songid, stat, value, "song")
+        return self.UpdateMusicProperty(songid, stat, value, "song")
 
-    def UpdateMusicStatistic(self, musicid, stat, value, musictype):
+    def UpdateMusicProperty(self, musicid, stat, value, musictype):
         """
-        This method updates a songs or videos statistics, depending on the value of ``musictype``.
+        This method updates a songs or videos property and statistic, depending on the value of ``musictype``.
 
         Statistics are:
 
-            * ``"likes"``, ``"dislikes"``, ``"favorite"``, ``"disabled"``, ``"lastplayed"``
+            * Statistics: ``"likes"``, ``"dislikes"``, ``"lastplayed"``
+            * Properties: ``"favorite"``, ``"disabled"``, ``"liverecording"``, ``"badaudio"``
 
-        Deprecated statistics will be ignored.
 
-        Values are:
+        Possible values are:
             
-            * ``"inc"``, ``"love"``, ``"yes"``: Increment value
+            * ``"inc"``, ``"love"``, ``"yes"``: Increment value or set to ``1`` for boolean properties
             * ``"dec"``, ``"hate"``: Decrement value
             * ``"reset"``, ``"none"``, ``"no"``: Set value to ``0``
 
@@ -1850,6 +1856,8 @@ class MusicDatabase(Database):
             * ``-1``: Hated song
             * ``0``: Normal song
             * ``1``: Loved song
+        
+        ``likes`` and ``dislikes`` can be incremented and decremented.
 
         ``lastplayed`` expects the unix time as integer given as value.
 
@@ -1868,6 +1876,7 @@ class MusicDatabase(Database):
             TypeError: When ``stat == "lastplayed"`` but ``value`` is not an integer
             ValueError: When an expected unix time is less than 0
             ValueError: When ``musictype`` is not ``"song"`` or ``"video"``
+            ValueError: For an unknown property or statistic
         """
         if musictype not in ["song", "video"]:
             raise ValueError("Music type must be \"song\" or \"video\"! (it was %s)", str(musictype))
@@ -1906,14 +1915,27 @@ class MusicDatabase(Database):
             # apply modifier
             if stat == "favorite":
                 music["favorite"] = modifier
+
             elif stat == "disable":
                 music["disabled"] = modifier
+
             elif stat == "lastplayed":
                 music["lastplayed"] = value
-            elif modifier == 0:
-                music[stat]       = 0
+
+            elif stat == "likes":
+                music["likes"] += modifier
+
+            elif stat == "dislikes":
+                music["dislikes"] += modifier
+
+            elif stat == "liverecording":
+                musicdb["liverecording"] = modifier
+
+            elif stat == "badaudio":
+                musicdb["badaudio"] = modifier
+
             else:
-                music[stat]      += modifier
+                raise ValueError("Unknown property or statistic!")
 
             # Write Song or video
             if musictype == "song":

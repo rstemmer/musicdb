@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -778,6 +778,8 @@ class MusicDBDatabase(object):
         song["lyricsstate"] = SONG_LYRICSSTATE_EMPTY
         song["checksum"]    = self.fs.Checksum(songpath)
         song["lastplayed"]  = 0
+        song["liverecording"]=0
+        song["badaudio"]    = 0
 
         # FIX: THE FILESYSTEM IS _ALWAYS_ RIGHT! - WHAT THE FUCK!
         song["name"] = fsmeta["song"] 
@@ -1007,7 +1009,7 @@ class MusicDBDatabase(object):
         video["likes"]       = 0
         video["dislikes"]    = 0
         video["favorite"]    = 0
-        video["livevideo"]   = 0
+        video["liverecording"]=0
         video["badaudio"]    = 0
         video["checksum"]    = self.fs.Checksum(videopath)
         video["lastplayed"]  = 0
