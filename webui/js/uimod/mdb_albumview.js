@@ -475,6 +475,10 @@ function _ABV_CreateSongEntryButtonbox(MDBSong)
     var boxid= "ABV_buttonbox_" + MDBSong.id;
     html += "<div id=\"" + boxid + "\" class=\"ABV_buttonbox hlcolor\">";
 
+    if(MDBSong.liverecording > 0)
+        html += _ABV_CreateFlag("liverecording", "<i class=\"fa\">&#xf0c0</i>", null);
+    if(MDBSong.badaudio > 0)
+        html += _ABV_CreateFlag("badaudio", "<i class=\"fa\">&#xf131</i>", null);
     if(MDBSong.favorite > 0)
         html += _ABV_CreateFlag("favorite", "<i class=\"fa fa-star-o\"></i>", "#A8A623");
 

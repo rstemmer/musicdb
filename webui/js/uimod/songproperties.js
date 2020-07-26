@@ -23,24 +23,25 @@ function Songproperties_ShowControl(parentid, controlname)
 
     // Create grid
     var html = "";
-    html += CreateGrid(controlname, 3, 2);
+    html += CreateGrid(controlname, 4, 2);
     $("#"+parentid).html(html);
 
     // Create mood buttons
-    Songproperties_CreateButton(controlname, 0, 0, "<i class=fa>&#xf087;</i>", "like");
-    Songproperties_CreateButton(controlname, 1, 0, "<i class=fa>&#xf088;</i>", "dislike");
-    Songproperties_CreateButton(controlname, 0, 1, "<i class=fa>&#xf006;</i>", "love");
-    Songproperties_CreateButton(controlname, 1, 1, "<i class=fa>&#xf014;</i>", "hate");
-    Songproperties_CreateButton(controlname, 2, 1, "<i class=fa>&#xf05e;</i>", "disable");
+    Songproperties_CreateButton(controlname, 0, 0, "<i class=fa>&#xf087;</i>", "like",          "Like");
+    Songproperties_CreateButton(controlname, 1, 0, "<i class=fa>&#xf088;</i>", "dislike",       "Dislike");
+    Songproperties_CreateButton(controlname, 2, 0, "<i class=fa>&#xf0c0;</i>", "liverecording", "Live Recording");
+    Songproperties_CreateButton(controlname, 0, 1, "<i class=fa>&#xf006;</i>", "love",          "Loved Song");
+    Songproperties_CreateButton(controlname, 1, 1, "<i class=fa>&#xf014;</i>", "hate",          "Hated Song");
+    Songproperties_CreateButton(controlname, 2, 1, "<i class=fa>&#xf131;</i>", "badaudio",      "Bad Audio");
+    Songproperties_CreateButton(controlname, 3, 1, "<i class=fa>&#xf05e;</i>", "disable",       "Disable Song");
 }
     
 
 
-function Songproperties_CreateButton(controlname, x, y, icon, property)
+function Songproperties_CreateButton(controlname, x, y, icon, property, tooltip)
 {
-    var html = "";
-    var buttonid = controlname + "_" + property;
-    var tooltip = property.charAt(0).toUpperCase() + property.slice(1);
+    let html = "";
+    let buttonid = controlname + "_" + property;
     html += "<div";
     html += " title=\"" + tooltip + "\"";
     html += " id=\"" + buttonid + "\"";
@@ -50,7 +51,7 @@ function Songproperties_CreateButton(controlname, x, y, icon, property)
     html += icon;
     html += "</div>";
 
-    var cellid;
+    let cellid;
     cellid = GridCellID(controlname, x, y);
     $("#"+cellid).html(html);
 }
@@ -70,9 +71,11 @@ function Songproperties_UpdateControl(controlname, MDBSong, resetlike)
         Songproperties_SetProperty(controlname, MDBSong.id, "like",    false);
         Songproperties_SetProperty(controlname, MDBSong.id, "dislike", false);
     }
-    Songproperties_SetProperty(controlname, MDBSong.id, "love",    MDBSong.favorite ==  1);
-    Songproperties_SetProperty(controlname, MDBSong.id, "hate",    MDBSong.favorite == -1);
-    Songproperties_SetProperty(controlname, MDBSong.id, "disable", MDBSong.disabled !=  0);
+    Songproperties_SetProperty(controlname, MDBSong.id, "love",          MDBSong.favorite      ==  1);
+    Songproperties_SetProperty(controlname, MDBSong.id, "hate",          MDBSong.favorite      == -1);
+    Songproperties_SetProperty(controlname, MDBSong.id, "disable",       MDBSong.disabled      !=  0);
+    Songproperties_SetProperty(controlname, MDBSong.id, "liverecording", MDBSong.liverecording ==  1);
+    Songproperties_SetProperty(controlname, MDBSong.id, "badaudio",      MDBSong.badaudio      ==  1);
 }
 
 function Videoproperties_UpdateControl(controlname, MDBVideo, resetlike)
@@ -82,9 +85,11 @@ function Videoproperties_UpdateControl(controlname, MDBVideo, resetlike)
         Videoproperties_SetProperty(controlname, MDBVideo.id, "like",    false);
         Videoproperties_SetProperty(controlname, MDBVideo.id, "dislike", false);
     }
-    Videoproperties_SetProperty(controlname, MDBVideo.id, "love",    MDBVideo.favorite ==  1);
-    Videoproperties_SetProperty(controlname, MDBVideo.id, "hate",    MDBVideo.favorite == -1);
-    Videoproperties_SetProperty(controlname, MDBVideo.id, "disable", MDBVideo.disabled !=  0);
+    Videoproperties_SetProperty(controlname, MDBVideo.id, "love",          MDBVideo.favorite      ==  1);
+    Videoproperties_SetProperty(controlname, MDBVideo.id, "hate",          MDBVideo.favorite      == -1);
+    Videoproperties_SetProperty(controlname, MDBVideo.id, "disable",       MDBVideo.disabled      !=  0);
+    Videoproperties_SetProperty(controlname, MDBVideo.id, "liverecording", MDBVideo.liverecording ==  1);
+    Videoproperties_SetProperty(controlname, MDBVideo.id, "badaudio",      MDBVideo.badaudio      ==  1);
 }
 
 
@@ -217,7 +222,10 @@ function Musicproperties_onPropertyButtonClick(buttonid, musicid, property, type
         MusicDB_Request(requestfunction, requestsignature, parameters);
         $(buttonid).attr("data-button", newstate);
     }
-    else if(property == "disable")
+    else if(property == "disable"
+         || property == "liverecording"
+         || property == "badaudio"
+           )
     {
         if(buttonstate == "unpressed")
         {
@@ -232,9 +240,9 @@ function Musicproperties_onPropertyButtonClick(buttonid, musicid, property, type
 
         // update music statistics
         if(type == "song")
-            parameters = {songid:musicid,  statistic:"disable", modifier:value};
+            parameters = {songid:musicid,  statistic:property, modifier:value};
         else if(type == "video")
-            parameters = {videoid:musicid, statistic:"disable", modifier:value};
+            parameters = {videoid:musicid, statistic:property, modifier:value};
         else
             return
 

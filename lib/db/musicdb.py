@@ -1879,14 +1879,14 @@ class MusicDatabase(Database):
             ValueError: For an unknown property or statistic
         """
         if musictype not in ["song", "video"]:
-            raise ValueError("Music type must be \"song\" or \"video\"! (it was %s)", str(musictype))
+            raise ValueError("Music type must be \"song\" or \"video\"! (it was %s)"%(str(musictype)))
 
         if type(musicid) != str and type(musicid) != int:
             raise TypeError("Music ID must be a decimal number of type integer or string")
 
         # Check if value and stat are valid
-        if stat not in ["likes", "dislikes", "favorite", "disable", "lastplayed"]:
-            raise ValueError("stat has an invalid value \"%s\"", str(stat))
+        if stat not in ["likes", "dislikes", "favorite", "disable", "lastplayed", "liverecording", "badaudio"]:
+            raise ValueError("stat has an invalid value \"%s\""%(str(stat)))
 
         if stat == "lastplayed":
             if type(value) != int:
@@ -1895,7 +1895,7 @@ class MusicDatabase(Database):
                 raise ValueError("Unix time must be greater than 0!")
         else:
             if value not in ["inc", "dec", "reset", "love", "hate", "none", "yes", "no"]:
-                raise ValueError("value has an invalid value \"%s\"", str(value))
+                raise ValueError("value has an invalid value \"%s\""%(str(value)))
 
         # Update music entry - lock between read and write to avoid loosing changes
         with MusicDatabaseLock:
@@ -1929,10 +1929,10 @@ class MusicDatabase(Database):
                 music["dislikes"] += modifier
 
             elif stat == "liverecording":
-                musicdb["liverecording"] = modifier
+                music["liverecording"] = modifier
 
             elif stat == "badaudio":
-                musicdb["badaudio"] = modifier
+                music["badaudio"] = modifier
 
             else:
                 raise ValueError("Unknown property or statistic!")
