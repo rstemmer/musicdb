@@ -37,29 +37,23 @@ function _CreateVideoTile(MDBVideo, size)
     let datawidth   = "data-size=\"" + size + "\"";
 
     html += "<div";
-    html += " class=\"AT_albumentry\"";
+    html += " class=\"VT_videoentry\"";
     html += " " + datawidth;
     html += " onClick=\"" + videorequest + "\"";
     html += ">";
 
     // Cover
-    html += "<div title=\"Show this Video\" class=\"AT_albumcover\" " + datawidth + ">";
+    html += "<div title=\"Show this Video\" class=\"VT_videocover\" " + datawidth + ">";
     html += "  <img src=\"" + imgpath + "\"";
     html += "    onmouseover=\"this.src=\'"+anipath+"\'\"";
     html += "    onmouseout =\"this.src=\'"+imgpath+"\'\"";
     html += "  \">";
     html += "</div>";
-    /* 
-    <img src="http://icons.iconarchive.com/icons/fasticon/angry-birds/128/yellow-bird-icon.png" 
-        onmouseover="this.src='http://icons.iconarchive.com/icons/fasticon/angry-birds/128/red-bird-icon.png'"
-        onmouseout="this.src='http://icons.iconarchive.com/icons/fasticon/angry-birds/128/yellow-bird-icon.png'"
-        border="0" alt=""/>
-    */
 
-    html += "<div class=\"AT_albummetadata\">";
+    html += "<div class=\"VT_videometadata\">";
     if(size != "small")
-        html += "<span class=\"AT_albumrelease hlcolor smallfont\">" + videorelease + "</span>";
-    html += "<span class=\"AT_albumname fgcolor smallfont\" title=\""+videoname+"\">" + videoname + "</span>";
+        html += "<span class=\"VT_videorelease hlcolor smallfont\">" + videorelease + "</span>";
+    html += "<span class=\"VT_videoname fgcolor smallfont\" title=\""+videoname+"\">" + videoname + "</span>";
     html += "</div>";
 
     html += "</div>";

@@ -1,0 +1,75 @@
+
+/******************/
+/* Video-related */
+/******************/
+
+div.VT_videoentry
+{
+    display:        inline-block;
+    margin-left:    5px;
+    margin-right:   5px;
+}
+div.VT_videoentry[data-size=medium] {
+    max-width:      150px;
+}
+div.VT_videoentry[data-size=small] {
+    max-width:      60px;
+}
+
+div.VT_videocover
+{
+    border-radius:  5px;
+    overflow:       hidden;
+}
+div.VT_videocover[data-size=medium] {
+    width:          150px;
+    height:          85px; /* 16:9 */
+}
+div.VT_videocover[data-size=small] {
+    width:          107px; /* 16:9 */
+    height:          60px;
+}
+
+/* on small screens use alwasy the small variant*/
+@media only screen and (max-width: 1600px) 
+{
+    div.VT_videoentry[data-size=medium] {
+        max-width:      120px;
+    }
+    div.VT_videocover[data-size=medium] {
+        width:          120px;
+        height:          68px; /* 16:9 */
+    }
+}
+
+
+div.VT_videocover img
+{
+    width:          auto;
+    height:         100%;
+}
+
+div.VT_videometadata
+{
+    overflow:       hidden;
+    white-space:    nowrap;
+}
+
+span.VT_videoname
+{
+    display:        inline-block;
+    overflow:       hidden;
+    white-space:    nowrap;
+}
+span.VT_videorelease
+{
+    display:        inline-block;
+    float:          right;
+}
+
+
+
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+
