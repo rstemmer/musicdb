@@ -1,0 +1,66 @@
+
+/******************/
+/* Main Container */
+/******************/
+
+div#VideoViewBox
+{
+    display:        block;
+    overflow:       auto;
+}
+
+
+
+/******************/
+/* Headline       */
+/******************/
+
+div#VVHeadlineBox
+{
+    margin-top:     2%;
+    margin-left:    5%;
+    display:        block;
+}
+
+
+div#VVMainHeadline
+{
+    display:        block;
+}
+div#VVSubHeadline
+{
+    display:        block;
+}
+span#VVSHLSeparator
+{
+    padding-left:   5px;
+    padding-right:  5px;
+}
+
+
+
+/******************/
+/* Video          */
+/******************/
+
+
+div#VVVideo
+{
+    display:        block;
+    width:          80%;
+    margin-top:     25px;
+    margin-left:    6%;
+    margin-bottom:  25px;
+}
+
+
+video.VV_player
+{
+    border-radius:  5px;
+}
+
+
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+
