@@ -246,7 +246,7 @@ class database(MDBModule, MusicDBDatabase):
 
         # Determine target by path
         try:
-            target = self.GetTargetByPath(args.path)
+            target = self.GetTargetByPath(path)
         except Exception as e:
             traceback.print_exc()
             print("\033[1;31mDetermine target by path failed with exception \"%s\"!\033[0m"%(str(e)))
