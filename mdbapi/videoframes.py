@@ -17,6 +17,10 @@
 This module handles the thumbnails (frames) and previews (git-animation) of videos.
 Its main task is to cache, scale and provide them to the GUI.
 
+.. attention::
+
+    Frame and preview scaling has not been implemented yet.
+
 Definitions
 -----------
 
@@ -143,17 +147,10 @@ Algorithm
 
 To update the frames cache the following steps are done:
 
-TODO
-
     #. Create a sun directory for the frames via :meth:`~mdbapi.videoframes.VideoFrames.CreateFramesDirectory`
     #. Generate the frames from a video with :meth:`~mdbapi.videoframes.VideoFrames.GenerateFrames`
     #. Generate the previews from the frames with :meth:`~mdbapi.videoframes.VideoFrames.GeneratePreviews`
-    #. Update database entry with the directory name
-
-    #. Read metadata from file in :meth:`~mdbapi.artwork.MusicDBArtwork.GetArtworkFromFile`
-    #. Create scaled versions of the new artwork in :meth:`~mdbapi.artwork.MusicDBArtwork.SetArtwork`
-    #. Create database entry in :meth:`~mdbapi.artwork.MusicDBArtwork.SetArtwork`
-
+    #. Update database entry with the directory name in the database via :meth:`~mdbapi.videoframes.VideoFrames.SetVideoFrames`
 """
 
 import os
@@ -386,6 +383,61 @@ class VideoFrames(object):
 
 
 
+    def GetScaledFrame(self, framesdir, resolution):
+        pass
+    def GetScaledPreview(self, framesdir, resolution):
+        pass
+
+
+    def SetVideoFrames(self, videoid, framesdir, thumbnailfile=None, previewfile=None):
+        """
+        Set Database entry for the video with video ID ``videoid``.
+        Using this method defines the frames directory to which all further paths are relative to.
+        The thumbnail file addresses a static source frame (like ``frame-01.jpg``),
+        the preview file addresses the preview animation (usually ``preview.webp``).
+
+        If ``thumbnailfile`` or ``previewfile`` is ``None``, it will not be changed in the database.
+
+        This method checks if the files exists.
+        If not, ``False`` gets returned an *no* changes will be done in the database.
+
+        Example:
+
+            .. code-block:: python
+
+                retval = vf.SetVideoFrames(1000, "Fleshgod Apocalypse/Monnalisa", "frame-02.jpg", "preview.webp")
+                if retval == False:
+                    print("Updating video entry failed.")
+
+        Args:
+            videoid (int): ID of the video that database entry shall be updated
+            framesdir (str): Path of the video specific sub directory containing all frames/preview files. Relative to the video frames root directory
+            thumbnailfile (str, NoneType): File name of the frame that shall be used as thumbnail, relative to ``framesdir``
+            previewfile (str, NoneType): File name of the preview animation, relative to ``framesdir``
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+        """
+        # Check if all files are valid
+        if not self.framesroot.IsDirectory(framesdir):
+            logging.error("The frames directory \"%s\" does not exist in the video frames root directory.", framesdir)
+            return False
+
+        if thumbnailfile and not self.framesroot.IsFile(framesdir + "/" + thumbnailfile):
+            logging.error("The thumbnail file \"%s\" does not exits in the frames directory \"%s\".", thumbnailfile, framesdir)
+            return False
+
+        if previewfile and not self.framesroot.IsFile(framesdir + "/" + previewfile):
+            logging.error("The preview file \"%s\" does not exits in the frames directory \"%s\".", previewfile, framesdir)
+            return False
+
+        # Change paths in the database
+        retval = self.db.SetVideoFrames(videoid, framesdir, thumbnailfile, previewfile)
+
+        return retval
+
+
+
     def UpdateVideoFrames(self, video):
         """
         #. Create frames directory (:meth:`~CreateFramesDirectory`)
@@ -404,6 +456,7 @@ class VideoFrames(object):
         artistname = artist["name"]
         videopath  = video["path"]
         videoname  = video["name"]
+        videoid    = video["id"]
 
         # Prepare everything to start generating frames and previews
         framesdir  = self.CreateFramesDirectory(artistname, videoname)
@@ -417,7 +470,10 @@ class VideoFrames(object):
         retval = self.GeneratePreviews(framesdir)
         if retval == False:
             return False
-        return True
+
+        # Update database
+        retval = self.SetVideoFrames(videoid, framesdir, "frame-01.jpg", "preview.webp")
+        return retval
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

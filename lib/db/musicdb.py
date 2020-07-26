@@ -2121,6 +2121,65 @@ class MusicDatabase(Database):
         return videos
 
 
+    def SetVideoFrames(self, videoid, framesdirectory=None, thumbnailfile=None, previewfile=None):
+        """
+        This method updates the frames directory, thumbnail file and preview file entry in the database
+        for a video with the ID ``videoid``.
+
+        The files and directory can be ``None``.
+        In this case the values will not be changed.
+        The video ID must be a valid ID of a video existing in the database.
+
+        Args:
+            videoid (int): ID of the video that database entry shall be updated
+            framesdirectory (str, NoneType): Path of the video specific sub directory containing all frames/preview files. Relative to the video frames root directory
+            thumbnailfile (str, NoneType): File name of the frame that shall be used as thumbnail, relative to ``framesdir``
+            previewfile (str, NoneType): File name of the preview animation, relative to ``framesdir``
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+
+        Raises:
+            TypeError: when the types of the arguments mismatch
+        """
+        if type(videoid) is not int:
+            raise TypeError("Video ID must be an integer")
+        if type(framesdirectory) is not str and type(framesdirectory) is not NoneType:
+            raise TypeError("Frames Directory must be a string or None")
+        if type(thumbnailfile)   is not str and type(thumbnailfile)   is not NoneType:
+            raise TypeError("Thumbnail File must be a string or None")
+        if type(previewfile)     is not str and type(previewfile)     is not NoneType:
+            raise TypeError("Preview File must be a string or None")
+
+        # Check if there is anything to do
+        if framesdirectory == None and thumbnailfile == None and previewfile == None:
+            return True
+
+        # Prepare data directory for database update
+        data = {}
+        data["videoid"]         = videoid
+        data["framesdirectory"] = framesdirectory
+        data["thumbnailfile"]   = thumbnailfile
+        data["previewfile"]     = previewfile
+
+        # Prepare sql instruction
+        updates = []
+        if framesdirectory:
+            updates.append("framesdirectory=:framesdirectory")
+        if thumbnailfile:
+            updates.append("thumbnailfile=:thumbnailfile")
+        if previewfile:
+            updates.append("previewfile=:previewfile")
+
+        sql  = "UPDATE videos SET "
+        sql += ", ".join(updates)
+        sql += " where videoid=:videoid"
+
+        with MusicDatabaseLock:
+            self.Execute(sql, data)
+        return True
+
+
     ####################################
     # TAG HANDLING
     ####################################
