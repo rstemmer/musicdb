@@ -141,6 +141,15 @@ function onMusicDBMessage(fnc, sig, args, pass)
             UpdateRelationshipTileTags(pass.taginputid, args.tags);
         }
     }
+    else if(fnc == "GetVideo" && sig == "UpdateVideo") {
+        //if(args.video.id == currentvideoid)
+        //{
+            UpdateVideoSettings(args.video, args.tags, false);
+            //Taginput_Show("GenreHUD",    "MainSongGenreView",    args.song.id, args.tags, "Genre",    "Song");
+            //Taginput_Show("SubgenreHUD", "MainSongSubgenreView", args.song.id, args.tags, "Subgenre", "Song");
+            UpdateStyle();    // Update new tags
+        //}
+    }
     else if(fnc == "GetQueue" && sig == "ShowQueue")
         ShowQueue("RightContentBox", args);
 

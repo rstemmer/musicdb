@@ -28,6 +28,7 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
     // Album title and artist infos
     html += _VV_CreateHeadline(MDBArtist, MDBAlbum, MDBSong, MDBVideo);
 
+    // Show the video
     let poster = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile);
     html += "<div id=VVVideo>";
     html += "    <video ";
@@ -40,12 +41,23 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
     html += "       >";
     html += "       <source src=\"/musicdb/music/" + MDBVideo.path + "\">";
     html += "    </video>";
-    html += "</div>";
 
+    // Show settings
+    let settingsid = "VV_videosettings_" + MDBVideo.id;
+    html += "    <div id=\"" + settingsid + "\" class=\"VV_videosettings fmcolor frame\">";
+    html += "        <div class=\"VV_videosettings_row\">";
+    html += _VV_CreateVideoSettings(MDBVideo, MDBTags);
+    html += "        </div>";
+    html += "    <div class=\"VV_videosettings_row\">";
+    html += "    </div>";
+    html += "    </div>";
+
+    html += "</div>"; // VVVideo
     html += "</div>"; // main box
 
     // Push content to screen
     $("#"+parentID).html(html);
+    UpdateVideoSettings(MDBVideo, MDBTags, true);
     return;
 }
 
@@ -53,9 +65,7 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
 function _VV_CreateHeadline(MDBArtist, MDBAlbum, MDBSong, MDBVideo)
 {
     let html = "";
-    html += "<div id=VVHeadlineBox title=\"Origin: " + MDBVideo.origin + "\"";
-    //html += " oncontextmenu=\"ToggleVisibility(\'ABVSettings\'); return false;\""; // Show settings
-    html += ">";
+    html += "<div id=VVHeadlineBox title=\"Origin: " + MDBVideo.origin + "\">";
 
     html += "<div id=VVMainHeadline>";
     // Video name
@@ -87,6 +97,48 @@ function _VV_CreateHeadline(MDBArtist, MDBAlbum, MDBSong, MDBVideo)
     html += "</div>";
     html += "</div>";
     return html;
+}
+
+
+function _VV_CreateVideoSettings(MDBVideo, MDBVideoTags)
+{
+    let videoid = MDBVideo.id;
+    let html = "";
+    let moodboxid = "VVS_moodbox_" + videoid;
+    let propboxid = "VVS_propbox_" + videoid;
+    let tagsboxid = "VVS_tagsbox_" + videoid;
+
+    html += "<div id=\""+moodboxid+"\" class=\"VVS_moodbox hlcolor\">"
+    html += "</div>";
+    html += "<div id=\""+propboxid+"\" class=\"VVS_propbox hlcolor\">";
+    html += "</div>";
+    //html += "<div id=\""+tagsboxid+"\" class=\"VVS_tagsbox\">";
+    //html += Taginput_Create("VVS_genre_"    + videoid, videoid, "Genre",    "Song");
+    //html += Taginput_Create("VVS_subgenre_" + videoid, videoid, "Subgenre", "Song");
+    //html += "</div>";
+
+    return html;
+}
+
+function UpdateVideoSettings(MDBVideo, MDBVideoTags, initialize)
+{
+    let videoid = MDBVideo.id;
+    let moodboxid = "VVS_moodbox_" + videoid;
+    let propboxid = "VVS_propbox_" + videoid;
+    let tagsboxid = "VVS_tagsbox_" + videoid;
+
+    if(initialize == true)
+        Videotags_ShowMoodControl(moodboxid, moodboxid);
+
+    Videotags_UpdateMoodControl(moodboxid, MDBVideoTags);
+    
+    if(initialize == true)
+        Videoproperties_ShowControl(propboxid, propboxid);
+
+    Videoproperties_UpdateControl(propboxid, MDBVideo, initialize); // true: initialize and reset like/dislike buttons
+
+    //Taginput_Update("VVS_genre_"    + videoid, MDBVideoTags);
+    //Taginput_Update("VVS_subgenre_" + videoid, MDBVideoTags);
 }
 
 

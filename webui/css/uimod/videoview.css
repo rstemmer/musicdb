@@ -60,6 +60,44 @@ video.VV_player
 }
 
 
+/******************/
+/* Video Settings  */
+/******************/
+
+div.VV_videosettings
+{
+    display:        block;
+    flex-direction: column;
+    margin-top:     0px;
+    margin-bottom:  5px;
+}
+div.VV_videosettings_row
+{
+    display:        flex;
+    flex-direction: row;
+    align-items:    center;
+    justify-content: left;
+}
+
+
+div.VVS_moodbox
+{
+    flex-grow:      0;
+    display:        flex;
+}
+div.VVS_propbox
+{
+    flex-grow:      0;
+    display:        flex;
+}
+div.VVS_tagsbox
+{
+    flex-grow:      1;
+    display:        flex;
+    flex-direction: column;
+    margin-left:    10px;
+    margin-right:   10px;
+}
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */

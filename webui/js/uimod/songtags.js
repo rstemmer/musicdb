@@ -8,11 +8,16 @@
  *  parentid (str): ID of the HTML element in that the grid shall be placed
  *  controlname (str): Name of the grid to identify if later
  */
+function Videotags_ShowMoodControl(parentid, controlname)
+{
+    // There are no differences between songs and videos at this point
+    Songtags_ShowMoodControl(parentid, controlname);
+}
 function Songtags_ShowMoodControl(parentid, controlname)
 {
     if($("#"+parentid).length === 0)
     {
-        window.console && console.log("Parent " + parenid + "does not exist!");
+        window.console && console.log("Parent " + parentid + "does not exist!");
         return;
     }
 
@@ -107,6 +112,38 @@ function Songtags_UpdateMoodControl(controlname, MDBSongTags)
 
 }
 
+function Videotags_UpdateMoodControl(controlname, MDBVideoTags)
+{
+    // Create a list of tags that are set
+    let taglist = [];
+    for(let tag of MDBVideoTags.moods)
+        taglist.push(tag.id);
+
+    // Update each mood button
+    let moods;
+    moods = Tagmanager_GetMoods();
+
+    for(let mood of moods)
+    {
+        let buttonid;
+        buttonid = "#" + controlname + "_" + mood.name.replace(/\s+/g, ''); // control name + name of mood
+
+        let buttonstate;
+        if(taglist.indexOf(mood.id) >= 0)
+            buttonstate = "pressed";
+        else
+            buttonstate = "unpressed";
+
+        $(buttonid).attr("data-button", buttonstate);
+        $(buttonid).off().on("click",
+            function()
+            {
+                Videotags_onTagButtonClick(buttonid, MDBVideoTags.videoid, mood.id);
+            }
+        );
+    }
+}
+
 
 function Songtags_onTagButtonClick(buttonid, songid, tagid)
 {
@@ -127,6 +164,24 @@ function Songtags_onTagButtonClick(buttonid, songid, tagid)
     $(buttonid).attr("data-button", newstate);
 }
 
+function Videotags_onTagButtonClick(buttonid, videoid, tagid)
+{
+    var buttonstate = $(buttonid).attr("data-button");
+    var newstate;
+
+    if(buttonstate == "pressed")
+    {
+        newstate = "unpressed";
+        MusicDB_Request("RemoveVideoTag", "UpdateVideo", {videoid:videoid, tagid:tagid});
+    }
+    else if(buttonstate == "unpressed")
+    {
+        newstate = "pressed";
+        MusicDB_Request("SetVideoTag", "UpdateVideo", {videoid:videoid, tagid:tagid});
+    }
+
+    $(buttonid).attr("data-button", newstate);
+}
 
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
