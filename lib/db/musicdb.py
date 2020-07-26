@@ -436,8 +436,8 @@ Approval (Integer, Default: 1)
    * ``2`` - Can be used for training. This Song/Album is a good representation for this tag. It can be used to train an AI.
 
 
-Database API
-^^^^^^^^^^^^^
+Tag Related Methods
+^^^^^^^^^^^^^^^^^^^
 
     * :meth:`~lib.db.musicdb.MusicDatabase.CreateTag`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetAllTags`
@@ -455,7 +455,7 @@ The following tag classes exist:
     * ``MusicDatabase.TAG_CLASS_SUBGENRE``: Subgenre like Dark Metal, New Wave, …
     * ``MusicDatabase.TAG_CLASS_MOOD``: Moods like Lucky, Sad, …
 
-A target can be "song" or "album".
+A target can be "song", "video" or "album".
 """
 
 import random
