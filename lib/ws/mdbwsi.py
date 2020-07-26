@@ -50,6 +50,7 @@ Videos
 ^^^^^^
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideos`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideo`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateVideoStatistic`
 
 Queue
 ^^^^^
@@ -250,6 +251,11 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetSong(args["songid"])
             method = "broadcast"
             fncname= "GetSong"
+        elif fncname == "UpdateVideoStatistic":
+            retval = self.UpdateVideoStatistic(args["videoid"], args["statistic"], args["modifier"])
+            retval = self.GetVideo(args["videoid"])
+            method = "broadcast"
+            fncname= "GetVideo"
         elif fncname == "AddSongToQueue":
             retval = self.AddSongToQueue(args["songid"], args["position"])
         elif fncname == "AddAlbumToQueue":
@@ -668,6 +674,28 @@ class MusicDBWebSocketInterface(object):
         retval["video"]   = video
         retval["tags"]    = tags
         return retval
+
+
+    def UpdateVideoStatistic(self, videoid, statistic, modifier):
+        """
+        This video allows setting some statistics and properties for a video.
+        When this method got called direct via the JavaScript API, the MusicDB server broadcasts the result of :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideo`. (``method = "broadcast", fncname = "GetSong"``)
+        So each client gets informed about the changes made and can synchronize itself.
+
+        This method is a direct interface to :meth:`lib.db.musicdb.MusicDatabase.UpdateVideoStatistic`. See the related documentation for more details.
+        """
+        if self.cfg.debug.disablestats:
+            logging.info("Updating video statistics disabled. \033[1;33m!!")
+            return None
+
+        try:
+            self.database.UpdateVideoStatistic(videoid, statistic, modifier)
+        except ValueError as e:
+            logging.warning("Updating video statistics failed with error: %s!", str(e))
+        except Exception as e:
+            logging.exception("Updating video statistics failed with error: %s!", str(e))
+
+        return None
 
 
     def GetSortedAlbumCDs(self, albumid):

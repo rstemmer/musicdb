@@ -221,6 +221,7 @@ The following methods exist to handle video entries in the database:
     * :meth:`~lib.db.musicdb.MusicDatabase.GetVideoByPath`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetVideoById`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetVideosByArtistId`
+    * :meth:`~lib.db.musicdb.MusicDatabase.UpdateVideoStatistic`
 
 
 Albums
@@ -1816,9 +1817,21 @@ class MusicDatabase(Database):
 
 
 
+    def UpdateVideoStatistic(self, videoid, stat, value):
+        """
+        Alias to :meth:`~UpdateMusicStatistic` with last parameter ``musictype = "video"``.
+        """
+        return self.UpdateMusicStatistic(videoid, stat, value, "video")
+
     def UpdateSongStatistic(self, songid, stat, value):
         """
-        This method updates the song statistics.
+        Alias to :meth:`~UpdateMusicStatistic` with last parameter ``musictype = "song"``.
+        """
+        return self.UpdateMusicStatistic(songid, stat, value, "song")
+
+    def UpdateMusicStatistic(self, musicid, stat, value, musictype):
+        """
+        This method updates a songs or videos statistics, depending on the value of ``musictype``.
 
         Statistics are:
 
@@ -1841,9 +1854,10 @@ class MusicDatabase(Database):
         ``lastplayed`` expects the unix time as integer given as value.
 
         Args:
-            songid (int): ID of the song
+            musicid (int): ID of the song or video
             stat (str): Name of the statistics to update
             value (str/int): How to update
+            musictype (str): ``"song"`` or ``"video"``
 
         Returns:
             ``None``
@@ -1853,9 +1867,13 @@ class MusicDatabase(Database):
             ValueError: if stats or value have an invalid value. Deprecated statistics do not raise an exception.
             TypeError: When ``stat == "lastplayed"`` but ``value`` is not an integer
             ValueError: When an expected unix time is less than 0
+            ValueError: When ``musictype`` is not ``"song"`` or ``"video"``
         """
-        if type(songid) != str and type(songid) != int:
-            raise TypeError("songid must be a decimal number of type integer or string")
+        if musictype not in ["song", "video"]:
+            raise ValueError("Music type must be \"song\" or \"video\"! (it was %s)", str(musictype))
+
+        if type(musicid) != str and type(musicid) != int:
+            raise TypeError("Music ID must be a decimal number of type integer or string")
 
         # Check if value and stat are valid
         if stat not in ["likes", "dislikes", "favorite", "disable", "lastplayed"]:
@@ -1870,9 +1888,12 @@ class MusicDatabase(Database):
             if value not in ["inc", "dec", "reset", "love", "hate", "none", "yes", "no"]:
                 raise ValueError("value has an invalid value \"%s\"", str(value))
 
-        # Get song entry
+        # Update music entry - lock between read and write to avoid loosing changes
         with MusicDatabaseLock:
-            song = self.GetSongById(songid)
+            if musictype == "song":
+                music = self.GetSongById(musicid)
+            elif musictype == "video":
+                music = self.GetVideoById(musicid)
 
             # generate modifier
             if value in ["inc", "love", "yes"]:
@@ -1884,18 +1905,21 @@ class MusicDatabase(Database):
 
             # apply modifier
             if stat == "favorite":
-                song["favorite"] = modifier
+                music["favorite"] = modifier
             elif stat == "disable":
-                song["disabled"] = modifier
+                music["disabled"] = modifier
             elif stat == "lastplayed":
-                song["lastplayed"] = value
+                music["lastplayed"] = value
             elif modifier == 0:
-                song[stat]       = 0
+                music[stat]       = 0
             else:
-                song[stat]      += modifier
+                music[stat]      += modifier
 
-            # Write Song
-            self.WriteSong(song)
+            # Write Song or video
+            if musictype == "song":
+                self.WriteSong(music)
+            elif musictype == "video":
+                self.WriteVideo(music)
         return None
 
 
