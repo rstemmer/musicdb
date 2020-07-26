@@ -28,7 +28,8 @@ function CreateSmallVideoTile(MDBVideo)
 function _CreateVideoTile(MDBVideo, size)
 {
     let html        = "";
-    let imgpath     = EncodeVideoThumbnailPath(MDBVideo.thumbnailpath, "150x150");
+    let imgpath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile, "150×150");
+    let anipath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.previewfile,   "150×150");
     let videoid     = MDBVideo.id;
     let videoname   = MDBVideo.name;
     let videorelease= MDBVideo.release;
@@ -43,9 +44,18 @@ function _CreateVideoTile(MDBVideo, size)
 
     // Cover
     html += "<div title=\"Show this Video\" class=\"AT_albumcover\" " + datawidth + ">";
-    html += "<img src=\"" + imgpath + "\">";
+    html += "  <img src=\"" + imgpath + "\"";
+    html += "    onmouseover=\"this.src=\'"+anipath+"\'\"";
+    html += "    onmouseout =\"this.src=\'"+imgpath+"\'\"";
+    html += "  \">";
     html += "</div>";
-    
+    /* 
+    <img src="http://icons.iconarchive.com/icons/fasticon/angry-birds/128/yellow-bird-icon.png" 
+        onmouseover="this.src='http://icons.iconarchive.com/icons/fasticon/angry-birds/128/red-bird-icon.png'"
+        onmouseout="this.src='http://icons.iconarchive.com/icons/fasticon/angry-birds/128/yellow-bird-icon.png'"
+        border="0" alt=""/>
+    */
+
     html += "<div class=\"AT_albummetadata\">";
     if(size != "small")
         html += "<span class=\"AT_albumrelease hlcolor smallfont\">" + videorelease + "</span>";
