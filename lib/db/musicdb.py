@@ -152,9 +152,13 @@ The columns of the videos table are the following:
     | disabled | playtime | origin | release | added |
     +----------+----------+--------+---------+-------+
 
-    +-------+-------------+-------------+---------------+
-    | codec | xresolution | yresolution | thumbnailpath |
-    +-------+-------------+-------------+---------------+
+    +-------+-------------+-------------+
+    | codec | xresolution | yresolution |
+    +-------+-------------+-------------+
+
+    +-----------------+---------------+-------------+
+    | framesdirectory | thumbnailfile | previewfile |
+    +-----------------+---------------+-------------+
 
     +-------+----------+----------+-----------+----------+
     | likes | dislikes | favorite | livevideo | badaudio |
@@ -526,14 +530,16 @@ class MusicDatabase(Database):
     VIDEO_CODEC         = 11
     VIDEO_XRESOLUTION   = 12
     VIDEO_YRESOLUTION   = 13
-    VIDEO_THUMBNAILPATH = 14
-    VIDEO_LIKES         = 15
-    VIDEO_DISLIKES      = 16
-    VIDEO_FAVORITE      = 17
-    VIDEO_LIVEVIDEO     = 18
-    VIDEO_BADAUDIO      = 19
-    VIDEO_CHECKSUM      = 20
-    VIDEO_LASTPLAYED    = 21
+    VIDEO_FRAMESDIRECTORY = 14
+    VIDEO_THUMBNAILFILE = 15
+    VIDEO_PREVIEWFILE   = 16
+    VIDEO_LIKES         = 17
+    VIDEO_DISLIKES      = 18
+    VIDEO_FAVORITE      = 19
+    VIDEO_LIVEVIDEO     = 20
+    VIDEO_BADAUDIO      = 21
+    VIDEO_CHECKSUM      = 22
+    VIDEO_LASTPLAYED    = 23
 
     TAG_ID          = 0
     TAG_NAME        = 1
@@ -637,7 +643,9 @@ class MusicDatabase(Database):
         video["codec"]         = entry[self.VIDEO_CODEC         ]
         video["xresolution"]   = entry[self.VIDEO_XRESOLUTION   ]
         video["yresolution"]   = entry[self.VIDEO_YRESOLUTION   ]
-        video["thumbnailpath"] = entry[self.VIDEO_THUMBNAILPATH ]
+        video["framesdirectory"] = entry[self.VIDEO_FRAMESDIRECTORY]
+        video["thumbnailfile"] = entry[self.VIDEO_THUMBNAILFILE ]
+        video["previewfile"]   = entry[self.VIDEO_PREVIEWFILE   ]
         video["likes"]         = entry[self.VIDEO_LIKES         ]
         video["dislikes"]      = entry[self.VIDEO_DISLIKES      ]
         video["favorite"]      = entry[self.VIDEO_FAVORITE      ]
@@ -782,7 +790,9 @@ class MusicDatabase(Database):
             codec         = :codec         ,
             xresolution   = :xresolution   ,
             yresolution   = :yresolution   ,
-            thumbnailpath = :thumbnailpath ,
+            framesdirectory = :framesdirectory ,
+            thumbnailfile = :thumbnailfile ,
+            previewfile   = :previewfile   ,
             likes         = :likes         ,
             dislikes      = :dislikes      ,
             favorite      = :favorite      ,
