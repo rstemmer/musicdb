@@ -54,7 +54,7 @@ Some of them can be configured in the MusicDB configuration file:
 
 Because the database only takes album tags into account, the song tags gets checked afterwards.
 If the song has a confirmed genre tag, and if this tag does not match the filter, the song gets rejected.
-Song genres set by the Music AI (see :doc:`/mdbapi/musicai`) will be ignored because the AI may be wrong.
+Song genres that are automatically set by an algorithm (and not confirmed by the user) will be ignored because the algorithm may be wrong.
 
 
 Blacklist Stage

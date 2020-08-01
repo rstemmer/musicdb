@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@ It does the following steps:
     #. Import artist and album
     #. Import artwork (if there is one in the meta data)
     #. Import lyrics (if there are some in the files meta data)
-    #. Run MusicAI to determine the music genres
 
 Press ``Ctrl-D`` to exit the tool and reject changes.
 
@@ -68,7 +67,7 @@ Album Import Form
 
 The artist and album directory names gets generated out of the artist name, album name and release year.
 Those names and values can be changed in the *Album Import* form list.
-Furthermore the can be selected if the artwork shall be imported as well, the lyrics if available and if the genres shall be predicted by the MusicAI.
+Furthermore it the can be selected if the artwork shall be imported as well, the lyrics if available.
 If there is an artwork file embedded in the song files, the import artwork checkbox gets set automatically.
 In case there are lyrics in the file, the checkbox gets set as well.
 
@@ -122,7 +121,6 @@ Depending on the checkboxes you set in the *Album Import* form, the following th
     #. Renaming the files and directory.
     #. Importing the album artwork.
     #. Importing the lyrics from each file into the database
-    #. Determine the genres of each song using MusicAI
 
 It may happen that there is no artwork inside the song files.
 In that case, you have to import an artwork manually using the :doc:`/mod/artwork` module.
@@ -148,7 +146,6 @@ from lib.clui.boolinput import BoolInput
 from lib.clui.buttonview import ButtonView
 from lib.clui.tabgroup  import TabGroup
 
-from mod.musicai        import musicai as musicai_module
 
 class FileNameInput(TextInput):
     def __init__(self, x=0, y=0, w=0):
@@ -192,7 +189,10 @@ class SongView(ListView, ButtonView):
         self.dialog.AddInput("Song name:",   self.nameinput,   "Correct name only")
         self.dialog.AddInput("Song number:", self.numberinput, "Song number only")
         self.dialog.AddInput("CD number:",   self.cdnuminput,  "CD number or nothing")
-        self.dialogmode = False
+
+        # Internal states
+        self.dialogmode        = False
+        self.allsongnamesvalid = False
 
 
     def FindSongs(self):
@@ -202,6 +202,16 @@ class SongView(ListView, ButtonView):
         for f in files:
             extension = self.fs.GetFileExtension(f)
             if extension in ["mp3","flac","m4a","aac"]:
+                # Check if the name has valid Unicode.
+                # Some strange music stores have strange Unicode issues
+                try:
+                    f.encode("utf-8")
+                except UnicodeEncodeError as e:
+                    print("\n\033[1;31mThere is a file with a name that contains invalid utf-8 code.")
+                    print("Please navigate to the album %s and rename strange looking files.\033[0m"%(self.albumpath))
+                    print("\033[1;30mIf there is no cursor visible, execute \033[0;36mreset\033[0m")
+                    exit(1)
+
                 songs.append((f,f))
         return songs
 
@@ -216,7 +226,7 @@ class SongView(ListView, ButtonView):
             seg        = self.FileNameSegments(filename)
 
             newfilename  = filename[seg["number"]:seg["gap"]]
-            newfilename += filename[seg["name"]:]
+            newfilename += filename[seg["name"]:seg["end"]]
             newfilename  = unicodedata.normalize("NFC", newfilename)
 
             newpath = os.path.join(directory, newfilename + "." + extension)
@@ -249,6 +259,13 @@ class SongView(ListView, ButtonView):
         else:
             seg["name"] = seg["gap"]
 
+        # Find end of song name (before " [Explicit]")
+        i = filename.rfind(" [Explicit]")
+        if i > 0:
+            seg["end"] = i
+        else:
+            seg["end"] = len(filename)
+
         return seg 
 
 
@@ -264,10 +281,15 @@ class SongView(ListView, ButtonView):
         filename   = self.fs.GetFileName(path)
         extension  = self.fs.GetFileExtension(path)
         analresult = self.fs.AnalyseSongFileName(filename + "." + extension)
+        seg        = self.FileNameSegments(filename)
 
         # Render validation
         if not analresult:
             validation = "\033[1;31m ✘ "
+            self.allsongnamesvalid = False
+        elif seg["number"] != 0 or seg["gap"] != seg["name"] or seg["end"] != len(filename):
+            validation = "\033[1;31m ✘ "
+            self.allsongnamesvalid = False
         else:
             validation = "\033[1;32m ✔ "
         width -= 3
@@ -276,11 +298,11 @@ class SongView(ListView, ButtonView):
         # Render file name
         renderedname  = ""
         width        -= len(filename)
-        seg           = self.FileNameSegments(filename)
         renderedname += "\033[1;31m\033[4m" + filename[0:seg["number"]] + "\033[24m"
         renderedname += "\033[1;34m" + filename[seg["number"]:seg["gap"]]
         renderedname += "\033[1;31m\033[4m" + filename[seg["gap"]:seg["name"]] + "\033[24m"
-        renderedname += "\033[1;34m" + filename[seg["name"]:]
+        renderedname += "\033[1;34m" + filename[seg["name"]:seg["end"]]
+        renderedname += "\033[1;31m\033[4m" + filename[seg["end"]:] + "\033[24m"
 
         # Render file extension
         fileextension = "." + extension
@@ -292,6 +314,7 @@ class SongView(ListView, ButtonView):
         if self.dialogmode == True:
             pass
         else:
+            self.allsongnamesvalid = True  # Will be updated by ListView.Draw() call
             ListView.Draw(self)
             x = self.x + 1
             y = self.y + self.h - 1
@@ -533,6 +556,7 @@ class add(MDBModule, MusicDBDatabase):
             validation = "\033[1;32m✔ "
         else:
             validation = "\033[1;31m✘ "
+
         self.cli.PrintText(validation)
         width -= 2
 
@@ -569,6 +593,23 @@ class add(MDBModule, MusicDBDatabase):
         self.cli.PrintText(note)
 
 
+    def ShowSongValidation(self, valid, x, y, w):
+        width = w
+        self.cli.SetCursor(x, y)
+
+        if valid:
+            label = "\033[1;32m✔ "
+            note  = "\033[0;32m(Valid)                                 " # FIXME: This is a hack to overwrite the "invalid" note
+        else:
+            label = "\033[1;31m✘ "
+            note  = "\033[0;31m(Invalid names - please edit song names)"
+        label += "\033[1;34mSong file names: " + note
+
+        #label = label[:width]
+        #label = label.ljust(width)
+        self.cli.PrintText(label)
+
+
     def ShowImportDialog(self, albumpath):
         self.cli.ShowCursor(False)
         self.cli.ClearScreen()
@@ -586,11 +627,11 @@ class add(MDBModule, MusicDBDatabase):
 
         # Calculate the positions of the UI element
         headh   = 5 # n lines high headline
-        pathh   = 2
+        pathh   = 3
         dialogx = 1
         dialogy = 2 + headh
         dialogw = self.maxw-2
-        dialogh = 9
+        dialogh = 8
         listx   = 1
         listy   = dialogy + dialogh + 1
         listw   = self.maxw-2
@@ -610,16 +651,14 @@ class add(MDBModule, MusicDBDatabase):
         releaseinput   = TextInput()
         origininput    = TextInput()
         artworkinput   = BoolInput()
-        musicaiinput   = BoolInput()
         lyricsinput    = BoolInput()
 
         albumdialog.AddInput("Artist name:", artistinput, "Correct name of the album artist")
         albumdialog.AddInput("Album name:", nameinput, "Correct name of the album (no release year)")
         albumdialog.AddInput("Release date:", releaseinput, "Year with 4 digits like \"2017\"")
-        albumdialog.AddInput("Origin:", origininput, "\"iTunes\", \"bandcamp\", \"CD\", \"internet\", \"music163\"")
+        albumdialog.AddInput("Origin:", origininput, "\"iTunes\", \"bandcamp\", \"Amazon\", \"CD\", \"internet\"")
         albumdialog.AddInput("Import artwork:", artworkinput, "Import the artwork to MusicDB")
         albumdialog.AddInput("Import lyrics:", lyricsinput, "Try to import lyrics from file")
-        albumdialog.AddInput("Predict genre:", musicaiinput, "Runs MusicAI to predict the song genres")
 
         # Initialize dialog
         albumdirname = os.path.split(albumpath)[1]
@@ -627,8 +666,14 @@ class add(MDBModule, MusicDBDatabase):
         metadata     = self.GetAlbumMetadata(albumpath)
         if metadata:
             origin   = str(metadata["origin"])
-        else:
+
+            if metadata["lyrics"]:
+                lyricsinput.SetData(True)
+            else:
+                lyricsinput.SetData(False)
+        else: # No meta data available
             origin   = "Internet"
+
         analresult   = self.fs.AnalyseAlbumDirectoryName(albumdirname)
         if analresult:
             release   = str(analresult["release"])
@@ -646,16 +691,6 @@ class add(MDBModule, MusicDBDatabase):
         releaseinput.SetData(release)
         origininput.SetData(origin)
         artworkinput.SetData(True)
-
-        if self.cfg.debug.disableai:
-            musicaiinput.SetData(False)
-        else:
-            musicaiinput.SetData(True)
-
-        if metadata["lyrics"]:
-            lyricsinput.SetData(True)
-        else:
-            lyricsinput.SetData(False)
 
         # Initialize list
         songview.UpdateUI()
@@ -680,13 +715,19 @@ class add(MDBModule, MusicDBDatabase):
             origin      = origininput.GetData()
             artwork     = artworkinput.GetData()
             lyrics      = lyricsinput.GetData()
-            musicai     = musicaiinput.GetData()
 
             # Show everything
             songview.Draw()
             albumdialog.Draw()
             self.ShowArtistValidation(artistname, pathx, pathy, pathw)
             self.ShowAlbumValidation(artistname, albumname, releasedate, pathx, pathy+1, pathw)
+            self.ShowSongValidation(songview.allsongnamesvalid, pathx, pathy+2, pathw)
+            #if songview.allsongnamesvalid:
+            #    validation = "\033[1;32m✔ "
+            #else:
+            #    validation = "\033[1;31m✘ "
+            #self.cli.PrintText(validation)
+
             self.cli.FlushScreen()
 
             # Handle keys
@@ -704,7 +745,6 @@ class add(MDBModule, MusicDBDatabase):
                 data["origin"]      = origin
                 data["runartwork"]  = artwork
                 data["runlyrics"]   = lyrics
-                data["runmusicai"]  = musicai
                 data["songs"]       = songview.GetData()
                 return data
 
@@ -753,7 +793,10 @@ class add(MDBModule, MusicDBDatabase):
             return
         else:
             self.cli.PrintText("\033[1;34mImport album \033[0;36m%s\n"%(newalbumpath))
-            self.AddAlbum(newalbumpath, artist["id"])
+            try:
+                self.AddAlbum(newalbumpath, artist["id"])
+            except Exception as e:
+                self.cli.PrintText("\033[1;31mImporting album failed with exception %s!\033[1;30m (Nothing bad happened, just try to solve the issue and repeat. Were all Paths and file names valid?)\n"%(str(e)))
 
         # set origin
         album = self.db.GetAlbumByPath(newalbumpath)
@@ -788,18 +831,6 @@ class add(MDBModule, MusicDBDatabase):
                 if lyrics:
                     self.db.SetLyrics(songid, lyrics, SONG_LYRICSSTATE_FROMFILE)
 
-        if data["runmusicai"]:
-            self.cli.PrintText("\033[1;37mRun MusicAI\n")
-            absalbumpath = self.fs.AbsolutePath(newalbumpath)
-            musicai      = musicai_module(self.cfg, self.db)
-            mdbsongs     = musicai.GetSongsFromPath(absalbumpath)
-            if not mdbsongs:
-                self.cli.PrintText("\033[1;31mNo songs to analyze found in %s! \033[1;30m\033[0m"%(absalbumpath))
-                return
-            
-            musicai.GenerateFeatureset(mdbsongs)
-            prediction = musicai.PerformPrediction(mdbsongs)
-            musicai.StorePrediction(prediction)
 
     # return exit-code
     def MDBM_Main(self, args):

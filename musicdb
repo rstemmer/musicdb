@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -174,7 +174,17 @@ if __name__ == "__main__":
         loglevel = config.log.loglevel
     log.Reconfigure(logfile, loglevel, debugfile, config)
 
+
+    # Get module name that shall be executed
+    try:
+        modulename = args.module
+    except:
+        argparser.print_help()
+        exit(1)
+
+
     # get, check and open the database from path
+    # In case the module is "upgrade", do not open MusicDatabase - it my be outdated
     databasepath = config.database.path
 
     if not fs.IsFile(databasepath):
@@ -188,21 +198,17 @@ if __name__ == "__main__":
 
     try:
         fs.AssertFile(databasepath)
-        database = MusicDatabase(databasepath)
+        if modulename == "upgrade":
+            database = None
+        else:
+            database = MusicDatabase(databasepath)
     except Exception as e:
         print("\033[1;31mFATAL ERROR: Opening database failed!\033[0m (" + databasepath + ")")
         print(e)
         exit(1)
 
 
-
     # execute module
-    try:
-        modulename = args.module
-    except:
-        argparser.print_help()
-        exit(1)
-
     modclass = getattr(modules[modulename], modulename)
     modobj   = modclass(config, database)
     exitcode = modobj.MDBM_Main(args)

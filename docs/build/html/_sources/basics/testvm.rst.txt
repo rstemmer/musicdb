@@ -154,7 +154,6 @@ Arch Linux
 **Version:** *latest* (x86-64)
 
 Compared to my development system that is also Arch Linux, this is only a minimal installation.
-Furthermore, I use this VM to test an installation without any MusicAI components including its dependencies.
 It also does not have an ``icecast`` installation.
 So, this is the minimum environment MusicDB must have to run.
 

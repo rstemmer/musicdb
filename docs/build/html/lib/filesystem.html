@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Filesystem Interface &mdash; MusicDB 5.2.0 documentation</title>
+  <title>Filesystem Interface &mdash; MusicDB 6.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 6.0.0 documentation" href="../index.html"/>
         <link rel="next" title="GStreamer Interface" href="gstreamer.html"/>
         <link rel="prev" title="Fileprocessing Methods" href="fileprocessing.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.2
+                6.0
               </div>
             
           
@@ -114,7 +114,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#icecast">Icecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
@@ -222,14 +221,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#additional-steps-for-ubuntu">Additional Steps for Ubuntu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-all-dependencies">Install all Dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#configureing-musicdb">Configureing MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#configuring-musicdb">Configuring MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#configuring-musicdb-webui">Configuring MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#id1">Configuring MusicDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-manually">Installation (Manually)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#system-preparation">System Preparation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id2">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
@@ -237,10 +244,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#cuda-for-musicai">CUDA for MusicAI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
@@ -285,10 +288,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
@@ -309,11 +308,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-list">Mood List</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-grid">Mood Grid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#style-guide">Style Guide</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/musicai.html">musicai - MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#module-mod.musicai">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
@@ -382,30 +376,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/mise.html">Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicai.html">MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#training-time">Training Time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#featureset">Featureset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#trainingset">Trainingset</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musiccache.html">MusicCache</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
@@ -489,10 +459,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="hdf5storage.html">HDF5Storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="icecast.html">Icecast Interface</a><ul>
@@ -675,9 +641,9 @@
 <span id="filesystem-interface"></span><h1>Filesystem Interface<a class="headerlink" href="#module-lib.filesystem" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="filesystem-class">
 <h2>Filesystem Class<a class="headerlink" href="#filesystem-class" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="lib.filesystem.Filesystem">
-<em class="property">class </em><code class="sig-prename descclassname">lib.filesystem.</code><code class="sig-name descname">Filesystem</code><span class="sig-paren">(</span><em class="sig-param">root='/'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.filesystem.</code><code class="sig-name descname">Filesystem</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root</span><span class="o">=</span><span class="default_value">'/'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides an interface to the filesystem.
 The whole class assumes that it is used with an Unicode capable unix-style filesystem.</p>
 <p>Whenever I write about <em>root director</em> the path set in this class as root is meant.
@@ -698,9 +664,9 @@ Otherwise I would call it <em>system root directory</em>.</p>
 <dd class="field-even"><p><strong>ValueError</strong> – if the root path does not start with <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code> or does not exist</p>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.AbsolutePath">
-<code class="sig-name descname">AbsolutePath</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AbsolutePath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AbsolutePath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AbsolutePath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AbsolutePath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AbsolutePath" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns an absolute path by adding the root directory to the path.
 If the path is already absolute (starts with <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>) it gets returned as it is.</p>
 <p>If the path starts with <code class="docutils literal notranslate"><span class="pre">&quot;./&quot;</span></code> the root path gets prepended.</p>
@@ -718,9 +684,9 @@ If the path is already absolute (starts with <code class="docutils literal notra
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.AnalyseAlbumDirectoryName">
-<code class="sig-name descname">AnalyseAlbumDirectoryName</code><span class="sig-paren">(</span><em class="sig-param">albumdirname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseAlbumDirectoryName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseAlbumDirectoryName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AnalyseAlbumDirectoryName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumdirname</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseAlbumDirectoryName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseAlbumDirectoryName" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method analyses the name of an album directory.
 If it does not follow the scheme of an album directory name, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned, otherwise the albumname and release year.</p>
 <p>The scheme is the following: <code class="docutils literal notranslate"><span class="pre">{releaseyear}</span> <span class="pre">-</span> <span class="pre">{albumname}</span></code>.</p>
@@ -742,15 +708,15 @@ If it does not follow the scheme of an album directory name, <code class="docuti
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">infos</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">AnalyseAlbumDirectoryName</span><span class="p">(</span><span class="s2">&quot;2000 - Testalbum&quot;</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">infos</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>    <span class="c1"># 2000</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">])</span> <span class="c1"># Testalbum</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>    <span class="c1"># 2000</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">])</span> <span class="c1"># Testalbum</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.AnalyseSongFileName">
-<code class="sig-name descname">AnalyseSongFileName</code><span class="sig-paren">(</span><em class="sig-param">songfilename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseSongFileName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseSongFileName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AnalyseSongFileName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songfilename</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseSongFileName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseSongFileName" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method analyses the name of a song file.
 If it does not follow the scheme, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned, otherwise all information encoded in the name as dictionary.</p>
 <p>The scheme is the following: <code class="docutils literal notranslate"><span class="pre">{songnumber}</span> <span class="pre">{songname}.{extension}</span></code> or <code class="docutils literal notranslate"><span class="pre">{cdnumber}-{songnumber}</span> <span class="pre">{songname}.{extension}</span></code></p>
@@ -776,29 +742,29 @@ If it does not follow the scheme, <code class="docutils literal notranslate"><sp
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">infos</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">AnalyseSongDirectoryName</span><span class="p">(</span><span class="s2">&quot;05 This is a Song.mp3&quot;</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">infos</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;cdnumber&quot;</span><span class="p">])</span>    <span class="c1"># 1</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">])</span>      <span class="c1"># 5</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>        <span class="c1"># This is a Song</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">])</span>   <span class="c1"># mp3</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;cdnumber&quot;</span><span class="p">])</span>    <span class="c1"># 1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">])</span>      <span class="c1"># 5</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>        <span class="c1"># This is a Song</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">])</span>   <span class="c1"># mp3</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.AssertDirectory">
-<code class="sig-name descname">AssertDirectory</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AssertDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AssertDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AssertDirectory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AssertDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AssertDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raises an AssertionError if <a class="reference internal" href="#lib.filesystem.Filesystem.IsDirectory" title="lib.filesystem.Filesystem.IsDirectory"><code class="xref py py-meth docutils literal notranslate"><span class="pre">IsDirectory()</span></code></a> fails.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.AssertFile">
-<code class="sig-name descname">AssertFile</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AssertFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AssertFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AssertFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AssertFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AssertFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raises an AssertionError if <a class="reference internal" href="#lib.filesystem.Filesystem.IsFile" title="lib.filesystem.Filesystem.IsFile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">IsFile()</span></code></a> fails.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.CopyFile">
-<code class="sig-name descname">CopyFile</code><span class="sig-paren">(</span><em class="sig-param">xsrcpath</em>, <em class="sig-param">xdstpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.CopyFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.CopyFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">CopyFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xsrcpath</span></em>, <em class="sig-param"><span class="n">xdstpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.CopyFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.CopyFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method copies a file.
 <strong>Handle with care!</strong></p>
 <p>If the source file does not exist, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.
@@ -822,9 +788,9 @@ The UNIX shell alternative would be like the following line:</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.CreateSubdirectory">
-<code class="sig-name descname">CreateSubdirectory</code><span class="sig-paren">(</span><em class="sig-param">xnewpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.CreateSubdirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.CreateSubdirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">CreateSubdirectory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xnewpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.CreateSubdirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.CreateSubdirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a subdirectory.
 The directories are made recursively.
 So <em>xnewpath</em> can address the last directory of a path that will be created.</p>
@@ -838,9 +804,9 @@ So <em>xnewpath</em> can address the last directory of a path that will be creat
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.Execute">
-<code class="sig-name descname">Execute</code><span class="sig-paren">(</span><em class="sig-param">commandline</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.Execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.Execute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Execute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">commandline</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.Execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.Execute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Executes an external program.
 The command line is a list of arguments with the executable name as first element.
 So <code class="docutils literal notranslate"><span class="pre">commandline[0]</span></code> is the program name like <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code> and the next elements are a list of arguments to this program (like <code class="docutils literal notranslate"><span class="pre">&quot;-l&quot;,</span> <span class="pre">&quot;-h&quot;</span></code>).</p>
@@ -863,8 +829,8 @@ but those data were not completely written to the disk.</p>
 <p>The following python code results in the following command line</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
     <span class="n">fs</span><span class="o">.</span><span class="n">Execute</span><span class="p">([</span><span class="s2">&quot;ls&quot;</span><span class="p">,</span> <span class="s2">&quot;-l&quot;</span><span class="p">,</span> <span class="s2">&quot;-h&quot;</span><span class="p">])</span>
-<span class="k">except</span> <span class="n">ChildProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ChildProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls -l -h <span class="m">2</span>&gt; /dev/null &gt; /dev/null &lt; /dev/null
@@ -873,9 +839,9 @@ sync
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.Exists">
-<code class="sig-name descname">Exists</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.Exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.Exists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Exists</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.Exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.Exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a path exist. It can be a file or a directory</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -887,9 +853,9 @@ sync
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.GetDirectory">
-<code class="sig-name descname">GetDirectory</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetDirectory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the directory a file or folder is stored in.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -901,9 +867,9 @@ sync
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.GetFileExtension">
-<code class="sig-name descname">GetFileExtension</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFileExtension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFileExtension" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetFileExtension</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFileExtension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFileExtension" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the file extension of the file addressed by <em>xpath</em>.
 The file must <em>not</em> exist.</p>
 <p>If xpath does not address a file or the file does not have an extension, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.
@@ -920,14 +886,14 @@ Otherwise only the extension without the leading <code class="docutils literal n
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span>  <span class="o">=</span> <span class="n">FileSystem</span><span class="p">(</span><span class="s2">&quot;/tmp&quot;</span><span class="p">)</span>
 <span class="n">ext</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">GetFileExtension</span><span class="p">(</span><span class="s2">&quot;test.txt&quot;</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">ext</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;File Extension is: &quot;</span><span class="o">%</span><span class="n">s</span><span class="s2">&quot;&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ext</span><span class="p">))</span>    <span class="c1"># in this example: &quot;txt&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File Extension is: &quot;</span><span class="o">%</span><span class="n">s</span><span class="s2">&quot;&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ext</span><span class="p">))</span>    <span class="c1"># in this example: &quot;txt&quot;</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.GetFileName">
-<code class="sig-name descname">GetFileName</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFileName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFileName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetFileName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFileName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFileName" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the file name of the file addressed by <em>xpath</em>.
 The file must <em>not</em> exist.
 The name of a file does not include the file extension.</p>
@@ -941,9 +907,9 @@ The name of a file does not include the file extension.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.GetFiles">
-<code class="sig-name descname">GetFiles</code><span class="sig-paren">(</span><em class="sig-param">xparents=None</em>, <em class="sig-param">ignore=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFiles" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetFiles</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xparents</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ignore</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFiles" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a filtered list with files for one or more parent directories.
 If <em>xparents</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the root directory will be used.
 If a parent path does not exist, an exception gets raised.</p>
@@ -962,9 +928,9 @@ If a parent path does not exist, an exception gets raised.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.GetModificationDate">
-<code class="sig-name descname">GetModificationDate</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetModificationDate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetModificationDate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetModificationDate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetModificationDate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetModificationDate" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the date when a file or directory was modified the last time.
 (See <a class="reference external" href="https://docs.python.org/3/library/os.path.html#os.path.getmtime">os.path.getmtime</a>)</p>
 <dl class="field-list simple">
@@ -978,14 +944,14 @@ If a parent path does not exist, an exception gets raised.</p>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span> <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="s2">&quot;/data/music/&quot;</span><span class="p">)</span>
 <span class="n">cdate</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">GetModificationDate</span><span class="p">(</span><span class="s2">&quot;Rammstein&quot;</span><span class="p">)</span> <span class="c1"># Possible creation date of /data/music/Rammstein directory</span>
-<span class="k">print</span><span class="p">(</span><span class="n">cdate</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cdate</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.GetSubdirectories">
-<code class="sig-name descname">GetSubdirectories</code><span class="sig-paren">(</span><em class="sig-param">xparents=None</em>, <em class="sig-param">ignore=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetSubdirectories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetSubdirectories" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetSubdirectories</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xparents</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ignore</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetSubdirectories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetSubdirectories" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a filtered list with subdirectories for one or more parent directories.
 If <em>xparents</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the root directory will be used.
 Using the root directory leads to returning absolute paths!</p>
@@ -1011,14 +977,14 @@ dir2/tmp/*
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">subdirs</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">GetSubdirectories</span><span class="p">([</span><span class="s2">&quot;dir1&quot;</span><span class="p">,</span> <span class="s2">&quot;dir2&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;tmp&quot;</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="n">subdirs</span><span class="p">)</span>  <span class="c1"># &gt; [&#39;dir1/subdir&#39;, &#39;dir1/testdir&#39;, &#39;dir2/test&#39;]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">subdirs</span><span class="p">)</span>  <span class="c1"># &gt; [&#39;dir1/subdir&#39;, &#39;dir1/testdir&#39;, &#39;dir2/test&#39;]</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.IsDirectory">
-<code class="sig-name descname">IsDirectory</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">IsDirectory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a directory exists.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1030,9 +996,9 @@ dir2/tmp/*
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.IsFile">
-<code class="sig-name descname">IsFile</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">IsFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a file exists.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1044,9 +1010,9 @@ dir2/tmp/*
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.ListDirectory">
-<code class="sig-name descname">ListDirectory</code><span class="sig-paren">(</span><em class="sig-param">xpath=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.ListDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.ListDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ListDirectory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.ListDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.ListDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of entries in the directory addressed by <em>xpath</em>.
 The list can contain files and directories.
 If <em>xpath</em> is not a directory, an empty list will be returned.
@@ -1063,9 +1029,9 @@ The special directories <code class="docutils literal notranslate"><span class="
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.MoveDirectory">
-<code class="sig-name descname">MoveDirectory</code><span class="sig-paren">(</span><em class="sig-param">xsrcpath</em>, <em class="sig-param">xdstpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.MoveDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.MoveDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">MoveDirectory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xsrcpath</span></em>, <em class="sig-param"><span class="n">xdstpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.MoveDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.MoveDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method moves a directory in the file system.
 <strong>Handle with care!</strong></p>
 <p>If the source directory does not exist, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.
@@ -1083,9 +1049,9 @@ To move files, see <a class="reference internal" href="#lib.filesystem.Filesyste
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.MoveFile">
-<code class="sig-name descname">MoveFile</code><span class="sig-paren">(</span><em class="sig-param">xsrcpath</em>, <em class="sig-param">xdstpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.MoveFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.MoveFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">MoveFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xsrcpath</span></em>, <em class="sig-param"><span class="n">xdstpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.MoveFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.MoveFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method moves a file in the filesystem.
 <strong>Handle with care!</strong></p>
 <p>If the source file does not exist, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.
@@ -1103,9 +1069,9 @@ To move directories, see <a class="reference internal" href="#lib.filesystem.Fil
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.RemoveDirectory">
-<code class="sig-name descname">RemoveDirectory</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveDirectory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes a directory tree from the filesystem.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1122,9 +1088,9 @@ To move directories, see <a class="reference internal" href="#lib.filesystem.Fil
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.RemoveFile">
-<code class="sig-name descname">RemoveFile</code><span class="sig-paren">(</span><em class="sig-param">xpath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes a file from the filesystem.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1141,9 +1107,9 @@ To move directories, see <a class="reference internal" href="#lib.filesystem.Fil
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.RemoveRoot">
-<code class="sig-name descname">RemoveRoot</code><span class="sig-paren">(</span><em class="sig-param">abspath</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveRoot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveRoot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">abspath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveRoot" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method makes a path relative to the root path.
 The existence of the path gets not checked!</p>
 <dl class="field-list simple">
@@ -1162,7 +1128,7 @@ The existence of the path gets not checked!</p>
 
 <span class="n">abspath</span> <span class="o">=</span> <span class="s2">&quot;/data/music/Artist/Album&quot;</span>
 <span class="n">relpath</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">abspath</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">relpath</span><span class="p">)</span>  <span class="c1"># &gt; Artist/Album</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">relpath</span><span class="p">)</span>  <span class="c1"># &gt; Artist/Album</span>
 
 <span class="n">_</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="s2">&quot;/data/backup/Artist/Album&quot;</span><span class="p">)</span>
 <span class="c1"># -&gt; ValueError-Excpetion</span>
@@ -1170,9 +1136,9 @@ The existence of the path gets not checked!</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.filesystem.Filesystem.SetAttributes">
-<code class="sig-name descname">SetAttributes</code><span class="sig-paren">(</span><em class="sig-param">xpath</em>, <em class="sig-param">owner</em>, <em class="sig-param">group</em>, <em class="sig-param">mode</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.SetAttributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.SetAttributes" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SetAttributes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em>, <em class="sig-param"><span class="n">owner</span></em>, <em class="sig-param"><span class="n">group</span></em>, <em class="sig-param"><span class="n">mode</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.SetAttributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.SetAttributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets attributes for a file or directory.
 The <em>mode</em> is the access permissions as defined in the <em>stats</em> module.</p>
 <dl class="field-list simple">
@@ -1218,7 +1184,7 @@ The <em>mode</em> is the access permissions as defined in the <em>stats</em> mod
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
 
     </p>
   </div>
@@ -1240,7 +1206,7 @@ The <em>mode</em> is the access permissions as defined in the <em>stats</em> mod
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.2.0',
+            VERSION:'6.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

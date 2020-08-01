@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS meta
     key         TEXT,
     value       TEXT DEFAULT ''
 );
-INSERT INTO meta (key, value) VALUES ("version", 3);
+INSERT INTO meta (key, value) VALUES ("version", 4);
 
 
 CREATE TABLE IF NOT EXISTS artists
@@ -15,18 +15,18 @@ CREATE TABLE IF NOT EXISTS artists
 );
 
 
-CREATE TABLE IF NOT EXISTS albums 
+CREATE TABLE IF NOT EXISTS albums
 (
-    albumid     INTEGER PRIMARY KEY AUTOINCREMENT, 
-    artistid    INTEGER, 
-    name        TEXT, 
-    path        TEXT, 
-    numofsongs  INTEGER, 
-    numofcds    INTEGER, 
-    origin      TEXT, 
+    albumid     INTEGER PRIMARY KEY AUTOINCREMENT,
+    artistid    INTEGER,
+    name        TEXT,
+    path        TEXT,
+    numofsongs  INTEGER,
+    numofcds    INTEGER,
+    origin      TEXT,
     release     INTEGER,
     artworkpath TEXT DEFAULT 'default.jpg',
-    bgcolor     TEXT DEFAULT '#080808',
+    bgcolor     TEXT DEFAULT '#101010',
     fgcolor     TEXT DEFAULT '#F0F0F0',
     hlcolor     TEXT DEFAULT '#909090',
     added       INTEGER DEFAULT 0
@@ -35,23 +35,19 @@ CREATE TABLE IF NOT EXISTS albums
 
 CREATE TABLE IF NOT EXISTS songs 
 (
-    songid      INTEGER PRIMARY KEY AUTOINCREMENT, 
-    albumid     INTEGER, 
-    artistid    INTEGER, 
-    name        TEXT, 
-    path        TEXT, 
-    number      INTEGER, 
+    songid      INTEGER PRIMARY KEY AUTOINCREMENT,
+    albumid     INTEGER,
+    artistid    INTEGER,
+    name        TEXT,
+    path        TEXT,
+    number      INTEGER,
     cd          INTEGER,
     disabled    INTEGER,
     playtime    INTEGER,
     bitrate     INTEGER,
     likes       INTEGER DEFAULT 0,
     dislikes    INTEGER DEFAULT 0,
-    qskips      INTEGER DEFAULT 0,
-    qadds       INTEGER DEFAULT 0,
-    qremoves    INTEGER DEFAULT 0,
     favorite    INTEGER DEFAULT 0,
-    qrndadds    INTEGER DEFAULT 0,
     lyricsstate INTEGER DEFAULT 0,
     checksum    TEXT    DEFAULT "",
     lastplayed  INTEGER DEFAULT 0

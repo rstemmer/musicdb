@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.metatags &mdash; MusicDB 5.2.0 documentation</title>
+  <title>lib.metatags &mdash; MusicDB 6.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 5.2.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 6.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                5.2
+                6.0
               </div>
             
           
@@ -113,7 +113,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#lycra">lycra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#icecast">Icecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#debug">debug</a></li>
@@ -221,14 +220,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#additional-steps-for-ubuntu">Additional Steps for Ubuntu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-all-dependencies">Install all Dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#configureing-musicdb">Configureing MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#configuring-musicdb">Configuring MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#configuring-musicdb-webui">Configuring MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#id1">Configuring MusicDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#update">Update</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-manually">Installation (Manually)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#system-preparation">System Preparation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id2">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#libprinthex">libprinthex</a></li>
@@ -236,10 +243,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#cuda-for-musicai">CUDA for MusicAI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#first-run">First Run</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#update">Update</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage/music.html">Music</a><ul>
@@ -284,10 +287,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/cache.html">cache - Music Cache Manager</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mod/cache.html#class">class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/extern.html#class">class</a></li>
@@ -308,11 +307,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#mood-list">Mood List</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#mood-grid">Mood Grid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#style-guide">Style Guide</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/musicai.html">musicai - MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#module-mod.musicai">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/repair.html">repair - Repair Database Entries</a><ul>
@@ -381,30 +375,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/mise.html">Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/musicai.html">MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#training-time">Training Time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#featureset">Featureset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/musiccache.html">MusicCache</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/randy.html">Randomizer</a><ul>
@@ -488,10 +458,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../lib/hdf5storage.html">HDF5Storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/icecast.html">Icecast Interface</a><ul>
@@ -695,10 +661,10 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">from</span> <span class="nn">mutagenx.flac</span>  <span class="k">import</span> <span class="n">FLAC</span>
-<span class="kn">from</span> <span class="nn">mutagenx.mp3</span>   <span class="k">import</span> <span class="n">MP3</span>
-<span class="kn">from</span> <span class="nn">mutagenx.mp4</span>   <span class="k">import</span> <span class="n">MP4</span>
-<span class="kn">from</span> <span class="nn">lib.filesystem</span> <span class="k">import</span> <span class="n">Filesystem</span>
+<span class="kn">from</span> <span class="nn">mutagenx.flac</span>  <span class="kn">import</span> <span class="n">FLAC</span>
+<span class="kn">from</span> <span class="nn">mutagenx.mp3</span>   <span class="kn">import</span> <span class="n">MP3</span>
+<span class="kn">from</span> <span class="nn">mutagenx.mp4</span>   <span class="kn">import</span> <span class="n">MP4</span>
+<span class="kn">from</span> <span class="nn">lib.filesystem</span> <span class="kn">import</span> <span class="n">Filesystem</span>
 
 <div class="viewcode-block" id="MetaTags"><a class="viewcode-back" href="../../lib/metatags.html#lib.metatags.MetaTags">[docs]</a><span class="k">class</span> <span class="nc">MetaTags</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -708,7 +674,7 @@
 <span class="sd">        root (str): All paths used in this class are relative to this path. Default is ``&quot;/&quot;``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fs</span>         <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file</span>       <span class="o">=</span> <span class="kc">None</span>      <span class="c1"># the mutagenx file handler/object</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ftype</span>      <span class="o">=</span> <span class="kc">None</span>      <span class="c1"># contains the identifier of the filetype (m4a, mp3, flac)</span>
@@ -819,7 +785,10 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ftype</span> <span class="o">==</span> <span class="s2">&quot;mp3&quot;</span><span class="p">:</span>
                 <span class="c1"># Source: http://stackoverflow.com/questions/6171565/how-do-i-read-album-artwork-using-python</span>
-                <span class="n">artwork</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;APIC:&quot;</span><span class="p">]</span> <span class="c1"># access APIC frame and grab the image</span>
+                <span class="c1">#artwork = self.file[&quot;APIC:&quot;] # access APIC frame and grab the image</span>
+                <span class="c1"># The suggested API seems to be broken.</span>
+                <span class="c1"># This is why I go deeper into the mutagen-classes to get the image:</span>
+                <span class="n">artwork</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">getall</span><span class="p">(</span><span class="s2">&quot;APIC&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">imgfilename</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">img</span><span class="p">:</span>
                     <span class="n">img</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">artwork</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">True</span>
@@ -991,7 +960,7 @@
 <div class="viewcode-block" id="MetaTags.GetCDNumber"><a class="viewcode-back" href="../../lib/metatags.html#lib.metatags.MetaTags.GetCDNumber">[docs]</a>    <span class="k">def</span> <span class="nf">GetCDNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method returns the CD Number.</span>
-<span class="sd">        The CD number is only stored in MP4 metadata.</span>
+<span class="sd">        The CD number is only read from MP4 and MP3 metadata.</span>
 <span class="sd">        For all other formats, this method always returns ``0``</span>
 
 <span class="sd">        Returns:</span>
@@ -1002,9 +971,15 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">[</span><span class="sa">b</span><span class="s2">&quot;disk&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">pass</span>
+                <span class="n">number</span> <span class="o">=</span> <span class="mi">0</span>
+
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">ftype</span> <span class="o">==</span> <span class="s2">&quot;mp3&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">0</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Possible formats: &quot;x/y&quot; or &quot;x&quot;</span>
+                <span class="n">number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;TPOS&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">number</span> <span class="o">=</span> <span class="mi">0</span>
+
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">ftype</span> <span class="o">==</span> <span class="s2">&quot;flac&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span>
 
@@ -1057,6 +1032,8 @@
 
 <span class="sd">            * ``&quot;iTunes&quot;``</span>
 <span class="sd">            * ``&quot;bandcamp&quot;``</span>
+<span class="sd">            * ``&quot;Amazon&quot;``</span>
+<span class="sd">            * ``&quot;Google&quot;``</span>
 <span class="sd">            * ``&quot;music163&quot;`` aka 网易云音乐</span>
 <span class="sd">            * ``&quot;CD&quot;`` as fallback for unknown *flac* files</span>
 <span class="sd">            * ``&quot;internet&quot;`` as fallback for any other unknown files</span>
@@ -1087,14 +1064,23 @@
                     <span class="k">return</span> <span class="s2">&quot;music163&quot;</span>
             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                 <span class="k">pass</span>
-            <span class="c1"># … but not always :( - There is a secound way: COMM contains a key</span>
+            <span class="c1"># … but not always :( - There is a second way: COMM contains a key</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">if</span> <span class="s2">&quot;COMM::</span><span class="se">\&#39;</span><span class="s2">eng</span><span class="se">\&#39;</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
                     <span class="k">if</span> <span class="s2">&quot;163 key&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;COMM::</span><span class="se">\&#39;</span><span class="s2">eng</span><span class="se">\&#39;</span><span class="s2">&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
                         <span class="k">return</span> <span class="s2">&quot;music163&quot;</span>
                     <span class="k">elif</span> <span class="s2">&quot;bandcamp&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;COMM::</span><span class="se">\&#39;</span><span class="s2">eng</span><span class="se">\&#39;</span><span class="s2">&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
                         <span class="k">return</span> <span class="s2">&quot;bandcamp&quot;</span>
+                    <span class="k">elif</span> <span class="s2">&quot;Amazon&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">[</span><span class="s2">&quot;COMM::</span><span class="se">\&#39;</span><span class="s2">eng</span><span class="se">\&#39;</span><span class="s2">&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                        <span class="k">return</span> <span class="s2">&quot;Amazon&quot;</span>
             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="c1"># … there is also a third way to identify the origin</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">priv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">getall</span><span class="p">(</span><span class="s2">&quot;PRIV&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">owner</span>
+                <span class="k">if</span> <span class="n">priv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Google&quot;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s2">&quot;Google&quot;</span>
+            <span class="k">except</span><span class="p">:</span>
                 <span class="k">pass</span>
 
         <span class="c1"># Check flac</span>
@@ -1242,7 +1228,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
 
     </p>
   </div>
@@ -1264,7 +1250,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'5.2.0',
+            VERSION:'6.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -24,6 +24,7 @@ from tqdm               import tqdm
 from lib.modapi         import MDBModule
 from lib.filesystem     import Filesystem
 from mdbapi.database    import MusicDBDatabase
+from lib.db.database    import Database
 from lib.db.trackerdb   import TrackerDatabase
 from lib.db.lycradb     import LycraDatabase
 from lib.cfg.musicdb    import MusicDBConfig
@@ -33,7 +34,11 @@ class upgrade(MDBModule, MusicDBDatabase):
     def __init__(self, config, database):
         MDBModule.__init__(self)
 
-        self.db  = database
+        # The MusicDatabase object should not be used
+        # because the database may be outdated when calling upgrade
+        # Use the low level interface instead
+        #self.db  = database
+        self.db  = Database(config.database.path)
         self.cfg = config
         self.fs  = None
 
@@ -88,7 +93,7 @@ class upgrade(MDBModule, MusicDBDatabase):
 
     def UpgradeMusicDB(self):
         self.PrintCheckFile("music.db")
-        newversion = 3
+        newversion = 4
 
         # Check version of MusicDB
         version = self.GetDatabaseVersion(self.db)
@@ -122,9 +127,67 @@ class upgrade(MDBModule, MusicDBDatabase):
 
             # Update version in database
             self.SetDatabaseVersion(self.db, 3)
+            self.PrintGood()
             version = 3
 
-        self.PrintGood()
+        # Upgrade to version 4
+        if version == 3:
+            print("\033[1;34mRemoving unused song statistics columns: ")
+            sql  = "BEGIN TRANSACTION;"
+            sql += " CREATE TABLE songs_new"
+            sql += " ("
+            sql += "     songid      INTEGER PRIMARY KEY AUTOINCREMENT,"
+            sql += "     albumid     INTEGER,"
+            sql += "     artistid    INTEGER,"
+            sql += "     name        TEXT,"
+            sql += "     path        TEXT,"
+            sql += "     number      INTEGER,"
+            sql += "     cd          INTEGER,"
+            sql += "     disabled    INTEGER,"
+            sql += "     playtime    INTEGER,"
+            sql += "     bitrate     INTEGER,"
+            sql += "     likes       INTEGER DEFAULT 0,"
+            sql += "     dislikes    INTEGER DEFAULT 0,"
+            sql += "     favorite    INTEGER DEFAULT 0,"
+            sql += "     lyricsstate INTEGER DEFAULT 0,"
+            sql += "     checksum    TEXT    DEFAULT \"\","
+            sql += "     lastplayed  INTEGER DEFAULT 0"
+            sql += " );"
+            sql += " INSERT INTO songs_new SELECT songid,albumid,artistid,name,path,number,cd,disabled,playtime,bitrate,likes,dislikes,favorite,lyricsstate,checksum,lastplayed FROM songs;"
+            sql += " DROP TABLE songs;"
+            sql += " CREATE TABLE songs"
+            sql += " ("
+            sql += "     songid      INTEGER PRIMARY KEY AUTOINCREMENT,"
+            sql += "     albumid     INTEGER,"
+            sql += "     artistid    INTEGER,"
+            sql += "     name        TEXT,"
+            sql += "     path        TEXT,"
+            sql += "     number      INTEGER,"
+            sql += "     cd          INTEGER,"
+            sql += "     disabled    INTEGER,"
+            sql += "     playtime    INTEGER,"
+            sql += "     bitrate     INTEGER,"
+            sql += "     likes       INTEGER DEFAULT 0,"
+            sql += "     dislikes    INTEGER DEFAULT 0,"
+            sql += "     favorite    INTEGER DEFAULT 0,"
+            sql += "     lyricsstate INTEGER DEFAULT 0,"
+            sql += "     checksum    TEXT    DEFAULT \"\","
+            sql += "     lastplayed  INTEGER DEFAULT 0"
+            sql += " );"
+            sql += " INSERT INTO songs SELECT songid,albumid,artistid,name,path,number,cd,disabled,playtime,bitrate,likes,dislikes,favorite,lyricsstate,checksum,lastplayed FROM songs_new;"
+            sql += " COMMIT;"
+
+            try:
+                self.db.ExecuteScript(sql)
+            except Exception as e:
+                self.PrintError(str(e))
+                return False
+
+            # Update version in database
+            self.SetDatabaseVersion(self.db, 4)
+            self.PrintGood()
+            version = 4
+
         return True
 
 
@@ -184,7 +247,7 @@ class upgrade(MDBModule, MusicDBDatabase):
         filename   = "/etc/musicdb.ini"
         musicdbini = configparser.ConfigParser()
         musicdbini.read(filename)
-        newversion = 3
+        newversion = 4
 
         # Check current version
         version = musicdbini.get("meta", "version", fallback="1")
@@ -224,6 +287,28 @@ class upgrade(MDBModule, MusicDBDatabase):
                 self.PrintError(str(e))
                 return False
             version = 3
+
+        if version == 3:
+            musicdbini.set("meta", "version", "4")
+            musicdbini.set("debug", "disableai", "1")
+            musicdbini.remove_option("MusicAI", "modelpath")
+            musicdbini.remove_option("MusicAI", "tmppath")
+            musicdbini.remove_option("MusicAI", "logpath")
+            musicdbini.remove_option("MusicAI", "spectrogrampath")
+            musicdbini.remove_option("MusicAI", "slicesize")
+            musicdbini.remove_option("MusicAI", "batchsize")
+            musicdbini.remove_option("MusicAI", "epoch")
+            musicdbini.remove_option("MusicAI", "usegpu")
+            musicdbini.remove_option("MusicAI", "modelname")
+            musicdbini.remove_option("MusicAI", "genrelist")
+            musicdbini.remove_section("MusicAI")
+            try:
+                with open(filename, "w") as configfile:
+                    musicdbini.write(configfile)
+            except Exception as e:
+                self.PrintError(str(e))
+                return False
+            version = 4
 
 
         # Reload configuration

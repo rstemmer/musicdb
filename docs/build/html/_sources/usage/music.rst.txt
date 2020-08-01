@@ -84,8 +84,6 @@ For details see :doc:`/mod/database`.
    musicdb database add album $MusicPath/$ArtistName/$Release\ -\ $AlbumName
    musicdb artwork -u
 
-   # oprional you can run the AI to predict the genre tags for the new songs
-   musicdb musicai -f -p store $MusicPath/$ArtistName
 
 Using the repair module
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -101,8 +99,6 @@ For details see :doc:`/mod/repair`.
 
    musicdb artwork -u
 
-   # oprional you can run the AI to predict the genre tags for the new songs
-   musicdb musicai -f -p store $MusicPath/$ArtistName
 
 Using the add module
 ^^^^^^^^^^^^^^^^^^^^

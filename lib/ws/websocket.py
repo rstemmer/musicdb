@@ -131,6 +131,73 @@ class WebSocket(WebSocketServerProtocol):
 
 
 
+    def BeautifyValues(self, packet, affectkey, old, new):
+        """
+        This method can be used to beautify values inside nested dictionaries.
+        Use-cases are replacing Division Slashes by normal slashes or hyphens by n-dashes in song names.
+
+        It recursively scans through nested dictionaries and lists (``packet``) 
+        to find a specific key (``affectkey``).
+        The content behind that key, in case it is of type string, gets scanned for ``old`` substring.
+        This substring then gets replaced by the substirng ``new``
+
+        For easy to read code, the method returns the reference to ``packet``.
+        Keep in mind that the content of `packet` will be changed even if the return value gets not assigned.
+
+        The core algorithm was copied from `sotapme @ stackoverflow <https://stackoverflow.com/questions/14882138/replace-value-in-json-file-for-key-which-can-be-nested-by-n-levels/14882688>`:
+
+        Args:
+            packet: A nested dictionary/list
+            affectkey (str): A key to search for
+            old (str): A sub string to search for, inside the value referenced by ``affectkey``
+            new (str): A sub string to replace ``old``
+
+        Returns:
+            A reference to ``packet``
+
+        Raises:
+            TypeError: If ``affectkey``, ``old`` or ``new`` are not of type string
+
+        Example:
+
+            Replace divison slash (U+2215) by slash and hyphen by n-dash
+
+            .. code-block:: python
+
+                packet  = self.BeautifyValues(packet, "name", "∕",   "/");
+                packet  = self.BeautifyValues(packet, "name", " - ", " – ");
+        """
+        if type(affectkey) is not str:
+            raise TypeError("affectkey must be of type str")
+        if type(old) is not str:
+            raise TypeError("old must be of type str")
+        if type(new) is not str:
+            raise TypeError("new must be of type str")
+
+        origpacketref = packet
+
+        if type(packet) is list:
+            for entry in packet:
+                self.BeautifyValues(entry, affectkey, old, new)
+
+        elif type(packet) is dict:
+            for key in packet.keys():
+                if key == affectkey:
+                    if type(packet[key]) is str:
+                        packet[key] = packet[key].replace(old, new)
+
+                elif type(packet[key]) is dict:
+                    self.BeautifyValues(packet[key], affectkey, old, new)
+
+                elif type(packet[key]) is list:
+                    for entry in packet[key]:
+                        self.BeautifyValues(entry, affectkey, old, new)
+        else:
+            return origpacketref
+        return origpacketref
+
+
+
     def SendPacket(self, packet):
         """
         This method sends a packet via to the connected client.
@@ -140,6 +207,7 @@ class WebSocket(WebSocketServerProtocol):
 
             .. code-block:: python
 
+                packet  = self.BeautifyValues(packet, "name", "∕", "/");
                 rawdata = json.dumps(packet)        # Python Dict to JSON string
                 rawdata = rawdata.encode("utf-8")   # Encode as UTF-8
                 self.sendMessage(rawdata, False)    # isBinary = False
@@ -148,6 +216,9 @@ class WebSocket(WebSocketServerProtocol):
         To prevent problems, this method returns ``False`` if the connection is not established yet.
         Further more the state of the connection gets checked.
         If the connection state is not *OPEN*, ``False`` gets returned, too.
+
+        All values behind the ``name`` key of the packet get beautified.
+        It is assumed that those values are used to display information to the user.
 
         Args:
             packet: A packet dictionary that will be send to the client
@@ -180,6 +251,8 @@ class WebSocket(WebSocketServerProtocol):
             logging.warning("Socket not conneced! \033[1;30m(message will be discard) %s", str(self))
             return False
 
+        packet  = self.BeautifyValues(packet, "name", "∕",   "/");
+        packet  = self.BeautifyValues(packet, "name", " - ", " – ");
         rawdata = json.dumps(packet)
         rawdata = rawdata.encode("utf-8")
         

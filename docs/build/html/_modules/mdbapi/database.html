@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.database &mdash; MusicDB 5.2.0 documentation</title>
+  <title>mdbapi.database &mdash; MusicDB 6.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 5.2.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 6.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                5.2
+                6.0
               </div>
             
           
@@ -113,7 +113,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#lycra">lycra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#icecast">Icecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#debug">debug</a></li>
@@ -221,14 +220,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#additional-steps-for-ubuntu">Additional Steps for Ubuntu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-all-dependencies">Install all Dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#configureing-musicdb">Configureing MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#configuring-musicdb">Configuring MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#configuring-musicdb-webui">Configuring MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#id1">Configuring MusicDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#update">Update</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-manually">Installation (Manually)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#system-preparation">System Preparation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id2">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#libprinthex">libprinthex</a></li>
@@ -236,10 +243,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#cuda-for-musicai">CUDA for MusicAI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#first-run">First Run</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#update">Update</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage/music.html">Music</a><ul>
@@ -284,10 +287,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/cache.html">cache - Music Cache Manager</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mod/cache.html#class">class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/extern.html#class">class</a></li>
@@ -308,11 +307,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#mood-list">Mood List</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#mood-grid">Mood Grid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mod/moods.html#style-guide">Style Guide</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/musicai.html">musicai - MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#module-mod.musicai">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mod/repair.html">repair - Repair Database Entries</a><ul>
@@ -381,30 +375,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/mise.html">Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/musicai.html">MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#training-time">Training Time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#featureset">Featureset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musicai.html#trainingset">Trainingset</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/musiccache.html">MusicCache</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/randy.html">Randomizer</a><ul>
@@ -488,10 +458,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../lib/hdf5storage.html">HDF5Storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/icecast.html">Icecast Interface</a><ul>
@@ -692,13 +658,13 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">stat</span>
 <span class="kn">import</span> <span class="nn">signal</span>
-<span class="kn">from</span> <span class="nn">lib.fileprocessing</span> <span class="k">import</span> <span class="n">Fileprocessing</span>
-<span class="kn">from</span> <span class="nn">lib.metatags</span>       <span class="k">import</span> <span class="n">MetaTags</span>
-<span class="kn">from</span> <span class="nn">lib.pidfile</span>        <span class="k">import</span> <span class="o">*</span>                    <span class="c1"># Check PID File…</span>
-<span class="kn">from</span> <span class="nn">lib.namedpipe</span>      <span class="k">import</span> <span class="n">NamedPipe</span>
-<span class="kn">from</span> <span class="nn">lib.cfg.musicdb</span>    <span class="k">import</span> <span class="n">MusicDBConfig</span>
-<span class="kn">from</span> <span class="nn">lib.db.musicdb</span>     <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">lib.db.trackerdb</span>   <span class="k">import</span> <span class="n">TrackerDatabase</span>      <span class="c1"># To update when a song gets removed</span>
+<span class="kn">from</span> <span class="nn">lib.fileprocessing</span> <span class="kn">import</span> <span class="n">Fileprocessing</span>
+<span class="kn">from</span> <span class="nn">lib.metatags</span>       <span class="kn">import</span> <span class="n">MetaTags</span>
+<span class="kn">from</span> <span class="nn">lib.pidfile</span>        <span class="kn">import</span> <span class="o">*</span>                    <span class="c1"># Check PID File…</span>
+<span class="kn">from</span> <span class="nn">lib.namedpipe</span>      <span class="kn">import</span> <span class="n">NamedPipe</span>
+<span class="kn">from</span> <span class="nn">lib.cfg.musicdb</span>    <span class="kn">import</span> <span class="n">MusicDBConfig</span>
+<span class="kn">from</span> <span class="nn">lib.db.musicdb</span>     <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">lib.db.trackerdb</span>   <span class="kn">import</span> <span class="n">TrackerDatabase</span>      <span class="c1"># To update when a song gets removed</span>
 
 
 <div class="viewcode-block" id="MusicDBDatabase"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase">[docs]</a><span class="k">class</span> <span class="nc">MusicDBDatabase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -728,7 +694,7 @@
 <span class="sd">    Raises:</span>
 <span class="sd">        TypeError: when *config* or *database* not of type :class:`~lib.cfg.musicdb.MusicDBConfig` or :class:`~lib.db.musicdb.MusicDatabase`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
 
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDBConfig</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31mFATAL ERROR: Config-class of unknown type!</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
@@ -1402,11 +1368,7 @@
         <span class="n">song</span><span class="p">[</span><span class="s2">&quot;bitrate&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;bitrate&quot;</span><span class="p">]</span>
         <span class="n">song</span><span class="p">[</span><span class="s2">&quot;likes&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="mi">0</span>
         <span class="n">song</span><span class="p">[</span><span class="s2">&quot;dislikes&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;qskips&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;qadds&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;qremoves&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">0</span>
         <span class="n">song</span><span class="p">[</span><span class="s2">&quot;favorite&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;qrndadds&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">0</span>
         <span class="n">song</span><span class="p">[</span><span class="s2">&quot;lyricsstate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SONG_LYRICSSTATE_EMPTY</span>
         <span class="n">song</span><span class="p">[</span><span class="s2">&quot;checksum&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Checksum</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span>
         <span class="n">song</span><span class="p">[</span><span class="s2">&quot;lastplayed&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="mi">0</span>
@@ -1737,144 +1699,6 @@
 
 
 
-<div class="viewcode-block" id="MusicDBDatabase.UpdateSongPath"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateSongPath">[docs]</a>    <span class="k">def</span> <span class="nf">UpdateSongPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newsongpath</span><span class="p">,</span> <span class="n">oldsongpath</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        .. warning::</span>
-
-<span class="sd">            This method is deprecated!</span>
-<span class="sd">            It will be removed in April 2019!</span>
-
-<span class="sd">        This method can be used to update a song.</span>
-
-<span class="sd">        The new song file must be named as necessary for MusicDB.</span>
-<span class="sd">        It is OK when the songs file name changes, as long as the cd and track number are equal to the old file.</span>
-
-<span class="sd">        The following steps will be done:</span>
-
-<span class="sd">            #. Get database entry from old song</span>
-<span class="sd">            #. Analyse new songs metatags and file name</span>
-<span class="sd">            #. Check if it is a valid replacement</span>
-<span class="sd">            #. Replace files (and creating a backup of the old song)</span>
-<span class="sd">            #. Try to set file attributes</span>
-<span class="sd">            #. Update database</span>
-
-<span class="sd">        .. attention::</span>
-
-<span class="sd">            If something went wrong, ``False`` gets returned.</span>
-<span class="sd">            Then only the new file must be replaced by the backup file.</span>
-<span class="sd">            The database is still consistent.</span>
-
-<span class="sd">        .. warning::</span>
-
-<span class="sd">            A single CD song cannot be updated to a multi CD one</span>
-
-<span class="sd">            The old and new song must have the same track number</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            newsongpath (str): Absolute path to the new song</span>
-<span class="sd">            oldsongpath (str): Absolute path to the current song</span>
-
-<span class="sd">        Return:</span>
-<span class="sd">            ``True`` on success, otherwise ``False``</span>
-
-<span class="sd">        Example:</span>
-
-<span class="sd">            .. code-block:: python</span>
-<span class="sd">                </span>
-<span class="sd">                # replace an old mp3 by a new flac file</span>
-<span class="sd">                db.UpdateSongPath(&quot;/tmp/downloads/23 Is Everywhere.flac&quot;, &quot;/data/music/Illuminati/2023 - Sheeple/23 Is Everwhere.mp3&quot;)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;DEPRECATED! Will be removed in April 2019!&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">newsongpath</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">oldsongpath</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Arguments of wrong type. Strings were expected&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="c1"># Get song database entry</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Getting old song database entry …&quot;</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">relsongpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">oldsongpath</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The path </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> is not inside the music root directory! </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="n">oldsongpath</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="n">song</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetSongByPath</span><span class="p">(</span><span class="n">relsongpath</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">song</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The song with path </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> does not exist in the database. </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="n">relsongpath</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="c1"># Analyse new song</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Analysing new song …&quot;</span><span class="p">)</span>
-        <span class="n">newmetadata</span> <span class="o">=</span> <span class="n">MetaTags</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;source: &quot;</span> <span class="o">+</span> <span class="n">newsongpath</span><span class="p">)</span>
-            <span class="n">newmetadata</span><span class="o">.</span><span class="n">Load</span><span class="p">(</span><span class="n">newsongpath</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Loading meta data from file </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed with error: </span><span class="si">%s</span><span class="s2">! </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="n">newsongpath</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="n">tagmeta</span> <span class="o">=</span> <span class="n">newmetadata</span><span class="o">.</span><span class="n">GetAllMetadata</span><span class="p">()</span>
-        
-        <span class="n">songfilename</span> <span class="o">=</span> <span class="n">newsongpath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">fsmeta</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">AnalyseSongFileName</span><span class="p">(</span><span class="n">songfilename</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">fsmeta</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Analysing song file name </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed! </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="n">songfilename</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="c1"># Check if this is a valid replacement</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Checking if replacement is valid …&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;cd&quot;</span><span class="p">]</span>     <span class="o">!=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;cdnumber&quot;</span><span class="p">]:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Old CD number (</span><span class="si">%s</span><span class="s2">) is not equal to the new CD number (</span><span class="si">%s</span><span class="s2">)! </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> 
-                    <span class="nb">str</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;cd&quot;</span><span class="p">]),</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;cdnumber&quot;</span><span class="p">]))</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="k">if</span> <span class="n">song</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">]:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Old song number (</span><span class="si">%s</span><span class="s2">) is not equal to the new song number (</span><span class="si">%s</span><span class="s2">)! </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> 
-                    <span class="nb">str</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">]),</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">]))</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-
-        <span class="c1"># Replace files</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Replacing song file …&quot;</span><span class="p">)</span>
-        <span class="n">albumpath</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAlbumById</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>
-        <span class="n">relbackup</span>      <span class="o">=</span> <span class="n">relsongpath</span> <span class="o">+</span> <span class="s2">&quot;.bak&quot;</span>
-        <span class="n">newrelsongpath</span> <span class="o">=</span> <span class="n">albumpath</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">newsongpath</span><span class="p">)</span>
-
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot; mv </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">relsongpath</span><span class="p">,</span> <span class="n">relbackup</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">MoveFile</span><span class="p">(</span><span class="n">relsongpath</span><span class="p">,</span> <span class="n">relbackup</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Creating backup failed! </span><span class="se">\033</span><span class="s2">[1;30m(Doning nothing)&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot; cp </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">newsongpath</span><span class="p">,</span> <span class="n">newrelsongpath</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">CopyFile</span><span class="p">(</span><span class="n">newsongpath</span><span class="p">,</span> <span class="n">newrelsongpath</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Copying new song fail failed! Trying to restore backup. Check if file </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> is back in place!&quot;</span><span class="p">,</span> <span class="n">oldsongpath</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">MoveFile</span><span class="p">(</span><span class="n">relbackup</span><span class="p">,</span> <span class="n">relsongpath</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="c1"># Update database</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Updating database …&quot;</span><span class="p">)</span>
-        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">newrelsongpath</span>
-        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span>
-        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;bitrate&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;bitrate&quot;</span><span class="p">]</span>
-        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> 
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">FixAttributes</span><span class="p">(</span><span class="n">newsongpath</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Fixing file attributes failed with error: </span><span class="si">%s</span><span class="s2"> </span><span class="se">\033</span><span class="s2">[1;30m(leaving permissions as they are)&quot;</span><span class="p">,</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-
-        <span class="c1"># write to database</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">WriteSong</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
-
-
-
 <div class="viewcode-block" id="MusicDBDatabase.UpdateServerCache"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateServerCache">[docs]</a>    <span class="k">def</span> <span class="nf">UpdateServerCache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method signals the MusicDB Websocket Server to update its caches by writing ``refresh`` into its named pipe.</span>
@@ -1903,7 +1727,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
 
     </p>
   </div>
@@ -1925,7 +1749,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'5.2.0',
+            VERSION:'6.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

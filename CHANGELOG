@@ -7,10 +7,38 @@
 
 Run  git log --oneline  for more details
 
-┍━━━━┫ 2020-??-?? ┣━━━━┫ 5.3.0 ┣━━━━━━━━╍╍
+┍━━━━┫ 2020-08-01 ┣━━━━┫ 6.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
+│ - [MusicAI] Removed (The framework I used is no longer maintained and does not work with modern Tensorflow anymore)
+│ - [MusicDB] Removed unused columns: qskips, qadds, qremoves, qrndadds
+│ + [MSBWSI/WebUI] In packages, all values behind the name key get beautified (U+2215->"/", "-"->N-Dash)
+│ - [MusicCache] MusicCache Removed. Was never used.
 │
 ┝━ MINOR CHANGES
+│ * Log output ends with setting terminal color to default (\e[0m)
+│ * [Artwork] Fixes issue with mutagenx package and importing artworks from mp3 files
+│ * [Add] Highlight in the summary when there are invalid song names
+│ * [Add] Exceptions during album import were captured to create better error messages
+│ + [Add] In case there is invalid unicode in a song file name, the module exits immediately
+│ + [Add] Detect and remove " [Explicit]" tags from song names
+│ * [Add] Fix a bug that get triggered when a song file comes with no meta data
+│ - [Add] MusicAI processing removed
+│ - [mdbstate] Deprecated check/warning removed: israndom is now a mandatory key for song queue files 
+│ - [mdbstate] Deprecated check/warning removed: timestamp is now a mandatory key for blacklist files 
+│ - [MDBWSI] Deprecated function removed: GetMPDState, SetMPDState
+│ * [MDBWSI] Bugfix in warning inside SetStreamState
+│ - [database] Deprecated function removed: UpdateSongPath
+│ - [Installation] All MusicAI related tasks removed
+│ - [Configuration] All MusicAI related settings removed
+│ * [MP3Transcoder] File descriptor leak fixed. GStreamer pipes get closed after file transcoding.
+│ * [MP3Transcoder] File descriptor leak fixed. GStreamer object got not garbage-collected and left a file handler open
+│ + [lib/metadata] Detect Amazon and Google as possible song origin
+│ * [lib/metadata] Detect CD information from mp3 files
+│ + [install-scripts] check.sh prints some helpful hints
+│ * [install-scripts] Select correct music owner
+│ * [install-scripts] Create music directory when it does not exists
+│ * [upgrade] Upgrade CLI-Module does not load and use MusicDatabase (Fixes version conflicts)
+│ * [font] Source Sans Pro has an issue with different sizes for smileys. I switched to DejaVuSans for mood-tags.
 └───────────────────────────────────────╌╌
 
 

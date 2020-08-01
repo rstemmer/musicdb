@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,25 +42,14 @@ class stats(MDBModule):
 
     def CountOrigin(self, albums):
         counter = {}
-        counter["iTunes"]   = 0
-        counter["CD"]       = 0
-        counter["internet"] = 0
-        counter["music163"] = 0
-        counter["bandcamp"] = 0
 
         for album in albums:
-            if album["origin"] == "iTunes":
-                counter["iTunes"] += 1
-            elif album["origin"] == "CD":
-                counter["CD"] += 1
-            elif album["origin"] == "internet":
-                counter["internet"] += 1
-            elif album["origin"] == "music163":
-                counter["music163"] += 1
-            elif album["origin"] == "bandcamp":
-                counter["bandcamp"] += 1
-            else:
-                print("\033[1;31mERROR: Invalid origin for album %s: %s\033[0m" % (album["name"], album["origin"]))
+            origin = album["origin"]
+
+            if not origin in counter:
+                counter[origin] = 0
+
+            counter[origin] += 1
 
         return counter
 
@@ -110,7 +99,7 @@ class stats(MDBModule):
         # Albums
         print("\033[1;34mNumber of \033[1;37mAlbums\033[1;34m: \033[1;36m%4i\033[1;34m \t⌀ \033[1;36m%.2f\033[1;34m Albums/Artist\033[0m" 
                 % (numalbums, (numalbums / numartists)))
-        for origin in ["iTunes","CD","internet","music163","bandcamp"]:
+        for origin in origincounter:
             print("\t\033[1;34m%8s: \033[1;36m%4i\033[0;36m % 2.2f%%\033[0m" % (origin, origincounter[origin], (origincounter[origin]*100)/numalbums))
 
         releaselist = list(releasecounter.keys())

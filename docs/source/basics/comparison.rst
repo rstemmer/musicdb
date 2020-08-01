@@ -85,7 +85,6 @@ Comparison
 +-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 | Information Source| Filesystem, | Tags,       | Tags        | Tags,       |             | Tags        | Tags        |
 |                   | Analysis,   | MusicBrainz |             | MusicBrainz |             |             |             |
-|                   | AI          |             |             |             |             |             |             |
 +-------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 | External Sources  | ffmpeg      | MusicBrainz |             | MusicBrainz |             |             | None        |
 |                   |             |             |             |             |             |             |             |

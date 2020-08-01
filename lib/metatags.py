@@ -148,7 +148,10 @@ class MetaTags(object):
         try:
             if self.ftype == "mp3":
                 # Source: http://stackoverflow.com/questions/6171565/how-do-i-read-album-artwork-using-python
-                artwork = self.file["APIC:"] # access APIC frame and grab the image
+                #artwork = self.file["APIC:"] # access APIC frame and grab the image
+                # The suggested API seems to be broken.
+                # This is why I go deeper into the mutagen-classes to get the image:
+                artwork = self.file.tags.getall("APIC")[0]
                 with open(imgfilename, "wb") as img:
                     img.write(artwork.data)
                 return True
@@ -320,7 +323,7 @@ class MetaTags(object):
     def GetCDNumber(self):
         """
         This method returns the CD Number.
-        The CD number is only stored in MP4 metadata.
+        The CD number is only read from MP4 and MP3 metadata.
         For all other formats, this method always returns ``0``
 
         Returns:
@@ -331,9 +334,15 @@ class MetaTags(object):
             try:
                 number = self.file[b"disk"][0][0]
             except KeyError as e:
-                pass
+                number = 0
+
         elif self.ftype == "mp3":
-            return 0
+            try:
+                # Possible formats: "x/y" or "x"
+                number = self.file["TPOS"][0].split("/")[0]
+            except KeyError as e:
+                number = 0
+
         elif self.ftype == "flac":
             return 0
 
@@ -386,6 +395,8 @@ class MetaTags(object):
 
             * ``"iTunes"``
             * ``"bandcamp"``
+            * ``"Amazon"``
+            * ``"Google"``
             * ``"music163"`` aka 网易云音乐
             * ``"CD"`` as fallback for unknown *flac* files
             * ``"internet"`` as fallback for any other unknown files
@@ -416,14 +427,23 @@ class MetaTags(object):
                     return "music163"
             except KeyError:
                 pass
-            # … but not always :( - There is a secound way: COMM contains a key
+            # … but not always :( - There is a second way: COMM contains a key
             try:
                 if "COMM::\'eng\'" in self.file:
                     if "163 key" in self.file["COMM::\'eng\'"][0]:
                         return "music163"
                     elif "bandcamp" in self.file["COMM::\'eng\'"][0]:
                         return "bandcamp"
+                    elif "Amazon" in self.file["COMM::\'eng\'"][0]:
+                        return "Amazon"
             except KeyError:
+                pass
+            # … there is also a third way to identify the origin
+            try:
+                priv = self.file.tags.getall("PRIV")[0].owner
+                if priv.split("/")[0] == "Google":
+                    return "Google"
+            except:
                 pass
 
         # Check flac

@@ -36,6 +36,6 @@ The nested list elements highlight some important implications of the philosophy
 
    * The software must follow the users decision and not question it
    * AI and other algorithms shall not replace the users action and decision, just give hints and good defaults
-   * Every decision made by AI must be approved or denied by the user
+   * Every decision made by AI or other algorithms must be approved or denied by the user
    * The source music collection of the user shall be considered read-only
 

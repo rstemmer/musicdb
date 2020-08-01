@@ -869,11 +869,6 @@ class MusicDBWebSocketInterface(object):
         return state
 
 
-    def GetMPDState(self):
-        # DEPRECATED: Remove in April 2019
-        state = {}
-        logging.error("GetMPDState is DEPRECATED - The new method is called GetStreamState")
-        return state
     def GetStreamState(self):
         """
         This method returns the state of the Streaming Thread. (See :doc:`/mdbapi/stream`)
@@ -1114,10 +1109,6 @@ class MusicDBWebSocketInterface(object):
         return results
 
 
-    def SetMPDState(self): # REMOVE/DEPRECATED: Remove in April 2019
-        state = {}
-        logging.error("SetMPDState is DEPRECATED - The new method is called SetStreamState")
-        return None
     def SetStreamState(self, state):
         """
         This method can be used to set the  *playing*-state of the stream (see :doc:`/mdbapi/stream`)
@@ -1153,7 +1144,7 @@ class MusicDBWebSocketInterface(object):
         elif state == "play":
             self.stream.Play(True)
         else:
-            logging.warning("Unexpected state \"%s\" will not be set! \033[1;30m(State must be play, pause or playpause)" % str(mpdstate))
+            logging.warning("Unexpected state \"%s\" will not be set! \033[1;30m(State must be play, pause or playpause)", str(state))
 
         return None
 

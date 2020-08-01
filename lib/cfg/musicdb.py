@@ -88,8 +88,6 @@ class LOG:
     pass
 class DEBUG:
     pass
-class MUSICAI:
-    pass
 class RANDY:
     pass
 
@@ -207,20 +205,6 @@ class MusicDBConfig(Config):
         self.icecast.mountname      = self.Get(str, "Icecast",  "mountname","/stream")
 
 
-        # [MusicAI]
-        self.musicai    = MUSICAI()
-        self.musicai.modelpath      = self.GetDirectory("MusicAI",  "modelpath",        "/opt/musicdb/data/musicai/models")
-        self.musicai.tmppath        = self.GetDirectory("MusicAI",  "tmppath",          "/opt/musicdb/data/musicai/tmp")
-        self.musicai.logpath        = self.GetDirectory("MusicAI",  "logpath",          "/opt/musicdb/data/musicai/log")
-        self.musicai.specpath       = self.GetDirectory("MusicAI",  "spectrogrampath",  "/opt/musicdb/data/musicai/spectrograms")
-        self.musicai.slicesize      = self.Get(int, "MusicAI",  "slicesize",    128)
-        self.musicai.epoch          = self.Get(int, "MusicAI",  "epoch",        20)
-        self.musicai.batchsize      = self.Get(int, "MusicAI",  "batchsize",    128)
-        self.musicai.usegpu         = self.Get(bool,"MusicAI",  "usegpu",       True)
-        self.musicai.modelname      = self.Get(str, "MusicAI",  "modelname",    "MusicGenre")
-        self.musicai.genrelist      = self.Get(str, "MusicAI",  "genrelist",    None, islist=True)
-        
-        
         # [Randy]
         self.randy      = RANDY()
         self.randy.nodisabled       = self.Get(bool, "Randy",   "nodisabled",   True)

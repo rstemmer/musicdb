@@ -6,7 +6,7 @@
 Welcome to MusicDB's documentation!
 ===================================
 
-.. figure:: ../../webui/pics/TouchIcon.png
+.. figure:: ./images/mdblogo.png
    :align: left
 
 **MusicDB** is a music manager, server and player that focus on music, not the software itself.
@@ -103,7 +103,7 @@ The name is the last parameter for ``musicdb``, all following parameters are par
 
    # Show help for musicdb, and after that, for the musicai-module
    musicdb --help
-   musicdb musicai --help
+   musicdb artwork --help
 
    # List all availabe modules
    musicdb --version

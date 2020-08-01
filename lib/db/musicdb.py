@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017, 2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -67,18 +67,14 @@ The columns of the songs table are the following:
     | number | cd | disabled | playtime | bitrate |
     +--------+----+----------+----------+---------+
     
-    +-------+----------+--------+-------+----------+----------+----------+
-    | likes | dislikes | qskips | qadds | qremoves | favorite | qrndadds |
-    +-------+----------+--------+-------+----------+----------+----------+
+    +-------+----------+----------+
+    | likes | dislikes | favorite |
+    +-------+----------+----------+
 
     +-------------+----------+------------+
     | lyricsstate | checksum | lastplayed |
     +-------------+----------+------------+
 
-.. warning::
-
-    qskips, qadds, qrndadds and qremoves are deprecated.
-    I never used those values, now I will remove them in one of the next major released!
 
 checksum (Text)
     This is the *sha256* hash value of the file addressed by ``path``.
@@ -415,15 +411,10 @@ class MusicDatabase(Database):
     SONG_BITRATE    = 9
     SONG_LIKES      = 10
     SONG_DISLIKES   = 11
-    SONG_QSKIPS     = 12
-    SONG_QADDS      = 13
-    SONG_QREMOVES   = 14
-    SONG_FAVORITE   = 15
-    SONG_QRNDADDS   = 16
-    SONG_LYRICSSTATE = 17
-    SONG_CHECKSUM   = 18
-    SONG_LASTPLAYED = 19
-    # Q* : Queue statistics
+    SONG_FAVORITE   = 12
+    SONG_LYRICSSTATE = 13
+    SONG_CHECKSUM   = 14
+    SONG_LASTPLAYED = 15
 
     TAG_ID          = 0
     TAG_NAME        = 1
@@ -462,8 +453,9 @@ class MusicDatabase(Database):
         except Exception as e:
             raise ValueError("Unable to read version number from Music Database")
 
-        if version != 3:
-            raise ValueError("Unexpected version number of Music Database. Got %i, expected %i"%(version, 3))
+        if version != 4:
+            logging.error("Unexpected version number of Music Database. Got %i, expected %i"%(version, 4))
+            raise ValueError("Unexpected version number of Music Database. Got %i, expected %i"%(version, 4))
         
 
     def __ArtistEntryToDict(self, entry):
@@ -504,11 +496,7 @@ class MusicDatabase(Database):
         song["bitrate"]     = entry[self.SONG_BITRATE]
         song["likes"]       = entry[self.SONG_LIKES]
         song["dislikes"]    = entry[self.SONG_DISLIKES]
-        song["qskips"]      = entry[self.SONG_QSKIPS]
-        song["qadds"]       = entry[self.SONG_QADDS]
-        song["qremoves"]    = entry[self.SONG_QREMOVES]
         song["favorite"]    = entry[self.SONG_FAVORITE]
-        song["qrndadds"]    = entry[self.SONG_QRNDADDS]
         song["lyricsstate"] = entry[self.SONG_LYRICSSTATE]
         song["checksum"]    = entry[self.SONG_CHECKSUM]
         song["lastplayed"]  = entry[self.SONG_LASTPLAYED]
@@ -612,11 +600,7 @@ class MusicDatabase(Database):
             bitrate=:bitrate,
             likes=:likes,
             dislikes=:dislikes,
-            qskips=:qskips,
-            qadds=:qadds,
-            qremoves=:qremoves,
             favorite=:favorite,
-            qrndadds=:qrndadds,
             lyricsstate=:lyricsstate,
             checksum=:checksum,
             lastplayed=:lastplayed
@@ -1642,8 +1626,7 @@ class MusicDatabase(Database):
 
         Statistics are:
 
-            * **Valid:** ``"likes"``, ``"dislikes"``, ``"favorite"``, ``"disabled"``, ``"lastplayed"``
-            * **Deprecated:** ``"qskips"``, ``"qadds"``, ``"qrndadds"``, ``"qremoves"``
+            * ``"likes"``, ``"dislikes"``, ``"favorite"``, ``"disabled"``, ``"lastplayed"``
 
         Deprecated statistics will be ignored.
 
@@ -1679,7 +1662,7 @@ class MusicDatabase(Database):
             raise TypeError("songid must be a decimal number of type integer or string")
 
         # Check if value and stat are valid
-        if stat not in ["likes", "dislikes", "qskips", "qadds", "qrndadds", "qremoves", "favorite", "disable", "lastplayed"]:
+        if stat not in ["likes", "dislikes", "favorite", "disable", "lastplayed"]:
             raise ValueError("stat has an invalid value \"%s\"", str(stat))
 
         if stat == "lastplayed":
@@ -1690,11 +1673,6 @@ class MusicDatabase(Database):
         else:
             if value not in ["inc", "dec", "reset", "love", "hate", "none", "yes", "no"]:
                 raise ValueError("value has an invalid value \"%s\"", str(value))
-        
-
-        if stat in ["qskips", "qadds", "qrndadds", "qremoves"]:
-            logging.warning("The statistic \"%s\" is deprecated! It will be removed in April 2019.") # DEPRECATED
-            return
 
         # Get song entry
         with MusicDatabaseLock:

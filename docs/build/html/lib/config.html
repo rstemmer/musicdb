@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Configuration &mdash; MusicDB 5.2.0 documentation</title>
+  <title>Configuration &mdash; MusicDB 6.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 6.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Database" href="database.html"/>
         <link rel="prev" title="Command Line User Interface" href="clui.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.2
+                6.0
               </div>
             
           
@@ -114,7 +114,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#icecast">Icecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
@@ -222,14 +221,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#additional-steps-for-ubuntu">Additional Steps for Ubuntu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-all-dependencies">Install all Dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#configureing-musicdb">Configureing MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#configuring-musicdb">Configuring MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#configuring-musicdb-webui">Configuring MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#id1">Configuring MusicDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-manually">Installation (Manually)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#system-preparation">System Preparation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id2">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
@@ -237,10 +244,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#cuda-for-musicai">CUDA for MusicAI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
@@ -285,10 +288,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
@@ -309,11 +308,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-list">Mood List</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-grid">Mood Grid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#style-guide">Style Guide</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/musicai.html">musicai - MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#module-mod.musicai">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
@@ -382,30 +376,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/mise.html">Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicai.html">MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#training-time">Training Time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#featureset">Featureset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#trainingset">Trainingset</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musiccache.html">MusicCache</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
@@ -489,10 +459,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="hdf5storage.html">HDF5Storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="icecast.html">Icecast Interface</a><ul>
@@ -707,12 +673,12 @@ The definition of names is shown in the ini file example below.</p>
 </pre></div>
 </div>
 </div></blockquote>
-<dl class="class">
+<dl class="py class">
 <dt id="lib.cfg.config.Config">
-<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.config.</code><code class="sig-name descname">Config</code><span class="sig-paren">(</span><em class="sig-param">filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.config.</code><code class="sig-name descname">Config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
 <dt id="lib.cfg.config.Config.AllowNoneValue">
-<code class="sig-name descname">AllowNoneValue</code><span class="sig-paren">(</span><em class="sig-param">allow=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.AllowNoneValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.AllowNoneValue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">AllowNoneValue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">allow</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.AllowNoneValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.AllowNoneValue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method enables the possibility to configure (read) a <code class="docutils literal notranslate"><span class="pre">None</span></code> value.
 In case a value has the string <code class="docutils literal notranslate"><span class="pre">&quot;None&quot;</span></code>, the <a class="reference internal" href="#lib.cfg.config.Config.Get" title="lib.cfg.config.Config.Get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Get()</span></code></a> method returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.
 The upper case N is important!</p>
@@ -733,19 +699,19 @@ The upper case N is important!</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="s2">&quot;test.ini&quot;</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;option&quot;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># str</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># str</span>
 
 <span class="n">cfg</span><span class="o">.</span><span class="n">AllowNoneValue</span><span class="p">()</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;option&quot;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># NoneType</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># NoneType</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.config.Config.Get">
-<code class="sig-name descname">Get</code><span class="sig-paren">(</span><em class="sig-param">datatype</em>, <em class="sig-param">section</em>, <em class="sig-param">option</em>, <em class="sig-param">default=None</em>, <em class="sig-param">islist=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Get" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Get</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datatype</span></em>, <em class="sig-param"><span class="n">section</span></em>, <em class="sig-param"><span class="n">option</span></em>, <em class="sig-param"><span class="n">default</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">islist</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Get" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads a value from the configuration.
 The values in the file are all stored as string.
 Using the <em>datatype</em> parameter will convert that string into a python data type.</p>
@@ -777,20 +743,20 @@ A list of the striped values (without leading or trailing spaces) gets returned 
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="s2">&quot;test.ini&quot;</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>    <span class="c1"># 1000</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>    <span class="c1"># 1000</span>
 
-<span class="n">x</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;list&quot;</span><span class="p">,</span> <span class="p">[],</span> <span class="bp">True</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>    <span class="c1"># [13, 23, 42]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;list&quot;</span><span class="p">,</span> <span class="p">[],</span> <span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>    <span class="c1"># [13, 23, 42]</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;noneexisting&quot;</span><span class="p">,</span> <span class="mi">1337</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>    <span class="c1"># 1337</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>    <span class="c1"># 1337</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.config.Config.Load">
-<code class="sig-name descname">Load</code><span class="sig-paren">(</span><em class="sig-param">path=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Load" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Load</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Load" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method loads a configuration file.
 If the <em>path</em> parameter is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, the path given while instantiating the class will be overwritten.
 If the file was already loaded, it gets reloaded.</p>
@@ -807,9 +773,9 @@ If the file was already loaded, it gets reloaded.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.config.Config.OptionAvailable">
-<code class="sig-name descname">OptionAvailable</code><span class="sig-paren">(</span><em class="sig-param">section</em>, <em class="sig-param">option</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.OptionAvailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.OptionAvailable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">OptionAvailable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">section</span></em>, <em class="sig-param"><span class="n">option</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.OptionAvailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.OptionAvailable" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to check if an option exists in the configuration file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -824,13 +790,13 @@ If the file was already loaded, it gets reloaded.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.config.Config.Reload">
 <code class="sig-name descname">Reload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Reload" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method just calls <a class="reference internal" href="#lib.cfg.config.Config.Load" title="lib.cfg.config.Config.Load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Load()</span></code></a> without a path argument.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.config.Config.Save">
 <code class="sig-name descname">Save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Save" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method saves all set values back to the configuration file.</p>
@@ -838,9 +804,9 @@ If the file was already loaded, it gets reloaded.</p>
 <p>If writing fails not because of missing write permission, an exception gets raised.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.config.Config.Set">
-<code class="sig-name descname">Set</code><span class="sig-paren">(</span><em class="sig-param">section</em>, <em class="sig-param">option</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Set" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">section</span></em>, <em class="sig-param"><span class="n">option</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.config.Config.Set" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets an option.
 The value gets casted to a string.
 If the section or option does not exist, it will be created.</p>
@@ -866,9 +832,9 @@ This is necessary because there is no reliable destructor in python to.</p>
 <div class="section" id="module-lib.cfg.csv">
 <span id="csvfile"></span><h3>CSVFile<a class="headerlink" href="#module-lib.cfg.csv" title="Permalink to this headline">¶</a></h3>
 <p>This module handles the reading and writing of csv-files.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="lib.cfg.csv.CSVFile">
-<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.csv.</code><code class="sig-name descname">CSVFile</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.csv.</code><code class="sig-name descname">CSVFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class reads <a class="reference external" href="https://tools.ietf.org/html/rfc4180">Comma Separated Value (CSV)</a> files as used by MusicDB.</p>
 <p>The class does not cache the files content.
 Every read access accesses the actual file.
@@ -893,7 +859,7 @@ Do not change the layout of the files!</p>
 <dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Absolute path of the csv file the class works with</p>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.csv.CSVFile.Read">
 <code class="sig-name descname">Read</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Read" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads the file and returns its a table represented as a list of dictionaries.
@@ -908,7 +874,7 @@ and each entry in the dictionary represents one cell or column in that row.</p>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">Read</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
@@ -928,9 +894,9 @@ and each entry in the dictionary represents one cell or column in that row.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.csv.CSVFile.Write">
-<code class="sig-name descname">Write</code><span class="sig-paren">(</span><em class="sig-param">table</em>, <em class="sig-param">header=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Write" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Write</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">table</span></em>, <em class="sig-param"><span class="n">header</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Write" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write rows into the csv file.
 The first row will be the header of the table.</p>
 <p class="rubric">Example</p>
@@ -941,7 +907,7 @@ The first row will be the header of the table.</p>
 <span class="p">]</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
 <span class="n">csv</span><span class="o">.</span><span class="n">Write</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
 <span class="c1"># or: csv.Write(table, [&quot;name&quot;, &quot;id&quot;])</span>
 </pre></div>
@@ -1007,7 +973,7 @@ The first row will be the header of the table.</p>
 The read value must be writen into an attribute named as the option, inside an instance of the dummy class named liked the section:</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">newmod</span> <span class="o">=</span> <span class="n">NEWMOD</span><span class="p">()</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">newmod</span><span class="o">.</span><span class="n">enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="s2">&quot;newmod&quot;</span><span class="p">,</span> <span class="s2">&quot;enable&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">newmod</span><span class="o">.</span><span class="n">enable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="s2">&quot;newmod&quot;</span><span class="p">,</span> <span class="s2">&quot;enable&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -1015,15 +981,15 @@ The read value must be writen into an attribute named as the option, inside an i
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">MusicDBConfig</span><span class="p">(</span><span class="s2">&quot;musicdb.ini&quot;</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">newmod</span><span class="o">.</span><span class="n">enable</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;newmod enabled!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;newmod enabled!&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
-<dl class="class">
+<dl class="py class">
 <dt id="lib.cfg.musicdb.MusicDBConfig">
-<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.musicdb.</code><code class="sig-name descname">MusicDBConfig</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.musicdb.</code><code class="sig-name descname">MusicDBConfig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides the access to the MusicDB configuration file.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.musicdb.MusicDBConfig.GetDirectory">
 <code class="sig-name descname">GetDirectory</code><span class="sig-paren">(</span><em class="sig-param">section</em>, <em class="sig-param">option</em>, <em class="sig-param">default</em>, <em class="sig-param">logger=&lt;function error&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig.GetDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig.GetDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets a string from the config file and checks if it is an existing directory.
@@ -1045,7 +1011,7 @@ The “invalid” will be returned anyway, because it may be OK that the directo
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.musicdb.MusicDBConfig.GetFile">
 <code class="sig-name descname">GetFile</code><span class="sig-paren">(</span><em class="sig-param">section</em>, <em class="sig-param">option</em>, <em class="sig-param">default</em>, <em class="sig-param">logger=&lt;function error&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig.GetFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig.GetFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets a string from the config file and checks if it is an existing file.
@@ -1081,12 +1047,12 @@ If values get changed, they will not be stored!</p>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">ExternConfig</span><span class="p">(</span><span class="s2">&quot;test.ini&quot;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="class">
+<dl class="py class">
 <dt id="lib.cfg.extern.ExternConfig">
-<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.extern.</code><code class="sig-name descname">ExternConfig</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/extern.html#ExternConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.extern.ExternConfig" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.extern.</code><code class="sig-name descname">ExternConfig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/extern.html#ExternConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.extern.ExternConfig" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -1098,9 +1064,9 @@ Each read or write process to the files that hold the state will be triggered by
 <p>The state is stored in several files in a directory that can be configured via <code class="docutils literal notranslate"><span class="pre">[server]-&gt;statedir</span></code></p>
 <p>All files inside the state directory are managed by the <a class="reference internal" href="#lib.cfg.mdbstate.MDBState" title="lib.cfg.mdbstate.MDBState"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDBState</span></code></a> class.
 The content of those files should not be changed by any user because its content gets not validated.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="lib.cfg.mdbstate.MDBState">
-<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.mdbstate.</code><code class="sig-name descname">MDBState</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">musicdb=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.cfg.mdbstate.</code><code class="sig-name descname">MDBState</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">musicdb</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class holds the MusicDB internal state.</p>
 <p>The following table shows which method is responsible for which file in the MusicDB State Directory.</p>
 <blockquote>
@@ -1144,7 +1110,7 @@ The content of those files should not be changed by any user because its content
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.mdbstate.MDBState.GetFilterList">
 <code class="sig-name descname">GetFilterList</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.GetFilterList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.GetFilterList" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of the activated genre
@@ -1155,7 +1121,7 @@ If a genre is not defined in the configuration file, its default value is <code 
 Before the comparison, the state file gets reloaded so that external changes get applied directly.</p>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">filter</span> <span class="o">=</span> <span class="n">mdbstate</span><span class="o">.</span><span class="n">GetFilterList</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span> <span class="c1"># [&#39;Metal&#39;,&#39;NDH&#39;]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span> <span class="c1"># [&#39;Metal&#39;,&#39;NDH&#39;]</span>
 <span class="c1"># Metal and NDH are active, other available genres are not enabled.</span>
 </pre></div>
 </div>
@@ -1166,9 +1132,9 @@ Before the comparison, the state file gets reloaded so that external changes get
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.mdbstate.MDBState.LoadBlacklists">
-<code class="sig-name descname">LoadBlacklists</code><span class="sig-paren">(</span><em class="sig-param">songbllen</em>, <em class="sig-param">albumbllen</em>, <em class="sig-param">artistbllen</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">LoadBlacklists</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songbllen</span></em>, <em class="sig-param"><span class="n">albumbllen</span></em>, <em class="sig-param"><span class="n">artistbllen</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a dictionary with the blacklist managed by <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a>.
 This method also handles the blacklist length by adding empty entries or cutting off exceeding ones.</p>
 <dl class="field-list simple">
@@ -1185,7 +1151,7 @@ This method also handles the blacklist length by adding empty entries or cutting
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.mdbstate.MDBState.LoadSongQueue">
 <code class="sig-name descname">LoadSongQueue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadSongQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadSongQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads the song queue from the state directory.</p>
@@ -1199,9 +1165,9 @@ A list of dictionaries, each containing the <code class="docutils literal notran
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.mdbstate.MDBState.ReadList">
-<code class="sig-name descname">ReadList</code><span class="sig-paren">(</span><em class="sig-param">listname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.ReadList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.ReadList" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ReadList</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">listname</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.ReadList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.ReadList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a list from the mdbstate directory.
 The <code class="docutils literal notranslate"><span class="pre">listname</span></code> argument defines which file gets read: <code class="docutils literal notranslate"><span class="pre">config.server.statedir/listname.csv</span></code>.</p>
 <p>This method should only be used by class internal methods.
@@ -1217,9 +1183,9 @@ So deleting a file is an option to reset an internal state of MusicDB.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.mdbstate.MDBState.SaveBlacklists">
-<code class="sig-name descname">SaveBlacklists</code><span class="sig-paren">(</span><em class="sig-param">blacklists</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SaveBlacklists</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">blacklists</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveBlacklists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method stores the blacklist in the related CSV files.
 The data structure of the dictionary is expected to be the same, <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a> uses.</p>
 <dl class="field-list simple">
@@ -1232,9 +1198,9 @@ The data structure of the dictionary is expected to be the same, <a class="refer
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.mdbstate.MDBState.SaveSongQueue">
-<code class="sig-name descname">SaveSongQueue</code><span class="sig-paren">(</span><em class="sig-param">queue</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveSongQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveSongQueue" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">SaveSongQueue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">queue</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveSongQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveSongQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method saves a song queue.
 The data structure of the queue must be exact as the one expected when the queue shall be loaded.</p>
 <dl class="field-list simple">
@@ -1247,9 +1213,9 @@ The data structure of the queue must be exact as the one expected when the queue
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.cfg.mdbstate.MDBState.WriteList">
-<code class="sig-name descname">WriteList</code><span class="sig-paren">(</span><em class="sig-param">listname</em>, <em class="sig-param">rows</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.WriteList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.WriteList" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">WriteList</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">listname</span></em>, <em class="sig-param"><span class="n">rows</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.WriteList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.WriteList" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method write a list of rows into the related file.
 The <code class="docutils literal notranslate"><span class="pre">listname</span></code> argument defines which file gets written: <code class="docutils literal notranslate"><span class="pre">config.server.statedir/listname.csv</span></code>.</p>
 <p>This method should only be used by class internal methods.</p>
@@ -1284,7 +1250,7 @@ The <code class="docutils literal notranslate"><span class="pre">listname</span>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
 
     </p>
   </div>
@@ -1306,7 +1272,7 @@ The <code class="docutils literal notranslate"><span class="pre">listname</span>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.2.0',
+            VERSION:'6.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

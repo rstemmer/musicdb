@@ -26,9 +26,11 @@ function CreateDirectoryTree {
     ###################
 
     # The music directory should already exist
+    # If not, just create it - better than exiting
     if [ ! -d "$MUSICDIR" ]; then
-        echo -e "\e[1;31mMusic directory \e[0;36m$MUSICDIR\e[1;31m does not exist!\e[0m"
-        exit 1
+        echo -e "\e[1;33mMusic directory \e[0;36m$MUSICDIR\e[1;33m does not exist!\e[0m"
+        echo -e "\e[1;30mCreating $MUSICDIR.\e[0m"
+        mkdir -p $MUSICDIR
     fi
 
     chown -R $MUSICUSER:$MDBGROUP $MUSICDIR
@@ -60,15 +62,6 @@ function CreateDirectoryTree {
         chown -R $MDBUSER:$MDBGROUP $DATADIR
         echo -e "\e[1;32mdone"
         chmod g+w $DATADIR
-    fi
-
-    # Create Music AI directories
-    if [ ! -d "$DATADIR/musicai" ] ; then
-        echo -e -n "\t\e[1;34mCreating \e[0;36m$DARADIR/musicai/* \e[1;31m"
-        mkdir -p $DATADIR/musicai/{models,log,spectrograms,tmp}
-        chown -R $MDBUSER:$MDBGROUP $DATADIR/musicai
-        chmod -R g+w $DATADIR/musicai
-        echo -e "\e[1;32mdone"
     fi
 
     # Create MusicDB State

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Database &mdash; MusicDB 5.2.0 documentation</title>
+  <title>Database &mdash; MusicDB 6.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 6.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Fileprocessing Methods" href="fileprocessing.html"/>
         <link rel="prev" title="Configuration" href="config.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.2
+                6.0
               </div>
             
           
@@ -114,7 +114,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#icecast">Icecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
@@ -222,14 +221,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#additional-steps-for-ubuntu">Additional Steps for Ubuntu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-all-dependencies">Install all Dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#configureing-musicdb">Configureing MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#configuring-musicdb">Configuring MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#configuring-musicdb-webui">Configuring MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#id1">Configuring MusicDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-manually">Installation (Manually)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#system-preparation">System Preparation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id2">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
@@ -237,10 +244,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#cuda-for-musicai">CUDA for MusicAI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
@@ -285,10 +288,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
@@ -309,11 +308,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-list">Mood List</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-grid">Mood Grid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#style-guide">Style Guide</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/musicai.html">musicai - MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#module-mod.musicai">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
@@ -382,30 +376,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/mise.html">Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicai.html">MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#training-time">Training Time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#featureset">Featureset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#trainingset">Trainingset</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musiccache.html">MusicCache</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
@@ -489,10 +459,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="hdf5storage.html">HDF5Storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="icecast.html">Icecast Interface</a><ul>
@@ -699,9 +665,9 @@
 There may be other keys depending on the databases. In that case they are described in the documentations of the related modules.</p>
 <span class="target" id="module-lib.db.database"></span><div class="section" id="database-class">
 <h2>Database Class<a class="headerlink" href="#database-class" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="lib.db.database.Database">
-<em class="property">class </em><code class="sig-prename descclassname">lib.db.database.</code><code class="sig-name descname">Database</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lib.db.database.</code><code class="sig-name descname">Database</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the base class for all database classes in MusicDB.
 It establishes the connection to the sqlite3 databases.</p>
 <p>The connection timeout is set to <code class="docutils literal notranslate"><span class="pre">20</span></code>.</p>
@@ -713,9 +679,9 @@ It establishes the connection to the sqlite3 databases.</p>
 <dd class="field-even"><p><strong>TypeError</strong> – When <em>path</em> is not a string</p>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="lib.db.database.Database.Compress">
-<code class="sig-name descname">Compress</code><span class="sig-paren">(</span><em class="sig-param">string</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Compress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.Compress" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Compress</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">string</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Compress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.Compress" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to compress a string before storing it into the database.</p>
 <p>To keep a consistent database, use only this method and the complementary method <a class="reference internal" href="#lib.db.database.Database.Decompress" title="lib.db.database.Database.Decompress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Decompress()</span></code></a>.
 It uses <em>gzip</em> for compression.</p>
@@ -729,9 +695,9 @@ It uses <em>gzip</em> for compression.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.db.database.Database.Decompress">
-<code class="sig-name descname">Decompress</code><span class="sig-paren">(</span><em class="sig-param">blob</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Decompress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.Decompress" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Decompress</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">blob</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Decompress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.Decompress" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to decompress a compresses string after reading it from the database.</p>
 <p>To keep a consistent database, use only this method and the complementary method <a class="reference internal" href="#lib.db.database.Database.Compress" title="lib.db.database.Database.Compress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Compress()</span></code></a>.
 It uses <em>gzip</em> for decompression.</p>
@@ -745,9 +711,9 @@ It uses <em>gzip</em> for decompression.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lib.db.database.Database.Execute">
-<code class="sig-name descname">Execute</code><span class="sig-paren">(</span><em class="sig-param">sql</em>, <em class="sig-param">values=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.Execute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Execute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sql</span></em>, <em class="sig-param"><span class="n">values</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.Execute" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method executes a SQL command.
 When the command fails, the database gets rolled back.
 Otherwise the changes gets committed.</p>
@@ -785,9 +751,28 @@ Otherwise the changes gets committed.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="lib.db.database.Database.ExecuteScript">
+<code class="sig-name descname">ExecuteScript</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sqlscript</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.ExecuteScript"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.ExecuteScript" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method executes multiple SQL commands stored in <code class="docutils literal notranslate"><span class="pre">sqlscript</span></code>.
+When the command fails, the database gets rolled back.
+Otherwise the changes gets committed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sqlscript</strong> (<em>str</em>) – SQL script</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – When <em>sqlscript</em> is not a string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="lib.db.database.Database.GetFromDatabase">
-<code class="sig-name descname">GetFromDatabase</code><span class="sig-paren">(</span><em class="sig-param">sql</em>, <em class="sig-param">values=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.GetFromDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.GetFromDatabase" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetFromDatabase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sql</span></em>, <em class="sig-param"><span class="n">values</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.GetFromDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.database.Database.GetFromDatabase" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets values from the database by executing a SQL command and fetching the results.
 When the command fails, the database gets rolled back.</p>
 <p>values can be a single value, a list, a dictionary or a tuple.</p>
@@ -816,11 +801,11 @@ Each row is represented by a tuple of values.</p>
 
 <span class="n">results</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">results</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;No entries with value 1000 in database&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No entries with value 1000 in database&quot;</span><span class="p">)</span>
     <span class="k">return</span>
 
 <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -843,7 +828,7 @@ Each row is represented by a tuple of values.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
 
     </p>
   </div>
@@ -865,7 +850,7 @@ Each row is represented by a tuple of values.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.2.0',
+            VERSION:'6.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

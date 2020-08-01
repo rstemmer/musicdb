@@ -148,12 +148,7 @@ class MDBState(Config, object):
                 entry = {}
                 entry["entryid"]  = int( row["EntryID"])
                 entry["songid"]   = int( row["SongID"])
-                # Be backwards compatible for lists that have no IsRandom key yet.
-                # TODO: DEPRECATED: Remove in December 2019
-                if "IsRandom" in row:
-                    entry["israndom"] = bool(row["IsRandom"])
-                else:
-                    entry["israndom"] = False
+                entry["israndom"] = bool(row["IsRandom"])
 
                 queue.append(entry)
             except Exception as e:
@@ -207,15 +202,10 @@ class MDBState(Config, object):
                 else:
                     entry["id"] = int(row[idname])
 
-                # Be backwards compatible for lists that have no timestamp key yet.
-                # TODO: DEPRECATED: Remove in December 2019
-                if "TimeStamp" in row:
-                    if row["TimeStamp"] == "":
-                        entry["timestamp"] = None
-                    else:
-                        entry["timestamp"] = int(row["TimeStamp"])
+                if row["TimeStamp"] == "":
+                    entry["timestamp"] = None
                 else:
-                    entry["timestamp"] = int(time.time())
+                    entry["timestamp"] = int(row["TimeStamp"])
 
                 blacklist.append(entry)
             except Exception as e:

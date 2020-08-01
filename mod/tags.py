@@ -25,7 +25,6 @@ genre:
     For example *Classic*, *Metal*, *Pop*, *Hip Hop*, …
     Genre tags for albums are used by MusicDB to show or hide them in the web UI.
     Further more the randomizer :mod:`~mdbapi.randy` only chooses from songs that genres are activated.
-    The Music AI (:mod:`~mod.musicai`) also works on these main genres.
 
 subgenre:
     Subgenre tags are of class ``"subgenre"`` and have a main genre as parent.

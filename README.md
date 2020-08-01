@@ -1,4 +1,4 @@
-![MusicDB Logo](https://rstemmer.github.io/musicdb/landingpage/img/logo.png)
+![MusicDB Logo](graphics/MusicDB/mdblogo.png?raw=true)
 
 # MusicDB
 
@@ -19,6 +19,24 @@ A detailed description of MusicDB and its components can be found in the documen
 
 For news, follow [@MusicDBProject](https://twitter.com/MusicDBProject) on Twitter.
 
+## Table of Contents
+
+* [MusicDB](#musicdb)
+  * [Table of Contents](#table-of-contents)
+  * [Important News](#important-news)
+  * [Social](#social)
+* [Using MusicDB](#using-musicdb)
+  * [Requirements](#requirements)
+  * [Download](#download)
+  * [Installation and Update](#installation-and-update)
+  * [Usage](#usage)
+* [Development](#development)
+  * [Documentation](#documentation)
+  * [Contributing](#contributing)
+* [Roadmap](#roadmap)
+  * [Branches](#branches)
+  * [Releases](#releases)
+
 
 ## Important News
 
@@ -28,8 +46,15 @@ Furthermore those changes may break scripts you wrote around MusicDB.
 
 Lines starting with "**:wrench: Change:**" are steps you have to do *before* or *after* updating via `install.sh` script.
 
+**01.08.2020: 5.x.x → 6.0.0+**
+
+* Changes in the configuration file and music database (See CHANGELOG for details)
+  * **:wrench: Change:** Remember to call `musicdb upgrade` *after* installation when using the `update.sh` script
+  * **:wrench: Change:** Reload WebUI *after* update
+* MusicAI will no longer work. Everything related to MusicAI got removed. Reason: The used framework _tflearn_ is no longer under development and got not ported to TensorFlow 2.0.
+
 <details>
-<summary> 20.01.19: 4.x.x → 5.0.0+ </summary>
+<summary> 20.01.2019: 4.x.x → 5.0.0+ </summary>
 
 * Some changes in the configuration file
   * **:wrench: Change:** Remember to call `musicdb upgrade` *after* installation when using the `update.sh` script
@@ -41,7 +66,7 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* or 
 </details>
 
 <details>
-<summary> 28.07.18: 3.x.x → 4.0.0+ </summary>
+<summary> 28.07.2018: 3.x.x → 4.0.0+ </summary>
 
 * Rebuild of the installation process.
   * **:wrench: Change:** Make a backup of the MusicDB data directory!
@@ -91,7 +116,7 @@ In case MusicDB does not run on outdated operating systems, update your system :
   * [Debian](https://www.debian.org/distrib/) for x86-64 (not recommended because it comes with lots of ~~old~~ "stable" software)
   * [Arch Linux ARM](https://archlinuxarm.org/) for AArch64 with [ODROID-C2](https://wiki.odroid.com/odroid-c2/odroid-c2)
   * [Arch Linux ARM](https://archlinuxarm.org/) for ARMv7 with [Raspberry Pi 3](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
-* [Python3](https://www.python.org/) (At least Python 3.5. I test with Python 3.7)
+* [Python3](https://www.python.org/) (At least Python 3.5. I test with Python 3.8)
 * [Icecast](https://icecast.org/) and [GStreamer](https://gstreamer.freedesktop.org/) for streaming
 * A modern web browser for accessing the WebUI:
   * [Firefox](https://www.mozilla.org/en-US/) (recommended)
@@ -104,7 +129,53 @@ The `install.sh` script checks for tools needed to install MusicDB.
 Furthermore `check.sh` list all tools and Python modules needed by MusicDB.
 You can run the check-script at any time. 
 
+A detailed list can be found on [:notebook: How to Install MusicDB](https://rstemmer.github.io/musicdb/build/html/usage/install.html) in the documentation.
+
+
 Execute `pip install -r requirements.txt` to install a basic set of Python modules needed for MusicDB.
+I recommend to try to get the modules from the distributions package manager.
+
+You should use the latest versions of these dependencies and update them regularly.
+When MusicDB breaks because of an updated dependency create a ticket.
+I then will fix MusicDB as soon as possible.
+
+
+## Installation and Update
+
+To install MusicDB, read [:notebook: How to Install MusicDB](https://rstemmer.github.io/musicdb/build/html/usage/install.html) in the documentation.
+
+For updating, you can do one of the following steps.
+Read the *Important News* for manual steps to do before updating to a new major release.
+Only execute the scripts as root, that are followed by the comment "as root"!
+
+### Update to a New Minor Version
+
+``` bash
+git checkout master # Only install from master branch!
+git pull
+
+cd scripts
+./update.sh # as root
+```
+
+### Update to a New Major Version
+
+For major upgrades there exists two strategies.
+Strategy 1 is recommended.
+
+``` bash
+git checkout master # Only install from master branch!
+git pull
+
+cd scripts
+
+# Statgey 1
+./update.sh --major # as root
+
+# Statrgy 2
+./install.sh        # as root
+musicdb upgrade
+```
 
 
 ## Download
@@ -115,17 +186,6 @@ The *master* branch can be considered stable.
 ```sh
 git clone https://github.com/rstemmer/musicdb.git
 ```
-
-
-## Installation and Update
-
-To install MusicDB, read [:notebook: How to Install MusicDB](https://rstemmer.github.io/musicdb/build/html/usage/install.html) in the documentation.
-
-For updating, you can also execute `cd scripts && ./install.sh && musicdb upgrade`.
-Read the *Important News* for manual steps to do before updating to a new major release.
-
-Updating to the next minor version can be done by simply executing `git pull && cd scripts && ./update.sh` (Be sure you are on the master branch).
-
 
 ## Usage
 
@@ -161,7 +221,7 @@ If there are any problems setting up MusicDB, create an issue.
 
 ## Docker-Based Demo
 
-It is possible to run a Demo installation via Docker container.
+It is possible to run a *Demo* installation via Docker container.
 Just clone this repository and execute the scripts in the docker sub-directory.
 
 ```sh
@@ -170,6 +230,10 @@ cd musicdb
 ./docker/build.sh
 ./docker/run.sh
 ```
+
+**Important:** I do not longer support docker and will no longer update or test the files in the docker directory.
+I let the scripts untouched as they were for version 5.2.2.
+In case they do not work with later versions of MusicDB please create an Issue.
 
 
 # Development
@@ -207,23 +271,25 @@ Every help is welcome.
 * Please don't commit *docs/build*,
 
 
-# Versioning and Branches
+# Roadmap
 
-I work on MusicDB in three sprints per year. Each sprint is about one and a half week long.
-The rest of the year I only want to concentrate on fixing critical bugs.
+*MusicDB* is under active development.
+Beside maintaining this software, I also think about improving it or adding new features if necessary.
+The following list contains all huge improvements I'm planning to add to MusicDB.
 
-There are no classic releases. The MusicDB core has some kind of version number (see VERSION file),
-but this number does not cover changes in the WebUI, for example.
+* Integrate music videos into the MusicDB infrastructure. The UI should be switch to video-mode. Then, instead of showing artists and their albums, artists and their videos will be shown. The videos can then be put into a video-queue that get streamed.
+  * A first prototype exists in the *feature-video* branch.
+  * Development progress can be seen on the [corresponding GitHub Project page](https://github.com/rstemmer/musicdb/projects/1).
 
-Major "releases" are not compatible with the previous version of MusicDB.
-How to update to a next major version will be described in the *Important News* section at the beginning of this README.
 
-A reliable change log can be generated by calling `git log --oneline`. :wink:
+* Next generation of *MusicAI*. I already miss the old one that was surprisingly helpful tagging songs. The next generation might base on TensorFlow 2.0 directly. I will have the same or similar architecture since it worked in the past.
 
-It is recommended to update whenever there are changes on *master*.
-You better not use any other branch than *master*. :wink:
+* New Frontend. Early ideas are around WebAssembly based technology or a native client. Even with a native client the WebUI still needs to be updated. The code base is very ugly and the used coding strategy does not fit to the complexity of the application and abilities of JavaScript.
 
-**Best dates for updating MusicDB are end of January, end of May and end of September.**
+The following subsections cover more information regarding releases and branches.
+
+## Branches
+
 
 The following branches exist in the MusicDB git repository contains.
 
@@ -250,6 +316,17 @@ Make a backup of your MusicDB data directory before using installing MusicDB fro
 </details>
 
 <details>
+<summary>feature-???</summary>
+
+These branches are for adding *game-changing* features into MusicDB.
+They are not strictly bound to a release.
+It is not even clear if the features will be finished at all.
+
+Do never use code from this branch in production!
+
+</details>
+
+<details>
 <summary> mobileapp - The mobile app is dead </summary>
 
 I started to build a tiny mobile app that downloads your whole music collection via WLAN onto your smartphone.
@@ -262,9 +339,10 @@ The build environment used proprietary 32bit executables and may more problems l
 </details>
 
 
-## GitHub Releases
+## Releases
 
-Some special old releases are tagged in the git repository.
+With version 5.0.0 I started to use the Releases feature of GitHub.
 They can be found in [GitHubs Releases Section](https://github.com/rstemmer/musicdb/releases).
-These are not the latest version of MusicDB and I do not recommend to use them.
+Some special old releases are tagged in the git repository as well.
+
 

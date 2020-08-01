@@ -32,21 +32,72 @@ The following subsections explain how to install MusicDB using this script.
 Install Dependencies
 ^^^^^^^^^^^^^^^^^^^^
 
-First, you need to install some dependencies using your systems package manager:
+Execute the ``check.sh`` script to see what dependencies are missing.
+Install at least all mandatory (none optional) dependencies.
+You can use your system package manager or pythons package manager ``pip`` (``pip3`` on Debian) to install them.
 
+Required system packages:
+
+   * python (3.5+)
    * openssl
    * sqlite3
    * sed
    * git
-   * icecast
-   * gstreamer
+   * icecast (2)
+   * gstreamer (python module, good and bad plugins)
+   * ffmpeg
    * dialog
-   * gcc and clang
+   * rsync
+   * clang
 
-required gstreamer packages:
+Required gstreamer packages:
 
    * **Arch Linux:** gst-python, gst-plugins-good, gst-plugins-bad
    * **Fedora:** python3-gstreamer1 gstreamer1-plugins-good gstreamer1-plugins-bad-free
+
+Required Python modules:
+
+   * gi
+   * sqlite3
+   * configparser
+   * json
+   * csv
+   * hashlib
+   * mutangenx
+   * Levenshtein
+   * fuzzywuzzy
+   * unicodedata
+   * asyncio
+   * autobahn (asyncio websocket)
+   * PIL
+   * tqdm
+
+Execute ``pip install -r requirements.txt`` to install a basic set of Python modules needed for MusicDB.
+I recommend to try to get the modules from the distributions package manager.
+
+Additional Steps for Ubuntu
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Important for Ubuntu users (and maybe Debian) only**
+
+Usually I do not support Ubuntu for several technical reasons.
+But I had a clean virtual machine with the latest Ubuntu installed, so I tried test installation.
+The following *additional* steps are mandatory to get MusicDB to work on Ubuntu:
+
+Before installation:
+
+.. code-block:: bash
+
+   apt install python-is-python3    # when executing python, python3 gets called and not the dead python2
+   apt install icecast2             # Do not use the configuration dialog, MusicDB provides a secure config
+                                    # Ignore that check.sh does not find icecast after installation.
+                                    # This is because on Debian/Ubuntu the binary is calles "icecast2".
+                                    # Important scripts handle this situation of different naming.
+
+   pip3 install -r requirements.txt # pip is called pip3 on Ubuntu
+
+
+
 
 Executing the install.sh Script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -62,6 +113,9 @@ after you have cloned the `git <https://github.com/rstemmer/musicdb>`_ repositor
    # download MusicDB
    git clone https://github.com/rstemmer/musicdb
    cd musicdb/scripts
+
+   # check for dependencies (and install them)
+   ./check.sh
 
    # start the installation
    su    # you need to be root
@@ -107,25 +161,149 @@ After solving the problem you can just restart the install script.
 Make sure the settings are the same or still valid.
 The script always tries to determine the state of a single installation step and recognizes if it is already done.
 
-Install all Dependencies
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-Execute the ``check.sh`` script to see what dependencies are missing.
-In context of the install.sh script, the name of this script is a bit misleading.
-It only checks for dependencies needed by MusicDB to run. It does not check the installation.
-
-Install at least all mandatory (none optional) dependencies.
-You can use your system package manager or pythons package manager ``pip`` (``pip3`` on Debian) to install them.
-
-Configureing MusicDB
-^^^^^^^^^^^^^^^^^^^^
+Configuring MusicDB
+^^^^^^^^^^^^^^^^^^^
 
 To configure MusicDB edit the ``musicdb.ini`` file in the data directory (that is also linked to /etc/musicdb.ini).
 Furthermore you should check ``icecast/config.xml`` (also in MusicDB's data directory) if those settings are what you want.
+Details are described in the following section.
+
+
+Configuring MusicDB WebUI
+-------------------------
+
+The WebUI configuration must be done inside the file ``webui/config.js``
+
+At the begin of this file, the variable ``WEBSOCKET_URL`` must be configured.
+In particular the port number must match the one set in the MusicDB Configuration file /etc/musicdb.ini.
+An example variable is ``WEBSOCKET_URL = "wss://localhost:9000"``.
+
+For further details, read the :doc:`/webui/websockets` documentation
+See the sections for the watchdog and the communication to the server.
+
+This configuration will be persistent when updating.
+The update process saves the lines with the configuration and restores them after the file got replaced by a new one.
+
+The web server must provide the following virtual directories:
+
+   * ``/musicdb/`` pointing to the WebUI directory (``$SERVERDIR/webui``)
+   * ``/musicdb/artwork/`` pointing to the artwork directory (``$DATADIR/artwork``)
+   * ``/musicdb/music/`` pointing to the music source directory (``*/music``)
+   * ``/musicdb/docs/`` pointing to the documentation directory (``$SERVERDIR/docs``)
+
+An example `Apache <https://httpd.apache.org/>`_ configuration can look like this:
+
+.. code-block:: apache
+
+   Alias /musicdb/webui/artwork/ "/opt/musicdb/data/artwork/"
+   <Directory "/opt/musicdb/data/artwork">
+      AllowOverride None
+      Options +FollowSymLinks
+      Require all granted
+   </Directory>
+
+   Alias /musicdb/music/ "/data/music/"
+   <Directory "/data/music>
+      AllowOverride None
+      Options +FollowSymLinks
+      Require all granted
+   </Directory>
+
+   Alias /musicdb/docs/ "/opt/musicdb/server/docs/"
+   <Directory "/opt/musicdb/server/docs">
+       AllowOverride None
+       Options +FollowSymLinks
+       Require all granted
+   </Directory>
+
+   Alias /musicdb/ "/opt/musicdb/server/"
+   <Directory "/opt/musicdb/server">
+      AllowOverride None
+      Options +ExecCGI +FollowSymLinks
+      Require all granted
+      AddType text/cache-manifest .iOSmanifest
+   </Directory>
+                              
+
+When everything is correct, and the server is running, the WebUI can be reached via ``http://localhost/musicdb/webui/moderator.html``
+
+
+Configuring MusicDB
+-------------------
+
+MusicDB comes with good default settings.
+The passwords for accessing IceCast are auto-generated (``openssl rand -base64 32``) during the installation process.
+For details of the configuration, see :doc:`/basics/config`.
+
+Anyway, MusicDB is configured in a way that they are only accessible from *localhost*.
+When everything is set up as you like, you may want to change the following setting:
+
+   * In /etc/musicdb.ini: ``[websocket]->address = 0.0.0.0``
+
+
+First Run
+---------
+
+For starting and stopping the MusicDB WebSocket Server and its dependent processes, 
+the scripts described in :doc:`/usage/scripts` are recommended.
+
+You can access the WebUI by opening the file ``webui/moderator.html`` in your web browser.
+
+The first time you want to connect to the WebSocket server you have to tell the browser that your SSL
+certificates are "good".
+Open the WebSocket URL in the browser with ``https`` instead of ``wss`` and create an exception.
+So if your WebSocket address is ``wss://localhost:9000`` visit `https://localhost:9000`.
+
+
+Update
+------
+
+For updating, you can do one of the following steps.
+Read the *Important News* of the README.md file for manual steps to do before updating to a new major release.
+Only execute the scripts as root, that are followed by the comment "as root"!
+
+Update to a New Minor Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: bash
+
+   git checkout master # Only install from master branch!
+   git pull
+
+   cd scripts
+   ./update.sh # as root
+
+Update to a New Major Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For major upgrades there exists two strategies.
+Strategy 1 is recommended.
+
+.. code-block:: bash
+
+   git checkout master # Only install from master branch!
+   git pull
+
+   cd scripts
+
+   # Statgey 1
+   ./update.sh --major # as root
+
+   # Statrgy 2
+   ./install.sh        # as root
+   musicdb upgrade
+
 
 
 Installation (Manually)
 -----------------------
+
+.. warning::
+
+   **This section is no longer maintained!**
+   Anyway, it will give you an overview of *some* steps the install script does.
+   See this section as an incomplete documentation of the internal installation process of install.sh
+
 
 The whole installation and updating process can be concluded into the steps in the table below.
 
@@ -138,7 +316,6 @@ The whole installation and updating process can be concluded into the steps in t
 | Generate SSL Key      | - Generate an SSL certificate and key    |                                          |
 +-----------------------+------------------------------------------+------------------------------------------+
 | Create directory tree | - Create data and server base directory  | - Update ``artwork/default.jpg``         |
-|                       | - Create MusicAI tree                    |                                          |
 |                       | - Create Artwork Cache                   |                                          |
 +-----------------------+------------------------------------------+------------------------------------------+
 | MusicDB Configuration | - Install ``musicdb.ini``                | - Update ``musicdb.ini``                 |
@@ -160,7 +337,6 @@ The whole installation and updating process can be concluded into the steps in t
 +-----------------------+------------------------------------------+------------------------------------------+
 | MusicDB Installation  | - Install MusicDB                        | - Update MusicDB                         |
 +-----------------------+------------------------------------------+------------------------------------------+
-
 
 
 The following steps give an idea of how to install MusicDB.
@@ -206,7 +382,6 @@ The following list gives you some details about the listed modules.
    * ``icecast`` won't be detected on Debian because there it is called ``icecast2`` (This has no impact).
    * ``apachectl`` my be not found if it is only available for root user. Or you simply use another HTTP server.
    * ``jsdoc`` can be installed via ``npm install -g jsdoc``.
-   * The following modules are optional in case you don't want to use the AI infrastructure: ``numpy``, ``h5py``, ``tensorflow``, ``tflearn``
 
 Basic packages
 ^^^^^^^^^^^^^^
@@ -282,164 +457,10 @@ musicdb
    cp ~/projects/musicdb/share/default.jpg artwork/default.jpg
    chown musicdb:musicdb artwork/default.jpg 
     
-   # MusicAI
-   mkdir -p musicai/{models,log,spectrograms,tmp}
-   chown -R musicdb:musicdb musicai
-    
    # logfile
    touch debuglog.ansi && chown musicdb:musicdb debuglog.ansi
     
    # logrotate
    cp ~/projects/musicdb/share/logrotate.conf /etc/logrotate.d/musicdb
-
-
-
-Configureing MusicDB WebUI
---------------------------
-
-The WebUI configuration must be done inside the file ``webui/config.js``
-
-At the begin of this file, the variable ``WEBSOCKET_URL`` must be configured.
-In particular the port number must match the one set in the MusicDB Configuration file /etc/musicdb.ini.
-An example variable is ``WEBSOCKET_URL = "wss://localhost:9000"``.
-
-For further details, read the :doc:`/webui/websockets` documentation
-See the sections for the watchdog and the communication to the server.
-
-This configuration will be persistent when updating.
-The update process saves the lines with the configuration and restores them after the file got replaced by a new one.
-
-The web server must provide the following virtual directories:
-
-   * ``/musicdb/`` pointing to the WebUI directory (``$SERVERDIR/webui``)
-   * ``/musicdb/artwork/`` pointing to the artwork directory (``$DATADIR/artwork``)
-   * ``/musicdb/music/`` pointing to the music source directory (``*/music``)
-   * ``/musicdb/docs/`` pointing to the documentation directory (``$SERVERDIR/docs``)
-
-An example `Apache <https://httpd.apache.org/>`_ configuration can look like this:
-
-.. code-block:: apache
-
-   Alias /musicdb/webui/artwork/ "/opt/musicdb/data/artwork/"
-   <Directory "/opt/musicdb/data/artwork">
-      AllowOverride None
-      Options +FollowSymLinks
-      Require all granted
-   </Directory>
-
-   Alias /musicdb/music/ "/data/music/"
-   <Directory "/data/music>
-      AllowOverride None
-      Options +FollowSymLinks
-      Require all granted
-   </Directory>
-
-   Alias /musicdb/docs/ "/opt/musicdb/server/docs/"
-   <Directory "/opt/musicdb/server/docs">
-       AllowOverride None
-       Options +FollowSymLinks
-       Require all granted
-   </Directory>
-
-   Alias /musicdb/ "/opt/musicdb/server/"
-   <Directory "/opt/musicdb/server">
-      AllowOverride None
-      Options +ExecCGI +FollowSymLinks
-      Require all granted
-      AddType text/cache-manifest .iOSmanifest
-   </Directory>
-                              
-
-When everything is correct, and the server is running, the WebUI can be reached via ``http://localhost/musicdb/webui/moderator.html``
-
-
-
-CUDA for MusicAI
-----------------
-
-.. note::
-
-   **MusicAI is optional!**
-
-   You only should consider using MusicAI if you know how to handle Neural Networks - or if you are willing to learn.
-   This feature is very computation intensive and requires expensive hardware to be usable.
-   You should first read the :doc:`/mdbapi/musicai` documentation.
-   If you still think working with a Convolutional Deep Neural Network is a good idea, then you should give it a try.
-   For me it works well and it has a coolness level over 9000.
-
-When you want to use :doc:`/mdbapi/musicai` you need a working `TensorFlow <https://www.tensorflow.org/>`_ environment 
-with `CUDA <https://developer.nvidia.com/cuda-zone>`_ support:
-
-.. code-block:: bash
-
-   pacman -S nvidia
-   shutdown -r now
-   pacman -S opencl-nvidia opencl-headers cuda
-
-   pip install tensorflow
-   pip install tflearn
-
-The `CuDNN <https://developer.nvidia.com/cudnn>`_ libraries are needed by *TensorFlow*.
-To download them you need a `NVidia Developer Account <https://developer.nvidia.com/rdp/form/cudnn-download-survey>`_.
-
-.. code-block:: bash
-
-   cp cudnn-8.0-linux-x64-v6.0.tgz /opt
-   cd /opt
-   tar xf cudnn-8.0-linux-x64-v6.0.tgz
-   echo 'export LD_LIBRARY_PATH=/opt/cuda/lib64:$LD_LIBRARY_PATH' >> /etc/profile.d/cuda.sh
-
-
-
-First Run
----------
-
-For starting and stopping the MusicDB WebSocket Server and its dependent processes, 
-the scripts described in :doc:`/usage/scripts` are recommended.
-
-For details of the configuration, see :doc:`/basics/config`.
-
-You can access the WebUI by opening the file ``webui/moderator.html`` in your web browser.
-
-The first time you want to connect to the WebSocket server you have to tell the browser that your SSL
-certificates are "good".
-Open the WebSocket URL in the browser with ``https`` instead of ``wss`` and create an exception.
-So if your WebSocket address is ``wss://localhost:9000`` visit `https://localhost:9000`.
-
-
-Update
-------
-
-.. warning::
-   
-   The MusicDB installation script cannot be tested as good as it should be tested.
-   There may be some problems in special cases.
-   Espacially when you use it for updating MusicDB, it could happen that you loose some configuration or in worts case your database.
-
-   You really should **make a backup** of the MusicDB data directory!
-
-After updating *CUDA*, *TensorFlow* must be updated, too.
-
-.. code-block:: bash
-
-   pip install --upgrade tensorflow
-   pip install --upgrade tflearn
-
-
-If you want to update MusicDB, pull the latest version from GitHub, and execute the ``install.sh`` script.
-Make sure the detected settings that are displayed in the dialog are correct.
-For minor release updates, the ``quickupdate.sh`` is also OK (It just updates MusicDB without checking the environment).
-
-.. code-block:: bash
-
-   cd /src/musicdb      # go to MusicDB's source directory
-   git pull             # get the latest source code
-   git checkout master  # make sure you are in the master branch
-   cd scripts           # go into the scripts directory
-   su                   # you must be root for the updating process
-   ./update.sh --major  # update
-
-
-
 
 

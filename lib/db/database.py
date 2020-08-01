@@ -135,6 +135,38 @@ class Database(object):
         return None
 
 
+
+    def ExecuteScript(self, sqlscript):
+        """
+        This method executes multiple SQL commands stored in ``sqlscript``.
+        When the command fails, the database gets rolled back.
+        Otherwise the changes gets committed.
+
+        Args:
+            sqlscript (str): SQL script
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: When *sqlscript* is not a string
+
+        """
+        if type(sqlscript) != str:
+            raise TypeError("Invalid sql script type. String expected!")
+
+        try:
+            self.db_cursor.executescript(sqlscript)
+
+        except Exception as e:
+            self.db_connection.rollback()
+            raise e
+
+        self.db_connection.commit()
+        return None
+
+
+
     # get some data from the database
     def GetFromDatabase(self, sql, values=None):
         """

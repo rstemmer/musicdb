@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &amp; Update &mdash; MusicDB 5.2.0 documentation</title>
+  <title>Installation &amp; Update &mdash; MusicDB 6.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 6.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Music" href="music.html"/>
         <link rel="prev" title="Docker" href="docker.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.2
+                6.0
               </div>
             
           
@@ -114,7 +114,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#icecast">Icecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
@@ -222,14 +221,22 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-steps-for-ubuntu">Additional Steps for Ubuntu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#executing-the-install-sh-script">Executing the install.sh Script</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#install-all-dependencies">Install all Dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configureing-musicdb">Configureing MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-musicdb">Configuring MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-musicdb-webui">Configuring MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Configuring MusicDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#update">Update</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-to-a-new-major-version">Update to a New Major Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#installation-manually">Installation (Manually)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#system-preparation">System Preparation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#libprinthex">libprinthex</a></li>
@@ -237,10 +244,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#musicdb">musicdb</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#cuda-for-musicai">CUDA for MusicAI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#first-run">First Run</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#update">Update</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="music.html">Music</a><ul>
@@ -285,10 +288,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
@@ -309,11 +308,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-list">Mood List</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-grid">Mood Grid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#style-guide">Style Guide</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/musicai.html">musicai - MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#module-mod.musicai">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
@@ -382,30 +376,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/mise.html">Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musicai.html">MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#external-dependencies">External Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#training-time">Training Time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#removing-an-old-model">Removing an old model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#data-handling">Data Handling</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#featureset">Featureset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musicai.html#trainingset">Trainingset</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musicai.html#musicai-class">MusicAI Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/musiccache.html">MusicCache</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#features-and-constraints">Features and Constraints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#updating-the-cache">Updating the Cache</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../mdbapi/musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/musiccache.html#musiccache-class">MusicCache Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/randy.html">Randomizer</a><ul>
@@ -489,10 +459,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../lib/hdf5storage.html">HDF5Storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/icecast.html">Icecast Interface</a><ul>
@@ -698,26 +664,70 @@ Execute this script from the scripts directory to install MusicDB.
 The following subsections explain how to install MusicDB using this script.</p>
 <div class="section" id="install-dependencies">
 <h3>Install Dependencies<a class="headerlink" href="#install-dependencies" title="Permalink to this headline">¶</a></h3>
-<p>First, you need to install some dependencies using your systems package manager:</p>
+<p>Execute the <code class="docutils literal notranslate"><span class="pre">check.sh</span></code> script to see what dependencies are missing.
+Install at least all mandatory (none optional) dependencies.
+You can use your system package manager or pythons package manager <code class="docutils literal notranslate"><span class="pre">pip</span></code> (<code class="docutils literal notranslate"><span class="pre">pip3</span></code> on Debian) to install them.</p>
+<p>Required system packages:</p>
 <blockquote>
 <div><ul class="simple">
+<li><p>python (3.5+)</p></li>
 <li><p>openssl</p></li>
 <li><p>sqlite3</p></li>
 <li><p>sed</p></li>
 <li><p>git</p></li>
-<li><p>icecast</p></li>
-<li><p>gstreamer</p></li>
+<li><p>icecast (2)</p></li>
+<li><p>gstreamer (python module, good and bad plugins)</p></li>
+<li><p>ffmpeg</p></li>
 <li><p>dialog</p></li>
-<li><p>gcc and clang</p></li>
+<li><p>rsync</p></li>
+<li><p>clang</p></li>
 </ul>
 </div></blockquote>
-<p>required gstreamer packages:</p>
+<p>Required gstreamer packages:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><strong>Arch Linux:</strong> gst-python, gst-plugins-good, gst-plugins-bad</p></li>
 <li><p><strong>Fedora:</strong> python3-gstreamer1 gstreamer1-plugins-good gstreamer1-plugins-bad-free</p></li>
 </ul>
 </div></blockquote>
+<p>Required Python modules:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>gi</p></li>
+<li><p>sqlite3</p></li>
+<li><p>configparser</p></li>
+<li><p>json</p></li>
+<li><p>csv</p></li>
+<li><p>hashlib</p></li>
+<li><p>mutangenx</p></li>
+<li><p>Levenshtein</p></li>
+<li><p>fuzzywuzzy</p></li>
+<li><p>unicodedata</p></li>
+<li><p>asyncio</p></li>
+<li><p>autobahn (asyncio websocket)</p></li>
+<li><p>PIL</p></li>
+<li><p>tqdm</p></li>
+</ul>
+</div></blockquote>
+<p>Execute <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code> to install a basic set of Python modules needed for MusicDB.
+I recommend to try to get the modules from the distributions package manager.</p>
+</div>
+<div class="section" id="additional-steps-for-ubuntu">
+<h3>Additional Steps for Ubuntu<a class="headerlink" href="#additional-steps-for-ubuntu" title="Permalink to this headline">¶</a></h3>
+<p><strong>Important for Ubuntu users (and maybe Debian) only</strong></p>
+<p>Usually I do not support Ubuntu for several technical reasons.
+But I had a clean virtual machine with the latest Ubuntu installed, so I tried test installation.
+The following <em>additional</em> steps are mandatory to get MusicDB to work on Ubuntu:</p>
+<p>Before installation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install python-is-python3    <span class="c1"># when executing python, python3 gets called and not the dead python2</span>
+apt install icecast2             <span class="c1"># Do not use the configuration dialog, MusicDB provides a secure config</span>
+                                 <span class="c1"># Ignore that check.sh does not find icecast after installation.</span>
+                                 <span class="c1"># This is because on Debian/Ubuntu the binary is calles &quot;icecast2&quot;.</span>
+                                 <span class="c1"># Important scripts handle this situation of different naming.</span>
+
+pip3 install -r requirements.txt <span class="c1"># pip is called pip3 on Ubuntu</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="executing-the-install-sh-script">
 <h3>Executing the install.sh Script<a class="headerlink" href="#executing-the-install-sh-script" title="Permalink to this headline">¶</a></h3>
@@ -729,6 +739,9 @@ after you have cloned the <a class="reference external" href="https://github.com
 <span class="c1"># download MusicDB</span>
 git clone https://github.com/rstemmer/musicdb
 <span class="nb">cd</span> musicdb/scripts
+
+<span class="c1"># check for dependencies (and install them)</span>
+./check.sh
 
 <span class="c1"># start the installation</span>
 su    <span class="c1"># you need to be root</span>
@@ -768,22 +781,130 @@ After solving the problem you can just restart the install script.
 Make sure the settings are the same or still valid.
 The script always tries to determine the state of a single installation step and recognizes if it is already done.</p>
 </div>
-<div class="section" id="install-all-dependencies">
-<h3>Install all Dependencies<a class="headerlink" href="#install-all-dependencies" title="Permalink to this headline">¶</a></h3>
-<p>Execute the <code class="docutils literal notranslate"><span class="pre">check.sh</span></code> script to see what dependencies are missing.
-In context of the install.sh script, the name of this script is a bit misleading.
-It only checks for dependencies needed by MusicDB to run. It does not check the installation.</p>
-<p>Install at least all mandatory (none optional) dependencies.
-You can use your system package manager or pythons package manager <code class="docutils literal notranslate"><span class="pre">pip</span></code> (<code class="docutils literal notranslate"><span class="pre">pip3</span></code> on Debian) to install them.</p>
-</div>
-<div class="section" id="configureing-musicdb">
-<h3>Configureing MusicDB<a class="headerlink" href="#configureing-musicdb" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="configuring-musicdb">
+<h3>Configuring MusicDB<a class="headerlink" href="#configuring-musicdb" title="Permalink to this headline">¶</a></h3>
 <p>To configure MusicDB edit the <code class="docutils literal notranslate"><span class="pre">musicdb.ini</span></code> file in the data directory (that is also linked to /etc/musicdb.ini).
-Furthermore you should check <code class="docutils literal notranslate"><span class="pre">icecast/config.xml</span></code> (also in MusicDB’s data directory) if those settings are what you want.</p>
+Furthermore you should check <code class="docutils literal notranslate"><span class="pre">icecast/config.xml</span></code> (also in MusicDB’s data directory) if those settings are what you want.
+Details are described in the following section.</p>
+</div>
+</div>
+<div class="section" id="configuring-musicdb-webui">
+<h2>Configuring MusicDB WebUI<a class="headerlink" href="#configuring-musicdb-webui" title="Permalink to this headline">¶</a></h2>
+<p>The WebUI configuration must be done inside the file <code class="docutils literal notranslate"><span class="pre">webui/config.js</span></code></p>
+<p>At the begin of this file, the variable <code class="docutils literal notranslate"><span class="pre">WEBSOCKET_URL</span></code> must be configured.
+In particular the port number must match the one set in the MusicDB Configuration file /etc/musicdb.ini.
+An example variable is <code class="docutils literal notranslate"><span class="pre">WEBSOCKET_URL</span> <span class="pre">=</span> <span class="pre">&quot;wss://localhost:9000&quot;</span></code>.</p>
+<p>For further details, read the <a class="reference internal" href="../webui/websockets.html"><span class="doc">Websocket Connection</span></a> documentation
+See the sections for the watchdog and the communication to the server.</p>
+<p>This configuration will be persistent when updating.
+The update process saves the lines with the configuration and restores them after the file got replaced by a new one.</p>
+<p>The web server must provide the following virtual directories:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/</span></code> pointing to the WebUI directory (<code class="docutils literal notranslate"><span class="pre">$SERVERDIR/webui</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/artwork/</span></code> pointing to the artwork directory (<code class="docutils literal notranslate"><span class="pre">$DATADIR/artwork</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/music/</span></code> pointing to the music source directory (<code class="docutils literal notranslate"><span class="pre">*/music</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/docs/</span></code> pointing to the documentation directory (<code class="docutils literal notranslate"><span class="pre">$SERVERDIR/docs</span></code>)</p></li>
+</ul>
+</div></blockquote>
+<p>An example <a class="reference external" href="https://httpd.apache.org/">Apache</a> configuration can look like this:</p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">Alias</span> <span class="sx">/musicdb/webui/artwork/</span> <span class="s2">&quot;/opt/musicdb/data/artwork/&quot;</span>
+<span class="nt">&lt;Directory</span> <span class="s">&quot;/opt/musicdb/data/artwork&quot;</span><span class="nt">&gt;</span>
+   <span class="nb">AllowOverride</span> <span class="k">None</span>
+   <span class="nb">Options</span> +FollowSymLinks
+   <span class="nb">Require</span> <span class="k">all</span> granted
+<span class="nt">&lt;/Directory&gt;</span>
+
+<span class="nb">Alias</span> <span class="sx">/musicdb/music/</span> <span class="s2">&quot;/data/music/&quot;</span>
+<span class="nt">&lt;Directory</span> <span class="s">&quot;/data/music</span><span class="nt">&gt;</span>
+   <span class="nb">AllowOverride</span> <span class="k">None</span>
+   <span class="nb">Options</span> +FollowSymLinks
+   <span class="nb">Require</span> <span class="k">all</span> granted
+<span class="nt">&lt;/Directory&gt;</span>
+
+<span class="nb">Alias</span> <span class="sx">/musicdb/docs/</span> <span class="s2">&quot;/opt/musicdb/server/docs/&quot;</span>
+<span class="nt">&lt;Directory</span> <span class="s">&quot;/opt/musicdb/server/docs&quot;</span><span class="nt">&gt;</span>
+    <span class="nb">AllowOverride</span> <span class="k">None</span>
+    <span class="nb">Options</span> +FollowSymLinks
+    <span class="nb">Require</span> <span class="k">all</span> granted
+<span class="nt">&lt;/Directory&gt;</span>
+
+<span class="nb">Alias</span> <span class="sx">/musicdb/</span> <span class="s2">&quot;/opt/musicdb/server/&quot;</span>
+<span class="nt">&lt;Directory</span> <span class="s">&quot;/opt/musicdb/server&quot;</span><span class="nt">&gt;</span>
+   <span class="nb">AllowOverride</span> <span class="k">None</span>
+   <span class="nb">Options</span> +ExecCGI +FollowSymLinks
+   <span class="nb">Require</span> <span class="k">all</span> granted
+   <span class="nb">AddType</span> text/cache-manifest .iOSmanifest
+<span class="nt">&lt;/Directory&gt;</span>
+</pre></div>
+</div>
+<p>When everything is correct, and the server is running, the WebUI can be reached via <code class="docutils literal notranslate"><span class="pre">http://localhost/musicdb/webui/moderator.html</span></code></p>
+</div>
+<div class="section" id="id1">
+<h2>Configuring MusicDB<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>MusicDB comes with good default settings.
+The passwords for accessing IceCast are auto-generated (<code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">rand</span> <span class="pre">-base64</span> <span class="pre">32</span></code>) during the installation process.
+For details of the configuration, see <a class="reference internal" href="../basics/config.html"><span class="doc">MusicDB Configuration</span></a>.</p>
+<p>Anyway, MusicDB is configured in a way that they are only accessible from <em>localhost</em>.
+When everything is set up as you like, you may want to change the following setting:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>In /etc/musicdb.ini: <code class="docutils literal notranslate"><span class="pre">[websocket]-&gt;address</span> <span class="pre">=</span> <span class="pre">0.0.0.0</span></code></p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="first-run">
+<h2>First Run<a class="headerlink" href="#first-run" title="Permalink to this headline">¶</a></h2>
+<p>For starting and stopping the MusicDB WebSocket Server and its dependent processes,
+the scripts described in <a class="reference internal" href="scripts.html"><span class="doc">Scripts</span></a> are recommended.</p>
+<p>You can access the WebUI by opening the file <code class="docutils literal notranslate"><span class="pre">webui/moderator.html</span></code> in your web browser.</p>
+<p>The first time you want to connect to the WebSocket server you have to tell the browser that your SSL
+certificates are “good”.
+Open the WebSocket URL in the browser with <code class="docutils literal notranslate"><span class="pre">https</span></code> instead of <code class="docutils literal notranslate"><span class="pre">wss</span></code> and create an exception.
+So if your WebSocket address is <code class="docutils literal notranslate"><span class="pre">wss://localhost:9000</span></code> visit <cite>https://localhost:9000</cite>.</p>
+</div>
+<div class="section" id="update">
+<h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
+<p>For updating, you can do one of the following steps.
+Read the <em>Important News</em> of the README.md file for manual steps to do before updating to a new major release.
+Only execute the scripts as root, that are followed by the comment “as root”!</p>
+<div class="section" id="update-to-a-new-minor-version">
+<h3>Update to a New Minor Version<a class="headerlink" href="#update-to-a-new-minor-version" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git checkout master <span class="c1"># Only install from master branch!</span>
+git pull
+
+<span class="nb">cd</span> scripts
+./update.sh <span class="c1"># as root</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-to-a-new-major-version">
+<h3>Update to a New Major Version<a class="headerlink" href="#update-to-a-new-major-version" title="Permalink to this headline">¶</a></h3>
+<p>For major upgrades there exists two strategies.
+Strategy 1 is recommended.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git checkout master <span class="c1"># Only install from master branch!</span>
+git pull
+
+<span class="nb">cd</span> scripts
+
+<span class="c1"># Statgey 1</span>
+./update.sh --major <span class="c1"># as root</span>
+
+<span class="c1"># Statrgy 2</span>
+./install.sh        <span class="c1"># as root</span>
+musicdb upgrade
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="installation-manually">
 <h2>Installation (Manually)<a class="headerlink" href="#installation-manually" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>This section is no longer maintained!</strong>
+Anyway, it will give you an overview of <em>some</em> steps the install script does.
+See this section as an incomplete documentation of the internal installation process of install.sh</p>
+</div>
 <p>The whole installation and updating process can be concluded into the steps in the table below.</p>
 <table class="docutils align-default">
 <colgroup>
@@ -816,7 +937,6 @@ Furthermore you should check <code class="docutils literal notranslate"><span cl
 <tr class="row-even"><td><p>Create directory tree</p></td>
 <td><ul class="simple">
 <li><p>Create data and server base directory</p></li>
-<li><p>Create MusicAI tree</p></li>
 <li><p>Create Artwork Cache</p></li>
 </ul>
 </td>
@@ -919,8 +1039,8 @@ mkdir /data/music   <span class="o">&amp;&amp;</span> chown -R user:musicdb    /
 </pre></div>
 </div>
 </div>
-<div class="section" id="id1">
-<h3>Install dependencies<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h3>Install dependencies<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>Some: <code class="docutils literal notranslate"><span class="pre">git</span></code>, <code class="docutils literal notranslate"><span class="pre">gcc</span></code>, <code class="docutils literal notranslate"><span class="pre">python</span></code>, <code class="docutils literal notranslate"><span class="pre">pip</span></code></p>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
@@ -936,7 +1056,6 @@ The following list gives you some details about the listed modules.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">icecast</span></code> won’t be detected on Debian because there it is called <code class="docutils literal notranslate"><span class="pre">icecast2</span></code> (This has no impact).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">apachectl</span></code> my be not found if it is only available for root user. Or you simply use another HTTP server.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">jsdoc</span></code> can be installed via <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">-g</span> <span class="pre">jsdoc</span></code>.</p></li>
-<li><p>The following modules are optional in case you don’t want to use the AI infrastructure: <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">h5py</span></code>, <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code>, <code class="docutils literal notranslate"><span class="pre">tflearn</span></code></p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -1003,10 +1122,6 @@ chmod -R g+w artwork
 cp ~/projects/musicdb/share/default.jpg artwork/default.jpg
 chown musicdb:musicdb artwork/default.jpg
 
-<span class="c1"># MusicAI</span>
-mkdir -p musicai/<span class="o">{</span>models,log,spectrograms,tmp<span class="o">}</span>
-chown -R musicdb:musicdb musicai
-
 <span class="c1"># logfile</span>
 touch debuglog.ansi <span class="o">&amp;&amp;</span> chown musicdb:musicdb debuglog.ansi
 
@@ -1014,125 +1129,6 @@ touch debuglog.ansi <span class="o">&amp;&amp;</span> chown musicdb:musicdb debu
 cp ~/projects/musicdb/share/logrotate.conf /etc/logrotate.d/musicdb
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="configureing-musicdb-webui">
-<h2>Configureing MusicDB WebUI<a class="headerlink" href="#configureing-musicdb-webui" title="Permalink to this headline">¶</a></h2>
-<p>The WebUI configuration must be done inside the file <code class="docutils literal notranslate"><span class="pre">webui/config.js</span></code></p>
-<p>At the begin of this file, the variable <code class="docutils literal notranslate"><span class="pre">WEBSOCKET_URL</span></code> must be configured.
-In particular the port number must match the one set in the MusicDB Configuration file /etc/musicdb.ini.
-An example variable is <code class="docutils literal notranslate"><span class="pre">WEBSOCKET_URL</span> <span class="pre">=</span> <span class="pre">&quot;wss://localhost:9000&quot;</span></code>.</p>
-<p>For further details, read the <a class="reference internal" href="../webui/websockets.html"><span class="doc">Websocket Connection</span></a> documentation
-See the sections for the watchdog and the communication to the server.</p>
-<p>This configuration will be persistent when updating.
-The update process saves the lines with the configuration and restores them after the file got replaced by a new one.</p>
-<p>The web server must provide the following virtual directories:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/</span></code> pointing to the WebUI directory (<code class="docutils literal notranslate"><span class="pre">$SERVERDIR/webui</span></code>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/artwork/</span></code> pointing to the artwork directory (<code class="docutils literal notranslate"><span class="pre">$DATADIR/artwork</span></code>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/music/</span></code> pointing to the music source directory (<code class="docutils literal notranslate"><span class="pre">*/music</span></code>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/docs/</span></code> pointing to the documentation directory (<code class="docutils literal notranslate"><span class="pre">$SERVERDIR/docs</span></code>)</p></li>
-</ul>
-</div></blockquote>
-<p>An example <a class="reference external" href="https://httpd.apache.org/">Apache</a> configuration can look like this:</p>
-<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">Alias</span> <span class="sx">/musicdb/webui/artwork/</span> <span class="s2">&quot;/opt/musicdb/data/artwork/&quot;</span>
-<span class="nt">&lt;Directory</span> <span class="s">&quot;/opt/musicdb/data/artwork&quot;</span><span class="nt">&gt;</span>
-   <span class="nb">AllowOverride</span> <span class="k">None</span>
-   <span class="nb">Options</span> +FollowSymLinks
-   <span class="nb">Require</span> <span class="k">all</span> granted
-<span class="nt">&lt;/Directory&gt;</span>
-
-<span class="nb">Alias</span> <span class="sx">/musicdb/music/</span> <span class="s2">&quot;/data/music/&quot;</span>
-<span class="nt">&lt;Directory</span> <span class="s">&quot;/data/music</span><span class="nt">&gt;</span>
-   <span class="nb">AllowOverride</span> <span class="k">None</span>
-   <span class="nb">Options</span> +FollowSymLinks
-   <span class="nb">Require</span> <span class="k">all</span> granted
-<span class="nt">&lt;/Directory&gt;</span>
-
-<span class="nb">Alias</span> <span class="sx">/musicdb/docs/</span> <span class="s2">&quot;/opt/musicdb/server/docs/&quot;</span>
-<span class="nt">&lt;Directory</span> <span class="s">&quot;/opt/musicdb/server/docs&quot;</span><span class="nt">&gt;</span>
-    <span class="nb">AllowOverride</span> <span class="k">None</span>
-    <span class="nb">Options</span> +FollowSymLinks
-    <span class="nb">Require</span> <span class="k">all</span> granted
-<span class="nt">&lt;/Directory&gt;</span>
-
-<span class="nb">Alias</span> <span class="sx">/musicdb/</span> <span class="s2">&quot;/opt/musicdb/server/&quot;</span>
-<span class="nt">&lt;Directory</span> <span class="s">&quot;/opt/musicdb/server&quot;</span><span class="nt">&gt;</span>
-   <span class="nb">AllowOverride</span> <span class="k">None</span>
-   <span class="nb">Options</span> +ExecCGI +FollowSymLinks
-   <span class="nb">Require</span> <span class="k">all</span> granted
-   <span class="nb">AddType</span> text/cache-manifest .iOSmanifest
-<span class="nt">&lt;/Directory&gt;</span>
-</pre></div>
-</div>
-<p>When everything is correct, and the server is running, the WebUI can be reached via <code class="docutils literal notranslate"><span class="pre">http://localhost/musicdb/webui/moderator.html</span></code></p>
-</div>
-<div class="section" id="cuda-for-musicai">
-<h2>CUDA for MusicAI<a class="headerlink" href="#cuda-for-musicai" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><strong>MusicAI is optional!</strong></p>
-<p>You only should consider using MusicAI if you know how to handle Neural Networks - or if you are willing to learn.
-This feature is very computation intensive and requires expensive hardware to be usable.
-You should first read the <a class="reference internal" href="../mdbapi/musicai.html"><span class="doc">MusicAI</span></a> documentation.
-If you still think working with a Convolutional Deep Neural Network is a good idea, then you should give it a try.
-For me it works well and it has a coolness level over 9000.</p>
-</div>
-<p>When you want to use <a class="reference internal" href="../mdbapi/musicai.html"><span class="doc">MusicAI</span></a> you need a working <a class="reference external" href="https://www.tensorflow.org/">TensorFlow</a> environment
-with <a class="reference external" href="https://developer.nvidia.com/cuda-zone">CUDA</a> support:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pacman -S nvidia
-shutdown -r now
-pacman -S opencl-nvidia opencl-headers cuda
-
-pip install tensorflow
-pip install tflearn
-</pre></div>
-</div>
-<p>The <a class="reference external" href="https://developer.nvidia.com/cudnn">CuDNN</a> libraries are needed by <em>TensorFlow</em>.
-To download them you need a <a class="reference external" href="https://developer.nvidia.com/rdp/form/cudnn-download-survey">NVidia Developer Account</a>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp cudnn-8.0-linux-x64-v6.0.tgz /opt
-<span class="nb">cd</span> /opt
-tar xf cudnn-8.0-linux-x64-v6.0.tgz
-<span class="nb">echo</span> <span class="s1">&#39;export LD_LIBRARY_PATH=/opt/cuda/lib64:$LD_LIBRARY_PATH&#39;</span> &gt;&gt; /etc/profile.d/cuda.sh
-</pre></div>
-</div>
-</div>
-<div class="section" id="first-run">
-<h2>First Run<a class="headerlink" href="#first-run" title="Permalink to this headline">¶</a></h2>
-<p>For starting and stopping the MusicDB WebSocket Server and its dependent processes,
-the scripts described in <a class="reference internal" href="scripts.html"><span class="doc">Scripts</span></a> are recommended.</p>
-<p>For details of the configuration, see <a class="reference internal" href="../basics/config.html"><span class="doc">MusicDB Configuration</span></a>.</p>
-<p>You can access the WebUI by opening the file <code class="docutils literal notranslate"><span class="pre">webui/moderator.html</span></code> in your web browser.</p>
-<p>The first time you want to connect to the WebSocket server you have to tell the browser that your SSL
-certificates are “good”.
-Open the WebSocket URL in the browser with <code class="docutils literal notranslate"><span class="pre">https</span></code> instead of <code class="docutils literal notranslate"><span class="pre">wss</span></code> and create an exception.
-So if your WebSocket address is <code class="docutils literal notranslate"><span class="pre">wss://localhost:9000</span></code> visit <cite>https://localhost:9000</cite>.</p>
-</div>
-<div class="section" id="update">
-<h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The MusicDB installation script cannot be tested as good as it should be tested.
-There may be some problems in special cases.
-Espacially when you use it for updating MusicDB, it could happen that you loose some configuration or in worts case your database.</p>
-<p>You really should <strong>make a backup</strong> of the MusicDB data directory!</p>
-</div>
-<p>After updating <em>CUDA</em>, <em>TensorFlow</em> must be updated, too.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install --upgrade tensorflow
-pip install --upgrade tflearn
-</pre></div>
-</div>
-<p>If you want to update MusicDB, pull the latest version from GitHub, and execute the <code class="docutils literal notranslate"><span class="pre">install.sh</span></code> script.
-Make sure the detected settings that are displayed in the dialog are correct.
-For minor release updates, the <code class="docutils literal notranslate"><span class="pre">quickupdate.sh</span></code> is also OK (It just updates MusicDB without checking the environment).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /src/musicdb      <span class="c1"># go to MusicDB&#39;s source directory</span>
-git pull             <span class="c1"># get the latest source code</span>
-git checkout master  <span class="c1"># make sure you are in the master branch</span>
-<span class="nb">cd</span> scripts           <span class="c1"># go into the scripts directory</span>
-su                   <span class="c1"># you must be root for the updating process</span>
-./update.sh --major  <span class="c1"># update</span>
-</pre></div>
 </div>
 </div>
 </div>
@@ -1150,7 +1146,7 @@ su                   <span class="c1"># you must be root for the updating proces
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
 
     </p>
   </div>
@@ -1172,7 +1168,7 @@ su                   <span class="c1"># you must be root for the updating proces
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.2.0',
+            VERSION:'6.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

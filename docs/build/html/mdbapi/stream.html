@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Streaming Server &mdash; MusicDB 5.2.0 documentation</title>
+  <title>Streaming Server &mdash; MusicDB 6.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 5.2.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 6.0.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDBTags" href="tags.html"/>
         <link rel="prev" title="MusicDB Song Queue" href="songqueue.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                5.2
+                6.0
               </div>
             
           
@@ -114,7 +114,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#icecast">Icecast</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#musicai">MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
@@ -238,7 +237,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#cuda-for-musicai">CUDA for MusicAI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a></li>
 </ul>
@@ -285,10 +283,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/artwork.html#class">class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/cache.html">cache - Music Cache Manager</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/cache.html#class">class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/database.html">database - Music DB Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/extern.html">extern - Music File Uploader</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/extern.html#class">class</a></li>
@@ -309,11 +303,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-list">Mood List</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#mood-grid">Mood Grid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mod/moods.html#style-guide">Style Guide</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/musicai.html">musicai - MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#module-mod.musicai">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/musicai.html#class-description">Class Description</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mod/repair.html">repair - Repair Database Entries</a><ul>
@@ -382,30 +371,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mise.html">Micro Search Engine</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mise.html#musicdbmicrosearchengine-class">MusicDBMicroSearchEngine Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="musicai.html">MusicAI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="musicai.html#external-dependencies">External Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="musicai.html#training-time">Training Time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="musicai.html#removing-an-old-model">Removing an old model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="musicai.html#data-handling">Data Handling</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="musicai.html#featureset">Featureset</a></li>
-<li class="toctree-l3"><a class="reference internal" href="musicai.html#trainingset">Trainingset</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="musicai.html#module-mdbapi.musicai">MusicAI Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="musicai.html#musicai-class">MusicAI Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="musiccache.html">MusicCache</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="musiccache.html#features-and-constraints">Features and Constraints</a></li>
-<li class="toctree-l2"><a class="reference internal" href="musiccache.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="musiccache.html#updating-the-cache">Updating the Cache</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="musiccache.html#add-a-song-to-the-cache">Add a song to the cache</a></li>
-<li class="toctree-l3"><a class="reference internal" href="musiccache.html#get-a-songs-path-inside-the-case">Get a songs path inside the case</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="musiccache.html#musiccache-class">MusicCache Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="randy.html">Randomizer</a><ul>
@@ -489,10 +454,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/gstreamer.html#gstreamerinterface-class">GStreamerInterface Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../lib/hdf5storage.html">HDF5Storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../lib/hdf5storage.html#hdf5storage-class">HDF5Storage Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/icecast.html">Icecast Interface</a><ul>
@@ -764,7 +725,7 @@ Argument is the current playtime of the song in seconds.</p>
 <p class="rubric">Example</p>
 <p>This example shows how to use the callback interface:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Event &quot;</span><span class="o">%</span><span class="n">s</span><span class="s2">&quot; occurred with argument &quot;</span><span class="o">%</span><span class="n">s</span><span class="s2">&quot;.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Event &quot;</span><span class="o">%</span><span class="n">s</span><span class="s2">&quot; occurred with argument &quot;</span><span class="o">%</span><span class="n">s</span><span class="s2">&quot;.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)))</span>
 
 <span class="n">sq</span> <span class="o">=</span> <span class="n">StreamManager</span><span class="p">(</span><span class="n">mdbconfig</span><span class="p">,</span> <span class="n">musicdatabase</span><span class="p">)</span>
 <span class="n">sq</span><span class="o">.</span><span class="n">RegisterCallback</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
@@ -774,9 +735,9 @@ Argument is the current playtime of the song in seconds.</p>
 <span class="n">sq</span><span class="o">.</span><span class="n">RemoveCallback</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="function">
+<dl class="py function">
 <dt id="mdbapi.stream.StartStreamingThread">
-<code class="sig-prename descclassname">mdbapi.stream.</code><code class="sig-name descname">StartStreamingThread</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">musicdb</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StartStreamingThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StartStreamingThread" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mdbapi.stream.</code><code class="sig-name descname">StartStreamingThread</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em>, <em class="sig-param"><span class="n">musicdb</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StartStreamingThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StartStreamingThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function starts the Streaming Thread <code class="xref py py-mod docutils literal notranslate"><span class="pre">StreamingThread</span></code>.
 You should use this function instead of calling the Streaming Thread function directly.</p>
 <p>By calling this function, the global state of this module gets reset.
@@ -797,7 +758,7 @@ This included removing all commands from the Command Queue.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="mdbapi.stream.StopStreamingThread">
 <code class="sig-prename descclassname">mdbapi.stream.</code><code class="sig-name descname">StopStreamingThread</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StopStreamingThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StopStreamingThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function stops the Streaming Thread.
@@ -809,7 +770,7 @@ The function is blocking and waits until the thread is closed.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="mdbapi.stream.StreamingThread">
 <code class="sig-prename descclassname">mdbapi.stream.</code><code class="sig-name descname">StreamingThread</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamingThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamingThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>This thread manages the streaming of the songs from the Song Queue to the Icecast server.</p>
@@ -830,9 +791,9 @@ Skipped songs will be ignored.</p>
 </div>
 <div class="section" id="stream-manager-class">
 <h2>Stream Manager Class<a class="headerlink" href="#stream-manager-class" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="mdbapi.stream.StreamManager">
-<em class="property">class </em><code class="sig-prename descclassname">mdbapi.stream.</code><code class="sig-name descname">StreamManager</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">database</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">mdbapi.stream.</code><code class="sig-name descname">StreamManager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em>, <em class="sig-param"><span class="n">database</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides an interface to the Streaming Thread (<a class="reference internal" href="#mdbapi.stream.StreamingThread" title="mdbapi.stream.StreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamingThread()</span></code></a>) and the Song Queue that will be streamed.</p>
 <p>The communication is implemented with a command queue.
 More details about those commands can be found in the <a class="reference internal" href="#mdbapi.stream.StreamingThread" title="mdbapi.stream.StreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamingThread()</span></code></a> description.
@@ -857,7 +818,7 @@ The thread handles the skip to the next song and starts streaming the new file.<
 <dd class="field-even"><p><strong>TypeError</strong> – When the arguments are not of the correct type.</p>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="mdbapi.stream.StreamManager.GetStreamState">
 <code class="sig-name descname">GetStreamState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.GetStreamState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.GetStreamState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the current state of the Streaming Thread as a dictionary.</p>
@@ -868,9 +829,9 @@ The thread handles the skip to the next song and starts streaming the new file.<
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mdbapi.stream.StreamManager.Play">
-<code class="sig-name descname">Play</code><span class="sig-paren">(</span><em class="sig-param">play=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.Play"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.Play" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">Play</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">play</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.Play"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.Play" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the play-state.</p>
 <blockquote>
 <div><ul class="simple">
@@ -891,7 +852,7 @@ the <a class="reference internal" href="#mdbapi.stream.StreamingThread" title="m
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mdbapi.stream.StreamManager.PlayNextSong">
 <code class="sig-name descname">PlayNextSong</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.PlayNextSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.PlayNextSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function triggers the Streaming Thread to play the next song in the queue.</p>
@@ -902,9 +863,9 @@ the <a class="reference internal" href="#mdbapi.stream.StreamingThread" title="m
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mdbapi.stream.StreamManager.PushCommand">
-<code class="sig-name descname">PushCommand</code><span class="sig-paren">(</span><em class="sig-param">command</em>, <em class="sig-param">argument=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.PushCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.PushCommand" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">PushCommand</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">command</span></em>, <em class="sig-param"><span class="n">argument</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.PushCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.PushCommand" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class internal interface to the <a class="reference internal" href="#command-queue">Command Queue</a> used to communicate with the <a class="reference internal" href="#mdbapi.stream.StreamingThread" title="mdbapi.stream.StreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamingThread()</span></code></a>.
 You should not access the queue directly, because the Streaming Thread expects valid data inside the queue.
 This is guaranteed by the methods that use this method.</p>
@@ -921,9 +882,9 @@ This is guaranteed by the methods that use this method.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mdbapi.stream.StreamManager.RegisterCallback">
-<code class="sig-name descname">RegisterCallback</code><span class="sig-paren">(</span><em class="sig-param">function</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.RegisterCallback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.RegisterCallback" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RegisterCallback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">function</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.RegisterCallback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.RegisterCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a callback function that reacts on Streaming related events.
 For more details see the module description at the top of this document.</p>
 <dl class="field-list simple">
@@ -936,9 +897,9 @@ For more details see the module description at the top of this document.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="mdbapi.stream.StreamManager.RemoveCallback">
-<code class="sig-name descname">RemoveCallback</code><span class="sig-paren">(</span><em class="sig-param">function</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.RemoveCallback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.RemoveCallback" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RemoveCallback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">function</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/stream.html#StreamManager.RemoveCallback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.stream.StreamManager.RemoveCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a function from the list of callback functions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -968,7 +929,7 @@ For more details see the module description at the top of this document.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
 
     </p>
   </div>
@@ -990,7 +951,7 @@ For more details see the module description at the top of this document.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'5.2.0',
+            VERSION:'6.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
