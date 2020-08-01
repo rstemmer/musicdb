@@ -273,14 +273,18 @@ Every help is welcome.
 
 # Roadmap
 
+*MusicDB* is under active development.
+Beside maintaining this software, I also think about improving it or adding new features if necessary.
+The following list contains all huge improvements I'm planning to add to MusicDB.
+
 * Integrate music videos into the MusicDB infrastructure. The UI should be switch to video-mode. Then, instead of showing artists and their albums, artists and their videos will be shown. The videos can then be put into a video-queue that get streamed.
   * A first prototype exists in the *feature-video* branch.
   * Development progress can be seen on the corresponding GitHub Project page.
 
 
-* Next generation of *MusicAI*. I already miss the old one that was surprisingly helpful tagging songs. The next generation might be based on TensorFlow 2.0 directly. I will have the same or similar architecture since it worked in the past.
+* Next generation of *MusicAI*. I already miss the old one that was surprisingly helpful tagging songs. The next generation might base on TensorFlow 2.0 directly. I will have the same or similar architecture since it worked in the past.
 
-* New Frontend. Early ideas are around WebAssembly based technology or a native client.
+* New Frontend. Early ideas are around WebAssembly based technology or a native client. Even with a native client the WebUI still needs to be updated. The code base is very ugly and the used coding strategy does not fit to the complexity of the application and abilities of JavaScript.
 
 The following subsections cover more information regarding releases and branches.
 
