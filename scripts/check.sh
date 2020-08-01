@@ -51,10 +51,10 @@ CheckBinaryExistence "ffmpeg"
 CheckBinaryExistence "apachectl" opt    # other servers are also possible
 CheckBinaryExistence "openssl"
 CheckBinaryExistence "sqlite3"
-CheckBinaryExistence "rsync" opt    # for source update
+CheckBinaryExistence "rsync"        # for source update
 CheckBinaryExistence "latex" opt    # for documentation
 CheckBinaryExistence "jsdoc" opt    # for documentation
-CheckBinaryExistence "dialog" opt   # for installation script
+CheckBinaryExistence "dialog"       # for installation script
 
 echo -e "\e[1;34mChecking python modules …"
 CheckPythonModuleExistence "gi"
