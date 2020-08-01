@@ -1,5 +1,4 @@
-![MusicDB Logo](https://rstemmer.github.io/musicdb/landingpage/img/logo.png)
-![Example output](graphics/MusicDB/mdblogo.png?raw=true)
+![MusicDB Logo](graphics/MusicDB/mdblogo.png?raw=true)
 
 # MusicDB
 
