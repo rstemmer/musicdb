@@ -130,7 +130,41 @@ The `install.sh` script checks for tools needed to install MusicDB.
 Furthermore `check.sh` list all tools and Python modules needed by MusicDB.
 You can run the check-script at any time. 
 
+The following dependencies are required
+
+* Python 3.5+ and the following modules:
+  * gi
+  * sqlite3
+  * configparser
+  * json
+  * csv
+  * hashlib
+  * mutangenx
+  * Levenshtein
+  * fuzzywuzzy
+  * unicodedata
+  * asyncio
+  * autobahn (asyncio websocket)
+  * PIL
+  * tqdm
+* clang
+* IceCast 2
+* GStreamer
+  * good plugins
+  * bad pligins
+* sqlite3
+* ffmpeg
+* openssl
+* rsync
+* dialog
+
+
 Execute `pip install -r requirements.txt` to install a basic set of Python modules needed for MusicDB.
+I recommend to try to get the modules from the distributions package manager.
+
+You should use the latest versions of these dependencies and update them regularly.
+When MusicDB breaks because of an updated dependency create a ticket.
+I then will fix MusicDB as soon as possible.
 
 
 ## Download
