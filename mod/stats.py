@@ -42,25 +42,14 @@ class stats(MDBModule):
 
     def CountOrigin(self, albums):
         counter = {}
-        counter["iTunes"]   = 0
-        counter["CD"]       = 0
-        counter["internet"] = 0
-        counter["music163"] = 0
-        counter["bandcamp"] = 0
 
         for album in albums:
-            if album["origin"] == "iTunes":
-                counter["iTunes"] += 1
-            elif album["origin"] == "CD":
-                counter["CD"] += 1
-            elif album["origin"] == "internet":
-                counter["internet"] += 1
-            elif album["origin"] == "music163":
-                counter["music163"] += 1
-            elif album["origin"] == "bandcamp":
-                counter["bandcamp"] += 1
-            else:
-                print("\033[1;31mERROR: Invalid origin for album %s: %s\033[0m" % (album["name"], album["origin"]))
+            origin = album["origin"]
+
+            if not origin in counter:
+                counter[origin] = 0
+
+            counter[origin] += 1
 
         return counter
 

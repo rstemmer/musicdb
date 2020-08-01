@@ -49,6 +49,7 @@ Run  git log --oneline  for more details
 │ * [install-scripts] Select correct music owner
 │ * [install-scripts] Create music directory when it does not exists
 │ * [upgrade] Upgrade CLI-Module does not load and use MusicDatabase (Fixes version conflicts)
+│ * [font] Source Sans Pro has an issue with different sizes for smileys. I switched to DejaVuSans for mood-tags.
 └───────────────────────────────────────╌╌
 
 

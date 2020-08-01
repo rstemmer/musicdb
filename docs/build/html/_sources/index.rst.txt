@@ -6,7 +6,7 @@
 Welcome to MusicDB's documentation!
 ===================================
 
-.. figure:: ../../webui/pics/TouchIcon.png
+.. figure:: ./images/mdblogo.png
    :align: left
 
 **MusicDB** is a music manager, server and player that focus on music, not the software itself.
