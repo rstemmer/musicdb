@@ -129,33 +129,7 @@ The `install.sh` script checks for tools needed to install MusicDB.
 Furthermore `check.sh` list all tools and Python modules needed by MusicDB.
 You can run the check-script at any time. 
 
-The following dependencies are required
-
-* Python 3.5+ and the following modules:
-  * gi
-  * sqlite3
-  * configparser
-  * json
-  * csv
-  * hashlib
-  * mutangenx
-  * Levenshtein
-  * fuzzywuzzy
-  * unicodedata
-  * asyncio
-  * autobahn (asyncio websocket)
-  * PIL
-  * tqdm
-* clang
-* IceCast 2
-* GStreamer
-  * good plugins
-  * bad pligins
-* sqlite3
-* ffmpeg
-* openssl
-* rsync
-* dialog
+A detailed list can be found on [:notebook: How to Install MusicDB](https://rstemmer.github.io/musicdb/build/html/usage/install.html) in the documentation.
 
 
 Execute `pip install -r requirements.txt` to install a basic set of Python modules needed for MusicDB.
@@ -166,6 +140,44 @@ When MusicDB breaks because of an updated dependency create a ticket.
 I then will fix MusicDB as soon as possible.
 
 
+## Installation and Update
+
+To install MusicDB, read [:notebook: How to Install MusicDB](https://rstemmer.github.io/musicdb/build/html/usage/install.html) in the documentation.
+
+For updating, you can do one of the following steps.
+Read the *Important News* for manual steps to do before updating to a new major release.
+Only execute the scripts as root, that are followed by the comment "as root"!
+
+### Update to a New Minor Version
+
+``` bash
+git checkout master # Only install from master branch!
+git pull
+
+cd scripts
+./update.sh # as root
+```
+
+### Update to a New Major Version
+
+For major upgrades there exists two strategies.
+Strategy 1 is recommended.
+
+``` bash
+git checkout master # Only install from master branch!
+git pull
+
+cd scripts
+
+# Statgey 1
+./update.sh --major # as root
+
+# Statrgy 2
+./install.sh        # as root
+musicdb upgrade
+```
+
+
 ## Download
 
 To get the latest version of MusicDB, clone this repository.
@@ -174,17 +186,6 @@ The *master* branch can be considered stable.
 ```sh
 git clone https://github.com/rstemmer/musicdb.git
 ```
-
-
-## Installation and Update
-
-To install MusicDB, read [:notebook: How to Install MusicDB](https://rstemmer.github.io/musicdb/build/html/usage/install.html) in the documentation.
-
-For updating, you can also execute `cd scripts && ./install.sh && musicdb upgrade`.
-Read the *Important News* for manual steps to do before updating to a new major release.
-
-Updating to the next minor version can be done by simply executing `git pull && cd scripts && ./update.sh` (Be sure you are on the master branch).
-
 
 ## Usage
 
