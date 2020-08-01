@@ -278,7 +278,7 @@ The following list contains all huge improvements I'm planning to add to MusicDB
 
 * Integrate music videos into the MusicDB infrastructure. The UI should be switch to video-mode. Then, instead of showing artists and their albums, artists and their videos will be shown. The videos can then be put into a video-queue that get streamed.
   * A first prototype exists in the *feature-video* branch.
-  * Development progress can be seen on the corresponding GitHub Project page.
+  * Development progress can be seen on the [corresponding GitHub Project page](https://github.com/rstemmer/musicdb/projects/1).
 
 
 * Next generation of *MusicAI*. I already miss the old one that was surprisingly helpful tagging songs. The next generation might base on TensorFlow 2.0 directly. I will have the same or similar architecture since it worked in the past.
