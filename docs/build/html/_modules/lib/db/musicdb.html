@@ -220,14 +220,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#additional-steps-for-ubuntu">Additional Steps for Ubuntu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#install-all-dependencies">Install all Dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#configureing-musicdb">Configureing MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#configuring-musicdb">Configuring MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#configuring-musicdb-webui">Configuring MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#id1">Configuring MusicDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#update">Update</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#installation-manually">Installation (Manually)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#system-preparation">System Preparation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#id2">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#libprinthex">libprinthex</a></li>
@@ -235,9 +243,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#first-run">First Run</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#update">Update</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage/music.html">Music</a><ul>
@@ -631,7 +636,7 @@
             
   <h1>Source code for lib.db.musicdb</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017, 2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2017-2020  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -1086,8 +1091,8 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unable to read version number from Music Database&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Unexpected version number of Music Database. Got </span><span class="si">%i</span><span class="s2">, expected </span><span class="si">%i</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unexpected version number of Music Database. Got </span><span class="si">%i</span><span class="s2">, expected </span><span class="si">%i</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Unexpected version number of Music Database. Got </span><span class="si">%i</span><span class="s2">, expected </span><span class="si">%i</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unexpected version number of Music Database. Got </span><span class="si">%i</span><span class="s2">, expected </span><span class="si">%i</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
         
 
     <span class="k">def</span> <span class="nf">__ArtistEntryToDict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
