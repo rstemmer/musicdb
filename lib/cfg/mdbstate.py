@@ -55,6 +55,8 @@ class MDBState(Config, object):
         +------------------------+-------------------------+-------------------------+
         | songblacklist.csv      | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |
         +------------------------+-------------------------+-------------------------+
+        | videoblacklist.csv     | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |
+        +------------------------+-------------------------+-------------------------+
 
     Additional this class allows to access the file ``state.ini`` in the MusicDB State Directory.
     The file can be accessed via :meth:`~lib.cfg.config.Config.Set` and :meth:`~lib.cfg.config.Config.Get`.
@@ -260,10 +262,10 @@ class MDBState(Config, object):
     def __LoadBlacklist(self, filename, idname, length):
         # filename: artistblacklist
         # idname:   ArtistID
-        if filename not in ["artistblacklist","albumblacklist","songblacklist"]:
-            raise ValueError("filename must be \"artistblacklist\", \"albumblacklist\" or \"songblacklist\"")
-        if idname not in ["ArtistID","AlbumID","SongID"]:
-            raise ValueError("idname must be \"ArtistID\", \"AlbumID\" or \"SongID\"")
+        if filename not in ["artistblacklist","albumblacklist","songblacklist","videoblacklist"]:
+            raise ValueError("filename must be \"artistblacklist\", \"albumblacklist\" or \"songblacklist\", \"videoblacklist\"")
+        if idname not in ["ArtistID","AlbumID","SongID","VideoID"]:
+            raise ValueError("idname must be \"ArtistID\", \"AlbumID\" or \"SongID\". \"VideoID\"")
 
         rows      = self.ReadList(filename)
         rows      = rows[:length]   # Do not process more entries than necessary
@@ -297,15 +299,17 @@ class MDBState(Config, object):
     
         return blacklist
 
-    def LoadBlacklists(self, songbllen, albumbllen, artistbllen):
+    def LoadBlacklists(self, songbllen, albumbllen, artistbllen, videobllen):
         """
-        This method returns a dictionary with the blacklist managed by :class:`mdbapi.randy.Randy`.
+        This method returns a dictionary with the blacklist used by :class:`mdbapi.randy.Randy`.
+        The blacklists are managed by the :class:`~mdbapi.blacklist.BlacklistInterface` class.
         This method also handles the blacklist length by adding empty entries or cutting off exceeding ones.
 
         Args:
             songbllen (int): Number of entries the blacklist shall have
             albumbllen (int): Number of entries the blacklist shall have
             artistbllen (int): Number of entries the blacklist shall have
+            videobllen (int): Number of entries the blacklist shall have
 
         Returns:
             A dictionary with the blacklists as expected by :class:`mdbapi.randy.Randy`
@@ -315,15 +319,16 @@ class MDBState(Config, object):
         blacklists["artists"] = self.__LoadBlacklist("artistblacklist", "ArtistID", artistbllen)
         blacklists["albums"]  = self.__LoadBlacklist("albumblacklist",  "AlbumID",  albumbllen)
         blacklists["songs"]   = self.__LoadBlacklist("songblacklist",   "SongID",   songbllen)
+        blacklists["videos"]  = self.__LoadBlacklist("videoblacklist",  "VideoID",  videobllen)
         return blacklists
 
 
 
     def __SaveBlacklist(self, blacklist, filename, idname):
-        if filename not in ["artistblacklist","albumblacklist","songblacklist"]:
-            raise ValueError("filename must be \"artistblacklist\", \"albumblacklist\" or \"songblacklist\"")
-        if idname not in ["ArtistID","AlbumID","SongID"]:
-            raise ValueError("idname must be \"ArtistID\", \"AlbumID\" or \"SongID\"")
+        if filename not in ["artistblacklist","albumblacklist","songblacklist","videoblacklist"]:
+            raise ValueError("filename must be \"artistblacklist\", \"albumblacklist\" or \"songblacklist\", \"videoblacklist\"")
+        if idname not in ["ArtistID","AlbumID","SongID","VideoID"]:
+            raise ValueError("idname must be \"ArtistID\", \"AlbumID\" or \"SongID\", \"VideoID\"")
 
         rows = []
         for entry in blacklist:
@@ -341,7 +346,7 @@ class MDBState(Config, object):
     def SaveBlacklists(self, blacklists):
         """
         This method stores the blacklist in the related CSV files.
-        The data structure of the dictionary is expected to be the same, :class:`mdbapi.randy.Randy` uses.
+        The data structure of the dictionary is expected to be the same, :class:`mdbapi.blacklist.BlacklistInterface` uses.
 
         Args:
             blacklist (dict): A dictionary of blacklists.
@@ -352,6 +357,7 @@ class MDBState(Config, object):
         self.__SaveBlacklist(blacklists["songs"],   "songblacklist",   "SongID")
         self.__SaveBlacklist(blacklists["albums"],  "albumblacklist",  "AlbumID")
         self.__SaveBlacklist(blacklists["artists"], "artistblacklist", "ArtistID")
+        self.__SaveBlacklist(blacklists["videos"],  "videoblacklist",  "VideoID")
         return
 
 

@@ -61,7 +61,7 @@ Blacklist Stage
 ^^^^^^^^^^^^^^^
 
 The selected song from the first stage now gets compared to the blacklists via 
-:meth:`mdbapi.blacklist.BlacklistInterface.CheckAllLists` or
+:meth:`mdbapi.blacklist.BlacklistInterface.CheckAllListsForSong` or
 :meth:`mdbapi.blacklist.BlacklistInterface.CheckSongList`.
 If the song, or its album or artist, is listed in one of blacklist, 
 then the song, a song from the same album or from the same artist was played recently.
@@ -173,7 +173,7 @@ class Randy(object):
 
 
             # STAGE 2: Make randomness feeling random by checking if the song/album/artist was recently played
-            if self.blacklist.CheckAllLists(song):
+            if self.blacklist.CheckAllListsForSong(song):
                 song = None
                 continue
 

@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2010-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,23 +14,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-The *randy* module provides a way to select random songs that can be put into the Song Queue.
-The selection of random songs follows certain constraints.
-
-The *blacklist* module provides an interface to the blacklists of artist, albums and songs
+The *blacklist* module provides an interface to the blacklists of artist, albums, songs and videos
 that shall not be played for a certain (configured) time.
 
 
 Blacklist
 ---------
 
-There are three FIFO organized blacklists: For songs, albums and artists.
-Each blacklist holds the IDs of the last played songs, albums and artists.
+There are four FIFO organized blacklists: For videos, songs, albums and artists.
+Each blacklist holds the IDs of the last played videos, songs, albums and artists.
 
-If a user adds a song into the Queue, this song must be added manually by calling the :meth:`~mdbapi.blacklist.BlacklistInterface.AddSong` method.
-This must also be done if the song got selected by :class:`~mdbapi.randy.Randy`.
+If a user adds music into the Song-Queue or Video-Queue, this song or video
+must be added manually by calling the :meth:`~mdbapi.blacklist.BlacklistInterface.AddSong` or
+:meth:`~mdbapi.blacklist.BlacklistInterface.AddVideo` method.
+This must also be done if the song or video got selected by :class:`~mdbapi.randy.Randy`.
 
-Once a song got added to the blacklist, it remains even if the song got removed from the queue.
+Once music got added to the blacklist, it remains even if the song or video got removed from the queue.
 
 The length of those blacklist can be configured in the MusicDB Configuration:
 
@@ -40,15 +39,16 @@ The length of those blacklist can be configured in the MusicDB Configuration:
             songbllen=50
             albumbllen=20
             artistbllen=10
+            videobllen=10
 
 For small music collections, the lengths should not exceed the possibility to provide individual data.
 For medium collections and above, the default values as shown in the example are good.
 When set to ``0``, the blacklist for the songs, albums or artists will be disabled.
 
-The blacklists get maintained by the :class:`~Randy` class.
-Each instance of this class accesses the same global blacklist.
+The blacklists get maintained by the :class:`~mdbapi.songqueue.SongQueue` and :class:`~mdbapi.videoqueue.VideoQueue` classes.
+Each instance of this class accesses the same global blacklists.
 
-The blacklist is implemented as a dictionary with the keys ``"songs"``, ``"albums"`` and ``"artists"``.
+The blacklist is implemented as a dictionary with the keys ``"videos"``, ``"songs"``, ``"albums"`` and ``"artists"``.
 Their values are lists of dictionaries.
 The key of the dictionary are:
 
@@ -99,6 +99,7 @@ class BlacklistInterface(object):
         self.songbllen   = self.cfg.randy.songbllen
         self.albumbllen  = self.cfg.randy.albumbllen
         self.artistbllen = self.cfg.randy.artistbllen
+        self.videobllen  = self.cfg.randy.videobllen
 
         # Check blacklist and create new one if there is none yet
         global Blacklist
@@ -107,7 +108,7 @@ class BlacklistInterface(object):
         with BlacklistLock:
             if not Blacklist:
                 # try to load the blacklist from MusicDB State
-                Blacklist = self.mdbstate.LoadBlacklists(self.songbllen, self.albumbllen, self.artistbllen)
+                Blacklist = self.mdbstate.LoadBlacklists(self.songbllen, self.albumbllen, self.artistbllen, self.videobllen)
 
 
 
@@ -124,10 +125,10 @@ class BlacklistInterface(object):
             *Nothing*
 
         Raises:
-            ValueError: When blacklistname is not ``"songs"``, ``"albums"`` or ``"artists"``
+            ValueError: When blacklistname is not ``"video"``, ``"songs"``, ``"albums"`` or ``"artists"``
         """
-        if blacklistname not in ["songs", "albums", "artists"]:
-            raise ValueError("blacklistname must be \"songs\", \"albums\" or \"artists\"!")
+        if blacklistname not in ["songs", "albums", "artists", "video"]:
+            raise ValueError("blacklistname must be \"video\", \"songs\", \"albums\" or \"artists\"!")
 
         timelimit = time.time() - self.cfg.randy.maxblage*60*60;
 
@@ -171,10 +172,10 @@ class BlacklistInterface(object):
             A list of valid IDs as integers.
 
         Raises:
-            ValueError: When blacklistname is not ``"songs"``, ``"albums"`` or ``"artists"``
+            ValueError: When blacklistname is not ``"video"``, ``"songs"``, ``"albums"`` or ``"artists"``
         """
-        if blacklistname not in ["songs", "albums", "artists"]:
-            raise ValueError("blacklistname must be \"songs\", \"albums\" or \"artists\"!")
+        if blacklistname not in ["songs", "albums", "artists", "video"]:
+            raise ValueError("blacklistname must be \"video\", \"songs\", \"albums\" or \"artists\"!")
 
         global BlacklistLock
         global Blacklist
@@ -188,7 +189,7 @@ class BlacklistInterface(object):
 
     def GetValidIDsFromBlacklists(self):
         """
-        Returns all Song, Album and Artist IDs from the blacklist.
+        Returns all Video, Song, Album and Artist IDs from the blacklist.
         The IDs are separated into three lists.
         This method checks the time stamp and removes all IDs that are older than configured.
 
@@ -198,25 +199,28 @@ class BlacklistInterface(object):
             #. :meth:`~mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist`
 
         Returns:
-            A tupel ``(SongIDs, AlbumIDs, ArtistIDs)`` of lists of IDs that are temporal still valid.
+            A tupel ``(VideoIDs, SongIDs, AlbumIDs, ArtistIDs)`` of lists of IDs that are temporal still valid.
         """
+        videoids  = []
         songids   = []
         albumids  = []
         artistids = []
 
+        self.ValidateBlacklist("videos")
         self.ValidateBlacklist("songs")
         self.ValidateBlacklist("albums")
         self.ValidateBlacklist("artists")
 
+        videoids  = self.GetIDsFromBlacklist("videos")
         songids   = self.GetIDsFromBlacklist("songs")
         albumids  = self.GetIDsFromBlacklist("albums")
         artistids = self.GetIDsFromBlacklist("artists")
 
-        return (songids, albumids, artistids)
+        return (videoids, songids, albumids, artistids)
 
 
 
-    def CheckAllLists(self, song):
+    def CheckAllListsForSong(self, song):
         """
         This method checks if a song, its album or artist is on one of the blacklists.
         If it is so, the method returns ``True``.
@@ -241,7 +245,7 @@ class BlacklistInterface(object):
         elif type(song) != dict:
             raise TypeError("song argument must be of type dict or a song ID (int). Actual type was %s!"%(str(type(song))))
 
-        songbl, albumbl, artistbl = self.GetValidIDsFromBlacklists()
+        videobl, songbl, albumbl, artistbl = self.GetValidIDsFromBlacklists()
 
         if self.artistbllen > 0 and song["artistid"] in artistbl:
             logging.debug("artist on blacklist")
@@ -280,7 +284,7 @@ class BlacklistInterface(object):
         elif type(song) != dict:
             raise TypeError("song argument must be of type dict or a song ID (int). Actual type was %s!"%(str(type(song))))
 
-        songbl, albumbl, artistbl = self.GetValidIDsFromBlacklists()
+        videobl, songbl, albumbl, artistbl = self.GetValidIDsFromBlacklists()
 
         if self.songbllen > 0 and song["id"] in songbl:
             logging.debug("song on blacklist")
@@ -349,8 +353,54 @@ class BlacklistInterface(object):
             self.mdbstate.SaveBlacklists(Blacklist)
 
 
-    def AddVideo(self, videoid):
-        raise NotImplementedError()
+    def AddVideo(self, video):
+        """
+        This method pushes a video onto the video blacklist.
+        If the video is ``None`` nothing happens.
+
+        .. note::
+
+            The video associated album and artist get not pushed on the album or artist blacklist.
+
+        This method should be the only place where the blacklist gets changed.
+        After adding a video, the lists get stored in the MusicDB State Directory to be persistent
+        
+        If the length of the blacklist exceeds its limit, the oldest entry gets dropped.
+
+        Args:
+            video (dict/int): A video from the :class:`~lib.db.musicdb.MusicDatabase` or the video ID
+
+        Returns:
+            *Nothing*
+
+        Raises:
+            TypeError: When ``video`` is not of type ``dict`` or ``int``
+        """
+        if not video:
+            return
+
+        if type(video) is int:
+            video = self.db.GetVideoById(video)
+        elif type(video) is not dict:
+            raise TypeError("video argument must be of type dict or a video ID (int). Actual type was %s!"%(str(type(video))))
+
+        global BlacklistLock
+        global Blacklist
+
+        logging.debug("Setting video \"%s\" onto the blacklist.", video["path"])
+        with BlacklistLock:
+            if self.videobllen > 0:
+                entry = {}
+                entry["timestamp"] = int(time.time())
+                entry["id"]        = video["id"]
+                Blacklist["videos"].pop(0)
+                Blacklist["videos"].append(entry)
+
+            # Remove outdated entries before saving
+            self.ValidateBlacklist("videos")
+
+            # Save blacklists to files 
+            self.mdbstate.SaveBlacklists(Blacklist)
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

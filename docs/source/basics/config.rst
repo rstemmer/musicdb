@@ -197,6 +197,9 @@ albumbllen (number ∈ ℕ):
 artistbllen (number ∈ ℕ):
    Blacklist length for artists (``0`` to disable the blacklist)
 
+videobllen (number ∈ ℕ):
+   Blacklist length for videos (``0`` to disable the blacklist)
+
 maxblage (time in hours as integer):
    The highest age an entry in one of the three blacklist can have until it gets automatically removed.
 
