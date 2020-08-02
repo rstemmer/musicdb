@@ -21,8 +21,8 @@ function CreateVideoTile(MDBVideo, MDBAlbum, MDBArtist, topbuttonbox, bottombutt
     let html        = "";
     let imgpath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile, "50×50");
     let anipath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.previewfile,   "50×50");
-    let songname    = MDBVideo.name.replace(" - ", " – ");
-    let songid      = MDBVideo.id;
+    let videoname   = MDBVideo.name.replace(" - ", " – ");
+    let videoid     = MDBVideo.id;
     let artistname  = MDBArtist.name;
     let artistid    = MDBArtist.id;
     let videorelease= MDBVideo.release;
@@ -31,8 +31,8 @@ function CreateVideoTile(MDBVideo, MDBAlbum, MDBArtist, topbuttonbox, bottombutt
     html += "<div class=\"ST_tile\">"; // main box
 
     // Artwork
-    html += "<div class=\"ST_artworkbox\">";
-        html += "<img class=\"ST_artwork\" ";
+    html += "<div class=\"VT_videocover\" data-size=\"small\">";
+        html += "<img class=\"\" ";
         html += " src=\"" + imgpath + "\" ";
         html += " onmouseover=\"this.src=\'"+anipath+"\'\"";
         html += " onmouseout =\"this.src=\'"+imgpath+"\'\"";
@@ -59,7 +59,7 @@ function CreateVideoTile(MDBVideo, MDBAlbum, MDBArtist, topbuttonbox, bottombutt
         html += " class=\"ST_artistname hlcolor\">";
         html += artistname;
         html += "</span>";
-
+        html += "</div>";
     html += "</div>";
     html += "</div>";
 

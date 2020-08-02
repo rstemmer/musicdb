@@ -50,6 +50,7 @@ Videos
 ^^^^^^
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideos`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideo`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddVideoToQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveVideoFromQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveVideoInQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateVideoStatistic`
@@ -60,6 +61,7 @@ Queue
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddVideoToQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveVideoFromQueue`
@@ -294,6 +296,8 @@ class MusicDBWebSocketInterface(object):
             fncname= "GetVideo"
         elif fncname == "AddSongToQueue":
             retval = self.AddSongToQueue(args["songid"], args["position"])
+        elif fncname == "AddVideoToQueue":
+            retval = self.AddVideoToQueue(args["videoid"], args["position"])
         elif fncname == "AddAlbumToQueue":
             retval = self.AddAlbumToQueue(args["albumid"])
         elif fncname == "AddRandomSongToQueue":
@@ -303,6 +307,8 @@ class MusicDBWebSocketInterface(object):
                 retval = self.AddRandomSongToQueue(args["position"])
         elif fncname == "MoveSongInQueue":
             retval = self.MoveSongInQueue(args["entryid"], args["afterid"])
+        elif fncname == "MoveVideoInQueue":
+            retval = self.MoveVideoInQueue(args["entryid"], args["afterid"])
         elif fncname == "RemoveSongFromQueue":
             retval = self.RemoveSongFromQueue(args["entryid"])
         elif fncname == "RemoveVideoFromQueue":
@@ -1597,6 +1603,43 @@ class MusicDBWebSocketInterface(object):
         if albumid != None:
             albumid = int(albumid)
         self.songqueue.AddRandomSong(position, albumid)
+        return None
+
+
+    def AddVideoToQueue(self, videoid, position):
+        """
+        This method adds a new video to the queue of videos that will be played.
+
+        The video gets address by its ID.
+        The position can be ``"next"`` if the video shall be places behind the current playing video.
+        So, the new added video will be played next.
+        Alternative ``"last"`` can be used to place the video at the end of the queue.
+
+        Args:
+            videoid (int): ID of the video that shall be added
+            position (str): ``"next"`` or ``"last"`` - Determines where the video gets added
+
+        Returns:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("AddVideoToQueue", {videoid:1000, position:"last"});
+
+        """
+        # Check if the video ID is valid
+        video = self.database.GetVideoById(videoid)
+        if not video:
+            logging.warning("Invalid video ID: %s! \033[1;30m(ignoring AddVideoToQueue command)", str(videoid))
+            return None
+
+        if position not in ["next", "last"]:
+            logging.warning("Position must have the value \"next\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
+            return None
+
+        # Add video to the queue and update statistics
+        self.videoqueue.AddVideo(videoid, position)
         return None
 
 

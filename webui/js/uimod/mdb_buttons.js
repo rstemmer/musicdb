@@ -39,6 +39,23 @@ function Button_AddSongToQueue(songid)
     return html;
 }
 
+function Button_AddVideoToQueue(videoid)
+{
+    let html = "";
+    html += "<div class=\"BTN_box\">";
+    
+    html += BTN_CreateIconButton(
+        "<i class=\"fa fa-plus-circle\" title=\"Add this video to the queue\"></i>",
+        "MusicDB_Call(\'AddVideoToQueue\', {videoid:"+videoid+", position:\'last\'});");
+    html += BTN_CreateSeparator();
+    html += BTN_CreateIconButton(
+        "<i class=\"fa fa-play-circle\" title=\"Play this video next\"></i>",
+        "MusicDB_Call(\'AddVideoToQueue\', {videoid:"+videoid+", position:\'next\'});");
+
+    html += "</div>";
+    return html;
+}
+
 function Button_AddRandomSongToQueue()
 {
     var html = "";
