@@ -50,6 +50,8 @@ Videos
 ^^^^^^
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideos`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideo`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveVideoFromQueue`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveVideoInQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateVideoStatistic`
 
 Queue
@@ -60,7 +62,9 @@ Queue
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveVideoFromQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveVideoInQueue`
 
 Tag related
 ^^^^^^^^^^^
@@ -301,6 +305,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.MoveSongInQueue(args["entryid"], args["afterid"])
         elif fncname == "RemoveSongFromQueue":
             retval = self.RemoveSongFromQueue(args["entryid"])
+        elif fncname == "RemoveVideoFromQueue":
+            retval = self.RemoveVideoFromQueue(args["entryid"])
         elif fncname == "CutSongRelationship":
             retval = self.CutSongRelationship(args["songid"], args["relatedsongid"])
             if method == "request":
@@ -1647,6 +1653,31 @@ class MusicDBWebSocketInterface(object):
 
         self.songqueue.RemoveSong(int(entryid))
         return None
+
+
+    def RemoveVideoFromQueue(self, entryid):
+        """
+        This method removes a video from the video queue.
+        The video gets identified by the entry ID of the queue entry.
+
+        Args:
+            entryid (str) Queue entry ID of the video
+
+        Returns:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("RemoveVideoFromQueue", {entryid:"82390194629402649"});
+
+        """
+        if type(entryid) != str:
+            logging.warning("entryid must be of type string! Actual type was %s. \033[1;30m(RemoveVideoFromQueue will be ignored)", str(type(entryid)))
+            return None
+
+        self.videoqueue.RemoveVideo(int(entryid))
+        return None
     
     
     def MoveSongInQueue(self, entryid, afterid):
@@ -1713,6 +1744,33 @@ class MusicDBWebSocketInterface(object):
             return None
 
         self.songqueue.MoveSong(int(entryid), int(afterid))
+        return None
+
+
+    def MoveVideoInQueue(self, entryid, afterid):
+        """
+        This is a direct interface to :meth:`mdbapi.videoqueue.VideoQueue.MoveVideo`.
+        It moves a video from one position in the queue to another one.
+
+        It is not allowed to move the current playing video (index 0).
+        When this is tried, nothing happens.
+
+        Args:
+            entryid (str): Position of the video
+            afterid (str): The position the video shall be moved to
+
+        Return:
+            ``None``
+
+        """
+        if type(entryid) != str:
+            logging.warning("entryid must be of type string! Actual type was %s. \033[1;30m(MoveVideoInQueue will be ignored)", str(type(entryid)))
+            return None
+        if type(afterid) != str:
+            logging.warning("afterid must be of type string! Actual type was %s. \033[1;30m(MoveVideoInQueue will be ignored)", str(type(afterid)))
+            return None
+
+        self.videoqueue.MoveVideo(int(entryid), int(afterid))
         return None
 
 

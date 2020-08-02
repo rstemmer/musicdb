@@ -93,22 +93,41 @@ function Button_ShowSettings(containerid)
     return html;
 }
 
-function Button_QueueEntryControls(songid, entryid, qposition)
+// queuetype can be "audio" or "video"
+function Button_QueueEntryControls(musicid, entryid, qposition, queuetype)
 {
-    var html = "";
+    let html = "";
+
     html += "<div class=\"BTN_box\">";
     
-    html += BTN_CreateIconButton(
-        "<i class=\"fa fa-sitemap hovpacity\" title=\"Show songs related to this song\"></i>",
-        "MusicDB_Request(\'GetSongRelationship\', \'ShowSongRelationship\', {songid:"+songid+"});");
+    if(queuetype == "audio")
+    {
+        html += BTN_CreateIconButton(
+            "<i class=\"fa fa-sitemap hovpacity\" title=\"Show songs related to this song\"></i>",
+            "MusicDB_Request(\'GetSongRelationship\', \'ShowSongRelationship\', {songid:"+musicid+"});");
+    }
+    else if(queuetype == "video")
+    {
+        // No video relations tracked yet
+    }
+
 
     // no remove button for the current song
     if(qposition > 0)
     {
         html += BTN_CreateSeparator();
-        html += BTN_CreateIconButton(
-            "<i class=\"fa fa-times-circle\" title=\"Remove this song from the queue\"></i>",
-            "MusicDB_Call(\'RemoveSongFromQueue\', {entryid:\'"+entryid+"\'});");
+        if(queuetype == "audio")
+        {
+            html += BTN_CreateIconButton(
+                "<i class=\"fa fa-times-circle\" title=\"Remove this song from the queue\"></i>",
+                "MusicDB_Call(\'RemoveSongFromQueue\', {entryid:\'"+entryid+"\'});");
+        }
+        else if(queuetype == "video")
+        {
+            html += BTN_CreateIconButton(
+                "<i class=\"fa fa-times-circle\" title=\"Remove this video from the queue\"></i>",
+                "MusicDB_Call(\'RemoveVideoFromQueue\', {entryid:\'"+entryid+"\'});");
+        }
     }
 
     html += "</div>";

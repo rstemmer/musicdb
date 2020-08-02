@@ -108,7 +108,7 @@ function _ATV_CreateArtistEntryWithVideos(MDBArtist, MDBVideoList)
     for(var i in MDBVideoList)
     {
         let MDBVideo = MDBVideoList[i].video;
-        html += CreateVideoTile(MDBVideo);
+        html += CreateSmallVideoTile(MDBVideo);
     }
     html += "</div>"; // close albumlist div
 

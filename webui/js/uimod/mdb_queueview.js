@@ -20,35 +20,52 @@
 
 function ShowQueue(parentID, MDBQueue)
 {
-    var html = "";
+    let html = "";
 
     // Reset timer
     ClearPlaytime();
 
     html += "<div id=QMainBox>"; // main box
-    for(var pos in MDBQueue)
+    for(let pos in MDBQueue)
     {
-        var entryid     = MDBQueue[pos].entryid;
-        var MDBSong     = MDBQueue[pos].song;
-        var MDBAlbum    = MDBQueue[pos].album;
-        var MDBArtist   = MDBQueue[pos].artist;
+        let entryid     = MDBQueue[pos].entryid;
+        let MDBAlbum    = MDBQueue[pos].album;
+        let MDBArtist   = MDBQueue[pos].artist;
+
+        let MDBMusic    = null;
+        let queuetype   = null;
+        if(MDBQueue[pos].song !== undefined)
+        {
+            MDBMusic  = MDBQueue[pos].song;
+            queuetype = "audio"
+        }
+        else if(MDBQueue[pos].video !== undefined)
+        {
+            MDBMusic  = MDBQueue[pos].video;
+            queuetype = "video"
+        }
+        else
+            continue;   // No song and no video? Should never happen, but who knows…
 
         // Update timer
-        AddPlaytime(MDBSong.playtime);
+        AddPlaytime(MDBMusic.playtime);
         
         // Create Entry
 
-        var buttonbox   = Button_QueueEntryControls(MDBSong.id, entryid, pos);
+        let buttonbox = Button_QueueEntryControls(MDBMusic.id, entryid, pos, queuetype);
 
         html += "<div";
         html += " id=Q_drag_" + pos;
         html += " class=\"Q_entry\"";
         html += " draggable=\"true\"";
         html += " data-pos=\""     + pos        + "\"";
-        html += " data-songid=\""  + MDBSong.id + "\"";
+        html += " data-songid=\""  + MDBMusic.id + "\"";
         html += " data-entryid=\"" + entryid    + "\"";
         html += ">";
-        html += CreateSongTile(MDBSong, MDBAlbum, MDBArtist, buttonbox)
+        if(queuetype == "audio")
+            html += CreateSongTile(MDBMusic, MDBAlbum, MDBArtist, buttonbox)
+        else if(queuetype == "video")
+            html += CreateVideoTile(MDBMusic, MDBAlbum, MDBArtist, buttonbox)
         html += "</div>";
 
         html += "<div";
@@ -66,9 +83,9 @@ function ShowQueue(parentID, MDBQueue)
     UpdateStyle();
 
 
-    // make all dropentrys usefull by adding event handler to them
-    var dropelement = ".Q_separator";
-    var dragelement = ".Q_entry";
+    // make all dropentrys useful by adding event handler to them
+    let dropelement = ".Q_separator";
+    let dragelement = ".Q_entry";
 
     $(dropelement).on("dragover", function(e){
         e.preventDefault();
@@ -86,27 +103,27 @@ function ShowQueue(parentID, MDBQueue)
         e.preventDefault();
         $(this).removeClass("Q_hldropzone");
 
-        var attrid = "#" + e.target.id;
-        var dstpos  = $(attrid).attr("data-entryid");
-        var srcpos  = e.originalEvent.dataTransfer.getData("srcpos");
-        var songid  = e.originalEvent.dataTransfer.getData("songid");
+        let attrid = "#" + e.target.id;
+        let dstpos  = $(attrid).attr("data-entryid");
+        let srcpos  = e.originalEvent.dataTransfer.getData("srcpos");
+        let videoid = e.originalEvent.dataTransfer.getData("videoid");
 
-        MusicDB_Call("MoveSongInQueue", {entryid:srcpos, afterid:dstpos});
+        MusicDB_Call("MoveVideoInQueue", {entryid:srcpos, afterid:dstpos});
     });
 
     // the entries itself need some DnD-handler too
     $(dragelement).on("dragstart", function(e){
         e.target.style.opacity = "0.5";
 
-        // get data needed vor queue-move and set it as dataTransfer
-        var attrid = "#" + e.originalEvent.originalTarget.id;
+        // get data needed for queue-move and set it as dataTransfer
+        let attrid = "#" + e.originalEvent.originalTarget.id;
 
-        var entryid = $(attrid).attr("data-entryid");
-        var songid  = $(attrid).attr("data-songid");
+        let entryid = $(attrid).attr("data-entryid");
+        let videoid = $(attrid).attr("data-videoid");
 
         // Set data that will be transferred (mandatory to make DnD work)
         e.originalEvent.dataTransfer.setData("srcpos", entryid);
-        e.originalEvent.dataTransfer.setData("songid", songid);
+        e.originalEvent.dataTransfer.setData("videoid", videoid);
     });
     $(dragelement).on("dragend", function(e){
         e.target.style.opacity = "1.0";
