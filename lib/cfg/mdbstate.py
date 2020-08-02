@@ -47,6 +47,8 @@ class MDBState(Config, object):
         +========================+=========================+=========================+
         | songqueue.csv          | :meth:`~LoadSongQueue`  | :meth:`~SaveSongQueue`  |
         +------------------------+-------------------------+-------------------------+
+        | videoqueue.csv         | :meth:`~LoadVideoQueue` | :meth:`~SaveVideoQueue` |
+        +------------------------+-------------------------+-------------------------+
         | artistblacklist.csv    | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |
         +------------------------+-------------------------+-------------------------+
         | albumblacklist.csv     | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |
@@ -198,6 +200,60 @@ class MDBState(Config, object):
             rows.append(row)
 
         self.WriteList("songqueue", rows)
+        return
+
+
+    def LoadVideoQueue(self):
+        """
+        This method reads the video queue from the state directory.
+
+        The method returns the queue as needed inside :meth:`mdbapi.videoqueue.VideoQueue`:
+        A list of dictionaries, each containing the ``entryid`` and ``videoid`` as integers and ``israndom`` as boolean.
+
+        The UUIDs of the queue entries remain.
+
+        Returns:
+            A stored video queue
+        """
+        rows  = self.ReadList("videoqueue")
+        queue = []
+        for row in rows:
+            try:
+                entry = {}
+                entry["entryid"]  = int( row["EntryID"])
+                entry["videoid"]  = int( row["VideoID"])
+                entry["israndom"] = bool(row["IsRandom"])
+
+                queue.append(entry)
+            except Exception as e:
+                logging.warning("Invalid entry in stored Video Queue: \"%s\"! \033[1;30m(Entry will be ignored)", str(row))
+
+        return queue
+
+
+    def SaveVideoQueue(self, queue):
+        """
+        This method saves a video queue.
+        The data structure of the queue must be exact as the one expected when the queue shall be loaded.
+
+        Args:
+            queue (dictionary): The video queue to save.
+
+        Returns:
+            *Nothing*
+        """
+        # transform data to a structure that can be handled by the csv module
+        # save entry ID as string, csv cannot handle 128bit integer
+        rows = []
+        for entry in queue:
+            row = {}
+            row["EntryID"]  = str(entry["entryid"])
+            row["VideoID"]   = int(entry["videoid"])
+            row["IsRandom"] = str(entry["israndom"])
+
+            rows.append(row)
+
+        self.WriteList("videoqueue", rows)
         return
 
 
