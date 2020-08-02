@@ -303,7 +303,7 @@ class SongQueue(object):
 
         The method returns element 0 from the queue which is the current song that can be streamed or gets already streamed.
         The song shall remain in the queue until it got completely streamed.
-        Then it can be removed by calling :meth:`~mdbapi.songqueue.SongQueue.NetSong`.
+        Then it can be removed by calling :meth:`~mdbapi.songqueue.SongQueue.NextSong`.
 
         When the queue is empty, a new random song gets added.
         This is the exact same song that then will be returned by this method.
@@ -347,7 +347,7 @@ class SongQueue(object):
                 self.AddRandomSong()
                 self.Event_SongQueueChanged()
 
-            # Still empty (no random song found)? Then return (None, None). Nothing to do…
+            # Still empty (no random song found)? Then return None. Nothing to do…
             if len(Queue) == 0:
                 logging.critical("Queue run empty! \033[1;30m(Check constraints for random song selection and check if there are songs at all)")
                 return None
@@ -439,7 +439,7 @@ class SongQueue(object):
         The content of the dictionary is described in the description of this module.
 
         Returns:
-            The current song queue. ``None`` if there is no queue yet.
+            The current song queue. ``[None]`` if there is no queue yet.
 
         Example:
 
@@ -566,7 +566,7 @@ class SongQueue(object):
         Returns the song ID of the entry addressed by the entry ID
 
         Args:
-            entryid (int): ID of the entry that song ID shall be returnd
+            entryid (int): ID of the entry that song ID shall be returned
 
         Returns:
             The song ID of the entry, or ``None`` if the entry does not exists
@@ -575,7 +575,7 @@ class SongQueue(object):
             TypeError: When ``entryid`` is not of type ``int``
         """
         if type(entryid) != int:
-            raise TypeError("Song must be an integer!")
+            raise TypeError("Entry ID must be an integer!")
 
         global Queue
         global QueueLock
@@ -594,9 +594,9 @@ class SongQueue(object):
         """
         Removes the entry with the ID ``entryid`` from the queue.
         Removing the current song is not allowed!
-        Call :meth:`NextSong` instead.
+        Call :meth:`~NextSong` instead.
 
-        When there is only one entry left in the queue - the current song - then a new one gets add via :meth:`AddRandomSong`
+        When there is only one entry left in the queue - the current song - then a new one gets add via :meth:`~AddRandomSong`
 
         On success, this method triggers the ``SongQueueChanged`` event.
 
@@ -610,7 +610,7 @@ class SongQueue(object):
             TypeError: When ``entryid`` is not of type ``int``
         """
         if type(entryid) != int:
-            raise TypeError("Song must be an integer!")
+            raise TypeError("Entry ID must be an integer!")
 
         global Queue
         global QueueLock
