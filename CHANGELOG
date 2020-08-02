@@ -13,6 +13,9 @@ Run  git log --oneline  for more details
 │ + [database] musicdb database add allows adding videos to the music collection
 │ + [videoframes] musicdb videoframes is a command line module for managing video frames and previews
 │ + Lots of bug-fixes due to rewriting some code fragments to integrate video management
+│ + [Web API]
+│    - notification "MusicDB:Queue" is now called "MusicDB:SongQueue"
+│    - method "GetQueue" is now called "GetSongQueue"
 │
 ┝━ MINOR CHANGES
 └───────────────────────────────────────╌╌

@@ -234,10 +234,12 @@ function _AL_BroadcastRequestArtistlist(type)
     if(MDBMODE == "audio")
     {
         MusicDB_Broadcast("GetFilteredArtistsWithAlbums", "ShowArtists");
+        MusicDB_Broadcast("GetSongQueue",                 "ShowSongQueue");
     }
     else if(MDBMODE == "video")
     {
         MusicDB_Broadcast("GetFilteredArtistsWithVideos", "ShowArtists");
+        MusicDB_Braodcast("GetVideoQueue",                "ShowVideoQueue");
     }
 }
 function _AL_RequestArtistlist(type)
@@ -245,10 +247,12 @@ function _AL_RequestArtistlist(type)
     if(MDBMODE == "audio")
     {
         MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+        MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
     }
     else if(MDBMODE == "video")
     {
         MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+        MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
     }
 }
 

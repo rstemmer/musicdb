@@ -4,14 +4,9 @@ var currentalbumid  = null; // /
 
 function onMusicDBConnectionOpen()
 {
-    SetMusicDBOnlineState("yes", "yes"); // MDB, MPD
+    SetMusicDBOnlineState("yes", "yes"); // MusicDB, IceCast
     window.console && console.log("[MDB] Open");
-
-    MusicDB_Request("GetTags",      "UpdateTagsCache");
-    MusicDB_Request("GetStreamState",  "UpdateStreamState");
-    MusicDB_Request("GetQueue",     "ShowQueue");
-    MusicDB_Request("GetMDBState",  "UpdateMDBState");
-    MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+    MusicDB_Request("GetMDBState",  "InitializeWebUI");
 }
 function onMusicDBConnectionError()
 {
@@ -59,7 +54,18 @@ function onMusicDBNotification(fnc, sig, rawdata)
         }
         else if(sig == "onSongQueueChanged")
         {
-            MusicDB_Request("GetQueue", "ShowQueue");
+            MusicDB_Request("GetSongQueue", "ShowSongQueue");
+        }
+    }
+    else if (fnc == "MusicDB:VideoQueue")
+    {
+        if(sig == "onVideoChanged")
+        {
+            MusicDB_Request("GetStreamState", "UpdateStreamState");
+        }
+        else if(sig == "onVideoQueueChanged")
+        {
+            MusicDB_Request("GetVideoQueue", "ShowVideoQueue");
         }
     }
 }
@@ -90,7 +96,24 @@ function onMusicDBMessage(fnc, sig, args, pass)
 
 
     // Handle Messages form the server
-    if(fnc == "GetStreamState" && sig == "UpdateStreamState") {
+    if(fnc == "GetMDBState" && sig == "InitializeWebUI") {
+        MusicDB_Request("GetTags",          "UpdateTagsCache");
+        MusicDB_Request("GetStreamState",   "UpdateStreamState");
+        MusicDB_Request("GetMDBState",      "UpdateMDBState");
+
+        if(args.MusicDB.uimode == "audio")
+        {
+            MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
+            MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+        }
+        else if(args.MusicDB.uimode == "video")
+        {
+            MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
+            MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+        }
+    }
+
+    else if(fnc == "GetStreamState" && sig == "UpdateStreamState") {
         if(!args.hasqueue)
         {
             window.console && console.log("There is no queue and no current song!")
@@ -155,7 +178,10 @@ function onMusicDBMessage(fnc, sig, args, pass)
             //}
         }
     }
-    else if(fnc == "GetQueue" && sig == "ShowQueue")
+    else if(fnc == "GetSongQueue" && sig == "ShowSongQueue")
+        ShowQueue("RightContentBox", args);
+
+    else if(fnc == "GetVideoQueue" && sig == "ShowVideoQueue")
         ShowQueue("RightContentBox", args);
 
     else if(fnc == "GetAlbum" && sig == "ShowAlbum") {
@@ -173,6 +199,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
 
     else if(fnc == "GetFilteredArtistsWithAlbums" && sig == "ShowArtists")
         ShowArtists("LeftContentBox", args);
+
     else if(fnc == "GetFilteredArtistsWithVideos" && sig == "ShowArtists")
         ShowArtists("LeftContentBox", args);
 

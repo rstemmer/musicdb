@@ -54,7 +54,8 @@ Videos
 
 Queue
 ^^^^^
-* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongQueue`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue`
@@ -221,8 +222,10 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetMDBState()
         elif fncname == "GetStreamState":
             retval = self.GetStreamState()
-        elif fncname == "GetQueue":
-            retval = self.GetQueue()
+        elif fncname == "GetSongQueue":
+            retval = self.GetSongQueue()
+        elif fncname == "GetVideoQueue":
+            retval = self.GetVideoQueue()
         elif fncname == "Find":
             retval = self.Find(args["searchstring"], args["limit"])
         elif fncname == "GetSongRelationship":
@@ -1137,6 +1140,8 @@ class MusicDBWebSocketInterface(object):
                 {
                     if(fnc == "GetMDBState" && sig == "ShowMDBState")
                     {
+                        console.log(args.MusicDB.uimode);
+
                         let activetags;
                         activetags = args.albumfilter;
                         for(let genrename of activetags)
@@ -1228,7 +1233,7 @@ class MusicDBWebSocketInterface(object):
         return state
 
 
-    def GetQueue(self):
+    def GetSongQueue(self):
         """
         This method returns a list of songs, albums and artists for each song in the song queue.
         If there are no songs in the queue, an empty list gets returned.
@@ -1247,13 +1252,13 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                MusicDB_Request("GetQueue", "ShowQueue");
+                MusicDB_Request("GetSongQueue", "ShowSongQueue");
 
                 // …
 
                 function onMusicDBMessage(fnc, sig, args, pass)
                 {
-                    if(fnc == "GetQueue" && sig == "ShowQueue")
+                    if(fnc == "GetSongQueue" && sig == "ShowSongQueue")
                     {
                         for(let entry of args)
                         {
@@ -1278,6 +1283,74 @@ class MusicDBWebSocketInterface(object):
             entry["entryid"]  = str(queueentry["entryid"])
             entry["israndom"] = bool(queueentry["israndom"])
             entry["song"]     = song
+            entry["album"]    = album
+            entry["artist"]   = artist
+
+            queue.append(entry)
+
+        return queue
+
+
+    def GetVideoQueue(self):
+        """
+        This method returns a list of videos, albums and artists for each video in the video queue.
+        If there are no videos in the queue, an empty list gets returned.
+        The album or artist can be ``null`` if there is no associated to the video.
+
+        Each entry of the list contains the following information:
+
+            * **entryid:** A unique ID to identify the entry in the queue (as string because it is a 128 integer that blows JavaScripts mind)
+            * **israndom:** A boolean value set to ``true`` when the video got added randomly and not explicitly by the user
+            * **video:** The video entry from the database
+            * **album:** The related album entry from the database or ``null``.
+            * **artist:** The related artist entry from the database or ``null``.
+
+        Returns:
+            A list of video, album and artist information for each video in the video queue
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Request("GetVideoQueue", "ShowVideoQueue");
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "GetVideoQueue" && sig == "ShowVideoQueue")
+                    {
+                        for(let entry of args)
+                        {
+                            console.log(entry.video.name + " by " + entry.artist.name);
+                        }
+                    }
+                }
+        """
+        entries = self.videoqueue.GetQueue()
+
+        # return empty list if there is no queue
+        if not entries:
+            return []
+
+        queue = []
+        for queueentry in entries:
+
+            video = self.database.GetVideoById(queueentry["videoid"])
+
+            if video["albumid"] != None:
+                album  = self.database.GetAlbumById(video["albumid"])
+            else:
+                album  = None
+
+            if video["artistid"] != None:
+                artist = self.database.GetArtistById(video["artistid"])
+            else:
+                artist = None
+
+            entry = {}
+            entry["entryid"]  = str(queueentry["entryid"])
+            entry["israndom"] = bool(queueentry["israndom"])
+            entry["video"]    = video
             entry["album"]    = album
             entry["artist"]   = artist
 
