@@ -80,6 +80,42 @@ span#MDBReconnectBtn[data-online=no]
 }
 
 /******************/
+/* Mode Switch Btn*/
+/******************/
+
+span#MDBModeswitchBtn
+{
+    font-weight:    normal;
+    width:          1em;
+    text-align:     center;
+    visibility:     visible;
+
+    display:        inline-block;
+    padding-right:  5px;
+    margin-bottom:  3px;
+}
+span#MDBMode[data-mode=unknown]:after
+{
+    font-family:    FontAwesome;
+    color:          #048;
+    content:        "\f128";
+}
+span#MDBMode[data-mode=audio]:after
+{
+    content:        "A";
+    /* Variation Selector gets ignored -> No unicode possible at this place m(
+    content:        "🎧\fe0e";
+    */
+}
+span#MDBMode[data-mode=video]:after
+{
+    content:        "V";
+    /* Variation Selector gets ignored -> No unicode possible at this place m(
+    content:        "🎞\fe0e";
+    */
+}
+
+/******************/
 /* Playtime       */
 /******************/
 

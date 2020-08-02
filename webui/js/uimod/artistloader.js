@@ -25,7 +25,6 @@
 // on timeout the artist lists will be requested
 var RELOAD_INTERVAL      = 1000; //ms
 var reloadtimeouthandler = null;
-var MDBMODE = "audio";  // audio/video
 
 /*
  * This function creates the Artistloader View.
@@ -57,15 +56,6 @@ function Artistloader_Show(parentID)
     html += " onClick=\"_AL_onToggleControlButton(\'Reload\');\"";
     html += ">";
     html += "Reload";
-    html += "</div>";
-    // Mode Select
-    html += "<div";
-    html += " title=\"Switch between Audio/Video mode\"";
-    html += " id=ArtistControlButton_Mode";
-    html += " class=\"AL_controlbutton hlcolor smallfont\"";
-    html += " onClick=\"_AL_onToggleControlButton(\'Mode\');\"";
-    html += ">";
-    html += "Switch Mode";
     html += "</div>";
     html += "</div>";
     
@@ -123,13 +113,6 @@ function Artistloader_UpdateState(MDBState)
     // Update the state of each tag
     for(let genre of genres)
         _AL_SetTagState(genre.name, (filter.indexOf(genre.name) >= 0));
-
-    // Check and update UI Mode
-    if(MDBMODE != MDBState.MusicDB.uimode)
-    {
-        MDBMODE = MDBState.MusicDB.uimode;
-        _AL_RequestArtistlist();    // Reload Artist list for new Mode
-    }    
 }
 
 function _AL_SetTagState(name, state)
@@ -194,37 +177,6 @@ function _AL_onToggleControlButton(name)
         }
         _AL_BroadcastRequestArtistlist();
     }
-    else if(name == "Mode")
-    {
-        // Switch mode
-        if(MDBMODE == "audio")
-        {
-            MDBMODE = "video";
-        }
-        else
-        {
-            MDBMODE = "audio";
-        }
-
-        // Reset genre-selection timer
-        if(reloadtimeouthandler !== null)
-        {
-            clearTimeout(reloadtimeouthandler);
-            reloadtimeouthandler = null;
-        }
-
-        // Get artist list for new mode
-        _AL_RequestArtistlist();
-        // The UpdateMDBState signal make other clients to request the data by them self.
-        // So there is no need for a Broadcast-Request
-        
-        // Inform everyone about the mode change
-        // The Call will trigger a broadcast of GetMDBState
-        // By making a Request and giving a function signature the broadcast
-        // gets handled exactly like a GetMDBState request
-        MusicDB_Request("SetMDBState", "UpdateMDBState",
-            {category:"MusicDB", name:"uimode", value:MDBMODE});
-    }
 }
 
 
@@ -240,19 +192,6 @@ function _AL_BroadcastRequestArtistlist(type)
     {
         MusicDB_Broadcast("GetFilteredArtistsWithVideos", "ShowArtists");
         MusicDB_Braodcast("GetVideoQueue",                "ShowVideoQueue");
-    }
-}
-function _AL_RequestArtistlist(type)
-{
-    if(MDBMODE == "audio")
-    {
-        MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
-        MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
-    }
-    else if(MDBMODE == "video")
-    {
-        MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
-        MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
     }
 }
 

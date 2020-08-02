@@ -20,6 +20,8 @@
  *   On onTimeChanged-mpd-event set the TimePlayed. This call will also update the view
  */
 
+var MDBMODE = "audio";  // audio/video
+
 function ShowMusicDBStateView(parentID)
 {
     var html = "";
@@ -39,6 +41,21 @@ function ShowMusicDBStateView(parentID)
     html += "</span>";
     html += "<span id=MDBState class=\"onlinestate\" data-online=\"unknown\">";
     html += "MusicDB";
+    html += "</span><br>";
+
+    // Mode Select
+    html += "<span id=MDBModeswitchBtn";
+    html += " title=\"Switch between Audio/Video mode\"";
+    html += " onClick=\"ToggleMusicDBMode();\"";
+    html += ">";
+    html += "↹";
+    html += "</span>";
+    html += "<span id=MDBMode";
+    html += " class=\"onlinestate\"";
+    html += " data-mode=\"unknown\"";
+    html += " onClick=\"ToggleMusicDBMode();\"";
+    html += ">";
+    html += "Mode";
     html += "</span><br>";
 
     // Playtime
@@ -147,6 +164,64 @@ function UpdateTimeview()
     // Display time
     $('#CurrentTime').html(currenttime);
     $('#PlayTime').html(endtime);
+}
+
+
+function ToggleMusicDBMode()
+{
+    // Switch mode
+    if(MDBMODE == "audio")
+    {
+        MDBMODE = "video";
+    }
+    else
+    {
+        MDBMODE = "audio";
+    }
+
+    // Reset genre-selection timer
+    if(reloadtimeouthandler !== null)
+    {
+        clearTimeout(reloadtimeouthandler);
+        reloadtimeouthandler = null;
+    }
+
+    // Get artist list for new mode
+    _MDBState_RequrestContentUpdate();
+    // The UpdateMDBState signal make other clients to request the data by them self.
+    // So there is no need for a Broadcast-Request
+    
+    // Inform everyone about the mode change
+    // The Call will trigger a broadcast of GetMDBState
+    // By making a Request and giving a function signature the broadcast
+    // gets handled exactly like a GetMDBState request
+    MusicDB_Request("SetMDBState", "UpdateMDBState",
+        {category:"MusicDB", name:"uimode", value:MDBMODE});
+}
+
+function UpdateMusicDBMode(MDBState)
+{
+    // Check and update UI Mode
+    if(MDBMODE != MDBState.MusicDB.uimode)
+    {
+        MDBMODE = MDBState.MusicDB.uimode;
+        _MDBState_RequrestContentUpdate();    // Reload Artist list for new Mode
+    }    
+    $("#MDBMode").attr("data-mode", MDBMODE);
+}
+
+function _MDBState_RequrestContentUpdate()
+{
+    if(MDBMODE == "audio")
+    {
+        MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+        MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
+    }
+    else if(MDBMODE == "video")
+    {
+        MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+        MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
+    }
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

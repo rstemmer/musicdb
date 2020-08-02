@@ -136,6 +136,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetMDBState") {
         if(sig == "UpdateMDBState" || sig == "UpdateRelationshipGenreHighlight")
         {
+            UpdateMusicDBMode(args);
             Artistloader_UpdateState(args);
             UpdateRelationshipGenreHighlight(args);
         }
