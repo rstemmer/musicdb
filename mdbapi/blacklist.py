@@ -125,10 +125,10 @@ class BlacklistInterface(object):
             *Nothing*
 
         Raises:
-            ValueError: When blacklistname is not ``"video"``, ``"songs"``, ``"albums"`` or ``"artists"``
+            ValueError: When blacklistname is not ``"videos"``, ``"songs"``, ``"albums"`` or ``"artists"``
         """
-        if blacklistname not in ["songs", "albums", "artists", "video"]:
-            raise ValueError("blacklistname must be \"video\", \"songs\", \"albums\" or \"artists\"!")
+        if blacklistname not in ["songs", "albums", "artists", "videos"]:
+            raise ValueError("blacklistname must be \"videos\", \"songs\", \"albums\" or \"artists\"!")
 
         timelimit = time.time() - self.cfg.randy.maxblage*60*60;
 
@@ -172,10 +172,10 @@ class BlacklistInterface(object):
             A list of valid IDs as integers.
 
         Raises:
-            ValueError: When blacklistname is not ``"video"``, ``"songs"``, ``"albums"`` or ``"artists"``
+            ValueError: When blacklistname is not ``"videos"``, ``"songs"``, ``"albums"`` or ``"artists"``
         """
-        if blacklistname not in ["songs", "albums", "artists", "video"]:
-            raise ValueError("blacklistname must be \"video\", \"songs\", \"albums\" or \"artists\"!")
+        if blacklistname not in ["songs", "albums", "artists", "videos"]:
+            raise ValueError("blacklistname must be \"videos\", \"songs\", \"albums\" or \"artists\"!")
 
         global BlacklistLock
         global Blacklist
