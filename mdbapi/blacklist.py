@@ -349,6 +349,8 @@ class BlacklistInterface(object):
             self.mdbstate.SaveBlacklists(Blacklist)
 
 
+    def AddVideo(self, videoid):
+        raise NotImplementedError()
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

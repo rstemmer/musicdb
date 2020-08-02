@@ -242,6 +242,11 @@ class Randy(object):
         return song
 
 
+    def GetVideo(self):
+        raise NotImplementedError()
+
+    def GetVideoFromAlbum(self, albumid):
+        raise NotImplementedError()
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
