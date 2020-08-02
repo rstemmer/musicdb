@@ -106,6 +106,7 @@ from mdbapi.mise        import MusicDBMicroSearchEngine
 from mdbapi.tags        import MusicDBTags
 from mdbapi.stream      import StreamManager
 from mdbapi.songqueue   import SongQueue
+from mdbapi.videoqueue  import VideoQueue
 import logging
 from threading          import Thread
 import traceback
@@ -120,12 +121,14 @@ class MusicDBWebSocketInterface(object):
         self.cfg        = cfg
 
         # The autobahn framework silently hides all exceptions - that sucks
+        # So all possible exceptions must be caught here, so that they can be made visible.
         try:
             self.fs         = Filesystem(self.cfg.music.path)
             self.tags       = MusicDBTags(self.cfg, self.database)
             self.mdbstate   = MDBState(self.cfg.server.statedir, self.database)
             self.stream     = StreamManager(self.cfg, self.database)
-            self.queue      = SongQueue(self.cfg, self.database)
+            self.songqueue  = SongQueue(self.cfg, self.database)
+            self.videoqueue = VideoQueue(self.cfg, self.database)
         except Exception as e:
             logging.exception(e)
             raise e
@@ -133,13 +136,15 @@ class MusicDBWebSocketInterface(object):
 
     def onWSConnect(self):
         self.stream.RegisterCallback(self.onStreamEvent)
-        self.queue.RegisterCallback(self.onQueueEvent)
+        self.songqueue.RegisterCallback(self.onSongQueueEvent)
+        self.videoqueue.RegisterCallback(self.onVideoQueueEvent)
         return None
         
 
     def onWSDisconnect(self, wasClean, code, reason):
         self.stream.RemoveCallback(self.onStreamEvent)
-        self.queue.RemoveCallback(self.onQueueEvent)
+        self.songqueue.RemoveCallback(self.onSongQueueEvent)
+        self.videoqueue.RemoveCallback(self.onVideoQueueEvent)
         return None
 
 
@@ -155,12 +160,24 @@ class MusicDBWebSocketInterface(object):
         success = self.SendPacket(response)
         return success
 
-    def onQueueEvent(self, event, data):
+    def onSongQueueEvent(self, event, data):
         # This function is called from a different thread. Therefore NO sqlite3-access is allowed.
         # So there will be just a notification so that the clients can request related functions.
         response    = {}
         response["method"]      = "notification"
-        response["fncname"]     = "MusicDB:Queue"
+        response["fncname"]     = "MusicDB:SongQueue"
+        response["fncsig"]      = "on"+event
+        response["arguments"]   = data
+        response["pass"]        = None
+        success = self.SendPacket(response)
+        return success
+
+    def onVideoQueueEvent(self, event, data):
+        # This function is called from a different thread. Therefore NO sqlite3-access is allowed.
+        # So there will be just a notification so that the clients can request related functions.
+        response    = {}
+        response["method"]      = "notification"
+        response["fncname"]     = "MusicDB:VideoQueue"
         response["fncsig"]      = "on"+event
         response["arguments"]   = data
         response["pass"]        = None
@@ -1182,7 +1199,7 @@ class MusicDBWebSocketInterface(object):
         state = {}
 
         streamstate = self.stream.GetStreamState()
-        queueentry  = self.queue.CurrentSong()
+        queueentry  = self.songqueue.CurrentSong()
         if queueentry:
             songid  = queueentry["songid"]
         else:
@@ -1245,7 +1262,7 @@ class MusicDBWebSocketInterface(object):
                     }
                 }
         """
-        entries = self.queue.GetQueue()
+        entries = self.songqueue.GetQueue()
 
         # return empty list if there is no queue
         if not entries:
@@ -1467,7 +1484,7 @@ class MusicDBWebSocketInterface(object):
             return None
 
         # Add song to the queue and update statistics
-        self.queue.AddSong(songid, position)
+        self.songqueue.AddSong(songid, position)
         return None
 
 
@@ -1500,7 +1517,7 @@ class MusicDBWebSocketInterface(object):
 
         if albumid != None:
             albumid = int(albumid)
-        self.queue.AddRandomSong(position, albumid)
+        self.songqueue.AddRandomSong(position, albumid)
         return None
 
 
@@ -1530,7 +1547,7 @@ class MusicDBWebSocketInterface(object):
                 song = entry["song"]
                 if song["disabled"] == 1 or song["favorite"] == -1:
                     continue
-                self.queue.AddSong(song["id"])
+                self.songqueue.AddSong(song["id"])
         return None
     
         
@@ -1555,7 +1572,7 @@ class MusicDBWebSocketInterface(object):
             logging.warning("entryid must be of type string! Actual type was %s. \033[1;30m(RemoveSongFromQueue will be ignored)", str(type(entryid)))
             return None
 
-        self.queue.RemoveSong(int(entryid))
+        self.songqueue.RemoveSong(int(entryid))
         return None
     
     
@@ -1622,7 +1639,7 @@ class MusicDBWebSocketInterface(object):
             logging.warning("afterid must be of type string! Actual type was %s. \033[1;30m(MoveSongInQueue will be ignored)", str(type(afterid)))
             return None
 
-        self.queue.MoveSong(int(entryid), int(afterid))
+        self.songqueue.MoveSong(int(entryid), int(afterid))
         return None
 
 

@@ -51,7 +51,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
             MusicDB_Request("GetStreamState", "UpdateStreamState");
         }
     }
-    else if (fnc == "MusicDB:Queue")
+    else if (fnc == "MusicDB:SongQueue")
     {
         if(sig == "onSongChanged")
         {
