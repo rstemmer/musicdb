@@ -49,6 +49,23 @@ div.VT_videocover img
     height:         100%;
 }
 
+div.VT_videobuttons
+{
+    border-radius:  5px;
+    background-color: rgba(0.1, 0.1, 0.1, 0.6);
+
+    display:        flex;
+    position:       absolute;
+    margin-top:     5px;
+    z-index:        100;
+}
+div.VT_videobuttons[data-size=medium] {
+    margin-left:    100px; /*150px;*/
+}
+div.VT_videobuttons[data-size=small] {
+    margin-left:     10px; /*60px;*/
+}
+
 div.VT_videometadata
 {
     overflow:       hidden;

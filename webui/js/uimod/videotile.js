@@ -99,7 +99,7 @@ function CreateVideoTile(MDBVideo, MDBAlbum, MDBArtist, topbuttonbox, bottombutt
 
 
 
-function CreateSmallVideoTile(MDBVideo)
+function CreateSmallVideoTile(MDBVideo, buttonbox)
 {
     let html        = "";
     let imgpath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile, "150×150");
@@ -116,6 +116,16 @@ function CreateSmallVideoTile(MDBVideo)
     html += " onClick=\"" + videorequest + "\"";
     html += ">";
 
+    if(buttonbox)
+    {
+        html += "<div class=\"VT_videobuttons\" " + datawidth + ">";
+        html += "<span";
+        html += " class=\"hlcolor\">";
+        html += buttonbox;
+        html += "</span>";
+        html += "</div>";
+    }
+
     // Cover
     html += "<div title=\"Show this Video\" class=\"VT_videocover\" " + datawidth + ">";
     html += "  <img src=\"" + imgpath + "\"";
@@ -124,6 +134,7 @@ function CreateSmallVideoTile(MDBVideo)
     html += "  \">";
     html += "</div>";
 
+    // Meta Data
     html += "<div class=\"VT_videometadata\">";
     html += "<span class=\"VT_videorelease hlcolor smallfont\">" + videorelease + "</span>";
     html += "<span class=\"VT_videoname fgcolor smallfont\" title=\""+videoname+"\">" + videoname + "</span>";

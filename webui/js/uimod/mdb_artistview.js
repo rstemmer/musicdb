@@ -107,9 +107,9 @@ function _ATV_CreateArtistEntryWithVideos(MDBArtist, MDBVideoList)
     html += "<div class=\"ATV_albumlist\">"; // FIXME: A different class may be better
     for(var i in MDBVideoList)
     {
-        let MDBVideo = MDBVideoList[i].video;
-        html += CreateSmallVideoTile(MDBVideo);
-        html += Button_AddVideoToQueue(MDBVideo.id);
+        let MDBVideo  = MDBVideoList[i].video;
+        let buttonbox = Button_AddVideoToQueue(MDBVideo.id);
+        html += CreateSmallVideoTile(MDBVideo, buttonbox);
     }
     html += "</div>"; // close albumlist div
 
