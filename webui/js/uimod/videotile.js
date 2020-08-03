@@ -136,7 +136,7 @@ function CreateSmallVideoTile(MDBVideo, buttonbox)
 
     // Meta Data
     html += "<div class=\"VT_videometadata\">";
-    html += "<span class=\"VT_videorelease hlcolor smallfont\">" + videorelease + "</span>";
+    //html += "<span class=\"VT_videorelease hlcolor smallfont\">" + videorelease + "</span>";
     html += "<span class=\"VT_videoname fgcolor smallfont\" title=\""+videoname+"\">" + videoname + "</span>";
     html += "</div>";
 
