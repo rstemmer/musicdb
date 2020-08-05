@@ -58,9 +58,10 @@ function ShowQueue(parentID, MDBQueue)
         html += " id=Q_drag_" + pos;
         html += " class=\"Q_entry\"";
         html += " draggable=\"true\"";
-        html += " data-pos=\""     + pos        + "\"";
-        html += " data-songid=\""  + MDBMusic.id + "\"";
-        html += " data-entryid=\"" + entryid    + "\"";
+        html += " data-pos=\""     + pos         + "\"";
+        html += " data-musicid=\"" + MDBMusic.id + "\"";
+        html += " data-entryid=\"" + entryid     + "\"";
+        html += " data-musictype=\"" + queuetype + "\"";
         html += ">";
         if(queuetype == "audio")
             html += CreateSongTile(MDBMusic, MDBAlbum, MDBArtist, buttonbox)
@@ -103,12 +104,18 @@ function ShowQueue(parentID, MDBQueue)
         e.preventDefault();
         $(this).removeClass("Q_hldropzone");
 
-        let attrid = "#" + e.target.id;
-        let dstpos  = $(attrid).attr("data-entryid");
-        let srcpos  = e.originalEvent.dataTransfer.getData("srcpos");
-        let videoid = e.originalEvent.dataTransfer.getData("videoid");
+        let attrid    = "#" + e.target.id;
+        let dstpos    = $(attrid).attr("data-entryid");
+        let srcpos    = e.originalEvent.dataTransfer.getData("srcpos");
+        let musicid   = e.originalEvent.dataTransfer.getData("musicid");
+        let musictype = e.originalEvent.dataTransfer.getData("musictype");
 
-        MusicDB_Call("MoveVideoInQueue", {entryid:srcpos, afterid:dstpos});
+        if(musictype == "video")
+            MusicDB_Call("MoveVideoInQueue", {entryid:srcpos, afterid:dstpos});
+        else if(musictype == "audio")
+            MusicDB_Call("MoveSongInQueue", {entryid:srcpos, afterid:dstpos});
+        else
+            window.console && console.log("Unknown music type"+musictype)
     });
 
     // the entries itself need some DnD-handler too
@@ -118,12 +125,14 @@ function ShowQueue(parentID, MDBQueue)
         // get data needed for queue-move and set it as dataTransfer
         let attrid = "#" + e.originalEvent.originalTarget.id;
 
-        let entryid = $(attrid).attr("data-entryid");
-        let videoid = $(attrid).attr("data-videoid");
+        let entryid   = $(attrid).attr("data-entryid");
+        let musicid   = $(attrid).attr("data-musicid");
+        let musictype = $(attrid).attr("data-musictype");
 
         // Set data that will be transferred (mandatory to make DnD work)
-        e.originalEvent.dataTransfer.setData("srcpos", entryid);
-        e.originalEvent.dataTransfer.setData("videoid", videoid);
+        e.originalEvent.dataTransfer.setData("srcpos",    entryid);
+        e.originalEvent.dataTransfer.setData("musicid",   musicid);
+        e.originalEvent.dataTransfer.setData("musictype", musictype);
     });
     $(dragelement).on("dragend", function(e){
         e.target.style.opacity = "1.0";
