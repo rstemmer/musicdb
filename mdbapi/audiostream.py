@@ -232,7 +232,7 @@ def AudioStreamingThread():
     This thread manages the streaming of the songs from the Song Queue to the Icecast server.
 
     The thread tracks the played song using the :doc:`/mdbapi/tracker` module.
-    It also tracks randomly added songs assuming the user skips or removes songs that don't fit.
+    Randomly added songs will not be tracked, only songs added by the user.
     Only completely played songs will be considered.
     Skipped songs will be ignored.
 
