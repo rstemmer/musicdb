@@ -111,7 +111,7 @@ from mdbapi.lycra       import Lycra
 from mdbapi.database    import MusicDBDatabase
 from mdbapi.mise        import MusicDBMicroSearchEngine
 from mdbapi.tags        import MusicDBTags
-from mdbapi.stream      import StreamManager
+from mdbapi.audiostream import AudioStreamManager
 from mdbapi.songqueue   import SongQueue
 from mdbapi.videoqueue  import VideoQueue
 import logging
@@ -133,7 +133,7 @@ class MusicDBWebSocketInterface(object):
             self.fs         = Filesystem(self.cfg.music.path)
             self.tags       = MusicDBTags(self.cfg, self.database)
             self.mdbstate   = MDBState(self.cfg.server.statedir, self.database)
-            self.stream     = StreamManager(self.cfg, self.database)
+            self.audiostream= AudioStreamManager(self.cfg, self.database)
             self.songqueue  = SongQueue(self.cfg, self.database)
             self.videoqueue = VideoQueue(self.cfg, self.database)
         except Exception as e:
@@ -142,25 +142,25 @@ class MusicDBWebSocketInterface(object):
 
 
     def onWSConnect(self):
-        self.stream.RegisterCallback(self.onStreamEvent)
+        self.audiostream.RegisterCallback(self.onAudioStreamEvent)
         self.songqueue.RegisterCallback(self.onSongQueueEvent)
         self.videoqueue.RegisterCallback(self.onVideoQueueEvent)
         return None
         
 
     def onWSDisconnect(self, wasClean, code, reason):
-        self.stream.RemoveCallback(self.onStreamEvent)
+        self.audiostream.RemoveCallback(self.onAudioStreamEvent)
         self.songqueue.RemoveCallback(self.onSongQueueEvent)
         self.videoqueue.RemoveCallback(self.onVideoQueueEvent)
         return None
 
 
-    def onStreamEvent(self, event, data):
+    def onAudioStreamEvent(self, event, data):
         # This function is called from a different thread. Therefore NO sqlite3-access is allowed.
         # So there will be just a notification so that the clients can request GetStreamState.
         response    = {}
         response["method"]      = "notification"
-        response["fncname"]     = "MusicDB:Stream"
+        response["fncname"]     = "MusicDB:AudioStream"
         response["fncsig"]      = "on"+event
         response["arguments"]   = data
         response["pass"]        = None
@@ -1172,7 +1172,7 @@ class MusicDBWebSocketInterface(object):
 
     def GetStreamState(self):
         """
-        This method returns the state of the Streaming Thread. (See :doc:`/mdbapi/stream`)
+        This method returns the state of the Streaming Thread. (See :doc:`/mdbapi/audiostream`)
 
         The state is a dictionary that has always the following information:
 
@@ -1215,7 +1215,7 @@ class MusicDBWebSocketInterface(object):
         """
         state = {}
 
-        streamstate = self.stream.GetStreamState()
+        streamstate = self.audiostream.GetStreamState()
         queueentry  = self.songqueue.CurrentSong()
         if queueentry:
             songid  = queueentry["songid"]
@@ -1480,7 +1480,8 @@ class MusicDBWebSocketInterface(object):
 
     def SetStreamState(self, state):
         """
-        This method can be used to set the  *playing*-state of the stream (see :doc:`/mdbapi/stream`)
+        This method can be used to set the  *playing*-state of the audio stream (see :doc:`/mdbapi/audiostream`)
+        and the video stream (see :doc:`/mdbapi/videostream`)
 
         The following arguments are possible:
 
@@ -1489,7 +1490,7 @@ class MusicDBWebSocketInterface(object):
             * ``"playpause"``: Toggle between *playing* and *pause*
 
         Args:
-            state (str): New playing-state for the Streamin Thread. *state* must be one of the following strings: ``"playpause"``, ``"play"`` or ``"pause"``.
+            state (str): New playing-state for the audio streaming thread. *state* must be one of the following strings: ``"playpause"``, ``"play"`` or ``"pause"``.
 
         Returns:
             ``None``
@@ -1500,18 +1501,18 @@ class MusicDBWebSocketInterface(object):
                 MusicDB_Call("SetStreamState", {state:"playpause"});
 
         """
-        currentstate = self.stream.GetStreamState()
+        currentstate = self.audiostream.GetStreamState()
         isplaying    = currentstate["isplaying"]
 
         if state == "playpause":
             if isplaying:
-                self.stream.Play(False)
+                self.audiostream.Play(False)
             else:
-                self.stream.Play(True)
+                self.audiostream.Play(True)
         elif state == "pause":
-            self.stream.Play(False)
+            self.audiostream.Play(False)
         elif state == "play":
-            self.stream.Play(True)
+            self.audiostream.Play(True)
         else:
             logging.warning("Unexpected state \"%s\" will not be set! \033[1;30m(State must be play, pause or playpause)", str(state))
 
@@ -1532,7 +1533,7 @@ class MusicDBWebSocketInterface(object):
                 MusicDB_Call("PlayNextSong");
 
         """
-        self.stream.PlayNextSong()
+        self.audiostream.PlayNextSong()
         return None
 
 

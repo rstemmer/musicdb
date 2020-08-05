@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2018-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-This module implements the stream that streams the music.
+This module implements the audio stream that streams the songs.
 This module provides a thread that takes the songs from a :class:`mdbapi.songqueue.SongQueue` to stream them via Icecast.
 It manages the connection to the Icecast server using the :mod:`lib.stream.icecast` module.
 Further more this module provides some callback interfaces to inform the rest of MusicDB about the state of the stream.
@@ -23,7 +23,7 @@ So this module consist of the following parts:
 
     * The `Streaming Thread`_ that manages the Song Stream.
     * An `Event Management`_ that provides a callback interface to get updated about what's going on in the Streaming Thread.
-    * The :class:`~StreamManager` that does management behind streaming.
+    * The :class:`~AudioStreamManager` that does management behind streaming.
 
 
 Interface
@@ -36,12 +36,12 @@ There are two functions and one class that are available to manage the Stream:
 
     .. code-block:: python
 
-        from mdbapi.stream import StartStreamingThread, StopStreamingThread, StreamManager
+        from mdbapi.audiostream import StartAudioStreamingThread, StopAudioStreamingThread, AudioStreamManager
 
 
-    * :meth:`~StartStreamingThread` starts the Streaming Thread that manages the streaming. It also establishes a connection to the Icecast server.
-    * :meth:`~StopStreamingThread` disconnects MusicDB from Icecast and stops the Streaming Thread
-    * :class:`~StreamManager` is the class to manage the Stream.
+    * :meth:`~StartAudioStreamingThread` starts the Streaming Thread that manages the streaming. It also establishes a connection to the Icecast server.
+    * :meth:`~StopAudioStreamingThread` disconnects MusicDB from Icecast and stops the Streaming Thread
+    * :class:`~AudioStreamManager` is the class to manage the Stream.
 
 
 Streaming Thread
@@ -50,13 +50,13 @@ Streaming Thread
 The Streaming Thread mainly manages sending mp3-file chunks to the Icecast server.
 This thread is the point where the music managed by MusicDB gets handed over to Icecast so the user can listen to it.
 
-The :class:`~StreamManager` communicates with the :meth:`~StreamingThread` with a `Command Queue`_.
+The :class:`~AudioStreamManager` communicates with the :meth:`~AudioStreamingThread` with a `Command Queue`_.
 
-More details are in the :meth:`~StreamingThread` description.
+More details are in the :meth:`~AudioStreamingThread` description.
 
 The thread maintains a global dictionary that holds the state of the thread - The **Stream State**.
-It can be accessed via :meth:`mdbapi.stream.StreamManager.GetStreamState`.
-This will only be updated by the StreamingThread.
+It can be accessed via :meth:`mdbapi.audiostream.AudioStreamManager.GetStreamState`.
+This will only be updated by the AudioStreamingThread.
 It contains the following information:
 
     * ``isconnected`` (bool): ``True`` when connected to Icecast, otherwise ``False``
@@ -70,16 +70,16 @@ The Command Queue is a FIFO buffer of tuple.
 Each tuple has a command name and an optional argument.
 For the whole Module, there is only one global Command Queue.
 
-Each instance of the :class:`~StreamManager` class writes into the same queue following the *First Come First Serve* (FCFS) protocol.
-The :meth:`~StreamingThread` reads the command from that queue and processes them.
+Each instance of the :class:`~AudioStreamManager` class writes into the same queue following the *First Come First Serve* (FCFS) protocol.
+The :meth:`~AudioStreamingThread` reads the command from that queue and processes them.
 
 The following commands are available:
 
-    ``Play`` (:meth:`StreamManager.Play`):
+    ``Play`` (:meth:`AudioStreamManager.Play`):
         If state is ``True`` the current song from the Song Queue gets streamed to Icecast.
         If state is ``False`` the audio stream gets paused.
 
-    ``PlayNextSong`` (:meth:`StreamManager.PlayNextSong`):
+    ``PlayNextSong`` (:meth:`AudioStreamManager.PlayNextSong`):
         Stops streaming the current song, and starts with the next song.
         If streaming is paused, only the next song gets selected as new current song.
 
@@ -87,12 +87,12 @@ The following commands are available:
 Event Management
 ----------------
 
-This module provided a callback interface to react on events triggered by Streaming Thread or by actions done by the :class:`~StreamManager` class.
+This module provided a callback interface to react on events triggered by Streaming Thread or by actions done by the :class:`~AudioStreamManager` class.
 
 The following two functions can be used to register or remove a callback function:
 
-    * :meth:`~StreamManager.RegisterCallback`
-    * :meth:`~StreamManager.RemoveCallback`
+    * :meth:`~AudioStreamManager.RegisterCallback`
+    * :meth:`~AudioStreamManager.RemoveCallback`
 
 Functions that get called must provide two parameters.
 The first is a string that provides the name of the event as described below.
@@ -118,12 +118,12 @@ Example:
         def callback(name, arg):
             print("Event \"%s\" occurred with argument \"%s\"." % (name, str(arg)))
 
-        sq = StreamManager(mdbconfig, musicdatabase)
-        sq.RegisterCallback(callback)
+        audiostream = AudioStreamManager(mdbconfig, musicdatabase)
+        audiostream.RegisterCallback(callback)
 
         # …
 
-        sq.RemoveCallback(callback)
+        audiostream.RemoveCallback(callback)
 
 """
 
@@ -152,9 +152,9 @@ State           = {}
 #####################################################################
 
 
-def StartStreamingThread(config, musicdb):
+def StartAudioStreamingThread(config, musicdb):
     """
-    This function starts the Streaming Thread :mod:`~StreamingThread`.
+    This function starts the Streaming Thread :mod:`~AudioStreamingThread`.
     You should use this function instead of calling the Streaming Thread function directly.
 
     By calling this function, the global state of this module gets reset.
@@ -178,7 +178,7 @@ def StartStreamingThread(config, musicdb):
     global State
 
     if Thread != None:
-        logging.warning("Streaming Thread already running")
+        logging.warning("Audio Streaming Thread already running")
         return False
 
     if type(config) != MusicDBConfig:
@@ -186,22 +186,22 @@ def StartStreamingThread(config, musicdb):
     if type(musicdb) != MusicDatabase:
         raise TypeError("database argument not of type MusicDatabase")
 
-    logging.debug("Initialize Streaming environment")
+    logging.debug("Initialize Audio Streaming environment")
     Config       = config
     Callbacks    = []
     CommandQueue = []
     State        = {"isconnected": False, "isplaying": False}
 
-    logging.debug("Starting Streaming Thread")
+    logging.debug("Starting Audio Streaming Thread")
     RunThread = True
-    Thread    = threading.Thread(target=StreamingThread)
+    Thread    = threading.Thread(target=AudioStreamingThread)
     Thread.start()
 
     return True
 
 
 
-def StopStreamingThread():
+def StopAudioStreamingThread():
     """
     This function stops the Streaming Thread.
     The function is blocking and waits until the thread is closed.
@@ -213,21 +213,21 @@ def StopStreamingThread():
     global Thread
 
     if Thread == None:
-        logging.warning("There is no Streaming Thread running!")
+        logging.warning("There is no Audio Streaming Thread running!")
         return False
 
-    logging.debug("Waiting for Streaming Thread to stop…")
+    logging.debug("Waiting for Audio Streaming Thread to stop…")
 
     RunThread = False
     Thread.join()
     Thread = None
 
-    logging.debug("Streaming Thread shut down.")
+    logging.debug("Audio Streaming Thread shut down.")
     return True
 
 
 
-def StreamingThread():
+def AudioStreamingThread():
     """
     This thread manages the streaming of the songs from the Song Queue to the Icecast server.
 
@@ -325,7 +325,7 @@ def StreamingThread():
                 break   # Stop streaming current song, and start the next one
 
             elif command == "Play":
-                logging.debug("Setting Play-State to %s", str(argument))
+                logging.debug("Setting Audio Play-State to %s", str(argument))
                 State["isplaying"] = argument
                 icecast.Mute(not State["isplaying"])    # Mute stream, when not playing
                 Event_StatusChanged()
@@ -405,12 +405,12 @@ def TriggerEvent(name, arg=None):
 
 
 
-class StreamManager(object):
+class AudioStreamManager(object):
     """
-    This class provides an interface to the Streaming Thread (:meth:`~StreamingThread`) and the Song Queue that will be streamed.
+    This class provides an interface to the Streaming Thread (:meth:`~AudioStreamingThread`) and the Song Queue that will be streamed.
 
     The communication is implemented with a command queue.
-    More details about those commands can be found in the :meth:`StreamingThread` description.
+    More details about those commands can be found in the :meth:`AudioStreamingThread` description.
     Anyway, the details of the command queue are not important to know.
     They get hide by this class.
     Only important thing to know is, that when multiple instances of this class are used, the actions follow the *First Come First Server* protocol.
@@ -420,7 +420,7 @@ class StreamManager(object):
         **Important for developer:**
 
         Never call the :meth:`mdbapi.songqueue.SongQueue.NextSong` method directly from this class!
-        Send the ``"PlayNextSong"`` command to the :meth:`StreamingThread` instead.
+        Send the ``"PlayNextSong"`` command to the :meth:`AudioStreamingThread` instead.
         The thread handles the skip to the next song and starts streaming the new file.
 
     Args:
@@ -444,12 +444,12 @@ class StreamManager(object):
 
     def PushCommand(self, command, argument=None):
         """
-        Class internal interface to the `Command Queue`_ used to communicate with the :meth:`StreamingThread`.
+        Class internal interface to the `Command Queue`_ used to communicate with the :meth:`AudioStreamingThread`.
         You should not access the queue directly, because the Streaming Thread expects valid data inside the queue.
         This is guaranteed by the methods that use this method.
 
         Args:
-            command (str): A command to the Streaming Thread. Valid commands are listed in the :meth:`StreamingThread` section of the documentation.
+            command (str): A command to the Streaming Thread. Valid commands are listed in the :meth:`AudioStreamingThread` section of the documentation.
             argument: An argument to the command.
 
         Returns:
@@ -537,12 +537,12 @@ class StreamManager(object):
         Set the play-state.
 
             * If ``play`` is ``True`` (default value), the Streaming Thread streams audio file data to Icecast.
-            * If ``play`` is ``False``, the stream gets paused.
+            * If ``play`` is ``False``, the audio stream gets paused.
 
         This function is forcing the state. It does not care about the current playing state.
 
         When the command got successful executed, 
-        the :meth:`~mdbapi.stream.StreamingThread` will trigger the ``StatusChanged`` event.
+        the :meth:`~mdbapi.audiostream.AudioStreamingThread` will trigger the ``StatusChanged`` event.
 
         Args:
             play (bool): Playstate the Streaming Thread shall get

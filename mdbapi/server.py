@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ from lib.pidfile        import *
 from lib.namedpipe      import NamedPipe
 from lib.ws.server      import MusicDBWebSocketServer
 from mdbapi.mise        import MusicDBMicroSearchEngine
-from mdbapi.stream      import StartStreamingThread, StopStreamingThread
+from mdbapi.audiostream import StartAudioStreamingThread, StopAudioStreamingThread
 import logging
 
 # Global objects
@@ -157,7 +157,7 @@ def Initialize(configobj, databaseobj):
         #. Assign the *configobj* and *databaseobj* to global variables ``cfg`` and ``database`` to share them between multiple connections
         #. Seed Python's random number generator
         #. Instantiate a global :meth:`mdbapi.mise.MusicDBMicroSearchEngine` object
-        #. Start the Streaming Thread via :meth:`mdbapi.stream.StartStreamingThread` (see :doc:`/mdbapi/stream` for details)
+        #. Start the Streaming Thread via :meth:`mdbapi.audiostream.StartAudioStreamingThread` (see :doc:`/mdbapi/audiostream` for details)
         #. Update MiSE cache via :meth:`mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache`
         #. Create FIFO file for named pipe
 
@@ -194,9 +194,9 @@ def Initialize(configobj, databaseobj):
 
     # Start/Connect all interfaces
     logging.debug("Starting Streaming Thread…")
-    StartStreamingThread(cfg, database)
+    StartAudioStreamingThread(cfg, database)
     
-    logging.debug("Updateing MiSE Cache…")
+    logging.debug("Updating MiSE Cache…")
     mise.UpdateCache()
     
     # Signal Handler
@@ -217,7 +217,7 @@ def Initialize(configobj, databaseobj):
 
 def StartWebSocketServer():
     """
-    This function creates and starts a the actual MusicDB Websocket Server.
+    This function creates and starts the actual MusicDB Websocket Server.
 
     Returns:
         ``True`` on success, otherwise ``False``
@@ -246,7 +246,7 @@ def Shutdown():
 
     The following things happen when this function gets called:
 
-        #. Stop the Streaming Thread via :meth:`mdbapi.stream.StopStreamingThread`
+        #. Stop the Streaming Thread via :meth:`mdbapi.audiostream.StopAudioStreamingThread`
         #. Removing FIFO file for named pipe
         #. Stop the websocket server
 
@@ -265,7 +265,7 @@ def Shutdown():
         tlswsserver.factory.CloseConnections()
     
     logging.debug("Stopping Streaming Thread…")
-    StopStreamingThread()
+    StopAudioStreamingThread()
     
     if tlswsserver:
         logging.debug("Stopping TLS WS Server…")

@@ -2,7 +2,7 @@ Streaming Server
 ================
 
 .. automodule:: mdbapi.stream
-   :members: StartStreamingThread, StopStreamingThread, StreamingThread
+   :members: StartAudioStreamingThread, StopAudioStreamingThread, AudioStreamingThread
 
 
 Stream Manager Class

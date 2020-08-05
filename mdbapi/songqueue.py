@@ -374,10 +374,10 @@ class SongQueue(object):
             In context of streaming, this method may not be the one you want to call.
             This Method drops the current song and sets the next song on top of the queue.
 
-            The stream will not notice this, so that it continues streaming the previous song. (See :doc:`/mdbapi/stream`).
-            If you want to stream the next song, call :meth:`mdbapi.stream.StreamManager.PlayNextSong`.
+            The stream will not notice this, so that it continues streaming the previous song. (See :doc:`/mdbapi/audiostream`).
+            If you want to stream the next song, call :meth:`mdbapi.audiostream.AudioStreamManager.PlayNextSong`.
 
-            The :meth:`mdbapi.stream.StreamManager.PlayNextSong` then makes the Streaming Thread calling this method.
+            The :meth:`mdbapi.audiostream.AudioStreamManager.PlayNextSong` then makes the Streaming Thread calling this method.
 
         This method triggers the ``SongChanged`` and ``SongQueueChanged`` event when the queue was not empty.
         The ``SongChanged`` event gets also triggered when there was no next song.

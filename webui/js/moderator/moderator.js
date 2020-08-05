@@ -27,7 +27,7 @@ function onMusicDBConnectionClosed()
 function onMusicDBNotification(fnc, sig, rawdata)
 {
     window.console && console.log(sig);
-    if(fnc == "MusicDB:Stream")
+    if(fnc == "MusicDB:AudioStream")
     {
         // Update state indicator.
         // TODO: This is now different - updates also come when Icecast connection lost

@@ -87,16 +87,16 @@ Watchdog
 
 The existence of a watchdog timer in this code has historical reasons.
 There was a bug in the server that caused a loss of the connection to all clients.
-To fullfill the "The show must go on" requirement I implemented this code.
+To fulfill the "The show must go on" requirement I implemented this code.
 It is still in use because it does not hurt.
 
 Watchdog gets started with the first received message and with each message reset.
-When the connection gets closed or an error occured, the watchdog timer gets stop.
-Only when there are no more messages comming without any reason, the watchdog closes the current connection and establishes a new one.
+When the connection gets closed or an error occurred, the watchdog timer gets stop.
+Only when there are no more messages coming without any reason, the watchdog closes the current connection and establishes a new one.
 When the watchdog timer runs to 0, a callback function ``onMusicDBWatchdogBarks`` gets called.
 
 The watchdog does an automatic reconnect to the server when there are no packages coming from the server.
-The MusicDB Server send in a period of several seconds (max 3) the state of the :mod:`mdbapi.stream.StreamingThread` to all clients.
+The MusicDB Server send in a period of several seconds (max 3) the state of the :mod:`mdbapi.audiostream.AudioStreamingThread` to all clients.
 On Windows systems, packages can be stuck inside Windows internal buffers for a long time (several seconds).
 Keep this in mind when configuring the Watchdog.
 

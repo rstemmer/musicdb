@@ -15,7 +15,10 @@ Run  git log --oneline  for more details
 │ + Lots of bug-fixes due to rewriting some code fragments to integrate video management
 │ + [Web API]
 │    - notification "MusicDB:Queue" is now called "MusicDB:SongQueue"
+│    - notification "MusicDB:Stream" is now called "MusicDB:AudioStream"
 │    - method "GetQueue" is now called "GetSongQueue"
+│ + [Refactoring]
+│    - StreamManager -> AudioStreamManager
 │
 ┝━ MINOR CHANGES
 └───────────────────────────────────────╌╌
