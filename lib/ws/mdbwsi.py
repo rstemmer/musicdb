@@ -35,7 +35,6 @@ Albums
 Songs
 ^^^^^
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong`
-* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue`
@@ -54,6 +53,7 @@ Videos
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveVideoFromQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveVideoInQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateVideoStatistic`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextVideo`
 
 Queue
 ^^^^^
@@ -94,6 +94,7 @@ Other
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextVideo`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTables`
@@ -112,6 +113,7 @@ from mdbapi.database    import MusicDBDatabase
 from mdbapi.mise        import MusicDBMicroSearchEngine
 from mdbapi.tags        import MusicDBTags
 from mdbapi.audiostream import AudioStreamManager
+from mdbapi.videostream import VideoStreamManager
 from mdbapi.songqueue   import SongQueue
 from mdbapi.videoqueue  import VideoQueue
 import logging
@@ -134,6 +136,7 @@ class MusicDBWebSocketInterface(object):
             self.tags       = MusicDBTags(self.cfg, self.database)
             self.mdbstate   = MDBState(self.cfg.server.statedir, self.database)
             self.audiostream= AudioStreamManager(self.cfg, self.database)
+            self.videostream= VideoStreamManager(self.cfg, self.database)
             self.songqueue  = SongQueue(self.cfg, self.database)
             self.videoqueue = VideoQueue(self.cfg, self.database)
         except Exception as e:
@@ -143,6 +146,7 @@ class MusicDBWebSocketInterface(object):
 
     def onWSConnect(self):
         self.audiostream.RegisterCallback(self.onAudioStreamEvent)
+        self.videostream.RegisterCallback(self.onVideoStreamEvent)
         self.songqueue.RegisterCallback(self.onSongQueueEvent)
         self.videoqueue.RegisterCallback(self.onVideoQueueEvent)
         return None
@@ -150,6 +154,7 @@ class MusicDBWebSocketInterface(object):
 
     def onWSDisconnect(self, wasClean, code, reason):
         self.audiostream.RemoveCallback(self.onAudioStreamEvent)
+        self.videostream.RemoveCallback(self.onVideoStreamEvent)
         self.songqueue.RemoveCallback(self.onSongQueueEvent)
         self.videoqueue.RemoveCallback(self.onVideoQueueEvent)
         return None
@@ -161,6 +166,18 @@ class MusicDBWebSocketInterface(object):
         response    = {}
         response["method"]      = "notification"
         response["fncname"]     = "MusicDB:AudioStream"
+        response["fncsig"]      = "on"+event
+        response["arguments"]   = data
+        response["pass"]        = None
+        success = self.SendPacket(response)
+        return success
+
+    def onVideoStreamEvent(self, event, data):
+        # This function is called from a different thread. Therefore NO sqlite3-access is allowed.
+        # So there will be just a notification so that the clients can request GetStreamState.
+        response    = {}
+        response["method"]      = "notification"
+        response["fncname"]     = "MusicDB:VideoStream"
         response["fncsig"]      = "on"+event
         response["arguments"]   = data
         response["pass"]        = None
@@ -322,6 +339,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.SetStreamState(args["state"])
         elif fncname == "PlayNextSong":
             retval = self.PlayNextSong()
+        elif fncname == "PlayNextVideo":
+            retval = self.PlayNextVideo()
         else:
             logging.warning("Unknown function: %s! \033[0;33m(will be ignored)", str(fncname))
             return None
@@ -1534,6 +1553,24 @@ class MusicDBWebSocketInterface(object):
 
         """
         self.audiostream.PlayNextSong()
+        return None
+
+
+    def PlayNextVideo(self):
+        """
+        This method skips the current playing video.
+        If there is no video that can be skipped, the Video Queue or Streaming Thread will handle this properly.
+
+        Returns:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("PlayNextVideo");
+
+        """
+        self.videostream.PlayNextSong()
         return None
 
 

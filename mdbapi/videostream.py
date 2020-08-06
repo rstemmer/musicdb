@@ -266,11 +266,15 @@ def VideoStreamingThread():
     # Create all interfaces that are needed by this Thread
     musicdb    = MusicDatabase(Config.database.path)
     tracker    = Tracker(Config, musicdb)
-    filesystem = Filesystem(Config.music.path)
+    #filesystem = Filesystem(Config.music.path)
     queue      = VideoQueue(Config, musicdb)
     #randy      = Randy(Config, musicdb)
 
     while RunThread:
+        # TODO: Currently there is nothing implemented
+        time.sleep(5)
+        continue
+
         # Sleep a bit to reduce the load on the CPU. If disconnected, sleep a bit longer
         if State["isconnected"]:
             time.sleep(0.1)

@@ -63,6 +63,7 @@ from lib.namedpipe      import NamedPipe
 from lib.ws.server      import MusicDBWebSocketServer
 from mdbapi.mise        import MusicDBMicroSearchEngine
 from mdbapi.audiostream import StartAudioStreamingThread, StopAudioStreamingThread
+from mdbapi.videostream import StartVideoStreamingThread, StopVideoStreamingThread
 import logging
 
 # Global objects
@@ -157,7 +158,8 @@ def Initialize(configobj, databaseobj):
         #. Assign the *configobj* and *databaseobj* to global variables ``cfg`` and ``database`` to share them between multiple connections
         #. Seed Python's random number generator
         #. Instantiate a global :meth:`mdbapi.mise.MusicDBMicroSearchEngine` object
-        #. Start the Streaming Thread via :meth:`mdbapi.audiostream.StartAudioStreamingThread` (see :doc:`/mdbapi/audiostream` for details)
+        #. Start the Audio Streaming Thread via :meth:`mdbapi.audiostream.StartAudioStreamingThread` (see :doc:`/mdbapi/audiostream` for details)
+        #. Start the Video Streaming Thread via :meth:`mdbapi.videostream.StartVideoStreamingThread` (see :doc:`/mdbapi/audiostream` for details)
         #. Update MiSE cache via :meth:`mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache`
         #. Create FIFO file for named pipe
 
@@ -195,6 +197,7 @@ def Initialize(configobj, databaseobj):
     # Start/Connect all interfaces
     logging.debug("Starting Streaming Thread…")
     StartAudioStreamingThread(cfg, database)
+    StartVideoStreamingThread(cfg, database)
     
     logging.debug("Updating MiSE Cache…")
     mise.UpdateCache()
@@ -246,7 +249,8 @@ def Shutdown():
 
     The following things happen when this function gets called:
 
-        #. Stop the Streaming Thread via :meth:`mdbapi.audiostream.StopAudioStreamingThread`
+        #. Stop the Audio Streaming Thread via :meth:`mdbapi.audiostream.StopAudioStreamingThread`
+        #. Stop the Video Streaming Thread via :meth:`mdbapi.videostream.StopVideoStreamingThread`
         #. Removing FIFO file for named pipe
         #. Stop the websocket server
 
@@ -266,6 +270,7 @@ def Shutdown():
     
     logging.debug("Stopping Streaming Thread…")
     StopAudioStreamingThread()
+    StopVideoStreamingThread()
     
     if tlswsserver:
         logging.debug("Stopping TLS WS Server…")
