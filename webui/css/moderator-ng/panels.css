@@ -1,0 +1,49 @@
+
+div.screen
+{
+    box-sizing:     border-box;
+    border-color:   #3030A0;
+    display:        flex;
+    flex-direction: column;
+    height:         100%;
+    width:          100%;
+    overflow:       scroll;
+    scrollbar-width: none;
+}
+
+div.panels
+{
+    box-sizing:     border-box;
+    display:        flex;
+    flex-direction: column;
+    width:          100%;
+}
+div.panels[data-panels="1"]
+{
+    min-height:     100%;
+}
+div.panels[data-panels="2"]
+{
+    min-height:     200%;
+}
+
+
+div.panel
+{
+    border-color:   #10A010;
+    box-sizing:     border-box;
+    height:         100%;
+    width:          100%;
+}
+div.panel[data-visible="true"]
+{
+    display:        flex;
+}
+div.panel[data-visible="false"]
+{
+    display:        none;
+}
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

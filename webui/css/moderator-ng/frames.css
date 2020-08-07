@@ -1,0 +1,34 @@
+
+/******************/
+/* Frame setup    */
+/******************/
+
+div.frame
+{
+    border-style:   solid;
+    border-width:   1px;
+    border-radius:  5px;
+    box-sizing:     border-box;
+}
+
+div.frame_left
+{
+    border-left: 0;
+    border-top-left-radius:     0;
+    border-bottom-left-radius:  0;
+}
+div.frame_middle
+{
+}
+div.frame_right
+{
+    border-right: 0;
+    border-top-right-radius:    0;
+    border-bottom-right-radius: 0;
+}
+
+
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

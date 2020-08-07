@@ -1,0 +1,204 @@
+
+/******************/
+/* Main Container */
+/******************/
+
+div.flexbox
+{
+    display:        flex;
+    height:         100%;
+    width:          100%;
+    flex-wrap:      wrap;
+    align-content:  space-around;
+}
+@media only screen and (max-height: 400px) 
+{
+    div.flexbox
+    {
+        align-content: center;
+    }
+}
+
+
+
+/******************/
+/* Flex-Rows      */
+/******************/
+
+div.flexrow
+{
+    display:        flex;
+    width:          100%;
+    align-content:  space-between;
+    flex-direction: column;
+    flex-wrap:      wrap;
+}
+
+div#FXTopRow
+{
+    /*
+    height: 75px;
+    */
+    height: 5em;
+}
+@media only screen and (max-height: 400px) 
+{
+    div#FXTopRow
+    {
+        align-self: center;
+    }
+}
+
+div#FXMiddleRow
+{
+    height: 80%;
+}
+@media only screen and (max-height: 400px) 
+{
+    div#FXMiddleRow
+    {
+        display:    none;
+        visibility: hidden;
+    }
+}
+
+div#FXBottomRow
+{
+    height: 30px;
+}
+@media only screen and (max-height: 600px) 
+{
+    div#FXBottomRow
+    {
+        display:    none;
+        visibility: hidden;
+    }
+}
+
+
+
+/******************/
+/* Flex-Columns   */
+/******************/
+
+div.flexcolumn_left
+{
+    width: 20%;
+}
+div.flexcolumn_middle
+{
+    width: 55%;
+}
+div.flexcolumn_right
+{
+    width: 20%;
+}
+
+@media only screen and (max-width: 800px) 
+{
+    div.flexcolumn_left, div.flexcolumn_right
+    {
+        display:    none;
+        visibility: hidden;
+    }
+    div.flexcolumn_middle
+    {
+        align-self: center;
+        width:      80%;
+    }
+}
+
+
+
+/******************/
+/* Flex-Cells     */
+/******************/
+
+div.flexcell
+{
+    height: 100%;
+}
+
+
+
+/******************/
+/* Sonderwürste for the main conten  */
+/******************/
+
+div.contentboxheader
+{
+    display:        flex;
+    flex-direction: row;
+    align-content:  flex-end;
+
+    position:       relative;
+    bottom:         0px;
+    min-height:     20px;
+    overflow:       hidden;
+}
+
+div.contentbox
+{
+    height:     calc( 100% - 20px );
+}
+
+div.maincell
+{
+    box-shadow: inset 0px 0px 10px 0px #080808;
+}
+
+
+div.statecell
+{
+    display:        flex;
+    height:         100%;
+    width:          100%;
+    align-items:    center;
+    justify-content:center;
+}
+
+div.stateelements
+{
+    display:        flex;
+    height:         100%;
+    flex-direction: row;
+    align-items:    center;
+}
+
+div#Controls
+{
+    display:        flex;
+    height:         100%;
+}
+
+/******************/
+/* Sonderwürste for the HUD  */
+/******************/
+
+div.hudcell
+{
+    width:          50%;
+    box-shadow:     inset 0px 0px 10px 0px;
+}
+
+div.vsplit
+{
+    display:        flex;
+    align-content:  space-between;
+    align-items:    center;
+    flex-direction: row;
+}
+
+div.primarycell
+{
+    flex-grow:      1;
+}
+div.secondarycell
+{
+    flex-grow:      0;
+}
+
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+
