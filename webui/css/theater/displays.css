@@ -14,6 +14,15 @@ div.screen
     scrollbar-width: none;
 }
 
+div.singlescreen
+{
+    box-sizing:     border-box;
+    display:        flex;
+    flex-direction: column;
+    min-height:     100%;
+    width:          100%;
+}
+
 div.doublescreen
 {
     box-sizing:     border-box;
@@ -31,6 +40,11 @@ div.display
     display:        flex;
     height:         100%;
     width:          100%;
+}
+
+div.hidepanel
+{
+    display:        none;
 }
 
 div.popable

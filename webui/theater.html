@@ -111,8 +111,8 @@
 
     <body class="bgcolor fgcolor">
         <div class="screen">
-            <div class="doublescreen">
-                <div class="display">
+            <div class="doublescreen" id="screen">
+                <div class="display" id="videopanel">
 
                     <div id="popable_trigger"></div> <!-- Steady dummy element -->
                     <div id="popable_video" class="popable popable_in">
@@ -120,8 +120,9 @@
                     </div>
 
                 </div>
-                <div class="display">
+                <div class="display" id="moderatorpanel">
                     2
+                    <button onClick="ToggleScreen();"></button>
                 </div>
             </div>
         </div>

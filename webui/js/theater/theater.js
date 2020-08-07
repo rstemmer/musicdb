@@ -98,5 +98,15 @@ function handleIntersect(entries, observer)
         });
 }
 
+function ToggleScreen()
+{
+    let videopanel = document.getElementById("videopanel");
+    videopanel.classList.toggle("hidepanel");
+
+    let screen = document.getElementById("screen");
+    screen.classList.toggle("doublescreen");
+    screen.classList.toggle("singlescreen");
+}
+
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
