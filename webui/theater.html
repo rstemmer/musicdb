@@ -111,19 +111,22 @@
 
     <body class="bgcolor fgcolor">
         <div class="screen">
-            <div class="doublescreen" id="screen">
-                <div class="display" id="videopanel">
+            <div class="panels" data-panels="2" id="Panels">
 
-                    <div id="popable_trigger"></div> <!-- Steady dummy element -->
-                    <div id="popable_video" class="popable popable_in">
-                        <img class="popable_content" src="videoframes/Blutengel/Reich%20mir%20die%20Hand/frame-01.jpg"><img>
+                <div class="panel" data-visible="true" id="videopanel">
+
+                    <div id="detachable_trigger"></div> <!-- Steady dummy element -->
+                    <div id="detachable_video" class="detachable" data-detached="false">
+                        <img class="detachable_content" src="videoframes/Blutengel/Reich%20mir%20die%20Hand/frame-01.jpg"><img>
                     </div>
 
                 </div>
-                <div class="display" id="moderatorpanel">
+
+                <div class="panel" data-visible="true" id="moderatorpanel">
                     2
-                    <button onClick="ToggleScreen();"></button>
+                    <button onClick="ToggleVideoPanel();"></button>
                 </div>
+
             </div>
         </div>
     </body>

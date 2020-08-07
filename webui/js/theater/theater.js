@@ -38,46 +38,31 @@ window.onload = function ()
     //$("#MainViewContent4").html(cogs);
     //$("#MainViewContent5").html(cogs);
     ConnectToMusicDB();
+    CreateIntersectionObserver("detachable_trigger", onDetachableTriggerIntersection);
 
 }
 
 
 
-const numSteps = 20.0;
-
-let boxElement;
-
-window.addEventListener("load", (event) => {
-      boxElement = document.getElementById("popable_trigger");
-
-      createObserver();
-    }, false);
 
 
-function createObserver()
+function CreateIntersectionObserver(elementname, callback)
 {
-    let observer;
-    let thresholds = [];
-    thresholds.push(0.0);
-    thresholds.push(0.25);
-    thresholds.push(0.5);
-    thresholds.push(0.75);
-    thresholds.push(1.0);
 
     let options = {
             root:       null,
-            rootMargin: "10%"/*,
-            thresholds: thresholds*/
+            rootMargin: "10%"
         };
 
-    observer = new IntersectionObserver(handleIntersect, options);
-    observer.observe(boxElement);
+    let trigger  = document.getElementById(elementname);
+    let observer = new IntersectionObserver(callback, options);
+    observer.observe(trigger);
 }
 
 
-function handleIntersect(entries, observer)
+function onDetachableTriggerIntersection(entries, observer)
 {
-    let element = document.getElementById("popable_video");
+    let element = document.getElementById("detachable_video");
 
     entries.forEach((entry) => {
             window.console && console.log(entry.intersectionRatio);
@@ -86,26 +71,30 @@ function handleIntersect(entries, observer)
             if(entry.isIntersecting)
             {
                 window.console && console.log("visible");
-                element.classList.remove("popable_out");
-                element.classList.add("popable_in");
+                element.dataset.detached = "false";
             }
             else
             {
                 window.console && console.log("hidden");
-                element.classList.remove("popable_in");
-                element.classList.add("popable_out");
+                element.dataset.detached = "true";
             }
         });
 }
 
-function ToggleScreen()
+
+function ToggleVideoPanel()
 {
     let videopanel = document.getElementById("videopanel");
-    videopanel.classList.toggle("hidepanel");
+    if(videopanel.dataset.visible == "true")
+        videopanel.dataset.visible = "false";
+    else
+        videopanel.dataset.visible = "true";
 
-    let screen = document.getElementById("screen");
-    screen.classList.toggle("doublescreen");
-    screen.classList.toggle("singlescreen");
+    let panels = document.getElementById("Panels");
+    if(panels.dataset.panels == "1")
+        panels.dataset.panels = "2";
+    else
+        panels.dataset.panels = "1";
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
