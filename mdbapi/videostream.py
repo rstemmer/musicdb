@@ -254,6 +254,11 @@ def VideoStreamingThread():
         * ``StatusChanged``: When the play-state changed
         * ``StreamNextVideo``: When the player shall stream the next video
 
+    States
+
+        * ``isstreaming``:
+        * ``isplaying``:
+        * ``currententry``:
     """
     from mdbapi.tracker import Tracker
 
@@ -267,8 +272,9 @@ def VideoStreamingThread():
     tracker = Tracker(Config, musicdb)
     queue   = VideoQueue(Config, musicdb)
 
-    State["isplaying"]   = False
-    State["isstreaming"] = False
+    State["isplaying"]    = False
+    State["isstreaming"]  = False
+    State["currententry"] = None
     while RunThread:
         # Sleep a bit to reduce the load on the CPU. If not in streaming , sleep a bit longer
         if State["isstreaming"]:

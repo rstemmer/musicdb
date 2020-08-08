@@ -4,23 +4,23 @@ var currentalbumid  = null; // /
 
 function onMusicDBConnectionOpen()
 {
-    SetMusicDBOnlineState("yes", "yes"); // MusicDB, IceCast
+    SetMusicDBOnlineState("yes", "yes"); // data, audio, video
     window.console && console.log("[MDB] Open");
     MusicDB_Request("GetMDBState",  "InitializeWebUI");
 }
 function onMusicDBConnectionError()
 {
-    SetMusicDBOnlineState("error", "unknown"); // MDB, MPD
+    SetMusicDBOnlineState("error", "unknown", "error"); // data, audio, video
     window.console && console.log("[MDB] Error");
 }
 function onMusicDBWatchdogBarks()
 {
-    SetMusicDBOnlineState("error", "unknown"); // MDB, MPD
+    SetMusicDBOnlineState("error", "unknown", "unknown"); // data, audio, video
     window.console && console.log("[MDB] WD Barks");
 }
 function onMusicDBConnectionClosed()
 {
-    SetMusicDBOnlineState("no", "unknown"); // MDB, MPD
+    SetMusicDBOnlineState("no", "unknown", "no"); // data, audio, video
     window.console && console.log("[MDB] Closed");
 }
 
@@ -30,8 +30,9 @@ function onMusicDBNotification(fnc, sig, rawdata)
     if(fnc == "MusicDB:AudioStream")
     {
         // Update state indicator.
-        // TODO: This is now different - updates also come when Icecast connection lost
-        SetMusicDBOnlineState("yes", "yes"); // MDB, MPD
+        // Just because the audio stream to Icecast works,
+        // it is not sure that the Icecast is actually OK -> null for audio
+        SetMusicDBOnlineState("yes", null, null); // data, audio, video
         
         // Handle notifications
         if(sig == "onTimeChanged")
@@ -43,14 +44,26 @@ function onMusicDBNotification(fnc, sig, rawdata)
         }
         else if(sig == "onStatusChanged")
         {
-            MusicDB_Request("GetStreamState", "UpdateStreamState");
+            MusicDB_Request("GetAudioStreamState", "UpdateStreamState");
         }
     }
-    else if (fnc == "MusicDB:SongQueue")
+    else if(fnc == "MusicDB:VideoStream")
+    {
+        window.console && console.log(sig);
+        window.console && console.log(rawdata);
+        // Update state indicator. If notifications arrive, something must be working :)
+        SetMusicDBOnlineState("yes", null, "yes"); // Data, Audio, Video
+
+        if(sig == "onStatusChanged")
+        {
+            MusicDB_Request("GetVideoStreamState", "UpdateStreamState");
+        }
+    }
+    else if(fnc == "MusicDB:SongQueue")
     {
         if(sig == "onSongChanged")
         {
-            MusicDB_Request("GetStreamState", "UpdateStreamState");
+            MusicDB_Request("GetAudioStreamState", "UpdateStreamState");
         }
         else if(sig == "onSongQueueChanged")
         {
@@ -61,7 +74,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
     {
         if(sig == "onVideoChanged")
         {
-            MusicDB_Request("GetStreamState", "UpdateStreamState");
+            MusicDB_Request("GetAudioStreamState", "UpdateStreamState");
         }
         else if(sig == "onVideoQueueChanged")
         {
@@ -72,16 +85,16 @@ function onMusicDBNotification(fnc, sig, rawdata)
 function onMusicDBMessage(fnc, sig, args, pass)
 {
     // Update state-indicators if some indication passes
-    if(fnc == "GetStreamState")
+    if(fnc == "GetAudioStreamState")
     {
         if(args.isconnected)
         {
-            SetMusicDBOnlineState("yes", "yes");        // MDB, MPD
+            SetMusicDBOnlineState("yes", "yes", null);  // data, audio, video
             MDB_EnableWatchdog();
         }
         else
         {
-            SetMusicDBOnlineState("yes", "no");         // MDB, MPD
+            SetMusicDBOnlineState("yes", "no", null);   // data, audio, video
             MDB_DisableWatchdog();                      // Stop watchdog when MPD cannot trigger updates
             // TODO: behavior changed with the new Icecast backend.
         }
@@ -91,6 +104,17 @@ function onMusicDBMessage(fnc, sig, args, pass)
         else
             SetMusicDBPlayingState("paused", null);     // Stream, Client
     }
+    else if(fnc == "GetVideoStreamState")
+    {
+        window.console && console.log("GetVideoStreamState");
+        window.console && console.log(args);
+        if(args.isstreaming)
+            SetMusicDBOnlineState("yes", null, "yes");  // data, audio, video
+        else
+            SetMusicDBOnlineState("yes", null, "no");   // data, audio, video
+
+        // TODO: Handle playing state
+    }
     else
         window.console && console.log(" >> fnc: "+fnc+"; sig: "+sig);
 
@@ -98,7 +122,8 @@ function onMusicDBMessage(fnc, sig, args, pass)
     // Handle Messages form the server
     if(fnc == "GetMDBState" && sig == "InitializeWebUI") {
         MusicDB_Request("GetTags",          "UpdateTagsCache");
-        MusicDB_Request("GetStreamState",   "UpdateStreamState");
+        MusicDB_Request("GetAudioStreamState",   "UpdateStreamState");
+        MusicDB_Request("GetVideoStreamState",   "UpdateStreamState");
         MusicDB_Request("GetMDBState",      "UpdateMDBState");
 
         if(args.MusicDB.uimode == "audio")
@@ -113,7 +138,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
         }
     }
 
-    else if(fnc == "GetStreamState" && sig == "UpdateStreamState") {
+    else if(fnc == "GetAudioStreamState" && sig == "UpdateStreamState") {
         if(!args.hasqueue)
         {
             window.console && console.log("There is no queue and no current song!")

@@ -92,6 +92,8 @@ Lyrics
 Other
 ^^^^^
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAudioStreamState`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoStreamState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextVideo`
@@ -162,7 +164,7 @@ class MusicDBWebSocketInterface(object):
 
     def onAudioStreamEvent(self, event, data):
         # This function is called from a different thread. Therefore NO sqlite3-access is allowed.
-        # So there will be just a notification so that the clients can request GetStreamState.
+        # So there will be just a notification so that the clients can request GetAudioStreamState.
         response    = {}
         response["method"]      = "notification"
         response["fncname"]     = "MusicDB:AudioStream"
@@ -174,7 +176,7 @@ class MusicDBWebSocketInterface(object):
 
     def onVideoStreamEvent(self, event, data):
         # This function is called from a different thread. Therefore NO sqlite3-access is allowed.
-        # So there will be just a notification so that the clients can request GetStreamState.
+        # So there will be just a notification so that the clients can request GetVideoStreamState.
         response    = {}
         response["method"]      = "notification"
         response["fncname"]     = "MusicDB:VideoStream"
@@ -244,7 +246,12 @@ class MusicDBWebSocketInterface(object):
         elif fncname == "GetMDBState":
             retval = self.GetMDBState()
         elif fncname == "GetStreamState":
-            retval = self.GetStreamState()
+            logging.warning("GetStreamState is deprecated! Use GetAudioStreamState instead. \033[1;30m(Calling GetAudioStreamState)")
+            retval = self.GetAudioStreamState()
+        elif fncname == "GetAudioStreamState":
+            retval = self.GetAudioStreamState()
+        elif fncname == "GetVideoStreamState":
+            retval = self.GetVideoStreamState()
         elif fncname == "GetSongQueue":
             retval = self.GetSongQueue()
         elif fncname == "GetVideoQueue":
@@ -1189,7 +1196,7 @@ class MusicDBWebSocketInterface(object):
         return state
 
 
-    def GetStreamState(self):
+    def GetAudioStreamState(self):
         """
         This method returns the state of the Streaming Thread. (See :doc:`/mdbapi/audiostream`)
 
@@ -1213,13 +1220,13 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                MusicDB_Request("GetStreamState", "ShowStreamState");
+                MusicDB_Request("GetAudioStreamState", "ShowStreamState");
 
                 // …
 
                 function onMusicDBMessage(fnc, sig, args, pass)
                 {
-                    if(fnc == "GetStreamState" && sig == "ShowStreamtate")
+                    if(fnc == "GetAudioStreamState" && sig == "ShowStreamtate")
                     {
                         if(args.isconnected == true)
                         {
@@ -1257,6 +1264,73 @@ class MusicDBWebSocketInterface(object):
             state["artist"]     = artist
             state["songtags"]   = songtags
             state["albumtags"]  = albumtags
+            state["hasqueue"]   = True
+        else:
+            state["hasqueue"]   = False
+
+        return state
+
+
+    def GetVideoStreamState(self):
+        """
+        This method returns the state of the Video Streaming Thread. (See :doc:`/mdbapi/videostream`)
+
+        The state is a dictionary that has always the following information:
+
+            * **isstreaming:** ``True`` if MusicDB manages the video stream
+            * **isplaying:** ``True`` if the Streaming Thread is in *playing*-mode, otherwise ``False``
+            * **hasqueue:** ``True`` when there is at least one song in the queue. When ``False``, the following song information are *not* included!
+            * **currententry:** (string) UUID of the current entry in the queue - the video that gets streamed, or ``null``.
+
+        In case there is a at least one song in the queue, this current streamed song gets returned with the following information:
+
+            * **video:** The video entry from the database for the video that is currently playing
+            * **videotags:** a list of tags as returned by :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoTags`
+
+        Returns:
+            The current state of the streaming thread
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Request("GetVideoStreamState", "ShowStreamState");
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "GetVideoStreamState" && sig == "ShowStreamtate")
+                    {
+                        if(args.hasqueue == true)
+                        {
+                            console.log("Current playing video: " + args.video.name);
+                        }
+                    }
+                }
+        """
+        state = {}
+
+        streamstate = self.videostream.GetStreamState()
+        queueentry  = self.videoqueue.CurrentVideo()
+        if queueentry:
+            videoid  = queueentry["videoid"]
+        else:
+            videoid  = None
+
+        state["isstreaming"]  = streamstate["isstreaming"]
+        state["isplaying"]    = streamstate["isplaying"]
+        if streamstate["currententry"]:
+            state["currententry"] = str(streamstate["currententry"])
+        else:
+            state["currententry"] = None
+
+        # if no file is given, the queue is empty - or "there is no queue"
+        if videoid:
+            video     = self.database.GetVideoById(videoid)
+            videotags = self.GetVideoTags(video["id"])
+
+            state["video"]      = video
+            state["vudeitags"]  = videotags
             state["hasqueue"]   = True
         else:
             state["hasqueue"]   = False

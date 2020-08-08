@@ -17,6 +17,7 @@ Run  git log --oneline  for more details
 │    - notification "MusicDB:Queue" is now called "MusicDB:SongQueue"
 │    - notification "MusicDB:Stream" is now called "MusicDB:AudioStream"
 │    - method "GetQueue" is now called "GetSongQueue"
+│    - method "GetStreamState" is now called "GetAudioStreamState"
 │ + [Refactoring]
 │    - StreamManager -> AudioStreamManager
 │
