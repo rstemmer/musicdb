@@ -251,12 +251,11 @@ def VideoStreamingThread():
 
     The thread triggers the following events:
 
-        * ``StatusChanged``: When the play-state
-        * ``TimeChanged``: To update the current streaming progress of a song
+        * ``StatusChanged``: When the play-state changed
+        * ``StreamNextVideo``: When the player shall stream the next video
 
-    The ``TimeChanged`` event gets triggered approximately every second.
     """
-    from mdbapi.tracker     import Tracker
+    from mdbapi.tracker import Tracker
 
     global Config
     global RunThread
@@ -264,42 +263,68 @@ def VideoStreamingThread():
     global State
 
     # Create all interfaces that are needed by this Thread
-    musicdb    = MusicDatabase(Config.database.path)
-    tracker    = Tracker(Config, musicdb)
-    #filesystem = Filesystem(Config.music.path)
-    queue      = VideoQueue(Config, musicdb)
-    #randy      = Randy(Config, musicdb)
+    musicdb = MusicDatabase(Config.database.path)
+    tracker = Tracker(Config, musicdb)
+    queue   = VideoQueue(Config, musicdb)
 
+    State["isplaying"]   = False
+    State["isstreaming"] = False
     while RunThread:
-        # TODO: Currently there is nothing implemented
-        time.sleep(5)
-        continue
-
-        # Sleep a bit to reduce the load on the CPU. If disconnected, sleep a bit longer
-        if State["isconnected"]:
+        # Sleep a bit to reduce the load on the CPU. If not in streaming , sleep a bit longer
+        if State["isstreaming"]:
             time.sleep(0.1)
         else:
             time.sleep(2)
 
-
-        # Get current song that shall be streamed.
-        queueentry = queue.CurrentVideo()
-        if queueentry == None or queueentry["entryid"] == None:
-            logging.info("Waiting for 5s to try to get a new song to play.")
-            time.sleep(5)
+        # Check command
+        if len(CommandQueue) == 0:
             continue
+        command, argument = CommandQueue.pop(0)
 
-        mdbvideo  = musicdb.GetVideoById(queueentry["videoid"])
-        videopath = filesystem.AbsolutePath(mdbvideo["path"])
+        if command == "PlayNextVideo":      # Player pressed "Next" Button
+            logging.debug("User forced next video")
+            queue.NextVideo()
+            State["isplaying"] = False
+
+        elif command == "VideoFinished":    # Video was played to the end
+            # If the currently streaming entry is different from the finished video
+            # a different client may have already finished streaming the video and
+            # requested the next song.
+            # So nothing to do here anymore
+            if State["currententry"] != argument:
+                continue
+
+            logging.debug("Finished streaming video with queue entry id %i", argument)
+            queue.NextVideo()
+            State["isplaying"] = False
+            if not Config.debug.disablestats:
+                musicdb.UpdateVideoStatistic(queueentry["videoid"], "lastplayed", int(time.time()))
+
+        elif command == "Stream":
+            logging.debug("Setting Video Stream-State to %s", str(argument))
+            State["isstreaming"] = argument
+            Event_StatusChanged()
 
 
-        # Stream song
-        # TODO
+        # Stream next song, if clients finished streaming a song
+        if State["isstreaming"] and not State["isplaying"]:
+            # Get current song that shall be streamed.
+            queueentry = queue.CurrentVideo()
+            if queueentry == None or queueentry["entryid"] == None:
+                logging.info("Video Queue is empty, waiting for new video.")
+                continue
 
-        # Current video completely streamed. Get next one.
-        # When the video was stopped to shutdown the server, do not skip to the next one
-        if RunThread:
-            queue.NextSong()
+            mdbvideo  = musicdb.GetVideoById(queueentry["videoid"])
+            videoinfo = {}
+            videoinfo["video"] = mdbvideo
+            videoinfo["queue"] = queueentry
+            Event_StreamNextVideo(videoinfo)
+
+            State["isplaying"]    = True
+            State["currententry"] = queueentry["entryid"]
+
+    return
+
 
 
 
@@ -314,14 +339,15 @@ def Event_StatusChanged():
     See :meth:`~TriggerEvent` with event name ``"StatusChanged"``
     More details in the module description at the top of this document.
     """
-    TriggerEvent("StatusChanged")
+    global State
+    TriggerEvent("StatusChanged", State)
 
-def Event_TimeChanged(playtime):
+def Event_StreamNextVideo(videoinfo):
     """
-    See :meth:`~TriggerEvent` with event name ``"TimeChanged"`` and playtime of the song as argument
+    See :meth:`~TriggerEvent` with event name ``"StreamNextVideo"`` and a path to the video as argument
     More details in the module description at the top of this document.
     """
-    TriggerEvent("TimeChanged", playtime)
+    TriggerEvent("StreamNextVideo", videoinfo)
 
 def TriggerEvent(name, arg=None):
     """
@@ -387,8 +413,8 @@ class VideoStreamManager(object):
         if type(database) is not MusicDatabase:
             raise TypeError("database argument not of type MusicDatabase")
 
-        self.db         = database
-        self.cfg        = config
+        self.db  = database
+        self.cfg = config
 
 
 
@@ -510,12 +536,30 @@ class VideoStreamManager(object):
 
     def PlayNextVideo(self):
         """
-        This function triggers the Streaming Thread to play the next song in the queue.
+        This function triggers the Streaming Thread to play the next video in the queue.
 
         Returns:
             ``True`` on success, otherwise ``False``
         """
         return self.PushCommand("PlayNextVideo")
+
+
+
+    def VideoFinished(self, queueentryid):
+        """
+        This method informs the Streaming Thread the video was completely streams.
+        It sets the ``lastplayed`` statistics of the video and
+        triggers the Streaming Thread to play the next video in the queue.
+
+        This method can be called multiple times for the same queue entry.
+
+        Args:
+            queueentryid (int): The ID of the queue entry that got finished streaming
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+        """
+        return self.PushCommand("VideoFinished", queueentryid)
 
 
 
