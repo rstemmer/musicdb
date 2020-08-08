@@ -273,7 +273,7 @@ def VideoStreamingThread():
     queue   = VideoQueue(Config, musicdb)
 
     State["isplaying"]    = False
-    State["isstreaming"]  = False
+    State["isstreaming"]  = True
     State["currententry"] = None
     while RunThread:
         # Sleep a bit to reduce the load on the CPU. If not in streaming , sleep a bit longer

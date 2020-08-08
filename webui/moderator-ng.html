@@ -51,6 +51,7 @@
         <link rel="stylesheet" href="css/uimod/mdb_artistview.css">
         <link rel="stylesheet" href="css/uimod/mdb_albumview.css">
         <link rel="stylesheet" href="css/uimod/videoview.css">
+        <link rel="stylesheet" href="css/uimod/videostream.css">
         <link rel="stylesheet" href="css/uimod/mdb_queueview.css">
 
 
@@ -91,6 +92,7 @@
         <script src="js/uimod/mdb_artistview.js"></script>  
         <script src="js/uimod/mdb_albumview.js"></script>  
         <script src="js/uimod/videoview.js"></script>  
+        <script src="js/uimod/videostream.js"></script>  
         <script src="js/uimod/mdb_queueview.js"></script>  
 
         <script src="config.js"></script>  
@@ -120,7 +122,15 @@
 
                     <div id="detachable_trigger"></div> <!-- Steady dummy element -->
                     <div id="detachable_video" class="detachable fmcolor" data-detached="false">
+                        <!--
                         <img class="detachable_content" src="videoframes/Blutengel/Reich%20mir%20die%20Hand/frame-01.jpg"><img>
+                        -->
+                        <video
+                            id="VideoStreamPlayer"
+                            class="detachable_content"
+                            controls
+                            preload=none>
+                        </video>
                     </div>
 
                 </div>

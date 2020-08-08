@@ -113,6 +113,9 @@ function onMusicDBMessage(fnc, sig, args, pass)
         else
             SetMusicDBOnlineState("yes", null, "no");   // data, audio, video
 
+        // FIXME: JUST FOR DEBUGGING
+        PlayVideo(args.video);
+
         // TODO: Handle playing state
     }
     else
