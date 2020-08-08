@@ -35,8 +35,8 @@ function PlayVideo(MDBVideo)
     let posterpath = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile);
     let videopath  = "/musicdb/music/" + MDBVideo.path;
 
-    player.width  = MDBVideo.xresolution;
-    player.height = MDBVideo.yresolution;
+    //player.width  = MDBVideo.xresolution;
+    //player.height = MDBVideo.yresolution;
     player.poster = posterpath;
     player.src    = videopath;
     player.load();

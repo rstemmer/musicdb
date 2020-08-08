@@ -16,6 +16,7 @@ function CreateIntersectionObserver(elementname, callback)
 function onDetachableTriggerIntersection(entries, observer)
 {
     let element = document.getElementById("detachable_video");
+    let video   = document.getElementById("VideoStreamPlayer");
 
     entries.forEach((entry) => {
             window.console && console.log(entry.intersectionRatio);
@@ -23,13 +24,13 @@ function onDetachableTriggerIntersection(entries, observer)
 
             if(entry.isIntersecting)
             {
-                window.console && console.log("visible");
                 element.dataset.detached = "false";
+                video.dataset.detached   = "false";
             }
             else
             {
-                window.console && console.log("hidden");
                 element.dataset.detached = "true";
+                video.dataset.detached   = "true";
             }
         });
 }
