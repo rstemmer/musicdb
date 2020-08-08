@@ -13,10 +13,11 @@ div#MDBStateView
 
 
 /******************/
-/* onlien State   */
+/* Online State   */
 /******************/
 
-#MDBStateView .onlinestate:after {
+#MDBStateView .onlinestate:after
+{
     font-family:    FontAwesome;
     font-weight:    normal;
     width:          1em;

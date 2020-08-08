@@ -1,6 +1,22 @@
+// MusicDB,  a music manager with web-bases UI that focus on music.
+// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 "use strict";
-/*
+
+/* OLD!
  * This class provides the mdbstate view consisting of the following components:
  *
  * Requirements:
@@ -20,26 +36,31 @@
  *   On onTimeChanged-mpd-event set the TimePlayed. This call will also update the view
  */
 
-var MDBMODE = "audio";  // audio/video
+var GLOBAL_MDBMODE = "audio";  // audio/video
 
 function ShowMusicDBStateView(parentID)
 {
-    var html = "";
+    let html = "";
 
     html += "<div id=MDBStateView class=\"hlcolor smallfont\">";
 
-    // Icecast
-    html += "<span id=MPDState class=\"onlinestate\" data-online=\"unknown\">";
+    // Audio Stream (Icecast)
+    html += "<span id=AudioStreamState class=\"onlinestate\" data-online=\"unknown\">";
     html += "Icecast";
     html += "</span><br>";
 
-    // MusicDB
+    // Video Stream (Icecast)
+    html += "<span id=VideoStreamState class=\"onlinestate\" data-online=\"unknown\">";
+    html += "Video Stream";
+    html += "</span><br>";
+
+    // Data Stream (MusicDB)
     html += "<span id=MDBReconnectBtn data-online=\"unknown\""; 
     html += " title=\"Reconnect to MusicDB server\"";
     html += " onclick=\"ConnectToMusicDB();\">";
     html += "&#xf021;";
     html += "</span>";
-    html += "<span id=MDBState class=\"onlinestate\" data-online=\"unknown\">";
+    html += "<span id=DataStreamState class=\"onlinestate\" data-online=\"unknown\">";
     html += "MusicDB";
     html += "</span><br>";
 
@@ -59,7 +80,7 @@ function ShowMusicDBStateView(parentID)
     html += "</span><br>";
 
     // Playtime
-    html += "<span id=CurrentTime  class=\"timestats\" data-playstate=\"unknown\">";
+    html += "<span id=CurrentTime class=\"timestats\" data-playstate=\"unknown\">";
     html += "00:00:00";
     html += "</span>";
     html += " / ";
@@ -70,38 +91,44 @@ function ShowMusicDBStateView(parentID)
     html += "</div>";
     
     // Create Element
-    $("#"+parentID).html(html);
+    document.getElementById(parentID).innerHTML = html;
 }
 
 // Valid states: yes, no, error, unknown, *null* (to change nothing)
-function SetMusicDBOnlineState(mdbstate, mpdstate)
+function SetMusicDBOnlineState(datastreamstate, audiostreamstate, videostreamstate)
 {
-    var mpdid = "#MPDState";
-    var mdbid = "#MDBState";
-    var recon = "#MDBReconnectBtn"; // shall have same state as MDBState
+    let audioelement = document.getElementById("AudioStreamState");
+    let videoelement = document.getElementById("VideoStreamState");
+    let dataelement  = document.getElementById("DataStreamState");
+    let reconnect    = document.getElementById("MDBReconnectBtn"); // shall have same state as data stream state
 
-    if(mpdstate != null)
+    if(typeof audiostreamstate === "string")
     {
-        $(mpdid).attr("data-online", mpdstate);
+        audioelement.dataset.online = audiostreamstate;
     }
     
-    if(mdbstate != null)
+    if(typeof videostreamstate === "string")
     {
-        $(mdbid).attr("data-online", mdbstate);
-        $(recon).attr("data-online", mdbstate);
+        videoelement.dataset.online = videostreamstate;
+    }
+    
+    if(typeof datastreamstate === "string")
+    {
+        dataelement.dataset.online = datastreamstate;
+        reconnect.dataset.online = datastreamstate;
     }
 }
 
 // Valid states: unknown, playing, paused, *null* (to change nothing)
 function SetMusicDBPlayingState(serverstate, clientstate)
 {
-    var ssid = "#PlayTime";
-    var csid = "#CurrentTime";
+    let sselement = document.getElementById("PlayTime");
+    let cselement = document.getElementById("CurrentTime");
 
-    if(serverstate != null)
-        $(ssid).attr("data-playstate", serverstate);
-    if(clientstate != null)
-        $(csid).attr("data-playstate", clientstate);
+    if(typeof serverstate === "string")
+        sselement.dataset.playstate = serverstate;
+    if(typeof clientstate === "string")
+        cselement.dataset.playstate = serverstate;
 }
 
 
@@ -112,11 +139,11 @@ var GLOBAL_TimePlayed    = 0;   // time the first song in the queue was played
 function HMSToString(h,m,s)
 {
     // convert to string
-    var ss = ("00"+s).substr(-2);
-    var ms = ("00"+m).substr(-2);
-    var hs = ("00"+h).substr(-2);
+    let ss = ("00"+s).substr(-2);
+    let ms = ("00"+m).substr(-2);
+    let hs = ("00"+h).substr(-2);
 
-    // create timestring
+    // create time string hh:mm:ss
     return hs + ":" + ms + ":" + ss;
 }
 
@@ -134,49 +161,52 @@ function SetTimePlayed(played)
 {
     GLOBAL_TimePlayed = played;
     // Ugly but works fine for now.
-    // SetTimePlayed gets called by the websocket handler. The server sends every second (depending on its config)
-    // the current state of the currently playing song. So this function gets called every second independent if
-    // the the song is playing or not.
+    // SetTimePlayed gets called by the websocket handler. 
+    // The server sends every second the current state of the currently playing song.
+    // So this function gets called every second independent if the song is playing or not.
     UpdateTimeview();
 }
 
 function UpdateTimeview()
 {
     // Get current time
-    var date = new Date();
+    let date = new Date();
 
-    var h = date.getHours();
-    var m = date.getMinutes();
-    var s = date.getSeconds();
+    let h = date.getHours();
+    let m = date.getMinutes();
+    let s = date.getSeconds();
 
     // Calculate estimated end time (hours, minutes and seconds)
-    var es = s + GLOBAL_TotalPlaytime - GLOBAL_TimePlayed;
-    var em = m + Math.floor(es / 60);
-    var es = Math.floor(es % 60);
-    var eh = h + Math.floor(em / 60);
-    var em = Math.floor(em % 60);
-    var eh = Math.floor(eh % 24);
+    let es, em, eh;
+    es = s + GLOBAL_TotalPlaytime - GLOBAL_TimePlayed;
+    em = m + Math.floor(es / 60);
+    es = Math.floor(es % 60);
+    eh = h + Math.floor(em / 60);
+    em = Math.floor(em % 60);
+    eh = Math.floor(eh % 24);
 
     // convert to string
-    var currenttime = HMSToString( h,  m,  s);
-    var endtime     = HMSToString(eh, em, es);
+    let currenttime = HMSToString( h,  m,  s);
+    let endtime     = HMSToString(eh, em, es);
 
     // Display time
-    $('#CurrentTime').html(currenttime);
-    $('#PlayTime').html(endtime);
+    let ctimeelement = document.getElementById("CurrentTime");
+    let ptimeelement = document.getElementById("PlayTime");
+    ctimeelement.innerHTML = currenttime;
+    ptimeelement.innerHTML = endtime;
 }
 
 
 function ToggleMusicDBMode()
 {
     // Switch mode
-    if(MDBMODE == "audio")
+    if(GLOBAL_MDBMODE == "audio")
     {
-        MDBMODE = "video";
+        GLOBAL_MDBMODE = "video";
     }
     else
     {
-        MDBMODE = "audio";
+        GLOBAL_MDBMODE = "audio";
     }
 
     // Reset genre-selection timer
@@ -196,28 +226,31 @@ function ToggleMusicDBMode()
     // By making a Request and giving a function signature the broadcast
     // gets handled exactly like a GetMDBState request
     MusicDB_Request("SetMDBState", "UpdateMDBState",
-        {category:"MusicDB", name:"uimode", value:MDBMODE});
+        {category:"MusicDB", name:"uimode", value:GLOBAL_MDBMODE});
 }
 
 function UpdateMusicDBMode(MDBState)
 {
     // Check and update UI Mode
-    if(MDBMODE != MDBState.MusicDB.uimode)
+    if(GLOBAL_MDBMODE != MDBState.MusicDB.uimode)
     {
-        MDBMODE = MDBState.MusicDB.uimode;
+        GLOBAL_MDBMODE = MDBState.MusicDB.uimode;
         _MDBState_RequrestContentUpdate();    // Reload Artist list for new Mode
     }    
-    $("#MDBMode").attr("data-mode", MDBMODE);
+
+    // Visualize mode
+    let modeelement = document.getElementById("MDBMode");
+    modeelement.dataset.mode = GLOBAL_MDBMODE;
 }
 
 function _MDBState_RequrestContentUpdate()
 {
-    if(MDBMODE == "audio")
+    if(GLOBAL_MDBMODE == "audio")
     {
         MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
         MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
     }
-    else if(MDBMODE == "video")
+    else if(GLOBAL_MDBMODE == "video")
     {
         MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
         MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
