@@ -239,6 +239,7 @@ function UpdateMusicDBMode(MDBState)
     }    
 
     // Visualize mode
+    ShowMDBControls("Controls", GLOBAL_MDBMODE);
     let modeelement = document.getElementById("MDBMode");
     modeelement.dataset.mode = GLOBAL_MDBMODE;
 }

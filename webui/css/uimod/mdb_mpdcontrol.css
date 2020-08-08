@@ -1,9 +1,26 @@
+/*
+ * MusicDB,  a music manager with web-bases UI that focus on music.
+ * Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 /******************/
 /* Main Container */
 /******************/
 
-div#MPDControls
+div#MDBControls
 {
     display:        flex;
     height:         100%;
@@ -12,7 +29,7 @@ div#MPDControls
     flex-direction: column;
 }
 
-div#MPDCMainFrame
+div#MDBCMainFrame
 {
     display:        flex;
     height:         100%;
@@ -20,7 +37,7 @@ div#MPDCMainFrame
     justify-content: space-around;
 }
 
-div.MPDC_button
+div.MDBC_button
 {
     display:        flex;
     padding-right:  10px;
@@ -29,7 +46,7 @@ div.MPDC_button
     align-items:    center;
 }
 
-div.MPDC_button:before
+div.MDBC_button:before
 {
     font-family:    FontAwesome;
     font-weight:    normal;
@@ -39,11 +56,11 @@ div.MPDC_button:before
     padding-right:  5px;
 }
 
-div#MPDCPauseButton:before
+div#MDBCPauseButton:before
 {
     content: "\f144";   /*fa-play-circle*/
 }
-div#MPDCNextButton:before
+div#MDBCNextButton:before
 {
 
     content: "\f0a9";   /*fa-arrow-circle-right*/

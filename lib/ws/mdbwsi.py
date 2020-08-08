@@ -91,10 +91,10 @@ Lyrics
 
 Other
 ^^^^^
-* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAudioStreamState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoStreamState`
-* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAudioStreamState`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetVideoStreamState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextVideo`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState`
@@ -343,7 +343,12 @@ class MusicDBWebSocketInterface(object):
                 retval = self.GetSongRelationship(args["songid"])
                 fncname= "GetSongRelationship"
         elif fncname == "SetStreamState":
-            retval = self.SetStreamState(args["state"])
+            logging.warning("SetStreamState is deprecated! Use SetAudioStreamState instead. \033[1;30m(Calling SetAudioStreamState)")
+            retval = self.SetAudioStreamState(args["state"])
+        elif fncname == "SetAudioStreamState":
+            retval = self.SetAudioStreamState(args["state"])
+        elif fncname == "SetVideoStreamState":
+            retval = self.SetVideoStreamState(args["state"])
         elif fncname == "PlayNextSong":
             retval = self.PlayNextSong()
         elif fncname == "PlayNextVideo":
@@ -1571,10 +1576,9 @@ class MusicDBWebSocketInterface(object):
         return results
 
 
-    def SetStreamState(self, state):
+    def SetAudioStreamState(self, state):
         """
         This method can be used to set the  *playing*-state of the audio stream (see :doc:`/mdbapi/audiostream`)
-        and the video stream (see :doc:`/mdbapi/videostream`)
 
         The following arguments are possible:
 
@@ -1591,7 +1595,7 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                MusicDB_Call("SetStreamState", {state:"playpause"});
+                MusicDB_Call("SetAudioStreamState", {state:"playpause"});
 
         """
         currentstate = self.audiostream.GetStreamState()
@@ -1606,6 +1610,46 @@ class MusicDBWebSocketInterface(object):
             self.audiostream.Play(False)
         elif state == "play":
             self.audiostream.Play(True)
+        else:
+            logging.warning("Unexpected state \"%s\" will not be set! \033[1;30m(State must be play, pause or playpause)", str(state))
+
+        return None
+
+
+    def SetVideoStreamState(self, state):
+        """
+        This method can be used to set the  *playing*-state of the video stream (see :doc:`/mdbapi/videostream`)
+
+        The following arguments are possible:
+
+            * ``"play"``: Set state to *playing*. If there are songs in the queue, MusicDB starts streaming.
+            * ``"pause"``: Set state to *pause*.
+            * ``"playpause"``: Toggle between *playing* and *pause*
+
+        Args:
+            state (str): New playing-state for the video streaming thread. *state* must be one of the following strings: ``"playpause"``, ``"play"`` or ``"pause"``.
+
+        Returns:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("SetVideoStreamState", {state:"playpause"});
+
+        """
+        currentstate = self.videostream.GetStreamState()
+        isplaying    = currentstate["isplaying"]
+
+        if state == "playpause":
+            if isplaying:
+                self.videostream.Play(False)
+            else:
+                self.videostream.Play(True)
+        elif state == "pause":
+            self.videostream.Play(False)
+        elif state == "play":
+            self.videostream.Play(True)
         else:
             logging.warning("Unexpected state \"%s\" will not be set! \033[1;30m(State must be play, pause or playpause)", str(state))
 
@@ -1644,7 +1688,7 @@ class MusicDBWebSocketInterface(object):
                 MusicDB_Call("PlayNextVideo");
 
         """
-        self.videostream.PlayNextSong()
+        self.videostream.PlayNextVideo()
         return None
 
 

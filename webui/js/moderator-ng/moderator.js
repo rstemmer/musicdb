@@ -258,7 +258,6 @@ window.onload = function ()
     Songproperties_ShowControl("PropertyHUD", "MainPropertyControl");
     ShowMusicDBStateView("State");
     Artistloader_Show("Artistloader");
-    ShowMPDControls("Controls");
     ShowQueueControls("QueueControl");
     ShowSearchInput("Search");
     ShowFullscreenButton();
