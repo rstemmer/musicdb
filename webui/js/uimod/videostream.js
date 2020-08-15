@@ -25,11 +25,13 @@
  *
  */
 
+var PLAYING = false;
+
 function NextVideo(videopath)
 {
 }
 
-function PlayVideo(MDBVideo, entryid, startplaying)
+function PlayVideo(MDBVideo, entryid)
 {
     let player     = document.getElementById("VideoStreamPlayer");
     let posterpath = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile);
@@ -37,25 +39,49 @@ function PlayVideo(MDBVideo, entryid, startplaying)
 
     //player.width  = MDBVideo.xresolution;
     //player.height = MDBVideo.yresolution;
-    player.poster = posterpath;
-    player.src    = videopath;
+    player.src = videopath;
     player.load();
 
     player.onended = (event) =>
         {
-            onVideoEnded(entryid)
+            onVideoEnded(entryid);
+        };
+    player.onclick = (event) =>
+        {
+            window.console && console.log("Toggle Playing");
+            PLAYING = !PLAYING;
+            UpdatePlayerState();
         };
 
-    if(startplaying == true)
-        player.play();
+    if(PLAYING == false)
+    {
+        player.poster = posterpath;
+    }
+    else
+    {
+        player.poster = null;
+    }
+
+    UpdatePlayerState();
 }
 
 
-function UpdateVideoEventHandler(videoid, entryid)
+function UpdatePlayerState()
 {
-    let video = document.getElementById(videoid);
-    // Use the onended property to avoid adding multiple event handler
+    let player = document.getElementById("VideoStreamPlayer");
+
+    if(PLAYING == true)
+    {
+        window.console && console.log("PLAYING == true");
+        player.play();
+    }
+    else
+    {
+        window.console && console.log("PLAYING == false");
+        player.pause();
+    }
 }
+
 
 function onVideoEnded(entryid)
 {

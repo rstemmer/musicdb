@@ -257,7 +257,7 @@ def VideoStreamingThread():
     States
 
         * ``isstreaming``:
-        * ``isplaying``:
+        * ``isplaying``: Stream is in a state where clients could play the current video. This is an assumption of the clients possible state. This does not represent the true clients state, and it is not meant to be used by the clients in any way.
         * ``currententry``:
     """
     from mdbapi.tracker import Tracker
