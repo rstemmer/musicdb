@@ -58,6 +58,11 @@ function onMusicDBNotification(fnc, sig, rawdata)
         {
             MusicDB_Request("GetVideoStreamState", "UpdateStreamState");
         }
+        else if(sig == "onStreamNextVideo")
+        {
+            // New video and entry is included rawdata
+            PlayVideo(rawdata.video, rawdata.queue.entryid, rawdata.streamstate.isplaying); // true: directly start playing video
+        }
     }
     else if(fnc == "MusicDB:SongQueue")
     {
@@ -114,7 +119,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
             SetMusicDBOnlineState("yes", null, "no");   // data, audio, video
 
         // FIXME: JUST FOR DEBUGGING
-        PlayVideo(args.video, args.currententry);
+        PlayVideo(args.video, args.currententry, args.isplaying);
 
         // TODO: Handle playing state
     }

@@ -29,7 +29,7 @@ function NextVideo(videopath)
 {
 }
 
-function PlayVideo(MDBVideo, entryid)
+function PlayVideo(MDBVideo, entryid, startplaying)
 {
     let player     = document.getElementById("VideoStreamPlayer");
     let posterpath = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile);
@@ -40,12 +40,14 @@ function PlayVideo(MDBVideo, entryid)
     player.poster = posterpath;
     player.src    = videopath;
     player.load();
-    //player.play();
 
     player.onended = (event) =>
         {
             onVideoEnded(entryid)
         };
+
+    if(startplaying == true)
+        player.play();
 }
 
 

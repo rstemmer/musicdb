@@ -252,7 +252,7 @@ def VideoStreamingThread():
     The thread triggers the following events:
 
         * ``StatusChanged``: When the play-state changed
-        * ``StreamNextVideo``: When the player shall stream the next video
+        * ``StreamNextVideo``: When the player shall stream the next video. MDBVideo, streamstate and queue entry is included as rawdata argument.
 
     States
 
@@ -326,14 +326,16 @@ def VideoStreamingThread():
                 logging.info("Video Queue is empty, waiting for new video.")
                 continue
 
-            mdbvideo  = musicdb.GetVideoById(queueentry["videoid"])
-            videoinfo = {}
-            videoinfo["video"] = mdbvideo
-            videoinfo["queue"] = queueentry
-            Event_StreamNextVideo(videoinfo)
-
             State["isplaying"]    = True
             State["currententry"] = queueentry["entryid"]
+
+            mdbvideo  = musicdb.GetVideoById(queueentry["videoid"])
+            videoinfo = {}
+            videoinfo["video"]       = mdbvideo
+            videoinfo["queue"]       = queueentry
+            videoinfo["queue"]["entryid"] = str(videoinfo["queue"]["entryid"]) # JavaScript cannot handle big integers
+            videoinfo["streamstate"] = State
+            Event_StreamNextVideo(videoinfo)
 
     return
 
