@@ -332,7 +332,7 @@ def VideoStreamingThread():
             mdbvideo  = musicdb.GetVideoById(queueentry["videoid"])
             videoinfo = {}
             videoinfo["video"]       = mdbvideo
-            videoinfo["queue"]       = queueentry
+            videoinfo["queue"]       = dict(queueentry) # will be manipulated, so better make a copy
             videoinfo["queue"]["entryid"] = str(videoinfo["queue"]["entryid"]) # JavaScript cannot handle big integers
             videoinfo["streamstate"] = State
             Event_StreamNextVideo(videoinfo)
