@@ -274,7 +274,12 @@ def VideoStreamingThread():
 
     State["isplaying"]    = False
     State["isstreaming"]  = True
-    State["currententry"] = None
+    queueentry = queue.CurrentVideo()
+    if queueentry == None or queueentry["entryid"] == None:
+        logging.info("Video Queue is empty, waiting for new video.")
+    else:
+        State["currententry"] = queueentry["entryid"]
+
     while RunThread:
         # Sleep a bit to reduce the load on the CPU. If not in streaming , sleep a bit longer
         if State["isstreaming"]:
@@ -292,12 +297,13 @@ def VideoStreamingThread():
             queue.NextVideo()
             State["isplaying"] = False
 
-        elif command == "VideoFinished":    # Video was played to the end
+        elif command == "VideoEnded":    # Video was played to the end
             # If the currently streaming entry is different from the finished video
             # a different client may have already finished streaming the video and
             # requested the next song.
             # So nothing to do here anymore
             if State["currententry"] != argument:
+                logging.debug("Ignoring VideoEnded command for %s. Current video is %s.", str(argument), str(State["currententry"]))
                 continue
 
             logging.debug("Finished streaming video with queue entry id %i", argument)
@@ -551,7 +557,7 @@ class VideoStreamManager(object):
 
 
 
-    def VideoFinished(self, queueentryid):
+    def VideoEnded(self, queueentryid):
         """
         This method informs the Streaming Thread the video was completely streams.
         It sets the ``lastplayed`` statistics of the video and
@@ -565,7 +571,7 @@ class VideoStreamManager(object):
         Returns:
             ``True`` on success, otherwise ``False``
         """
-        return self.PushCommand("VideoFinished", queueentryid)
+        return self.PushCommand("VideoEnded", queueentryid)
 
 
 

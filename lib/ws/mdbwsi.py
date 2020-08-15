@@ -54,6 +54,7 @@ Videos
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveVideoInQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateVideoStatistic`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextVideo`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.VideoEnded`
 
 Queue
 ^^^^^
@@ -353,6 +354,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.PlayNextSong()
         elif fncname == "PlayNextVideo":
             retval = self.PlayNextVideo()
+        elif fncname == "VideoEnded":
+            retval = self.VideoEnded(args["entryid"])
         else:
             logging.warning("Unknown function: %s! \033[0;33m(will be ignored)", str(fncname))
             return None
@@ -1335,7 +1338,7 @@ class MusicDBWebSocketInterface(object):
             videotags = self.GetVideoTags(video["id"])
 
             state["video"]      = video
-            state["vudeitags"]  = videotags
+            state["videotags"]  = videotags
             state["hasqueue"]   = True
         else:
             state["hasqueue"]   = False
@@ -1689,6 +1692,33 @@ class MusicDBWebSocketInterface(object):
 
         """
         self.videostream.PlayNextVideo()
+        return None
+
+
+    def VideoEnded(self, entryid):
+        """
+        Notify the Video Queue that the current played video with a specific entry id ended.
+        In case multiple clients are calling this method, the `~mdbapi.videostream.VideoStreamManager` will handle the conflict.
+
+        Args:
+            entryid (str): UUID of the video entry in the song queue
+
+        Returns:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("VideoEnded", {entryid:'168493523207840521806064336792025247758'});
+
+        """
+        try:
+            entryid = int(entryid)
+        except ValueError:
+            logging.debug("Invalid argument. Cannot cast UUID \"%s\" to integer.", str(entryid))
+            return None
+
+        self.videostream.VideoEnded(entryid)
         return None
 
 

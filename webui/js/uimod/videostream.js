@@ -29,7 +29,7 @@ function NextVideo(videopath)
 {
 }
 
-function PlayVideo(MDBVideo)
+function PlayVideo(MDBVideo, entryid)
 {
     let player     = document.getElementById("VideoStreamPlayer");
     let posterpath = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile);
@@ -41,10 +41,23 @@ function PlayVideo(MDBVideo)
     player.src    = videopath;
     player.load();
     //player.play();
+
+    player.onended = (event) =>
+        {
+            onVideoEnded(entryid)
+        };
 }
 
-function onVideoFinished()
+
+function UpdateVideoEventHandler(videoid, entryid)
 {
+    let video = document.getElementById(videoid);
+    // Use the onended property to avoid adding multiple event handler
+}
+
+function onVideoEnded(entryid)
+{
+    MusicDB_Call("VideoEnded", {entryid: entryid});
 }
 
 function onVideoStreamConnect()
