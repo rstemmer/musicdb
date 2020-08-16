@@ -44,16 +44,6 @@ function ShowMusicDBStateView(parentID)
 
     html += "<div id=MDBStateView class=\"hlcolor smallfont\">";
 
-    // Audio Stream (Icecast)
-    html += "<span id=AudioStreamState class=\"onlinestate\" data-online=\"unknown\">";
-    html += "Icecast";
-    html += "</span><br>";
-
-    // Video Stream (Icecast)
-    html += "<span id=VideoStreamState class=\"onlinestate\" data-online=\"unknown\">";
-    html += "Video Stream";
-    html += "</span><br>";
-
     // Data Stream (MusicDB)
     html += "<span id=MDBReconnectBtn data-online=\"unknown\""; 
     html += " title=\"Reconnect to MusicDB server\"";
@@ -62,6 +52,16 @@ function ShowMusicDBStateView(parentID)
     html += "</span>";
     html += "<span id=DataStreamState class=\"onlinestate\" data-online=\"unknown\">";
     html += "MusicDB";
+    html += "</span><br>";
+
+    // Audio Stream (Icecast)
+    html += "<span id=AudioStreamState class=\"onlinestate\" data-online=\"unknown\">";
+    html += "Audio Stream";
+    html += "</span><br>";
+
+    // Video Stream (MusicDB)
+    html += "<span id=VideoStreamState class=\"onlinestate\" data-online=\"unknown\">";
+    html += "Video Stream";
     html += "</span><br>";
 
     // Mode Select
@@ -76,7 +76,7 @@ function ShowMusicDBStateView(parentID)
     html += " data-mode=\"unknown\"";
     html += " onClick=\"ToggleMusicDBMode();\"";
     html += ">";
-    html += "Mode";
+    html += "Stream Mode";
     html += "</span><br>";
 
     // Playtime
@@ -90,9 +90,13 @@ function ShowMusicDBStateView(parentID)
 
     html += "</div>";
     
-    // Create Element
+    // Create Elements
     document.getElementById(parentID).innerHTML = html;
+    ShowMDBControls("Controls", GLOBAL_MDBMODE);
+    UpdateMDBControls(null, GLOBAL_MDBMODE);
 }
+
+
 
 // Valid states: yes, no, error, unknown, *null* (to change nothing)
 function SetMusicDBOnlineState(datastreamstate, audiostreamstate, videostreamstate)
@@ -119,16 +123,22 @@ function SetMusicDBOnlineState(datastreamstate, audiostreamstate, videostreamsta
     }
 }
 
+
+
 // Valid states: unknown, playing, paused, *null* (to change nothing)
 function SetMusicDBPlayingState(serverstate, clientstate)
 {
-    let sselement = document.getElementById("PlayTime");
-    let cselement = document.getElementById("CurrentTime");
+    let sselement  = document.getElementById("PlayTime");
+    let cselement  = document.getElementById("CurrentTime");
 
     if(typeof serverstate === "string")
         sselement.dataset.playstate = serverstate;
     if(typeof clientstate === "string")
         cselement.dataset.playstate = serverstate;
+
+    window.console && console.log("SetMusicDBPlayingState");
+
+    UpdateMDBControls(serverstate, GLOBAL_MDBMODE);
 }
 
 
@@ -239,7 +249,7 @@ function UpdateMusicDBMode(MDBState)
     }    
 
     // Visualize mode
-    ShowMDBControls("Controls", GLOBAL_MDBMODE);
+    UpdateMDBControls(null, GLOBAL_MDBMODE);
     let modeelement = document.getElementById("MDBMode");
     modeelement.dataset.mode = GLOBAL_MDBMODE;
 }

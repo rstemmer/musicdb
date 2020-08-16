@@ -16,17 +16,6 @@
 
 "use strict";
 
-/*
- * This class provides the artistloader.
- * It is possible to select a set of genres and/or to reload the artists-list
- */
-
-function ShowMPDControls(parentID)
-{
-    window.console && console.log("ShowMPDControls is deprecated. Use ShowMDBControls instead!");
-    return ShowMDBControls(parentID, "audio");
-}
-
 // mode can be "audio" or "video"
 function ShowMDBControls(parentID, mode)
 {
@@ -40,43 +29,16 @@ function ShowMDBControls(parentID, mode)
     html += "<div";
     html += " id=MDBCPauseButton";
     html += " class=\"MDBC_button hlcolor\"";
-    if(mode == "audio")
-    {
-        html += " title=\"Play/Pause song\"";
-        html += " onClick=\"MusicDB_Call(\'SetAudioStreamState\', {state:\'playpause\'});\"";
-    }
-    else if(mode == "video")
-    {
-        html += " title=\"Play/Pause video\"";
-        html += " onClick=\"MusicDB_Call(\'SetVideoStreamState\', {state:\'playpause\'});\"";
-    }
     html += ">";
-    html += "Pause/Play";
+    html += "…";
     html += "</div>";
 
     // Next
     html += "<div";
     html += " id=MDBCNextButton";
     html += " class=\"MDBC_button hlcolor\"";
-    if(mode == "audio")
-    {
-        html += " title=\"Play next song from queue\"";
-        html += " onClick=\"MusicDB_Call(\'PlayNextSong\');\"";
-    }
-    else if(mode == "video")
-    {
-        html += " title=\"Play next video from queue\"";
-        html += " onClick=\"MusicDB_Call(\'PlayNextVideo\');\"";
-    }
     html += ">";
-    if(mode == "audio")
-    {
-        html += "Next Song";
-    }
-    else if(mode == "video")
-    {
-        html += "Next Video";
-    }
+    html += "…";
     html += "</div>";
 
     html += "</div>"; // frame
@@ -85,9 +47,69 @@ function ShowMDBControls(parentID, mode)
     // Create Element
     let parentelement = document.getElementById(parentID);
     parentelement.innerHTML = html;
+    UpdateMDBControls(null, mode);
     UpdateStyle();  // Colorize text correctly
 }
 
+
+// Valid states: unknown, playing, paused, *null* (to change nothing)
+// Valid modes: audio, video, *null*
+function UpdateMDBControls(serverstate, mode)
+{
+    let playbutton = document.getElementById("MDBCPauseButton");
+    let nextbutton = document.getElementById("MDBCNextButton");
+
+    if(playbutton)
+    {
+        if(typeof serverstate === "string")
+        {
+            let buttonlabel = "";
+
+            if(serverstate === "playing")
+                buttonlabel = "Pause Stream";
+            else if(serverstate === "paused")
+                buttonlabel = "Continue Stream";
+            else
+                buttonlabel = "(Server State Unknown)";
+
+            playbutton.textContent = buttonlabel;
+        }
+
+        if(typeof mode === "string")
+        {
+            if(mode == "audio")
+            {
+                playbutton.title   = "Update Audio Stream State";
+                playbutton.onclick = (event) => { MusicDB_Call("SetAudioStreamState", {state:"playpause"}); };
+            }
+            else if(mode == "video")
+            {
+                playbutton.title   = "Update Video Stream State";
+                playbutton.onclick = (event) => { MusicDB_Call("SetVideoStreamState", {state:"playpause"}); };
+            }
+        }
+    }
+
+
+    if(nextbutton)
+    {
+        if(typeof mode === "string")
+        {
+            if(mode == "audio")
+            {
+                nextbutton.title       = "Play Next Song from Queue";
+                nextbutton.onclick     = (event) => { MusicDB_Call("PlayNextSong"); };
+                nextbutton.textContent = "Next Song";
+            }
+            else if(mode == "video")
+            {
+                nextbutton.title       = "Play Next Video from Queue";
+                nextbutton.onclick     = (event) => { MusicDB_Call("PlayNextVideo"); };
+                nextbutton.textContent = "Next Video";
+            }
+        }
+    }
+}
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

@@ -111,8 +111,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
     }
     else if(fnc == "GetVideoStreamState")
     {
-        window.console && console.log("GetVideoStreamState");
-        window.console && console.log(args);
         if(args.isstreaming)
             SetMusicDBOnlineState("yes", null, "yes");  // data, audio, video
         else
