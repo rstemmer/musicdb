@@ -46,32 +46,22 @@ There are two functions and one class that are available to manage the Stream:
 Streaming Thread
 ----------------
 
-.. warning::
+The Streaming Thread mainly manages updating the queue based on played videos by the stream player (WebUI).
+This thread is the point where the music managed by MusicDB gets handed over to the users web browser
+so that the user can watch the video stream.
 
-    **TODO:** UPDATE
-
-The Streaming Thread mainly manages sending mp3-file chunks to the Icecast server.
-This thread is the point where the music managed by MusicDB gets handed over to Icecast so the user can listen to it.
-
-The :class:`~AudioStreamManager` communicates with the :meth:`~AudioStreamingThread` with a `Command Queue`_.
-
-More details are in the :meth:`~AudioStreamingThread` description.
+The :class:`~VideoStreamManager` communicates with the :meth:`~VideoStreamingThread` with a `Command Queue`_.
 
 The thread maintains a global dictionary that holds the state of the thread - The **Stream State**.
-It can be accessed via :meth:`mdbapi.audiostream.AudioStreamManager.GetStreamState`.
-This will only be updated by the AudioStreamingThread.
+It can be accessed via :meth:`mdbapi.videostream.VideoStreamManager.GetStreamState`.
+This will only be updated by the VideoStreamingThread.
 It contains the following information:
 
-    * ``isconnected`` (bool): ``True`` when connected to Icecast, otherwise ``False``
-    * ``isplaying`` (bool): ``True`` when streaming, otherwise ``False``
+More details are in the :meth:`~VideoStreamingThread` description.
 
 
 Command Queue
 -------------
-
-.. warning::
-
-    **TODO:** UPDATE
 
 The Command Queue is a FIFO buffer of tuple.
 Each tuple has a command name and an optional argument.
@@ -80,14 +70,7 @@ For the whole Module, there is only one global Command Queue.
 Each instance of the :class:`~VideoStreamManager` class writes into the same queue following the *First Come First Serve* (FCFS) protocol.
 The :meth:`~VideoStreamingThread` reads the command from that queue and processes them.
 
-The following commands are available:
-
-    ``Play`` (:meth:`VideoStreamManager.Play`):
-        If state is ``True`` **TODO**
-        If state is ``False`` **TODO**
-
-    ``PlayNextVideo`` (:meth:`VideoStreamManager.PlayNextVideo`):
-        **TODO**
+More details are in the :meth:`~VideoStreamingThread` description.
 
 
 Event Management
@@ -109,13 +92,15 @@ A return value gets not handled.
 The following events exist:
 
     StatusChanged:
-        **TODO**
-        Gets triggered when the play status changed.
+        Gets triggered when the status of the streaming thread changes.
+        Internal states are excluded.
 
-    TimeChanged:
-        **TODO**
-        The time of the current playing position of a song changed.
-        Argument is the current playtime of the song in seconds.
+    StreamNextVideo:
+        Informs the stream player to play the next video in the queue.
+        The video to play is provided by the event as well.
+
+More details are in the :meth:`~VideoStreamingThread` description.
+
 
 Example:
 
@@ -139,11 +124,9 @@ Example:
 import time
 import logging
 import threading
-#from lib.filesystem     import Filesystem
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
 from mdbapi.videoqueue  import VideoQueue
-#from mdbapi.randy       import Randy
 
 
 Config          = None
@@ -198,7 +181,7 @@ def StartVideoStreamingThread(config, musicdb):
     Config       = config
     Callbacks    = []
     CommandQueue = []
-    State        = {"isconnected": False, "isplaying": False}
+    State        = {"isstreaming": False, "isplaying": False, "currententry": 0}
 
     logging.debug("Starting Video Streaming Thread")
     RunThread = True
@@ -239,26 +222,32 @@ def VideoStreamingThread():
     """
     This thread manages the streaming of the videos from the Video Queue.
 
-.. warning::
-
-    **TODO:** UPDATE
-
-
     The thread tracks the played video using the :doc:`/mdbapi/tracker` module.
-    It also tracks randomly added videos assuming the user skips or removes songs that don't fit.
+    It does not track randomly added videos.
     Only completely played videos will be considered.
     Skipped videos will be ignored.
+    It also maintains the ``lastplayed`` statistic.
 
     The thread triggers the following events:
 
-        * ``StatusChanged``: When the play-state changed
+        * ``StatusChanged``: When the stream state changed
         * ``StreamNextVideo``: When the player shall stream the next video. MDBVideo, streamstate and queue entry is included as rawdata argument.
 
     States
 
-        * ``isstreaming``:
+        * ``isstreaming``: This thread manages the queue and provides new videos when a video is considered being watched.
         * ``isplaying``: Stream is in a state where clients could play the current video. This is an assumption of the clients possible state. This does not represent the true clients state, and it is not meant to be used by the clients in any way.
-        * ``currententry``:
+        * ``currententry``: The queue entry ID of the current playing video.
+
+    Commands:
+
+        * ``VideoEnded``: When a client send the VideoEnded information to the server (:meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.VideoEnded` this thread manages the call. In case the provided entry ID is the same as the ``currententy`` ID the next video gets popped from the video queue. Otherwise the command gets ignored.
+        * ``PlayNextVideo``: Skip the current video and start playing the next.
+        * ``SetStreamState``: Sets the stream state to streaming or not streaming.
+
+    When streaming gets deactivated, or activated, it also generates an event (``StatusChanged``).
+    It is expected that all clients stop playing the current video if ``isstreaming`` is set to ``Flase``.
+    In case it is set to ``True``, all clients that were used to play the videos continue playing the current video.
     """
     from mdbapi.tracker import Tracker
 
@@ -300,7 +289,7 @@ def VideoStreamingThread():
         elif command == "VideoEnded":    # Video was played to the end
             # If the currently streaming entry is different from the finished video
             # a different client may have already finished streaming the video and
-            # requested the next song.
+            # requested the next video.
             # So nothing to do here anymore
             if State["currententry"] != argument:
                 logging.debug("Ignoring VideoEnded command for %s. Current video is %s.", str(argument), str(State["currententry"]))
@@ -312,15 +301,15 @@ def VideoStreamingThread():
             if not Config.debug.disablestats:
                 musicdb.UpdateVideoStatistic(queueentry["videoid"], "lastplayed", int(time.time()))
 
-        elif command == "Stream":
+        elif command == "SetStreamState":
             logging.debug("Setting Video Stream-State to %s", str(argument))
             State["isstreaming"] = argument
             Event_StatusChanged()
 
 
-        # Stream next song, if clients finished streaming a song
+        # Stream next video, if clients finished streaming a video
         if State["isstreaming"] and not State["isplaying"]:
-            # Get current song that shall be streamed.
+            # Get current video that shall be streamed.
             queueentry = queue.CurrentVideo()
             if queueentry == None or queueentry["entryid"] == None:
                 logging.info("Video Queue is empty, waiting for new video.")
@@ -409,9 +398,9 @@ class VideoStreamManager(object):
 
         **Important for developer:**
 
-        Never call the :meth:`mdbapi.videoqueue.VideoQueue.NextSong` method directly from this class!
+        Never call the :meth:`mdbapi.videoqueue.VideoQueue.NextVideo` method directly from this class!
         Send the ``"PlayNextVideo"`` command to the :meth:`VideoStreamingThread` instead.
-        The thread handles the skip to the next song and starts streaming the new file.
+        The thread handles the skip to the next video and starts streaming the new file.
 
     Args:
         config: :class:`~lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration
@@ -526,13 +515,13 @@ class VideoStreamManager(object):
         """
         Set the play-state.
 
-            * If ``play`` is ``True`` (default value), the Streaming Thread streams data. **TODO: Update docu**
+            * If ``play`` is ``True`` (default value), the Streaming Thread streams data.
             * If ``play`` is ``False``, the audio stream gets paused.
 
         This function is forcing the state. It does not care about the current playing state.
 
         When the command got successful executed, 
-        the :meth:`~mdbapi.audiostream.VideoStreamingThread` will trigger the ``StatusChanged`` event.
+        the :meth:`~mdbapi.videostream.VideoStreamingThread` will trigger the ``StatusChanged`` event.
 
         Args:
             play (bool): Playstate the Streaming Thread shall get
@@ -544,7 +533,7 @@ class VideoStreamManager(object):
             logging.warning("Unexpected datatype %s of play-argument (expecting bool)! \033[1;30m(Command will be ignored)", str(type(play)))
             return False
 
-        return self.PushCommand("Play", play)
+        return self.PushCommand("SetStreamState", play)
 
 
 

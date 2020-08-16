@@ -1,13 +1,13 @@
-Streaming Server
-================
+Audio Streaming Server
+======================
 
-.. automodule:: mdbapi.stream
+.. automodule:: mdbapi.audiostream
    :members: StartAudioStreamingThread, StopAudioStreamingThread, AudioStreamingThread
 
 
 Stream Manager Class
 --------------------
 
-.. autoclass:: mdbapi.stream.StreamManager
+.. autoclass:: mdbapi.audiostream.AudioStreamManager
    :members:
 
