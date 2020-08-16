@@ -212,10 +212,12 @@ function ToggleMusicDBMode()
     // Switch mode
     if(GLOBAL_MDBMODE == "audio")
     {
+        MusicDB_Call("SetAudioStreamState", {state:"pause"});
         GLOBAL_MDBMODE = "video";
     }
     else
     {
+        MusicDB_Call("SetVideoStreamState", {state:"pause"});
         GLOBAL_MDBMODE = "audio";
     }
 
