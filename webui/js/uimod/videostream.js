@@ -25,7 +25,8 @@
  *
  */
 
-var PLAYING = false;
+var GLOBAL_PLAYING   = false;   // Is this client playing the stream
+var GLOBAL_STREAMING = false;   // Is the server streaming videos
 
 function NextVideo(videopath)
 {
@@ -48,12 +49,11 @@ function PlayVideo(MDBVideo, entryid)
         };
     player.onclick = (event) =>
         {
-            window.console && console.log("Toggle Playing");
-            PLAYING = !PLAYING;
+            GLOBAL_PLAYING = !GLOBAL_PLAYING;
             UpdatePlayerState();
         };
 
-    if(PLAYING == false)
+    if(GLOBAL_PLAYING == false)
     {
         player.poster = posterpath;
     }
@@ -66,18 +66,22 @@ function PlayVideo(MDBVideo, entryid)
 }
 
 
-function UpdatePlayerState()
+// isstreaming (optional): true, false, null
+function UpdatePlayerState(isstreaming)
 {
+    if(typeof isstreaming === "boolean")
+    {
+        GLOBAL_STREAMING = isstreaming;
+    }
+
     let player = document.getElementById("VideoStreamPlayer");
 
-    if(PLAYING == true)
+    if(GLOBAL_PLAYING == true && GLOBAL_STREAMING == true)
     {
-        window.console && console.log("PLAYING == true");
         player.play();
     }
     else
     {
-        window.console && console.log("PLAYING == false");
         player.pause();
     }
 }

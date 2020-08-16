@@ -123,6 +123,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
             SetMusicDBPlayingState("playing", null);    // Stream, Client
         else
             SetMusicDBPlayingState("paused", null);     // Stream, Client
+        UpdatePlayerState(args.isstreaming);
     }
     else
         window.console && console.log(" >> fnc: "+fnc+"; sig: "+sig);

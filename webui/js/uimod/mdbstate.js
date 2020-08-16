@@ -36,7 +36,7 @@
  *   On onTimeChanged-mpd-event set the TimePlayed. This call will also update the view
  */
 
-var GLOBAL_MDBMODE = "audio";  // audio/video
+var GLOBAL_MDBMODE = "audio"; // audio/video
 
 function ShowMusicDBStateView(parentID)
 {
