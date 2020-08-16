@@ -119,7 +119,10 @@ function onMusicDBMessage(fnc, sig, args, pass)
         // FIXME: JUST FOR DEBUGGING
         PlayVideo(args.video, args.currententry);
 
-        // TODO: Handle playing state
+        if(args.isstreaming)
+            SetMusicDBPlayingState("playing", null);    // Stream, Client
+        else
+            SetMusicDBPlayingState("paused", null);     // Stream, Client
     }
     else
         window.console && console.log(" >> fnc: "+fnc+"; sig: "+sig);

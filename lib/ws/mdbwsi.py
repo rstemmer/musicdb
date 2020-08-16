@@ -1621,7 +1621,7 @@ class MusicDBWebSocketInterface(object):
 
     def SetVideoStreamState(self, state):
         """
-        This method can be used to set the  *playing*-state of the video stream (see :doc:`/mdbapi/videostream`)
+        This method can be used to set the *streaming*-state of the video stream (see :doc:`/mdbapi/videostream`)
 
         The following arguments are possible:
 
@@ -1630,7 +1630,7 @@ class MusicDBWebSocketInterface(object):
             * ``"playpause"``: Toggle between *playing* and *pause*
 
         Args:
-            state (str): New playing-state for the video streaming thread. *state* must be one of the following strings: ``"playpause"``, ``"play"`` or ``"pause"``.
+            state (str): New streaming-state for the video streaming thread. *state* must be one of the following strings: ``"playpause"``, ``"play"`` or ``"pause"``.
 
         Returns:
             ``None``
@@ -1642,7 +1642,7 @@ class MusicDBWebSocketInterface(object):
 
         """
         currentstate = self.videostream.GetStreamState()
-        isplaying    = currentstate["isplaying"]
+        isplaying    = currentstate["isstreaming"]
 
         if state == "playpause":
             if isplaying:
