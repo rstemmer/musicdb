@@ -8,8 +8,9 @@ function CreateIntersectionObserver(elementname, callback)
         };
 
     let trigger  = document.getElementById(elementname);
-    let observer = new IntersectionObserver(callback, options);
-    observer.observe(trigger);
+    // This feature was annoying because the detached video covered parts of the queue and controls.
+    //let observer = new IntersectionObserver(callback, options);
+    //observer.observe(trigger);
 }
 
 
