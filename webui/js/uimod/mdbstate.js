@@ -250,10 +250,26 @@ function UpdateMusicDBMode(MDBState)
         _MDBState_RequrestContentUpdate();    // Reload Artist list for new Mode
     }    
 
-    // Visualize mode
+    // Update UI
     UpdateMDBControls(null, GLOBAL_MDBMODE);
+    
     let modeelement = document.getElementById("MDBMode");
     modeelement.dataset.mode = GLOBAL_MDBMODE;
+
+    // Show/Hide video panel
+    let videopanel  = document.getElementById("VideoPanel");
+    let panels      = document.getElementById("Panels");
+    if(GLOBAL_MDBMODE == "audio")
+    {
+        panels.dataset.panels      = "1";
+        videopanel.dataset.visible = "false";
+    }
+    else
+    {
+        panels.dataset.panels      = "2";
+        videopanel.dataset.visible = "true";
+    }
+
 }
 
 function _MDBState_RequrestContentUpdate()
