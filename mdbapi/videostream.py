@@ -323,7 +323,8 @@ def VideoStreamingThread():
             videoinfo["video"]       = mdbvideo
             videoinfo["queue"]       = dict(queueentry) # will be manipulated, so better make a copy
             videoinfo["queue"]["entryid"] = str(videoinfo["queue"]["entryid"]) # JavaScript cannot handle big integers
-            videoinfo["streamstate"] = State
+            videoinfo["streamstate"] = dict(State)
+            videoinfo["streamstate"]["currententry"] = str(videoinfo["streamstate"]["currententry"])
             Event_StreamNextVideo(videoinfo)
 
     return
@@ -343,7 +344,10 @@ def Event_StatusChanged():
     More details in the module description at the top of this document.
     """
     global State
-    TriggerEvent("StatusChanged", State)
+    streamstate = dict(State)
+    streamstate["currententry"] = str(streamstate["currententry"]) # JavaScript cannot handle big integers
+
+    TriggerEvent("StatusChanged", streamstate)
 
 def Event_StreamNextVideo(videoinfo):
     """
