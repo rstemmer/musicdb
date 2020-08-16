@@ -1013,6 +1013,12 @@ class MusicDBDatabase(object):
         video["badaudio"]    = 0
         video["checksum"]    = self.fs.Checksum(videopath)
         video["lastplayed"]  = 0
+        video["lyricsvideo"] = 0
+        video["bgcolor"]     = "#101010"
+        video["fgcolor"]     = "#F0F0F0"
+        video["hlcolor"]     = "#909090"
+        video["vbegin"]      = 0
+        video["vend"]        = video["playtime"]
 
         # Fix attributes to fit in MusicDB environment before adding it to the database
         try:

@@ -164,9 +164,13 @@ The columns of the videos table are the following:
     | likes | dislikes | favorite | liverecording | badaudio |
     +-------+----------+----------+---------------+----------+
 
-    +----------+------------+
-    | checksum | lastplayed |
-    +----------+------------+
+    +----------+------------+-------------+
+    | checksum | lastplayed | lyricsvideo |
+    +----------+------------+-------------+
+
+    +---------+---------+---------+--------+------+
+    | bgcolor | fgcolor | hlcolor | vbegin | vend |
+    +---------+---------+---------+--------+------+
 
 songid, albumid (Integer)
     These are references to an album the videos was included in,
@@ -543,6 +547,12 @@ class MusicDatabase(Database):
     VIDEO_BADAUDIO      = 21
     VIDEO_CHECKSUM      = 22
     VIDEO_LASTPLAYED    = 23
+    VIDEO_LYRICSVIDEO   = 24
+    VIDEO_BGCOLOR       = 25
+    VIDEO_FGCOLOR       = 26
+    VIDEO_HLCOLOR       = 27
+    VIDEO_VBEGIN        = 28
+    VIDEO_VEND          = 29
 
     TAG_ID          = 0
     TAG_NAME        = 1
@@ -658,6 +668,12 @@ class MusicDatabase(Database):
         video["badaudio"]      = entry[self.VIDEO_BADAUDIO      ]
         video["checksum"]      = entry[self.VIDEO_CHECKSUM      ]
         video["lastplayed"]    = entry[self.VIDEO_LASTPLAYED    ]
+        video["lyricsvideo"]   = entry[self.VIDEO_LYRICSVIDEO   ]
+        video["bgcolor"]       = entry[self.VIDEO_BGCOLOR       ]
+        video["fgcolor"]       = entry[self.VIDEO_FGCOLOR       ]
+        video["hlcolor"]       = entry[self.VIDEO_HLCOLOR       ]
+        video["vbegin"]        = entry[self.VIDEO_VBEGIN        ]
+        video["vend"]          = entry[self.VIDEO_VEND          ]
         return video
 
     def __TagEntryToDict(self, entry):
@@ -806,7 +822,13 @@ class MusicDatabase(Database):
             liverecording = :liverecording ,
             badaudio      = :badaudio      ,
             checksum      = :checksum      ,
-            lastplayed    = :lastplayed
+            lastplayed    = :lastplayed    ,
+            lyricsvideo   = :lyricsvideo   ,
+            bgcolor       = :bgcolor       ,
+            fgcolor       = :fgcolor       ,
+            hlcolor       = :hlcolor       ,
+            vbegin        = :vbegin        ,
+            vend          = :vend
         WHERE
             videoid=:id
         """

@@ -81,7 +81,13 @@ CREATE TABLE IF NOT EXISTS videos
     liverecording   INTEGER DEFAULT 0,
     badaudio    INTEGER DEFAULT 0,
     checksum    TEXT    DEFAULT "",
-    lastplayed  INTEGER DEFAULT 0
+    lastplayed  INTEGER DEFAULT 0,
+    lyricsvideo INTEGER DEFAULT 0,
+    bgcolor     TEXT    DEFAULT '#101010',
+    fgcolor     TEXT    DEFAULT '#F0F0F0',
+    hlcolor     TEXT    DEFAULT '#909090',
+    vbegin      INTEGER,
+    vend        INTEGER
 );
 
 
