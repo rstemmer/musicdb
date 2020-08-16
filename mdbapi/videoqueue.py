@@ -372,15 +372,13 @@ class VideoQueue(object):
 
         .. warning::
 
-            **FIXME/TODO**: This is derived from the Song Queue - It will not fit to the Video Queue
-
             In context of streaming, this method may not be the one you want to call.
             This Method drops the current video and sets the next video on top of the queue.
 
-            The stream will not notice this, so that it continues streaming the previous video. (See :doc:`/mdbapi/stream`).
-            If you want to stream the next video, call :meth:`mdbapi.stream.StreamManager.PlayNextVideo`.
+            The stream will not notice this, so that it continues streaming the previous video. (See :doc:`/mdbapi/videostream`).
+            If you want to stream the next video, call :meth:`mdbapi.videostream.VideoStreamManager.PlayNextVideo`.
 
-            The :meth:`mdbapi.stream.StreamManager.PlayNextVideo` then makes the Streaming Thread calling this method.
+            The :meth:`mdbapi.videostream.VideoStreamManager.PlayNextVideo` then makes the Streaming Thread calling this method.
 
         This method triggers the ``VideoChanged`` and ``VideoQueueChanged`` event when the queue was not empty.
         The ``VideoChanged`` event gets also triggered when there was no next video.
