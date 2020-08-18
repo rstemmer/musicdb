@@ -29,11 +29,13 @@ frame:
 
 thumbnail:
     One video frame that is used as image to represent the video in the UI.
-    File format is JPEG.
+    File format is JPEG, the file names begin with the prefix ``frame-``.
+    In context of HTML ``video``-tags, this thumbnail is used as *poster*
 
 preview:
     A short WebP-animation consisting of several frames of the video.
     This animation will can be played when the cursor hovers above the video.
+    The file names begin with the prefix ``preview``.
 
 
 Database
@@ -42,15 +44,13 @@ Database
 The thumbnail and preview data is part of the video entry in the MusicDB Database.
 The thumbnail and preview part consists of the following entries:
 
-    +------------+
-    | framespath |
-    +------------+
+    +-----------------+---------------+-------------+
+    | framesdirectory | thumbnailfile | previewfile |
+    +-----------------+---------------+-------------+
 
-framespath:
-    The path to a frame relative to the thumbnails root directory set in the MusicDB Configuration.
-    To access a scaled version of the artwork, the scale as prefix can be used.
-
-    For example, to access a thumbnail, the absolute path would be ``/$THUMBNAILCACHE/$THUMBNAILPATH``.
+framesdirectory:
+    The path to a frame relative to the thumbnails and previews root directory set in the MusicDB Configuration.
+    To access a scaled version of the artwork, the scale as suffix can be used.
 
 
 Path structure
@@ -91,7 +91,7 @@ preview.webp:
     The amount of frames can be configured, as well as the animation length.
     The frames are uniform distributed over the animation length.
 
-preview-$i ($s×$s).webp:
+preview ($s×$s).webp:
     A scaled version of the preview animation.
 
 The sub directory name for each video gets created by
@@ -107,6 +107,7 @@ HTTPS Server
 
 Web browsers has to prefix the path with ``videoframes/``.
 So, the server must be configured.
+The resulting path will then be for example ``"videoframes/$framesdirectory/$previewfile"``.
 
 
 Scaling
@@ -138,7 +139,7 @@ An example configuration can look like the following one:
 Under these conditions, a 150×150 pixels preview animation of a video "Sonne" from "Rammstein"
 would have the following absolute path:
 ``/data/musicdb/videoframes/Rammstein/Sonne/preview (150×150).webp``.
-Inside the database, this path is stored as ``Ramstein - Sonne``.
+Inside the database, this path is stored as ``Rammstein - Sonne``.
 Inside the HTML code of the WebUI the following path would be used: ``Rammstein/Sonne/preview (150×150).webp``.
 
 
