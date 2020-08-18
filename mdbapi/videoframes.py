@@ -399,21 +399,58 @@ class VideoFrames(object):
         Returns:
             ``True`` on success, otherwise ``False``
         """
-        # Check if there are already frames.
-        relpreviewpath = dirname + "/preview.webp"
-        if self.framesroot.IsFile(relpreviewpath):
-            logging.debug("There is already a preview.webp in \"%s\" (Skipping frame generation process)", dirname)
+        # Create original sized preview
+        framepaths = []
+        for framenumber in range(self.maxframes):
+            framename = "frame-%02d.jpg"%(framenumber+1)
+            framepath = dirname + "/" + framename
+            framepaths.append(framepath)
+        previewpath = dirname + "/preview.webp"
+
+        success  = True
+        success &= self.CreateAnimation(framepaths, previewpath)
+
+        # Create scaled down previews
+        for scale in self.scales:
+            framepaths    = []
+            width, height = map(int, scale.split("x"))
+
+            for framenumber in range(self.maxframes):
+                scaledframename = "frame-%02d (%d×%d).jpg"%(framenumber, width, height)
+                scaledframepath = dirname + "/" + scaledframename
+                framepaths.append(framepath)
+
+            previewpath = dirname + "/preview (%d×%d).webp"%(width, height)
+            success    &= self.CreateAnimation(framepaths, previewpath)
+
+        return success
+
+
+
+    def CreateAnimation(self, framepaths, animationpath):
+        """
+        This method creates a WebP animation from frames that are addresses by a sorted list of paths.
+        Frame paths that do not exists or cannot be opened will be ignored.
+        If there already exists an animation addressed by animation path, nothing will be done.
+
+        The list of frame paths must at least contain 2 entries.
+
+        Args:
+            framepaths (list(str)): A list of relative frame paths that will be used to create an animation
+            animationpath (str): A relative path where the animation shall be stored at.
+
+        Returns:
+            ``True`` when an animation has been created or exists, otherwise ``False``
+        """
+        if self.framesroot.IsFile(animationpath):
+            logging.debug("There is already an animation \"%s\" (Skipping frame generation process)", animationpath)
             return True
 
         # Load all frames
         frames = []
-        for framenumber in range(self.maxframes):
-            # Create absolute frame file path
-            framename    = "frame-%02d.jpg"%(framenumber+1)
-            relframepath = dirname + "/" + framename
-            absframepath = self.framesroot.AbsolutePath(relframepath)
+        for framepath in framepaths:
+            absframepath = self.framesroot.AbsolutePath(framepath)
 
-            # Open image
             try:
                 frame = Image.open(absframepath)
             except FileNotFoundError as e:
@@ -428,14 +465,14 @@ class VideoFrames(object):
             return False
 
         # Create absolute animation file path
-        abspreviewpath = self.framesroot.AbsolutePath(relpreviewpath)
+        absanimationpath = self.framesroot.AbsolutePath(animationpath)
 
         # Calculate time for each frame in ms being visible
         duration = int((self.previewlength * 1000) / self.maxframes)
 
         # Store as WebP animation
         preview = frames[0]                 # Start with frame 0
-        preview.save(abspreviewpath, 
+        preview.save(absanimationpath, 
                 save_all=True,              # Save all frames
                 append_images=frames[1:],   # Save these frames
                 duration=duration,          # Display time for each frame
