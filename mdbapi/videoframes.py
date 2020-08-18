@@ -101,6 +101,10 @@ This method replaces "/" by an Unicode division slash (U+2215) to avoid problems
 All new creates files and directories were set to the ownership ``[music]->owner:[music]->group``
 and gets the permission ``rw-rw-r--`` (``+x`` for directories)
 
+.. attention::
+
+    Existing frames and previews will not be overwritten.
+    In case the settings change, video frames and previews need to be removed manually before recreating them.
 
 HTTPS Server
 ------------
@@ -114,13 +118,12 @@ Scaling
 --------
 
 Scales that shall be provides are set in the MusicDB Configuration as list of edge-lengths.
-For example, to generate 50x50, 100x100 and 500x500 versions of a frame,
-the configuration would look like this: ``scales=50, 100, 500``
+For example, to generate 50×27 and 150×83 versions of a frame,
+the configuration would look like this: ``scales=50x27, 150x83``
 The scaled frames get stored as progressive JPEGs to get a better responsiveness for the WebUI.
 
 Usually videos do not have a ration of 1:1.
-The scale value is interpreted as the width of the video in pixels.
-The height follows the original ration.
+If the aspect ration of a frame differs from the desired thumbnail, the borders will be cropped.
 
 
 Configuration
@@ -133,14 +136,14 @@ An example configuration can look like the following one:
     [videoframes]
     path=/data/musicdb/videoframes  ; Path to the sub directories for videos
     frames=5                        ; Grab 5 frames from the video
-    scales=50, 150                  ; Provide scales of 50px and 150px
+    scales=50x27, 150x83            ; Provide scales of 50px and 150px width with aspect ration of 16/9
     previewlength=3                 ; Create GIF-Animations with 3 second loop length
 
-Under these conditions, a 150×150 pixels preview animation of a video "Sonne" from "Rammstein"
+Under these conditions, a 150×83 pixels preview animation of a video "Sonne" from "Rammstein"
 would have the following absolute path:
-``/data/musicdb/videoframes/Rammstein/Sonne/preview (150×150).webp``.
+``/data/musicdb/videoframes/Rammstein/Sonne/preview (150×83).webp``.
 Inside the database, this path is stored as ``Rammstein - Sonne``.
-Inside the HTML code of the WebUI the following path would be used: ``Rammstein/Sonne/preview (150×150).webp``.
+Inside the HTML code of the WebUI the following path would be used: ``Rammstein/Sonne/preview (150×83).webp``.
 
 
 Algorithm
@@ -190,6 +193,7 @@ class VideoFrames(object):
         self.metadata   = MetaTags(self.cfg.music.path)
         self.maxframes  = self.cfg.videoframes.frames
         self.previewlength = self.cfg.videoframes.previewlength
+        self.scales     = self.cfg.videoframes.scales
 
         # Check if all paths exist that have to exist
         pathlist = []
@@ -294,12 +298,6 @@ class VideoFrames(object):
         Returns:
             ``True`` on success, otherwise ``False``
         """
-        # Check if there are already frames.
-        framepath = dirname + "/frame-01.jpg"
-        if self.framesroot.IsFile(framepath):
-            logging.debug("There are already frames in \"%s\" (Skipping frame generation process)", dirname)
-            return True
-
         # Determine length of the video in seconds
         try:
             self.metadata.Load(videopath)
@@ -320,26 +318,71 @@ class VideoFrames(object):
             framename = "frame-%02d.jpg"%(framenumber+1)
             framepath = dirname + "/" + framename
 
-            # Run ffmpeg - use absolute paths
-            absframepath = self.framesroot.AbsolutePath(framepath)
-            absvideopath = self.musicroot.AbsolutePath(videopath)
-            process = ["ffmpeg",
-                    "-ss", str(moment),
-                    "-i", absvideopath,
-                    "-vf", "scale=iw*sar:ih",   # Make sure the aspect ration is correct
-                    "-vframes", "1",
-                    absframepath]
-            logging.debug("Getting frame via %s", str(process))
-            try:
-                self.fs.Execute(process)
-            except Exception as e:
-                logging.exception("Generating frame for video \"%s\" failed with error: %s", videopath, str(e))
-                return False
+            # Only create frame if it does not yet exist
+            if not self.framesroot.Exists(framepath):
+                # create absolute paths for FFMPEG
+                absframepath = self.framesroot.AbsolutePath(framepath)
+                absvideopath = self.musicroot.AbsolutePath(videopath)
 
-            # TODO: Scale down the frame
-            logging.warning("TODO: Scaling not yet implemented")
+                # Run FFMPEG - use absolute paths
+                process = ["ffmpeg",
+                        "-ss",      str(moment),
+                        "-i",       absvideopath,
+                        "-vf",      "scale=iw*sar:ih",   # Make sure the aspect ration is correct
+                        "-vframes", "1",
+                        absframepath]
+                logging.debug("Getting frame via %s", str(process))
+                try:
+                    self.fs.Execute(process)
+                except Exception as e:
+                    logging.exception("Generating frame for video \"%s\" failed with error: %s", videopath, str(e))
+                    return False
+
+            # Scale down the frame
+            self.ScaleFrame(dirname, framenumber+1)
 
         return True
+
+
+
+    def ScaleFrame(self, dirname, framenumber):
+        """
+        This method creates a scaled version of the existing frames for a video.
+        The aspect ration of the frame will be maintained.
+        In case the resulting aspect ratio differs from the source file,
+        the borders of the source frame will be cropped in the scaled version.
+
+        If a scaled version exist, it will be skipped.
+
+        The scaled JPEG will be stored with optimized and progressive settings.
+
+        Args:
+            dirname (str): Name of the directory where the frames are stored at (relative)
+            framenumber (int): Number of the frame that will be scaled
+
+        Returns:
+            *Nothing*
+        """
+        sourcename    = "frame-%02d.jpg"%(framenumber)
+        sourcepath    = dirname + "/" + sourcename 
+        abssourcepath = self.framesroot.AbsolutePath(sourcepath)
+
+        for scale in self.scales:
+            width, height   = map(int, scale.split("x"))
+            scaledframename = "frame-%02d (%d×%d).jpg"%(framenumber, width, height)
+            scaledframepath = dirname + "/" + scaledframename
+            
+            # In case the scaled version already exists, nothing will be done
+            if self.framesroot.Exists(scaledframepath):
+                continue
+
+            absscaledframepath = self.framesroot.AbsolutePath(scaledframepath)
+
+            size  = (width, height)
+            frame = Image.open(abssourcepath)
+            frame.thumbnail(size, Image.BICUBIC)
+            frame.save(absscaledframepath, "JPEG", optimize=True, progressive=True)
+        return
 
 
 
@@ -357,8 +400,8 @@ class VideoFrames(object):
             ``True`` on success, otherwise ``False``
         """
         # Check if there are already frames.
-        previewpath = dirname + "/preview.webp"
-        if self.framesroot.IsFile(previewpath):
+        relpreviewpath = dirname + "/preview.webp"
+        if self.framesroot.IsFile(relpreviewpath):
             logging.debug("There is already a preview.webp in \"%s\" (Skipping frame generation process)", dirname)
             return True
 
@@ -385,7 +428,6 @@ class VideoFrames(object):
             return False
 
         # Create absolute animation file path
-        relpreviewpath = dirname + "/preview.webp"
         abspreviewpath = self.framesroot.AbsolutePath(relpreviewpath)
 
         # Calculate time for each frame in ms being visible
@@ -404,12 +446,6 @@ class VideoFrames(object):
 
         return True
 
-
-
-    def GetScaledFrame(self, framesdir, resolution):
-        pass
-    def GetScaledPreview(self, framesdir, resolution):
-        pass
 
 
     def SetVideoFrames(self, videoid, framesdir, thumbnailfile=None, previewfile=None):
