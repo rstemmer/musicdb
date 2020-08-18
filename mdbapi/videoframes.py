@@ -416,9 +416,9 @@ class VideoFrames(object):
             width, height = map(int, scale.split("x"))
 
             for framenumber in range(self.maxframes):
-                scaledframename = "frame-%02d (%d×%d).jpg"%(framenumber, width, height)
+                scaledframename = "frame-%02d (%d×%d).jpg"%(framenumber+1, width, height)
                 scaledframepath = dirname + "/" + scaledframename
-                framepaths.append(framepath)
+                framepaths.append(scaledframepath)
 
             previewpath = dirname + "/preview (%d×%d).webp"%(width, height)
             success    &= self.CreateAnimation(framepaths, previewpath)
