@@ -28,8 +28,17 @@ function EncodeArtworkPath(imgpath, scaling)
     return encpath + encname;
 }
 
-function EncodeVideoThumbnailPath(framesdir, imgpath, scaling)
+function EncodeVideoThumbnailPath(framesdir, imgpath, width, height)
 {
+    if(width && height)
+    {
+        let scale  = ` (${width}×${height})`;
+        let extpos = imgpath.lastIndexOf(".");
+        let name   = imgpath.substr(0, extpos);
+        let ext    = imgpath.substr(extpos);
+        imgpath    = name + scale + ext;
+    }
+
     let encpath = encodeURI         ("videoframes/" + framesdir + "/");
     let encname = encodeURIComponent(imgpath);
     return encpath + encname;

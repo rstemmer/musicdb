@@ -19,8 +19,8 @@ function CreateVideoTile(MDBVideo, MDBAlbum, MDBArtist, topbuttonbox, bottombutt
 {
     // Album is not used because it may be undefined very often
     let html        = "";
-    let imgpath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile, "50×50");
-    let anipath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.previewfile,   "50×50");
+    let imgpath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile, 150, 83);
+    let anipath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.previewfile,   150, 83);
     let videoname   = MDBVideo.name.replace(" - ", " – ");
     let videoid     = MDBVideo.id;
     let artistname  = MDBArtist.name;
@@ -102,8 +102,8 @@ function CreateVideoTile(MDBVideo, MDBAlbum, MDBArtist, topbuttonbox, bottombutt
 function CreateSmallVideoTile(MDBVideo, buttonbox)
 {
     let html        = "";
-    let imgpath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile, "150×150");
-    let anipath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.previewfile,   "150×150");
+    let imgpath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile, 150, 83);
+    let anipath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.previewfile,   150, 83);
     let videoid     = MDBVideo.id;
     let videoname   = MDBVideo.name;
     let videorelease= MDBVideo.release;
