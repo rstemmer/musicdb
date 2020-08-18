@@ -186,7 +186,7 @@ class MusicDBConfig(Config):
         self.videoframes.frames         = self.Get(int, "videoframes",  "frames",       "5")
         self.videoframes.previewlength  = self.Get(int, "videoframes",  "previewlength","3")
         self.videoframes.scales         = self.Get(str, "videoframes",  "scales",       "50x27, 150x83", islist=True)
-        for s in ["50x27", "150x83"]:
+        for s in ["150x83"]:
             if not s in self.videoframes.scales:
                 logging.error("Missing scale in [videoframes]->scales: The web UI expects a scale of %s", s)
         for scale in self.videoframes.scales:
