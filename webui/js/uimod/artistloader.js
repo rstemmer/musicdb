@@ -183,12 +183,12 @@ function _AL_onToggleControlButton(name)
 
 function _AL_BroadcastRequestArtistlist(type)
 {
-    if(MDBMODE == "audio")
+    if(GLOBAL_MDBMODE == "audio")
     {
         MusicDB_Broadcast("GetFilteredArtistsWithAlbums", "ShowArtists");
         MusicDB_Broadcast("GetSongQueue",                 "ShowSongQueue");
     }
-    else if(MDBMODE == "video")
+    else if(GLOBAL_MDBMODE == "video")
     {
         MusicDB_Broadcast("GetFilteredArtistsWithVideos", "ShowArtists");
         MusicDB_Braodcast("GetVideoQueue",                "ShowVideoQueue");
