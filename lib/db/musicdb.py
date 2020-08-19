@@ -226,6 +226,7 @@ The following methods exist to handle video entries in the database:
     * :meth:`~lib.db.musicdb.MusicDatabase.GetVideoById`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetVideosByArtistId`
     * :meth:`~lib.db.musicdb.MusicDatabase.UpdateVideoStatistic`
+    * :meth:`~lib.db.musicdb.MusicDatabase.SetColorThemeByVideoId`
 
 
 Albums
@@ -2251,6 +2252,50 @@ class MusicDatabase(Database):
         with MusicDatabaseLock:
             self.Execute(sql, data)
         return True
+
+
+
+    def SetColorThemeByVideoId(self, videoid, colorname, color):
+        """
+        This method is for setting a color for a video.
+        Valid color names are the following and must be given as string to the *colorname* parameter.
+
+            * ``"bgcolor"`` -  Background color
+            * ``"fgcolor"`` -  Primary foreground color
+            * ``"hlcolor"`` -  Secondary foreground color
+
+        The color itself must be in HTML-Format: ``#RRGGBB``.
+
+        Args:
+            videoid: The ID of the video that color shall be set
+            colorname (str): Name of the color that shall be set
+            color (str): Color in HTML format
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: If one of the arguments is None
+            ValueError: If *colorname* not ``"bgcolor"``, ``"fgcolor"`` or ``"hlcolor"``
+            ValueError: If color length is not ``7`` and first character not ``"#"``
+        """
+        if videoid == None or color == None or colorname == None:
+            raise TypeError("All parameters must have a value!")
+        if not colorname in ["bgcolor", "fgcolor", "hlcolor"]:
+            raise ValueError("colorname must be bgcolor, fgcolor or hlcolor");
+
+        if color[0] != "#":
+            raise ValueError("First char in color-code must be \'#\': #RRGGBB !")
+        if len(color) != 7:
+            raise ValueError("Color-code must have a length of 7 character: #RRGGBB !")
+
+        data = {}
+        data["color"]   = color
+        data["videoid"] = videoid
+        sql = "UPDATE videos SET " + colorname + "=:color WHERE videoid=:videoid"
+        with MusicDatabaseLock:
+            self.Execute(sql, data)
+        return None
 
 
     ####################################

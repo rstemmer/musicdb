@@ -53,6 +53,7 @@ Videos
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveVideoFromQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveVideoInQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateVideoStatistic`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetVideoColor`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextVideo`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.VideoEnded`
 
@@ -309,6 +310,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.SetSongLyrics(args["songid"], args["lyrics"], args["lyricsstate"])
         elif fncname == "SetAlbumColor":
             retval = self.SetAlbumColor(args["albumid"], args["colorname"], args["color"])
+        elif fncname == "SetVideoColor":
+            retval = self.SetVideoColor(args["videoid"], args["colorname"], args["color"])
         elif fncname == "UpdateSongStatistic":
             retval = self.UpdateSongStatistic(args["songid"], args["statistic"], args["modifier"])
             retval = self.GetSong(args["songid"])
@@ -2205,6 +2208,54 @@ class MusicDBWebSocketInterface(object):
             logging.exception("Update Album Color failed: %s", str(e))
             logging.error(" For AlbumID %s, Colorname %s and Color %s", 
                     str(albumid),
+                    str(colorname),
+                    str(color))
+            return False
+
+        return True
+
+
+    def SetVideoColor(self, videoid, colorname, color):
+        """
+        Sets a color scheme for a video.
+        Valid color names are the following and must be given as string to the *colorname* parameter.
+        The color itself must be in HTML-Format: ``#RRGGBB``.
+        
+        The following color-names exist:
+
+            * ``"bgcolor"`` -  Background color
+            * ``"fgcolor"`` -  Primary foreground color
+            * ``"hlcolor"`` -  Secondary foreground color
+
+        Args:
+            videoid (int): ID of the video
+            colorname (str): Name of the color to set (``"fgcolor"``, ``"hlcolor"``, ``"bgcolor"``)
+            color (str): Color code in HTML notation: #RRGGBB
+
+        Return:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("SetVideoColor", {videoid:1000, colorname:"bgcolor", color:"#42AB23"});
+        """
+        if not colorname in ["bgcolor", "fgcolor", "hlcolor"]:
+            logging.warning("colorname must be bgcolor, fgcolor or hlcolor");
+            return False
+
+        try:
+            self.database.SetColorThemeByVideoId(videoid, colorname, color)
+        except ValueError as e:
+            logging.warning("Update Video Color failed: %s", str(e))
+            logging.warning(" For VideoID %s, Colorname %s and Color %s", 
+                    str(videoid),
+                    str(colorname),
+                    str(color))
+        except Exception as e:
+            logging.exception("Update Video Color failed: %s", str(e))
+            logging.error(" For VideoID %s, Colorname %s and Color %s", 
+                    str(videoid),
                     str(colorname),
                     str(color))
             return False
