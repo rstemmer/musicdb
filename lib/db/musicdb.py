@@ -1864,7 +1864,7 @@ class MusicDatabase(Database):
         Statistics are:
 
             * Statistics: ``"likes"``, ``"dislikes"``, ``"lastplayed"``
-            * Properties: ``"favorite"``, ``"disabled"``, ``"liverecording"``, ``"badaudio"``
+            * Properties: ``"favorite"``, ``"disabled"``, ``"liverecording"``, ``"badaudio"``, ``"lyricsvideo"`` (for videos only)
 
 
         Possible values are:
@@ -1907,8 +1907,11 @@ class MusicDatabase(Database):
             raise TypeError("Music ID must be a decimal number of type integer or string")
 
         # Check if value and stat are valid
-        if stat not in ["likes", "dislikes", "favorite", "disable", "lastplayed", "liverecording", "badaudio"]:
+        if stat not in ["likes", "dislikes", "favorite", "disable", "lastplayed", "liverecording", "badaudio", "lyricsvideo"]:
             raise ValueError("stat has an invalid value \"%s\""%(str(stat)))
+
+        if stat == "lyricsvideo" and musictype != "video":
+            raise ValueError("Property \"lyricsvideo\" is only allowed for musictype \"video\"!")
 
         if stat == "lastplayed":
             if type(value) != int:
@@ -1955,6 +1958,9 @@ class MusicDatabase(Database):
 
             elif stat == "badaudio":
                 music["badaudio"] = modifier
+
+            elif stat == "lyricsvideo":
+                music["lyricsvideo"] = modifier
 
             else:
                 raise ValueError("Unknown property or statistic!")

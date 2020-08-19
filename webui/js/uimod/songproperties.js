@@ -10,9 +10,30 @@
  */
 function Videoproperties_ShowControl(parentid, controlname)
 {
-    // There are no differences between songs and videos at this point
-    Songproperties_ShowControl(parentid, controlname);
+    let parentelement = document.getElementById(parentid);
+    if(!parentelement)
+    {
+        window.console && console.log("Parent " + parentid + "does not exist!");
+        return;
+    }
+
+    // Create grid
+    var html = "";
+    html += CreateGrid(controlname, 4, 2);
+    parentelement.innerHTML = html;
+
+    // Create mood buttons
+    Songproperties_CreateButton(controlname, 0, 0, "<i class=fa>&#xf087;</i>", "like",          "Like");
+    Songproperties_CreateButton(controlname, 1, 0, "<i class=fa>&#xf088;</i>", "dislike",       "Dislike");
+    Songproperties_CreateButton(controlname, 2, 0, "<i class=fa>&#xf0c0;</i>", "liverecording", "Live Recording");
+    Songproperties_CreateButton(controlname, 3, 0, "<i class=fa>&#xf0e5;</i>", "lyricsvideo",   "Lyrics Video");
+    Songproperties_CreateButton(controlname, 0, 1, "<i class=fa>&#xf006;</i>", "love",          "Loved Song");
+    Songproperties_CreateButton(controlname, 1, 1, "<i class=fa>&#xf014;</i>", "hate",          "Hated Song");
+    Songproperties_CreateButton(controlname, 2, 1, "<i class=fa>&#xf131;</i>", "badaudio",      "Bad Audio");
+    Songproperties_CreateButton(controlname, 3, 1, "<i class=fa>&#xf05e;</i>", "disable",       "Disable Song");
+    return;
 }
+
 function Songproperties_ShowControl(parentid, controlname)
 {
     if($("#"+parentid).length === 0)
@@ -90,6 +111,7 @@ function Videoproperties_UpdateControl(controlname, MDBVideo, resetlike)
     Videoproperties_SetProperty(controlname, MDBVideo.id, "disable",       MDBVideo.disabled      !=  0);
     Videoproperties_SetProperty(controlname, MDBVideo.id, "liverecording", MDBVideo.liverecording ==  1);
     Videoproperties_SetProperty(controlname, MDBVideo.id, "badaudio",      MDBVideo.badaudio      ==  1);
+    Videoproperties_SetProperty(controlname, MDBVideo.id, "lyricsvideo",   MDBVideo.lyricsvideo   ==  1);
 }
 
 
@@ -225,6 +247,7 @@ function Musicproperties_onPropertyButtonClick(buttonid, musicid, property, type
     else if(property == "disable"
          || property == "liverecording"
          || property == "badaudio"
+         || property == "lyricsvideo"
            )
     {
         if(buttonstate == "unpressed")
