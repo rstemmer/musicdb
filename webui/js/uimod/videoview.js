@@ -62,8 +62,8 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
     let begintimeselect   = new TimeSelect("Video Begin", videoplayerid);
     let endtimeselect     = new TimeSelect("Video End",   videoplayerid);
     
-    begintimeselect.BecomeChildOf(playtimeselection);
-    endtimeselect.BecomeChildOf(playtimeselection);
+    playtimeselection.appendChild(begintimeselect.GetHTMLElement());
+    playtimeselection.appendChild(endtimeselect.GetHTMLElement());
 
     begintimeselect.SetValidationFunction((time) => 
         {

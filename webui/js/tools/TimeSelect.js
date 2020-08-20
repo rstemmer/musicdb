@@ -10,10 +10,9 @@ class Button
         return;
     }
 
-    BecomeChildOf(parentelement)
+    GetHTMLElement(parentelement)
     {
-        parentelement.appendChild(this.element);
-        return;
+        return this.element;
     }
 }
 
@@ -21,12 +20,17 @@ class TimeSelect
 {
     constructor(label, videoelementid)
     {
+        this.element        = document.createElement("div");
         this.videoelementid = videoelementid;
         this.gettimeelement = new Button("Current Time", ()=>{this.SelectTimeStampFromVideo()});
         this.inputelement   = document.createElement("input");
         this.labelelement   = document.createTextNode(label);
         this.validationfunction = null;
         this.parentelement  = null;
+
+        this.element.appendChild(this.labelelement);
+        this.element.appendChild(this.inputelement);
+        this.element.appendChild(this.gettimeelement.GetHTMLElement());
         return;
     }
 
@@ -48,13 +52,11 @@ class TimeSelect
 
     ShowErrorMessage(message)
     {
-        window.console && console.log(message);
         let errormessage = document.createTextNode(message);
         let errorelement = document.createElement("span");
         errorelement.appendChild(errormessage);
 
-        if(this.parentelement)
-            this.parentelement.appendChild(errorelement);
+        this.element.appendChild(errorelement);
         return;
     }
 
@@ -77,13 +79,9 @@ class TimeSelect
         return;
     }
 
-    BecomeChildOf(parentelement)
+    GetHTMLElement()
     {
-        this.parentelement = parentelement;
-        this.parentelement.appendChild(this.labelelement);
-        this.parentelement.appendChild(this.inputelement);
-        this.gettimeelement.BecomeChildOf(this.parentelement);
-        return;
+        return this.element;
     }
 
 }
