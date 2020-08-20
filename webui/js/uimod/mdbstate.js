@@ -146,17 +146,6 @@ function SetMusicDBPlayingState(serverstate, clientstate)
 var GLOBAL_TotalPlaytime = 0;   // total playtime of all songs in the queue
 var GLOBAL_TimePlayed    = 0;   // time the first song in the queue was played
 
-function HMSToString(h,m,s)
-{
-    // convert to string
-    let ss = ("00"+s).substr(-2);
-    let ms = ("00"+m).substr(-2);
-    let hs = ("00"+h).substr(-2);
-
-    // create time string hh:mm:ss
-    return hs + ":" + ms + ":" + ss;
-}
-
 function AddPlaytime(playtime)
 {
     GLOBAL_TotalPlaytime += playtime;

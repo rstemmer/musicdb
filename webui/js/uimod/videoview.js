@@ -59,8 +59,8 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
 
     let videoplayerid     = "VideoPreviewPlayer";
     let playtimeselection = document.getElementById("BeginEndSelection");
-    let begintimeselect   = new TimeSelect("Video Begin", videoplayerid);
-    let endtimeselect     = new TimeSelect("Video End",   videoplayerid);
+    let begintimeselect   = new TimeSelect("Video Begin:", videoplayerid, MDBVideo.vbegin);
+    let endtimeselect     = new TimeSelect("Video End:",   videoplayerid, MDBVideo.vend);
     
     playtimeselection.appendChild(begintimeselect.GetHTMLElement());
     playtimeselection.appendChild(endtimeselect.GetHTMLElement());

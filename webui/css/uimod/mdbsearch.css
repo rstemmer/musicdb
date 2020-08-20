@@ -64,6 +64,8 @@ input.MDBSInput
 {
     border:             0px none;
     background:         transparent;
+    border-radius:      0;
+    box-shadow:         none;
 }
 
 
