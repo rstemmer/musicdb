@@ -32,6 +32,7 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
     let poster = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile);
     html += "<div id=VVVideo>";
     html += "    <video ";
+    html += "       id=VideoPreviewPlayer";
     html += "       class=VV_player";
     html += "       controls";
     html += "       width="  + MDBVideo.xresolution;
@@ -55,6 +56,39 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
     $("#"+parentID).html(html);
     UpdateVideoSettings(MDBVideo, MDBTags, true);
     //UpdateStyle(MDBAlbum.bgcolor, MDBAlbum.fgcolor, MDBAlbum.hlcolor);
+
+    let videoplayerid     = "VideoPreviewPlayer";
+    let playtimeselection = document.getElementById("BeginEndSelection");
+    let begintimeselect   = new TimeSelect("Video Begin", videoplayerid);
+    let endtimeselect     = new TimeSelect("Video End",   videoplayerid);
+    
+    begintimeselect.BecomeChildOf(playtimeselection);
+    endtimeselect.BecomeChildOf(playtimeselection);
+
+    begintimeselect.SetValidationFunction((time) => 
+        {
+            let endtime = endtimeselect.GetSelectedTime();
+            if(endtime == null)
+                return true;
+
+            if(time < endtime)
+                return true;
+
+            return `begintimeselect: ${time} >= ${endtime}`;
+        }
+    );
+    endtimeselect.SetValidationFunction((time) =>
+        {
+            let begintime = endtimeselect.GetSelectedTime();
+            if(begintime == null)
+                return true;
+
+            if(time > begintime)
+                return true;
+
+            return `endtimeselect: ${time} <= ${begintime}`;
+        }
+    );
     return;
 }
 
@@ -143,6 +177,11 @@ function _VV_CreateVideoSettings(MDBVideo, MDBVideoTags)
         "_VV_onColorSave("+videoid+", \'CI_HLColor\');",
         _VV_onColorChange
         );
+    html += "</div>";
+
+    // Begin/End Time Selection
+    html += "<div class=\"VV_videosettings_row\" id=\"BeginEndSelection\">";
+    // TODO
     html += "</div>";
     return html;
 }
