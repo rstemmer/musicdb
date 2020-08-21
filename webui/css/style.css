@@ -81,6 +81,11 @@ button
     border-radius:      calc( 0.5em + 0.1rem );                 /* (text size + padding) / 2 */
 }
 
+button + button
+{
+    margin-left:        1ch;
+}
+
 .inputbox > button
 {
     margin:             0.1rem 0.2rem;

@@ -22,6 +22,7 @@ class TimeSelect
     {
         this.element        = document.createElement("div");
         this.videoelementid = videoelementid;
+        this.initialtime    = initialtime;
         let  buttonlabel    = "Current Time";
         this.gettimeelement = new Button(buttonlabel, ()=>{this.SelectTimeStampFromVideo()});
         this.inputelement   = document.createElement("input");
@@ -44,6 +45,11 @@ class TimeSelect
         this.element.appendChild(this.inputelement);
         this.element.appendChild(this.gettimeelement.GetHTMLElement());
         return;
+    }
+
+    Reset()
+    {
+        this.inputelement.value = this.initialtime;
     }
 
     SetValidationFunction(fnc)

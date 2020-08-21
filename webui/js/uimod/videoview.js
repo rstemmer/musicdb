@@ -61,9 +61,20 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
     let playtimeselection = document.getElementById("BeginEndSelection");
     let begintimeselect   = new TimeSelect("Video Begin:", videoplayerid, MDBVideo.vbegin);
     let endtimeselect     = new TimeSelect("Video End:",   videoplayerid, MDBVideo.vend);
+    let resetbutton       = new Button("Reset", ()=>
+        {
+            begintimeselect.Reset();
+            endtimeselect.Reset();
+        });
+    let commitbutton      = new Button("Accept", ()=>
+        {
+
+        });
     
     playtimeselection.appendChild(begintimeselect.GetHTMLElement());
     playtimeselection.appendChild(endtimeselect.GetHTMLElement());
+    playtimeselection.appendChild(resetbutton.GetHTMLElement());
+    playtimeselection.appendChild(commitbutton.GetHTMLElement());
 
     begintimeselect.SetValidationFunction((time) => 
         {
