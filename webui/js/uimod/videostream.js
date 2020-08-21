@@ -41,8 +41,20 @@ function PlayVideo(MDBVideo, entryid)
     //player.width  = MDBVideo.xresolution;
     //player.height = MDBVideo.yresolution;
     player.src = videopath;
-    player.load();
 
+    player.onloadeddata = (event) =>
+        {
+            player.currentTime = MDBVideo.vbegin;
+        };
+    player.ontimeupdate = (event) =>
+        {
+            if(player.currentTime >= MDBVideo.vend)
+            {
+                player.pause();
+                player.currentTime = 0;
+                onVideoEnded(entryid);
+            }
+        };
     player.onended = (event) =>
         {
             onVideoEnded(entryid);
@@ -52,6 +64,8 @@ function PlayVideo(MDBVideo, entryid)
             GLOBAL_PLAYING = !GLOBAL_PLAYING;
             UpdatePlayerState();
         };
+
+    player.load();
 
     if(GLOBAL_PLAYING == false)
     {
