@@ -32,10 +32,12 @@ class TimeSelect
 
         this.labelelement.appendChild(this.labeltext);
 
+        this.inputelement.dataset.valid="true";
         this.inputelement.type = "number";
         this.inputelement.value= initialtime;
         this.inputelement.min  = 0.0;
         this.inputelement.step = 0.1;
+        this.inputelement.oninput = ()=>{this.InputEvent()};
 
         this.element.classList.add("inputbox");
         this.element.appendChild(this.labelelement);
@@ -70,6 +72,28 @@ class TimeSelect
         return;
     }
 
+    InputEvent()
+    {
+        let time = this.inputelement.value;
+
+        if(this.validationfunction)
+        {
+            let retval = this.validationfunction(time);
+            if(typeof retval === "string")
+                this.ShowErrorMessage(retval);
+
+            if(retval !== true)
+            {
+                this.inputelement.dataset.valid="false";
+                return;
+            }
+            else
+            {
+                this.inputelement.dataset.valid="true";
+            }
+        }
+    }
+
     SelectTimeStampFromVideo()
     {
         let video = document.getElementById(this.videoelementid);
@@ -82,12 +106,14 @@ class TimeSelect
                 this.ShowErrorMessage(retval);
 
             if(retval !== true)
+            {
+                this.inputelement.dataset.valid="false";
                 return;
+            }
         }
 
-        window.console && console.log(time);
-
         this.inputelement.value = time;
+        this.inputelement.dataset.valid="true";
         return;
     }
 

@@ -79,7 +79,7 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
     );
     endtimeselect.SetValidationFunction((time) =>
         {
-            let begintime = endtimeselect.GetSelectedTime();
+            let begintime = begintimeselect.GetSelectedTime();
             if(begintime == null)
                 return true;
 
