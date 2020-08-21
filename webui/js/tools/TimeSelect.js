@@ -36,8 +36,8 @@ class TimeSelect
         this.inputelement.dataset.valid="true";
         this.inputelement.type = "number";
         this.inputelement.value= initialtime;
-        this.inputelement.min  = 0.0;
-        this.inputelement.step = 0.1;
+        this.inputelement.min  = 0;
+        this.inputelement.step = 1;
         this.inputelement.oninput = ()=>{this.InputEvent()};
 
         this.element.classList.add("inputbox");
@@ -60,7 +60,7 @@ class TimeSelect
 
     GetSelectedTime()
     {
-        let time = parseFloat(this.inputelement.value);
+        let time = Math.round(parseFloat(this.inputelement.value));
         if(typeof time !== "number" || isNaN(time))
         {
             return null;

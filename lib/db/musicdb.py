@@ -2309,18 +2309,18 @@ class MusicDatabase(Database):
 
         Args:
             videoid (int): ID of the video
-            begin (float): Begin of the main content in seconds.
-            end (float): End of the main content in seconds.
+            begin (int): Begin of the main content in seconds.
+            end (int): End of the main content in seconds.
 
         Return:
             ``True`` on success, otherwise false
 
         Raises:
-            TypeError: If begin or end if not float
+            TypeError: If begin or end if not int
             ValueError: If begin > end
         """
-        if type(begin) != float or type(end) != float:
-            raise TypeError("begin and end must be floats!")
+        if type(begin) != int or type(end) != int:
+            raise TypeError("begin and end must be integer!")
         if begin > end:
             raise ValueError("begin must not be larger than end")
 

@@ -2279,8 +2279,8 @@ class MusicDBWebSocketInterface(object):
 
         Args:
             videoid (int): ID of the video
-            begin (float): Begin of the main content in seconds.
-            end (float): End of the main content in seconds.
+            begin (int): Begin of the main content in seconds.
+            end (int): End of the main content in seconds.
 
         Return:
             ``True`` on success, otherwise false
@@ -2288,7 +2288,7 @@ class MusicDBWebSocketInterface(object):
         Example:
             .. code-block:: javascript
 
-                MusicDB_Call("SetVidoTimeFrame", {videoid:1000, begin:1.23, end:4.56});
+                MusicDB_Call("SetVidoTimeFrame", {videoid:1000, begin:23, end:142});
 
         """
         # Validate input
@@ -2298,27 +2298,27 @@ class MusicDBWebSocketInterface(object):
             return False
 
         vbegin = None
-        if type(begin) == float:
+        if type(begin) == int:
             vbegin = begin
         elif begin == None:
             vbegin = 0.0
         else:
             try:
-                vbegin = float(begin)
+                vbegin = int(begin)
             except ValueError:
-                logging.warning("Invalid video begin marker \"%s\". A floating point number was expected.", str(begin))
+                logging.warning("Invalid video begin marker \"%s\". An integer was expected.", str(begin))
                 return False
 
         vend = None
-        if type(end) == float:
+        if type(end) == int:
             vend = end
         elif end == None:
             vend = video["playtime"]
         else:
             try:
-                vend = float(end)
+                vend = int(end)
             except ValueError:
-                logging.warning("Invalid video begin marker \"%s\". A floating point number was expected.", str(begin))
+                logging.warning("Invalid video begin marker \"%s\". An integer was expected.", str(begin))
                 return False
 
         if vbegin > vend:
