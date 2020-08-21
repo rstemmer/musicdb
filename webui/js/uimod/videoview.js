@@ -68,7 +68,12 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
         });
     let commitbutton      = new Button("Accept", ()=>
         {
-
+            MusicDB_Call("SetVideoTimeFrame", 
+                {
+                    videoid: MDBVideo.id,
+                    begin:   begintimeselect.GetSelectedTime(),
+                    end:     endtimeselect.GetSelectedTime()
+                });
         });
     
     playtimeselection.appendChild(begintimeselect.GetHTMLElement());

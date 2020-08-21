@@ -54,6 +54,7 @@ Videos
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveVideoInQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateVideoStatistic`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetVideoColor`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetVideoTimeFrame`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextVideo`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.VideoEnded`
 
@@ -312,6 +313,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.SetAlbumColor(args["albumid"], args["colorname"], args["color"])
         elif fncname == "SetVideoColor":
             retval = self.SetVideoColor(args["videoid"], args["colorname"], args["color"])
+        elif fncname == "SetVideoTimeFrame":
+            retval = self.SetVideoTimeFrame(args["videoid"], args["begin"], args["end"])
         elif fncname == "UpdateSongStatistic":
             retval = self.UpdateSongStatistic(args["songid"], args["statistic"], args["modifier"])
             retval = self.GetSong(args["songid"])
@@ -2233,7 +2236,7 @@ class MusicDBWebSocketInterface(object):
             color (str): Color code in HTML notation: #RRGGBB
 
         Return:
-            ``None``
+            ``True`` on success, otherwise false
 
         Example:
             .. code-block:: javascript
@@ -2259,6 +2262,70 @@ class MusicDBWebSocketInterface(object):
                     str(colorname),
                     str(color))
             return False
+
+        return True
+        
+
+    def SetVideoTimeFrame(self, videoid, begin, end):
+        """
+        Set the time frame for a video.
+        This time frame defines where the player should start playing the video
+        and where it should end.
+        Purpose for this is to cut away intros and outros.
+        The values are floating point numbers an represent the second inside the video file.
+
+        In case begin or end is ``None`` (``null`` in JavaScript), they get reset to the default value.
+        The default for *begin* is ``0.0`` and for *end* is the total play time of the video.
+
+        Args:
+            videoid (int): ID of the video
+            begin (float): Begin of the main content in seconds.
+            end (float): End of the main content in seconds.
+
+        Return:
+            ``True`` on success, otherwise false
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("SetVidoTimeFrame", {videoid:1000, begin:1.23, end:4.56});
+
+        """
+        # Validate input
+        video = self.database.GetVideoById(videoid)
+        if video == None:
+            logging.warning("There is no video with ID \"%s\"!", str(videoid))
+            return False
+
+        vbegin = None
+        if type(begin) == float:
+            vbegin = begin
+        elif begin == None:
+            vbegin = 0.0
+        else:
+            try:
+                vbegin = float(begin)
+            except ValueError:
+                logging.warning("Invalid video begin marker \"%s\". A floating point number was expected.", str(begin))
+                return False
+
+        vend = None
+        if type(end) == float:
+            vend = end
+        elif end == None:
+            vend = video["playtime"]
+        else:
+            try:
+                vend = float(end)
+            except ValueError:
+                logging.warning("Invalid video begin marker \"%s\". A floating point number was expected.", str(begin))
+                return False
+
+        if vbegin > vend:
+            logging.warning("Begin of the frame must not be larger than the end! (%s > %s)", str(vbegin), str(vend))
+            return False
+
+        self.database.SetVideoTimeFrame(videoid, vbegin, vend)
 
         return True
 
