@@ -74,7 +74,8 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
             if(time < endtime)
                 return true;
 
-            return `begintimeselect: ${time} >= ${endtime}`;
+            window.console && console.log(`begintimeselect: ${time} >= ${endtime}`);
+            return false;
         }
     );
     endtimeselect.SetValidationFunction((time) =>
@@ -86,7 +87,8 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
             if(time > begintime)
                 return true;
 
-            return `endtimeselect: ${time} <= ${begintime}`;
+            window.console && console.log(`endtimeselect: ${time} <= ${begintime}`);
+            return false;
         }
     );
     return;

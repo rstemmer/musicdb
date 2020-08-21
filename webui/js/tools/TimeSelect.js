@@ -62,16 +62,6 @@ class TimeSelect
         return time;
     }
 
-    ShowErrorMessage(message)
-    {
-        let errormessage = document.createTextNode(message);
-        let errorelement = document.createElement("span");
-        errorelement.appendChild(errormessage);
-
-        this.element.appendChild(errorelement);
-        return;
-    }
-
     InputEvent()
     {
         let time = this.inputelement.value;
