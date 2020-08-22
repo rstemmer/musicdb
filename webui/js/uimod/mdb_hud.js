@@ -73,7 +73,7 @@ class MusicDBHUD
         this.artistinfobox = document.createElement("div");
 
         this.songicon      = new SVGIcon("img/icons/Song.svg",   "Song");
-        this.videoicon     = new SVGIcon("img/icons/Song.svg",   "Song");
+        this.videoicon     = new SVGIcon("img/icons/Video.svg",  "Video");
         this.albumicon     = new SVGIcon("img/icons/Album.svg",  "Album");
         this.artisticon    = new SVGIcon("img/icons/Artist.svg", "Artist");
 
@@ -318,8 +318,10 @@ class MusicDBHUD
         }
 
         // Video Part
-        else if(fnc == "GetVideoStreamState" && sig == "UpdateHUD")
+        else if(fnc == "GetVideoStreamState")
         {
+            let reset = this.currentvideoid != args.video.id; // Reset like/dislike for new songs
+
             if(sig == "UpdateStreamState" && this.currentvideoid != args.video.id)
             {
                 this.currentvideoid = args.video.id;
