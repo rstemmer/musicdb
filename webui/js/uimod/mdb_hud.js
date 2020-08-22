@@ -252,28 +252,30 @@ class MusicDBHUD
 
 
 
-    UpdateHUDForSong(MDBSong, MDBAlbum, MDBArtist, MDBSongTags)
+    UpdateHUDForSong(MDBSong, MDBAlbum, MDBArtist, MDBSongTags, reset)
     {
         this.SetAlbumArtwork(MDBAlbum);
         this.SetSongInformation(MDBSong, MDBAlbum, MDBArtist);
 
         Songtags_UpdateMoodControl("MainMoodControl", MDBSongTags);
-        Songproperties_ShowControl("PropertyHUD", "MainPropertyControl");
-        Songproperties_UpdateControl("MainPropertyControl", MDBSong, true); // reset like/dislike state
+        if(reset == true)
+            Songproperties_ShowControl("PropertyHUD", "MainPropertyControl");
+        Songproperties_UpdateControl("MainPropertyControl", MDBSong, reset); // reset like/dislike state
         Taginput_Show("GenreHUD",    "MainSongGenreView",    MDBSong.id, MDBSongTags, "Genre",    "Song");
         Taginput_Show("SubgenreHUD", "MainSongSubgenreView", MDBSong.id, MDBSongTags, "Subgenre", "Song");
 
         UpdateStyle();    // Update new tags
     }
 
-    UpdateHUDForVideo(MDBVideo, MDBArtist, MDBVideoTags)
+    UpdateHUDForVideo(MDBVideo, MDBArtist, MDBVideoTags, reset)
     {
         this.SetVideoArtwork(MDBVideo);
         this.SetVideoInformation(MDBVideo, MDBArtist);
 
         Videotags_UpdateMoodControl("MainMoodControl", MDBVideoTags);
-        Videoproperties_ShowControl("PropertyHUD", "MainPropertyControl");
-        Videoproperties_UpdateControl("MainPropertyControl", MDBVideo, true); // reset like/dislike state
+        if(reset == true)
+            Videoproperties_ShowControl("PropertyHUD", "MainPropertyControl");
+        Videoproperties_UpdateControl("MainPropertyControl", MDBVideo, reset); // reset like/dislike state
         Taginput_Show("GenreHUD",    "MainSongGenreView",    MDBVideo.id, MDBVideoTags, "Genre",    "Video");
         Taginput_Show("SubgenreHUD", "MainSongSubgenreView", MDBVideo.id, MDBVideoTags, "Subgenre", "Video");
 
@@ -293,23 +295,25 @@ class MusicDBHUD
         // Song Part
         if(fnc == "GetAudioStreamState")
         {
+            let reset = this.currentsongid != args.song.id; // Reset like/dislike for new songs
+
             // New song playing?
             if(sig == "UpdateStreamState" && this.currentsongid != args.song.id)
             {
                 this.currentsongid = args.song.id;
-                this.UpdateHUDForSong(args.song, args.album, args.artist, args.songtags);
+                this.UpdateHUDForSong(args.song, args.album, args.artist, args.songtags, reset);
             }
 
             if(sig == "UpdateHUD")
             {
-                this.UpdateHUDForSong(args.song, args.album, args.artist, args.songtags);
+                this.UpdateHUDForSong(args.song, args.album, args.artist, args.songtags, reset);
             }
         }
         else if(fnc == "GetSong")
         {
             if(args.song.id == this.currentsongid)
             {
-                this.UpdateHUDForSong(args.song, args.album, args.artist, args.songtags);
+                this.UpdateHUDForSong(args.song, args.album, args.artist, args.tags, false /*no reset*/);
             }
         }
 
@@ -323,14 +327,14 @@ class MusicDBHUD
 
             if(sig == "UpdateHUD")
             {
-                this.UpdateHUDForVideo(args.video, args.artist, args.videotags)
+                this.UpdateHUDForVideo(args.video, args.artist, args.videotags, reset)
             }
         }
         else if(fnc == "GetVideo")
         {
             if(args.video.id == this.currentvideoid)
             {
-                this.UpdateHUDForVideo(args.video, args.artist, args.videotags)
+                this.UpdateHUDForVideo(args.video, args.artist, args.videotags, false /*no reset*/)
             }
         }
     }
