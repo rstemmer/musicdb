@@ -1299,6 +1299,7 @@ class MusicDBWebSocketInterface(object):
         In case there is a at least one song in the queue, this current streamed song gets returned with the following information:
 
             * **video:** The video entry from the database for the video that is currently playing
+            * **artist:** The artist entry from the database related to the video
             * **videotags:** a list of tags as returned by :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoTags`
 
         Returns:
@@ -1341,9 +1342,11 @@ class MusicDBWebSocketInterface(object):
         # if no file is given, the queue is empty - or "there is no queue"
         if videoid:
             video     = self.database.GetVideoById(videoid)
+            artist    = self.database.GetArtistById(video["artistid"])
             videotags = self.GetVideoTags(video["id"])
 
             state["video"]      = video
+            state["artist"]     = artist
             state["videotags"]  = videotags
             state["hasqueue"]   = True
         else:
