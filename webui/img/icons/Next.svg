@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-100,-5)">
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next" transform="matrix(1,0,0,1,-25,1.77636e-15)">
+            <g transform="matrix(1.05263,0,0,1.05263,71.3158,-1.31579)">
+                <circle cx="60.5" cy="15.5" r="9.5"/>
+            </g>
+            <g transform="matrix(0.75,0,0,1,70.75,-1.77636e-15)">
+                <path d="M79,15L91,15" style="fill:none;stroke:rgb(89,89,89);stroke-width:3.39px;"/>
+            </g>
+            <g transform="matrix(1,0,0,1,-1,-1.77636e-15)">
+                <path d="M140,15L137,11L139,15L137,19L140,15Z" style="fill:none;stroke:rgb(89,89,89);stroke-width:3px;"/>
+            </g>
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Insert-Template" serif:id="Insert Template">
+        </g>
+        <g id="Play-Template" serif:id="Play Template">
+        </g>
+    </g>
+</svg>

@@ -1,6 +1,23 @@
 
 var currentsongid   = null; // \_ track current album and song
 var currentalbumid  = null; // /
+let musicdbhud      = new MusicDBHUD();
+
+window.onload = function ()
+{
+    ConnectToMusicDB();
+
+    let HUDparent = document.getElementById("HUD");
+    HUDparent.appendChild(musicdbhud.GetHTMLElement());
+
+    ShowAlphabetBar("Alphabetbar");
+    ShowMusicDBStateView("State");
+    Artistloader_Show("Artistloader");
+    ShowQueueControls("QueueControl");
+    ShowSearchInput("Search");
+    ShowFullscreenButton();
+    CreateIntersectionObserver("detachable_trigger", onDetachableTriggerIntersection);
+}
 
 function onMusicDBConnectionOpen()
 {
@@ -26,6 +43,8 @@ function onMusicDBConnectionClosed()
 
 function onMusicDBNotification(fnc, sig, rawdata)
 {
+    musicdbhud.onMusicDBNotification(fnc, sig, rawdata);
+
     window.console && console.log(sig);
     if(fnc == "MusicDB:AudioStream")
     {
@@ -62,6 +81,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
         {
             // New video and entry is included rawdata
             PlayVideo(rawdata.video, rawdata.queue.entryid);
+            MusicDB_Request("GetVideoStreamState", "UpdateHUD");
         }
     }
     else if(fnc == "MusicDB:SongQueue")
@@ -89,6 +109,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
 }
 function onMusicDBMessage(fnc, sig, args, pass)
 {
+    musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
     // Update state-indicators if some indication passes
     if(fnc == "GetAudioStreamState")
     {
@@ -133,19 +154,30 @@ function onMusicDBMessage(fnc, sig, args, pass)
     if(fnc == "GetMDBState" && sig == "InitializeWebUI") {
         MusicDB_Request("GetTags",          "UpdateTagsCache");
         MusicDB_Request("GetAudioStreamState",   "UpdateStreamState");
-        MusicDB_Request("GetVideoStreamState",   "UpdateStreamState");
         MusicDB_Request("GetMDBState",      "UpdateMDBState");
 
         if(args.MusicDB.uimode == "audio")
         {
+            MusicDB_Request("GetAudioStreamState",          "UpdateHUD")
             MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
             MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
         }
         else if(args.MusicDB.uimode == "video")
         {
+            MusicDB_Request("GetVideoStreamState",          "UpdateHUD");
             MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
             MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
         }
+    }
+
+    else if(fnc == "GetVideoStreamState" && sig == "UpdateHUD") {
+        window.console && console.log(args);
+        //UpdateMusicDBVideoHUD(args.video, args.artist);
+        Videotags_UpdateMoodControl("MainMoodControl", args.videotags);
+        Videoproperties_ShowControl("PropertyHUD", "MainPropertyControl");
+        Videoproperties_UpdateControl("MainPropertyControl", args.video, true); // reset like/dislike state
+        Taginput_Show("GenreHUD",    "MainSongGenreView",    args.video.id, args.videotags, "Genre",    "Song");
+        Taginput_Show("SubgenreHUD", "MainSongSubgenreView", args.video.id, args.videotags, "Subgenre", "Song");
     }
 
     else if(fnc == "GetAudioStreamState" && sig == "UpdateStreamState") {
@@ -155,8 +187,9 @@ function onMusicDBMessage(fnc, sig, args, pass)
             return
         }
 
-        UpdateMusicDBHUD(args.song, args.album, args.artist);
+        //UpdateMusicDBSongHUD(args.song, args.album, args.artist);
         Songtags_UpdateMoodControl("MainMoodControl", args.songtags);
+        Songproperties_ShowControl("PropertyHUD", "MainPropertyControl");
         Songproperties_UpdateControl("MainPropertyControl", args.song, true); // reset like/dislike state
         Taginput_Show("GenreHUD",    "MainSongGenreView",    args.song.id, args.songtags, "Genre",    "Song");
         Taginput_Show("SubgenreHUD", "MainSongSubgenreView", args.song.id, args.songtags, "Subgenre", "Song");
@@ -188,6 +221,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
         if(args.song.id == currentsongid)
         {
             Songtags_UpdateMoodControl("MainMoodControl", args.tags);
+            Songproperties_ShowControl("PropertyHUD", "MainPropertyControl");
             Songproperties_UpdateControl("MainPropertyControl", args.song, false); // dont reset like/dislike state
             Taginput_Show("GenreHUD",    "MainSongGenreView",    args.song.id, args.tags, "Genre",    "Song");
             Taginput_Show("SubgenreHUD", "MainSongSubgenreView", args.song.id, args.tags, "Subgenre", "Song");
@@ -254,21 +288,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
         MusicDB_Request("GetMDBState", "UpdateMDBState"); // Update cached MDB state (Selected Genre)
         Songtags_ShowMoodControl("MoodHUD", "MainMoodControl");
     }
-}
-
-
-window.onload = function ()
-{
-    ConnectToMusicDB();
-    ShowAlphabetBar("Alphabetbar");
-    ShowMusicDBHUD("HUD");
-    Songproperties_ShowControl("PropertyHUD", "MainPropertyControl");
-    ShowMusicDBStateView("State");
-    Artistloader_Show("Artistloader");
-    ShowQueueControls("QueueControl");
-    ShowSearchInput("Search");
-    ShowFullscreenButton();
-    CreateIntersectionObserver("detachable_trigger", onDetachableTriggerIntersection);
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

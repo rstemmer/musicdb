@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-50,-55)">
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+            <g transform="matrix(1.08543,-0.427718,0.911383,2.31285,-71.2508,-70.8751)">
+                <ellipse cx="55" cy="72" rx="3" ry="1"/>
+            </g>
+            <g transform="matrix(1.08543,-0.427718,0.911383,2.31285,-61.2508,-72.9709)">
+                <ellipse cx="55" cy="72" rx="3" ry="1"/>
+            </g>
+            <path d="M66,69L66,59" style="fill:none;stroke:#000;stroke-width:3px;"/>
+            <g transform="matrix(1,0,0,1.15,-10,-7.85)">
+                <path d="M66,69L66,59" style="fill:none;stroke:#000;stroke-width:2.78px;"/>
+            </g>
+            <g transform="matrix(1.17664,-0.361171,0.293438,0.955978,-28.9711,26.3465)">
+                <rect x="58" y="57" width="8" height="2" style="stroke:#000;stroke-width:2.68px;"/>
+            </g>
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Insert-Template" serif:id="Insert Template">
+        </g>
+        <g id="Play-Template" serif:id="Play Template">
+        </g>
+    </g>
+</svg>

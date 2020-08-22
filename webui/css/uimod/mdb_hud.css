@@ -83,34 +83,38 @@ img#MDBHUD_AlbumCover
 /* Song Information */
 /********************/
 
-span.mdbhud_sientry
+div.mdbhud_infoelement
 {
-    display:        block;
-    overflow:       hidden;
     white-space:    nowrap;
+    overflow:       hidden;
+    vertical-align: middle;
 }
 
-i.mdbhud_siicon
+div.mdbhud_infoelement::before
 {
     display:        inline-block;
-    margin-left:    2px;
-    margin-right:   5px;
-    opacity:        0.5;
-    font-style:     normal;
-    min-width:      20px;
-    text-align:     center;
+    color:          var(--hl-color);
+    width:          1rem;
+    margin-right:   1ch;
 }
 
-i#MDBHUD_SongnameIcon
+div#MDBHUD_Musicname[data-type="unknown"]::before
 {
+    content:        url(test.svg);
 }
-i#MDBHUD_AlbumnameIcon
+div#MDBHUD_Musicname[data-type="audio"]::before
 {
-    font-family:    FontAwesome;
+    content:        url(../../img/icons/Song.svg);
 }
-i#MDBHUD_ArtistnameIcon
+
+div#MDBHUD_Albumname[data-type="audio"]::before
 {
-    font-family:    FontAwesome;
+    content:        url(../../img/icons/Album.svg);
+}
+
+div#MDBHUD_Artistname[data-type="audio"]::before
+{
+    content:        url(../../img/icons/Artist.svg);
 }
 
 

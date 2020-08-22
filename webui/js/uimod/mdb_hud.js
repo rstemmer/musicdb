@@ -1,136 +1,202 @@
-/*
- * This class provides the HUD consisting of the following components:
- *
- * Requirements:
- *   - JQuery
- *   - mdb_hud.css
- *   - scrollto.js
- * Show:
- *   - ShowMusicDBHUD(parentID);
- *   - UpdateMusicDBHUD(MDBSong, MDBAlbum, MDBArtist)
- * Functions:
- *   - MDBHUD_SetAlbumCover(MDBAlbum);
- *   - MDBHUD_SetSongInformation(MDBSong, MDBAlbum, MDBArtist)
- * Callbacks:
- * Recommended Paths:
- *   sig: onSongChanged, onStatusChanged -> GetMPDState -> UpdateMusicDBHUD
- * Trigger: (fnc -> sig)
- *   - GetAlbum -> ShowAlbum
- *   - UpdateSongStatistic \_ GetSong->UpdateCurrentSong
- *   - tool:ScrollToArtist(artistid)
- */
 
 "use strict";
 
-function ShowMusicDBHUD(parentID)
+
+class MusicDBHUD
 {
-    var html = "";
+    constructor()
+    {
+        this.artworkimg = document.createElement("img");
+        this.musicinfo  = this._CreateInfoElement("MDBHUD_Musicname");
+        this.albuminfo  = this._CreateInfoElement("MDBHUD_Albumname");
+        this.artistinfo = this._CreateInfoElement("MDBHUD_Artistname");
 
-    html += "<div id=MusicDBHUD>"; // main box
-    
-    // Albumcover
-    html += "<div id=MDBHUD_AlbumBox>";
-    html += "   <img id=MDBHUD_AlbumCover ";
-    html += "   src=\"pics/TouchIcon.png\" >";   // DEFAULT
-    html += "</div>";
+        this.element    = this._CreateElement();
 
-    // Song-Information
-    html += "<div id=MDBHUD_InformationBox>";
-    html += _MDBHUD_CreateSongInformationEntry("Songname");
-    html += _MDBHUD_CreateSongInformationEntry("Albumname");
-    html += _MDBHUD_CreateSongInformationEntry("Artistname");
-    html += "</div>";
-    
-    // Song-Properties
-    html += "<div id=\"GenreHUDBox\">";
-    html += "   <div id=\"GenreHUD\" class=\"hlcolor\"></div>";
-    html += "   <div id=\"SubgenreHUD\" class=\"hlcolor\"></div>";
-    html += "</div>";
-    html += "<div id=\"MoodHUD\" class=\"hlcolor\"></div>";
-    html += "<div id=\"PropertyHUD\" class=\"hlcolor\"></div>";
-    
-    html += "</div>"; // main box
+        this.currentsongid  = -1;
+    }
 
-    // Create Element
-    $("#"+parentID).html(html);
-}
+    GetHTMLElement()
+    {
+        return this.element;
+    }
 
-function _MDBHUD_CreateSongInformationEntry(elementid)
-{
-    var icon = "";
-    if(elementid == "Songname")
-        icon = "♫";
-    else if(elementid == "Albumname")
-        icon = "&#xf1c0;";    /* fa-database */
-    else if(elementid == "Artistname")
-        icon = "&#xf0c0;";    /* fa-group */
-    else
-        icon = "!"; // invalid elementid
+    _CreateElement()
+    {
+
+        // Setting some defaults
+        this.artworkimg.id   = "MDBHUD_AlbumCover";
+        this.artworkimg.src  = "pics/TouchIcon.png";  // Default artwork
+
+        // Artwork box
+        let artworkbox  = document.createElement("div");
+        artworkbox.id   = "MDBHUD_AlbumBox";
+        artworkbox.appendChild(this.artworkimg);
+
+        // Music information box
+        let infobox     = document.createElement("div");
+        infobox.id      = "MDBHUD_InformationBox";
+        infobox.appendChild(this.musicinfo);
+        infobox.appendChild(this.albuminfo);
+        infobox.appendChild(this.artistinfo);
+
+        // Genre boxes
+        let genrebox    = document.createElement("div");
+        let maingenre   = document.createElement("div");
+        let subgenre    = document.createElement("div");
+        maingenre.id    = "GenreHUD";
+        subgenre.id     = "SubgenreHUD";
+        maingenre.classList.add("hlcolor");
+        subgenre.classList.add("hlcolor");
+        genrebox.appendChild(maingenre);
+        genrebox.appendChild(subgenre);
+
+        // Mood and Property boxes
+        let moodbox     = document.createElement("div");
+        let propbox     = document.createElement("div");
+        moodbox.id      = "MoodHUD";
+        propbox.id      = "PropertyHUD";
+        moodbox.classList.add("hlcolor");
+        propbox.classList.add("hlcolor");
+
+        // Compose final element
+        let container   = document.createElement("div");
+        container.id    = "MusicDBHUD";
+        container.appendChild(artworkbox);
+        container.appendChild(infobox);
+        container.appendChild(genrebox);
+        container.appendChild(moodbox);
+        container.appendChild(propbox);
+
+        return container;
+    }
+
+    _CreateInfoElement(elementid)
+    {
+        let infoelement = document.createElement("div");
+        infoelement.id  = elementid;
+        infoelement.dataset.type = "unknown";
+        infoelement.classList.add("mdbhud_infoelement");
+        return infoelement;
+    }
 
 
-    var html = "";
 
-    // on Click-Event
-    html += "<span id=MDBHUD_"+elementid+"Button class=mdbhud_sientry>";
+    SetAlbumArtwork(MDBAlbum)
+    {
+        let imgpath = EncodeArtworkPath(MDBAlbum.artworkpath);
+        let albumid = MDBAlbum.id;
 
-    // Icon
-    html += "<i id=MDBHUD_"+elementid+"Icon class=\"mdbhud_siicon hlcolor\">";
-    html += icon;
-    html += "</i>";
-    // Text
-    html += "<span id=MDBHUD_"+elementid+"Content></span>";
+        this.artworkimg.src     = imgpath;
+        this.artworkimg.onclick = ()=>
+            {
+                MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: albumid});
+            }
+        return;
+    }
 
-    html += "</span>";
-    return html;
-}
+    SetVideoArtwork(MDBVideo)
+    {
+        let imgpath = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile);
+        let videoid = MDBVideo.id;
+
+        this.artworkimg.src     = imgpath;
+        this.artworkimg.onclick = ()=>
+            {
+                MusicDB_Request("GetVideo", "ShowVideo", {videoid: videoid});
+            }
+        return;
+    }
 
 
 
-function MDBHUD_SetAlbumCover(MDBAlbum)
-{
-    var imgpath = EncodeArtworkPath(MDBAlbum.artworkpath);
-    var albumid = MDBAlbum.id;
+    SetSongInformation(MDBSong, MDBAlbum, MDBArtist)
+    {
+        this.musicinfo.dataset.type  = "audio";
+        this.musicinfo.textContent   = MDBSong.name;
+        this.musicinfo.onclick       = ()=>
+            {
+            }
 
-    var html = "";
-    html += "<img id=MDBHUD_AlbumCover ";
-    html += "src=\"" + imgpath + "\" ";
-    html += "onClick=\"MusicDB_Request(\'GetAlbum\', \'ShowAlbum\', {albumid:"+albumid+"});\"";
-    html += ">";
+        this.albuminfo.dataset.type  = "audio";
+        this.albuminfo.textContent   = MDBAlbum.name;
+        this.albuminfo.onclick       = ()=>
+            {
+                MusicDB_Request("GetAlbum", "ShowAlbum", {albumid:MDBAlbum.id});
+            }
 
-    $("#MDBHUD_AlbumBox").html(html);
-}
+        this.artistinfo.dataset.type = "audio";
+        this.artistinfo.textContent  = MDBArtist.name;
+        this.artistinfo.onclick      = ()=>
+            {
+                ScrollToArtist(MDBArtist.id);
+            }
+        return;
+    }
 
-function MDBHUD_SetSongInformation(MDBSong, MDBAlbum, MDBArtist)
-{
-    $("#MDBHUD_SongnameButton").off().on("click",
-        function()
+    SetVideoInformation(MDBVideo, MDBArtist)
+    {
+        this.musicinfo.dataset.type  = "video";
+        this.musicinfo.textContent   = MDBVideo.name;
+        this.musicinfo.onclick       = ()=>
+            {
+                MusicDB_Request("GetVideo", "ShowVideo", {videoid:MDBVideo.id});
+            }
+
+        this.albuminfo.dataset.type  = "video";
+        this.albuminfo.textContent   = "⸻";
+        this.albuminfo.onclick       = ()=>
+            {
+            }
+
+        this.artistinfo.dataset.type = "audio";
+        this.artistinfo.textContent  = MDBArtist.name;
+        this.artistinfo.onclick      = ()=>
+            {
+                ScrollToArtist(MDBArtist.id);
+            }
+        return;
+    }
+
+
+
+    onMusicDBNotification(fnc, sig, rawdata)
+    {
+    }
+
+
+
+    onMusicDBMessage(fnc, sig, args, pass)
+    {
+        if(fnc == "GetAudioStreamState")
         {
-            // TODO: Call Trainer
-        }
-    );
-    $("#MDBHUD_AlbumnameButton").off().on("click",
-        function()
-        {
-            MusicDB_Request("GetAlbum", "ShowAlbum", {albumid:MDBAlbum.id});
-        }
-    );
-    $("#MDBHUD_ArtistnameButton").off().on("click",
-        function()
-        {
-            ScrollToArtist(MDBArtist.id);
-        }
-    );
+            // New song playing?
+            if(sig == "UpdateStreamState" && this.currentsongid != args.song.id)
+                this.currentsongid = args.song.id;
 
-    $("#MDBHUD_SongnameContent").html(MDBSong.name);
-    $("#MDBHUD_AlbumnameContent").html(MDBAlbum.name);
-    $("#MDBHUD_ArtistnameContent").html(MDBArtist.name);
+            if(sig == "UpdateStreamState" || sig == "UpdateHUD")
+            {
+                this.SetAlbumArtwork(args.album);
+                this.SetSongInformation(args.song, args.album, args.artist);
+            }
+        }
+        else if(fnc == "GetSong")
+        {
+            if(args.song.id == this.currentsongid)
+            {
+                this.SetAlbumArtwork(args.album);
+                this.SetSongInformation(args.song, args.album, args.artist);
+            }
+        }
+        else if(fnc == "GetVideoStreamState" && sig == "UpdateHUD")
+        {
+            this.SetVideoArtwork(args.video);
+            this.SetVideoInformation(args.video, args.artist);
+        }
+    }
 }
 
-function UpdateMusicDBHUD(MDBSong, MDBAlbum, MDBArtist)
-{
-    MDBHUD_SetAlbumCover(MDBAlbum);
-    MDBHUD_SetSongInformation(MDBSong, MDBAlbum, MDBArtist);
-}
+
 
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
