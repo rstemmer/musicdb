@@ -30,26 +30,28 @@ class SVGIcon
         }
 
         let svg = this.icon.contentDocument.getElementById(this.groupid)
-        if(svg.setAttribute != undefined)
+        if(svg == null)
+            return;
+
+        if(typeof svg.setAttribute === "function")
         {
             svg.setAttribute("fill",   color);
             svg.setAttribute("stroke", color);
         }
 
         //this._SetChildsColor(svg, color);
+        return;
     }
 
     _SetChildsColor(parentnode, color)
     {
-        window.console && this.groupid == "Song" && console.log(parentnode);
-
         if(!parentnode.hasChildNodes())
             return;
 
         let childnodes = parentnode.childNodes;
         for(let child of childnodes)
         {
-            if(child.setAttribute != undefined)
+            if(typeof child.setAttribute === "function")
             {
                 child.setAttribute("fill",   color);
                 child.setAttribute("stroke", color);
@@ -60,23 +62,6 @@ class SVGIcon
     }
 }
 
-/*
-
-var bd = document.body;
-
-// Zuerst werden wir überprüfen, ob das <body>-Element überhaupt Kindknoten hat.
-// if (bd.hasChildNodes()) {
-//    // Nun werden wir die Eigenschaft childNodes auslesen
-//       var nodeList = bd.childNodes;
-//
-//          for(var i = 0; i < nodeList.length; i++) {
-//               // So wird nodeList durchlaufen und folgender Code wird an jedem Eintrag ausgeführt
-//                    // In diesem Fall soll der Name ausgegeben werden
-//                         alert(nodeList[i].nodeName);
-//                            }
-//                            }
-
-*/
 
 class MusicDBHUD
 {
