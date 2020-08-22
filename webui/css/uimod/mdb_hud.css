@@ -83,40 +83,20 @@ img#MDBHUD_AlbumCover
 /* Song Information */
 /********************/
 
-div.mdbhud_infoelement
+div.mdbhud_infoelementbox
 {
     white-space:    nowrap;
     overflow:       hidden;
     vertical-align: middle;
 }
 
-div.mdbhud_infoelement::before
+div.mdbhud_infoelementbox object
 {
     display:        inline-block;
-    color:          var(--hl-color);
     width:          1rem;
     margin-right:   1ch;
+    vertical-align: middle;
 }
-
-div#MDBHUD_Musicname[data-type="unknown"]::before
-{
-    content:        url(test.svg);
-}
-div#MDBHUD_Musicname[data-type="audio"]::before
-{
-    content:        url(../../img/icons/Song.svg);
-}
-
-div#MDBHUD_Albumname[data-type="audio"]::before
-{
-    content:        url(../../img/icons/Album.svg);
-}
-
-div#MDBHUD_Artistname[data-type="audio"]::before
-{
-    content:        url(../../img/icons/Artist.svg);
-}
-
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */

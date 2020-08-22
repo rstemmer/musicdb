@@ -1,19 +1,100 @@
 
 "use strict";
 
+class SVGIcon
+{
+    constructor(path, groupid)
+    {
+        this.icon      = document.createElement("object");
+        this.icon.type = "image/svg+xml";
+        this.icon.data = path;
+        this.groupid   = groupid;
+    }
+
+    GetHTMLElement()
+    {
+        return this.icon;
+    }
+
+    SetColor(color)
+    {
+        if(this.icon.contentDocument == null)
+        {
+             // image not yet loaded
+            this.icon.addEventListener("load",()=>
+                {
+                    let content = this.icon.contentDocument;
+                    content.getElementById(this.groupid).setAttribute("fill", color);
+                }, false);
+            return;
+        }
+
+        let svg = this.icon.contentDocument.getElementById(this.groupid)
+        if(svg.setAttribute != undefined)
+        {
+            svg.setAttribute("fill",   color);
+            svg.setAttribute("stroke", color);
+        }
+
+        //this._SetChildsColor(svg, color);
+    }
+
+    _SetChildsColor(parentnode, color)
+    {
+        window.console && this.groupid == "Song" && console.log(parentnode);
+
+        if(!parentnode.hasChildNodes())
+            return;
+
+        let childnodes = parentnode.childNodes;
+        for(let child of childnodes)
+        {
+            if(child.setAttribute != undefined)
+            {
+                child.setAttribute("fill",   color);
+                child.setAttribute("stroke", color);
+            }
+            this._SetChildsColor(child, color);
+        }
+        return;
+    }
+}
+
+/*
+
+var bd = document.body;
+
+// Zuerst werden wir überprüfen, ob das <body>-Element überhaupt Kindknoten hat.
+// if (bd.hasChildNodes()) {
+//    // Nun werden wir die Eigenschaft childNodes auslesen
+//       var nodeList = bd.childNodes;
+//
+//          for(var i = 0; i < nodeList.length; i++) {
+//               // So wird nodeList durchlaufen und folgender Code wird an jedem Eintrag ausgeführt
+//                    // In diesem Fall soll der Name ausgegeben werden
+//                         alert(nodeList[i].nodeName);
+//                            }
+//                            }
+
+*/
 
 class MusicDBHUD
 {
     constructor()
     {
-        this.artworkimg = document.createElement("img");
-        this.musicinfo  = this._CreateInfoElement("MDBHUD_Musicname");
-        this.albuminfo  = this._CreateInfoElement("MDBHUD_Albumname");
-        this.artistinfo = this._CreateInfoElement("MDBHUD_Artistname");
+        this.artworkimg    = document.createElement("img");
+        this.musicinfobox  = document.createElement("div");
+        this.albuminfobox  = document.createElement("div");
+        this.artistinfobox = document.createElement("div");
 
-        this.element    = this._CreateElement();
+        this.songicon      = new SVGIcon("img/icons/Song.svg",   "Song");
+        this.videoicon     = new SVGIcon("img/icons/Song.svg",   "Song");
+        this.albumicon     = new SVGIcon("img/icons/Album.svg",  "Album");
+        this.artisticon    = new SVGIcon("img/icons/Artist.svg", "Artist");
 
-        this.currentsongid  = -1;
+        this.element       = this._CreateElement();
+
+        this.currentsongid = -1;
     }
 
     GetHTMLElement()
@@ -28,6 +109,10 @@ class MusicDBHUD
         this.artworkimg.id   = "MDBHUD_AlbumCover";
         this.artworkimg.src  = "pics/TouchIcon.png";  // Default artwork
 
+        this.musicinfobox.classList.add("mdbhud_infoelementbox");
+        this.albuminfobox.classList.add("mdbhud_infoelementbox");
+        this.artistinfobox.classList.add("mdbhud_infoelementbox");
+
         // Artwork box
         let artworkbox  = document.createElement("div");
         artworkbox.id   = "MDBHUD_AlbumBox";
@@ -36,9 +121,9 @@ class MusicDBHUD
         // Music information box
         let infobox     = document.createElement("div");
         infobox.id      = "MDBHUD_InformationBox";
-        infobox.appendChild(this.musicinfo);
-        infobox.appendChild(this.albuminfo);
-        infobox.appendChild(this.artistinfo);
+        infobox.appendChild(this.musicinfobox);
+        infobox.appendChild(this.albuminfobox);
+        infobox.appendChild(this.artistinfobox);
 
         // Genre boxes
         let genrebox    = document.createElement("div");
@@ -71,13 +156,30 @@ class MusicDBHUD
         return container;
     }
 
-    _CreateInfoElement(elementid)
+
+
+    _CreateInfoElement(icon, text)
     {
+        let textelement = document.createElement("span");
+        textelement.textContent = text;
+
         let infoelement = document.createElement("div");
-        infoelement.id  = elementid;
-        infoelement.dataset.type = "unknown";
         infoelement.classList.add("mdbhud_infoelement");
+        infoelement.appendChild(icon.GetHTMLElement());
+        infoelement.appendChild(textelement);
+
         return infoelement;
+    }
+
+
+
+    UpdateIconColor()
+    {
+        let color = GetHLColor();
+        this.songicon.SetColor(color);
+        this.videoicon.SetColor(color);
+        this.albumicon.SetColor(color);
+        this.artisticon.SetColor(color);
     }
 
 
@@ -112,49 +214,53 @@ class MusicDBHUD
 
     SetSongInformation(MDBSong, MDBAlbum, MDBArtist)
     {
-        this.musicinfo.dataset.type  = "audio";
-        this.musicinfo.textContent   = MDBSong.name;
-        this.musicinfo.onclick       = ()=>
+        this.musicinfobox.innerHTML = "";
+        this.musicinfobox.appendChild(this._CreateInfoElement(this.songicon, MDBSong.name));
+        this.musicinfobox.onclick       = ()=>
             {
             }
 
-        this.albuminfo.dataset.type  = "audio";
-        this.albuminfo.textContent   = MDBAlbum.name;
-        this.albuminfo.onclick       = ()=>
+        this.albuminfobox.innerHTML = "";
+        this.albuminfobox.appendChild(this._CreateInfoElement(this.albumicon, MDBAlbum.name));
+        this.albuminfobox.onclick       = ()=>
             {
                 MusicDB_Request("GetAlbum", "ShowAlbum", {albumid:MDBAlbum.id});
             }
 
-        this.artistinfo.dataset.type = "audio";
-        this.artistinfo.textContent  = MDBArtist.name;
-        this.artistinfo.onclick      = ()=>
+        this.artistinfobox.innerHTML = "";
+        this.artistinfobox.appendChild(this._CreateInfoElement(this.artisticon, MDBArtist.name));
+        this.artistinfobox.onclick      = ()=>
             {
                 ScrollToArtist(MDBArtist.id);
             }
+
+        this.UpdateIconColor();
         return;
     }
 
     SetVideoInformation(MDBVideo, MDBArtist)
     {
-        this.musicinfo.dataset.type  = "video";
-        this.musicinfo.textContent   = MDBVideo.name;
-        this.musicinfo.onclick       = ()=>
+        this.musicinfobox.innerHTML = "";
+        this.musicinfobox.appendChild(this._CreateInfoElement(this.videoicon, MDBVideo.name));
+        this.musicinfobox.onclick       = ()=>
             {
                 MusicDB_Request("GetVideo", "ShowVideo", {videoid:MDBVideo.id});
             }
 
-        this.albuminfo.dataset.type  = "video";
-        this.albuminfo.textContent   = "⸻";
-        this.albuminfo.onclick       = ()=>
+        this.albuminfobox.innerHTML = "";
+        this.albuminfobox.appendChild(this._CreateInfoElement(this.albumicon, "⸻"));
+        this.albuminfobox.onclick       = ()=>
             {
             }
 
-        this.artistinfo.dataset.type = "audio";
-        this.artistinfo.textContent  = MDBArtist.name;
-        this.artistinfo.onclick      = ()=>
+        this.artistinfobox.innerHTML = "";
+        this.artistinfobox.appendChild(this._CreateInfoElement(this.artisticon, MDBArtist.name));
+        this.artistinfobox.onclick      = ()=>
             {
                 ScrollToArtist(MDBArtist.id);
             }
+
+        this.UpdateIconColor();
         return;
     }
 

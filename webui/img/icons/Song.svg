@@ -19,12 +19,12 @@
             <g transform="matrix(1.08543,-0.427718,0.911383,2.31285,-61.2508,-72.9709)">
                 <ellipse cx="55" cy="72" rx="3" ry="1"/>
             </g>
-            <path d="M66,69L66,59" style="fill:none;stroke:#000;stroke-width:3px;"/>
+            <path d="M66,69L66,59" style="fill:none;stroke-width:3px;"/>
             <g transform="matrix(1,0,0,1.15,-10,-7.85)">
-                <path d="M66,69L66,59" style="fill:none;stroke:#000;stroke-width:2.78px;"/>
+                <path d="M66,69L66,59" style="fill:none;stroke-width:2.78px;"/>
             </g>
             <g transform="matrix(1.17664,-0.361171,0.293438,0.955978,-28.9711,26.3465)">
-                <rect x="58" y="57" width="8" height="2" style="stroke:#000;stroke-width:2.68px;"/>
+                <rect x="58" y="57" width="8" height="2" style="stroke-width:2.68px;"/>
             </g>
         </g>
         <g id="Remove">

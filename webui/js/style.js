@@ -8,6 +8,7 @@ var lasthlcolor = "#777799";
 // If no arguments, default values (last color setup) will be used
 function UpdateStyle(bgcolor, fgcolor, hlcolor)
 {
+    // Old concept
     lastbgcolor = bgcolor || lastbgcolor;
     lastfgcolor = fgcolor || lastfgcolor;
     lasthlcolor = hlcolor || lasthlcolor;
@@ -15,6 +16,19 @@ function UpdateStyle(bgcolor, fgcolor, hlcolor)
     $(".fgcolor").css("color",            lastfgcolor);
     $(".hlcolor").css("color",            lasthlcolor);
     $(".fmcolor").css("border-color",     lasthlcolor);
+
+    // New concept
+    //let styles = window.getComputedStyle(document.documentElement);
+    /*
+    styles.setProperty('--fgcolor', lastfgcolor);
+    styles.setProperty('--hlcolor', lasthlcolor);
+    styles.setProperty('--bgcolor', lastbgcolor);
+    */
+}
+
+function GetHLColor()
+{
+    return lasthlcolor;
 }
 
 
