@@ -262,6 +262,7 @@ function MusicDB_Broadcast(fncname, fncsig, args, pass)
 function MDB_SendPacket(packet)
 {
     let buffer;
+    window.console && console.log("%c << fnc:"+packet.fncname+"; sig: "+packet.fncsig, "color:#9cc87a");
 
     packet.key = WEBSOCKET_APIKEY;
     buffer     = JSON.stringify(packet);

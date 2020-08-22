@@ -80,6 +80,7 @@ class MusicDBHUD
         this.element       = this._CreateElement();
 
         this.currentsongid = -1;
+        this.currentvideoid = -1;
     }
 
     GetHTMLElement()
@@ -251,6 +252,36 @@ class MusicDBHUD
 
 
 
+    UpdateHUDForSong(MDBSong, MDBAlbum, MDBArtist, MDBSongTags)
+    {
+        this.SetAlbumArtwork(MDBAlbum);
+        this.SetSongInformation(MDBSong, MDBAlbum, MDBArtist);
+
+        Songtags_UpdateMoodControl("MainMoodControl", MDBSongTags);
+        Songproperties_ShowControl("PropertyHUD", "MainPropertyControl");
+        Songproperties_UpdateControl("MainPropertyControl", MDBSong, true); // reset like/dislike state
+        Taginput_Show("GenreHUD",    "MainSongGenreView",    MDBSong.id, MDBSongTags, "Genre",    "Song");
+        Taginput_Show("SubgenreHUD", "MainSongSubgenreView", MDBSong.id, MDBSongTags, "Subgenre", "Song");
+
+        UpdateStyle();    // Update new tags
+    }
+
+    UpdateHUDForVideo(MDBVideo, MDBArtist, MDBVideoTags)
+    {
+        this.SetVideoArtwork(MDBVideo);
+        this.SetVideoInformation(MDBVideo, MDBArtist);
+
+        Videotags_UpdateMoodControl("MainMoodControl", MDBVideoTags);
+        Videoproperties_ShowControl("PropertyHUD", "MainPropertyControl");
+        Videoproperties_UpdateControl("MainPropertyControl", MDBVideo, true); // reset like/dislike state
+        Taginput_Show("GenreHUD",    "MainSongGenreView",    MDBVideo.id, MDBVideoTags, "Genre",    "Video");
+        Taginput_Show("SubgenreHUD", "MainSongSubgenreView", MDBVideo.id, MDBVideoTags, "Subgenre", "Video");
+
+        UpdateStyle();    // Update new tags
+    }
+
+
+
     onMusicDBNotification(fnc, sig, rawdata)
     {
     }
@@ -259,30 +290,48 @@ class MusicDBHUD
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
+        // Song Part
         if(fnc == "GetAudioStreamState")
         {
             // New song playing?
             if(sig == "UpdateStreamState" && this.currentsongid != args.song.id)
-                this.currentsongid = args.song.id;
-
-            if(sig == "UpdateStreamState" || sig == "UpdateHUD")
             {
-                this.SetAlbumArtwork(args.album);
-                this.SetSongInformation(args.song, args.album, args.artist);
+                this.currentsongid = args.song.id;
+                this.UpdateHUDForSong(args.song, args.album, args.artist, args.songtags);
+            }
+
+            if(sig == "UpdateHUD")
+            {
+                this.UpdateHUDForSong(args.song, args.album, args.artist, args.songtags);
             }
         }
         else if(fnc == "GetSong")
         {
             if(args.song.id == this.currentsongid)
             {
-                this.SetAlbumArtwork(args.album);
-                this.SetSongInformation(args.song, args.album, args.artist);
+                this.UpdateHUDForSong(args.song, args.album, args.artist, args.songtags);
             }
         }
+
+        // Video Part
         else if(fnc == "GetVideoStreamState" && sig == "UpdateHUD")
         {
-            this.SetVideoArtwork(args.video);
-            this.SetVideoInformation(args.video, args.artist);
+            if(sig == "UpdateStreamState" && this.currentvideoid != args.video.id)
+            {
+                this.currentvideoid = args.video.id;
+            }
+
+            if(sig == "UpdateHUD")
+            {
+                this.UpdateHUDForVideo(args.video, args.artist, args.videotags)
+            }
+        }
+        else if(fnc == "GetVideo")
+        {
+            if(args.video.id == this.currentvideoid)
+            {
+                this.UpdateHUDForVideo(args.video, args.artist, args.videotags)
+            }
         }
     }
 }

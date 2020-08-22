@@ -68,8 +68,6 @@ function onMusicDBNotification(fnc, sig, rawdata)
     }
     else if(fnc == "MusicDB:VideoStream")
     {
-        window.console && console.log(sig);
-        window.console && console.log(rawdata);
         // Update state indicator. If notifications arrive, something must be working :)
         SetMusicDBOnlineState("yes", null, "yes"); // Data, Audio, Video
 
@@ -110,6 +108,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
 function onMusicDBMessage(fnc, sig, args, pass)
 {
     musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
+
     // Update state-indicators if some indication passes
     if(fnc == "GetAudioStreamState")
     {
@@ -147,7 +146,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
         UpdatePlayerState(args.isstreaming);
     }
     else
-        window.console && console.log(" >> fnc: "+fnc+"; sig: "+sig);
+        window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");
 
 
     // Handle Messages form the server
@@ -155,29 +154,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
         MusicDB_Request("GetTags",          "UpdateTagsCache");
         MusicDB_Request("GetAudioStreamState",   "UpdateStreamState");
         MusicDB_Request("GetMDBState",      "UpdateMDBState");
-
-        if(args.MusicDB.uimode == "audio")
-        {
-            MusicDB_Request("GetAudioStreamState",          "UpdateHUD")
-            MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
-            MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
-        }
-        else if(args.MusicDB.uimode == "video")
-        {
-            MusicDB_Request("GetVideoStreamState",          "UpdateHUD");
-            MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
-            MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
-        }
-    }
-
-    else if(fnc == "GetVideoStreamState" && sig == "UpdateHUD") {
-        window.console && console.log(args);
-        //UpdateMusicDBVideoHUD(args.video, args.artist);
-        Videotags_UpdateMoodControl("MainMoodControl", args.videotags);
-        Videoproperties_ShowControl("PropertyHUD", "MainPropertyControl");
-        Videoproperties_UpdateControl("MainPropertyControl", args.video, true); // reset like/dislike state
-        Taginput_Show("GenreHUD",    "MainSongGenreView",    args.video.id, args.videotags, "Genre",    "Song");
-        Taginput_Show("SubgenreHUD", "MainSongSubgenreView", args.video.id, args.videotags, "Subgenre", "Song");
     }
 
     else if(fnc == "GetAudioStreamState" && sig == "UpdateStreamState") {
@@ -186,13 +162,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
             window.console && console.log("There is no queue and no current song!")
             return
         }
-
-        //UpdateMusicDBSongHUD(args.song, args.album, args.artist);
-        Songtags_UpdateMoodControl("MainMoodControl", args.songtags);
-        Songproperties_ShowControl("PropertyHUD", "MainPropertyControl");
-        Songproperties_UpdateControl("MainPropertyControl", args.song, true); // reset like/dislike state
-        Taginput_Show("GenreHUD",    "MainSongGenreView",    args.song.id, args.songtags, "Genre",    "Song");
-        Taginput_Show("SubgenreHUD", "MainSongSubgenreView", args.song.id, args.songtags, "Subgenre", "Song");
 
         // if the song changes, show the new album (or reload for update)
         if(args.song.id != currentsongid)
@@ -208,25 +177,29 @@ function onMusicDBMessage(fnc, sig, args, pass)
             Artistloader_UpdateState(args);
             UpdateRelationshipGenreHighlight(args);
         }
+        if(sig == "UpdateMDBState")
+        {
+            if(args.MusicDB.uimode == "audio")
+            {
+                MusicDB_Request("GetAudioStreamState",          "UpdateHUD")
+                MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
+                MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+            }
+            else if(args.MusicDB.uimode == "video")
+            {
+                MusicDB_Request("GetVideoStreamState",          "UpdateHUD");
+                MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
+                MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+            }
+        }
     }
     else if(fnc=="sys:refresh" && sig == "UpdateCaches") {
         MusicDB_Request("GetTags", "UpdateTagsCache");                  // Update tag cache
         MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists"); // Update artist view
     }
-    else if(fnc == "GetSong"/* && sig == "UpdateSong"*/) {
+    else if(fnc == "GetSong") {
         // Update album view - in case the song is visible right now…
         Albumview_UpdateSong(args.album, args.song, args.tags);
-
-        // Update HUD
-        if(args.song.id == currentsongid)
-        {
-            Songtags_UpdateMoodControl("MainMoodControl", args.tags);
-            Songproperties_ShowControl("PropertyHUD", "MainPropertyControl");
-            Songproperties_UpdateControl("MainPropertyControl", args.song, false); // dont reset like/dislike state
-            Taginput_Show("GenreHUD",    "MainSongGenreView",    args.song.id, args.tags, "Genre",    "Song");
-            Taginput_Show("SubgenreHUD", "MainSongSubgenreView", args.song.id, args.tags, "Subgenre", "Song");
-            UpdateStyle();    // Update new tags
-        }
 
         // Update rest if a tag input element must be updated
         if(sig == "UpdateTagInput")
@@ -241,11 +214,8 @@ function onMusicDBMessage(fnc, sig, args, pass)
         }
         else if(sig == "UpdateVideo" || sig == "UpdateTagInput")
         {
-            //if(args.video.id == currentvideoid)
-            //{
-                UpdateVideoSettings(args.video, args.tags, false);
-                UpdateStyle();    // Update new tags
-            //}
+            UpdateVideoSettings(args.video, args.tags, false);
+            UpdateStyle();    // Update new tags
         }
     }
     else if(fnc == "GetSongQueue" && sig == "ShowSongQueue")
