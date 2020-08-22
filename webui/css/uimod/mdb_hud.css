@@ -95,7 +95,9 @@ div.mdbhud_infoelementbox object
     display:        inline-block;
     width:          1rem;
     margin-right:   1ch;
+    margin-left:    1ch;
     vertical-align: middle;
+    opacity:        0.5;
 }
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
