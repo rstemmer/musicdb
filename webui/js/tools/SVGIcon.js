@@ -3,14 +3,13 @@
 
 class SVGIcon
 {
-    constructor(path, groupid)
+    constructor(name)
     {
-        let maskurl  = `url("${path}");`;
+        let maskurl  = `url("img/icons/${name}.svg");`;
 
         this.icon    = document.createElement("div");
         this.icon.classList.add("icon");
         this.icon.style.cssText = "mask: "+maskurl;
-        this.groupid = groupid;
     }
 
     GetHTMLElement()
@@ -24,7 +23,6 @@ class SVGIcon
         return;
     }
 }
-
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

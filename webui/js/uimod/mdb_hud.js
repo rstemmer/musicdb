@@ -10,10 +10,10 @@ class MusicDBHUD
         this.albuminfobox  = document.createElement("div");
         this.artistinfobox = document.createElement("div");
 
-        this.songicon      = new SVGIcon("img/icons/Song.svg",   "Song");
-        this.videoicon     = new SVGIcon("img/icons/Video.svg",  "Video");
-        this.albumicon     = new SVGIcon("img/icons/Album.svg",  "Album");
-        this.artisticon    = new SVGIcon("img/icons/Artist.svg", "Artist");
+        this.songicon      = new SVGIcon("Song");
+        this.videoicon     = new SVGIcon("Video");
+        this.albumicon     = new SVGIcon("Album");
+        this.artisticon    = new SVGIcon("Artist");
 
         this.element       = this._CreateElement();
 
