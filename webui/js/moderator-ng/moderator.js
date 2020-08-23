@@ -2,19 +2,25 @@
 var currentsongid   = null; // \_ track current album and song
 var currentalbumid  = null; // /
 
+// Create Basic MusicDB WebUI Components
 let fullscreenmanager   = new FullscreenManager();
+let mdbmodemanager      = new MDBModeManager();
 let musicdbhud          = new MusicDBHUD();
 
-let mainmenu            = new MainMenu("1em", "1em");
+// Create Main Menu
+let mainmenu           = new MainMenu("1em", "1em");
 mainmenu.CreateSwitch(
     new SVGIcon("EnterFullscreen"), "Enter Fullscreen", ()=>{fullscreenmanager.EnterFullscreen();},
     new SVGIcon("LeaveFullscreen"), "Leave Fullscreen", ()=>{fullscreenmanager.LeaveFullscreen();}
     );
-mainmenu.CreateSwitch(
-    new SVGIcon("Switch2Video"), "Switch to Video Mode", ()=>{window.console&&console.log("Switch2Video");},
-    new SVGIcon("Switch2Audio"), "Switch to Audio Mode", ()=>{window.console&&console.log("Switch2Audio");}
+let entryid = mainmenu.CreateSwitch(
+    new SVGIcon("Switch2Video"), "Switch to Video Mode", ()=>{mdbmodemanager.SetVideoMode();},
+    new SVGIcon("Switch2Audio"), "Switch to Audio Mode", ()=>{mdbmodemanager.SetAudioMode();}
     );
 mainmenu.UpdateMenuEntryList();
+mdbmodemanager.SetMainMenuHandler(mainmenu, entryid); // This allows updating the menu entry on mode switch from remote
+
+
 
 window.onload = function ()
 {
@@ -122,6 +128,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
 function onMusicDBMessage(fnc, sig, args, pass)
 {
     musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
+    mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
 
     // Update state-indicators if some indication passes
     if(fnc == "GetAudioStreamState")
@@ -187,24 +194,8 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetMDBState") {
         if(sig == "UpdateMDBState" || sig == "UpdateRelationshipGenreHighlight")
         {
-            UpdateMusicDBMode(args);
             Artistloader_UpdateState(args);
             UpdateRelationshipGenreHighlight(args);
-        }
-        if(sig == "UpdateMDBState")
-        {
-            if(args.MusicDB.uimode == "audio")
-            {
-                MusicDB_Request("GetAudioStreamState",          "UpdateHUD")
-                MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
-                MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
-            }
-            else if(args.MusicDB.uimode == "video")
-            {
-                MusicDB_Request("GetVideoStreamState",          "UpdateHUD");
-                MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
-                MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
-            }
         }
     }
     else if(fnc=="sys:refresh" && sig == "UpdateCaches") {
@@ -269,7 +260,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     {
         Tagmanager_onGetTags(args);
         Artistloader_UpdateControl();
-        MusicDB_Request("GetMDBState", "UpdateMDBState"); // Update cached MDB state (Selected Genre)
+        MusicDB_Request("GetMDBState", "UpdateMDBState"); // Update cached MDB state (Selected Genre) // TODO: WHAT?
         Songtags_ShowMoodControl("MoodHUD", "MainMoodControl");
     }
 

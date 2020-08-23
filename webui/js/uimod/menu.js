@@ -109,37 +109,32 @@ class MainMenu
                 }
             }
 
-        this.entryarray.push(entry);
-        return;
+        let newlength = this.entryarray.push(entry);
+        let entryid   = newlength - 1;
+        return entryid;
     }
 
-    _CreateFullscreenSwitch()
+
+    ForceEntryState(entryid, state)
     {
-        let text  = document.createElement("span");
-        text.textContent = "Enter Fullscreen";
-        
-        let icon  = new SVGIcon("img/icons/EnterFullscreen.svg");
+        if(state == "a")
+        {
+            this.entryarray[entryid].switchstate = "a";
+            this.entryarray[entryid].element.innerHTML = "";
+            this.entryarray[entryid].element.appendChild(this.entryarray[entryid].aicon);
+            this.entryarray[entryid].element.appendChild(this.entryarray[entryid].atext);
+        }
+        else if(state == "b")
+        {
+            this.entryarray[entryid].switchstate = "b";
+            this.entryarray[entryid].element.innerHTML = "";
+            this.entryarray[entryid].element.appendChild(this.entryarray[entryid].bicon);
+            this.entryarray[entryid].element.appendChild(this.entryarray[entryid].btext);
+        }
 
-        let entry = document.createElement("div");
-        entry.classList.add("menuentry");
-        entry.appendChild(icon.GetHTMLElement());
-        entry.appendChild(text);
-        return entry;
+        this.UpdateMenuEntryList();
     }
 
-    _CreateMDBModeSwitch()
-    {
-        let text  = document.createElement("span");
-        text.textContent = "Switch to Video Mode";
-        
-        let icon  = new SVGIcon("img/icons/Switch2Video.svg");
-
-        let entry = document.createElement("div");
-        entry.classList.add("menuentry");
-        entry.appendChild(icon.GetHTMLElement());
-        entry.appendChild(text);
-        return entry;
-    }
 
     onToggleMenu()
     {

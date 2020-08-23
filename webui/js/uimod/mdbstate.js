@@ -36,7 +36,7 @@
  *   On onTimeChanged-mpd-event set the TimePlayed. This call will also update the view
  */
 
-var GLOBAL_MDBMODE = "audio"; // audio/video
+//var GLOBAL_MDBMODE = "audio"; // audio/video
 
 function ShowMusicDBStateView(parentID)
 {
@@ -63,7 +63,7 @@ function ShowMusicDBStateView(parentID)
     html += "<span id=VideoStreamState class=\"onlinestate\" data-online=\"unknown\">";
     html += "Video Stream";
     html += "</span><br>";
-
+/*
     // Mode Select
     html += "<span id=MDBModeswitchBtn";
     html += " title=\"Switch between Audio/Video mode\"";
@@ -78,6 +78,7 @@ function ShowMusicDBStateView(parentID)
     html += ">";
     html += "Stream Mode";
     html += "</span><br>";
+*/
 
     // Playtime
     html += "<span id=CurrentTime class=\"timestats\" data-playstate=\"unknown\">";
@@ -92,8 +93,8 @@ function ShowMusicDBStateView(parentID)
     
     // Create Elements
     document.getElementById(parentID).innerHTML = html;
-    ShowMDBControls("Controls", GLOBAL_MDBMODE);
-    UpdateMDBControls(null, GLOBAL_MDBMODE);
+    ShowMDBControls("Controls");
+    UpdateMDBControls(null);
 }
 
 
@@ -138,7 +139,7 @@ function SetMusicDBPlayingState(serverstate, clientstate)
 
     window.console && console.log("SetMusicDBPlayingState");
 
-    UpdateMDBControls(serverstate, GLOBAL_MDBMODE);
+    UpdateMDBControls(serverstate);
 }
 
 
@@ -195,7 +196,7 @@ function UpdateTimeview()
     ptimeelement.innerHTML = endtime;
 }
 
-
+/*
 function ToggleMusicDBMode()
 {
     // Switch mode
@@ -229,7 +230,9 @@ function ToggleMusicDBMode()
     MusicDB_Request("SetMDBState", "UpdateMDBState",
         {category:"MusicDB", name:"uimode", value:GLOBAL_MDBMODE});
 }
+*/
 
+/*
 function UpdateMusicDBMode(MDBState)
 {
     // Check and update UI Mode
@@ -260,7 +263,8 @@ function UpdateMusicDBMode(MDBState)
     }
 
 }
-
+*/
+/*
 function _MDBState_RequrestContentUpdate()
 {
     if(GLOBAL_MDBMODE == "audio")
@@ -274,6 +278,7 @@ function _MDBState_RequrestContentUpdate()
         MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
     }
 }
+*/
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

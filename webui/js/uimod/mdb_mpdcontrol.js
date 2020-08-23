@@ -17,8 +17,9 @@
 "use strict";
 
 // mode can be "audio" or "video"
-function ShowMDBControls(parentID, mode)
+function ShowMDBControls(parentID)
 {
+    let mode = mdbmodemanager.GetCurrentMode();
     let html = "";
 
     html += "<div id=MDBControls>"; // main box
@@ -54,10 +55,11 @@ function ShowMDBControls(parentID, mode)
 
 // Valid states: unknown, playing, paused, *null* (to change nothing)
 // Valid modes: audio, video, *null*
-function UpdateMDBControls(serverstate, mode)
+function UpdateMDBControls(serverstate)
 {
     let playbutton = document.getElementById("MDBCPauseButton");
     let nextbutton = document.getElementById("MDBCNextButton");
+    let mode       = mdbmodemanager.GetCurrentMode();
 
     if(playbutton)
     {
