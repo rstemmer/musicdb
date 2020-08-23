@@ -90,10 +90,11 @@ div.mdbhud_infoelementbox
     vertical-align: middle;
 }
 
-div.mdbhud_infoelementbox object
+div.mdbhud_infoelementbox .icon
 {
     display:        inline-block;
-    width:          1rem;
+    width:          1em;
+    height:         1em;
     margin-right:   1ch;
     margin-left:    1ch;
     vertical-align: middle;
