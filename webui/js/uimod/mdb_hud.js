@@ -97,17 +97,6 @@ class MusicDBHUD
 
 
 
-    UpdateIconColor()
-    {
-        let color = GetHLColor();
-        this.songicon.SetColor(color);
-        this.videoicon.SetColor(color);
-        this.albumicon.SetColor(color);
-        this.artisticon.SetColor(color);
-    }
-
-
-
     SetAlbumArtwork(MDBAlbum)
     {
         let imgpath = EncodeArtworkPath(MDBAlbum.artworkpath);
@@ -158,7 +147,6 @@ class MusicDBHUD
                 ScrollToArtist(MDBArtist.id);
             }
 
-        this.UpdateIconColor();
         return;
     }
 
@@ -184,7 +172,6 @@ class MusicDBHUD
                 ScrollToArtist(MDBArtist.id);
             }
 
-        this.UpdateIconColor();
         return;
     }
 

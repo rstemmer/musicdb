@@ -264,9 +264,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
         Songtags_ShowMoodControl("MoodHUD", "MainMoodControl");
     }
 
-    // TODO: This is not the best place for such updates because it is called far too often.
-    // Build a better color update mechanism!
-    musicdbhud.UpdateIconColor();
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

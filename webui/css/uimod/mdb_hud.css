@@ -92,13 +92,14 @@ div.mdbhud_infoelementbox
 
 div.mdbhud_infoelementbox .icon
 {
-    display:        inline-block;
-    width:          1em;
-    height:         1em;
-    margin-right:   1ch;
-    margin-left:    1ch;
-    vertical-align: middle;
-    opacity:        0.5;
+    display:            inline-block;
+    width:              1em;
+    height:             1em;
+    margin-right:       1ch;
+    margin-left:        1ch;
+    vertical-align:     middle;
+    opacity:            0.5;
+    background-color:   var(--hlcolor);
 }
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
