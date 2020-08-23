@@ -58,12 +58,18 @@ class MainMenu
 {
     constructor(topoffset, rightoffset)
     {
-        this.icon        = new SVGIcon("img/icons/Menu.svg");
-        //this.icon        = new SVGIcon("img/icons/Artist.svg", "Artist");
+        this.icon        = new SVGIcon("Menu");
+        this.entryarray  = new Array();
+        
         this.topoffset   = topoffset;
         this.rightoffset = rightoffset;
+
         this.menubutton  = this._CreateMenuToggleButton(this.icon);
-        this.entrylist   = this._CreateEntryList();
+
+
+        this.entrylistelement = document.createElement("div");
+        this.entrylistelement.classList.add("menuentrylist");
+        this.entrylistelement.style.display = "none"; // Hide by default
         this.isopen      = false;
 
         this.element     = document.createElement("div");
@@ -71,7 +77,7 @@ class MainMenu
         this.element.style.top      = this.topoffset;
         this.element.style.right    = this.rightoffset;
         this.element.appendChild(this.menubutton);
-        this.element.appendChild(this.entrylist);
+        this.element.appendChild(this.entrylistelement);
     }
 
     GetHTMLElement()
@@ -91,22 +97,71 @@ class MainMenu
 
         button.onclick = ()=>
             {
-                window.console && console.log("Button clicked");
                 this.onToggleMenu();
             };
         return button;
     }
 
-    _CreateEntryList()
+
+
+    UpdateMenuEntryList()
     {
-        let entries = document.createElement("div");
-        entries.classList.add("menuentrylist");
-        entries.style.display = "none"; // Hide by default
+        this.entrylistelement.innerHTML = "";
 
-        entries.appendChild(this._CreateFullscreenSwitch());
-        entries.appendChild(this._CreateMDBModeSwitch());
+        for(let entry of this.entryarray)
+        {
+            this.entrylistelement.appendChild(entry.element);
+        }
 
-        return entries;
+        return;
+    }
+
+
+
+    CreateSwitch(aicon, atext, afunction, bicon, btext, bfunction)
+    {
+        let entry = new Object();
+
+        entry.aicon = aicon.GetHTMLElement();
+        entry.bicon = bicon.GetHTMLElement();
+
+        entry.atext             = document.createElement("span");
+        entry.atext.textContent = atext;
+        entry.btext             = document.createElement("span");
+        entry.btext.textContent = btext;
+
+        entry.afunction = afunction;
+        entry.bfunction = bfunction;
+
+        entry.switchstate = "a";
+
+        entry.element = document.createElement("div");
+        entry.element.classList.add("menuentry");
+        entry.element.appendChild(entry.aicon);
+        entry.element.appendChild(entry.atext);
+
+        entry.element.onclick = (event)=>
+            {
+                if(entry.switchstate == "a")
+                {
+                    entry.afunction();
+                    entry.switchstate = "b";
+                    entry.element.innerHTML = "";
+                    entry.element.appendChild(entry.bicon);
+                    entry.element.appendChild(entry.btext);
+                }
+                else
+                {
+                    entry.bfunction();
+                    entry.switchstate = "a";
+                    entry.element.innerHTML = "";
+                    entry.element.appendChild(entry.aicon);
+                    entry.element.appendChild(entry.atext);
+                }
+            }
+
+        this.entryarray.push(entry);
+        return;
     }
 
     _CreateFullscreenSwitch()
@@ -141,50 +196,18 @@ class MainMenu
     {
         if(this.isopen)
         {
-            this.entrylist.style.display = "none";
+            this.entrylistelement.style.display = "none";
             this.isopen = false;
         }
         else
         {
-            this.entrylist.style.display = "flex";
+            this.entrylistelement.style.display = "flex";
             this.isopen = true;
         }
     }
 
 }
 
-/*
-
-function ToggleFullscreen()
-{
-    var state = $("#FSB").attr("data-fsstate");
-
-    if(state == "normal")
-    {
-        let  el = document.documentElement,
-            rfs = el.requestFullscreen
-               || el.webkitRequestFullScreen
-               || el.mozRequestFullScreen
-               || el.msRequestFullscreen 
-            ;
-
-        rfs.call(el);
-        $("#FSB").attr("data-fsstate", "fullscreen");
-    }
-    else
-    {
-        let  el = window.document,
-            rfs = el.exitFullscreen
-               || el.webkitExitFullscreen
-               || el.mozCancelFullScreen
-               || el.msExitFullscreen 
-            ;
-
-        rfs.call(el);
-        $("#FSB").attr("data-fsstate", "normal");
-    }
-};
-*/
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

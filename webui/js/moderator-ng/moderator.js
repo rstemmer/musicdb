@@ -1,8 +1,19 @@
 
 var currentsongid   = null; // \_ track current album and song
 var currentalbumid  = null; // /
+
 let musicdbhud      = new MusicDBHUD();
+
 let mainmenu        = new MainMenu("0.2em", "2em");
+mainmenu.CreateSwitch(
+    new SVGIcon("EnterFullscreen"), "Enter Fullscreen", ()=>{window.console&&console.log("Enter Fullscreen");},
+    new SVGIcon("LeaveFullscreen"), "Leave Fullscreen", ()=>{window.console&&console.log("Leave Fullscreen");}
+    );
+mainmenu.CreateSwitch(
+    new SVGIcon("Switch2Video"), "Switch to Video Mode", ()=>{window.console&&console.log("Switch2Video");},
+    new SVGIcon("Switch2Audio"), "Switch to Audio Mode", ()=>{window.console&&console.log("Switch2Audio");}
+    );
+mainmenu.UpdateMenuEntryList();
 
 window.onload = function ()
 {

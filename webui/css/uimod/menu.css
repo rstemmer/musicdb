@@ -36,7 +36,7 @@ div.menuentry
 {
     display:            flex;
     box-size:           border-box;
-    padding:            0.2em 1.5ch;
+    padding:            1em 1.5ch;
     vertical-align:     middle;
 }
 
