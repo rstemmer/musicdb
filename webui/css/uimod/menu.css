@@ -1,0 +1,59 @@
+
+/******************/
+/* Main Container */
+/******************/
+
+div.menu
+{
+    position:           absolute;
+    border:             1px solid blue;
+}
+
+div.menutogglebutton
+{
+    border:             1px solid red;
+}
+
+div.menutogglebutton .icon
+{
+    margin-left:        auto;
+    background-color:   var(--hlcolor);
+    width:              1.5em;
+    height:             1.5em;
+}
+
+div.menuentrylist
+{
+    border:             3px solid green;
+    height:             5em;
+    width:              5em;
+    background-color:   #909090;
+}
+
+/*
+div#FSBBox
+{
+    position:       absolute;
+    top:            1px;
+    right:          1px;
+}
+
+div#FSB:before
+{
+    font-family:    FontAwesome;
+    font-weight:    normal;
+    display:        inline-block;
+    padding:        5px;
+}
+div#FSB[data-fsstate=normal]:before 
+{
+    content: "\f065";
+}
+div#FSB[data-fsstate=fullscreen]:before
+{
+    content: "\f066";
+}
+*/
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

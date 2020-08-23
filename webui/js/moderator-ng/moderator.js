@@ -2,6 +2,7 @@
 var currentsongid   = null; // \_ track current album and song
 var currentalbumid  = null; // /
 let musicdbhud      = new MusicDBHUD();
+let mainmenu        = new MainMenu("0.2em", "2em");
 
 window.onload = function ()
 {
@@ -9,6 +10,8 @@ window.onload = function ()
 
     let HUDparent = document.getElementById("HUD");
     HUDparent.appendChild(musicdbhud.GetHTMLElement());
+
+    document.body.appendChild(mainmenu.GetHTMLElement());
 
     ShowAlphabetBar("Alphabetbar");
     ShowMusicDBStateView("State");
