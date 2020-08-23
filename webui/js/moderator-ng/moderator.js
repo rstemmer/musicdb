@@ -2,12 +2,13 @@
 var currentsongid   = null; // \_ track current album and song
 var currentalbumid  = null; // /
 
-let musicdbhud      = new MusicDBHUD();
+let fullscreenmanager   = new FullscreenManager();
+let musicdbhud          = new MusicDBHUD();
 
-let mainmenu        = new MainMenu("0.2em", "2em");
+let mainmenu            = new MainMenu("1em", "1em");
 mainmenu.CreateSwitch(
-    new SVGIcon("EnterFullscreen"), "Enter Fullscreen", ()=>{window.console&&console.log("Enter Fullscreen");},
-    new SVGIcon("LeaveFullscreen"), "Leave Fullscreen", ()=>{window.console&&console.log("Leave Fullscreen");}
+    new SVGIcon("EnterFullscreen"), "Enter Fullscreen", ()=>{fullscreenmanager.EnterFullscreen();},
+    new SVGIcon("LeaveFullscreen"), "Leave Fullscreen", ()=>{fullscreenmanager.LeaveFullscreen();}
     );
 mainmenu.CreateSwitch(
     new SVGIcon("Switch2Video"), "Switch to Video Mode", ()=>{window.console&&console.log("Switch2Video");},
@@ -29,7 +30,6 @@ window.onload = function ()
     Artistloader_Show("Artistloader");
     ShowQueueControls("QueueControl");
     ShowSearchInput("Search");
-    ShowFullscreenButton();
     CreateIntersectionObserver("detachable_trigger", onDetachableTriggerIntersection);
 }
 
