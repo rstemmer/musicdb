@@ -4,6 +4,10 @@
     <g transform="matrix(1,0,0,1,-50,-80)">
         <g id="Menu">
         </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
         <g id="Switch2Video">
         </g>
         <g id="Switch2Audio" transform="matrix(1,0,0,1,-0.0676869,25)">
