@@ -18,12 +18,10 @@ function UpdateStyle(bgcolor, fgcolor, hlcolor)
     $(".fmcolor").css("border-color",     lasthlcolor);
 
     // New concept
-    //let styles = window.getComputedStyle(document.documentElement);
-    /*
-    styles.setProperty('--fgcolor', lastfgcolor);
-    styles.setProperty('--hlcolor', lasthlcolor);
-    styles.setProperty('--bgcolor', lastbgcolor);
-    */
+    document.documentElement.style.setProperty("--fgcolor", lastfgcolor);
+    document.documentElement.style.setProperty("--bgcolor", lastbgcolor);
+    document.documentElement.style.setProperty("--hlcolor", lasthlcolor);
+    document.documentElement.style.setProperty("--fmcolor", lasthlcolor);
 }
 
 function GetHLColor()
