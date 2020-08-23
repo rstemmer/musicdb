@@ -46,7 +46,7 @@ class MainMenu
 
         button.onclick = ()=>
             {
-                this.onToggleMenu();
+                this.ToggleMenu();
             };
         return button;
     }
@@ -107,6 +107,9 @@ class MainMenu
                     entry.element.appendChild(entry.aicon);
                     entry.element.appendChild(entry.atext);
                 }
+
+                this.ToggleMenu(); // Hide menu after menu item clicked
+                return;
             }
 
         let newlength = this.entryarray.push(entry);
@@ -136,7 +139,7 @@ class MainMenu
     }
 
 
-    onToggleMenu()
+    ToggleMenu()
     {
         if(this.isopen)
         {
