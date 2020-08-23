@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
     <g transform="matrix(1,0,0,1,-50,-55)">
+        <g id="Menu">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
         <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
             <g id="Member-Right" serif:id="Member Right">
             </g>
@@ -13,19 +19,9 @@
         <g id="Album">
         </g>
         <g id="Song">
-            <g transform="matrix(1.08543,-0.427718,0.911383,2.31285,-71.2508,-70.8751)">
-                <ellipse cx="55" cy="72" rx="3" ry="1"/>
-            </g>
-            <g transform="matrix(1.08543,-0.427718,0.911383,2.31285,-61.2508,-72.9709)">
-                <ellipse cx="55" cy="72" rx="3" ry="1"/>
-            </g>
-            <path d="M66,69L66,59" style="fill:none;stroke-width:3px;"/>
-            <g transform="matrix(1,0,0,1.15,-10,-7.85)">
-                <path d="M66,69L66,59" style="fill:none;stroke-width:2.78px;"/>
-            </g>
-            <g transform="matrix(1.17664,-0.361171,0.293438,0.955978,-28.9711,26.3465)">
-                <rect x="58" y="57" width="8" height="2" style="stroke-width:2.68px;"/>
-            </g>
+            <path d="M54.5,69.495L54.5,60C54.5,59.983 54.5,59.966 54.501,59.949C54.474,59.285 54.894,58.66 55.56,58.455L64.973,55.566C65.765,55.323 66.604,55.768 66.847,56.56L67.434,58.472C67.484,58.635 67.505,58.801 67.5,58.963C67.5,58.975 67.5,58.988 67.5,59L67.5,69C67.5,69.134 67.482,69.264 67.45,69.387C67.468,70.521 66.486,71.749 64.979,72.343C63.182,73.051 61.314,72.589 60.811,71.313C60.308,70.036 61.359,68.425 63.156,67.717C63.607,67.539 64.063,67.435 64.5,67.399L64.5,60.941L57.5,63.09L57.5,71.5C57.5,71.737 57.445,71.962 57.346,72.162C57.058,73.078 56.187,73.962 54.979,74.438C53.182,75.147 51.314,74.685 50.811,73.409C50.308,72.132 51.359,70.521 53.156,69.813C53.607,69.635 54.063,69.531 54.5,69.495Z"/>
+        </g>
+        <g id="Video">
         </g>
         <g id="Remove">
         </g>
