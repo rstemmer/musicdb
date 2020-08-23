@@ -1,23 +1,77 @@
 
 "use strict";
 
+class FullscreenManager
+{
+    constructor()
+    {
+        if(document.fullscreenElement)
+            this.infullscreen = true;
+        else
+            this.infullscreen = false;
+
+        document.addEventListener("fullscreenchange", (event)=>
+            {
+                if(document.fullscreenElement)  // True when something is in fullscreen
+                {
+                    this.infullscreen = true;
+                }
+                else
+                {
+                    this.infullscreen = false;
+                }
+            });
+    }
+
+
+
+    inFullscreen()
+    {
+        return this.infullscreen;
+    }
+
+
+
+    EnterFullscreen()
+    {
+        if(document.fullscreenEnabled)
+            document.documentElement.requestFullScreen();
+    }
+
+    LeaveFullscreen()
+    {
+        if(document.fullscreenEnabled && document.fullscreenElement)
+            window.document.exitFullscreen();
+    }
+
+    ToggleFullscreen()
+    {
+        if(this.infullscreen)
+            this.LeaveFullscreen();
+        else
+            this.EnterFullscreen();
+    }
+}
+
+
 class MainMenu
 {
     constructor(topoffset, rightoffset)
     {
-        //this.icon        = new SVGIcon("img/icons/Menu.svg", "Menu");
-        this.icon        = new SVGIcon("img/icons/Artist.svg", "Artist");
+        this.icon        = new SVGIcon("img/icons/Menu.svg");
+        //this.icon        = new SVGIcon("img/icons/Artist.svg", "Artist");
         this.topoffset   = topoffset;
         this.rightoffset = rightoffset;
         this.menubutton  = this._CreateMenuToggleButton(this.icon);
-        this.menuentries = this._CreateMenuEntries();
+        this.entrylist   = this._CreateEntryList();
+        this.isopen      = false;
 
         this.element     = document.createElement("div");
         this.element.classList.add("menu");
         this.element.style.top      = this.topoffset;
         this.element.style.right    = this.rightoffset;
         this.element.appendChild(this.menubutton);
-        this.element.appendChild(this.menuentries);
+        this.element.appendChild(this.entrylist);
     }
 
     GetHTMLElement()
@@ -43,18 +97,58 @@ class MainMenu
         return button;
     }
 
-    _CreateMenuEntries()
+    _CreateEntryList()
     {
         let entries = document.createElement("div");
         entries.classList.add("menuentrylist");
+        entries.style.display = "none"; // Hide by default
+
+        entries.appendChild(this._CreateFullscreenSwitch());
+        entries.appendChild(this._CreateMDBModeSwitch());
+
         return entries;
     }
 
+    _CreateFullscreenSwitch()
+    {
+        let text  = document.createElement("span");
+        text.textContent = "Enter Fullscreen";
+        
+        let icon  = new SVGIcon("img/icons/EnterFullscreen.svg");
 
+        let entry = document.createElement("div");
+        entry.classList.add("menuentry");
+        entry.appendChild(icon.GetHTMLElement());
+        entry.appendChild(text);
+        return entry;
+    }
+
+    _CreateMDBModeSwitch()
+    {
+        let text  = document.createElement("span");
+        text.textContent = "Switch to Video Mode";
+        
+        let icon  = new SVGIcon("img/icons/Switch2Video.svg");
+
+        let entry = document.createElement("div");
+        entry.classList.add("menuentry");
+        entry.appendChild(icon.GetHTMLElement());
+        entry.appendChild(text);
+        return entry;
+    }
 
     onToggleMenu()
     {
-        window.console && console.log("Toggle Menu.");
+        if(this.isopen)
+        {
+            this.entrylist.style.display = "none";
+            this.isopen = false;
+        }
+        else
+        {
+            this.entrylist.style.display = "flex";
+            this.isopen = true;
+        }
     }
 
 }

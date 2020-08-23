@@ -6,12 +6,10 @@
 div.menu
 {
     position:           absolute;
-    border:             1px solid blue;
 }
 
 div.menutogglebutton
 {
-    border:             1px solid red;
 }
 
 div.menutogglebutton .icon
@@ -24,36 +22,33 @@ div.menutogglebutton .icon
 
 div.menuentrylist
 {
-    border:             3px solid green;
-    height:             5em;
-    width:              5em;
-    background-color:   #909090;
+    border:             1px solid;
+    border-color:       var(--hlcolor);
+    display:            flex;
+    flex-direction:     column;
+    background-color:   var(--bgcolor);
+    border-radius:      0.3em;
+    padding:            0.3em;
+    box-shadow:         0px 4px 8px 0px rgba(1, 0, 0, 1), 0px 6px 20px 0px rgba(0, 0, 0, 0.5);
 }
 
-/*
-div#FSBBox
+div.menuentry
 {
-    position:       absolute;
-    top:            1px;
-    right:          1px;
+    display:            flex;
+    box-size:           border-box;
+    padding:            0.2em 1.5ch;
+    vertical-align:     middle;
 }
 
-div#FSB:before
+div.menuentry > .icon
 {
-    font-family:    FontAwesome;
-    font-weight:    normal;
-    display:        inline-block;
-    padding:        5px;
+    display:            inline-block;
+    background-color:   var(--hlcolor);
+    width:              1.5em;
+    height:             1.5em;
+    margin-right:       1.5ch;
 }
-div#FSB[data-fsstate=normal]:before 
-{
-    content: "\f065";
-}
-div#FSB[data-fsstate=fullscreen]:before
-{
-    content: "\f066";
-}
-*/
+
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
 
