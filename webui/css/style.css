@@ -8,23 +8,24 @@
     --hlcolor:      #779;
     --fgcolor:      #CCC;
     --bgcolor:      #181819;
+    --fmcolor:      #779;
 }
 
 .fgcolor
 {
-    color:          #CCC;
+    color:          var(--fgcolor);
 }
 .hlcolor
 {
-    color:          #779;
+    color:          var(--hlcolor);
 }
 .bgcolor
 {
-    background-color:     #181819;
+    background-color:     var(--bgcolor);
 }
 .fmcolor
 {
-    border-color:   #888;
+    border-color:   var(--fmcolor);
 }
 
 
