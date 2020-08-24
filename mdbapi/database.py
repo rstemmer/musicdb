@@ -966,8 +966,8 @@ class MusicDBDatabase(object):
         # Get all information from the video path and its meta data
         try:
             self.meta.Load(videopath)
-        except Exception:
-            logging.debug("Meta data of file %s cannot be load. Assuming this is not a video file!", str(videopath))
+        except Exception as e:
+            logging.error("Meta data of file %s cannot be loaded (Error: %s). Assuming this is not a video file!", str(videopath), str(e))
             # Ignore this file, it is not a valid song file
             return False
 

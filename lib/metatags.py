@@ -81,13 +81,15 @@ class MetaTags(object):
         if not self.fs.IsFile(self.path):
             raise ValueError("File \"%s\" does not exist"%(self.path))
         
-        # remenber the path for debugging
+        # remember the path for debugging
         self.extension = self.fs.GetFileExtension(self.path)
 
         # normalize the extension
         if self.extension in ["mp4"]:
             logging.warning("A file with extension \"mp4\" shall be loaded. It will be loaded as video.")
             self.ftype = "m4v"
+        elif self.extension in ["webm"]:
+            self.ftype = "webm"
         elif self.extension in ["aac", "m4a"]:
             self.ftype = "m4a"
         elif self.extension in ["m4v"]:
@@ -111,6 +113,9 @@ class MetaTags(object):
             self.file = MP4(self.path)
         elif self.ftype == "m4v":
             self.file = MP4(self.path)
+        elif self.ftype == "webm":
+            logging.warning("WebM only partially supported!")
+            self.file = None
         else:
             self.path = None
             raise ValueError("Unsupported file-type %s"%(self.ftype))
@@ -153,7 +158,7 @@ class MetaTags(object):
             metadata["bitrate"]     = self.GetBitrate()
             metadata["lyrics"]      = self.GetLyrics()
 
-        elif self.ftype in ["m4v"]:
+        elif self.ftype in ["m4v", "webm"]:
             metadata["codec"]      = self.GetVideoCodec()
             x,y = self.GetVideoResolution()
             metadata["xresolution"] = x
@@ -535,7 +540,7 @@ class MetaTags(object):
         """
         time = 0
 
-        if self.ftype in ["m4a", "m4v", "mp3", "flac"]:
+        if self.ftype in ["m4a", "m4v", "mp3", "flac", "webm"]:
             try:
                 analtime = round(self.AnalysePlaytime())
             except:
