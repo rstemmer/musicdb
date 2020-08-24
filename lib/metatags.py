@@ -86,9 +86,8 @@ class MetaTags(object):
 
         # normalize the extension
         if self.extension in ["mp4"]:
-            logging.warning("A file with extension \"mp4\" shall be loaded. It is not clear if it should be loaded as video or audio file. Please rename the file \"%\" and be more specific using \"m4a\" for audio, or \"m4v\" for video.", path)
-            self.path = None
-            raise ValueError("Unspecific file extension \"%s\" of \"%s\""%(self.extension, path))
+            logging.warning("A file with extension \"mp4\" shall be loaded. It will be loaded as video.")
+            self.ftype = "m4v"
         elif self.extension in ["aac", "m4a"]:
             self.ftype = "m4a"
         elif self.extension in ["m4v"]:

@@ -887,7 +887,7 @@ class Filesystem(object):
             return None
 
         # Check extension
-        if not video["extension"] in ["m4v"]:
+        if not video["extension"] in ["m4v", "mp4"]:
             return None
 
         return video
