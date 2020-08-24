@@ -56,6 +56,14 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
     $("#"+parentID).html(html);
     UpdateVideoSettings(MDBVideo, MDBTags, true);
     //UpdateStyle(MDBAlbum.bgcolor, MDBAlbum.fgcolor, MDBAlbum.hlcolor);
+    //
+    //// TESTING Slider
+    let sliderbox = document.getElementById("Slidertest");
+    let slider    = new Slider(null, (rp)=>{window.console && console.log("rp = " + rp);});
+            
+    sliderbox.appendChild(slider.GetHTMLElement());
+
+    //// / TESTING
 
     let videoplayerid     = "VideoPreviewPlayer";
     let playtimeselection = document.getElementById("BeginEndSelection");
@@ -200,6 +208,9 @@ function _VV_CreateVideoSettings(MDBVideo, MDBVideoTags)
     // Begin/End Time Selection
     html += "<div class=\"VV_videosettings_row\" id=\"BeginEndSelection\">";
     // TODO
+    html += "</div>";
+    html += "<div class=\"VV_videosettings_row\" id=\"Slidertest\">";
+    // TODO: REMOVE
     html += "</div>";
     return html;
 }
