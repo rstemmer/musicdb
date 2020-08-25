@@ -65,11 +65,8 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
 
     //// / TESTING
 
-    let videoplayerid     = "VideoPreviewPlayer";
-    let videoplayer       = document.getElementById(videoplayerid);
+    let videoplayer       = document.getElementById("VideoPreviewPlayer");
     let playtimeselection = document.getElementById("BeginEndSelection");
-    //let begintimeselect   = new TimeSelect("Video Begin:", videoplayerid, MDBVideo.vbegin);
-    //let endtimeselect     = new TimeSelect("Video End:",   videoplayerid, MDBVideo.vend);
     let begintimeselect   = new BeginTimeSelect("Video Begin", videoplayer, MDBVideo.vbegin, 0);
     let endtimeselect     = new EndTimeSelect(  "Video End",   videoplayer, MDBVideo.vend,   MDBVideo.playtime);
     //let resetbutton       = new Button("Reset", ()=>
@@ -101,8 +98,7 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
             if(time < endtime)
                 return true;
 
-            window.console && console.log(`begintimeselect: ${time} >= ${endtime}`);
-            return false;
+            return `begintimeselect: ${time} >= ${endtime}`;
         }
     );
     endtimeselect.SetValidationFunction((time) =>
@@ -114,8 +110,7 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
             if(time > begintime)
                 return true;
 
-            window.console && console.log(`endtimeselect: ${time} <= ${begintime}`);
-            return false;
+            return `endtimeselect: ${time} <= ${begintime}`;
         }
     );
     return;

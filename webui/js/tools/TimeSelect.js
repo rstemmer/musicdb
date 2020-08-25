@@ -43,10 +43,10 @@ class TimeSelect
 
         this.inputelement.dataset.valid = "true";
         this.inputelement.type          = "string";
-        this.inputelement.value         = initialtime;
-        this.inputelement.oninput       = ()=>{this.onInputEvent(event)};
+        this.inputelement.oninput       = ()=>{this.onTextInput(event)};
 
         this._CreateElement();
+        this.SetNewTime(this.initialtime);
         return;
     }
 
@@ -56,7 +56,6 @@ class TimeSelect
 
         if(this.elementorientation == "left")
         {
-            //this.element.classList.add("inputbox");
             this.element.appendChild(this.label);
             this.element.appendChild(this.inputelement);
             this.element.appendChild(this.resetbutton.GetHTMLElement());
@@ -65,41 +64,34 @@ class TimeSelect
         }
         else if(this.elementorientation == "right")
         {
-            //this.element.classList.add("inputbox");
             this.element.appendChild(this.slider.GetHTMLElement());
             this.element.appendChild(this.resetbutton.GetHTMLElement());
             this.element.appendChild(this.inputelement);
             this.element.appendChild(this.label);
             //this.element.appendChild(this.gettimeelement.GetHTMLElement());
         }
+        return;
     }
+
+    GetHTMLElement()
+    {
+        return this.element;
+    }
+
+
 
     SetOrientationLeft()
     {
         this.elementorientation = "left";
         this._CreateElement();
+        return;
     }
 
     SetOrientationRight()
     {
         this.elementorientation = "right";
         this._CreateElement();
-    }
-
-    onSliderMoved(sliderpos)
-    {
-        let totaltime = this.videoelement.duration;
-        if(isNaN(totaltime))
-            return;
-
-        let newposition = Math.round(totaltime * sliderpos);
-
-        this.videoelement.currentTime = newposition;
-    }
-
-    Reset()
-    {
-        this.inputelement.value = this.initialtime;
+        return;
     }
 
     SetValidationFunction(fnc)
@@ -108,38 +100,113 @@ class TimeSelect
         return;
     }
 
+
+
+    onSliderMoved(sliderpos)
+    {
+        let totaltime = this.videoelement.duration;
+        if(isNaN(totaltime))
+            return;
+
+        let newtime = Math.round(totaltime * sliderpos);
+
+        // Validate new position
+        if(! this.ValidateNewTime(newtime))
+            return;
+
+        // Update other controls
+        this.SetNewTime(newtime)
+        return;
+    }
+
+    onTextInput(e)
+    {
+        let newtime = this.GetSelectedTime();
+
+        // Validate new time
+        if(! this.ValidateNewTime(newtime))
+            return;
+
+        // Update other controls
+        this.SetNewTime(newtime);
+        return;
+    }
+
+
+
+    // Expects a valid time as number
+    SetNewTime(newtime)
+    {
+        this.videoelement.currentTime = newtime;
+        this.inputelement.value       = SecondsToTimeString(newtime);
+        this.slider.SetPosition(newtime / this.videoelement.duration);
+        return;
+    }
+
+
+
     GetSelectedTime()
     {
-        let time = Math.round(parseFloat(this.inputelement.value));
+        let timestring = this.inputelement.value;   // expected format: mm:ss
+        let time       = TimeStringToSeconds(timestring);
+
         if(typeof time !== "number" || isNaN(time))
-        {
             return null;
-        }
+
         return time;
     }
 
-    onInputEvent(e)
-    {
-        let time = this.inputelement.value;
 
+
+    ValidateNewTime(time)
+    {
         if(this.validationfunction)
         {
             let retval = this.validationfunction(time);
             if(typeof retval === "string")
-                this.ShowErrorMessage(retval);
-
-            if(retval !== true)
             {
-                this.inputelement.dataset.valid="false";
-                return;
+                this.ShowErrorMessage(retval);
+                retval = false;
+            }
+
+            if(retval === true)
+            {
+                this.inputelement.dataset.valid="true";
+                return true;
             }
             else
             {
-                this.inputelement.dataset.valid="true";
+                this.inputelement.dataset.valid="false";
+                return false;
             }
+        }
+        else
+        {
+            this.inputelement.dataset.valid="true";
+            return true;    // Always true when no validation function is defined
         }
     }
 
+
+
+    Reset()
+    {
+        this.SetNewTime(this.initialtime);
+        return;
+    }
+
+
+
+    ShowErrorMessage(message)
+    {
+        window.console && console.log(message);
+        return;
+    }
+
+
+
+
+    /*
     SelectTimeStampFromVideo()
     {
         let video = document.getElementById(this.videoelementid);
@@ -162,11 +229,8 @@ class TimeSelect
         this.inputelement.dataset.valid="true";
         return;
     }
+    */
 
-    GetHTMLElement()
-    {
-        return this.element;
-    }
 
 }
 
