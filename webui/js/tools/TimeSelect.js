@@ -18,7 +18,7 @@ class Button
 
 class TimeSelect
 {
-    constructor(label, videoelement, initialtime, slidericon, reseticon, resetvalue)
+    constructor(label, videoelement, initialtime, slidericon, reseticonname, resetvalue)
     {
         this.elementorientation = "left";
         this.labeltext          = document.createTextNode(label);
@@ -30,7 +30,7 @@ class TimeSelect
         this.label              = document.createElement("label");
         this.label.appendChild(this.labeltext);
         this.slider             = new Slider(new SVGIcon(slidericon), (pos)=>{this.onSliderMoved(pos);});
-        this.resetbutton        = new SVGIcon(reseticon);
+        this.resetbutton        = new SVGButton(reseticonname, ()=>{this.SetNewTime(this.resetvalue);});
         this.resetbutton.SetTooltip(`Set slider to ${this.resetvalue}`);
         this.inputelement       = document.createElement("input");
 
@@ -46,7 +46,7 @@ class TimeSelect
         this.inputelement.oninput       = ()=>{this.onTextInput(event)};
 
         this._CreateElement();
-        //this.SetNewTime(this.initialtime);
+        this.SetNewTime(this.initialtime);
         // SetNewTime positions the slider depending on the video-element duration attribute.
         // This attribute is usually not set when this constructor is called because it is loaded
         // from the video meta data that is still on its way.
