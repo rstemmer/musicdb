@@ -46,15 +46,7 @@ class Slider
 
     _UpdateHandle(mousepos)
     {
-        function position(el) 
-        {
-            // See https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect
-            let domrect    = el.getBoundingClientRect(); // Get position in Viewport
-            let pageoffset = window.pageXOffset;
-            return domrect.left + pageoffset;
-        }
-
-        let slidebarpos   = position(this.slidebar);
+        let slidebarpos   = this._ElementPosition(this.slidebar);
         let slidebarwidth = this.slidebar.offsetWidth;
         let handlewidth   = this.handle.offsetWidth;
 
@@ -69,10 +61,35 @@ class Slider
         }
     }
 
+    _ElementPosition(el) 
+    {
+        // See https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect
+        let domrect    = el.getBoundingClientRect(); // Get position in Viewport
+        let pageoffset = window.pageXOffset;
+        return domrect.left + pageoffset;
+    }
+
 
     GetHTMLElement()
     {
         return this.slidebar;
+    }
+
+
+    // pos as number in percent
+    SetPosition(relpos)
+    {
+        if(isNaN(relpos))
+            return;
+
+        let slidebarwidth = this.slidebar.offsetWidth;
+        let handlewidth   = this.handle.offsetWidth;
+        let handlepos     = slidebarwidth * relpos - handlewidth;
+        window.console && console.log("slidebarwidth: " + slidebarwidth);
+        window.console && console.log("relpos: " + relpos);
+        window.console && console.log("handlepos: " + this.handle.style.left);
+        window.console && console.log("handlepos: " + handlepos);
+        this.handle.style.left = handlepos + "px";
     }
 }
 
