@@ -16,6 +16,11 @@ class SVGIcon
     {
         return this.icon;
     }
+
+    SetTooltip(tooltip)
+    {
+        this.icon.title = tooltip;
+    }
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
