@@ -85,10 +85,6 @@ class Slider
         let slidebarwidth = this.slidebar.offsetWidth;
         let handlewidth   = this.handle.offsetWidth;
         let handlepos     = slidebarwidth * relpos - handlewidth;
-        window.console && console.log("slidebarwidth: " + slidebarwidth);
-        window.console && console.log("relpos: " + relpos);
-        window.console && console.log("handlepos: " + this.handle.style.left);
-        window.console && console.log("handlepos: " + handlepos);
         this.handle.style.left = handlepos + "px";
     }
 }
