@@ -23,5 +23,16 @@ class SVGIcon
     }
 }
 
+
+
+class SVGButton extends SVGIcon
+{
+    constructor(name, onclick)
+    {
+        super(name)
+        this.icon.onclick = onclick;
+    }
+}
+
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
