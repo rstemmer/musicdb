@@ -18,33 +18,83 @@ class Button
 
 class TimeSelect
 {
-    constructor(label, videoelementid, initialtime)
+    constructor(label, videoelement, initialtime, slidericon, reseticon, resetvalue)
     {
-        this.element        = document.createElement("div");
-        this.videoelementid = videoelementid;
-        this.initialtime    = initialtime;
-        let  buttonlabel    = "Current Time";
-        this.gettimeelement = new Button(buttonlabel, ()=>{this.SelectTimeStampFromVideo()});
-        this.inputelement   = document.createElement("input");
-        this.labelelement   = document.createElement("label");
-        this.labeltext      = document.createTextNode(label);
+        this.elementorientation = "left";
+        this.labeltext          = document.createTextNode(label);
+        this.initialtime        = initialtime;
+        this.resetvalue         = resetvalue;
+        this.videoelement       = videoelement;
         this.validationfunction = null;
-        this.parentelement  = null;
 
-        this.labelelement.appendChild(this.labeltext);
+        this.label              = document.createElement("label");
+        this.label.appendChild(this.labeltext);
+        this.slider             = new Slider(new SVGIcon(slidericon), (pos)=>{this.onSliderMoved(pos);});
+        this.resetbutton        = new SVGIcon(reseticon);
+        this.resetbutton.SetTooltip(`Set slider to ${this.resetvalue}`);
+        this.inputelement       = document.createElement("input");
 
-        this.inputelement.dataset.valid="true";
-        this.inputelement.type = "number";
-        this.inputelement.value= initialtime;
-        this.inputelement.min  = 0;
-        this.inputelement.step = 1;
-        this.inputelement.oninput = ()=>{this.InputEvent()};
+        this.element            = document.createElement("div");
+        this.element.classList.add("timeselect");
+        //let  buttonlabel    = "Current Time";
+        //this.gettimeelement = new Button(buttonlabel, ()=>{this.SelectTimeStampFromVideo()});
+        //this.parentelement  = null;
 
-        this.element.classList.add("inputbox");
-        this.element.appendChild(this.labelelement);
-        this.element.appendChild(this.inputelement);
-        this.element.appendChild(this.gettimeelement.GetHTMLElement());
+
+        this.inputelement.dataset.valid = "true";
+        this.inputelement.type          = "string";
+        this.inputelement.value         = initialtime;
+        this.inputelement.oninput       = ()=>{this.onInputEvent(event)};
+
+        this._CreateElement();
         return;
+    }
+
+    _CreateElement()
+    {
+        this.element.innerHTML = "";
+
+        if(this.elementorientation == "left")
+        {
+            //this.element.classList.add("inputbox");
+            this.element.appendChild(this.label);
+            this.element.appendChild(this.inputelement);
+            this.element.appendChild(this.resetbutton.GetHTMLElement());
+            this.element.appendChild(this.slider.GetHTMLElement());
+            //this.element.appendChild(this.gettimeelement.GetHTMLElement());
+        }
+        else if(this.elementorientation == "right")
+        {
+            //this.element.classList.add("inputbox");
+            this.element.appendChild(this.slider.GetHTMLElement());
+            this.element.appendChild(this.resetbutton.GetHTMLElement());
+            this.element.appendChild(this.inputelement);
+            this.element.appendChild(this.label);
+            //this.element.appendChild(this.gettimeelement.GetHTMLElement());
+        }
+    }
+
+    SetOrientationLeft()
+    {
+        this.elementorientation = "left";
+        this._CreateElement();
+    }
+
+    SetOrientationRight()
+    {
+        this.elementorientation = "right";
+        this._CreateElement();
+    }
+
+    onSliderMoved(sliderpos)
+    {
+        let totaltime = this.videoelement.duration;
+        if(isNaN(totaltime))
+            return;
+
+        let newposition = Math.round(totaltime * sliderpos);
+
+        this.videoelement.currentTime = newposition;
     }
 
     Reset()
@@ -68,7 +118,7 @@ class TimeSelect
         return time;
     }
 
-    InputEvent()
+    onInputEvent(e)
     {
         let time = this.inputelement.value;
 
@@ -120,5 +170,23 @@ class TimeSelect
 
 }
 
+
+class BeginTimeSelect extends TimeSelect
+{
+    constructor(label, videoelement, initialtime, resetvalue)
+    {
+        super(label, videoelement, initialtime, "vBegin", "vMin", resetvalue);
+        this.SetOrientationLeft()
+    }
+}
+
+class EndTimeSelect extends TimeSelect
+{
+    constructor(label, videoelement, initialtime, resetvalue)
+    {
+        super(label, videoelement, initialtime, "vEnd", "vMax", resetvalue);
+        this.SetOrientationRight()
+    }
+}
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

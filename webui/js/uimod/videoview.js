@@ -38,7 +38,7 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
     html += "       width="  + MDBVideo.xresolution;
     html += "       height=" + MDBVideo.yresolution;
     html += "       poster=" + poster;
-    html += "       preload=none";
+    html += "       preload=auto";
     html += "       >";
     html += "       <source src=\"/musicdb/music/" + MDBVideo.path + "\">";
     html += "    </video>";
@@ -66,28 +66,31 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
     //// / TESTING
 
     let videoplayerid     = "VideoPreviewPlayer";
+    let videoplayer       = document.getElementById(videoplayerid);
     let playtimeselection = document.getElementById("BeginEndSelection");
-    let begintimeselect   = new TimeSelect("Video Begin:", videoplayerid, MDBVideo.vbegin);
-    let endtimeselect     = new TimeSelect("Video End:",   videoplayerid, MDBVideo.vend);
-    let resetbutton       = new Button("Reset", ()=>
-        {
-            begintimeselect.Reset();
-            endtimeselect.Reset();
-        });
-    let commitbutton      = new Button("Accept", ()=>
-        {
-            MusicDB_Call("SetVideoTimeFrame", 
-                {
-                    videoid: MDBVideo.id,
-                    begin:   begintimeselect.GetSelectedTime(),
-                    end:     endtimeselect.GetSelectedTime()
-                });
-        });
+    //let begintimeselect   = new TimeSelect("Video Begin:", videoplayerid, MDBVideo.vbegin);
+    //let endtimeselect     = new TimeSelect("Video End:",   videoplayerid, MDBVideo.vend);
+    let begintimeselect   = new BeginTimeSelect("Video Begin", videoplayer, MDBVideo.vbegin, 0);
+    let endtimeselect     = new EndTimeSelect(  "Video End",   videoplayer, MDBVideo.vend,   MDBVideo.playtime);
+    //let resetbutton       = new Button("Reset", ()=>
+    //    {
+    //        begintimeselect.Reset();
+    //        endtimeselect.Reset();
+    //    });
+    //let commitbutton      = new Button("Accept", ()=>
+    //    {
+    //        MusicDB_Call("SetVideoTimeFrame", 
+    //            {
+    //                videoid: MDBVideo.id,
+    //                begin:   begintimeselect.GetSelectedTime(),
+    //                end:     endtimeselect.GetSelectedTime()
+    //            });
+    //    });
     
     playtimeselection.appendChild(begintimeselect.GetHTMLElement());
     playtimeselection.appendChild(endtimeselect.GetHTMLElement());
-    playtimeselection.appendChild(resetbutton.GetHTMLElement());
-    playtimeselection.appendChild(commitbutton.GetHTMLElement());
+    //playtimeselection.appendChild(resetbutton.GetHTMLElement());
+    //playtimeselection.appendChild(commitbutton.GetHTMLElement());
 
     begintimeselect.SetValidationFunction((time) => 
         {
