@@ -59,7 +59,7 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
     //
     //// TESTING Slider
     let sliderbox = document.getElementById("Slidertest");
-    let slider    = new Slider(null, (rp)=>{window.console && console.log("rp = " + rp);});
+    let slider    = new Slider(new SVGIcon("vBegin"), (rp)=>{window.console && console.log("rp = " + rp);});
             
     sliderbox.appendChild(slider.GetHTMLElement());
 

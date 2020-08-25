@@ -3,7 +3,7 @@ div.slidebar
 {
     position:           relative;
     display:            block;
-    background-color:   red;
+    background-color:   var(--hlcolor);
     height:             0.1em;
     width:              100%;
     margin:             1.0em 0.5em;
@@ -13,7 +13,7 @@ div.slidebar > div
 {
     position:           absolute;
     display:            inline-block;
-    background-color:   yellow;
+    background-color:   var(--hlcolor);
     /*
     height:             1.0em;
     width:              0.5em;

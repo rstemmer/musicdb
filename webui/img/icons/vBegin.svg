@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-50,-105)">
+        <g id="vBegin">
+            <path d="M70,108.75C70,107.784 69.216,107 68.25,107L51.75,107C50.784,107 50,107.784 50,108.75L50,112.25C50,113.216 50.784,114 51.75,114L68.25,114C69.216,114 70,113.216 70,112.25L70,108.75ZM68,109.75C68,109.336 67.664,109 67.25,109L52.75,109C52.336,109 52,109.336 52,109.75L52,111.25C52,111.664 52.336,112 52.75,112L67.25,112C67.664,112 68,111.664 68,111.25L68,109.75Z"/>
+            <path d="M59.48,121L55,121C54.448,121 54,120.552 54,120L54,107C54,106.448 54.448,106 55,106C55.552,106 56,106.448 56,107L56,119L59.586,119L58.293,117.707C57.903,117.317 57.903,116.683 58.293,116.293C58.683,115.903 59.317,115.903 59.707,116.293L62.707,119.293C62.767,119.353 62.819,119.42 62.861,119.491C62.944,119.631 62.993,119.792 62.999,119.964L63,119.99L63,120.019L63,120.029C62.995,120.201 62.946,120.362 62.865,120.502L62.855,120.519C62.809,120.595 62.752,120.666 62.686,120.728L59.5,123.728C59.098,124.106 58.465,124.087 58.086,123.686C57.708,123.284 57.727,122.65 58.129,122.272L59.48,121Z"/>
+        </g>
+        <g id="vMin">
+        </g>
+        <g id="vMax">
+        </g>
+        <g id="vEnd">
+        </g>
+        <g id="Menu">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Insert-Template" serif:id="Insert Template">
+        </g>
+        <g id="Play-Template" serif:id="Play Template">
+        </g>
+    </g>
+</svg>

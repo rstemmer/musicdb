@@ -8,7 +8,8 @@ class Slider
         this.icon     = icon;
         this.onmove   = onmove;
 
-        this.handle   = document.createElement("div"); // TODO: this.icon.GetHTMLElement();
+        //this.handle   = document.createElement("div"); // TODO: this.icon.GetHTMLElement();
+        this.handle   = this.icon.GetHTMLElement();
         this.slidebar = document.createElement("div");
         this.slidebar.classList.add("slidebar");
         this.slidebar.appendChild(this.handle);
