@@ -46,7 +46,11 @@ class TimeSelect
         this.inputelement.oninput       = ()=>{this.onTextInput(event)};
 
         this._CreateElement();
-        this.SetNewTime(this.initialtime);
+        //this.SetNewTime(this.initialtime);
+        // SetNewTime positions the slider depending on the video-element duration attribute.
+        // This attribute is usually not set when this constructor is called because it is loaded
+        // from the video meta data that is still on its way.
+        // Furthermore the sliders dimensions are not yet known because it is not placed in the DOM
         return;
     }
 
@@ -250,6 +254,13 @@ class EndTimeSelect extends TimeSelect
     {
         super(label, videoelement, initialtime, "vEnd", "vMax", resetvalue);
         this.SetOrientationRight()
+    }
+    
+    Reset()
+    {
+        super.Reset();
+        if(this.resetvalue > 0)
+            this.slider.SetPosition(this.initialtime / this.resetvalue);
     }
 }
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

@@ -86,6 +86,9 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
     
     playtimeselection.appendChild(begintimeselect.GetHTMLElement());
     playtimeselection.appendChild(endtimeselect.GetHTMLElement());
+    // Because of the slider these initialization must take place after putting the elements into the DOM
+    begintimeselect.Reset();
+    endtimeselect.Reset();
     //playtimeselection.appendChild(resetbutton.GetHTMLElement());
     //playtimeselection.appendChild(commitbutton.GetHTMLElement());
 
