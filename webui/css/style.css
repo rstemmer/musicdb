@@ -54,6 +54,12 @@
     font-family:    SourceSerifPro;
 }
 
+.icon
+{
+    background-color:   var(--hlcolor);
+    width:              1.5em;
+    height:             1.5em;
+}
 
 /*************************/
 /* default element style */
