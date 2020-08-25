@@ -18,7 +18,8 @@ class MusicDBHUD
         this.element       = this._CreateElement();
 
         this.currentsongid = -1;
-        this.currentvideoid = -1;
+        this.currentvideoid= -1;
+        this.mode          = "unknown"; // can be "audio", "video", "unknown"
     }
 
     GetHTMLElement()
@@ -231,6 +232,13 @@ class MusicDBHUD
 
             if(sig == "UpdateHUD")
             {
+                // UpdateHUD can imply a mode switch
+                if(this.mode != "audio")
+                {
+                    this.mode = "audio";
+                    reset     = true;
+                }
+
                 this.UpdateHUDForSong(args.song, args.album, args.artist, args.songtags, reset);
             }
         }
@@ -254,6 +262,13 @@ class MusicDBHUD
 
             if(sig == "UpdateHUD")
             {
+                // UpdateHUD can imply a mode switch
+                if(this.mode != "video")
+                {
+                    this.mode = "video";
+                    reset     = true;
+                }
+
                 this.UpdateHUDForVideo(args.video, args.artist, args.videotags, reset)
             }
         }
