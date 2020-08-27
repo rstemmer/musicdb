@@ -236,6 +236,11 @@ def AudioStreamingThread():
     Only completely played songs will be considered.
     Skipped songs will be ignored.
 
+    If ``disableicecast`` is set in the debug-options, then the stream management loop gets not entered.
+    Everything will be initialized and prepared as if the audio stream would be used anyway.
+    This threads waits and checks every 5s if the thread should be stopped.
+    The stream status will be set correctly (``isconnected = False``, ``isplaying = False``)
+
     The thread triggers the following events:
 
         * ``StatusChanged``: When the play-state
@@ -265,6 +270,20 @@ def AudioStreamingThread():
             )
     icecast.Mute()
 
+    # Do nothing if icecast connection is disabled
+    if Config.debug.disableicecast:
+        logging.warning("Audio streaming via IceCast disabled!")
+
+        State["isplaying"]   = False
+        State["isconnected"] = False
+        Event_StatusChanged()
+
+        while RunThread:
+            time.sleep(5)
+
+        return
+
+    # Start streaming …
     while RunThread:
         # Sleep a bit to reduce the load on the CPU. If disconnected, sleep a bit longer
         if State["isconnected"]:
