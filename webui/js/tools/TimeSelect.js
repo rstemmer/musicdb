@@ -30,6 +30,7 @@ class TimeSelect
         this.label              = document.createElement("label");
         this.label.appendChild(this.labeltext);
         this.slider             = new Slider(new SVGIcon(slidericon), (pos)=>{this.onSliderMoved(pos);});
+        this.slider.AddMouseWheelEvent((event)=>{this.onMouseWheel(event)});
         
         this.resetbutton        = new SVGButton(reseticonname, ()=>{this.SetNewTime(this.resetvalue);});
         this.resetbutton.SetTooltip(`Set slider to ${this.resetvalue}`);
@@ -45,7 +46,9 @@ class TimeSelect
 
         this.inputelement.dataset.valid = "true";
         this.inputelement.type          = "string";
-        this.inputelement.oninput       = ()=>{this.onTextInput(event)};
+        this.inputelement.oninput       = (event)=>{this.onTextInput(event)};
+        this.inputelement.onwheel       = (event)=>{this.onMouseWheel(event)};
+
 
         this._CreateElement();
         this.Reset();
@@ -138,6 +141,29 @@ class TimeSelect
         return;
     }
 
+    onMouseWheel(event)
+    {
+        // When using the mouse wheel on an input element, do not scroll the page
+        event.preventDefault();
+
+        let newtime = this.GetSelectedTime();
+
+        // Increment/Decrement 1s per mouse wheel step
+        if(event.deltaY < 0)
+            newtime += 1;
+        else if(event.deltaY > 0 && newtime > 0)
+            newtime -= 1;
+        else
+            return;
+
+        // Validate new time
+        if(! this.ValidateNewTime(newtime))
+            return;
+
+        // Update other controls
+        this.SetNewTime(newtime);
+    }
+
 
 
     SelectTimeFromVideo()
@@ -155,7 +181,7 @@ class TimeSelect
 
 
 
-    // Expects a valid time as number
+    // Expects a valid time as number in seconds
     SetNewTime(newtime)
     {
         this.videoelement.currentTime = newtime;

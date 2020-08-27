@@ -4,9 +4,10 @@ div.slidebar
     position:           relative;
     display:            block;
     background-color:   var(--hlcolor);
-    height:             0.1em;
+    height:             0.2rem;
     width:              100%;
-    margin:             1.0em 0.5em;
+    margin:             auto 0.5rem;
+    border-radius:      0.1rem;
 }
 
 div.slidebar > div
@@ -23,4 +24,4 @@ div.slidebar > div
 
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
- */
+ *

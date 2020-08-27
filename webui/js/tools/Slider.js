@@ -70,6 +70,15 @@ class Slider
     }
 
 
+
+    AddMouseWheelEvent(eventhandler)
+    {
+        this.slidebar.onwheel = eventhandler;
+        this.handle.onwheel   = eventhandler;
+        return;
+    }
+
+
     GetHTMLElement()
     {
         return this.slidebar;
