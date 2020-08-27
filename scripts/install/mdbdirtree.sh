@@ -82,6 +82,15 @@ function CreateDirectoryTree {
         echo -e "\e[1;32mdone"
     fi
 
+    # Create Video frames cache
+    if [ ! -d "$DATADIR/artwork" ] ; then
+        echo -e -n "\t\e[1;34mCreating \e[0;36m$DARADIR/videoframes/* \e[1;31m"
+        mkdir $DATADIR/videoframes
+        chown -R $MUSICUSER:$MDBGROUP $DATADIR/videoframes
+        chmod -R g+w $DATADIR/videoframes
+        echo -e "\e[1;32mdone"
+    fi
+
     # Update default artwork
     install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/default.jpg -D $DATADIR/artwork/.
 }
