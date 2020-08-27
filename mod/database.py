@@ -255,8 +255,8 @@ class database(MDBModule, MusicDBDatabase):
         if not target:
             return 1
 
-        # Check if path is valid for target (GetTargetByPath is too error tolerant for songs, albums and artists)
-        if target in ["song", "album", "artist"]:
+        # Check if path is valid for target (GetTargetByPath is too error tolerant for songs and albums)
+        if target in ["song", "album"]:
             if not self.TryAnalysePathFor(target, path):
                 print("\033[1;31mInvalid path or target! Path \"%s\" does not match %s-naming scheme!\033[0m" % (path, target))
                 return 1
