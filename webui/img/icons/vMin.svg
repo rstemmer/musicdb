@@ -2,6 +2,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
     <g transform="matrix(1,0,0,1,-100,-105)">
+        <g id="vThis">
+        </g>
         <g id="vBegin">
         </g>
         <g id="vMin" transform="matrix(1,0,0,1,50,0.000192637)">
@@ -9,8 +11,8 @@
             <g transform="matrix(1,0,0,0.882363,-50,13.3515)">
                 <path d="M100,106L100,121C100,121.552 100.448,122 101,122C101.552,122 102,121.552 102,121L102,106C102,105.448 101.552,105 101,105C100.448,105 100,105.448 100,106Z"/>
             </g>
-            <g transform="matrix(0.833333,0,0,0.888889,-33.5,13.8887)">
-                <path d="M108,116C109.656,116 111,118.016 111,120.5C111,122.984 109.656,125 108,125C106.344,125 105,122.984 105,120.5C105,118.016 106.344,116 108,116ZM108,118C108.552,118 109,119.12 109,120.5C109,121.88 108.552,123 108,123C107.448,123 107,121.88 107,120.5C107,119.12 107.448,118 108,118Z"/>
+            <g id="_0" serif:id="0" transform="matrix(1.1523,0,0,1.31051,-92.3352,-46.7152)">
+                <text x="126.878px" y="131.029px" style="font-family:'SourceSansPro-Semibold', 'Source Sans Pro', sans-serif;font-weight:600;font-size:9.4px;">0</text>
             </g>
         </g>
         <g id="vMax">
