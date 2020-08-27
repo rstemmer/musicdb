@@ -46,7 +46,7 @@ class TimeSelect
         this.inputelement.oninput       = ()=>{this.onTextInput(event)};
 
         this._CreateElement();
-        this.SetNewTime(this.initialtime);
+        this.Reset();
         // SetNewTime positions the slider depending on the video-element duration attribute.
         // This attribute is usually not set when this constructor is called because it is loaded
         // from the video meta data that is still on its way.
@@ -195,7 +195,8 @@ class TimeSelect
 
     Reset()
     {
-        this.SetNewTime(this.initialtime);
+        this.inputelement.value = SecondsToTimeString(this.initialtime);
+        this.slider.SetPosition(this.initialtime / this.videoelement.duration);
         return;
     }
 
