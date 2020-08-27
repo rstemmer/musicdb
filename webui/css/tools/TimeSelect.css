@@ -16,14 +16,21 @@ div.timeselect
 .timeselect > input
 {
     margin:         0 1em;
+    width:          5ch;
 }
 
 .timeselect > .icon
 {
     display:        inline-block;
     flex-shrink:    0;
-    margin:         0 1em;
+    margin:         0 0.3em;
 }
+
+.timeselect > .slidebar
+{
+    margin:         0 2em;
+}
+
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
