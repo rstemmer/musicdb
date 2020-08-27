@@ -238,7 +238,8 @@ def AudioStreamingThread():
 
     If ``disableicecast`` is set in the debug-options, then the stream management loop gets not entered.
     Everything will be initialized and prepared as if the audio stream would be used anyway.
-    This threads waits and checks every 5s if the thread should be stopped.
+    This threads waits and checks every 1s if the thread should be stopped.
+    It also updates the time played (=0).
     The stream status will be set correctly (``isconnected = False``, ``isplaying = False``)
 
     The thread triggers the following events:
@@ -279,7 +280,8 @@ def AudioStreamingThread():
         Event_StatusChanged()
 
         while RunThread:
-            time.sleep(5)
+            time.sleep(1)
+            Event_TimeChanged(0)
 
         return
 
