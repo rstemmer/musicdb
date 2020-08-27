@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS songs
     favorite    INTEGER DEFAULT 0,
     lyricsstate INTEGER DEFAULT 0,
     checksum    TEXT    DEFAULT "",
-    lastplayed  INTEGER DEFAULT 0
+    lastplayed  INTEGER DEFAULT 0,
     liverecording   INTEGER DEFAULT 0,
     badaudio    INTEGER DEFAULT 0
 );
