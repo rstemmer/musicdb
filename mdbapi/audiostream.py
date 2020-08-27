@@ -270,7 +270,7 @@ def AudioStreamingThread():
         if State["isconnected"]:
             time.sleep(0.1)
         else:
-            time.sleep(2)
+            time.sleep(5)
 
         # Check connection to Icecast, and connect if disconnected.
         isconnected = icecast.IsConnected()
