@@ -30,15 +30,17 @@ class TimeSelect
         this.label              = document.createElement("label");
         this.label.appendChild(this.labeltext);
         this.slider             = new Slider(new SVGIcon(slidericon), (pos)=>{this.onSliderMoved(pos);});
+        
         this.resetbutton        = new SVGButton(reseticonname, ()=>{this.SetNewTime(this.resetvalue);});
         this.resetbutton.SetTooltip(`Set slider to ${this.resetvalue}`);
+
+        this.thistimebutton     = new SVGButton("vThis", ()=>{this.SelectTimeFromVideo();});
+        this.thistimebutton.SetTooltip(`Select current time from video`);
+        
         this.inputelement       = document.createElement("input");
 
         this.element            = document.createElement("div");
         this.element.classList.add("timeselect");
-        //let  buttonlabel    = "Current Time";
-        //this.gettimeelement = new Button(buttonlabel, ()=>{this.SelectTimeStampFromVideo()});
-        //this.parentelement  = null;
 
 
         this.inputelement.dataset.valid = "true";
@@ -62,17 +64,17 @@ class TimeSelect
         {
             this.element.appendChild(this.label);
             this.element.appendChild(this.inputelement);
+            this.element.appendChild(this.thistimebutton.GetHTMLElement());
             this.element.appendChild(this.resetbutton.GetHTMLElement());
             this.element.appendChild(this.slider.GetHTMLElement());
-            //this.element.appendChild(this.gettimeelement.GetHTMLElement());
         }
         else if(this.elementorientation == "right")
         {
             this.element.appendChild(this.slider.GetHTMLElement());
             this.element.appendChild(this.resetbutton.GetHTMLElement());
+            this.element.appendChild(this.thistimebutton.GetHTMLElement());
             this.element.appendChild(this.inputelement);
             this.element.appendChild(this.label);
-            //this.element.appendChild(this.gettimeelement.GetHTMLElement());
         }
         return;
     }
@@ -126,6 +128,21 @@ class TimeSelect
     onTextInput(e)
     {
         let newtime = this.GetSelectedTime();
+
+        // Validate new time
+        if(! this.ValidateNewTime(newtime))
+            return;
+
+        // Update other controls
+        this.SetNewTime(newtime);
+        return;
+    }
+
+
+
+    SelectTimeFromVideo()
+    {
+        let newtime = this.videoelement.currentTime;
 
         // Validate new time
         if(! this.ValidateNewTime(newtime))
@@ -207,36 +224,6 @@ class TimeSelect
         window.console && console.log(message);
         return;
     }
-
-
-
-
-    /*
-    SelectTimeStampFromVideo()
-    {
-        let video = document.getElementById(this.videoelementid);
-        let time  = video.currentTime;
-
-        if(this.validationfunction)
-        {
-            let retval = this.validationfunction(time);
-            if(typeof retval === "string")
-                this.ShowErrorMessage(retval);
-
-            if(retval !== true)
-            {
-                this.inputelement.dataset.valid="false";
-                return;
-            }
-        }
-
-        this.inputelement.value = time;
-        this.inputelement.dataset.valid="true";
-        return;
-    }
-    */
-
-
 }
 
 
