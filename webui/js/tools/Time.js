@@ -10,12 +10,26 @@ function HMSToString(h,m,s)
     return hs + ":" + ms + ":" + ss;
 }
 
-// mm:ss -> sss (Example: "1:23" -> 83)
+// mm:ss -> sss (Example: "1:23" ->  83)
+// mm:   -> sss (Example: "1:"   ->  60)
+// m     -> sss (Example: "1"    ->  60)
 function TimeStringToSeconds(timestring)
 {
     let substr = timestring.split(":");
-    let min    = substr[0];
-    let sec    = substr[1];
+    let min = "0";
+    let sec = "0";
+
+    if(substr.length == 1)
+    {
+        min = substr[0];
+    }
+    else
+    {
+        min = substr[0];
+        if(substr[1] != "")
+            sec = substr[1];
+    }
+
     let time   = parseInt(min) * 60 + parseInt(sec);
     return time;
 }

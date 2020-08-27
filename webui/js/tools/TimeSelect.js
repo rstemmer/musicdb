@@ -168,7 +168,7 @@ class TimeSelect
 
     GetSelectedTime()
     {
-        let timestring = this.inputelement.value;   // expected format: mm:ss
+        let timestring = this.inputelement.value;
         let time       = TimeStringToSeconds(timestring);
 
         if(typeof time !== "number" || isNaN(time))
