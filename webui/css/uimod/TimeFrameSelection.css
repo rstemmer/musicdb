@@ -38,7 +38,7 @@
     width:          calc(50% - 2em);
     margin:         0 1em;
     padding:        0.2em 0.5em;
-    border-radius:  0.2em;
+    border-radius:  var(--radius);
     background-color: #5E1F1F;
     color:          #F0F0F0;
 }
@@ -57,7 +57,7 @@
 {
     margin:         0 1em;
     padding:        0.2em 0.5em;
-    border-radius:  0.2em;
+    border-radius:  var(--radius);
     color:          #F0F0F0;
 }
 .vtfs_savestate[data-state=notsaved]
