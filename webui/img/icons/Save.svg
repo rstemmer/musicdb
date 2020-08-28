@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-50,-130)">
+        <g id="Save">
+            <g transform="matrix(1.10876,0,0,1.26098,-91.0415,-15.3672)">
+                <text x="126.878px" y="131.029px" style="font-family:'SourceSansPro-Semibold', 'Source Sans Pro', sans-serif;font-weight:600;font-size:9.4px;">S<tspan x="131.775px 136.391px 140.781px " y="131.029px 131.029px 131.029px ">ave</tspan></text>
+            </g>
+            <path d="M57.731,131.508C58.011,131.526 58.281,131.577 58.539,131.657C58.695,130.994 59.29,130.5 60,130.5C60.353,130.5 60.677,130.622 60.933,130.826C61.472,130.314 62.199,130 63,130C64.328,130 65.455,130.864 65.85,132.06C66.061,132.021 66.278,132 66.5,132C68.432,132 70,133.568 70,135.5C70,137.432 68.432,139 66.5,139C65.984,139 65.494,138.888 65.053,138.687C64.516,139.191 63.794,139.5 63,139.5C62.621,139.5 62.258,139.43 61.924,139.301C61.403,139.737 60.732,140 60,140C59.214,140 58.499,139.697 57.964,139.202L60.145,136.482L60.29,136.268C60.418,136.044 60.492,135.789 60.495,135.518L60.495,135.483C60.492,135.212 60.418,134.956 60.29,134.732L60.145,134.518L57.731,131.508ZM54.749,137.136L54.74,137.152L54.728,137.136L54.749,137.136ZM54.749,133.864L54.189,133.864C54.257,133.665 54.343,133.475 54.444,133.294L54.749,133.864Z"/>
+            <g id="Arrow" transform="matrix(0.75,0,0,0.727258,47.125,87.5011)">
+                <path d="M11.573,64.5L10.658,62.671C10.311,61.977 10.551,61.132 11.211,60.724C11.872,60.316 12.734,60.479 13.2,61.1L16.2,65.1C16.243,65.157 16.281,65.216 16.314,65.276L16.325,65.296C16.434,65.501 16.497,65.735 16.5,65.984L16.5,66.016C16.497,66.265 16.434,66.499 16.325,66.704L16.314,66.724C16.281,66.784 16.243,66.843 16.2,66.9L13.2,70.9C12.734,71.521 11.872,71.684 11.211,71.276C10.551,70.868 10.311,70.023 10.658,69.329L11.573,67.5L6,67.5C5.172,67.5 4.5,66.828 4.5,66C4.5,65.172 5.172,64.5 6,64.5L11.573,64.5Z"/>
+            </g>
+        </g>
+        <g id="Load">
+        </g>
+        <g id="vThis">
+        </g>
+        <g id="vBegin">
+        </g>
+        <g id="vMin">
+        </g>
+        <g id="vMax">
+        </g>
+        <g id="vEnd">
+        </g>
+        <g id="Menu">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Insert-Template" serif:id="Insert Template">
+        </g>
+        <g id="Play-Template" serif:id="Play Template">
+        </g>
+    </g>
+</svg>

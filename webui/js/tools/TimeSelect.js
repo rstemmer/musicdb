@@ -210,11 +210,6 @@ class TimeSelect
         if(this.validationfunction)
         {
             let retval = this.validationfunction(time);
-            if(typeof retval === "string")
-            {
-                this.ShowErrorMessage(retval);
-                retval = false;
-            }
 
             if(retval === true)
             {
@@ -245,11 +240,6 @@ class TimeSelect
 
 
 
-    ShowErrorMessage(message)
-    {
-        window.console && console.log(message);
-        return;
-    }
 }
 
 
@@ -277,5 +267,6 @@ class EndTimeSelect extends TimeSelect
             this.slider.SetPosition(this.initialtime / this.resetvalue);
     }
 }
+
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

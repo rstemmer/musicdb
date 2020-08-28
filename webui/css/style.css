@@ -65,6 +65,13 @@
 /* default element style */
 /*************************/
 
+.frame
+{
+    border:         0.1em solid;
+    border-radius:  0.2em;
+    border-color:   var(--fmcolor);
+}
+
 .inputbox
 {
     font-size:          1rem;

@@ -59,56 +59,13 @@ function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)
     //
 
     let videoplayer       = document.getElementById("VideoPreviewPlayer");
+    let timeframeselect   = new VideoTimeFrameSelection(videoplayer, MDBVideo);
+
     let playtimeselection = document.getElementById("BeginEndSelection");
-    let begintimeselect   = new BeginTimeSelect("Video Begin", videoplayer, MDBVideo.vbegin, 0);
-    let endtimeselect     = new EndTimeSelect(  "Video End",   videoplayer, MDBVideo.vend,   MDBVideo.playtime);
-    //let resetbutton       = new Button("Reset", ()=>
-    //    {
-    //        begintimeselect.Reset();
-    //        endtimeselect.Reset();
-    //    });
-    //let commitbutton      = new Button("Accept", ()=>
-    //    {
-    //        MusicDB_Call("SetVideoTimeFrame", 
-    //            {
-    //                videoid: MDBVideo.id,
-    //                begin:   begintimeselect.GetSelectedTime(),
-    //                end:     endtimeselect.GetSelectedTime()
-    //            });
-    //    });
-    
-    playtimeselection.appendChild(begintimeselect.GetHTMLElement());
-    playtimeselection.appendChild(endtimeselect.GetHTMLElement());
+    playtimeselection.appendChild(timeframeselect.GetHTMLElement());
     // Because of the slider these initialization must take place after putting the elements into the DOM
-    begintimeselect.Reset();
-    endtimeselect.Reset();
-    //playtimeselection.appendChild(resetbutton.GetHTMLElement());
-    //playtimeselection.appendChild(commitbutton.GetHTMLElement());
+    timeframeselect.Initialize();
 
-    begintimeselect.SetValidationFunction((time) => 
-        {
-            let endtime = endtimeselect.GetSelectedTime();
-            if(endtime == null)
-                return true;
-
-            if(time < endtime)
-                return true;
-
-            return `begintimeselect: ${time} >= ${endtime}`;
-        }
-    );
-    endtimeselect.SetValidationFunction((time) =>
-        {
-            let begintime = begintimeselect.GetSelectedTime();
-            if(begintime == null)
-                return true;
-
-            if(time > begintime)
-                return true;
-
-            return `endtimeselect: ${time} <= ${begintime}`;
-        }
-    );
     return;
 }
 

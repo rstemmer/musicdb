@@ -1,0 +1,55 @@
+
+
+.videotimeframeselection
+{
+    margin:         1.0em;
+    padding:        1.0em;
+}
+
+
+.vtfs_controlbox, .vtfs_timeselection
+{
+    margin-bottom:  0.2em;
+}
+
+.vtfs_controlbox span
+{
+    margin-right: auto;
+}
+.vtfs_controlbox div + div
+{
+    margin-left:    1.0em;
+}
+
+
+
+.vtfs_timeselection
+{
+}
+
+
+
+.vtfs_messagebox
+{
+}
+
+.vtfs_errormessage
+{
+    width:          calc(50% - 2em);
+    margin:         0 1em;
+    padding:        0.2em 0.5em;
+    border-radius:  0.2em;
+    background-color: #5E1F1F;
+    color:          #F0F0F0;
+}
+.vtfs_errormessage[data-visible=true]
+{
+    visibility:     visible;
+}
+.vtfs_errormessage[data-visible=false]
+{
+    visibility:     hidden;
+}
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */

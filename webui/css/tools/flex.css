@@ -1,0 +1,18 @@
+
+.flex-column
+{
+    display:        flex;
+    flex-direction: column;
+    width:          100%;
+}
+
+.flex-row
+{
+    display:        flex;
+    flex-direction: row;
+    width:          100%;
+}
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+
