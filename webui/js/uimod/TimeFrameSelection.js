@@ -17,6 +17,10 @@ class VideoTimeFrameSelection
         this.loadbutton         = new SVGButton("Load", ()=>{this.onLoad();});
         this.loadbutton.SetTooltip("Load and reset selected time frame from MusicDB server");
 
+        this.savestate          = document.createElement("div");
+        this.savestate.classList.add("vtfs_savestate");
+        this.SetSaveState("unchanged");
+
         this.element            = document.createElement("div");
         this.element.classList.add("videotimeframeselection");
         this.element.classList.add("flex-column");
@@ -28,6 +32,7 @@ class VideoTimeFrameSelection
         this.controltitle       = document.createElement("span");
         this.controltitle.innerText = "Select time frame that will be played";
         this.controlboxrow.appendChild(this.controltitle);
+        this.controlboxrow.appendChild(this.savestate);
         this.controlboxrow.appendChild(this.loadbutton.GetHTMLElement());
         this.controlboxrow.appendChild(this.savebutton.GetHTMLElement());
 
@@ -70,7 +75,10 @@ class VideoTimeFrameSelection
                 }
 
                 if(time < endtime)
+                {
+                    this._UpdateSaveState(time, endtime);
                     return true;
+                }
 
                 let beginstr = SecondsToTimeString(time);
                 let endstr   = SecondsToTimeString(endtime);
@@ -102,7 +110,10 @@ class VideoTimeFrameSelection
                 }
 
                 if(time > begintime)
+                {
+                    this._UpdateSaveState(begintime, time);
                     return true;
+                }
 
                 let beginstr = SecondsToTimeString(begintime);
                 let endstr   = SecondsToTimeString(time);
@@ -126,6 +137,44 @@ class VideoTimeFrameSelection
     {
         this.begintimeselect.Reset();
         this.endtimeselect.Reset();
+        this.SetSaveState("unchanged");
+    }
+
+
+
+    SetSaveState(state)
+    {
+        if(state == "notsaved")
+        {
+            this.savestate.dataset.state = "notsaved";
+            this.savestate.innerText     = "Changes not yet saved!";
+        }
+        else if(state == "unchanged")
+        {
+            this.savestate.dataset.state = "unchanged";
+            this.savestate.innerText     = "";
+        }
+        else if(state == "saved")
+        {
+            this.savestate.dataset.state = "saved";
+            this.savestate.innerText     = "Changes sucessfully saved.";
+        }
+
+    }
+
+    // do not read newbegin and newend vie GetSelectedTime.
+    // This method expects an intermediate selector state from within the validation methon
+    _UpdateSaveState(newbegin, newend)
+    {
+        if(newbegin == this.vbegin && newend == this.vend)
+        {
+            this.SetSaveState("unchanged");
+        }
+        else
+        {
+            this.SetSaveState("notsaved");
+        }
+        return;
     }
 
 
@@ -140,7 +189,6 @@ class VideoTimeFrameSelection
         else
             return;
 
-        window.console && console.log(message);
         msgbox.innerText       = message;
         msgbox.dataset.visible = true;
         return;
@@ -164,14 +212,22 @@ class VideoTimeFrameSelection
 
     onSave()
     {
+        let begintime = this.begintimeselect.GetSelectedTime();
+        let endtime   = this.endtimeselect.GetSelectedTime();
+
         window.console && console.log("SetVideoTimeFrame disabled for debugging reasons");
-        window.console && console.log("begin = " + this.begintimeselect.GetSelectedTime());
-        window.console && console.log("end   = " + this.endtimeselect.GetSelectedTime());
+        window.console && console.log("begin = " + begintime);
+        window.console && console.log("end   = " + endtime);
+
+        this.vbegin = begintime;
+        this.vend   = endtime;
+        this.SetSaveState("saved");
+
         //MusicDB_Call("SetVideoTimeFrame", 
         //    {
         //        videoid: this.videoid,
-        //        begin:   this.begintimeselect.GetSelectedTime(),
-        //        end:     this.endtimeselect.GetSelectedTime()
+        //        begin:   begintime,
+        //        end:     endtime
         //    });
     }
 

@@ -51,5 +51,32 @@
     visibility:     hidden;
 }
 
+
+
+.vtfs_savestate
+{
+    margin:         0 1em;
+    padding:        0.2em 0.5em;
+    border-radius:  0.2em;
+    color:          #F0F0F0;
+}
+.vtfs_savestate[data-state=notsaved]
+{
+    visibility:     visible;
+    background-color: #5E5E1F;
+    /*
+    background-color: #5E1F1F;
+    */
+}
+.vtfs_savestate[data-state=saved]
+{
+    visibility:     visible;
+    background-color: #1F5E29;
+}
+.vtfs_savestate[data-state=unchanged]
+{
+    visibility:     hidden;
+}
+
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
