@@ -33,7 +33,7 @@ class TimeSelect
         this.slider.AddMouseWheelEvent((event)=>{this.onMouseWheel(event)});
         
         this.resetbutton        = new SVGButton(reseticonname, ()=>{this.SetNewTime(this.resetvalue);});
-        this.resetbutton.SetTooltip(`Set slider to ${this.resetvalue}`);
+        this.resetbutton.SetTooltip(`Set slider to ${SecondsToTimeString(this.resetvalue)}`);
 
         this.thistimebutton     = new SVGButton("vThis", ()=>{this.SelectTimeFromVideo();});
         this.thistimebutton.SetTooltip(`Select current time from video`);
