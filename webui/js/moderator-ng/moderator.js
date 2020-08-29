@@ -6,6 +6,7 @@ var currentalbumid  = null; // /
 let fullscreenmanager   = new FullscreenManager();
 let mdbmodemanager      = new MDBModeManager();
 let musicdbhud          = new MusicDBHUD();
+let videostreamplayer   = new VideoStreamPlayer();
 
 // Create Main Menu
 let mainmenu           = new MainMenu("1em", "1em");
@@ -24,13 +25,20 @@ mdbmodemanager.SetMainMenuHandler(mainmenu, entryid); // This allows updating th
 
 window.onload = function ()
 {
-    ConnectToMusicDB();
-
-    let HUDparent = document.getElementById("HUD");
+    // Do some last DOM changes
+    let HUDparent   = document.getElementById("HUD");
     HUDparent.appendChild(musicdbhud.GetHTMLElement());
+
+    let videoplayer = document.getElementById("VideoStreamPlayer");
+    videostreamplayer.SetVideoPlayerElement(videoplayer);
 
     document.body.appendChild(mainmenu.GetHTMLElement());
 
+
+    // Connect to MusicDB
+    ConnectToMusicDB();
+
+    // Setup the Views
     ShowAlphabetBar("Alphabetbar");
     ShowMusicDBStateView("State");
     Artistloader_Show("Artistloader");
@@ -64,6 +72,7 @@ function onMusicDBConnectionClosed()
 function onMusicDBNotification(fnc, sig, rawdata)
 {
     musicdbhud.onMusicDBNotification(fnc, sig, rawdata);
+    videostreamplayer.onMusicDBNotification(fnc, sig, rawdata);
 
     window.console && console.log(sig);
     if(fnc == "MusicDB:AudioStream")
@@ -98,7 +107,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
         else if(sig == "onStreamNextVideo")
         {
             // New video and entry is included rawdata
-            PlayVideo(rawdata.video, rawdata.queue.entryid);
+            //PlayVideo(rawdata.video, rawdata.queue.entryid);
             MusicDB_Request("GetVideoStreamState", "UpdateHUD");
         }
     }
@@ -128,6 +137,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
 function onMusicDBMessage(fnc, sig, args, pass)
 {
     musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
+    videostreamplayer.onMusicDBMessage(fnc, sig, args, pass);
     mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
 
     // Update state-indicators if some indication passes
@@ -158,13 +168,12 @@ function onMusicDBMessage(fnc, sig, args, pass)
             SetMusicDBOnlineState("yes", null, "no");   // data, audio, video
 
         // FIXME: JUST FOR DEBUGGING
-        PlayVideo(args.video, args.currententry);
+        //PlayVideo(args.video, args.currententry);
 
         if(args.isstreaming)
             SetMusicDBPlayingState("playing", null);    // Stream, Client
         else
             SetMusicDBPlayingState("paused", null);     // Stream, Client
-        UpdatePlayerState(args.isstreaming);
     }
     else
         window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");

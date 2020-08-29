@@ -21,93 +21,155 @@
  * This new video gets streamed as soon as the current streamed video finished.
  *
  * In case there is no new video, a new one gets requested.
- *
- *
  */
 
-var GLOBAL_PLAYING   = false;   // Is this client playing the stream
-var GLOBAL_STREAMING = false;   // Is the server streaming videos
-
-function NextVideo(videopath)
+class VideoStreamPlayer
 {
-}
+    constructor()
+    {
+        this.videoplayer  = null;
+        this.currententry = 0;
+        this.currentvideo = null;
+        this.isstreaming  = false;
+        this.isplaying    = false;
+    }
 
-function PlayVideo(MDBVideo, entryid)
-{
-    let player     = document.getElementById("VideoStreamPlayer");
-    let posterpath = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile);
-    let videopath  = "/musicdb/music/" + MDBVideo.path;
 
-    //player.width  = MDBVideo.xresolution;
-    //player.height = MDBVideo.yresolution;
-    player.src = videopath;
 
-    player.onloadeddata = (event) =>
-        {
-            player.currentTime = MDBVideo.vbegin;
-        };
-    player.ontimeupdate = (event) =>
-        {
-            if(player.currentTime >= MDBVideo.vend)
+    SetVideoPlayerElement(videoplayer)
+    {
+        this.videoplayer = videoplayer;
+
+        this.videoplayer.onloadeddata = (event)=>
             {
-                player.pause();
-                player.currentTime = 0;
-                onVideoEnded(entryid);
+                if(this.currentvideo == null)
+                    return;
+                window.console && console.log("videoplayer.onloadeddata");
+
+                this.videoplayer.currentTime = this.currentvideo.vbegin;
+            };
+        
+        this.videoplayer.ontimeupdate = (event)=>
+            {
+                if(this.currentvideo == null)
+                    return;
+
+                if(this.videoplayer.currentTime >= this.currentvideo.vend)
+                {
+                    //TODO: fade out at this point
+                    this.videoplayer.pause();
+                    this.videoplayer.currentTime = 0;
+                    this.onVideoEnded(this.currententryid);
+                }
+            };
+
+        this.videoplayer.onended = (event)=>
+            {
+                if(this.currentvideo == null)
+                    return;
+                window.console && console.log("videoplayer.onended");
+
+                this.onVideoEnded(this.currententryid);
+            };
+
+        this.videoplayer.onclick = (event)=>
+            {
+                window.console && console.log("videoplayer.onclick");
+                this.isplaying = !this.isplaying;
+                this.UpdatePlayerState();
+            };
+
+        return;
+    }
+
+
+
+    // isstreaming (optional): true, false, null
+    UpdatePlayerState(isstreaming)
+    {
+        window.console && console.log("videoplayer.UpdatePlayerState(" + isstreaming + ")");
+        if(typeof isstreaming === "boolean")
+        {
+            this.isstreaming = isstreaming;
+        }
+
+        if(this.isplaying == true && this.isstreaming == true)
+        {
+            this.videoplayer.play();
+            window.console && console.log("videoplayer.UpdatePlayerState -> play()");
+        }
+        else
+        {
+            this.videoplayer.pause();
+            window.console && console.log("videoplayer.UpdatePlayerState -> pause()");
+        }
+
+        return;
+    }
+
+
+
+    PlayVideoFromQueue(MDBVideo, entryid)
+    {
+        window.console && console.log("videoplayer.PlayVideoFromQueue(" + MDBVideo.name + ")");
+        let videopath       = "/musicdb/music/" + MDBVideo.path;
+        let posterpath      = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile);
+        this.currentvideo   = MDBVideo;
+        this.currententryid = entryid;
+
+        this.videoplayer.src = videopath;
+        this.videoplayer.load();
+
+        if(this.isplaying == false)
+        {
+            this.videoplayer.poster = posterpath;
+        }
+        else
+        {
+            this.videoplayer.poster = null;
+        }
+
+        this.UpdatePlayerState();
+        return;
+    }
+
+
+
+    onVideoEnded()
+    {
+        MusicDB_Call("VideoEnded", {entryid: this.currententryid});
+        return;
+    }
+
+
+
+    onMusicDBNotification(fnc, sig, rawdata)
+    {
+        if(fnc == "MusicDB:VideoStream")
+        {
+            if(sig == "onStreamNextVideo")
+            {
+                this.PlayVideoFromQueue(rawdata.video, rawdata.queue.entryid);
             }
-        };
-    player.onended = (event) =>
+        }
+        return;
+    }
+
+
+
+    onMusicDBMessage(fnc, sig, args, pass)
+    {
+        if(fnc == "GetVideoStreamState")
         {
-            onVideoEnded(entryid);
-        };
-    player.onclick = (event) =>
-        {
-            GLOBAL_PLAYING = !GLOBAL_PLAYING;
-            UpdatePlayerState();
-        };
+            this.UpdatePlayerState(args.isstreaming);
 
-    player.load();
-
-    if(GLOBAL_PLAYING == false)
-    {
-        player.poster = posterpath;
+            if(this.currententryid != args.currententry)
+            {
+                this.PlayVideoFromQueue(args.video, args.currententry);
+            }
+        }
+        return;
     }
-    else
-    {
-        player.poster = null;
-    }
-
-    UpdatePlayerState();
-}
-
-
-// isstreaming (optional): true, false, null
-function UpdatePlayerState(isstreaming)
-{
-    if(typeof isstreaming === "boolean")
-    {
-        GLOBAL_STREAMING = isstreaming;
-    }
-
-    let player = document.getElementById("VideoStreamPlayer");
-
-    if(GLOBAL_PLAYING == true && GLOBAL_STREAMING == true)
-    {
-        player.play();
-    }
-    else
-    {
-        player.pause();
-    }
-}
-
-
-function onVideoEnded(entryid)
-{
-    MusicDB_Call("VideoEnded", {entryid: entryid});
-}
-
-function onVideoStreamConnect()
-{
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
