@@ -215,10 +215,6 @@ class VideoTimeFrameSelection
         let begintime = this.begintimeselect.GetSelectedTime();
         let endtime   = this.endtimeselect.GetSelectedTime();
 
-        window.console && console.log("SetVideoTimeFrame disabled for debugging reasons");
-        window.console && console.log("begin = " + begintime);
-        window.console && console.log("end   = " + endtime);
-
         this.vbegin = begintime;
         this.vend   = endtime;
         this.SetSaveState("saved");
