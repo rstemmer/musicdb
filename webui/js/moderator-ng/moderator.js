@@ -106,8 +106,6 @@ function onMusicDBNotification(fnc, sig, rawdata)
         }
         else if(sig == "onStreamNextVideo")
         {
-            // New video and entry is included rawdata
-            //PlayVideo(rawdata.video, rawdata.queue.entryid);
             MusicDB_Request("GetVideoStreamState", "UpdateHUD");
         }
     }
@@ -166,9 +164,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
             SetMusicDBOnlineState("yes", null, "yes");  // data, audio, video
         else
             SetMusicDBOnlineState("yes", null, "no");   // data, audio, video
-
-        // FIXME: JUST FOR DEBUGGING
-        //PlayVideo(args.video, args.currententry);
 
         if(args.isstreaming)
             SetMusicDBPlayingState("playing", null);    // Stream, Client
