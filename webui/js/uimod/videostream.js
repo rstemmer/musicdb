@@ -102,13 +102,14 @@ class VideoStreamPlayer
 
         if(this.isplaying == true && this.isstreaming == true)
         {
-            this.videoplayer.play();
             window.console && console.log("videoplayer.UpdatePlayerState -> play()");
+            window.console && console.log(this.videoplayer.src);
+            this.videoplayer.play();
         }
         else
         {
-            this.videoplayer.pause();
             window.console && console.log("videoplayer.UpdatePlayerState -> pause()");
+            this.videoplayer.pause();
         }
 
         return;
@@ -133,7 +134,7 @@ class VideoStreamPlayer
         }
         else
         {
-            this.videoplayer.poster = null;
+            this.videoplayer.poster = "";
         }
 
         this.UpdatePlayerState();
