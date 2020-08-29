@@ -47,6 +47,7 @@ class VideoStreamPlayer
                 window.console && console.log("videoplayer.onloadeddata");
 
                 this.videoplayer.currentTime = this.currentvideo.vbegin;
+                this.videoplayer.dataset.visible = true;
             };
         
         this.videoplayer.ontimeupdate = (event)=>
@@ -54,9 +55,15 @@ class VideoStreamPlayer
                 if(this.currentvideo == null)
                     return;
 
+                // Begin fade out animation short before vend is reached
+                if(this.videoplayer.currentTime >= this.currentvideo.vend - 2.0)
+                {
+                    this.videoplayer.dataset.visible = false;
+                }
+
+                // Stop video when vend is reached
                 if(this.videoplayer.currentTime >= this.currentvideo.vend)
                 {
-                    //TODO: fade out at this point
                     this.videoplayer.pause();
                     this.videoplayer.currentTime = 0;
                     this.onVideoEnded(this.currententryid);
