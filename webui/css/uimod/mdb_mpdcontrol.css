@@ -20,52 +20,50 @@
 /* Main Container */
 /******************/
 
-div#MDBControls
+.musicdbcontrolsslot
 {
-    display:        flex;
-    height:         100%;
-    width:          100%;
-    align-items:    center;
-    flex-direction: column;
+    height:             100%;
 }
 
-div#MDBCMainFrame
+.musicdbcontrols
 {
-    display:        flex;
-    height:         100%;
-    flex-direction: column;
-    justify-content: space-around;
+    display:            flex;
+    flex-direction:     column;
+    justify-content:    space-around;
+    height:             100%;
+    margin-left:        1ch;
 }
 
-div.MDBC_button
+.musicdbcontrols div::before
 {
-    display:        flex;
-    padding-right:  10px;
-    padding-left:   10px;
-    text-shadow:    1px 1px 1px #111;
-    align-items:    center;
+    content:            " ";
+    display:            inline-block;
+    height:             1.0rem;
+    width:              1.0rem;
+    background-color:   var(--hlcolor);
+    vertical-align:     middle;
+    margin-left:        1.5ch;
+    margin-right:       1.0ch;
+    margin-bottom:      0.1em;  /* To make it visually centered */
 }
 
-div.MDBC_button:before
+.musicdbcontrols .playbutton::before
 {
-    font-family:    FontAwesome;
-    font-weight:    normal;
-    text-align:     right;
-
-    display:        inline-block;
-    padding-right:  5px;
+    mask:               url("../../img/icons/StatusUnknown.svg");
+}
+.musicdbcontrols .playbutton[data-state=play]::before
+{
+    mask:               url("../../img/icons/Play.svg");
+}
+.musicdbcontrols .playbutton[data-state=stop]::before
+{
+    mask:               url("../../img/icons/Pause.svg");
 }
 
-div#MDBCPauseButton:before
+.musicdbcontrols .nextbutton::before
 {
-    content: "\f144";   /*fa-play-circle*/
+    mask:               url("../../img/icons/Next.svg");
 }
-div#MDBCNextButton:before
-{
-
-    content: "\f0a9";   /*fa-arrow-circle-right*/
-}
-
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */

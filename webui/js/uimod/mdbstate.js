@@ -195,8 +195,6 @@ function ShowMusicDBStateView(parentID)
     
     // Create Elements
     document.getElementById(parentID).innerHTML = html;
-    ShowMDBControls("Controls");
-    UpdateMDBControls(null);
 }
 
 

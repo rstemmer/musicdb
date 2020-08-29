@@ -1,8 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
     <g transform="matrix(1,0,0,1,-100,-5)">
+        <g transform="matrix(1.10876,0,0,1.26098,-91.0415,-15.3672)">
+            <g id="Save">
+            </g>
+        </g>
+        <g id="StatusGood">
+        </g>
+        <g id="StatusBad">
+        </g>
+        <g id="StatusPaused">
+        </g>
+        <g id="StatusPlaying">
+        </g>
+        <g id="StatusUnknown">
+        </g>
+        <g transform="matrix(1.10876,0,0,1.26098,-66.3229,-15.3672)">
+            <g id="Load">
+            </g>
+        </g>
+        <g id="vThis">
+        </g>
+        <g id="vBegin">
+        </g>
+        <g id="vMin">
+        </g>
+        <g transform="matrix(1.1523,0,0,1.31051,-21.9614,-46.8621)">
+            <g id="vMax">
+            </g>
+        </g>
+        <g id="vEnd">
+        </g>
         <g id="Menu">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
         </g>
         <g id="Switch2Video">
         </g>
@@ -28,16 +62,8 @@
         </g>
         <g id="Append">
         </g>
-        <g id="Next" transform="matrix(1,0,0,1,-25,1.77636e-15)">
-            <g transform="matrix(1.05263,0,0,1.05263,71.3158,-1.31579)">
-                <circle cx="60.5" cy="15.5" r="9.5"/>
-            </g>
-            <g transform="matrix(0.75,0,0,1,70.75,-1.77636e-15)">
-                <path d="M79,15L91,15" style="fill:none;stroke:rgb(89,89,89);stroke-width:3.39px;"/>
-            </g>
-            <g transform="matrix(1,0,0,1,-1,-1.77636e-15)">
-                <path d="M140,15L137,11L139,15L137,19L140,15Z" style="fill:none;stroke:rgb(89,89,89);stroke-width:3px;"/>
-            </g>
+        <g id="Next">
+            <path d="M110,5C115.519,5 120,9.481 120,15C120,20.519 115.519,25 110,25C104.481,25 100,20.519 100,15C100,9.481 104.481,5 110,5ZM110.573,13.5L109.658,11.671C109.311,10.977 109.551,10.132 110.211,9.724C110.872,9.316 111.734,9.479 112.2,10.1L115.2,14.1L115.325,14.296C115.434,14.501 115.497,14.735 115.5,14.984L115.5,15.016C115.497,15.265 115.434,15.499 115.325,15.704L115.2,15.9L112.2,19.9C111.734,20.521 110.872,20.684 110.211,20.276C109.551,19.868 109.311,19.023 109.658,18.329L110.573,16.5L105,16.5C104.172,16.5 103.5,15.828 103.5,15C103.5,14.172 104.172,13.5 105,13.5L110.573,13.5Z"/>
         </g>
         <g id="Pause">
         </g>

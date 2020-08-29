@@ -8,6 +8,7 @@ let mdbmodemanager      = new MDBModeManager();
 let musicdbhud          = new MusicDBHUD();
 let videostreamplayer   = new VideoStreamPlayer();
 let musicdbstatus       = new MusicDBStatus();
+let musicdbcontrols     = new MusicDBControls();
 
 // Create Main Menu
 let mainmenu           = new MainMenu("1em", "1em");
@@ -33,6 +34,9 @@ window.onload = function ()
 
     let videoplayer = document.getElementById("VideoStreamPlayer");
     videostreamplayer.SetVideoPlayerElement(videoplayer);
+
+    let controlsbox = document.getElementById("Controls");
+    controlsbox.appendChild(musicdbcontrols.GetHTMLElement());
 
     document.body.appendChild(mainmenu.GetHTMLElement());
 
@@ -132,6 +136,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
 {
     musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
     musicdbstatus.onMusicDBMessage(fnc, sig, args, pass);
+    musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);
     videostreamplayer.onMusicDBMessage(fnc, sig, args, pass);
     mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
 

@@ -16,102 +16,160 @@
 
 "use strict";
 
-// mode can be "audio" or "video"
-function ShowMDBControls(parentID)
+// Control buttons can have the following stated: "play", "stop"
+// The state represents the action that will be done when pressing the button
+
+
+class MusicDBControls
 {
-    let mode = mdbmodemanager.GetCurrentMode();
-    let html = "";
-
-    html += "<div id=MDBControls>"; // main box
-    // Frame
-    html += "<div id=MDBCMainFrame class=\"fmcolor\">";
-    
-    // Pause/Play
-    html += "<div";
-    html += " id=MDBCPauseButton";
-    html += " class=\"MDBC_button hlcolor\"";
-    html += ">";
-    html += "…";
-    html += "</div>";
-
-    // Next
-    html += "<div";
-    html += " id=MDBCNextButton";
-    html += " class=\"MDBC_button hlcolor\"";
-    html += ">";
-    html += "…";
-    html += "</div>";
-
-    html += "</div>"; // frame
-    html += "</div>"; // main box
-
-    // Create Element
-    let parentelement = document.getElementById(parentID);
-    parentelement.innerHTML = html;
-    UpdateMDBControls(null, mode);
-    UpdateStyle();  // Colorize text correctly
-}
-
-
-// Valid states: unknown, playing, paused, *null* (to change nothing)
-// Valid modes: audio, video, *null*
-function UpdateMDBControls(serverstate)
-{
-    let playbutton = document.getElementById("MDBCPauseButton");
-    let nextbutton = document.getElementById("MDBCNextButton");
-    let mode       = mdbmodemanager.GetCurrentMode();
-
-    if(playbutton)
+    constructor()
     {
-        if(typeof serverstate === "string")
-        {
-            let buttonlabel = "";
+        this.element        = document.createElement("div");
+        this.element.classList.add("musicdbcontrolsslot");
+        this.element.classList.add("hlcolor");
 
-            if(serverstate === "playing")
-                buttonlabel = "Pause Stream";
-            else if(serverstate === "paused")
-                buttonlabel = "Continue Stream";
+        this.controls = new Object();
+        this.controls["audio"] = this._CreateControls("audio");
+        this.controls["video"] = this._CreateControls("video");
+        this.ShowAudioControls();
+    }
+
+
+
+    GetHTMLElement()
+    {
+        return this.element;
+    }
+
+
+
+    ShowAudioControls()
+    {
+        this.element.innerHTML = "";
+        this.element.appendChild(this.controls["audio"].element);
+    }
+
+    ShowVideoControls()
+    {
+        this.element.innerHTML = "";
+        this.element.appendChild(this.controls["video"].element);
+    }
+
+
+    SetAudioStatus(state) // "playing"/"stopped"
+    {
+        if(state == "playing")
+        {
+            this.controls["audio"].playbutton.textContent   = "Pause Audio Stream";
+            this.controls["audio"].playbutton.title         = "Pause audio streaming on server side for all clients";
+            this.controls["audio"].playbutton.dataset.state = "stop";
+        }
+        else if(state == "stopped")
+        {
+            this.controls["audio"].playbutton.textContent   = "Play Audio Stream";
+            this.controls["audio"].playbutton.title         = "Continue audio streaming on server side for all clients";
+            this.controls["audio"].playbutton.dataset.state = "play";
+        }
+    }
+    SetVideoStatus(state) // "playing"/"stopped"
+    {
+        if(state == "playing")
+        {
+            this.controls["video"].playbutton.textContent   = "Pause Video Stream";
+            this.controls["video"].playbutton.title         = "Pause video streaming for all clients";
+            this.controls["video"].playbutton.dataset.state = "stop";
+        }
+        else if(state == "stopped")
+        {
+            this.controls["video"].playbutton.textContent   = "Play Video Stream";
+            this.controls["video"].playbutton.title         = "Continue video streaming for all clients";
+            this.controls["video"].playbutton.dataset.state = "play";
+        }
+    }
+
+
+
+    _CreateControls(type)
+    {
+        let controls   = new Object();
+
+        // Create Play/Pause Button
+        let playbutton = document.createElement("div");
+        playbutton.dataset.state = "unknown";
+        playbutton.classList.add("playbutton");
+        if(type == "audio")
+        {
+            playbutton.textContent = "Play/Pause Audio Stream";
+            playbutton.title       = "Update Audio Stream State";
+            playbutton.onclick     = (event) => { MusicDB_Call("SetAudioStreamState", {state:"playpause"}); };
+        }
+        else if(type == "video")
+        {
+            playbutton.textContent = "Play/Pause Video Stream";
+            playbutton.title       = "Update Video Stream State";
+            playbutton.onclick     = (event) => { MusicDB_Call("SetVideoStreamState", {state:"playpause"}); };
+        }
+        
+        // Create Next Button
+        let nextbutton = document.createElement("div");
+        nextbutton.classList.add("nextbutton");
+        if(type == "audio")
+        {
+            nextbutton.textContent = "Next Song";
+            nextbutton.title       = "Play Next Song from Queue";
+            nextbutton.onclick     = (event) => { MusicDB_Call("PlayNextSong"); };
+        }
+        else if(type == "video")
+        {
+            nextbutton.textContent = "Next Video";
+            nextbutton.title       = "Play Next Video from Queue";
+            nextbutton.onclick     = (event) => { MusicDB_Call("PlayNextVideo"); };
+        }
+
+        // Put all Buttons Together
+        let element = document.createElement("div");
+        element.classList.add("musicdbcontrols");
+        element.appendChild(playbutton);
+        element.appendChild(nextbutton);
+
+        controls["playbutton"] = playbutton;
+        controls["nextbutton"] = nextbutton;
+        controls["element"]    = element;
+        return controls;
+    }
+
+
+
+    onMusicDBMessage(fnc, sig, args, pass)
+    {
+        if(fnc == "GetMDBState" && sig == "UpdateMDBState")
+        {
+            if(args.MusicDB.uimode == "audio")
+                this.ShowAudioControls();
             else
-                buttonlabel = "(Server State Unknown)";
-
-            playbutton.textContent = buttonlabel;
+                this.ShowVideoControls();
         }
 
-        if(typeof mode === "string")
+        else if(fnc == "GetAudioStreamState")
         {
-            if(mode == "audio")
-            {
-                playbutton.title   = "Update Audio Stream State";
-                playbutton.onclick = (event) => { MusicDB_Call("SetAudioStreamState", {state:"playpause"}); };
-            }
-            else if(mode == "video")
-            {
-                playbutton.title   = "Update Video Stream State";
-                playbutton.onclick = (event) => { MusicDB_Call("SetVideoStreamState", {state:"playpause"}); };
-            }
+            if(args.isplaying)
+                this.SetAudioStatus("playing");
+            else
+                this.SetAudioStatus("stopped");
         }
-    }
 
-
-    if(nextbutton)
-    {
-        if(typeof mode === "string")
+        else if(fnc == "GetVideoStreamState")
         {
-            if(mode == "audio")
-            {
-                nextbutton.title       = "Play Next Song from Queue";
-                nextbutton.onclick     = (event) => { MusicDB_Call("PlayNextSong"); };
-                nextbutton.textContent = "Next Song";
-            }
-            else if(mode == "video")
-            {
-                nextbutton.title       = "Play Next Video from Queue";
-                nextbutton.onclick     = (event) => { MusicDB_Call("PlayNextVideo"); };
-                nextbutton.textContent = "Next Video";
-            }
+            if(args.isstreaming)
+                this.SetVideoStatus("playing");
+            else
+                this.SetVideoStatus("stopped");
         }
+
+        return;
     }
 }
+
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
