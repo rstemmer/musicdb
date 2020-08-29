@@ -16,69 +16,171 @@
 
 "use strict";
 
-/* OLD!
- * This class provides the mdbstate view consisting of the following components:
- *
- * Requirements:
- *   - JQuery
- *   - mdbstate.css
- * Show:
- *   - ShowMusicDBStateView(parentid)
- *   - SetMusicDBOnlineState(mdbstate, mpdstate)
- *   - SetMusicDBPlayingState(serverstate, clientstate)
- * Functions:
- * Callbacks:
- * Recommended Paths:
- * Trigger: (fnc -> sig)
- *
- * Timer:
- *   When the queue is loaded first clear the timer, then add the playtime of each queue entry
- *   On onTimeChanged-mpd-event set the TimePlayed. This call will also update the view
- */
+// All statuses can have the value:
+//
+// CSS Data-Set | State name
+// -------------+-----------------------------------
+// "unknown"    | "unknown"
+// "good"       | "connected"
+// "bad"        | "disconnected"
+// "playing"    | "playing"/"streaming"
+// "paused"     | "stopped"
 
-//var GLOBAL_MDBMODE = "audio"; // audio/video
+class MusicDBStatus
+{
+    constructor()
+    {
+        this.musicdbstatus = new Object();
+        this.CreateStatus("musicdb",     "MusicDB Server");
+        this.CreateStatus("icecast",     "Icecast Server");
+        this.CreateStatus("audiostream", "Audio Stream");
+        this.CreateStatus("videostream", "Video Stream");
+        this.CreateStatus("videoplayer", "Video Player");
+
+        this.element = document.createElement("div");
+        for(let statuskey in this.musicdbstatus)
+        {
+            let statusentry = this.musicdbstatus[statuskey];
+            this.element.appendChild(statusentry.element);
+        }
+
+        return;
+    }
+
+
+
+    GetHTMLElement()
+    {
+        return this.element;
+    }
+
+
+
+    CreateStatus(key, name)
+    {
+        this.musicdbstatus[key] = new Object();
+        this.musicdbstatus[key].name    = name;
+        this.musicdbstatus[key].state   = "unknown";
+        this.musicdbstatus[key].element = document.createElement("div");
+        this.musicdbstatus[key].element.innerText     = name;
+        this.musicdbstatus[key].element.dataset.state = "unknown";
+        return;
+    }
+
+
+    SetStatus(key, state)
+    {
+        if(typeof state !== "string")
+            return;
+
+        let cssstatename = "unknwon";
+
+        if(state == "connected")
+        {
+            cssstatename = "good";
+        }
+        else if(state == "playing"
+             || state == "streaming")
+        {
+            cssstatename = "playing";
+        }
+        else if(state == "disconnected")
+        {
+            cssstatename = "bad";
+        }
+        else if(state == "stopped")
+        {
+            cssstatename = "paused";
+        }
+        else
+        {
+            window.console && console.log("Unknown MusicDB Status " + state);
+        }
+
+        this.musicdbstatus[key].element.dataset.state = cssstatename;
+        return;
+    }
+
+
+
+    onMusicDBNotification(fnc, sig, rawdata)
+    {
+        this.SetStatus("musicdb", "connected");
+        return;
+    }
+
+
+
+    onMusicDBMessage(fnc, sig, args, pass)
+    {
+        this.SetStatus("musicdb", "connected");
+
+        if(fnc == "GetAudioStreamState")
+        {
+            if(args.isconnected)
+                this.SetStatus("icecast", "connected");
+            else
+                this.SetStatus("icecast", "disconnected");
+
+            if(args.isplaying)
+                this.SetStatus("audiostream", "playing");
+            else
+                this.SetStatus("audiostream", "stopped");
+        }
+
+        else if(fnc == "GetVideoStreamState")
+        {
+            if(args.isstreaming)
+                this.SetStatus("videostream", "playing");
+            else
+                this.SetStatus("videostream", "stopped");
+
+            /*
+            if(args.isplaying)
+                this.SetStatus("videoplayer", "playing");
+            else
+                this.SetStatus("videoplayer", "stopped");
+            */
+        }
+        return;
+    }
+
+
+    onMusicDBConnectionOpen()
+    {
+        this.SetStatus("musicdb",     "connected");
+    }
+    onMusicDBConnectionError()
+    {
+        this.SetStatus("musicdb",     "disconnected");
+        this.SetStatus("icecast",     "unknown");
+        this.SetStatus("audiostream", "unknown");
+        this.SetStatus("videostream", "unknown");
+    }
+    onMusicDBWatchdogBarks()
+    {
+        this.SetStatus("musicdb",     "disconnected");
+        this.SetStatus("icecast",     "unknown");
+        this.SetStatus("audiostream", "unknown");
+        this.SetStatus("videostream", "unknown");
+    }
+    onMusicDBConnectionClosed()
+    {
+        this.SetStatus("musicdb",     "disconnected");
+        this.SetStatus("icecast",     "unknown");
+        this.SetStatus("audiostream", "unknown");
+        this.SetStatus("videostream", "unknown");
+    }
+}
+
+
+
 
 function ShowMusicDBStateView(parentID)
 {
     let html = "";
 
     html += "<div id=MDBStateView class=\"hlcolor smallfont\">";
-
-    // Data Stream (MusicDB)
-    html += "<span id=MDBReconnectBtn data-online=\"unknown\""; 
-    html += " title=\"Reconnect to MusicDB server\"";
-    html += " onclick=\"ConnectToMusicDB();\">";
-    html += "&#xf021;";
-    html += "</span>";
-    html += "<span id=DataStreamState class=\"onlinestate\" data-online=\"unknown\">";
-    html += "MusicDB";
-    html += "</span><br>";
-
-    // Audio Stream (Icecast)
-    html += "<span id=AudioStreamState class=\"onlinestate\" data-online=\"unknown\">";
-    html += "Audio Stream";
-    html += "</span><br>";
-
-    // Video Stream (MusicDB)
-    html += "<span id=VideoStreamState class=\"onlinestate\" data-online=\"unknown\">";
-    html += "Video Stream";
-    html += "</span><br>";
-/*
-    // Mode Select
-    html += "<span id=MDBModeswitchBtn";
-    html += " title=\"Switch between Audio/Video mode\"";
-    html += " onClick=\"ToggleMusicDBMode();\"";
-    html += ">";
-    html += "↹";
-    html += "</span>";
-    html += "<span id=MDBMode";
-    html += " class=\"onlinestate\"";
-    html += " data-mode=\"unknown\"";
-    html += " onClick=\"ToggleMusicDBMode();\"";
-    html += ">";
-    html += "Stream Mode";
-    html += "</span><br>";
-*/
 
     // Playtime
     html += "<span id=CurrentTime class=\"timestats\" data-playstate=\"unknown\">";
@@ -95,51 +197,6 @@ function ShowMusicDBStateView(parentID)
     document.getElementById(parentID).innerHTML = html;
     ShowMDBControls("Controls");
     UpdateMDBControls(null);
-}
-
-
-
-// Valid states: yes, no, error, unknown, *null* (to change nothing)
-function SetMusicDBOnlineState(datastreamstate, audiostreamstate, videostreamstate)
-{
-    let audioelement = document.getElementById("AudioStreamState");
-    let videoelement = document.getElementById("VideoStreamState");
-    let dataelement  = document.getElementById("DataStreamState");
-    let reconnect    = document.getElementById("MDBReconnectBtn"); // shall have same state as data stream state
-
-    if(typeof audiostreamstate === "string")
-    {
-        audioelement.dataset.online = audiostreamstate;
-    }
-    
-    if(typeof videostreamstate === "string")
-    {
-        videoelement.dataset.online = videostreamstate;
-    }
-    
-    if(typeof datastreamstate === "string")
-    {
-        dataelement.dataset.online = datastreamstate;
-        reconnect.dataset.online = datastreamstate;
-    }
-}
-
-
-
-// Valid states: unknown, playing, paused, *null* (to change nothing)
-function SetMusicDBPlayingState(serverstate, clientstate)
-{
-    let sselement  = document.getElementById("PlayTime");
-    let cselement  = document.getElementById("CurrentTime");
-
-    if(typeof serverstate === "string")
-        sselement.dataset.playstate = serverstate;
-    if(typeof clientstate === "string")
-        cselement.dataset.playstate = serverstate;
-
-    window.console && console.log("SetMusicDBPlayingState");
-
-    UpdateMDBControls(serverstate);
 }
 
 

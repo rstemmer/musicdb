@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-200,-55)">
+        <g transform="matrix(1.10876,0,0,1.26098,-91.0415,-15.3672)">
+            <g id="Save">
+            </g>
+        </g>
+        <g id="StatusGood">
+        </g>
+        <g id="StatusBad" transform="matrix(1,0,0,1,25,0)">
+            <path id="Circle" d="M185,55C190.519,55 195,59.481 195,65C195,70.519 190.519,75 185,75C179.481,75 175,70.519 175,65C175,59.481 179.481,55 185,55ZM185,57C189.415,57 193,60.585 193,65C193,69.415 189.415,73 185,73C180.585,73 177,69.415 177,65C177,60.585 180.585,57 185,57Z"/>
+            <g transform="matrix(1,0,0,1,-25,0)">
+                <path d="M207.879,65L205.939,63.061C205.354,62.475 205.354,61.525 205.939,60.939C206.525,60.354 207.475,60.354 208.061,60.939L210,62.879L211.939,60.939C212.525,60.354 213.475,60.354 214.061,60.939C214.646,61.525 214.646,62.475 214.061,63.061L212.121,65L214.061,66.939C214.646,67.525 214.646,68.475 214.061,69.061C213.475,69.646 212.525,69.646 211.939,69.061L210,67.121L208.061,69.061C207.475,69.646 206.525,69.646 205.939,69.061C205.354,68.475 205.354,67.525 205.939,66.939L207.879,65Z"/>
+            </g>
+        </g>
+        <g id="StatusUnknown">
+        </g>
+        <g transform="matrix(1.10876,0,0,1.26098,-66.3229,-15.3672)">
+            <g id="Load">
+            </g>
+        </g>
+        <g id="vThis">
+        </g>
+        <g id="vBegin">
+        </g>
+        <g id="vMin">
+        </g>
+        <g transform="matrix(1.1523,0,0,1.31051,-21.9614,-46.8621)">
+            <g id="vMax">
+            </g>
+        </g>
+        <g id="vEnd">
+        </g>
+        <g id="Menu">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Insert-Template" serif:id="Insert Template">
+        </g>
+        <g id="Play-Template" serif:id="Play Template">
+        </g>
+    </g>
+</svg>

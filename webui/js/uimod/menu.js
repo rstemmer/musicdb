@@ -8,7 +8,8 @@ class MainMenu
     constructor(topoffset, rightoffset)
     {
         this.icon        = new SVGIcon("Menu");
-        this.entryarray  = new Array();
+        this.entryarray  = new Array(); // For regular menu entries
+        this.sectionarray= new Array(); // For additional sections added as div-elements
         
         this.topoffset   = topoffset;
         this.rightoffset = rightoffset;
@@ -60,6 +61,10 @@ class MainMenu
         for(let entry of this.entryarray)
         {
             this.entrylistelement.appendChild(entry.element);
+        }
+        for(let section of this.sectionarray)
+        {
+            this.entrylistelement.appendChild(section.element);
         }
 
         return;
@@ -115,6 +120,26 @@ class MainMenu
         let newlength = this.entryarray.push(entry);
         let entryid   = newlength - 1;
         return entryid;
+    }
+
+
+    CreateSection(sectionname, sectionelement)
+    {
+        sectionelement.classList.add("sectionbody");
+
+        let sectiontitle        = document.createElement("div");
+        sectiontitle.innerText  = sectionname;
+        sectiontitle.classList.add("sectiontitle");
+        sectiontitle.classList.add("hlcolor");
+
+        let section             = new Object();
+        section.element         = document.createElement("div");
+        section.element.classList.add("section");
+        section.element.appendChild(sectiontitle);
+        section.element.appendChild(sectionelement);
+
+        this.sectionarray.push(section);
+        return;
     }
 
 

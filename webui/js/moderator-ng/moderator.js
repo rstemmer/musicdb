@@ -7,6 +7,7 @@ let fullscreenmanager   = new FullscreenManager();
 let mdbmodemanager      = new MDBModeManager();
 let musicdbhud          = new MusicDBHUD();
 let videostreamplayer   = new VideoStreamPlayer();
+let musicdbstatus       = new MusicDBStatus();
 
 // Create Main Menu
 let mainmenu           = new MainMenu("1em", "1em");
@@ -18,6 +19,7 @@ let entryid = mainmenu.CreateSwitch(
     new SVGIcon("Switch2Video"), "Switch to Video Mode", ()=>{mdbmodemanager.SetVideoMode();},
     new SVGIcon("Switch2Audio"), "Switch to Audio Mode", ()=>{mdbmodemanager.SetAudioMode();}
     );
+mainmenu.CreateSection("MusicDB Status", musicdbstatus.GetHTMLElement());
 mainmenu.UpdateMenuEntryList();
 mdbmodemanager.SetMainMenuHandler(mainmenu, entryid); // This allows updating the menu entry on mode switch from remote
 
@@ -49,39 +51,36 @@ window.onload = function ()
 
 function onMusicDBConnectionOpen()
 {
-    SetMusicDBOnlineState("yes", "yes"); // data, audio, video
     window.console && console.log("[MDB] Open");
+    musicdbstatus.onMusicDBConnectionOpen();
+
     MusicDB_Request("GetMDBState",  "InitializeWebUI");
 }
 function onMusicDBConnectionError()
 {
-    SetMusicDBOnlineState("error", "unknown", "error"); // data, audio, video
     window.console && console.log("[MDB] Error");
+    musicdbstatus.onMusicDBConnectionError();
 }
 function onMusicDBWatchdogBarks()
 {
-    SetMusicDBOnlineState("error", "unknown", "unknown"); // data, audio, video
     window.console && console.log("[MDB] WD Barks");
+    musicdbstatus.onMusicDBWatchdogBarks();
 }
 function onMusicDBConnectionClosed()
 {
-    SetMusicDBOnlineState("no", "unknown", "no"); // data, audio, video
     window.console && console.log("[MDB] Closed");
+    musicdbstatus.onMusicDBConnectionClosed();
 }
 
 function onMusicDBNotification(fnc, sig, rawdata)
 {
     musicdbhud.onMusicDBNotification(fnc, sig, rawdata);
+    musicdbstatus.onMusicDBNotification(fnc, sig, rawdata);
     videostreamplayer.onMusicDBNotification(fnc, sig, rawdata);
 
     window.console && console.log(sig);
     if(fnc == "MusicDB:AudioStream")
     {
-        // Update state indicator.
-        // Just because the audio stream to Icecast works,
-        // it is not sure that the Icecast is actually OK -> null for audio
-        SetMusicDBOnlineState("yes", null, null); // data, audio, video
-        
         // Handle notifications
         if(sig == "onTimeChanged")
         {
@@ -97,9 +96,6 @@ function onMusicDBNotification(fnc, sig, rawdata)
     }
     else if(fnc == "MusicDB:VideoStream")
     {
-        // Update state indicator. If notifications arrive, something must be working :)
-        SetMusicDBOnlineState("yes", null, "yes"); // Data, Audio, Video
-
         if(sig == "onStatusChanged")
         {
             MusicDB_Request("GetVideoStreamState", "UpdateStreamState");
@@ -135,43 +131,11 @@ function onMusicDBNotification(fnc, sig, rawdata)
 function onMusicDBMessage(fnc, sig, args, pass)
 {
     musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
+    musicdbstatus.onMusicDBMessage(fnc, sig, args, pass);
     videostreamplayer.onMusicDBMessage(fnc, sig, args, pass);
     mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
 
-    // Update state-indicators if some indication passes
-    if(fnc == "GetAudioStreamState")
-    {
-        if(args.isconnected)
-        {
-            SetMusicDBOnlineState("yes", "yes", null);  // data, audio, video
-            MDB_EnableWatchdog();
-        }
-        else
-        {
-            SetMusicDBOnlineState("yes", "no", null);   // data, audio, video
-            MDB_DisableWatchdog();                      // Stop watchdog when MPD cannot trigger updates
-            // TODO: behavior changed with the new Icecast backend.
-        }
-
-        if(args.isplaying)
-            SetMusicDBPlayingState("playing", null);    // Stream, Client
-        else
-            SetMusicDBPlayingState("paused", null);     // Stream, Client
-    }
-    else if(fnc == "GetVideoStreamState")
-    {
-        if(args.isstreaming)
-            SetMusicDBOnlineState("yes", null, "yes");  // data, audio, video
-        else
-            SetMusicDBOnlineState("yes", null, "no");   // data, audio, video
-
-        if(args.isstreaming)
-            SetMusicDBPlayingState("playing", null);    // Stream, Client
-        else
-            SetMusicDBPlayingState("paused", null);     // Stream, Client
-    }
-    else
-        window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");
+    window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");
 
 
     // Handle Messages form the server

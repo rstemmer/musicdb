@@ -50,6 +50,60 @@ div.menuentry > .icon
     margin-right:       1.5ch;
 }
 
+
+
+/********************/
+/* Status Container */
+/********************/
+
+.menu .sectiontitle
+{
+    text-align:         center;
+    margin-top:         2em;
+    margin-bottom:      1em;
+}
+
+.menu .sectionbody div
+{
+    padding:            0.5em 1.5ch;
+    text-align:         right;
+}
+
+.menu .sectionbody div::after
+{
+    content:            " ";
+    display:            inline-block;
+    height:             1.0rem;
+    width:              1.0rem;
+    vertical-align:     middle;
+    margin-left:        1.5ch;
+}
+.menu .sectionbody div[data-state=unknown]::after
+{
+    mask:               url("../../img/icons/StatusUnknown.svg");
+    background-color:   #5E5E1F;
+}
+.menu .sectionbody div[data-state=bad]::after
+{
+    mask:               url("../../img/icons/StatusBad.svg");
+    background-color:   #5E1F1F;
+}
+.menu .sectionbody div[data-state=paused]::after
+{
+    mask:               url("../../img/icons/StatusPaused.svg");
+    background-color:   #5E1F1F;
+}
+.menu .sectionbody div[data-state=good]::after
+{
+    mask:               url("../../img/icons/StatusGood.svg");
+    background-color:   #1F5E29;
+}
+.menu .sectionbody div[data-state=playing]::after
+{
+    mask:               url("../../img/icons/StatusPlaying.svg");
+    background-color:   #1F5E29;
+}
+
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
 
