@@ -1,21 +1,157 @@
+// MusicDB,  a music manager with web-bases UI that focus on music.
+// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 "use strict";
 
-/*
- * This class shows a video
- *
- * Requirements:
- *   - JQuery
- *   - mdb_albumview.css
- *   - scrollto.js
- *   - lyrics
- * Show:
- *   - ShowVideo(parentID, MDBArgs);
- * Functions:
- * Callbacks:
- * Recommended Paths:
- * Trigger: (fnc -> sig)
- */
+
+class MainViewHeadline
+{
+    constructor(buttonarray)
+    {
+        // Info box
+        this.infobox        = document.createElement("div");
+
+        this.contentname    = document.createElement("span");
+        this.contentname.classList.add("fgcolor");
+
+        this.artistname     = document.createElement("span");
+        this.artistname.classList.add("hlcolor");
+        this.artistname.classList.add("smallfont");
+
+        this.spacer         = document.createElement("span");
+        this.spacer.classList.add("fgcolor");
+        this.spacer.classList.add("smallfont");
+        this.spacer.innerText = " — "; // EM DASH
+
+        this.releaseyear    = document.createElement("span");
+        this.releaseyear.classList.add("hlcolor");
+        this.releaseyear.classList.add("smallfont");
+
+        this.infobox.appendChild(this.contentname);
+        this.infobox.appendChild(this.artistname);
+        this.infobox.appendChild(this.spacer);
+        this.infobox.appendChild(this.releaseyear);
+
+        // Button box
+        this.buttonbox      = document.createElement("div");
+        this.buttonbox.classList.add("flex-row");
+        this.buttonbox.classList.add("hovpacity");
+        for(let button of buttonarray)
+        {
+            this.buttonbox.appendChild(button.GetHTMLElement());
+        }
+
+        // Full headline
+        this.element = document.createElement("div");
+        this.element.classList.add("mainview_headline");
+        this.element.classList.add("flex-row");
+        this.element.appendChild(this.infobox);
+        this.element.appendChild(this.buttonbox);
+    }
+
+    GetHTMLElement()
+    {
+        return this.element;
+    }
+
+
+
+    UpdateInformation(MDBMusic, MDBArtist)
+    {
+        this.contentname.innerText  = MDBMusic.name;
+        this.artistname.innerText   = MDBArtist.name
+        this.releaseyear.innerText  = MDBMusic.release;
+        this.infobox.title          = MDBMusic.origin;
+    }
+
+}
+
+
+
+class VideoView
+{
+    constructor()
+    {
+        this.currentvideoid = -1;
+
+        // Button Array
+        this.buttons        = new Array();
+        this.buttons.push(new SVGButton("Append", ()=>{this.AddVideoToQueue("last");}));
+        this.buttons.push(new SVGButton("Insert", ()=>{this.AddVideoToQueue("next");}));
+
+        // Create Headline
+        this.headline       = new MainViewHeadline(this.buttons);
+
+        // Create Video Player
+        this.videoplayer    = document.createElement("video");
+        this.videoplayer.controls = true;
+        this.videoplayer.classList.add("mainview_videoplayer");
+
+        // Create Video View
+        this.element  = document.createElement("div");
+        this.element.classList.add("mainview_container");
+        this.element.appendChild(this.headline.GetHTMLElement());
+        this.element.appendChild(this.videoplayer);
+    }
+
+
+
+    GetHTMLElement()
+    {
+        return this.element;
+    }
+
+
+
+    AddVideoToQueue(position)
+    {
+        MusicDB_Call("AddVideoToQueue", {videoid: this.currentvideoid, position: position});
+    }
+
+
+
+    UpdateInformation(MDBVideo, MDBArtist)
+    {
+        this.currentvideoid = MDBVideo.id;
+
+        this.headline.UpdateInformation(MDBVideo, MDBArtist)
+
+        let poster = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile);
+        let source = "/musicdb/music/" + MDBVideo.path;
+        this.videoplayer.width  = MDBVideo.xresolution;
+        this.videoplayer.height = MDBVideo.yresolution;
+        this.videoplayer.poster = poster;
+        this.videoplayer.src    = source;
+
+    }
+
+
+
+    onMusicDBMessage(fnc, sig, args, pass)
+    {
+        if(fnc == "GetVideo" && sig == "ShowVideo")
+        {
+            let mainviewbox = document.getElementById("MiddleContentBox"); // \_ HACK
+            mainviewbox.innerHTML = "";
+            mainviewbox.appendChild(videoview.GetHTMLElement());           // /  This should do a Main View Manager
+
+            this.UpdateInformation(args.video, args.artist);
+        }
+    }
+}
 
 // MDBAlbum and MDBSong can be null
 function ShowVideo(parentID, MDBArtist, MDBAlbum, MDBSong, MDBVideo, MDBTags)

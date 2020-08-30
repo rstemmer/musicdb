@@ -11,6 +11,8 @@ let musicdbstatus       = new MusicDBStatus();
 let musicdbcontrols     = new MusicDBControls();
 let queuetimemanager    = new QueueTimeManager();
 
+let videoview           = new VideoView();
+
 // Create Main Menu
 let mainmenu           = new MainMenu("1em", "1em");
 mainmenu.CreateSwitch(
@@ -41,6 +43,9 @@ window.onload = function ()
 
     let queuetimebar= document.getElementById("MDBQueueTimeBar");
     queuetimebar.appendChild(queuetimemanager.GetHTMLElement());
+    
+    let mainviewbox = document.getElementById("MiddleContentBox"); // \_ Do this when it is clear
+    mainviewbox.appendChild(videoview.GetHTMLElement());           // /  if audio or video mode is active
 
     document.body.appendChild(mainmenu.GetHTMLElement());
     document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
@@ -138,6 +143,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);
     videostreamplayer.onMusicDBMessage(fnc, sig, args, pass);
     mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
+    videoview.onMusicDBMessage(fnc, sig, args, pass);
 
     window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");
 
@@ -187,7 +193,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetVideo") {
         if(sig == "ShowVideo")
         {
-            ShowVideo("MiddleContentBox", args.artist, args.album, args.song, args.video, args.tags);
+            //ShowVideo("MiddleContentBox", args.artist, args.album, args.song, args.video, args.tags);
         }
         else if(sig == "UpdateVideo" || sig == "UpdateTagInput")
         {
