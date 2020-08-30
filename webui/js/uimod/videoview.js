@@ -24,22 +24,27 @@ class MainViewHeadline
         // Info box
         this.infobox        = document.createElement("div");
 
+        // Content Name
         this.contentname    = document.createElement("span");
         this.contentname.classList.add("fgcolor");
 
+        // Artist Name
         this.artistname     = document.createElement("span");
         this.artistname.classList.add("hlcolor");
         this.artistname.classList.add("smallfont");
 
+        // Spacer between Artist and Release Year
         this.spacer         = document.createElement("span");
         this.spacer.classList.add("fgcolor");
         this.spacer.classList.add("smallfont");
         this.spacer.innerText = " — "; // EM DASH
 
+        // Release Year
         this.releaseyear    = document.createElement("span");
         this.releaseyear.classList.add("hlcolor");
         this.releaseyear.classList.add("smallfont");
 
+        // Info Box for Names
         this.infobox.appendChild(this.contentname);
         this.infobox.appendChild(this.artistname);
         this.infobox.appendChild(this.spacer);
@@ -100,11 +105,15 @@ class VideoView
         this.videoplayer.controls = true;
         this.videoplayer.classList.add("mainview_videoplayer");
 
+        // Settings Box
+        this.settingsbox    = document.createElement("div");
+
         // Create Video View
         this.element  = document.createElement("div");
         this.element.classList.add("mainview_container");
         this.element.appendChild(this.headline.GetHTMLElement());
         this.element.appendChild(this.videoplayer);
+        this.element.appendChild(this.settingsbox);
     }
 
 
@@ -125,16 +134,29 @@ class VideoView
 
     UpdateInformation(MDBVideo, MDBArtist)
     {
-        this.currentvideoid = MDBVideo.id;
+        if(MDBVideo.id != this.currentvideoid)
+        {
+            this.currentvideoid = MDBVideo.id;
 
-        this.headline.UpdateInformation(MDBVideo, MDBArtist)
+            // Update Headline
+            this.headline.UpdateInformation(MDBVideo, MDBArtist)
 
-        let poster = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile);
-        let source = "/musicdb/music/" + MDBVideo.path;
-        this.videoplayer.width  = MDBVideo.xresolution;
-        this.videoplayer.height = MDBVideo.yresolution;
-        this.videoplayer.poster = poster;
-        this.videoplayer.src    = source;
+            // Update Video
+            let poster = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile);
+            let source = "/musicdb/music/" + MDBVideo.path;
+            this.videoplayer.width  = MDBVideo.xresolution;
+            this.videoplayer.height = MDBVideo.yresolution;
+            this.videoplayer.poster = poster;
+            this.videoplayer.src    = source;
+
+            // Update Settings
+            this.timeframeselect    = new VideoTimeFrameSelection(this.videoplayer, MDBVideo);
+
+            this.settingsbox.innerHTML = "";
+            this.settingsbox.appendChild(this.timeframeselect.GetHTMLElement());
+            // Because of the slider these initialization must take place after putting the elements into the DOM
+            this.timeframeselect.Initialize();
+        }
 
     }
 
@@ -151,6 +173,7 @@ class VideoView
             this.UpdateInformation(args.video, args.artist);
         }
     }
+
 }
 
 // MDBAlbum and MDBSong can be null
