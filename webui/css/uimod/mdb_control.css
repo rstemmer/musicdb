@@ -31,7 +31,7 @@
     flex-direction:     column;
     justify-content:    space-around;
     height:             100%;
-    margin-left:        1ch;
+    margin:             0 1em;
 }
 
 .musicdbcontrols div::before
