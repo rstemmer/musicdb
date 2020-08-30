@@ -35,7 +35,6 @@ class MusicDBStatus
         this.CreateStatus("icecast",     "Icecast Server");
         this.CreateStatus("audiostream", "Audio Stream");
         this.CreateStatus("videostream", "Video Stream");
-        this.CreateStatus("videoplayer", "Video Player");
 
         this.element = document.createElement("div");
         for(let statuskey in this.musicdbstatus)
@@ -134,13 +133,6 @@ class MusicDBStatus
                 this.SetStatus("videostream", "playing");
             else
                 this.SetStatus("videostream", "stopped");
-
-            /*
-            if(args.isplaying)
-                this.SetStatus("videoplayer", "playing");
-            else
-                this.SetStatus("videoplayer", "stopped");
-            */
         }
         return;
     }
