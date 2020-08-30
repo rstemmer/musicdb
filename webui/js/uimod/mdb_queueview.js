@@ -23,7 +23,14 @@ function ShowQueue(parentID, MDBQueue)
     let html = "";
 
     // Reset timer
-    ClearPlaytime();
+    if(MDBQueue[0].song !== undefined)
+    {
+        queuetimemanager.ClearTime("audio");
+    }
+    else if(MDBQueue[0].video !== undefined)
+    {
+        queuetimemanager.ClearTime("video");
+    }
 
     html += "<div id=QMainBox>"; // main box
     for(let pos in MDBQueue)
@@ -48,7 +55,7 @@ function ShowQueue(parentID, MDBQueue)
             continue;   // No song and no video? Should never happen, but who knows…
 
         // Update timer
-        AddPlaytime(MDBMusic.playtime);
+        queuetimemanager.AddTime(queuetype, MDBMusic.playtime);
         
         // Create Entry
 

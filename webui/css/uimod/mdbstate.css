@@ -20,65 +20,6 @@ div#MDBReconnectButton[data-visible=false]
 }
 
 
-
-/******************/
-/* Playtime       */
-/******************/
-
-span#PlayTime:after 
-{
-    font-family:    FontAwesome;
-    font-weight:    normal;
-    width:          1em;
-    text-align:     center;
-
-    display:        inline-block;
-    padding-right:  5px;
-    padding-left:   2px;
-    margin-bottom:  3px;
-}
-span#PlayTime[data-playstate=unknown]:after 
-{
-    color:      #048;
-    content:    "\f128";
-}
-span#PlayTime[data-playstate=playing]:after 
-{
-    color:      #084010;
-    content:    "\f04b";
-}
-span#PlayTime[data-playstate=paused]:after 
-{
-    color:      #611;
-    content:    "\f04c";
-}
-
-span#CurrentTime:before 
-{
-    font-family:    FontAwesome;
-    font-weight:    normal;
-    width:          1em;
-    text-align:     center;
-
-    display:        inline-block;
-    padding-right:  3px;
-    margin-bottom:  3px;
-}
-span#CurrentTime[data-playstate=unknown]:before
-{
-    visibility:     hidden;
-}
-span#CurrentTime[data-playstate=playing]:before
-{
-    visibility:     visible;
-    color:          #084010;
-    content:        "\f04b";
-}
-span#CurrentTime[data-playstate=paused]:before
-{
-    visibility:     hidden;
-}
-
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
 

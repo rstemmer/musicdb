@@ -1,0 +1,16 @@
+
+/******************/
+/* Playtime       */
+/******************/
+div#MDBQueueTimeBar
+{
+    display:            flex;
+    flex-direction:     row;
+    justify-content:    center;
+    width:              100%;
+}
+
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

@@ -9,6 +9,7 @@ let musicdbhud          = new MusicDBHUD();
 let videostreamplayer   = new VideoStreamPlayer();
 let musicdbstatus       = new MusicDBStatus();
 let musicdbcontrols     = new MusicDBControls();
+let queuetimemanager    = new QueueTimeManager();
 
 // Create Main Menu
 let mainmenu           = new MainMenu("1em", "1em");
@@ -38,6 +39,9 @@ window.onload = function ()
     let controlsbox = document.getElementById("Controls");
     controlsbox.appendChild(musicdbcontrols.GetHTMLElement());
 
+    let queuetimebar= document.getElementById("MDBQueueTimeBar");
+    queuetimebar.appendChild(queuetimemanager.GetHTMLElement());
+
     document.body.appendChild(mainmenu.GetHTMLElement());
     document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
 
@@ -47,7 +51,7 @@ window.onload = function ()
 
     // Setup the Views
     ShowAlphabetBar("Alphabetbar");
-    ShowMusicDBStateView("State");
+    //ShowMusicDBStateView("State");
     Artistloader_Show("Artistloader");
     ShowQueueControls("QueueControl");
     ShowSearchInput("Search");
@@ -81,20 +85,14 @@ function onMusicDBNotification(fnc, sig, rawdata)
 {
     musicdbhud.onMusicDBNotification(fnc, sig, rawdata);
     musicdbstatus.onMusicDBNotification(fnc, sig, rawdata);
+    queuetimemanager.onMusicDBNotification(fnc, sig, rawdata);
     videostreamplayer.onMusicDBNotification(fnc, sig, rawdata);
 
     window.console && console.log(sig);
     if(fnc == "MusicDB:AudioStream")
     {
         // Handle notifications
-        if(sig == "onTimeChanged")
-        {
-            // rawdata is the currently played time of the current song
-            // this method gets called every mpd-poll interval
-            SetTimePlayed(rawdata);
-            // This also updated the Timer-View
-        }
-        else if(sig == "onStatusChanged")
+        if(sig == "onStatusChanged")
         {
             MusicDB_Request("GetAudioStreamState", "UpdateStreamState");
         }
