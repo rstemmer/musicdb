@@ -39,6 +39,7 @@ window.onload = function ()
     controlsbox.appendChild(musicdbcontrols.GetHTMLElement());
 
     document.body.appendChild(mainmenu.GetHTMLElement());
+    document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
 
 
     // Connect to MusicDB

@@ -3,118 +3,23 @@
 /* Main Container */
 /******************/
 
-div#MDBStateView
+div#MDBReconnectButton
 {
-    text-align:     right;
-    padding-left:   10px;
-    padding-right:  5px;
+    position:           absolute;
+    top:                1em;
+    right:              calc(1em + 1.5em + 1em); /* left to menu button*/
+    background-color:   #5E5E1F;
 }
-
-
-
-/******************/
-/* Online State   */
-/******************/
-
-#MDBStateView .onlinestate:after
+div#MDBReconnectButton[data-visible=true]
 {
-    font-family:    FontAwesome;
-    font-weight:    normal;
-    width:          1em;
-    text-align:     center;
-
-    display:        inline-block;
-    padding-right:  5px;
-    padding-left:   2px;
-    margin-bottom:  3px;
+    visibility:         visible;
 }
-#MDBStateView .onlinestate[data-online=unknown]:after {
-    color:      #048;
-    content:    "\f192";
-}
-#MDBStateView .onlinestate[data-online=error]:after {
-    color:      #a8a623;
-    content:    "\f071";
-}
-#MDBStateView .onlinestate[data-online=yes]:after {
-    color:      #084010;
-    content:    "\f05d";
-}
-#MDBStateView .onlinestate[data-online=no]:after {
-    color:      #800;
-    content:    "\f05c";
+div#MDBReconnectButton[data-visible=false]
+{
+    visibility:         hidden;
 }
 
 
-/******************/
-/* Reconnect Btn  */
-/******************/
-
-span#MDBReconnectBtn 
-{
-    font-family:    FontAwesome;
-    font-weight:    normal;
-    width:          1em;
-    text-align:     center;
-    color:          #DB1;
-    visibility:     visible;
-
-    display:        inline-block;
-    padding-right:  5px;
-    margin-bottom:  3px;
-}
-span#MDBReconnectBtn[data-online=unknown]
-{
-    visibility:     visible;
-}
-span#MDBReconnectBtn[data-online=error]
-{
-    visibility:     visible;
-}
-span#MDBReconnectBtn[data-online=yes]
-{
-    visibility:     hidden;
-}
-span#MDBReconnectBtn[data-online=no]
-{
-    visibility:     visible;
-}
-
-/******************/
-/* Mode Switch Btn*/
-/******************/
-
-span#MDBModeswitchBtn
-{
-    font-weight:    normal;
-    width:          1em;
-    text-align:     center;
-    visibility:     visible;
-
-    display:        inline-block;
-    padding-right:  5px;
-    margin-bottom:  3px;
-}
-span#MDBMode[data-mode=unknown]:after
-{
-    font-family:    FontAwesome;
-    color:          #048;
-    content:        "\f128";
-}
-span#MDBMode[data-mode=audio]:after
-{
-    content:        "A";
-    /* Variation Selector gets ignored -> No unicode possible at this place m(
-    content:        "🎧\fe0e";
-    */
-}
-span#MDBMode[data-mode=video]:after
-{
-    content:        "V";
-    /* Variation Selector gets ignored -> No unicode possible at this place m(
-    content:        "🎞\fe0e";
-    */
-}
 
 /******************/
 /* Playtime       */

@@ -43,6 +43,14 @@ class MusicDBStatus
             this.element.appendChild(statusentry.element);
         }
 
+        // Create reconnect button
+        this.reconnectbutton  = new SVGButton("Reconnect", ()=>{ConnectToMusicDB();});
+        this.reconnectbutton.SetTooltip("Reconnect to MusicDB server");
+        this.reconnectelement = this.reconnectbutton.GetHTMLElement();
+        this.reconnectelement.id = "MDBReconnectButton";
+        this.reconnectelement.dataset.visible = false;
+
+
         return;
     }
 
@@ -51,6 +59,11 @@ class MusicDBStatus
     GetHTMLElement()
     {
         return this.element;
+    }
+
+    GetReconnectButtonHTMLElement()
+    {
+        return this.reconnectelement;
     }
 
 
@@ -72,7 +85,7 @@ class MusicDBStatus
         if(typeof state !== "string")
             return;
 
-        let cssstatename = "unknwon";
+        let cssstatename = "unknown";
 
         if(state == "connected")
         {
@@ -91,11 +104,25 @@ class MusicDBStatus
         {
             cssstatename = "paused";
         }
+        else if(state == "unknown")
+        {
+            cssstatename = "unknown";
+        }
         else
         {
-            window.console && console.log("Unknown MusicDB Status " + state);
+            window.console && console.log("Unknown " + key + " Status " + state);
         }
 
+        // Show / Hide reconnect button
+        if(key == "musicdb")
+        {
+            if(state == "connected")
+                this.reconnectelement.dataset.visible = false;
+            else
+                this.reconnectelement.dataset.visible = true;
+        }
+
+        // Apply status
         this.musicdbstatus[key].element.dataset.state = cssstatename;
         return;
     }
