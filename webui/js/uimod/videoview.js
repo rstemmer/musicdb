@@ -118,8 +118,13 @@ class VideoView
         this.settings_flags.appendChild(this.moodsbox);
         this.settings_flags.appendChild(this.propertiesbox);
 
+        this.settings_genretags = document.createElement("div");
+        this.settings_color     = document.createElement("div");
+
         this.settingsbox.appendChild(this.settings_timeframe);
+        this.settingsbox.appendChild(this.settings_color);
         this.settingsbox.appendChild(this.settings_flags);
+        this.settingsbox.appendChild(this.settings_genretags);
 
         // Create Video View
         this.element  = document.createElement("div");
@@ -178,12 +183,20 @@ class VideoView
             this.videomoods         = new VideoMoods();
             this.moodsbox.innerHTML = "";
             this.moodsbox.appendChild(this.videomoods.GetHTMLElement());
+
+            let html = "";
+            html += Taginput_Create("VVS_genre_"    + this.currentvideoid, this.currentvideoid, "Genre",    "Video");
+            html += Taginput_Create("VVS_subgenre_" + this.currentvideoid, this.currentvideoid, "Subgenre", "Video");
+            this.settings_genretags.innerHTML = html;
     
         }
 
         // For new and already visible videos, all settings need to be synchronized
         this.videoproperties.UpdateButtons(MDBVideo);
         this.videomoods.UpdateButtons(MDBVideo, MDBTags);
+
+        Taginput_Update("VVS_genre_"    + this.currentvideoid, MDBTags);
+        Taginput_Update("VVS_subgenre_" + this.currentvideoid, MDBTags);
     }
 
     _OLDUpdateVideoSettings(MDBVideo, MDBVideoTags, initialize)
