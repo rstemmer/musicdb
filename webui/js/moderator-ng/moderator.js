@@ -193,12 +193,10 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetVideo") {
         if(sig == "ShowVideo")
         {
-            //ShowVideo("MiddleContentBox", args.artist, args.album, args.song, args.video, args.tags);
             UpdateStyle(args.video.bgcolor, args.video.fgcolor, args.video.hlcolor)
         }
         else if(sig == "UpdateVideo" || sig == "UpdateTagInput")
         {
-            UpdateVideoSettings(args.video, args.tags, false);
             UpdateStyle();    // Update new tags
         }
     }
