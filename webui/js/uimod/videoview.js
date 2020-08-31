@@ -115,16 +115,17 @@ class VideoView
         this.settings_flags.classList.add("flex-row");
         this.moodsbox           = document.createElement("div");
         this.propertiesbox      = document.createElement("div");
+        this.genretagsbox       = document.createElement("div");
+        this.genretagsbox.classList.add("flex-grow");
         this.settings_flags.appendChild(this.moodsbox);
         this.settings_flags.appendChild(this.propertiesbox);
+        this.settings_flags.appendChild(this.genretagsbox);
 
-        this.settings_genretags = document.createElement("div");
         this.settings_color     = document.createElement("div");
 
         this.settingsbox.appendChild(this.settings_timeframe);
         this.settingsbox.appendChild(this.settings_color);
         this.settingsbox.appendChild(this.settings_flags);
-        this.settingsbox.appendChild(this.settings_genretags);
 
         // Create Video View
         this.element  = document.createElement("div");
@@ -187,7 +188,7 @@ class VideoView
             let html = "";
             html += Taginput_Create("VVS_genre_"    + this.currentvideoid, this.currentvideoid, "Genre",    "Video");
             html += Taginput_Create("VVS_subgenre_" + this.currentvideoid, this.currentvideoid, "Subgenre", "Video");
-            this.settings_genretags.innerHTML = html;
+            this.genretagsbox.innerHTML = html;
 
             this.colorsettings      = new ColorSchemeSelection("video", this.currentvideoid);
             this.settings_color.innerHTML = "";
