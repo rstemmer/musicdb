@@ -188,6 +188,10 @@ class VideoView
             html += Taginput_Create("VVS_genre_"    + this.currentvideoid, this.currentvideoid, "Genre",    "Video");
             html += Taginput_Create("VVS_subgenre_" + this.currentvideoid, this.currentvideoid, "Subgenre", "Video");
             this.settings_genretags.innerHTML = html;
+
+            this.colorsettings      = new ColorSchemeSelection("video", this.currentvideoid);
+            this.settings_color.innerHTML = "";
+            this.settings_color.appendChild(this.colorsettings.GetHTMLElement());
     
         }
 
@@ -197,6 +201,8 @@ class VideoView
 
         Taginput_Update("VVS_genre_"    + this.currentvideoid, MDBTags);
         Taginput_Update("VVS_subgenre_" + this.currentvideoid, MDBTags);
+
+        this.colorsettings.SetColors(MDBVideo.bgcolor, MDBVideo.fgcolor, MDBVideo.hlcolor);
     }
 
     _OLDUpdateVideoSettings(MDBVideo, MDBVideoTags, initialize)

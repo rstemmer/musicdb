@@ -2,6 +2,15 @@
 /*************************/
 /*************************/
 
+.colorsettings > div
+{
+    display:            flex;
+}
+.colorsettings label
+{
+    margin-left:        auto;
+}
+
 input.ColorInput
 {
     /*
