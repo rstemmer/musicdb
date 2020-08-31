@@ -198,11 +198,10 @@ class VideoView
                 mainviewbox.appendChild(videoview.GetHTMLElement());           // /  This should do a Main View Manager
 
                 this.UpdateInformation(args.video, args.artist);
-                this._OLDUpdateVideoSettings(args.video, args.tags, true);
             }
             else if(sig == "UpdateVideo" || sig == "UpdateTagInput")
             {
-                this._OLDUpdateVideoSettings(args.video, args.tags, false);
+                this.UpdateInformation(args.video, args.artist);
             }
         }
     }
