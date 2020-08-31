@@ -1,5 +1,117 @@
+// MusicDB,  a music manager with web-bases UI that focus on music.
+// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 "use strict";
+
+class MusicProperties
+{
+    constructor(musictype)
+    {
+        this.musictype  = musictype;
+        this.propgrid   = new Grid(4, 2);
+        this.properties = new Object();
+        this.properties["like"         ] = this._CreatePropertyButton("Like",          "like",          "Like");
+        this.properties["dislike"      ] = this._CreatePropertyButton("Dislike",       "dislike",       "Dislike");
+        this.properties["liverecording"] = this._CreatePropertyButton("LiveRecording", "liverecording", "Live Recording");
+        this.properties["love"         ] = this._CreatePropertyButton("Love",          "love",          "Loved Song");
+        this.properties["hate"         ] = this._CreatePropertyButton("Hate",          "hate",          "Hated Song");
+        this.properties["badaudio"     ] = this._CreatePropertyButton("BadAudio",      "badaudio",      "Bad Audio");
+        this.properties["disable"      ] = this._CreatePropertyButton("Disable",       "disable",       "Disable Song");
+
+        this.propgrid.InsertElement(0, 0, this.properties["like"         ].GetHTMLElement());
+        this.propgrid.InsertElement(1, 0, this.properties["dislike"      ].GetHTMLElement());
+        this.propgrid.InsertElement(2, 0, this.properties["liverecording"].GetHTMLElement());
+        this.propgrid.InsertElement(0, 1, this.properties["love"         ].GetHTMLElement());
+        this.propgrid.InsertElement(1, 1, this.properties["hate"         ].GetHTMLElement());
+        this.propgrid.InsertElement(2, 1, this.properties["badaudio"     ].GetHTMLElement());
+        this.propgrid.InsertElement(3, 1, this.properties["disable"      ].GetHTMLElement());
+
+        // Videos have more properties
+        if(this.musictype == "video")
+        {
+            this.properties["lyricsvideo"] = this._CreatePropertyButton("LyricsVideo", "lyricsvideo", "Lyrics Video");
+            this.propgrid.InsertElement(3, 0, this.properties["lyricsvideo"  ].GetHTMLElement());
+        }
+    }
+
+
+
+    GetHTMLElement()
+    {
+        return this.propgrid.GetHTMLElement();
+    }
+
+
+    _CreatePropertyButton(iconname, propertyname, tooltip)
+    {
+        let button;
+        button = new SVGToggleButton("Album", (state)=>{this.onPropertyClicked(propertyname, state);});
+        button.SetTooltip(tooltip);
+        return button;
+    }
+
+
+
+    onPropertyClicked(propertyname, newstate)
+    {
+        window.console && console.log("Setting " + propertyname + " to " + newstate);
+    }
+
+
+
+    UpdateButtons(MDBMusic)
+    {
+        this.properties["love"         ].SetSelectionState(MDBMusic.favorite      ==  1);
+        this.properties["hate"         ].SetSelectionState(MDBMusic.favorite      == -1);
+        this.properties["disable"      ].SetSelectionState(MDBMusic.disabled      !=  0);
+        this.properties["liverecording"].SetSelectionState(MDBMusic.liverecording ==  1);
+        this.properties["badaudio"     ].SetSelectionState(MDBMusic.badaudio      ==  1);
+        if(this.musictype == "video")
+            this.properties["lyricsvideo"].SetSelectionState(MDBMusic.lyricsvideo == 1);
+        return;
+    }
+
+
+
+    ResetButtons()
+    {
+        for(let key in this.properties)
+            this.properties[key].SetSelectionState(false);
+        return;
+    }
+
+}
+
+
+
+class VideoProperties extends MusicProperties
+{
+    constructor()
+    {
+        super("video");
+    }
+}
+
+class SongProperties extends MusicProperties
+{
+    constructor()
+    {
+        super("audio");
+    }
+}
 
 /*
  * This function creates and shows a grid of property controls (like,fav, …

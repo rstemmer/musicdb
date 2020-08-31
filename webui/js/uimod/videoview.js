@@ -107,6 +107,10 @@ class VideoView
 
         // Settings Box
         this.settingsbox    = document.createElement("div");
+        this.settings_timeframe = document.createElement("div");
+        this.videoproperties    = new VideoProperties();
+        this.settingsbox.appendChild(this.settings_timeframe);
+        this.settingsbox.appendChild(this.videoproperties.GetHTMLElement());
 
         // Create Video View
         this.element  = document.createElement("div");
@@ -134,6 +138,7 @@ class VideoView
 
     UpdateInformation(MDBVideo, MDBArtist)
     {
+        // For new videos, some persistent information need to be updated
         if(MDBVideo.id != this.currentvideoid)
         {
             this.currentvideoid = MDBVideo.id;
@@ -152,25 +157,53 @@ class VideoView
             // Update Settings
             this.timeframeselect    = new VideoTimeFrameSelection(this.videoplayer, MDBVideo);
 
-            this.settingsbox.innerHTML = "";
-            this.settingsbox.appendChild(this.timeframeselect.GetHTMLElement());
+            this.settings_timeframe.innerHTML = "";
+            this.settings_timeframe.appendChild(this.timeframeselect.GetHTMLElement());
             // Because of the slider these initialization must take place after putting the elements into the DOM
             this.timeframeselect.Initialize();
+
+            this.videoproperties.ResetButtons();
         }
 
+        // For new and already visible videos, all settings need to be synchronized
+        this.videoproperties.UpdateButtons(MDBVideo);
+    }
+
+    _OLDUpdateVideoSettings(MDBVideo, MDBVideoTags, initialize)
+    {
+        let videoid = MDBVideo.id;
+        let moodboxid = "VVS_moodbox";
+        let propboxid = "VVS_propbox";
+        let tagsboxid = "VVS_tagsbox";
+
+        if(initialize == true)
+            Videotags_ShowMoodControl(moodboxid, moodboxid);
+
+        Videotags_UpdateMoodControl(moodboxid, MDBVideoTags);
+        
+        Taginput_Update("VVS_genre_"    + videoid, MDBVideoTags);
+        Taginput_Update("VVS_subgenre_" + videoid, MDBVideoTags);
     }
 
 
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "GetVideo" && sig == "ShowVideo")
+        if(fnc == "GetVideo")
         {
-            let mainviewbox = document.getElementById("MiddleContentBox"); // \_ HACK
-            mainviewbox.innerHTML = "";
-            mainviewbox.appendChild(videoview.GetHTMLElement());           // /  This should do a Main View Manager
+            if(sig == "ShowVideo")
+            {
+                let mainviewbox = document.getElementById("MiddleContentBox"); // \_ HACK
+                mainviewbox.innerHTML = "";
+                mainviewbox.appendChild(videoview.GetHTMLElement());           // /  This should do a Main View Manager
 
-            this.UpdateInformation(args.video, args.artist);
+                this.UpdateInformation(args.video, args.artist);
+                this._OLDUpdateVideoSettings(args.video, args.tags, true);
+            }
+            else if(sig == "UpdateVideo" || sig == "UpdateTagInput")
+            {
+                this._OLDUpdateVideoSettings(args.video, args.tags, false);
+            }
         }
     }
 
