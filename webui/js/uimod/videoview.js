@@ -107,12 +107,19 @@ class VideoView
 
         // Settings Box
         this.settingsbox    = document.createElement("div");
+        this.settingsbox.classList.add("flex-column");
+
         this.settings_timeframe = document.createElement("div");
-        this.settings_moods     = document.createElement("div");
-        this.settings_properties= document.createElement("div");
+
+        this.settings_flags     = document.createElement("div");
+        this.settings_flags.classList.add("flex-row");
+        this.moodsbox           = document.createElement("div");
+        this.propertiesbox      = document.createElement("div");
+        this.settings_flags.appendChild(this.moodsbox);
+        this.settings_flags.appendChild(this.propertiesbox);
+
         this.settingsbox.appendChild(this.settings_timeframe);
-        this.settingsbox.appendChild(this.settings_moods);
-        this.settingsbox.appendChild(this.settings_properties);
+        this.settingsbox.appendChild(this.settings_flags);
 
         // Create Video View
         this.element  = document.createElement("div");
@@ -164,13 +171,13 @@ class VideoView
             this.timeframeselect.Initialize();
 
             this.videoproperties    = new VideoProperties();
-            this.settings_properties.innerHTML = "";
-            this.settings_properties.appendChild(this.videoproperties.GetHTMLElement());
+            this.propertiesbox.innerHTML = "";
+            this.propertiesbox.appendChild(this.videoproperties.GetHTMLElement());
             this.videoproperties.ResetButtons();
 
             this.videomoods         = new VideoMoods();
-            this.settings_moods.innerHTML = "";
-            this.settings_moods.appendChild(this.videomoods.GetHTMLElement());
+            this.moodsbox.innerHTML = "";
+            this.moodsbox.appendChild(this.videomoods.GetHTMLElement());
     
         }
 
