@@ -26,7 +26,7 @@ class MusicProperties
         this.properties["like"         ] = this._CreatePropertyButton("Like",          "like",          "Like");
         this.properties["dislike"      ] = this._CreatePropertyButton("Dislike",       "dislike",       "Dislike");
         this.properties["liverecording"] = this._CreatePropertyButton("LiveRecording", "liverecording", "Live Recording");
-        this.properties["love"         ] = this._CreatePropertyButton("Love",          "love",          "Loved Song");
+        this.properties["love"         ] = this._CreatePropertyButton("Favorite",      "love",          "Loved Song");
         this.properties["hate"         ] = this._CreatePropertyButton("Hate",          "hate",          "Hated Song");
         this.properties["badaudio"     ] = this._CreatePropertyButton("BadAudio",      "badaudio",      "Bad Audio");
         this.properties["disable"      ] = this._CreatePropertyButton("Disable",       "disable",       "Disable Song");
@@ -58,7 +58,7 @@ class MusicProperties
     _CreatePropertyButton(iconname, propertyname, tooltip)
     {
         let button;
-        button = new SVGToggleButton("Album", (state)=>{this.onPropertyClicked(propertyname, state);});
+        button = new SVGToggleButton(iconname, (state)=>{this.onPropertyClicked(propertyname, state);});
         button.SetTooltip(tooltip);
         return button;
     }
