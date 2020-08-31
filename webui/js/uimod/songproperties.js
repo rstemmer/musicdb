@@ -45,13 +45,18 @@ class MusicProperties
             this.properties["lyricsvideo"] = this._CreatePropertyButton("LyricsVideo", "lyricsvideo", "Lyrics Video");
             this.propgrid.InsertElement(3, 0, this.properties["lyricsvideo"  ].GetHTMLElement());
         }
+
+        // Create Element
+        this.element = document.createElement("div");
+        this.element.classList.add("musicproperties");
+        this.element.appendChild(this.propgrid.GetHTMLElement());
     }
 
 
 
     GetHTMLElement()
     {
-        return this.propgrid.GetHTMLElement();
+        return this.element
     }
 
 
