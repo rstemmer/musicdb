@@ -191,7 +191,7 @@ function _AL_BroadcastRequestArtistlist(type)
     else if(mdbmodemanager.GetCurrentMode() == "video")
     {
         MusicDB_Broadcast("GetFilteredArtistsWithVideos", "ShowArtists");
-        MusicDB_Braodcast("GetVideoQueue",                "ShowVideoQueue");
+        MusicDB_Broadcast("GetVideoQueue",                "ShowVideoQueue");
     }
 }
 
