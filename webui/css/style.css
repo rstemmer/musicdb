@@ -70,6 +70,22 @@
     opacity:            1.0;
 }
 
+.unicodeicon
+{
+    color:              var(--hlcolor);
+    font-family:        "DejaVuSans";
+    width:              1.5em;
+    height:             1.5em;
+}
+.unicodeicon[data-selected=false]
+{
+    opacity:            0.5;
+}
+.unicodeicon[data-selected=true]
+{
+    opacity:            1.0;
+}
+
 /*************************/
 /* default element style */
 /*************************/

@@ -44,8 +44,8 @@ window.onload = function ()
     let queuetimebar= document.getElementById("MDBQueueTimeBar");
     queuetimebar.appendChild(queuetimemanager.GetHTMLElement());
     
-    let mainviewbox = document.getElementById("MiddleContentBox"); // \_ Do this when it is clear
-    mainviewbox.appendChild(videoview.GetHTMLElement());           // /  if audio or video mode is active
+    //let mainviewbox = document.getElementById("MiddleContentBox"); // \_ Do this when it is clear
+    //mainviewbox.appendChild(videoview.GetHTMLElement());           // /  if audio or video mode is active
 
     document.body.appendChild(mainmenu.GetHTMLElement());
     document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());

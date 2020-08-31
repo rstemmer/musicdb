@@ -108,9 +108,11 @@ class VideoView
         // Settings Box
         this.settingsbox    = document.createElement("div");
         this.settings_timeframe = document.createElement("div");
-        this.videoproperties    = new VideoProperties();
+        this.settings_moods     = document.createElement("div");
+        this.settings_properties= document.createElement("div");
         this.settingsbox.appendChild(this.settings_timeframe);
-        this.settingsbox.appendChild(this.videoproperties.GetHTMLElement());
+        this.settingsbox.appendChild(this.settings_moods);
+        this.settingsbox.appendChild(this.settings_properties);
 
         // Create Video View
         this.element  = document.createElement("div");
@@ -136,7 +138,7 @@ class VideoView
 
 
 
-    UpdateInformation(MDBVideo, MDBArtist)
+    UpdateInformation(MDBVideo, MDBArtist, MDBTags)
     {
         // For new videos, some persistent information need to be updated
         if(MDBVideo.id != this.currentvideoid)
@@ -154,19 +156,27 @@ class VideoView
             this.videoplayer.poster = poster;
             this.videoplayer.src    = source;
 
-            // Update Settings
+            // Create fresh Settings
             this.timeframeselect    = new VideoTimeFrameSelection(this.videoplayer, MDBVideo);
-
             this.settings_timeframe.innerHTML = "";
             this.settings_timeframe.appendChild(this.timeframeselect.GetHTMLElement());
             // Because of the slider these initialization must take place after putting the elements into the DOM
             this.timeframeselect.Initialize();
 
+            this.videoproperties    = new VideoProperties();
+            this.settings_properties.innerHTML = "";
+            this.settings_properties.appendChild(this.videoproperties.GetHTMLElement());
             this.videoproperties.ResetButtons();
+
+            this.videomoods         = new VideoMoods();
+            this.settings_moods.innerHTML = "";
+            this.settings_moods.appendChild(this.videomoods.GetHTMLElement());
+    
         }
 
         // For new and already visible videos, all settings need to be synchronized
         this.videoproperties.UpdateButtons(MDBVideo);
+        this.videomoods.UpdateButtons(MDBVideo, MDBTags);
     }
 
     _OLDUpdateVideoSettings(MDBVideo, MDBVideoTags, initialize)
@@ -197,11 +207,13 @@ class VideoView
                 mainviewbox.innerHTML = "";
                 mainviewbox.appendChild(videoview.GetHTMLElement());           // /  This should do a Main View Manager
 
-                this.UpdateInformation(args.video, args.artist);
+                this.UpdateInformation(args.video, args.artist, args.tags);
             }
             else if(sig == "UpdateVideo" || sig == "UpdateTagInput")
             {
-                this.UpdateInformation(args.video, args.artist);
+                // Only update the video shown in the Video View
+                if(args.video.id == this.currentvideoid)
+                    this.UpdateInformation(args.video, args.artist, args.tags);
             }
         }
     }
