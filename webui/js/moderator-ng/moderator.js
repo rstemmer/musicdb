@@ -5,6 +5,7 @@ var currentalbumid  = null; // /
 // Create Basic MusicDB WebUI Components
 let fullscreenmanager   = new FullscreenManager();
 let mdbmodemanager      = new MDBModeManager();
+let tagmanager          = new TagManager();
 let musicdbhud          = new MusicDBHUD();
 let videostreamplayer   = new VideoStreamPlayer();
 let musicdbstatus       = new MusicDBStatus();
@@ -143,6 +144,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);
     videostreamplayer.onMusicDBMessage(fnc, sig, args, pass);
     mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
+    tagmanager.onMusicDBMessage(fnc, sig, args, pass);
     videoview.onMusicDBMessage(fnc, sig, args, pass);
 
     window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");
