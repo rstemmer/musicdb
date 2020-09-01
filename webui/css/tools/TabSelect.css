@@ -1,0 +1,61 @@
+.tabbox
+{
+    margin:         1em;
+}
+
+
+
+.tabbar
+{
+    padding-left:   1em;
+    padding-right:  1em;
+}
+
+
+
+.tabbutton
+{
+    border:         0.1em solid;
+    border-color:   var(--fmcolor);
+    border-radius:  var(--radius) var(--radius) 0 0;
+    border-bottom:  none;
+
+    padding:        0.5em 2ch;
+    margin:         0     1ch;
+}
+
+.tabbutton[data-selected=true]
+{
+    background-color:   var(--hlcolor);
+}
+.tabbutton[data-selected=true] > .icon
+{
+    background-color:   var(--bgcolor);
+}
+.tabbutton[data-selected=true] > div
+{
+    color:              var(--bgcolor);
+}
+
+.tabbutton[data-selected=false]
+{
+}
+
+.tabbutton div + div
+{
+    margin-left: 1.5ch;
+}
+
+
+
+.tabcontent
+{
+    border:         0.1em solid;
+    border-color:   var(--fmcolor);
+    border-radius:  var(--radius);
+
+    padding:        0.5em 1ch;
+}
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
