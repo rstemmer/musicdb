@@ -2220,11 +2220,11 @@ class MusicDatabase(Database):
         """
         if type(videoid) is not int:
             raise TypeError("Video ID must be an integer")
-        if type(framesdirectory) is not str and type(framesdirectory) is not NoneType:
+        if type(framesdirectory) is not str and framesdirectory is not None:
             raise TypeError("Frames Directory must be a string or None")
-        if type(thumbnailfile)   is not str and type(thumbnailfile)   is not NoneType:
+        if type(thumbnailfile)   is not str and thumbnailfile   is not None:
             raise TypeError("Thumbnail File must be a string or None")
-        if type(previewfile)     is not str and type(previewfile)     is not NoneType:
+        if type(previewfile)     is not str and previewfile     is not None:
             raise TypeError("Preview File must be a string or None")
 
         # Check if there is anything to do
