@@ -105,10 +105,7 @@ class VideoView
         this.videoplayer.controls = true;
         this.videoplayer.classList.add("mainview_videoplayer");
 
-        // Settings Box
-        this.settingsbox    = document.createElement("div");
-        this.settingsbox.classList.add("flex-column");
-
+        // Settings
         this.settings_timeframe = document.createElement("div");
 
         this.settings_flags     = document.createElement("div");
@@ -123,16 +120,17 @@ class VideoView
 
         this.settings_color     = document.createElement("div");
 
-        this.settingsbox.appendChild(this.settings_timeframe);
-        this.settingsbox.appendChild(this.settings_color);
-        this.settingsbox.appendChild(this.settings_flags);
+        this.settings           = new TabSelect();
+        this.settings.AddTab(new SVGIcon("Album"), "Flags & Tags",      this.settings_flags, true);
+        this.settings.AddTab(new SVGIcon("Album"), "Color Settings",    this.settings_color);
+        this.settings.AddTab(new SVGIcon("Album"), "Played Time Frame", this.settings_timeframe);
 
         // Create Video View
         this.element  = document.createElement("div");
         this.element.classList.add("mainview_container");
         this.element.appendChild(this.headline.GetHTMLElement());
         this.element.appendChild(this.videoplayer);
-        this.element.appendChild(this.settingsbox);
+        this.element.appendChild(this.settings.GetHTMLElement());
     }
 
 
@@ -204,23 +202,6 @@ class VideoView
         Taginput_Update("VVS_subgenre_" + this.currentvideoid, MDBTags);
 
         this.colorsettings.SetColors(MDBVideo.bgcolor, MDBVideo.fgcolor, MDBVideo.hlcolor);
-    }
-
-    _OLDUpdateVideoSettings(MDBVideo, MDBVideoTags, initialize)
-    {
-        let videoid = MDBVideo.id;
-        let moodboxid = "VVS_moodbox";
-        let propboxid = "VVS_propbox";
-        let tagsboxid = "VVS_tagsbox";
-
-        if(initialize == true)
-            Videotags_ShowMoodControl(moodboxid, moodboxid);
-
-        Videotags_UpdateMoodControl(moodboxid, MDBVideoTags);
-        
-        Taginput_Update("VVS_genre_"    + videoid, MDBVideoTags);
-        Taginput_Update("VVS_subgenre_" + videoid, MDBVideoTags);
-        return;
     }
 
 
