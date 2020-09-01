@@ -57,6 +57,7 @@ Videos
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetVideoTimeFrame`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextVideo`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.VideoEnded`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetVideoThumbnail`
 
 Queue
 ^^^^^
@@ -121,6 +122,7 @@ from mdbapi.audiostream import AudioStreamManager
 from mdbapi.videostream import VideoStreamManager
 from mdbapi.songqueue   import SongQueue
 from mdbapi.videoqueue  import VideoQueue
+from mdbapi.videoframes import VideoFrames
 import logging
 from threading          import Thread
 import traceback
@@ -362,6 +364,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.PlayNextVideo()
         elif fncname == "VideoEnded":
             retval = self.VideoEnded(args["entryid"])
+        elif fncname == "SetVideoThumbnail":
+            retval = self.SetVideoThumbnail(args["videoid"], args["timestamp"])
         else:
             logging.warning("Unknown function: %s! \033[0;33m(will be ignored)", str(fncname))
             return None
@@ -1728,6 +1732,34 @@ class MusicDBWebSocketInterface(object):
             return None
 
         self.videostream.VideoEnded(entryid)
+        return None
+
+
+    def SetVideoThumbnail(self, videoid, timestamp):
+        """
+        This method sets a new video thumbnail via :meth:`~mdbapi.videoframes.VideoFrames.ChangeThumbnail`.
+
+        Args:
+            videoid (int): ID of the video to update
+            timestamp (int): Time stamp of the frame to select (in seconds)
+
+        Returns:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                // Use frame at 1:10 as thumbnail
+                MusicDB_Call("SetVideoThumbnail", {videoid:1000, timestamp:70});
+
+        """
+        video = self.database.GetVideoById(videoid);
+        if not video:
+            logging.warning("Invalid video ID: %s! \033[1;30m(ignoring SetVideoThumbnail command)", str(videoid))
+            return None
+
+        videoframes = VideoFrames(self.cfg, self.database)
+        videoframes.ChangeThumbnail(video, timestamp)
         return None
 
 

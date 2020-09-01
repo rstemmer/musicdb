@@ -572,5 +572,126 @@ class VideoFrames(object):
         return retval
 
 
+
+    def ChangeThumbnail(self, video, timestamp):
+        """
+        This method creates a thumbnail image files, including scaled a version, from a video.
+        The image will be generated from a frame addressed by the ``timestamp`` argument.
+
+        To generate the thumbnail, ``ffmpeg`` is used in the following way:
+
+        .. code-block:: bash
+
+            ffmpeg -y -ss $timestamp -i $video["path"] -vf scale=iw*sar:ih -vframes 1 $videoframes/$video["framesdirectory"]/thumbnail.jpg
+
+        ``video`` and ``timestamp`` are the parameters of this method.
+        ``videoframes`` is the root directory for the video frames as configured in the MusicDB Configuration file.
+
+        The scale solves the differences between the Display Aspect Ratio (DAR) and the Sample Aspect Ratio (SAR).
+        By using a scale of image width multiplied by the SAR, the resulting frame has the same ratio as the video in the video player.
+
+        The total length of the video gets determined by :meth:`~lib.metatags.MetaTags.GetPlaytime`
+        If the time stamp is not between 0 and the total length, the method returns ``False`` and does nothing.
+
+        When there is already a thumbnail existing it will be overwritten.
+
+        Args:
+            video: A video entry that shall be updated
+            timestamp (int): Time stamp of the frame to select in seconds
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+        """
+
+        dirname   = video["framesdirectory"]
+        videopath = video["path"]
+        videoid   = video["id"]
+
+        # Determine length of the video in seconds
+        try:
+            self.metadata.Load(videopath)
+            videolength = self.metadata.GetPlaytime()
+        except Exception as e:
+            logging.exception("Generating a thumbnail for video \"%s\" failed with error: %s", videopath, str(e))
+            return False
+
+        if timestamp < 0:
+            logging.warning("Generating a thumbnail for video \"%s\" requires a time stamp > 0. Given was: %s", videopath, str(timestamp))
+            return False
+
+        if timestamp > videolength:
+            logging.warning("Generating a thumbnail for video \"%s\" requires a time stamp smaller than the video play time (%s). Given was: %s", videopath, str(videolength), str(timestamp))
+            return False
+
+
+        # Define destination path
+        framename = "thumbnail.jpg"
+        framepath = dirname + "/" + framename
+
+        # create absolute paths for FFMPEG
+        absframepath = self.framesroot.AbsolutePath(framepath)
+        absvideopath = self.musicroot.AbsolutePath(videopath)
+
+        # Run FFMPEG - use absolute paths
+        process = ["ffmpeg",
+                "-y",                           # Yes, overwrite existing frame
+                "-ss",      str(timestamp),
+                "-i",       absvideopath,
+                "-vf",      "scale=iw*sar:ih",  # Make sure the aspect ration is correct
+                "-vframes", "1",
+                absframepath]
+        logging.debug("Getting thumbnail via %s", str(process))
+        try:
+            self.fs.Execute(process)
+        except Exception as e:
+            logging.exception("Generating a thumbnail for video \"%s\" failed with error: %s", videopath, str(e))
+            return False
+
+        # Scale down the frame
+        self.ScaleThumbnail(dirname)
+
+        # Set new Thumbnail
+        retval = self.SetVideoFrames(videoid, dirname, thumbnailfile="thumbnail.jpg", previewfile=None)
+        if not retval:
+            return False
+
+        return True
+
+
+
+    def ScaleThumbnail(self, dirname):
+        """
+        This method creates a scaled version of the existing thumbnail for a video.
+        The aspect ration of the frame will be maintained.
+        In case the resulting aspect ratio differs from the source file,
+        the borders of the source frame will be cropped in the scaled version.
+
+        If a scaled version exist, it will be overwritten.
+
+        The scaled JPEG will be stored with optimized and progressive settings.
+
+        Args:
+            dirname (str): Name of the directory where the frames are stored at (relative)
+
+        Returns:
+            *Nothing*
+        """
+        sourcename    = "thumbnail.jpg"
+        sourcepath    = dirname + "/" + sourcename 
+        abssourcepath = self.framesroot.AbsolutePath(sourcepath)
+
+        for scale in self.scales:
+            width, height   = map(int, scale.split("x"))
+            scaledframename = "thumbnail (%d×%d).jpg"%(width, height)
+            scaledframepath = dirname + "/" + scaledframename
+            
+            absscaledframepath = self.framesroot.AbsolutePath(scaledframepath)
+
+            size  = (width, height)
+            frame = Image.open(abssourcepath)
+            frame.thumbnail(size, Image.BICUBIC)
+            frame.save(absscaledframepath, "JPEG", optimize=True, progressive=True)
+        return
+
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
