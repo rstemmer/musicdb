@@ -18,6 +18,8 @@ class Button
 
 class TimeSelect
 {
+    // reseticonname and resetvalue are optional.
+    // If reseticonname is undefined, there will be no reset functionality
     constructor(label, videoelement, initialtime, slidericon, reseticonname, resetvalue)
     {
         this.elementorientation = "left";
@@ -32,8 +34,11 @@ class TimeSelect
         this.slider             = new Slider(new SVGIcon(slidericon), (pos)=>{this.onSliderMoved(pos);});
         this.slider.AddMouseWheelEvent((event)=>{this.onMouseWheel(event)});
         
-        this.resetbutton        = new SVGButton(reseticonname, ()=>{this.SetNewTime(this.resetvalue);});
-        this.resetbutton.SetTooltip(`Set slider to ${SecondsToTimeString(this.resetvalue)}`);
+        if(reseticonname !== undefined)
+        {
+            this.resetbutton        = new SVGButton(reseticonname, ()=>{this.SetNewTime(this.resetvalue);});
+            this.resetbutton.SetTooltip(`Set slider to ${SecondsToTimeString(this.resetvalue)}`);
+        }
 
         this.thistimebutton     = new SVGButton("vThis", ()=>{this.SelectTimeFromVideo();});
         this.thistimebutton.SetTooltip(`Select current time from video`);
@@ -68,13 +73,15 @@ class TimeSelect
             this.element.appendChild(this.label);
             this.element.appendChild(this.inputelement);
             this.element.appendChild(this.thistimebutton.GetHTMLElement());
-            this.element.appendChild(this.resetbutton.GetHTMLElement());
+            if(this.resetbutton !== undefined)
+                this.element.appendChild(this.resetbutton.GetHTMLElement());
             this.element.appendChild(this.slider.GetHTMLElement());
         }
         else if(this.elementorientation == "right")
         {
             this.element.appendChild(this.slider.GetHTMLElement());
-            this.element.appendChild(this.resetbutton.GetHTMLElement());
+            if(this.resetbutton !== undefined)
+                this.element.appendChild(this.resetbutton.GetHTMLElement());
             this.element.appendChild(this.thistimebutton.GetHTMLElement());
             this.element.appendChild(this.inputelement);
             this.element.appendChild(this.label);
