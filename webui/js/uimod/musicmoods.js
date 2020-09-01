@@ -38,7 +38,7 @@ class MusicMoods
     {
         this.musictype  = musictype;
         this.musicid    = null;
-        this.moods      = Tagmanager_GetMoods();
+        this.moods      = tagmanager.GetMoods();
 
         // Calculate grid size
         this.rows       = 0;
