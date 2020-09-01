@@ -118,12 +118,18 @@ class VideoView
         this.settings_flags.appendChild(this.propertiesbox);
         this.settings_flags.appendChild(this.genretagsbox);
 
-        this.settings_color     = document.createElement("div");
+        this.settings_artwork   = document.createElement("div");
+        this.settings_artwork.classList.add("flex-row");
+        this.colorbox           = document.createElement("div");
+        this.thumbnailbox       = document.createElement("div");
+        this.thumbnailbox.classList.add("flex-grow");
+        this.settings_artwork.appendChild(this.thumbnailbox);
+        this.settings_artwork.appendChild(this.colorbox);
 
         this.settings           = new TabSelect();
-        this.settings.AddTab(new SVGIcon("Album"), "Flags & Tags",      this.settings_flags, true);
-        this.settings.AddTab(new SVGIcon("Album"), "Color Settings",    this.settings_color);
-        this.settings.AddTab(new SVGIcon("Album"), "Played Time Frame", this.settings_timeframe);
+        this.settings.AddTab(new SVGIcon("Tags"),      "Flags & Tags",      this.settings_flags, true);
+        this.settings.AddTab(new SVGIcon("Artwork"),   "Thumbnail & Color", this.settings_artwork);
+        this.settings.AddTab(new SVGIcon("TimeFrame"), "Played Time Frame", this.settings_timeframe);
 
         // Create Video View
         this.element  = document.createElement("div");
@@ -189,8 +195,13 @@ class VideoView
             this.genretagsbox.innerHTML = html;
 
             this.colorsettings      = new ColorSchemeSelection("video", this.currentvideoid);
-            this.settings_color.innerHTML = "";
-            this.settings_color.appendChild(this.colorsettings.GetHTMLElement());
+            this.colorbox.innerHTML = "";
+            this.colorbox.appendChild(this.colorsettings.GetHTMLElement());
+
+            this.thumbnailsettings  = new ThumbnailSelection(this.videoplayer, MDBVideo);
+            this.thumbnailbox.innerHTML = "";
+            this.thumbnailbox.appendChild(this.thumbnailsettings.GetHTMLElement());
+            this.thumbnailsettings.Initialize();
     
         }
 

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-100,-130)">
+        <g transform="matrix(1.10876,0,0,1.26098,-91.0415,-15.3672)">
+            <g id="Save">
+            </g>
+        </g>
+        <g id="StatusGood">
+        </g>
+        <g id="StatusBad">
+        </g>
+        <g id="StatusPaused">
+        </g>
+        <g id="StatusPlaying">
+        </g>
+        <g id="StatusUnknown">
+        </g>
+        <g transform="matrix(1.10876,0,0,1.26098,-66.3229,-15.3672)">
+            <g id="Load">
+            </g>
+        </g>
+        <g id="vThis">
+        </g>
+        <g id="vBegin">
+        </g>
+        <g id="vMin">
+        </g>
+        <g transform="matrix(1.1523,0,0,1.31051,-21.9614,-46.8621)">
+            <g id="vMax">
+            </g>
+        </g>
+        <g id="vEnd">
+        </g>
+        <g id="Reconnect">
+        </g>
+        <g id="Menu">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Disable">
+        </g>
+        <g id="Hate">
+        </g>
+        <g id="LiveRecording" transform="matrix(1.2,0,0,1.2,102.4,-65.9962)">
+            <g id="Member-Right1" serif:id="Member Right">
+            </g>
+            <g id="Member-Left1" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member1" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="LyricsVideo">
+        </g>
+        <g id="BadAudio">
+        </g>
+        <g id="Like">
+        </g>
+        <g id="Dislike">
+        </g>
+        <g id="Favorite">
+        </g>
+        <g id="Tags">
+            <g transform="matrix(1,0,0,1,0,0.208591)">
+                <path d="M101.393,135.108L100.604,132.68C100.494,132.343 100.533,131.975 100.71,131.668C100.888,131.361 101.187,131.143 101.534,131.07C103.141,130.728 105.699,130.185 106.504,130.015C106.665,129.98 106.833,130.007 106.976,130.09L118.332,136.646C119.408,137.267 119.777,138.644 119.156,139.719L118.542,140.783C118.475,140.734 118.405,140.688 118.332,140.646L106.976,134.09C106.833,134.007 106.665,133.98 106.504,134.015C105.699,134.185 103.141,134.728 101.534,135.07C101.486,135.08 101.439,135.093 101.393,135.108ZM102.442,132.668C102.718,132.19 103.33,132.026 103.808,132.302C104.286,132.578 104.45,133.19 104.174,133.668C103.898,134.146 103.286,134.31 102.808,134.034C102.33,133.758 102.166,133.146 102.442,132.668Z"/>
+            </g>
+            <g transform="matrix(0.5,-0.866025,0.866025,0.5,-66.0936,165.664)">
+                <path d="M104,134.637C104,134.472 104.061,134.313 104.172,134.19C104.884,133.399 107.57,130.414 107.57,130.414C107.807,130.151 108.145,130 108.5,130C108.855,130 109.193,130.151 109.43,130.414C110.529,131.635 112.278,133.579 112.828,134.19C112.939,134.313 113,134.472 113,134.637L113,147.75C113,148.992 111.992,150 110.75,150L106.25,150C105.008,150 104,148.992 104,147.75L104,134.637ZM108.5,132C109.052,132 109.5,132.448 109.5,133C109.5,133.552 109.052,134 108.5,134C107.948,134 107.5,133.552 107.5,133C107.5,132.448 107.948,132 108.5,132Z"/>
+            </g>
+        </g>
+        <g id="TimeFrame">
+        </g>
+        <g id="Artwork">
+        </g>
+    </g>
+</svg>
