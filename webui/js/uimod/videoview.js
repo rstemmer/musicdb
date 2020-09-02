@@ -195,6 +195,7 @@ class VideoView
             //this.genretagsbox.innerHTML = html;
             this.genreedit          = new TagListEdit("genre");
             this.subgenreedit       = new TagListEdit("subgenre");
+            this.genretagsbox.innerHTML = "";
             this.genretagsbox.appendChild(this.genreedit.GetHTMLElement());
             this.genretagsbox.appendChild(this.subgenreedit.GetHTMLElement());
 

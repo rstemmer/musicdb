@@ -22,7 +22,6 @@
 .tagselect
 {
     position:           absolute;
-    right:              0;
     background-color:   var(--bgcolor);
     box-shadow:         0px 4px 8px 0px rgba(1, 0, 0, 1), 0px 6px 20px 0px rgba(0, 0, 0, 0.5);
     z-index:            10;

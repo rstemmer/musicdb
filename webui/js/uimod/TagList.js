@@ -19,20 +19,20 @@
 
 class Tag
 {
-    // onclick onapprove and/or onremove are optional and can be undefined
-    constructor(MDBTag, onclick, onremove, onapprove)
+    constructor(MDBTag)
     {
         this.tagname        = MDBTag.name;
         this.tagid          = MDBTag.id;
         this.confidence     = MDBTag.confidence;
         this.approval       = MDBTag.approval;  // 0: Set by AI, >0: Set by User
 
-        this.onclick        = onclick;
-        this.onapprove      = onapprove;
-        this.onremove       = onremove;
+        this.onclick        = null;
+        this.onapprove      = null;
+        this.onremove       = null;
 
         this.approvebutton  = new SVGButton("Approve", ()=>{this.onApprove()});
         this.removebutton   = new SVGButton("Remove",  ()=>{this.onRemove()});
+        this.addbutton      = new SVGButton("Add",     ()=>{this.onClick()});
         this.nameelement    = document.createElement("div");
         this.nameelement.innerText = this.tagname;
 
@@ -41,11 +41,25 @@ class Tag
         this.element.classList.add("flex-row");
         this.element.classList.add("tag");
         this.element.appendChild(this.nameelement);
-        if(typeof this.onapprove === "function" && this.approval === 0) // Only show when tag not approved
-            this.element.appendChild(this.approvebutton.GetHTMLElement());
-        if(typeof this.onremove === "function")
-            this.element.appendChild(this.removebutton.GetHTMLElement());
-        this.element.onClick = ()=>{this.onClick();}
+        this.element.onclick = ()=>{this.onClick();};
+    }
+
+
+
+    SetAddAction(onclick)
+    {
+        this.onclick = onclick;
+        this.element.appendChild(this.addbutton.GetHTMLElement());
+    }
+    SetRemoveAction(onremove)
+    {
+        this.onremove = onremove;
+        this.element.appendChild(this.removebutton.GetHTMLElement());
+    }
+    SetApproveAction(onapprove)
+    {
+        this.onapprove = onapprove;
+        this.element.appendChild(this.approvebutton.GetHTMLElement());
     }
 
 
@@ -121,12 +135,23 @@ class TagListView
         {
             let tag;
             if(MDBTag.approval > 0)
+            {
                 if(this.allowremove === true)
-                    tag = new Tag(MDBTag, null, (tagid)=>{this.onRemove(tagid);});
-                else
+                {
                     tag = new Tag(MDBTag);
+                    tag.SetRemoveAction((tagid)=>{this.onRemove(tagid);});
+                }
+                else
+                {
+                    tag = new Tag(MDBTag);
+                }
+            }
             else
-                tag = new Tag(MDBTag, null, (tagid)=>{this.onRemove(tagid);}, (tagid)=>{this.onApprove(tagid);});
+            {
+                tag = new Tag(MDBTag);
+                tag.SetRemoveAction((tagid)=>{this.onRemove(tagid);});
+                tag.SetApproveAction((tagid)=>{this.onApprove(tagid);});
+            }
 
             this.taglist.push(tag);
             this.element.appendChild(tag.GetHTMLElement());
@@ -139,10 +164,38 @@ class TagListView
     onApprove(tagid)
     {
         window.console && console.log("Approve " + tagid + " for " + this.musicid);
+        switch(this.musictype)
+        {
+            case "audio":
+                MusicDB_Request("SetSongTag",  "UpdateTagInput", {songid:this.musicid,  tagid:tagid});
+                break;
+            case "video":
+                MusicDB_Request("SetVideoTag", "UpdateTagInput", {videoid:this.musicid, tagid:tagid});
+                break;
+            case "album":
+                MusicDB_Request("SetAlbumTag", "UpdateTagInput", {albumid:this.musicid, tagid:tagid});
+                break;
+            default:
+                window.console && console.log("Invalid music type: " + this.musictype);
+        }
     }
     onRemove(tagid)
     {
         window.console && console.log("Remove " + tagid + " for " + this.musicid);
+        switch(this.musictype)
+        {
+            case "audio":
+                MusicDB_Request("RemoveSongTag",  "UpdateTagInput", {songid:this.musicid,  tagid:tagid});
+                break;
+            case "video":
+                MusicDB_Request("RemoveVideoTag", "UpdateTagInput", {videoid:this.musicid, tagid:tagid});
+                break;
+            case "album":
+                MusicDB_Request("RemoveAlbumTag", "UpdateTagInput", {albumid:this.musicid, tagid:tagid});
+                break;
+            default:
+                window.console && console.log("Invalid music type: " + this.musictype);
+        }
     }
 }
 
@@ -212,11 +265,14 @@ class TagSelection
         this.button     = new SVGButton("Album", ()=>{this.onToggleSelectionList();}); // TODO
         this.listbox    = document.createElement("div");
         this.listbox.classList.add("tagselect");
+        this.listbox.classList.add("smallfont");
+        this.listbox.classList.add("hlcolor");
         this.listbox.classList.add("frame");
         this.listbox.style.display = "none";
 
         this.element.appendChild(this.button.GetHTMLElement());
-        this.element.appendChild(this.listbox);
+        //this.element.appendChild(this.listbox);
+        document.body.appendChild(this.listbox);
     }
 
 
@@ -229,8 +285,15 @@ class TagSelection
 
     onToggleSelectionList()
     {
+        let buttonelement  = this.button.GetHTMLElement();
+        let buttonposition = buttonelement.getBoundingClientRect();
+        let posx           = buttonposition.left + window.pageXOffset;
+        let posy           = buttonposition.top  + window.pageYOffset + buttonposition.height;
+
         if(this.listbox.style.display == "none")
         {
+            this.listbox.style.left    = posx + "px";
+            this.listbox.style.top     = posy + "px";
             this.listbox.style.display = "flex";
         }
         else
@@ -261,7 +324,8 @@ class TagSelection
         genrelist.classList.add("flex-column");
         for(let tag of taglist)
         {
-            let item = new Tag(tag, (tagid)=>{onTagSelect(tagid)});
+            let item = new Tag(tag);
+            item.SetAddAction((tagid)=>{this.onTagSelect(tagid)});
             genrelist.appendChild(item.GetHTMLElement());
         }
         window.console && console.log(genrelist);
@@ -284,6 +348,22 @@ class TagSelection
     onTagSelect(tagid)
     {
         window.console && console.log("Select " + tagid + " for " + this.musicid);
+        switch(this.musictype)
+        {
+            case "audio":
+                MusicDB_Request("SetSongTag",  "UpdateTagInput", {songid:this.musicid,  tagid:tagid});
+                break;
+            case "video":
+                MusicDB_Request("SetVideoTag", "UpdateTagInput", {videoid:this.musicid, tagid:tagid});
+                break;
+            case "album":
+                MusicDB_Request("SetAlbumTag", "UpdateTagInput", {albumid:this.musicid, tagid:tagid});
+                break;
+            default:
+                window.console && console.log("Invalid music type: " + this.musictype);
+        }
+
+        this.onToggleSelectionList(); // Hide list after selection
     }
 
 
