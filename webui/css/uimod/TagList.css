@@ -27,6 +27,7 @@
     background-color:   var(--bgcolor);
     box-shadow:         0px 4px 8px 0px rgba(1, 0, 0, 1), 0px 6px 20px 0px rgba(0, 0, 0, 0.5);
     padding:            0.5em 1ch;
+    z-index:            10;
 }
 .tagselect > div
 {
@@ -34,10 +35,20 @@
 }
 .tagselect div + div
 {
-    margin-left:         0.5em;
+    margin-left:        0.5em;
 }
 
-.tagselect .flex-row
+.tagselect .tag
+{
+    margin-top:         0.2em;
+}
+
+.tagselect span ~ span
+{
+    margin-top:         0.5em;
+}
+
+.tagselect div.flex-row
 {
     flex-wrap:          wrap;
 }

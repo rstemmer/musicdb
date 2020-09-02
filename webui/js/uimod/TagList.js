@@ -333,8 +333,9 @@ class TagSelection
             let subgenrelist = document.createElement("div");
             subgenrelist.classList.add("flex-row");
 
-            let title        = document.createElement("div");
+            let title        = document.createElement("span");
             title.classList.add("flex-row");
+            title.classList.add("fgcolor");
             title.innerText  = genre.name;
 
             for(let subgenre of subgenres)
