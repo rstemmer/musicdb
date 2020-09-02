@@ -210,7 +210,7 @@ class TagListEdit
         this.tagview    = new TagListView(true); // Show remove button on all tags
         this.taginput   = document.createElement("input");
         this.tagselect  = new TagSelection(tagtype);
-        this.listbutton = new SVGButton("Album", ()=>{this.tagselect.ToggleSelectionList();});
+        this.listbutton = new SVGButton("DropDown", ()=>{this.tagselect.ToggleSelectionList();});
 
         this.element    = document.createElement("div");
         this.element.classList.add("tagedit");
