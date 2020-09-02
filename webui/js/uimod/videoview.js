@@ -189,10 +189,14 @@ class VideoView
             this.moodsbox.innerHTML = "";
             this.moodsbox.appendChild(this.videomoods.GetHTMLElement());
 
-            let html = "";
-            html += Taginput_Create("VVS_genre_"    + this.currentvideoid, this.currentvideoid, "Genre",    "Video");
-            html += Taginput_Create("VVS_subgenre_" + this.currentvideoid, this.currentvideoid, "Subgenre", "Video");
-            this.genretagsbox.innerHTML = html;
+            //let html = "";
+            //html += Taginput_Create("VVS_genre_"    + this.currentvideoid, this.currentvideoid, "Genre",    "Video");
+            //html += Taginput_Create("VVS_subgenre_" + this.currentvideoid, this.currentvideoid, "Subgenre", "Video");
+            //this.genretagsbox.innerHTML = html;
+            this.genreedit          = new TagListEdit("genre");
+            this.subgenreedit       = new TagListEdit("subgenre");
+            this.genretagsbox.appendChild(this.genreedit.GetHTMLElement());
+            this.genretagsbox.appendChild(this.subgenreedit.GetHTMLElement());
 
             this.colorsettings      = new ColorSchemeSelection("video", this.currentvideoid);
             this.colorbox.innerHTML = "";
@@ -209,8 +213,10 @@ class VideoView
         this.videoproperties.UpdateButtons(MDBVideo);
         this.videomoods.UpdateButtons(MDBVideo, MDBTags);
 
-        Taginput_Update("VVS_genre_"    + this.currentvideoid, MDBTags);
-        Taginput_Update("VVS_subgenre_" + this.currentvideoid, MDBTags);
+        //Taginput_Update("VVS_genre_"    + this.currentvideoid, MDBTags);
+        //Taginput_Update("VVS_subgenre_" + this.currentvideoid, MDBTags);
+        this.genreedit.Update(   "video", this.currentvideoid, MDBTags);
+        this.subgenreedit.Update("video", this.currentvideoid, MDBTags);
 
         this.colorsettings.SetColors(MDBVideo.bgcolor, MDBVideo.fgcolor, MDBVideo.hlcolor);
     }

@@ -52,14 +52,14 @@ class MusicDBHUD
 
         // Genre boxes
         let genrebox    = document.createElement("div");
-        let maingenre   = document.createElement("div");
-        let subgenre    = document.createElement("div");
-        maingenre.id    = "GenreHUD";
-        subgenre.id     = "SubgenreHUD";
-        maingenre.classList.add("hlcolor");
-        subgenre.classList.add("hlcolor");
-        genrebox.appendChild(maingenre);
-        genrebox.appendChild(subgenre);
+        this.maingenre   = document.createElement("div");
+        this.subgenre    = document.createElement("div");
+        this.maingenre.id    = "GenreHUD";
+        this.subgenre.id     = "SubgenreHUD";
+        this.maingenre.classList.add("hlcolor");
+        this.subgenre.classList.add("hlcolor");
+        genrebox.appendChild(this.maingenre);
+        genrebox.appendChild(this.subgenre);
 
         // Mood and Property boxes
         let moodbox     = document.createElement("div");
@@ -202,8 +202,19 @@ class MusicDBHUD
         if(reset == true)
             Videoproperties_ShowControl("PropertyHUD", "MainPropertyControl");
         Videoproperties_UpdateControl("MainPropertyControl", MDBVideo, reset); // reset like/dislike state
-        Taginput_Show("GenreHUD",    "MainSongGenreView",    MDBVideo.id, MDBVideoTags, "Genre",    "Video");
-        Taginput_Show("SubgenreHUD", "MainSongSubgenreView", MDBVideo.id, MDBVideoTags, "Subgenre", "Video");
+        //Taginput_Show("GenreHUD",    "MainSongGenreView",    MDBVideo.id, MDBVideoTags, "Genre",    "Video");
+        //Taginput_Show("SubgenreHUD", "MainSongSubgenreView", MDBVideo.id, MDBVideoTags, "Subgenre", "Video");
+
+        // TODO: Just for text, move to better place
+        this.maingenre.innerHTML = "";
+        this.maingenrelist = new TagListView();
+        this.maingenre.appendChild(this.maingenrelist.GetHTMLElement());
+        this.maingenrelist.Update("video", MDBVideo.videoid, MDBVideoTags.genres);
+
+        this.subgenre.innerHTML = "";
+        this.subgenrelist = new TagListView();
+        this.subgenre.appendChild(this.subgenrelist.GetHTMLElement());
+        this.subgenrelist.Update("video", MDBVideo.videoid, MDBVideoTags.subgenres);
 
         UpdateStyle();    // Update new tags
     }
