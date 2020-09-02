@@ -123,7 +123,7 @@ class TagListView
 
 
 
-    // musictype: "audio" or "video"
+    // musictype: "audio" or "video" or "album"
     Update(musictype, musicid, MDBTagArray)
     {
         this.musicid            = musicid;
@@ -163,7 +163,6 @@ class TagListView
 
     onApprove(tagid)
     {
-        window.console && console.log("Approve " + tagid + " for " + this.musicid);
         switch(this.musictype)
         {
             case "audio":
@@ -181,7 +180,6 @@ class TagListView
     }
     onRemove(tagid)
     {
-        window.console && console.log("Remove " + tagid + " for " + this.musicid);
         switch(this.musictype)
         {
             case "audio":
@@ -212,6 +210,7 @@ class TagListEdit
         this.tagview    = new TagListView(true); // Show remove button on all tags
         this.taginput   = document.createElement("input");
         this.tagselect  = new TagSelection(tagtype);
+        this.listbutton = new SVGButton("Album", ()=>{this.tagselect.ToggleSelectionList();});
 
         this.element    = document.createElement("div");
         this.element.classList.add("tagedit");
@@ -222,6 +221,7 @@ class TagListEdit
         this.element.appendChild(this.infoicon.GetHTMLElement());
         this.element.appendChild(this.tagview.GetHTMLElement());
         this.element.appendChild(this.taginput);
+        this.element.appendChild(this.listbutton.GetHTMLElement());
         this.element.appendChild(this.tagselect.GetHTMLElement());
     }
 
@@ -237,9 +237,6 @@ class TagListEdit
     // MDBTags: All tags including .genres and .subgenres
     Update(musictype, musicid, MDBTags)
     {
-        window.console && console.log("Update TagListEdit:");
-        window.console && console.log(MDBTags);
-
         if(this.tagtype == "genre")
             this.tagview.Update(musictype, musicid, MDBTags.genres);
         else if(this.tagtype == "subgenre")
@@ -261,39 +258,27 @@ class TagSelection
         this.musictype  = null;
         this.musicid    = null;
 
-        this.element    = document.createElement("div");
-        this.button     = new SVGButton("Album", ()=>{this.onToggleSelectionList();}); // TODO
         this.listbox    = document.createElement("div");
         this.listbox.classList.add("tagselect");
         this.listbox.classList.add("smallfont");
         this.listbox.classList.add("hlcolor");
         this.listbox.classList.add("frame");
         this.listbox.style.display = "none";
-
-        this.element.appendChild(this.button.GetHTMLElement());
-        //this.element.appendChild(this.listbox);
-        document.body.appendChild(this.listbox);
     }
 
 
 
     GetHTMLElement()
     {
-        return this.element;
+        return this.listbox;
     }
 
 
-    onToggleSelectionList()
-    {
-        let buttonelement  = this.button.GetHTMLElement();
-        let buttonposition = buttonelement.getBoundingClientRect();
-        let posx           = buttonposition.left + window.pageXOffset;
-        let posy           = buttonposition.top  + window.pageYOffset + buttonposition.height;
 
+    ToggleSelectionList()
+    {
         if(this.listbox.style.display == "none")
         {
-            this.listbox.style.left    = posx + "px";
-            this.listbox.style.top     = posy + "px";
             this.listbox.style.display = "flex";
         }
         else
@@ -321,14 +306,13 @@ class TagSelection
 
         // Create HTML element from array
         let genrelist = document.createElement("div");
-        genrelist.classList.add("flex-column");
+        genrelist.classList.add("flex-row");
         for(let tag of taglist)
         {
             let item = new Tag(tag);
             item.SetAddAction((tagid)=>{this.onTagSelect(tagid)});
             genrelist.appendChild(item.GetHTMLElement());
         }
-        window.console && console.log(genrelist);
 
         return genrelist;
     }
@@ -339,15 +323,45 @@ class TagSelection
     // exclude: MDBTag array with tags that shall not appear in the list
     _CreateSubgenreList(genres, exclude)
     {
-        let list = document.createElement("div");
-        list.classList.add("flex-column");
-        return list;
+        let subgenres   = tagmanager.GetSubgenres();
+        let genrematrix = document.createElement("div");
+        genrematrix.classList.add("flex-column");
+
+        // Get subgenres for each genre
+        for(let genre of genres)
+        {
+            let subgenrelist = document.createElement("div");
+            subgenrelist.classList.add("flex-row");
+
+            let title        = document.createElement("div");
+            title.classList.add("flex-row");
+            title.innerText  = genre.name;
+
+            for(let subgenre of subgenres)
+            {
+                if(subgenre.parentid != genre.id)
+                    continue
+                if(exclude.some((element)=>{return element.id === subgenre.id;}))
+                    continue;
+
+                let item = new Tag(subgenre);
+                item.SetAddAction((tagid)=>{this.onTagSelect(tagid)});
+                subgenrelist.appendChild(item.GetHTMLElement());
+            }
+            
+            // Do not add an empty list entry
+            if(subgenrelist.childElementCount === 0)
+                continue;
+
+            genrematrix.appendChild(title);
+            genrematrix.appendChild(subgenrelist);
+        }
+        return genrematrix;
     }
 
 
     onTagSelect(tagid)
     {
-        window.console && console.log("Select " + tagid + " for " + this.musicid);
         switch(this.musictype)
         {
             case "audio":
@@ -384,12 +398,14 @@ class TagSelection
             listelement = this._CreateSubgenreList(MDBTags.genres, MDBTags.subgenres);
         }
 
-        window.console && console.log(listelement);
         this.listbox.innerHTML = "";
         this.listbox.appendChild(listelement);    
 
     }
 }
+
+
+
 
 //function Taginput_UpdateTags();
 //
