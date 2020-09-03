@@ -202,8 +202,6 @@ class MusicDBHUD
         if(reset == true)
             Videoproperties_ShowControl("PropertyHUD", "MainPropertyControl");
         Videoproperties_UpdateControl("MainPropertyControl", MDBVideo, reset); // reset like/dislike state
-        //Taginput_Show("GenreHUD",    "MainSongGenreView",    MDBVideo.id, MDBVideoTags, "Genre",    "Video");
-        //Taginput_Show("SubgenreHUD", "MainSongSubgenreView", MDBVideo.id, MDBVideoTags, "Subgenre", "Video");
 
         // TODO: Just for text, move to better place
         this.maingenre.innerHTML = "";
@@ -265,11 +263,7 @@ class MusicDBHUD
         else if(fnc == "GetVideoStreamState")
         {
             let reset = this.currentvideoid != args.video.id; // Reset like/dislike for new songs
-
-            if(sig == "UpdateStreamState" && this.currentvideoid != args.video.id)
-            {
-                this.currentvideoid = args.video.id;
-            }
+            this.currentvideoid = args.video.id;
 
             if(sig == "UpdateHUD")
             {
@@ -287,7 +281,7 @@ class MusicDBHUD
         {
             if(args.video.id == this.currentvideoid)
             {
-                this.UpdateHUDForVideo(args.video, args.artist, args.videotags, false /*no reset*/)
+                this.UpdateHUDForVideo(args.video, args.artist, args.tags, false /*no reset*/)
             }
         }
     }
