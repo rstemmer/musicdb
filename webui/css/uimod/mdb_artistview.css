@@ -3,6 +3,23 @@
 /* Main Container */
 /******************/
 
+.artistsview
+{
+    flex-wrap:          wrap;
+}
+
+.artistentry
+{
+    display:            flex;
+    flex-direction:     row;
+    flex-wrap:          wrap;
+}
+.artistentry > span
+{
+    flex-basis:         100%;
+}
+
+
 div#ArtistViewBox
 {
     display:        block;

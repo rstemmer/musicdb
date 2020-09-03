@@ -13,6 +13,7 @@ let musicdbstatus       = new MusicDBStatus();
 let musicdbcontrols     = new MusicDBControls();
 let queuetimemanager    = new QueueTimeManager();
 
+let artistsview         = new ArtistsView();
 let videoview           = new VideoView();
 
 // Create Main Menu
@@ -57,6 +58,9 @@ window.onload = function ()
 
     let queuetimebar= document.getElementById("MDBQueueTimeBar");
     queuetimebar.appendChild(queuetimemanager.GetHTMLElement());
+
+    let artistviewbox   = document.getElementById("LeftContentBox");
+    artistviewbox.appendChild(artistsview.GetHTMLElement());
 
     document.body.appendChild(mainmenu.GetHTMLElement());
     document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
@@ -157,6 +161,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
     videostreamplayer.onMusicDBMessage(fnc, sig, args, pass);
     genreselectionview.onMusicDBMessage(fnc, sig, args, pass);
+    artistsview.onMusicDBMessage(fnc, sig, args, pass);
     videoview.onMusicDBMessage(fnc, sig, args, pass);
 
     window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");
@@ -232,11 +237,13 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "Find" && sig == "ShowSearchResults")
         ShowSearchResults(args.artists, args.albums, args.songs);
 
+    /*
     else if(fnc == "GetFilteredArtistsWithAlbums" && sig == "ShowArtists")
         ShowArtists("LeftContentBox", args);
 
     else if(fnc == "GetFilteredArtistsWithVideos" && sig == "ShowArtists")
         ShowArtists("LeftContentBox", args);
+    */
 
     else if(fnc == "GetSongRelationship" && sig == "ShowSongRelationship")
         ShowSongRelationship("MiddleContentBox", args.songid, args.songs);
