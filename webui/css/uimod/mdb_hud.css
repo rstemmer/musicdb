@@ -41,7 +41,9 @@ div#MDBHUD_PropertiesBox
 
 div#MoodHUD
 {
+    /*
     font-family: "DejaVuSans";
+    */
     flex-grow: 0;
 }
 div#PropertyHUD

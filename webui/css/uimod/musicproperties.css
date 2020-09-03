@@ -3,6 +3,7 @@
 {
     width:      1.0em;
     height:     1.0em;
+    font-family: "DejaVuSans";  /* To have a uniform font style with the mood flags */
 }
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 

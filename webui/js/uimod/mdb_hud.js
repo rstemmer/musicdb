@@ -62,12 +62,12 @@ class MusicDBHUD
         genrebox.appendChild(this.subgenre);
 
         // Mood and Property boxes
-        let moodbox     = document.createElement("div");
-        let propbox     = document.createElement("div");
-        moodbox.id      = "MoodHUD";
-        propbox.id      = "PropertyHUD";
-        moodbox.classList.add("hlcolor");
-        propbox.classList.add("hlcolor");
+        this.moodbox     = document.createElement("div");
+        this.propbox     = document.createElement("div");
+        this.moodbox.id      = "MoodHUD";
+        this.propbox.id      = "PropertyHUD";
+        this.moodbox.classList.add("hlcolor");
+        this.propbox.classList.add("hlcolor");
 
         // Compose final element
         let container   = document.createElement("div");
@@ -75,8 +75,8 @@ class MusicDBHUD
         container.appendChild(artworkbox);
         container.appendChild(infobox);
         container.appendChild(genrebox);
-        container.appendChild(moodbox);
-        container.appendChild(propbox);
+        container.appendChild(this.moodbox);
+        container.appendChild(this.propbox);
 
         return container;
     }
@@ -183,13 +183,41 @@ class MusicDBHUD
         this.SetAlbumArtwork(MDBAlbum);
         this.SetSongInformation(MDBSong, MDBAlbum, MDBArtist);
 
+        // Update Properties and Moods
+        if(reset == true)
+        {
+            this.moods = new SongMoods();
+            this.moodbox.innerHTML = "";
+            this.moodbox.appendChild(this.moods.GetHTMLElement());
+
+            this.props = new SongProperties();
+            this.props.ResetButtons();
+            this.propbox.innerHTML = "";
+            this.propbox.appendChild(this.props.GetHTMLElement());
+        }
+        this.moods.UpdateButtons(MDBSong, MDBSongTags);
+        this.props.UpdateButtons(MDBSong);
+
+        // Update Tags
+        this.maingenre.innerHTML = "";
+        this.maingenrelist = new TagListView();
+        this.maingenre.appendChild(this.maingenrelist.GetHTMLElement());
+        this.maingenrelist.Update("audio", MDBSong.id, MDBSongTags.genres);
+
+        this.subgenre.innerHTML = "";
+        this.subgenrelist = new TagListView();
+        this.subgenre.appendChild(this.subgenrelist.GetHTMLElement());
+        this.subgenrelist.Update("audio", MDBSong.id, MDBSongTags.subgenres);
+
+
+        /*
         Songtags_UpdateMoodControl("MainMoodControl", MDBSongTags);
         if(reset == true)
             Songproperties_ShowControl("PropertyHUD", "MainPropertyControl");
         Songproperties_UpdateControl("MainPropertyControl", MDBSong, reset); // reset like/dislike state
         Taginput_Show("GenreHUD",    "MainSongGenreView",    MDBSong.id, MDBSongTags, "Genre",    "Song");
         Taginput_Show("SubgenreHUD", "MainSongSubgenreView", MDBSong.id, MDBSongTags, "Subgenre", "Song");
-
+*/
         UpdateStyle();    // Update new tags
     }
 
@@ -198,12 +226,22 @@ class MusicDBHUD
         this.SetVideoArtwork(MDBVideo);
         this.SetVideoInformation(MDBVideo, MDBArtist);
 
-        Videotags_UpdateMoodControl("MainMoodControl", MDBVideoTags);
+        // Update Properties and Moods
         if(reset == true)
-            Videoproperties_ShowControl("PropertyHUD", "MainPropertyControl");
-        Videoproperties_UpdateControl("MainPropertyControl", MDBVideo, reset); // reset like/dislike state
+        {
+            this.moods = new VideoMoods();
+            this.moodbox.innerHTML = "";
+            this.moodbox.appendChild(this.moods.GetHTMLElement());
 
-        // TODO: Just for text, move to better place
+            this.props = new VideoProperties();
+            this.props.ResetButtons();
+            this.propbox.innerHTML = "";
+            this.propbox.appendChild(this.props.GetHTMLElement());
+        }
+        this.moods.UpdateButtons(MDBVideo, MDBVideoTags);
+        this.props.UpdateButtons(MDBVideo);
+
+        // Update Tags
         this.maingenre.innerHTML = "";
         this.maingenrelist = new TagListView();
         this.maingenre.appendChild(this.maingenrelist.GetHTMLElement());

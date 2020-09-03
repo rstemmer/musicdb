@@ -1,4 +1,8 @@
 
+.musicmoods
+{
+    font-family: "DejaVuSans";  /* for best unicode support */
+}
 
 .musicmoods .icon, .musicmoods .unicodeicon
 {
