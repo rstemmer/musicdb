@@ -46,6 +46,10 @@ class Tag
 
 
 
+    SetClickAction(onclick)
+    {
+        this.onclick = onclick;
+    }
     SetAddAction(onclick)
     {
         this.onclick = onclick;

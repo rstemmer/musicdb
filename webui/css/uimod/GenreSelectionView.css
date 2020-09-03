@@ -1,0 +1,32 @@
+
+/******************/
+/* Main Container */
+/******************/
+
+#Artistloader
+{
+    display:            flex;
+    align-items:        center;
+    justify-content:    center;
+}
+
+.genreselectionview
+{
+/*
+    align-self:         center;
+    */
+    flex-wrap:          wrap;
+    padding:            0.4em; 2ch;
+}
+
+.genreselectionview > .tag[data-active=true]
+{
+}
+.genreselectionview > .tag[data-active=false]
+{
+    opacity:            0.5;
+}
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

@@ -7,6 +7,7 @@ let fullscreenmanager   = new FullscreenManager();
 let mdbmodemanager      = new MDBModeManager();
 let tagmanager          = new TagManager();
 let musicdbhud          = new MusicDBHUD();
+let genreselectionview  = new GenreSelectionView();
 let videostreamplayer   = new VideoStreamPlayer();
 let musicdbstatus       = new MusicDBStatus();
 let musicdbcontrols     = new MusicDBControls();
@@ -36,6 +37,9 @@ window.onload = function ()
     let HUDparent   = document.getElementById("HUD");
     HUDparent.appendChild(musicdbhud.GetHTMLElement());
 
+    let genrebox    = document.getElementById("Artistloader");
+    genrebox.appendChild(genreselectionview.GetHTMLElement());
+
     let videoplayer = document.getElementById("VideoStreamPlayer");
     videostreamplayer.SetVideoPlayerElement(videoplayer);
 
@@ -58,7 +62,7 @@ window.onload = function ()
     // Setup the Views
     ShowAlphabetBar("Alphabetbar");
     //ShowMusicDBStateView("State");
-    Artistloader_Show("Artistloader");
+    //Artistloader_Show("Artistloader");
     ShowQueueControls("QueueControl");
     ShowSearchInput("Search");
     CreateIntersectionObserver("detachable_trigger", onDetachableTriggerIntersection);
@@ -139,12 +143,16 @@ function onMusicDBNotification(fnc, sig, rawdata)
 }
 function onMusicDBMessage(fnc, sig, args, pass)
 {
-    musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
-    musicdbstatus.onMusicDBMessage(fnc, sig, args, pass);
-    musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);
-    videostreamplayer.onMusicDBMessage(fnc, sig, args, pass);
-    mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
+    // Background objects
     tagmanager.onMusicDBMessage(fnc, sig, args, pass);
+    mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
+    // Controls
+    musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);
+    musicdbstatus.onMusicDBMessage(fnc, sig, args, pass);
+    // Views
+    musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
+    videostreamplayer.onMusicDBMessage(fnc, sig, args, pass);
+    genreselectionview.onMusicDBMessage(fnc, sig, args, pass);
     videoview.onMusicDBMessage(fnc, sig, args, pass);
 
     window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");
@@ -238,8 +246,8 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetTags")
     {
         Tagmanager_onGetTags(args);
-        Artistloader_UpdateControl();
-        MusicDB_Request("GetMDBState", "UpdateMDBState"); // Update cached MDB state (Selected Genre) // TODO: WHAT?
+        //Artistloader_UpdateControl();
+        //MusicDB_Request("GetMDBState", "UpdateMDBState"); // Update cached MDB state (Selected Genre) // TODO: WHAT?
         Songtags_ShowMoodControl("MoodHUD", "MainMoodControl");
     }
 
