@@ -10,6 +10,11 @@
     --bgcolor:      #181819;
     --fmcolor:      #779;
     --radius:       0.2em;
+
+    --color-red:    #5E1F1F;
+    --color-yellow: #5E5E1F;
+    --color-green:  #1F5E29;
+    --color-white:  #F0F0F0;
 }
 
 .fgcolor

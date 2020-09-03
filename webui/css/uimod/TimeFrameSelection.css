@@ -39,8 +39,8 @@
     margin:         0 1em;
     padding:        0.2em 0.5em;
     border-radius:  var(--radius);
-    background-color: #5E1F1F;
-    color:          #F0F0F0;
+    background-color: var(--color-red);
+    color:          var(--color-white);
 }
 .vtfs_errormessage[data-visible=true]
 {
@@ -58,20 +58,17 @@
     margin:         0 1em;
     padding:        0.2em 0.5em;
     border-radius:  var(--radius);
-    color:          #F0F0F0;
+    color:          var(--color-white);
 }
 .vtfs_savestate[data-state=notsaved]
 {
     visibility:     visible;
-    background-color: #5E5E1F;
-    /*
-    background-color: #5E1F1F;
-    */
+    background-color: var(--color-yellow);
 }
 .vtfs_savestate[data-state=saved]
 {
     visibility:     visible;
-    background-color: #1F5E29;
+    background-color: var(--color-green);
 }
 .vtfs_savestate[data-state=unchanged]
 {
