@@ -10,6 +10,11 @@
     white-space:    nowrap;
 }
 
+.smallvideotile span
+{
+    display:        block;
+}
+
 .smallvideotile img
 {
     width:          auto;

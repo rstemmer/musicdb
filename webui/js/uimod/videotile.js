@@ -119,7 +119,6 @@ class SmallVideoTile
         this.titleelement             = document.createElement("span");
         this.titleelement.textContent = videoname;
         this.titleelement.classList.add("hlcolor");
-        this.titleelement.classList.add("flex-column");
         this.titleelement.classList.add("smallfont");
 
         this.element                  = document.createElement("div");

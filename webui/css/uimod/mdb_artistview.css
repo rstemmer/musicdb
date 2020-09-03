@@ -6,6 +6,18 @@
 .artistsview
 {
     flex-wrap:          wrap;
+    padding:            0.5em;
+}
+
+.artistsview img
+{
+    filter: brightness(70%) saturate(70%);
+    transition: 4s;
+}
+.artistsview:hover img
+{
+    filter: brightness(100%) saturate(100%);
+    transition: 2s;
 }
 
 .artistentry
@@ -17,6 +29,12 @@
 .artistentry > span
 {
     flex-basis:         100%;
+    margin-left:        0.8em;
+}
+.artistentry > div
+{
+    margin:             0 0.3em;
+    margin-bottom:      0.8em;
 }
 
 
