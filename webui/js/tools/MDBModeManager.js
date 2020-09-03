@@ -5,7 +5,7 @@ class MDBModeManager
 {
     constructor()
     {
-        this.mode     = "audio";
+        this.mode     = null;    // ! This variable should only be set as response to the server!
         this.mainmenu = null;
         this.entryid  = null;
     }
@@ -21,7 +21,6 @@ class MDBModeManager
 
     SetAudioMode()
     {
-        this.mode = "audio";
         MusicDB_Call("SetVideoStreamState", {state:"pause"});
         MusicDB_Request("SetMDBState", "UpdateMDBState",
             {category:"MusicDB", name:"uimode", value:"audio"});
@@ -30,7 +29,6 @@ class MDBModeManager
 
     SetVideoMode()
     {
-        this.mode = "video";
         MusicDB_Call("SetAudioStreamState", {state:"pause"});
         MusicDB_Request("SetMDBState", "UpdateMDBState",
             {category:"MusicDB", name:"uimode", value:"video"});
@@ -87,9 +85,14 @@ class MDBModeManager
     {
         if(fnc == "GetMDBState" && sig == "UpdateMDBState")
         {
-            window.console && console.log("Switching to mode: " + args.MusicDB.uimode)
-            this.mode = args.MusicDB.uimode;
-            this._UpdateWebUI();
+            window.console && console.log("MusicDB Server Mode: " + args.MusicDB.uimode)
+            window.console && console.log("MusicDB Client Mode: " + this.mode)
+            if(this.mode != args.MusicDB.uimode)
+            {
+                window.console && console.log("Switching to mode: " + args.MusicDB.uimode)
+                this.mode = args.MusicDB.uimode;
+                this._UpdateWebUI();
+            }
         }
 
         return;
