@@ -73,6 +73,7 @@
 {
     align-items:        center;
     padding:            0.2em 1ch;
+    margin:             0.1em 0.5ch;
 }
 
 .tag div + div
