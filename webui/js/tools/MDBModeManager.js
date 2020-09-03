@@ -85,11 +85,8 @@ class MDBModeManager
     {
         if(fnc == "GetMDBState" && sig == "UpdateMDBState")
         {
-            window.console && console.log("MusicDB Server Mode: " + args.MusicDB.uimode)
-            window.console && console.log("MusicDB Client Mode: " + this.mode)
             if(this.mode != args.MusicDB.uimode)
             {
-                window.console && console.log("Switching to mode: " + args.MusicDB.uimode)
                 this.mode = args.MusicDB.uimode;
                 this._UpdateWebUI();
             }
