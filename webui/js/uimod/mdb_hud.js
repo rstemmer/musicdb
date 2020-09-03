@@ -207,12 +207,12 @@ class MusicDBHUD
         this.maingenre.innerHTML = "";
         this.maingenrelist = new TagListView();
         this.maingenre.appendChild(this.maingenrelist.GetHTMLElement());
-        this.maingenrelist.Update("video", MDBVideo.videoid, MDBVideoTags.genres);
+        this.maingenrelist.Update("video", MDBVideo.id, MDBVideoTags.genres);
 
         this.subgenre.innerHTML = "";
         this.subgenrelist = new TagListView();
         this.subgenre.appendChild(this.subgenrelist.GetHTMLElement());
-        this.subgenrelist.Update("video", MDBVideo.videoid, MDBVideoTags.subgenres);
+        this.subgenrelist.Update("video", MDBVideo.id, MDBVideoTags.subgenres);
 
         UpdateStyle();    // Update new tags
     }
