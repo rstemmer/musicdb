@@ -42,6 +42,10 @@
 {
     margin-top:         0.2em;
 }
+.tagselect .tag[data-highlight=true]
+{
+    border-color:       red;
+}
 
 .tagselect span ~ span
 {

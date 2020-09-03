@@ -209,6 +209,8 @@ class TagListEdit
         this.infoicon   = new SVGIcon("Tags");
         this.tagview    = new TagListView(true); // Show remove button on all tags
         this.taginput   = document.createElement("input");
+        this.taginput.type    = "string";
+        this.taginput.oninput = ()=>{this.Find(this.taginput.value);};
         this.tagselect  = new TagSelection(tagtype);
         this.listbutton = new SVGButton("DropDown", ()=>{this.tagselect.ToggleSelectionList();});
 
@@ -245,6 +247,24 @@ class TagListEdit
         this.tagselect.Update(musictype, musicid, MDBTags);
         return;
     }
+
+
+
+    Find(string)
+    {
+        let result = this.tagselect.Find(string);
+
+        if(result.length === 1)
+        {
+            result[0].tagobject.onClick(); // == Add Tag
+            this.taginput.value = "";
+            this.tagselect.Hide();
+        }
+        else
+        {
+            this.tagselect.Show();
+        }
+    }
 }
 
 
@@ -279,12 +299,21 @@ class TagSelection
     {
         if(this.listbox.style.display == "none")
         {
-            this.listbox.style.display = "flex";
+            this.Show();
         }
         else
         {
-            this.listbox.style.display = "none";
+            this.Hide();
         }
+    }
+
+    Show()
+    {
+        this.listbox.style.display = "flex";
+    }
+    Hide()
+    {
+        this.listbox.style.display = "none";
     }
 
 
@@ -307,11 +336,13 @@ class TagSelection
         // Create HTML element from array
         let genrelist = document.createElement("div");
         genrelist.classList.add("flex-row");
+        this.tagmap = new Array();  // Keep a list of possible tags for searching
         for(let tag of taglist)
         {
             let item = new Tag(tag);
             item.SetAddAction((tagid)=>{this.onTagSelect(tagid)});
             genrelist.appendChild(item.GetHTMLElement());
+            this.tagmap.push({tag: item, genre: tag});
         }
 
         return genrelist;
@@ -328,6 +359,7 @@ class TagSelection
         genrematrix.classList.add("flex-column");
 
         // Get subgenres for each genre
+        this.tagmap = new Array();  // Keep a list of possible tags for searching
         for(let genre of genres)
         {
             let subgenrelist = document.createElement("div");
@@ -348,6 +380,8 @@ class TagSelection
                 let item = new Tag(subgenre);
                 item.SetAddAction((tagid)=>{this.onTagSelect(tagid)});
                 subgenrelist.appendChild(item.GetHTMLElement());
+
+                this.tagmap.push({tag: item, genre: subgenre});
             }
             
             // Do not add an empty list entry
@@ -359,6 +393,33 @@ class TagSelection
         }
         return genrematrix;
     }
+
+
+
+    Find(string)
+    {
+        let foundtags = new Array(); // return a list of MDBTags that match
+
+        for(let tag of this.tagmap)
+        {
+            let tagobject = tag.tag;
+            let element   = tagobject.GetHTMLElement();
+            let dbentry   = tag.genre;
+
+            if(string == dbentry.name)
+            {
+                element.dataset.highlight = true;
+                foundtags.push({tagobject: tagobject, mdbtag: dbentry});
+            }
+            else
+            {
+                element.dataset.highlight = false;
+            }
+        }
+
+        return foundtags;
+    }
+
 
 
     onTagSelect(tagid)
@@ -378,7 +439,7 @@ class TagSelection
                 window.console && console.log("Invalid music type: " + this.musictype);
         }
 
-        this.onToggleSelectionList(); // Hide list after selection
+        //this.Hide(); // Hide list after selection
     }
 
 
