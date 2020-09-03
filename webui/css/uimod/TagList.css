@@ -44,7 +44,12 @@
 }
 .tagselect .tag[data-highlight=true]
 {
-    border-color:       red;
+    background-color:   var(--hlcolor);
+    color:              var(--bgcolor);
+}
+.tagselect .tag[data-highlight=true] > .icon
+{
+    background-color:   var(--bgcolor);
 }
 
 .tagselect span ~ span

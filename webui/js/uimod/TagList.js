@@ -400,13 +400,19 @@ class TagSelection
     {
         let foundtags = new Array(); // return a list of MDBTags that match
 
+        string = string.toLowerCase();
         for(let tag of this.tagmap)
         {
             let tagobject = tag.tag;
             let element   = tagobject.GetHTMLElement();
             let dbentry   = tag.genre;
+            let tagname   = dbentry.name.toLowerCase();
 
-            if(string == dbentry.name)
+            let similarity = Similarity(string, tagname);
+            // 1st: Highlight all entries that are similar to the entered name
+            //      Do not add these in the found array because similarity may not
+            //      represent the users intention
+            if(similarity > 0.5)
             {
                 element.dataset.highlight = true;
                 foundtags.push({tagobject: tagobject, mdbtag: dbentry});
