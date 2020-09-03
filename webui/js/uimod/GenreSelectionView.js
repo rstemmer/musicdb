@@ -99,7 +99,7 @@ class GenreSelectionView
         // use a timeout until the artist lists shall be refreshed
         if(this.reloadtimeouthandler !== null)
             window.clearTimeout(this.reloadtimeouthandler);
-        reloadtimeouthandler = window.setTimeout(()=>
+        this.reloadtimeouthandler = window.setTimeout(()=>
             {
                 let mode = mdbmodemanager.GetCurrentMode();
                 if(mode == "audio")
