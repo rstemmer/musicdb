@@ -99,6 +99,43 @@ function CreateVideoTile(MDBVideo, MDBAlbum, MDBArtist, topbuttonbox, bottombutt
 
 
 
+class SmallVideoTile
+{
+    constructor(MDBVideo)
+    {
+        this.imgpath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile, 150, 83);
+        this.anipath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.previewfile,   150, 83);
+        let videoid      = MDBVideo.id;
+        let videoname    = MDBVideo.name;
+        let videorelease = MDBVideo.release;
+
+        this.imagebox                 = document.createElement("div");
+        this.imageelement             = document.createElement("img");
+        this.imageelement.src         = this.imgpath;
+        this.imageelement.onmouseover = ()=>{this.imageelement.src = this.anipath;};
+        this.imageelement.onmouseout  = ()=>{this.imageelement.src = this.imgpath;};
+        this.imagebox.appendChild(this.imageelement);
+
+        this.titleelement             = document.createElement("span");
+        this.titleelement.textContent = videoname;
+        this.titleelement.classList.add("hlcolor");
+        this.titleelement.classList.add("flex-column");
+        this.titleelement.classList.add("smallfont");
+
+        this.element                  = document.createElement("div");
+        this.element.classList.add("smallvideotile");
+        this.element.appendChild(this.imagebox);
+        this.element.appendChild(this.titleelement);
+    }
+
+
+
+    GetHTMLElement()
+    {
+        return this.element;
+    }
+}
+
 function CreateSmallVideoTile(MDBVideo, buttonbox)
 {
     let html        = "";

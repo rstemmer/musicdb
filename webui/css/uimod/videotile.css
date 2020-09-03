@@ -3,6 +3,30 @@
 /* Video-related */
 /******************/
 
+.smallvideotile
+{
+    max-width:      150px;
+    overflow:       hidden;
+    white-space:    nowrap;
+}
+
+.smallvideotile img
+{
+    width:          auto;
+    height:         100%;
+}
+
+.smallvideotile div
+{
+    border-radius:  var(--radius);
+    overflow:       hidden;
+    width:          150px;
+    height:          85px; /* 16:9 */
+}
+
+
+
+
 div.VT_videoentry
 {
     display:        inline-block;
