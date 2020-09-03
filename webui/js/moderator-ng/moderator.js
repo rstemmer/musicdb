@@ -25,6 +25,15 @@ let entryid = mainmenu.CreateSwitch(
     new SVGIcon("Switch2Video"), "Switch to Video Mode", ()=>{mdbmodemanager.SetVideoMode();},
     new SVGIcon("Switch2Audio"), "Switch to Audio Mode", ()=>{mdbmodemanager.SetAudioMode();}
     );
+mainmenu.CreateButton(
+    new SVGIcon("Reload"), "Reload Artists", ()=>
+        {
+            if(mdbmodemanager.GetCurrentMode() == "audio")
+                MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+            else
+                MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+        }
+    );
 mainmenu.CreateSection("MusicDB Status", musicdbstatus.GetHTMLElement());
 mainmenu.UpdateMenuEntryList();
 mdbmodemanager.SetMainMenuHandler(mainmenu, entryid); // This allows updating the menu entry on mode switch from remote

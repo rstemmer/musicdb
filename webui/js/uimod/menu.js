@@ -71,6 +71,31 @@ class MainMenu
     }
 
 
+    CreateButton(icon, text, onclick)
+    {
+        let entry = new Object();
+
+        entry.icon              = icon.GetHTMLElement();
+        entry.text              = document.createElement("span");
+        entry.text.textContent  = text;
+        entry.onclick           = onclick;
+        entry.element           = document.createElement("div");
+        entry.element.classList.add("menuentry");
+        entry.element.appendChild(entry.icon);
+        entry.element.appendChild(entry.text);
+
+        entry.element.onclick = (event)=>
+            {
+                entry.onclick();
+                this.ToggleMenu(); // Hide menu after menu item clicked
+                return;
+            }
+
+        let newlength = this.entryarray.push(entry);
+        let entryid   = newlength - 1;
+        return entryid;
+    }
+
 
     CreateSwitch(aicon, atext, afunction, bicon, btext, bfunction)
     {
