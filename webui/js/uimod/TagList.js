@@ -33,6 +33,9 @@ class Tag
         this.approvebutton  = new SVGButton("Approve", ()=>{this.onApprove()});
         this.removebutton   = new SVGButton("Remove",  ()=>{this.onRemove()});
         this.addbutton      = new SVGButton("Add",     ()=>{this.onClick()});
+        this.approvebutton.SetTooltip("Confirm this Tag");
+        this.removebutton.SetTooltip("Remove this Tag");
+        this.addbutton.SetTooltip("Add this Tag");
         this.nameelement    = document.createElement("div");
         this.nameelement.innerText = this.tagname;
 
@@ -42,6 +45,18 @@ class Tag
         this.element.classList.add("tag");
         this.element.appendChild(this.nameelement);
         this.element.onclick = ()=>{this.onClick();};
+    }
+
+
+
+    SetConfidence(confidence)
+    {
+        let percent  = Math.round(confidence * 100)
+        let ratiobar = new RatioBar(percent);
+
+        ratiobar.SetTooltip("Confidence: " + percent + "%");
+
+        this.element.appendChild(ratiobar.GetHTMLElement());
     }
 
 
@@ -153,8 +168,9 @@ class TagListView
             else
             {
                 tag = new Tag(MDBTag);
-                tag.SetRemoveAction((tagid)=>{this.onRemove(tagid);});
+                tag.SetConfidence(MDBTag.confidence);
                 tag.SetApproveAction((tagid)=>{this.onApprove(tagid);});
+                tag.SetRemoveAction((tagid)=>{this.onRemove(tagid);});
             }
 
             this.taglist.push(tag);
