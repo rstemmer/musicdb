@@ -48,9 +48,6 @@ window.onload = function ()
 
     let queuetimebar= document.getElementById("MDBQueueTimeBar");
     queuetimebar.appendChild(queuetimemanager.GetHTMLElement());
-    
-    //let mainviewbox = document.getElementById("MiddleContentBox"); // \_ Do this when it is clear
-    //mainviewbox.appendChild(videoview.GetHTMLElement());           // /  if audio or video mode is active
 
     document.body.appendChild(mainmenu.GetHTMLElement());
     document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
@@ -61,8 +58,6 @@ window.onload = function ()
 
     // Setup the Views
     ShowAlphabetBar("Alphabetbar");
-    //ShowMusicDBStateView("State");
-    //Artistloader_Show("Artistloader");
     ShowQueueControls("QueueControl");
     ShowSearchInput("Search");
     CreateIntersectionObserver("detachable_trigger", onDetachableTriggerIntersection);
@@ -182,7 +177,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetMDBState") {
         if(sig == "UpdateMDBState" || sig == "UpdateRelationshipGenreHighlight")
         {
-            Artistloader_UpdateState(args);
             UpdateRelationshipGenreHighlight(args);
         }
     }
@@ -246,8 +240,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetTags")
     {
         Tagmanager_onGetTags(args);
-        //Artistloader_UpdateControl();
-        //MusicDB_Request("GetMDBState", "UpdateMDBState"); // Update cached MDB state (Selected Genre) // TODO: WHAT?
         Songtags_ShowMoodControl("MoodHUD", "MainMoodControl");
     }
 
