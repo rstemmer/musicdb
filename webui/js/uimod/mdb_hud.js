@@ -209,15 +209,6 @@ class MusicDBHUD
         this.subgenre.appendChild(this.subgenrelist.GetHTMLElement());
         this.subgenrelist.Update("audio", MDBSong.id, MDBSongTags.subgenres);
 
-
-        /*
-        Songtags_UpdateMoodControl("MainMoodControl", MDBSongTags);
-        if(reset == true)
-            Songproperties_ShowControl("PropertyHUD", "MainPropertyControl");
-        Songproperties_UpdateControl("MainPropertyControl", MDBSong, reset); // reset like/dislike state
-        Taginput_Show("GenreHUD",    "MainSongGenreView",    MDBSong.id, MDBSongTags, "Genre",    "Song");
-        Taginput_Show("SubgenreHUD", "MainSongSubgenreView", MDBSong.id, MDBSongTags, "Subgenre", "Song");
-*/
         UpdateStyle();    // Update new tags
     }
 

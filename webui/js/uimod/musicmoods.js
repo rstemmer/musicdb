@@ -18,9 +18,9 @@
 
 class UnicodeToggleButton extends SVGToggleButton
 {
-    constructor(character)
+    constructor(character, onclick)
     {
-        super("");
+        super("", onclick);
 
         // Destroy SVG icon
         this.icon.classList.remove("icon")
