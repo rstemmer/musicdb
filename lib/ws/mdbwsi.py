@@ -2599,7 +2599,11 @@ class MusicDBWebSocketInterface(object):
         This method creates a new genre.
         If the tag already exists, nothing happens.
 
-        If tagging is disabled nothing will be done. 
+        After executing this command, :meth:`~GetTags` gets executed.
+        Its return value gets send via broadcast.
+
+        If tagging is disabled nothing will be changed.
+        The broadcast gets send anyway.
 
         Args:
             name (str): Name of the new genre
@@ -2617,7 +2621,11 @@ class MusicDBWebSocketInterface(object):
         This method creates a new subgenre.
         If the tag already exists, nothing happens.
 
-        If tagging is disabled nothing will be done. 
+        After executing this command, :meth:`~GetTags` gets executed.
+        Its return value gets send via broadcast.
+
+        If tagging is disabled nothing will be changed.
+        The broadcast gets send anyway.
 
         Args:
             name (str): Name of the new subgenre
