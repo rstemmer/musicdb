@@ -21,6 +21,11 @@ class SVGIcon
     {
         this.icon.title = tooltip;
     }
+
+    SetColor(htmlcolor)
+    {
+        this.icon.style.backgroundColor = htmlcolor;
+    }
 }
 
 
