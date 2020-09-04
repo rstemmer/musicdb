@@ -32,6 +32,14 @@
     bottom:             0;
 }
 
+.nullratiobar
+{
+    background-color:   var(--color-gray);
+    width:              100%;
+    position:           absolute;
+    bottom:             0;
+}
+
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
 

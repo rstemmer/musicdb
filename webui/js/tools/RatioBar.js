@@ -18,15 +18,23 @@
 
 class RatioBar
 {
+    // if ratio is null, a gray box will be shown
     constructor(percent)
     {
         this.element        = document.createElement("div");
         this.element.classList.add("ratiobox");
 
         this.bar            = document.createElement("div");
-        this.bar.classList.add("ratiobar");
-        this.bar.style.height= percent + "%";
-
+        if(percent)
+        {
+            this.bar.classList.add("ratiobar");
+            this.bar.style.height = percent + "%";
+        }
+        else
+        {
+            this.bar.classList.add("nullratiobar");
+            this.bar.style.height = "100%";
+        }
         this.element.appendChild(this.bar);
     }
 
