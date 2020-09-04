@@ -84,6 +84,7 @@ Tag related
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetVideoTag`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveVideoTag`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddGenre`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSubgenre`
 
 Lyrics
@@ -297,8 +298,16 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetVideo(args["videoid"])
             method = "broadcast"
             fncname= "GetVideo"
+        elif fncname == "AddGenre":
+            retval = self.AddGenre(args["name"])
+            retval = self.GetTags()
+            method = "broadcast"
+            fncname= "GetTags"
         elif fncname == "AddSubgenre":
             retval = self.AddSubgenre(args["name"], args["parentname"])
+            retval = self.GetTags()
+            method = "broadcast"
+            fncname= "GetTags"
         elif fncname == "SetAlbumTag":
             retval = self.SetAlbumTag(args["albumid"], args["tagid"])
             retval = self.GetAlbum(args["albumid"])
@@ -2585,9 +2594,28 @@ class MusicDBWebSocketInterface(object):
         return None
 
 
+    def AddGenre(self, name):
+        """
+        This method creates a new genre.
+        If the tag already exists, nothing happens.
+
+        If tagging is disabled nothing will be done. 
+
+        Args:
+            name (str): Name of the new genre
+        """
+        if self.cfg.debug.disabletagging:
+            logging.info("Changing tags disabled. \033[1;33m!!")
+            return None
+
+        self.database.CreateTag(name, MusicDatabase.TAG_CLASS_GENRE)
+        return None
+
+
     def AddSubgenre(self, name, parentname):
         """
         This method creates a new subgenre.
+        If the tag already exists, nothing happens.
 
         If tagging is disabled nothing will be done. 
 
