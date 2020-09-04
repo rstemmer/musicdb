@@ -122,9 +122,12 @@ class VideoTile
         this.titleelement.classList.add("hlcolor");
         this.titleelement.classList.add("smallfont");
 
+        this.buttonbox                = new ButtonBox_AddVideoToQueue(videoid);
+
         this.element                  = document.createElement("div");
         this.element.classList.add("smallvideotile");
         this.element.appendChild(this.imagebox);
+        this.element.appendChild(this.buttonbox.GetHTMLElement());
         this.element.appendChild(this.titleelement);
         if(flagbar !== undefined)
             this.element.appendChild(flagbar.GetHTMLElement());
