@@ -2,6 +2,44 @@
 /******************/
 /* Album-related */
 /******************/
+.albumtile
+{
+    max-width:      150px;
+    overflow:       hidden;
+    white-space:    nowrap;
+}
+
+.albumtile span
+{
+    display:        inline-block;
+}
+.albumtile span
+{
+    display:        inline-block;
+    overflow:       hidden;
+    white-space:    nowrap;
+}
+.albumtile span:last-child
+{
+    display:        inline-block;
+    float:          right;
+}
+
+.albumtile img
+{
+    width:          auto;
+    height:         100%;
+}
+
+.albumtile div.imagebox
+{
+    border-radius:  var(--radius);
+    overflow:       hidden;
+    width:          150px;
+    height:         150px;
+}
+
+
 
 div.AT_albumentry
 {

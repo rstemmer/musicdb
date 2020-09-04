@@ -1,6 +1,48 @@
 
 "use strict";
 
+class AlbumTile
+{
+    constructor(MDBAlbum, onclick)
+    {
+        this.imgpath     = EncodeArtworkPath(MDBAlbum.artworkpath, "150x150");
+        let albumid      = MDBAlbum.id;
+        let albumname    = OptimizeAlbumName(MDBAlbum.name);
+        let albumrelease = MDBAlbum.release;
+
+        this.imagebox                 = document.createElement("div");
+        this.imagebox.classList.add("imagebox");
+        this.imageelement             = document.createElement("img");
+        this.imageelement.src         = this.imgpath;
+        this.imagebox.appendChild(this.imageelement);
+
+        this.metadata                 = document.createElement("div");
+        this.metadata.classList.add("smallfont");
+        this.titleelement             = document.createElement("span");
+        this.titleelement.textContent = albumname;
+        this.titleelement.classList.add("fgcolor");
+        this.releaseelement           = document.createElement("span");
+        this.releaseelement.textContent=albumrelease
+        this.releaseelement.classList.add("hlcolor");
+
+        this.metadata.appendChild(this.titleelement);
+        this.metadata.appendChild(this.releaseelement);
+
+        this.element                  = document.createElement("div");
+        this.element.classList.add("albumtile");
+        this.element.appendChild(this.imagebox);
+        this.element.appendChild(this.metadata);
+        this.element.onclick = onclick;
+    }
+
+
+
+    GetHTMLElement()
+    {
+        return this.element;
+    }
+}
+
 /*
  *
  * Requirements:

@@ -101,7 +101,7 @@ function CreateVideoTile(MDBVideo, MDBAlbum, MDBArtist, topbuttonbox, bottombutt
 
 class SmallVideoTile
 {
-    constructor(MDBVideo)
+    constructor(MDBVideo, onclick)
     {
         this.imgpath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile, 150, 83);
         this.anipath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.previewfile,   150, 83);
@@ -125,6 +125,7 @@ class SmallVideoTile
         this.element.classList.add("smallvideotile");
         this.element.appendChild(this.imagebox);
         this.element.appendChild(this.titleelement);
+        this.element.onclick = onclick;
     }
 
 

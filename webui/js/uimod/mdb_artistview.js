@@ -76,7 +76,7 @@ class ArtistsView
         }
 
         let lastanchor = document.createElement("div");
-        lastanchor.id  = "BOTTOM_mark";
+        lastanchor.id  = "BTM_mark";
         this.element.appendChild(lastanchor);
 
         window.console && console.log(this.artists);
@@ -99,11 +99,17 @@ class ArtistsView
             let tile;
             if(this.mode == "audio")
             {
-                // TODO
+                tile = new AlbumTile(entry.album, ()=>
+                    {
+                        MusicDB_Request("GetAlbum", "ShowAlbum",{albumid:entry.album.id});
+                    });
             }
             else
             {
-                tile = new SmallVideoTile(entry.video);
+                tile = new SmallVideoTile(entry.video, ()=>
+                    {
+                        MusicDB_Request("GetVideo", "ShowVideo",{videoid:entry.video.id});
+                    });
             }
 
             artistelement.appendChild(tile.GetHTMLElement());
