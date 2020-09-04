@@ -156,6 +156,46 @@ class ArtistsView
 
 
 
+    /*
+     * This method does two things:
+     *  If the genre is valid but the tile does not exist -> Request new aritsts list
+     *  If the genre is not valid but the tile does exist -> Request new artists list
+     */
+    ValidateTile(MDBMusic, MDBGenres)
+    {
+        let musicid      = MDBMusic.id;
+        let tile         = this.tiles[musicid];
+        let activegenres = tagmanager.GetActiveGenres();
+
+        for(let genre of MDBGenres)
+        {
+            let found = activegenres.find(activegenre => activegenre.id == genre.id);
+            if(found) // Genre is OK, but does the tile exist?
+            {
+                if(tile === undefined)
+                    this.RequestUpdate();
+                return; // OK, Tile is still valid
+            }
+        }
+
+        // Genres are no longer active. Does the tile still exist?
+        if(tile !== undefined)
+            this.RequestUpdate();
+        
+        return;
+    }
+
+    RequestUpdate()
+    {
+        let mode = mdbmodemanager.GetCurrentMode();
+        if(mode == "audio")
+            MusicDB_Broadcast("GetFilteredArtistsWithAlbums", "ShowArtists");
+        else if(mode == "video")
+            MusicDB_Broadcast("GetFilteredArtistsWithVideos", "ShowArtists");
+    }
+
+
+
     onMusicDBMessage(fnc, sig, args, pass)
     {
         if(fnc == "GetFilteredArtistsWithAlbums" && sig == "ShowArtists")
@@ -168,12 +208,16 @@ class ArtistsView
             this.mode = "video";
             this.Update(args);
         }
-        else if(fnc == "GetVideo" && sig == "UpdateVideo") // There may be some changes regarding the flags
+        else if(fnc == "GetVideo")
         {
             if(this.mode != "video")
                 return;
 
-            this.UpdateTile(args.video, args.tags);
+            if(sig == "UpdateVideo") // There may be some changes regarding the flags
+                this.UpdateTile(args.video, args.tags);
+
+            if(sig == "UpdateTagInput") // Is the main genre set still intersecting the selected genres?
+                this.ValidateTile(args.video, args.tags.genres);
         }
         return;
     }

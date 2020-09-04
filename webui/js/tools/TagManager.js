@@ -20,7 +20,8 @@ class TagManager
 {
     constructor()
     {
-        this.tagcache = null;
+        this.tagcache     = null;
+        this.activegenres = null;
     }
 
 
@@ -37,6 +38,21 @@ class TagManager
                         return -1;
                 return 0;
             });
+    }
+    UpdateActiveGenres(albumfilter)
+    {
+        if(this.tagcache == null)
+            return;
+
+        this.activegenres = new Array();
+        let  genres       = this.GetGenres();
+        for(let genrename of albumfilter)
+        {
+            let activegenre = genres.find(genre => genre.name == genrename);
+            this.activegenres.push(activegenre);
+        }
+
+        return;
     }
 
 
@@ -58,6 +74,11 @@ class TagManager
         return this.tagcache.moods;
     }
 
+    GetActiveGenres()
+    {
+        return this.activegenres;
+    }
+
 
 
     onMusicDBMessage(fnc, sig, args, pass)
@@ -65,6 +86,10 @@ class TagManager
         if(fnc == "GetTags")
         {
             this.UpdateCache(args);
+        }
+        else if(fnc == "GetMDBState" && sig == "UpdateMDBState")
+        {
+            this.UpdateActiveGenres(args.albumfilter);
         }
     }
 }
