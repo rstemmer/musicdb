@@ -136,8 +136,6 @@ class VideoTile
     {
         let newflagbarelement = newflagbar.GetHTMLElement();
         let oldflagbarelement = this.element.getElementsByClassName("FlagBar")[0];
-        window.console && console.log(newflagbarelement);
-        window.console && console.log(oldflagbarelement);
         this.element.replaceChild(newflagbarelement, oldflagbarelement);
     }
 
