@@ -21,7 +21,7 @@
     height:         100%;
 }
 
-.smallvideotile div
+.smallvideotile > div:first-child
 {
     border-radius:  var(--radius);
     overflow:       hidden;

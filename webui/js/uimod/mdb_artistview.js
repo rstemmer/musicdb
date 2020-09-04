@@ -47,7 +47,6 @@ class ArtistsView
         for(let entry of MDBArtistList)
         {
             // Create artists entry
-            window.console && console.log(entry);
             let artist   = entry.artist;
 
             // Get music content from artist
@@ -78,8 +77,6 @@ class ArtistsView
         let lastanchor = document.createElement("div");
         lastanchor.id  = "BTM_mark";
         this.element.appendChild(lastanchor);
-
-        window.console && console.log(this.artists);
         return;
     }
 
@@ -93,7 +90,6 @@ class ArtistsView
         let headline = this._CreateArtistHeadline(artist)
         artistelement.appendChild(headline);
 
-        window.console && console.log(music);
         for(let entry of music)
         {
             let tile;
@@ -106,10 +102,12 @@ class ArtistsView
             }
             else
             {
-                tile = new SmallVideoTile(entry.video, ()=>
+                tile = new VideoTile(entry.video, ()=>
                     {
                         MusicDB_Request("GetVideo", "ShowVideo",{videoid:entry.video.id});
-                    });
+                    },
+                    new FlagBar(entry.video, entry.tags.moods)
+                    );
             }
 
             artistelement.appendChild(tile.GetHTMLElement());
