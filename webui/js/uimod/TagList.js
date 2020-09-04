@@ -467,11 +467,16 @@ class TagSelection
             if(similarity > 0.5)
             {
                 element.dataset.highlight = true;
-                foundtags.push({tagobject: tagobject, mdbtag: dbentry});
             }
             else
             {
                 element.dataset.highlight = false;
+            }
+
+            // 2nd: Add all exact matched
+            if(string === tagname)
+            {
+                foundtags.push({tagobject: tagobject, mdbtag: dbentry});
             }
         }
 
