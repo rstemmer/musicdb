@@ -24,6 +24,7 @@ class ArtistsView
         this.element.classList.add("flex-row");
         this.element.classList.add("artistsview");
         this.mode    = null; // Gets defined in the onMusicDBMessage method
+        this.tiles   = null; // Will be set during rendering the tiles
     }
 
 
@@ -37,8 +38,9 @@ class ArtistsView
 
     Update(MDBArtistList)
     {
-        let  anchor    = " ";   // track first letter of the artistname to set jumpmarks
+        let  anchor     = " ";   // track first letter of the artistname to set jumpmarks
 
+        this.tiles      = new Object();
         this.element.innerHTML = "";
         let firstanchor = document.createElement("div");
         firstanchor.id  = "TOP_mark";
@@ -93,23 +95,27 @@ class ArtistsView
         for(let entry of music)
         {
             let tile;
+            let musicid;
             if(this.mode == "audio")
             {
+                musicid = entry.album.id;
                 tile = new AlbumTile(entry.album, ()=>
                     {
-                        MusicDB_Request("GetAlbum", "ShowAlbum",{albumid:entry.album.id});
+                        MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: musicid});
                     });
             }
             else
             {
+                musicid = entry.video.id;
                 tile = new VideoTile(entry.video, ()=>
                     {
-                        MusicDB_Request("GetVideo", "ShowVideo",{videoid:entry.video.id});
+                        MusicDB_Request("GetVideo", "ShowVideo", {videoid: musicid});
                     },
                     new FlagBar(entry.video, entry.tags.moods)
                     );
             }
 
+            this.tiles[musicid] = tile;
             artistelement.appendChild(tile.GetHTMLElement());
         }
 
@@ -134,6 +140,18 @@ class ArtistsView
     {
         let element = document.getElementById("Artist_" + artistid);
         element.scrollIntoView({behavior: "smooth"});
+        return;
+    }
+
+
+
+    UpdateTile(MDBMusic, MDBTags)
+    {
+        let musicid = MDBMusic.id;
+        let tile    = this.tiles[musicid];
+        let flagbar = new FlagBar(MDBMusic, MDBTags.moods);
+        tile.ReplaceFlagBar(flagbar);
+        return;
     }
 
 
@@ -150,6 +168,14 @@ class ArtistsView
             this.mode = "video";
             this.Update(args);
         }
+        else if(fnc == "GetVideo" && sig == "UpdateVideo") // There may be some changes regarding the flags
+        {
+            if(this.mode != "video")
+                return;
+
+            this.UpdateTile(args.video, args.tags);
+        }
+        return;
     }
 }
 
