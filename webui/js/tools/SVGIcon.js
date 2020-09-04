@@ -26,6 +26,15 @@ class SVGIcon
     {
         this.icon.style.backgroundColor = htmlcolor;
     }
+
+    Show()
+    {
+        this.icon.style.display = "block";
+    }
+    Hide()
+    {
+        this.icon.style.display = "none";
+    }
 }
 
 
