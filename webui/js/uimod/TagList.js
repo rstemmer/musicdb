@@ -234,6 +234,12 @@ class TagListEdit
         this.tagselect  = new TagSelection(tagtype);
         this.listbutton = new SVGButton("DropDown", ()=>{this.tagselect.ToggleSelectionList();});
         this.listbutton.SetTooltip("Show available tags");
+        if(this.tagtype == "genre")
+        {
+            this.createbutton = new SVGButton("Add", ()=>{this.CreateTag();});
+            this.createbutton.SetTooltip("Create new tag");
+            this.createbutton.Hide();
+        }
 
         this.element    = document.createElement("div");
         this.element.classList.add("tagedit");
@@ -244,6 +250,10 @@ class TagListEdit
         this.element.appendChild(this.infoicon.GetHTMLElement());
         this.element.appendChild(this.tagview.GetHTMLElement());
         this.element.appendChild(this.taginput);
+        if(this.tagtype == "genre")
+        {
+            this.element.appendChild(this.createbutton.GetHTMLElement());
+        }
         this.element.appendChild(this.listbutton.GetHTMLElement());
         this.element.appendChild(this.tagselect.GetHTMLElement());
     }
@@ -266,6 +276,10 @@ class TagListEdit
             this.tagview.Update(musictype, musicid, MDBTags.subgenres);
 
         this.tagselect.Update(musictype, musicid, MDBTags);
+        this.tagselect.Hide();
+
+        if(this.tagtype == "genre")
+            this.createbutton.Hide();
         return;
     }
 
@@ -280,11 +294,28 @@ class TagListEdit
             result[0].tagobject.onClick(); // == Add Tag
             this.taginput.value = "";
             this.tagselect.Hide();
+            this.createbutton.Hide();
         }
         else
         {
             this.tagselect.Show();
+            this.createbutton.Show();
         }
+    }
+
+
+
+    CreateTag()
+    {
+        // Create Tag
+        let tagname = this.taginput.value;
+        MusicDB_Request("AddGenre", "NewGenre", {name: tagname});
+        // Clean user interface
+        this.taginput.value = "";
+        this.tagselect.Hide();
+        this.createbutton.Hide();
+
+        // Show info that tag was creates (allow undo)
     }
 }
 
