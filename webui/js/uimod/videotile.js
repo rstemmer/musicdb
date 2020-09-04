@@ -132,6 +132,11 @@ class VideoTile
         if(flagbar !== undefined)
             this.element.appendChild(flagbar.GetHTMLElement());
         this.element.onclick = onclick;
+
+        if(MDBVideo.disabled)
+        {
+            this.imageelement.classList.add("disabled");
+        }
     }
 
 

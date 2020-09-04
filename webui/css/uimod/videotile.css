@@ -30,6 +30,11 @@
     height:          85px; /* 16:9 */
 }
 
+.smallvideotile img.disabled
+{
+    filter:         brightness(70%) saturate(0%) !important;
+}
+
 .smallvideotile > .ButtonBox
 {
     position:       absolute;
