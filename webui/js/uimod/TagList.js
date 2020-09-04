@@ -233,6 +233,7 @@ class TagListEdit
         this.taginput.oninput = ()=>{this.Find(this.taginput.value);};
         this.tagselect  = new TagSelection(tagtype);
         this.listbutton = new SVGButton("DropDown", ()=>{this.tagselect.ToggleSelectionList();});
+        this.listbutton.SetTooltip("Show available tags");
 
         this.element    = document.createElement("div");
         this.element.classList.add("tagedit");
