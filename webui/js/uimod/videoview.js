@@ -212,7 +212,6 @@ class VideoView
 
         this.genreedit.Update(   "video", this.currentvideoid, MDBTags);
         this.subgenreedit.Update("video", this.currentvideoid, MDBTags);
-        this.cachedMDBTags = MDBTags;
 
         this.colorsettings.SetColors(MDBVideo.bgcolor, MDBVideo.fgcolor, MDBVideo.hlcolor);
     }
@@ -237,10 +236,6 @@ class VideoView
                 if(args.video.id == this.currentvideoid)
                     this.UpdateInformation(args.video, args.artist, args.tags);
             }
-        }
-        else if(fnc == "GetTags" && sig == "NewGenre")
-        {
-            this.genreedit.Update(   "video", this.currentvideoid, this.cachedMDBTags);
         }
         return;
     }

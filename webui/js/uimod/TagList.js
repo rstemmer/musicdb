@@ -309,13 +309,14 @@ class TagListEdit
     {
         // Create Tag
         let tagname = this.taginput.value;
-        MusicDB_Request("AddGenre", "NewGenre", {name: tagname});
+        if(this.tagtype == "genre")
+            MusicDB_Request("AddGenre", "NewGenre", {name: tagname});
+
         // Clean user interface
         this.taginput.value = "";
         this.tagselect.Hide();
         this.createbutton.Hide();
-
-        // Show info that tag was creates (allow undo)
+        return;
     }
 }
 
@@ -329,6 +330,7 @@ class TagSelection
         this.tagtype    = tagtype;
         this.musictype  = null;
         this.musicid    = null;
+        this.mdbtags    = null;
 
         this.listbox    = document.createElement("div");
         this.listbox.classList.add("tagselect");
@@ -508,19 +510,24 @@ class TagSelection
 
 
     // MDBTags: All tags including .genres and .subgenres
+    // All parameters are optional. If not given, they are used from a previous call
     Update(musictype, musicid, MDBTags)
     {
-        this.musictype = musictype;
-        this.musicid   = musicid;
+        if(musictype !== undefined)
+            this.musictype = musictype;
+        if(musicid !== undefined)
+            this.musicid   = musicid;
+        if(MDBTags !== undefined)
+            this.mdbtags   = MDBTags;
 
         let listelement;
         if(this.tagtype == "genre")
         {
-            listelement = this._CreateGenreList(MDBTags.genres);
+            listelement = this._CreateGenreList(this.mdbtags.genres);
         }
         else if(this.tagtype == "subgenre")
         {
-            listelement = this._CreateSubgenreList(MDBTags.genres, MDBTags.subgenres);
+            listelement = this._CreateSubgenreList(this.mdbtags.genres, this.mdbtags.subgenres);
         }
 
         this.listbox.innerHTML = "";
