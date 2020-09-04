@@ -90,7 +90,7 @@ class ArtistsView
         artistelement.classList.add("artistentry")
 
         // Add artist headline
-        let headline = this._CreateArtistHeadline(artist.name)
+        let headline = this._CreateArtistHeadline(artist)
         artistelement.appendChild(headline);
 
         window.console && console.log(music);
@@ -120,13 +120,22 @@ class ArtistsView
 
 
 
-    _CreateArtistHeadline(artistname)
+    _CreateArtistHeadline(MDBArtist)
     {
         // Add artist headline
         let headline = document.createElement("span");
         headline.classList.add("fgcolor");
-        headline.innerText = artistname;
+        headline.innerText = MDBArtist.name;
+        headline.id        = "Artist_" + MDBArtist.id;
         return headline;
+    }
+
+
+
+    ScrollToArtist(artistid)
+    {
+        let element = document.getElementById("Artist_" + artistid);
+        element.scrollIntoView({behavior: "smooth"});
     }
 
 

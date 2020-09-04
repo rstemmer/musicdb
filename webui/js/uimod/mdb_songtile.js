@@ -53,7 +53,7 @@ function CreateSongTile(MDBSong, MDBAlbum, MDBArtist, topbuttonbox, bottombutton
         // Artistname
         html += "<div class=\"ST_subtitle smallfont\">";
         html += "<span ";
-        html += " onClick=\'ScrollToArtist("+artistid+");\'";
+        html += " onClick=\'artistsview.ScrollToArtist("+artistid+");\'";
         html += " title=\"Scroll to this artist\"";
         html += " class=\"ST_artistname hlcolor\">";
         html += artistname;

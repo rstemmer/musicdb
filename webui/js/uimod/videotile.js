@@ -54,7 +54,7 @@ function CreateVideoTile(MDBVideo, MDBAlbum, MDBArtist, topbuttonbox, bottombutt
         // Artist name
         html += "<div class=\"ST_subtitle smallfont\">";
         html += "<span ";
-        html += " onClick=\'ScrollToArtist("+artistid+");\'";
+        html += " onClick=\'artistsview.ScrollToArtist("+artistid+");\'";
         html += " title=\"Scroll to this artist\"";
         html += " class=\"ST_artistname hlcolor\">";
         html += artistname;
