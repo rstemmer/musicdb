@@ -6,12 +6,6 @@
   font-style: normal;
 }
 @font-face {
-  font-family: 'Silkscreen';
-  src: url('../fonts/slkscr.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
   font-family: 'SourceSansPro';
   src: url('../fonts/SourceSansPro-Regular.otf.woff') format('woff');
   font-weight: normal;
