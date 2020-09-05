@@ -30,7 +30,7 @@ class GenreSelectionView
         this.element.classList.add("hlcolor");
         this.element.classList.add("smallfont");
         this.element.classList.add("hovpacity");
-        this.element.classList.add("genreselectionview");
+        this.element.classList.add("GenreSelectionView");
     }
 
 
