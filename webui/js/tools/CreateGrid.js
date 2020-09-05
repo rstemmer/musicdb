@@ -51,6 +51,22 @@ class Grid
         this.tablecells[row][column].appendChild(element);
         return;
     }
+
+    InsertText(column, row, string)
+    {
+        let textelement       = document.createElement("span");
+        textelement.innerText = string;
+        this.InsertElement(column, row, textelement);
+    }
+
+    InsertLink(column, row, name, url, target)
+    {
+        let linkelement       = document.createElement("a");
+        linkelement.innerText = name;
+        linkelement.href      = url;
+        linkelement.target    = target;
+        this.InsertElement(column, row, linkelement);
+    }
 }
 
 
