@@ -151,6 +151,11 @@ class ArtistsView
         let tile    = this.tiles[musicid];
         let flagbar = new FlagBar(MDBMusic, MDBTags.moods);
         tile.ReplaceFlagBar(flagbar);
+
+        if(MDBMusic.disabled)
+            tile.SetDisabled();
+        else
+            tile.SetEnabled();
         return;
     }
 

@@ -134,9 +134,9 @@ class VideoTile
         this.element.onclick = onclick;
 
         if(MDBVideo.disabled)
-        {
-            this.imageelement.classList.add("disabled");
-        }
+            this.SetDisabled();
+        else
+            this.SetEnabled();
     }
 
 
@@ -145,6 +145,15 @@ class VideoTile
         let newflagbarelement = newflagbar.GetHTMLElement();
         let oldflagbarelement = this.element.getElementsByClassName("FlagBar")[0];
         this.element.replaceChild(newflagbarelement, oldflagbarelement);
+    }
+
+    SetEnabled()
+    {
+        this.element.dataset.enabled = true;
+    }
+    SetDisabled()
+    {
+        this.element.dataset.enabled = false;
     }
 
 
