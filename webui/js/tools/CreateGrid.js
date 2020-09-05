@@ -67,6 +67,13 @@ class Grid
         linkelement.target    = target;
         this.InsertElement(column, row, linkelement);
     }
+
+
+
+    MergeRow(row)
+    {
+        this.tablecells[row][0].colSpan = this.columns;
+    }
 }
 
 
