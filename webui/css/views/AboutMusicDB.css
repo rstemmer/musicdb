@@ -95,7 +95,7 @@
 
 
 
-.AboutMusicDB > button
+.AboutMusicDB button
 {
     display:            block;
 
@@ -104,10 +104,9 @@
     border-radius:      var(--radius);
     filter:             drop-shadow(0.1rem 0.1rem 0.1rem #111);
 
-    margin-left:        6.0em;
     padding:            1.0em;
 }
-.AboutMusicDB > button:hover, .AboutMusicDB button:focus
+.AboutMusicDB button:hover, .AboutMusicDB button:focus
 {
     background:         linear-gradient(-30deg, #499620, #9cc87a);
 }
@@ -116,6 +115,7 @@
 
 .AboutMusicDB a
 {
+    display:            block;
     color:              var(--color-white);
     text-decoration:    none;
 }
@@ -140,6 +140,49 @@
     color:              transparent;
 }
 .AboutMusicDB a:hover, .AboutMusicDB a:focus
+{
+    background:         linear-gradient(-30deg, #499620, #9cc87a);
+    background-clip:    text;
+    color:              transparent;
+}
+
+
+
+.AboutMusicDB .latestversion::after
+{
+    content:            " ";
+    display:            inline-block;
+    height:             1.0rem;
+    width:              1.0rem;
+    vertical-align:     middle;
+    margin-left:        1.5ch;
+}
+.AboutMusicDB .latestversion[data-updaterequired=true]::after
+{
+    mask:               url("../../img/icons/StatusBad.svg");
+    background-color:   var(--color-red);
+}
+.AboutMusicDB .latestversion[data-updaterequired=false]::after
+{
+    mask:               url("../../img/icons/StatusGood.svg");
+    background-color:   var(--color-green);
+}
+
+.AboutMusicDB .versionmessage
+{
+    display:            block;
+
+    border-radius:      var(--radius);
+    background-clip:    text;
+    color:              transparent;
+}
+.AboutMusicDB .versionmessage[data-updaterequired=true]
+{
+    background:         linear-gradient(-30deg, #962020, #c87a80);
+    background-clip:    text;
+    color:              transparent;
+}
+.AboutMusicDB .versionmessage[data-updaterequired=false]
 {
     background:         linear-gradient(-30deg, #499620, #9cc87a);
     background-clip:    text;

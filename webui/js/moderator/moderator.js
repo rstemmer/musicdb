@@ -37,7 +37,7 @@ mainmenu.CreateButton(
         }
     );
 mainmenu.CreateButton(
-    new SVGIcon("Reload"), "About MusicDB", ()=>
+    new SVGIcon("MusicDB"), "About MusicDB", ()=>
         {
             let mainviewbox = document.getElementById("MiddleContentBox");
             mainviewbox.innerHTML = "";

@@ -24,6 +24,10 @@ class AboutMusicDB
 {
     constructor()
     {
+        this.major          = parseInt(MUSICDB_VERSION.split(".")[0]);
+        this.minor          = parseInt(MUSICDB_VERSION.split(".")[1]);
+        this.patch          = parseInt(MUSICDB_VERSION.split(".")[2]);
+
         this.logo           = document.createElement("img");
         this.logo.src       = "img/mdblogo-dark.svg";
 
@@ -31,7 +35,7 @@ class AboutMusicDB
 
         // Version Information
         this.versionheadline= this._CreateHeadline("h2", "Version");
-        this.versions       = new Grid(2, 2);
+        this.versions       = new Grid(3, 3);
         this.versions.InsertText(0, 0, "MusicDB");
         this.versions.InsertText(1, 0, MUSICDB_VERSION);
         this.versions.InsertText(0, 1, "WebUI");
@@ -41,6 +45,9 @@ class AboutMusicDB
         this.button.innerText= "Check for Updates";
         this.button.title   = "Compares the VERSION file on GitHub with the Installed MusicDB Version";
         this.button.onclick = ()=>{this.CheckForUpdate();};
+
+        this.versions.MergeRow(2);
+        this.versions.InsertElement(0, 2, this.button);
 
         // Online Information
         this.linksheadline  = this._CreateHeadline("h2", "Links");
@@ -66,7 +73,7 @@ class AboutMusicDB
         this.element.appendChild(this.headline);
         this.element.appendChild(this.versionheadline);
         this.element.appendChild(this.versions.GetHTMLElement());
-        this.element.appendChild(this.button);
+        //this.element.appendChild(this.button);
         this.element.appendChild(this.linksheadline);
         this.element.appendChild(this.links.GetHTMLElement());
     }
@@ -92,7 +99,7 @@ class AboutMusicDB
     CheckForUpdate()
     {
         let request = new XMLHttpRequest();
-        request.open("GET", "http://127.0.0.1/musicdb/webui/moderator.html", true /*Async*/);
+        request.open("GET", "https://raw.githubusercontent.com/rstemmer/musicdb/master/VERSION", true /*Async*/);
         request.send(null);
         request.onreadystatechange = ()=>
             {
@@ -110,11 +117,42 @@ class AboutMusicDB
 
     onMasterVersionFileReceived(versionfile)
     {
-        window.console && console.log(versionfile);
-        versionfile  = "";
-        versionfile += "7.0.0 - SEE CHANGELOG";
-        versionfile += "6.0.0 - SEE CHANGELOG";
-        versionfile += "5.2.2 - [artwork] Fixed wrong interpretation of relative path arguments";
+        let firstline     = versionfile.split("\n")[0];
+        let versionnumber = firstline.split(" ")[0];
+        let major         = parseInt(versionnumber.split(".")[0]);
+        let minor         = parseInt(versionnumber.split(".")[1]);
+        let patch         = parseInt(versionnumber.split(".")[2]);
+
+        let updaterequired = false;
+        if(this.major < major)
+            updaterequired = true;
+        else if(this.major == major)
+        {
+            if(this.minor < minor)
+                updaterequired = true;
+            else if(this.minor == minor)
+            {
+                if(this.patch < patch)
+                    updaterequired = true;
+            }
+        }
+
+        let latestversion = document.createElement("span");
+        latestversion.innerText = versionnumber;
+        latestversion.classList.add("latestversion");
+        latestversion.dataset.updaterequired = updaterequired;
+
+        let message = document.createElement("div")
+        message.classList.add("versionmessage");
+        message.dataset.updaterequired = updaterequired;
+        if(updaterequired)
+            message.innerText = "Update Recommended";
+        else
+            message.innerText = "Latest Version Installed";
+
+        // Show latest version and hide "check for update" button
+        this.versions.InsertElement(2, 0, latestversion);
+        this.versions.InsertElement(0, 2, message);
     }
 
     onMusicDBMessage(fnc, sig, args, pass)
