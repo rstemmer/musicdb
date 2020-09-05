@@ -14,20 +14,25 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
-.FlagBar
+.SVGIcon
 {
-    font-family:    DejaVuSans;  /* for best unicode support */
-    height:         1.0em;
+    background-color:   var(--hlcolor);
+    width:              1.0em;
+    height:             1.0em;
+    font-family:        DejaVuSans;  /* To have a uniform font style with the mood flags */
+}
+.SVGIcon[data-selected=false]
+{
+    opacity:            0.5;
+}
+.SVGIcon[data-selected=true]
+{
+    opacity:            1.0;
 }
 
-.FlagBar > div + div
-{
-    margin-left:    1ch;
-}
 
-
-/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
 

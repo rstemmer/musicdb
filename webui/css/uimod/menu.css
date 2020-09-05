@@ -12,10 +12,9 @@ div.menutogglebutton
 {
 }
 
-div.menutogglebutton .icon
+div.menutogglebutton .SVGIcon
 {
     margin-left:        auto;
-    background-color:   var(--hlcolor);
     width:              1.5em;
     height:             1.5em;
 }
@@ -41,10 +40,9 @@ div.menuentry
     vertical-align:     middle;
 }
 
-div.menuentry > .icon
+div.menuentry > .SVGIcon
 {
     display:            inline-block;
-    background-color:   var(--hlcolor);
     width:              1.5em;
     height:             1.5em;
     margin-right:       1.5ch;
@@ -81,27 +79,27 @@ div.menuentry > .icon
 .menu .sectionbody div[data-state=unknown]::after
 {
     mask:               url("../../img/icons/StatusUnknown.svg");
-    background-color:   #5E5E1F;
+    background-color:   var(--color-yellow);
 }
 .menu .sectionbody div[data-state=bad]::after
 {
     mask:               url("../../img/icons/StatusBad.svg");
-    background-color:   #5E1F1F;
+    background-color:   var(--color-red);
 }
 .menu .sectionbody div[data-state=paused]::after
 {
     mask:               url("../../img/icons/StatusPaused.svg");
-    background-color:   #5E1F1F;
+    background-color:   var(--color-red);
 }
 .menu .sectionbody div[data-state=good]::after
 {
     mask:               url("../../img/icons/StatusGood.svg");
-    background-color:   #1F5E29;
+    background-color:   var(--color-green);
 }
 .menu .sectionbody div[data-state=playing]::after
 {
     mask:               url("../../img/icons/StatusPlaying.svg");
-    background-color:   #1F5E29;
+    background-color:   var(--color-green);
 }
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 

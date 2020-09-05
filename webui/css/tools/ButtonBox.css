@@ -20,12 +20,7 @@
 {
 }
 
-.ButtonBox > .icon
-{
-    width:              1.0em;
-    height:             1.0em;
-}
-.ButtonBox > .icon + .icon
+.ButtonBox > .SVGIcon + .SVGIcon
 {
     margin-left:        1ch;
 }

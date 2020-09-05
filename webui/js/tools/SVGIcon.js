@@ -8,7 +8,7 @@ class SVGIcon
         let maskurl  = `url("img/icons/${name}.svg");`;
 
         this.icon    = document.createElement("div");
-        this.icon.classList.add("icon");
+        this.icon.classList.add("SVGIcon");
         this.icon.style.cssText = "mask: "+maskurl;
     }
 
@@ -81,6 +81,24 @@ class SVGToggleButton extends SVGIcon
     SetSelectionState(state)
     {
         this.icon.dataset.selected = state;
+    }
+}
+
+
+
+class UnicodeToggleButton extends SVGToggleButton
+{
+    constructor(character, onclick)
+    {
+        super("", onclick);
+
+        // Destroy SVG icon
+        this.icon.classList.remove("SVGIcon")
+        this.icon.style.cssText = "";
+
+        // Create Unicode icon
+        this.icon.innerText     = character;
+        this.icon.classList.add("unicodeicon");
     }
 }
 

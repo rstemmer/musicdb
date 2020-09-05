@@ -19,6 +19,12 @@
     margin-left:        1ch;
 }
 
+.tagedit > .SVGIcon
+{
+    width:              1.5em;
+    height:             1.5em;
+}
+
 
 
 .tagselect
@@ -47,7 +53,7 @@
     background-color:   var(--hlcolor);
     color:              var(--bgcolor);
 }
-.tagselect .tag[data-highlight=true] > .icon
+.tagselect .tag[data-highlight=true] > .SVGIcon
 {
     background-color:   var(--bgcolor);
 }
@@ -79,12 +85,6 @@
 .tag div + div
 {
     margin-left:        1ch;
-}
-
-.tag > .icon
-{
-    width:              1em;
-    height:             1em;
 }
 
 

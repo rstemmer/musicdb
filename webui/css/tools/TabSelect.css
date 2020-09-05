@@ -23,12 +23,17 @@
     padding:        0.5em 2ch;
     margin:         0     1ch;
 }
+.tabbutton > .SVGIcon
+{
+    width:          1.5em;
+    height:         1.5em;
+}
 
 .tabbutton[data-selected=true]
 {
     background-color:   var(--hlcolor);
 }
-.tabbutton[data-selected=true] > .icon
+.tabbutton[data-selected=true] > .SVGIcon
 {
     background-color:   var(--bgcolor);
 }

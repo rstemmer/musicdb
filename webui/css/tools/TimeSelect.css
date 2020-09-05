@@ -19,11 +19,13 @@ div.timeselect
     width:          5ch;
 }
 
-.timeselect > .icon
+.timeselect > .SVGIcon
 {
     display:        inline-block;
     flex-shrink:    0;
     margin:         0 0.3em;
+    width:          1.5em;
+    height:         1.5em;
 }
 
 .timeselect > .slidebar

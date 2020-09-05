@@ -16,22 +16,6 @@
 
 "use strict";
 
-class UnicodeToggleButton extends SVGToggleButton
-{
-    constructor(character, onclick)
-    {
-        super("", onclick);
-
-        // Destroy SVG icon
-        this.icon.classList.remove("icon")
-        this.icon.style.cssText = "";
-
-        // Create Unicode icon
-        this.icon.innerText     = character;
-        this.icon.classList.add("unicodeicon");
-    }
-}
-
 class MusicMoods
 {
     constructor(musictype)

@@ -1,10 +1,10 @@
 
 .musicmoods
 {
-    font-family: "DejaVuSans";  /* for best unicode support */
+    font-family: DejaVuSans;  /* for best unicode support */
 }
 
-.musicmoods .icon, .musicmoods .unicodeicon
+.musicmoods .unicodeicon
 {
     width:      1.0em;
     height:     1.0em;

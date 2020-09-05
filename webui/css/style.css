@@ -79,20 +79,6 @@
     font-family:    SourceSerifPro;
 }
 
-.icon
-{
-    background-color:   var(--hlcolor);
-    width:              1.5em;
-    height:             1.5em;
-}
-.icon[data-selected=false]
-{
-    opacity:            0.5;
-}
-.icon[data-selected=true]
-{
-    opacity:            1.0;
-}
 
 .unicodeicon
 {
