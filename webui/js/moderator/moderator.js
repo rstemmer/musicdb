@@ -2,55 +2,135 @@
 var currentsongid   = null; // \_ track current album and song
 var currentalbumid  = null; // /
 
+// Create Basic MusicDB WebUI Components
+let fullscreenmanager   = new FullscreenManager();
+let mdbmodemanager      = new MDBModeManager();
+let tagmanager          = new TagManager();
+let musicdbhud          = new MusicDBHUD();
+let genreselectionview  = new GenreSelectionView();
+let videostreamplayer   = new VideoStreamPlayer();
+let musicdbstatus       = new MusicDBStatus();
+let musicdbcontrols     = new MusicDBControls();
+let queuetimemanager    = new QueueTimeManager();
+
+let artistsview         = new ArtistsView();
+let videoview           = new VideoView();
+
+// Create Main Menu
+let mainmenu           = new MainMenu("1em", "1em");
+mainmenu.CreateSwitch(
+    new SVGIcon("EnterFullscreen"), "Enter Fullscreen", ()=>{fullscreenmanager.EnterFullscreen();},
+    new SVGIcon("LeaveFullscreen"), "Leave Fullscreen", ()=>{fullscreenmanager.LeaveFullscreen();}
+    );
+let entryid = mainmenu.CreateSwitch(
+    new SVGIcon("Switch2Video"), "Switch to Video Mode", ()=>{mdbmodemanager.SetVideoMode();},
+    new SVGIcon("Switch2Audio"), "Switch to Audio Mode", ()=>{mdbmodemanager.SetAudioMode();}
+    );
+mainmenu.CreateButton(
+    new SVGIcon("Reload"), "Reload Artists", ()=>
+        {
+            if(mdbmodemanager.GetCurrentMode() == "audio")
+                MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+            else
+                MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+        }
+    );
+mainmenu.CreateSection("MusicDB Status", musicdbstatus.GetHTMLElement());
+mainmenu.UpdateMenuEntryList();
+mdbmodemanager.SetMainMenuHandler(mainmenu, entryid); // This allows updating the menu entry on mode switch from remote
+
+
+
+window.onload = function ()
+{
+    // Do some last DOM changes
+    let HUDparent   = document.getElementById("HUD");
+    HUDparent.appendChild(musicdbhud.GetHTMLElement());
+
+    let genrebox    = document.getElementById("Artistloader");
+    genrebox.appendChild(genreselectionview.GetHTMLElement());
+
+    let videoplayer = document.getElementById("VideoStreamPlayer");
+    videostreamplayer.SetVideoPlayerElement(videoplayer);
+
+    let controlsbox = document.getElementById("Controls");
+    controlsbox.appendChild(musicdbcontrols.GetHTMLElement());
+
+    let queuetimebar= document.getElementById("MDBQueueTimeBar");
+    queuetimebar.appendChild(queuetimemanager.GetHTMLElement());
+
+    let artistviewbox   = document.getElementById("LeftContentBox");
+    artistviewbox.appendChild(artistsview.GetHTMLElement());
+
+    document.body.appendChild(mainmenu.GetHTMLElement());
+    document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
+
+
+    // Connect to MusicDB
+    ConnectToMusicDB();
+
+    // Setup the Views
+    ShowAlphabetBar("Alphabetbar");
+    ShowQueueControls("QueueControl");
+    ShowSearchInput("Search");
+    CreateIntersectionObserver("detachable_trigger", onDetachableTriggerIntersection);
+}
+
 function onMusicDBConnectionOpen()
 {
-    SetMusicDBOnlineState("yes", "yes"); // MusicDB, IceCast
     window.console && console.log("[MDB] Open");
+    musicdbstatus.onMusicDBConnectionOpen();
+
     MusicDB_Request("GetMDBState",  "InitializeWebUI");
 }
 function onMusicDBConnectionError()
 {
-    SetMusicDBOnlineState("error", "unknown"); // MDB, MPD
     window.console && console.log("[MDB] Error");
+    musicdbstatus.onMusicDBConnectionError();
 }
 function onMusicDBWatchdogBarks()
 {
-    SetMusicDBOnlineState("error", "unknown"); // MDB, MPD
     window.console && console.log("[MDB] WD Barks");
+    musicdbstatus.onMusicDBWatchdogBarks();
 }
 function onMusicDBConnectionClosed()
 {
-    SetMusicDBOnlineState("no", "unknown"); // MDB, MPD
     window.console && console.log("[MDB] Closed");
+    musicdbstatus.onMusicDBConnectionClosed();
 }
 
 function onMusicDBNotification(fnc, sig, rawdata)
 {
+    musicdbhud.onMusicDBNotification(fnc, sig, rawdata);
+    musicdbstatus.onMusicDBNotification(fnc, sig, rawdata);
+    queuetimemanager.onMusicDBNotification(fnc, sig, rawdata);
+    videostreamplayer.onMusicDBNotification(fnc, sig, rawdata);
+
     window.console && console.log(sig);
     if(fnc == "MusicDB:AudioStream")
     {
-        // Update state indicator.
-        // TODO: This is now different - updates also come when Icecast connection lost
-        SetMusicDBOnlineState("yes", "yes"); // MDB, MPD
-        
         // Handle notifications
-        if(sig == "onTimeChanged")
+        if(sig == "onStatusChanged")
         {
-            // rawdata is the currently played time of the current song
-            // this method gets called every mpd-poll interval
-            SetTimePlayed(rawdata);
-            // This also updated the Timer-View
-        }
-        else if(sig == "onStatusChanged")
-        {
-            MusicDB_Request("GetStreamState", "UpdateStreamState");
+            MusicDB_Request("GetAudioStreamState", "UpdateStreamState");
         }
     }
-    else if (fnc == "MusicDB:SongQueue")
+    else if(fnc == "MusicDB:VideoStream")
+    {
+        if(sig == "onStatusChanged")
+        {
+            MusicDB_Request("GetVideoStreamState", "UpdateStreamState");
+        }
+        else if(sig == "onStreamNextVideo")
+        {
+            MusicDB_Request("GetVideoStreamState", "UpdateHUD");
+        }
+    }
+    else if(fnc == "MusicDB:SongQueue")
     {
         if(sig == "onSongChanged")
         {
-            MusicDB_Request("GetStreamState", "UpdateStreamState");
+            MusicDB_Request("GetAudioStreamState", "UpdateStreamState");
         }
         else if(sig == "onSongQueueChanged")
         {
@@ -61,7 +141,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
     {
         if(sig == "onVideoChanged")
         {
-            MusicDB_Request("GetStreamState", "UpdateStreamState");
+            MusicDB_Request("GetAudioStreamState", "UpdateStreamState");
         }
         else if(sig == "onVideoQueueChanged")
         {
@@ -71,60 +151,35 @@ function onMusicDBNotification(fnc, sig, rawdata)
 }
 function onMusicDBMessage(fnc, sig, args, pass)
 {
-    // Update state-indicators if some indication passes
-    if(fnc == "GetStreamState")
-    {
-        if(args.isconnected)
-        {
-            SetMusicDBOnlineState("yes", "yes");        // MDB, MPD
-            MDB_EnableWatchdog();
-        }
-        else
-        {
-            SetMusicDBOnlineState("yes", "no");         // MDB, MPD
-            MDB_DisableWatchdog();                      // Stop watchdog when MPD cannot trigger updates
-            // TODO: behavior changed with the new Icecast backend.
-        }
+    // Background objects
+    tagmanager.onMusicDBMessage(fnc, sig, args, pass);
+    mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
+    // Controls
+    musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);
+    musicdbstatus.onMusicDBMessage(fnc, sig, args, pass);
+    // Views
+    musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
+    videostreamplayer.onMusicDBMessage(fnc, sig, args, pass);
+    genreselectionview.onMusicDBMessage(fnc, sig, args, pass);
+    artistsview.onMusicDBMessage(fnc, sig, args, pass);
+    videoview.onMusicDBMessage(fnc, sig, args, pass);
 
-        if(args.isplaying)
-            SetMusicDBPlayingState("playing", null);    // Stream, Client
-        else
-            SetMusicDBPlayingState("paused", null);     // Stream, Client
-    }
-    else
-        window.console && console.log(" >> fnc: "+fnc+"; sig: "+sig);
+    window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");
 
 
     // Handle Messages form the server
     if(fnc == "GetMDBState" && sig == "InitializeWebUI") {
         MusicDB_Request("GetTags",          "UpdateTagsCache");
-        MusicDB_Request("GetStreamState",   "UpdateStreamState");
+        MusicDB_Request("GetAudioStreamState",   "UpdateStreamState");
         MusicDB_Request("GetMDBState",      "UpdateMDBState");
-
-        if(args.MusicDB.uimode == "audio")
-        {
-            MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
-            MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
-        }
-        else if(args.MusicDB.uimode == "video")
-        {
-            MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
-            MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
-        }
     }
 
-    else if(fnc == "GetStreamState" && sig == "UpdateStreamState") {
+    else if(fnc == "GetAudioStreamState" && sig == "UpdateStreamState") {
         if(!args.hasqueue)
         {
             window.console && console.log("There is no queue and no current song!")
             return
         }
-
-        UpdateMusicDBHUD(args.song, args.album, args.artist);
-        Songtags_UpdateMoodControl("MainMoodControl", args.songtags);
-        Songproperties_UpdateControl("MainPropertyControl", args.song, true); // reset like/dislike state
-        Taginput_Show("GenreHUD",    "MainSongGenreView",    args.song.id, args.songtags, "Genre",    "Song");
-        Taginput_Show("SubgenreHUD", "MainSongSubgenreView", args.song.id, args.songtags, "Subgenre", "Song");
 
         // if the song changes, show the new album (or reload for update)
         if(args.song.id != currentsongid)
@@ -136,8 +191,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetMDBState") {
         if(sig == "UpdateMDBState" || sig == "UpdateRelationshipGenreHighlight")
         {
-            UpdateMusicDBMode(args);
-            Artistloader_UpdateState(args);
             UpdateRelationshipGenreHighlight(args);
         }
     }
@@ -145,19 +198,9 @@ function onMusicDBMessage(fnc, sig, args, pass)
         MusicDB_Request("GetTags", "UpdateTagsCache");                  // Update tag cache
         MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists"); // Update artist view
     }
-    else if(fnc == "GetSong"/* && sig == "UpdateSong"*/) {
+    else if(fnc == "GetSong") {
         // Update album view - in case the song is visible right now…
         Albumview_UpdateSong(args.album, args.song, args.tags);
-
-        // Update HUD
-        if(args.song.id == currentsongid)
-        {
-            Songtags_UpdateMoodControl("MainMoodControl", args.tags);
-            Songproperties_UpdateControl("MainPropertyControl", args.song, false); // dont reset like/dislike state
-            Taginput_Show("GenreHUD",    "MainSongGenreView",    args.song.id, args.tags, "Genre",    "Song");
-            Taginput_Show("SubgenreHUD", "MainSongSubgenreView", args.song.id, args.tags, "Subgenre", "Song");
-            UpdateStyle();    // Update new tags
-        }
 
         // Update rest if a tag input element must be updated
         if(sig == "UpdateTagInput")
@@ -168,15 +211,11 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetVideo") {
         if(sig == "ShowVideo")
         {
-            ShowVideo("MiddleContentBox", args.artist, args.album, args.song, args.video, args.tags);
+            UpdateStyle(args.video.bgcolor, args.video.fgcolor, args.video.hlcolor)
         }
         else if(sig == "UpdateVideo" || sig == "UpdateTagInput")
         {
-            //if(args.video.id == currentvideoid)
-            //{
-                UpdateVideoSettings(args.video, args.tags, false);
-                UpdateStyle();    // Update new tags
-            //}
+            UpdateStyle();    // Update new tags
         }
     }
     else if(fnc == "GetSongQueue" && sig == "ShowSongQueue")
@@ -198,11 +237,13 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "Find" && sig == "ShowSearchResults")
         ShowSearchResults(args.artists, args.albums, args.songs);
 
+    /*
     else if(fnc == "GetFilteredArtistsWithAlbums" && sig == "ShowArtists")
         ShowArtists("LeftContentBox", args);
 
     else if(fnc == "GetFilteredArtistsWithVideos" && sig == "ShowArtists")
         ShowArtists("LeftContentBox", args);
+    */
 
     else if(fnc == "GetSongRelationship" && sig == "ShowSongRelationship")
         ShowSongRelationship("MiddleContentBox", args.songid, args.songs);
@@ -215,25 +256,9 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetTags")
     {
         Tagmanager_onGetTags(args);
-        Artistloader_UpdateControl();
-        MusicDB_Request("GetMDBState", "UpdateMDBState"); // Update cached MDB state (Selected Genre)
         Songtags_ShowMoodControl("MoodHUD", "MainMoodControl");
     }
-}
 
-
-window.onload = function ()
-{
-    ConnectToMusicDB();
-    ShowAlphabetBar("Alphabetbar");
-    ShowMusicDBHUD("HUD");
-    Songproperties_ShowControl("PropertyHUD", "MainPropertyControl");
-    ShowMusicDBStateView("State");
-    Artistloader_Show("Artistloader");
-    ShowMPDControls("Controls");
-    ShowQueueControls("QueueControl");
-    ShowSearchInput("Search");
-    ShowFullscreenButton();
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
