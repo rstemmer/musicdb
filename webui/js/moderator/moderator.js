@@ -13,6 +13,7 @@ let musicdbstatus       = new MusicDBStatus();
 let musicdbcontrols     = new MusicDBControls();
 let queuetimemanager    = new QueueTimeManager();
 
+let aboutmusicdb        = new AboutMusicDB();
 let artistsview         = new ArtistsView();
 let videoview           = new VideoView();
 
@@ -33,6 +34,14 @@ mainmenu.CreateButton(
                 MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
             else
                 MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+        }
+    );
+mainmenu.CreateButton(
+    new SVGIcon("Reload"), "About MusicDB", ()=>
+        {
+            let mainviewbox = document.getElementById("MiddleContentBox");
+            mainviewbox.innerHTML = "";
+            mainviewbox.appendChild(aboutmusicdb.GetHTMLElement());
         }
     );
 mainmenu.CreateSection("MusicDB Status", musicdbstatus.GetHTMLElement());
