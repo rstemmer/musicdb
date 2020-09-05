@@ -125,19 +125,7 @@
 
 button
 {
-    margin:             0;
-    padding:            0.2rem 0.4rem;
-    color:              rgba(0,0,0,1.0);
-    background-color:   var(--hlcolor);
-    mix-blend-mode:     exclusion;
-    filter:             drop-shadow(0.1rem 0.1rem 0.1rem #111);
-    border:             0;
-    border-radius:      calc( 0.5em + 0.1rem );                 /* (text size + padding) / 2 */
-}
-
-button + button
-{
-    margin-left:        1ch;
+    border:             none;
 }
 
 .inputbox > button
