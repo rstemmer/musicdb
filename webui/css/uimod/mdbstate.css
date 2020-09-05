@@ -9,6 +9,8 @@ div#MDBReconnectButton
     top:                1em;
     right:              calc(1em + 1.5em + 1em); /* left to menu button*/
     background-color:   #5E5E1F;
+    width:              1.5em;
+    height:             1.5em;
 }
 div#MDBReconnectButton[data-visible=true]
 {
