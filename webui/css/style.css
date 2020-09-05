@@ -27,6 +27,7 @@
     --bgcolor:      #181819;
     --fmcolor:      #779;
     --radius:       0.3em;
+    --borderwidth:  0.1em;
 
     --color-red:    #5E1F1F;
     --color-yellow: #5E5E1F;
@@ -102,10 +103,13 @@
 
 .frame
 {
-    border:         0.1em solid;
-    border-radius:  0.2em;
-    border-color:   var(--fmcolor);
+    border:             var(--borderwidth) solid;
+    border-radius:      var(--radius);
+    border-color:       var(--fmcolor);
+    box-sizing:         border-box;
 }
+
+
 
 .inputbox
 {

@@ -15,7 +15,7 @@
 
 .tabbutton
 {
-    border:         0.1em solid;
+    border:         var(--borderwidth) solid;
     border-color:   var(--fmcolor);
     border-radius:  var(--radius) var(--radius) 0 0;
     border-bottom:  none;
@@ -55,7 +55,7 @@
 
 .tabcontent
 {
-    border:         0.1em solid;
+    border:         var(--borderwidth) solid;
     border-color:   var(--fmcolor);
     border-radius:  var(--radius);
 

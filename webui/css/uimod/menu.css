@@ -23,7 +23,7 @@ div.menuentrylist
 {
     display:            flex;
     flex-direction:     column;
-    border:             1px solid;
+    border:             var(--borderwidth) solid;
     border-color:       var(--fmcolor);
     border-radius:      var(--radius);
     margin-top:         0.3em;
