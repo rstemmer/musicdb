@@ -3,14 +3,12 @@
 /* Main Container */
 /******************/
 
-div#MusicDBHUD
+div.MusicDBHUD
 {
-    display:        flex;
     height:         100%;
     width:          100%;
     align-content:  space-between;
     align-items:    center;
-    flex-direction: row;
 }
 
 
@@ -19,64 +17,45 @@ div#MusicDBHUD
 /* Main Layout    */
 /******************/
 
-div#MDBHUD_AlbumBox
+div.MusicDBHUD .ArtworkBox
 {
     flex-grow:      0;
-    width:          60px;
-    height:         60px;
     margin-left:    8px;
     margin-right:   5px;
-    border-radius:  5px;
+    border-radius:  var(--radius);
     overflow:       hidden;
 }
-div#MDBHUD_InformationBox
+div.MusicDBHUD .ArtworkBox[data-musictype="unknown"]
+{
+    width:          60px;
+    height:         60px;
+}
+div.MusicDBHUD .ArtworkBox[data-musictype="audio"]
+{
+    width:          60px;
+    height:         60px;
+}
+div.MusicDBHUD .ArtworkBox[data-musictype="video"]
+{
+    width:          107px;  /* 16:9 */
+    height:         60px;
+}
+.ArtworkBox > img
+{
+    width:          auto;
+    height:         100%;
+}
+
+
+div.MusicDBHUD .InformationBox
 {
     flex-grow:      1;
     margin-left:    5px;
 }
-div#MDBHUD_PropertiesBox
-{
-    flex-grow: 0;
-}
 
-div#MoodHUD
+div.MusicDBHUD .GenreBox
 {
-    /*
-    font-family: "DejaVuSans";
-    */
-    flex-grow: 0;
-}
-div#PropertyHUD
-{
-    flex-grow: 0;
-}
-div#GenreHUD
-{
-    flex-grow: 0;
-}
-div#SubgenreHUD
-{
-    flex-grow: 0;
-}
-
-div#GenreHUDBox
-{
-    display:            flex;
-    flex-direction:     column;
-    justify-content:    space-around;
-    height:             100%;
-    min-height:         60px;
-    opacity:            0.5;
-}
-
-/******************/
-/* Album-Cover    */
-/******************/
-
-img#MDBHUD_AlbumCover
-{
-    width:  60px;
-    height: 60px;
+    opacity:        0.5;
 }
 
 
@@ -85,14 +64,14 @@ img#MDBHUD_AlbumCover
 /* Song Information */
 /********************/
 
-div.mdbhud_infoelementbox
+div.MusicDBHUD .InformationBoxElement
 {
     white-space:    nowrap;
     overflow:       hidden;
     vertical-align: middle;
 }
 
-div.mdbhud_infoelementbox .SVGIcon
+div.MusicDBHUD .InformationBoxElement .SVGIcon
 {
     display:            inline-block;
     margin-right:       1ch;

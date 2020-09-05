@@ -6,6 +6,7 @@ class MusicDBHUD
     constructor()
     {
         this.artworkimg    = document.createElement("img");
+        this.artworkbox    = document.createElement("div");
         this.musicinfobox  = document.createElement("div");
         this.albuminfobox  = document.createElement("div");
         this.artistinfobox = document.createElement("div");
@@ -16,6 +17,8 @@ class MusicDBHUD
         this.artisticon    = new SVGIcon("Artist");
 
         this.element       = this._CreateElement();
+        this.element.classList.add("MusicDBHUD");
+        this.element.classList.add("flex-row");
 
         this.currentsongid = -1;
         this.currentvideoid= -1;
@@ -34,18 +37,17 @@ class MusicDBHUD
         this.artworkimg.id   = "MDBHUD_AlbumCover";
         this.artworkimg.src  = "pics/TouchIcon.png";  // Default artwork
 
-        this.musicinfobox.classList.add("mdbhud_infoelementbox");
-        this.albuminfobox.classList.add("mdbhud_infoelementbox");
-        this.artistinfobox.classList.add("mdbhud_infoelementbox");
+        this.musicinfobox.classList.add( "InformationBoxElement");
+        this.albuminfobox.classList.add( "InformationBoxElement");
+        this.artistinfobox.classList.add("InformationBoxElement");
 
         // Artwork box
-        let artworkbox  = document.createElement("div");
-        artworkbox.id   = "MDBHUD_AlbumBox";
-        artworkbox.appendChild(this.artworkimg);
+        this.artworkbox.classList.add("ArtworkBox");
+        this.artworkbox.appendChild(this.artworkimg);
 
         // Music information box
         let infobox     = document.createElement("div");
-        infobox.id      = "MDBHUD_InformationBox";
+        infobox.classList.add("InformationBox");
         infobox.appendChild(this.musicinfobox);
         infobox.appendChild(this.albuminfobox);
         infobox.appendChild(this.artistinfobox);
@@ -54,8 +56,7 @@ class MusicDBHUD
         let genrebox    = document.createElement("div");
         this.maingenre   = document.createElement("div");
         this.subgenre    = document.createElement("div");
-        this.maingenre.id    = "GenreHUD";
-        this.subgenre.id     = "SubgenreHUD";
+        genrebox.classList.add("GenreBox");
         this.maingenre.classList.add("hlcolor");
         this.subgenre.classList.add("hlcolor");
         genrebox.appendChild(this.maingenre);
@@ -64,15 +65,12 @@ class MusicDBHUD
         // Mood and Property boxes
         this.moodbox     = document.createElement("div");
         this.propbox     = document.createElement("div");
-        this.moodbox.id      = "MoodHUD";
-        this.propbox.id      = "PropertyHUD";
         this.moodbox.classList.add("hlcolor");
         this.propbox.classList.add("hlcolor");
 
         // Compose final element
         let container   = document.createElement("div");
-        container.id    = "MusicDBHUD";
-        container.appendChild(artworkbox);
+        container.appendChild(this.artworkbox);
         container.appendChild(infobox);
         container.appendChild(genrebox);
         container.appendChild(this.moodbox);
@@ -103,6 +101,7 @@ class MusicDBHUD
         let imgpath = EncodeArtworkPath(MDBAlbum.artworkpath);
         let albumid = MDBAlbum.id;
 
+        this.artworkbox.dataset.musictype = "audio";
         this.artworkimg.src     = imgpath;
         this.artworkimg.onclick = ()=>
             {
@@ -116,6 +115,7 @@ class MusicDBHUD
         let imgpath = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile);
         let videoid = MDBVideo.id;
 
+        this.artworkbox.dataset.musictype = "video";
         this.artworkimg.src     = imgpath;
         this.artworkimg.onclick = ()=>
             {
@@ -134,6 +134,7 @@ class MusicDBHUD
             {
             }
 
+        this.albuminfobox.style.display = "block";
         this.albuminfobox.innerHTML = "";
         this.albuminfobox.appendChild(this._CreateInfoElement(this.albumicon, MDBAlbum.name));
         this.albuminfobox.onclick       = ()=>
@@ -160,6 +161,7 @@ class MusicDBHUD
                 MusicDB_Request("GetVideo", "ShowVideo", {videoid:MDBVideo.id});
             }
 
+        this.albuminfobox.style.display = "none";
         this.albuminfobox.innerHTML = "";
         this.albuminfobox.appendChild(this._CreateInfoElement(this.albumicon, "⸻"));
         this.albuminfobox.onclick       = ()=>
