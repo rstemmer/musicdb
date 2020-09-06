@@ -6,7 +6,7 @@
 .smallvideotile
 {
     position:       relative;
-    max-width:      150px;
+    max-width:      var(--artworkwidth-small);
     overflow:       hidden;
     white-space:    nowrap;
 }
@@ -26,8 +26,9 @@
 {
     border-radius:  var(--radius);
     overflow:       hidden;
-    width:          150px;
-    height:          85px; /* 16:9 */
+    width:          var(--artworkwidth-medium);
+    height:         calc(var(--artworkwidth-medium) / 1.77778);
+    /* 1.77778 = 16/9 */
 }
 
 .smallvideotile[data-enabled=false]
