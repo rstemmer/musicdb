@@ -54,7 +54,6 @@ function ShowLyrics(parentID, MDBLyrics, mode)
     
     // Create Element
     $("#"+parentID).html(html);
-    $(".nano").nanoScroller();
     UpdateStyle();
 }
 

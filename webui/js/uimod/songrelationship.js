@@ -78,7 +78,6 @@ function ShowSongRelationship(parentID, songid, MDBSonglist)
     }
 
     // New elements were created, update there colors with the current style
-    $(".nano").nanoScroller();          // update scrollbars
     UpdateStyle();
 
     // Request genre-highlight update

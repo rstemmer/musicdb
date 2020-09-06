@@ -99,7 +99,6 @@ function ShowAlbum(parentID, MDBArtist, MDBAlbum, MDBCDs, MDBAlbumTags, currents
     */
 
     // Final updates
-    $(".nano").nanoScroller();          // update scrollbars
     UpdateStyle(MDBAlbum.bgcolor, MDBAlbum.fgcolor, MDBAlbum.hlcolor);
 }
 

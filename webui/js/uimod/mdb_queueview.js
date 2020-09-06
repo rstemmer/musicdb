@@ -87,7 +87,6 @@ function ShowQueue(parentID, MDBQueue)
 
     // Create Element
     $("#"+parentID).html(html);
-    $(".nano").nanoScroller();          // update scrollbars
     UpdateStyle();
 
 

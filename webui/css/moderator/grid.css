@@ -141,6 +141,10 @@ div.contentbox
 {
     height:     calc( 100% - 20px );
 }
+div.content
+{
+    overflow:       auto;
+}
 
 div.maincell
 {
