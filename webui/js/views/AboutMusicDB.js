@@ -51,7 +51,7 @@ class AboutMusicDB
 
         // Online Information
         this.linksheadline  = this._CreateHeadline("h2", "Links");
-        this.links          = new Grid(2, 6);
+        this.links          = new Grid(2, 7);
         this.links.InsertText(0, 0, "Developer");
         this.links.InsertLink(1, 0, "Ralf Stemmer", "https://github.com/rstemmer", "_blank");
         this.links.InsertText(0, 1, "Website");
@@ -64,6 +64,8 @@ class AboutMusicDB
         this.links.InsertLink(1, 4, "github.com/rstemmer/musicdb/issues", "https://github.com/rstemmer/musicdb/issues", "_blank");
         this.links.InsertText(0, 5, "Twitter");
         this.links.InsertLink(1, 5, "@MusicDBProject", "https://twitter.com/musicdbproject", "_blank");
+        this.links.InsertText(0, 6, "License");
+        this.links.InsertLink(1, 6, "GNU General Public License v3.0", "https://github.com/rstemmer/musicdb/blob/master/LICENSE", "_blank");
 
 
         // Create Video View
