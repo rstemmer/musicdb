@@ -12,7 +12,11 @@ body
     font-size:      12pt;
     cursor:         default;
 
-    background-image: url(../pics/BGTexture05.png); /*root is css/ -> css/../pics/ */
+    /*
+    background-image: url(../pics/BGTexture05.png);
+    */
+    background-image: url(../img/Noise10.png);
+    background-repeat: repeat;
     image-rendering:  pixelated;
 }
 @media only screen and (min-width: 3000px)
