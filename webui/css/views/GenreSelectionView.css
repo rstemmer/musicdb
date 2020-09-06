@@ -16,21 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/******************/
-/* Main Container */
-/******************/
 
-#Artistloader
+
+.GenreSelectionView
 {
     display:            flex;
     align-items:        center;
     justify-content:    center;
-}
 
-.GenreSelectionView
-{
     flex-wrap:          wrap;
     padding:            0.4em; 2ch;
+    overflow:           auto;
 }
 
 .GenreSelectionView > .tag[data-active=true]
@@ -40,6 +36,8 @@
 {
     opacity:            0.5;
 }
+
+
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */

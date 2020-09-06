@@ -20,11 +20,11 @@ div.panels
 }
 div.panels[data-panels="1"]
 {
-    min-height:     100%;
+    height:         100vh;
 }
 div.panels[data-panels="2"]
 {
-    min-height:     200%;
+    height:         200vh;
 }
 
 
@@ -32,8 +32,8 @@ div.panel
 {
     border-color:   #10A010;
     box-sizing:     border-box;
-    height:         100%;
-    width:          100%;
+    height:         100vh;
+    width:          100vw;
 }
 div.panel[data-visible="true"]
 {

@@ -27,6 +27,8 @@ class MusicDBControls
         this.element        = document.createElement("div");
         this.element.classList.add("musicdbcontrolsslot");
         this.element.classList.add("hlcolor");
+        this.element.classList.add("frame");
+        this.element.classList.add("hovpacity");
 
         this.controls = new Object();
         this.controls["audio"] = this._CreateControls("audio");

@@ -53,16 +53,16 @@ mdbmodemanager.SetMainMenuHandler(mainmenu, entryid); // This allows updating th
 window.onload = function ()
 {
     // Do some last DOM changes
-    let HUDparent   = document.getElementById("HUD");
+    let HUDparent   = document.getElementById("HUDBox");
     HUDparent.appendChild(musicdbhud.GetHTMLElement());
 
-    let genrebox    = document.getElementById("Artistloader");
+    let genrebox    = document.getElementById("GenreBox");
     genrebox.appendChild(genreselectionview.GetHTMLElement());
 
     let videoplayer = document.getElementById("VideoStreamPlayer");
     videostreamplayer.SetVideoPlayerElement(videoplayer);
 
-    let controlsbox = document.getElementById("Controls");
+    let controlsbox = document.getElementById("ControlBox");
     controlsbox.appendChild(musicdbcontrols.GetHTMLElement());
 
     let queuetimebar= document.getElementById("MDBQueueTimeBar");

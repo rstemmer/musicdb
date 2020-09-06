@@ -7,6 +7,7 @@ div#AlbumViewBox
 {
     display:        block;
     overflow:       auto;
+    width:          100%;
 }
 
 div#ABVMetaBox

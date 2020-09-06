@@ -13,8 +13,6 @@
         <link rel="icon"              type="image/svg+xml" href="img/mdblogo-light.svg">
         <link rel="apple-touch-icon" sizes="152x152"   href="pics/TouchIcon.png">
         <!-- libs -->
-        <link rel="stylesheet" href="lib/nanoscroller/nanoscroller.css">
-        <link rel="stylesheet" href="lib/jquery-ui/jquery-ui.min.css">
         <link rel="stylesheet" href="lib/font-awesome/font-awesome.css">
         <!-- styles -->
         <link rel="stylesheet" href="css/fonts.css">
@@ -78,8 +76,6 @@
         <!-- Make things work -->
         <!-- libs -->
         <script src="lib/jquery/jquery-3.min.js"></script>  
-        <script src="lib/jquery-ui/jquery-ui.min.js"></script>  
-        <script src="lib/nanoscroller/jquery.nanoscroller.min.js"></script>  
         <!-- tools -->
         <script src="js/tools/Levenshtein.js"></script>  
         <script src="js/tools/CSSClassName.js"></script>  
@@ -151,7 +147,7 @@
         <style type="text/css">
         div
         {
-            border: 1px solid #f00;
+            outline: 1px solid #f00;
         }
         </style>
         -->
@@ -179,63 +175,45 @@
 
                 <div class="panel" data-visible="true" id="moderatorpanel">
                     <!-- Build up a 3x3 grid that gets filled with content by the scripts -->
-                    <div class=flexbox>
+                    <div class=WebUI>
 
                         <!-- Top Row -->
                         <div id=FXTopRow class=flexrow>
-                            <div id=Artistloader class="flexcell flexcolumn_left">
-                            </div>
-                            <div class="flexcell flexcolumn_middle hudcell vsplit frame fmcolor">
-                                <div id=HUD class="primarycell"></div>
-                            </div>
-                            <div class="flexcell flexcolumn_right">
-                                <div class="statecell">
-                                    <div class="stateelements frame hovpacity fmcolor">
-                                        <div id=Controls></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div id=GenreBox    class="flexcell flexcolumn_left  "></div>
+                            <div id=HUDBox      class="flexcell flexcolumn_middle"></div>
+                            <div id=ControlBox  class="flexcell flexcolumn_right "></div>
                         </div>
 
                         <!-- Middle Row -->
                         <div id=FXMiddleRow class=flexrow>
-                            <div class="flexcell flexcolumn_left hovpacity">
-                                <div id=Alphabetbar class="contentboxheader">
-                                </div>
-                                <div class="nano fmcolor frame frame_left contentbox">
-                                    <div id=LeftContentBox class="content nano-content"></div>
-                                </div>
+                            <div class="flexcolumn flexcolumn_left hovpacity">
+                                <div id=Alphabetbar    class="contentboxheader"></div>
+                                <div id=LeftContentBox class="contentbox flexcell frame frame_left"></div>
                             </div>
 
-                            <div class="flexcell flexcolumn_middle">
-                                <div class="contentboxheader">
-                                </div>
-                                <div class="maincell nano fmcolor frame frame_middle contentbox">
-                                    <div id=MiddleContentBox class="content nano-content">
+                            <div class="flexcolumn flexcolumn_middle">
+                                <div                     class="contentboxheader"></div>
+                                <div id=MiddleContentBox class="contentbox flexcell frame frame_middle">
                                         <!-- DEFAULTS -->
-                                        <div style="margin-top:30px; margin-left:50px;">
+                                        <div style="margin-top:30px; margin-left:50px; width: 100%;">
                                             <div class="fgcolor"><b>MusicDB</b></div>
                                             <div class="hlcolor smallfont">by Ralf Stemmer</div>
                                         </div>
                                         <!-- -------- -->
-                                    </div>
                                 </div>
                             </div>
 
-                            <div class="flexcell flexcolumn_right hovpacity">
-                                <div id=MDBQueueTimeBar class="contentboxheader hlcolor smallfont">
-                                </div>
-                                <div class="nano fmcolor frame frame_right contentbox">
-                                    <div id=RightContentBox class="content nano-content"></div>
-                                </div>
+                            <div class="flexcolumn flexcolumn_right hovpacity">
+                                <div id=MDBQueueTimeBar class="contentboxheader"></div>
+                                <div id=RightContentBox class="contentbox flexcell frame frame_right"></div>
                             </div>
                         </div>
 
                         <!-- Bottom Row -->
                         <div id=FXBottomRow class=flexrow>
-                            <div id=Search          class="flexcell flexcolumn_left"></div>
+                            <div id=Search          class="flexcell flexcolumn_left"  ></div>
                             <div                    class="flexcell flexcolumn_middle"></div>
-                            <div id=QueueControl    class="flexcell flexcolumn_right"></div>
+                            <div id=QueueControl    class="flexcell flexcolumn_right" ></div>
                         </div>
                     </div>
 
@@ -246,11 +224,6 @@
         </div> <!-- screen -->
 
     </body>
-
-    <!-- FIXME: This shall be done in the javascripts later -->
-    <script>
-        $(".nano").nanoScroller();
-    </script>
 </html>
 
 <!--

@@ -33,6 +33,7 @@ class MusicDBHUD
 
         this.element       = this._CreateElement();
         this.element.classList.add("MusicDBHUD");
+        this.element.classList.add("frame");
         this.element.classList.add("flex-row");
 
         this.currentsongid = -1;

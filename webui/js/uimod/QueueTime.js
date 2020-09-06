@@ -101,6 +101,8 @@ class QueueTimeManager
         this.element.appendChild(this.currenttimeelement);
         this.element.appendChild(this.separatorelement);
         this.element.appendChild(this.queuetimeelement);
+        this.element.classList.add("smallfont");
+        this.element.classList.add("hlcolor");
     }
 
 

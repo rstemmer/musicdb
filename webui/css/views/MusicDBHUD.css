@@ -23,9 +23,11 @@
 div.MusicDBHUD
 {
     height:         100%;
-    width:          100%;
     align-content:  space-between;
     align-items:    center;
+
+    width:          90%;
+    box-shadow:     inset 0px 0px 10px 0px;
 }
 
 

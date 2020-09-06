@@ -111,6 +111,13 @@
 
 
 
+div
+{
+    scrollbar-width:    none;
+}
+
+
+
 .inputbox
 {
     font-size:          1rem;
