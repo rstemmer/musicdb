@@ -50,7 +50,6 @@ class MusicDBHUD
 
         // Setting some defaults
         this.artworkimg.id   = "MDBHUD_AlbumCover";
-        this.artworkimg.src  = "pics/TouchIcon.png";  // Default artwork
 
         this.musicinfobox.classList.add( "InformationBoxElement");
         this.albuminfobox.classList.add( "InformationBoxElement");
