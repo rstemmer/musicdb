@@ -29,7 +29,7 @@ class AboutMusicDB
         this.patch          = parseInt(MUSICDB_VERSION.split(".")[2]);
 
         this.logo           = document.createElement("img");
-        this.logo.src       = "img/mdblogo-dark.svg";
+        this.logo.src       = "img/mdblogo-light.svg";
 
         this.headline       = this._CreateHeadline("h1", "MusicDB");
 
