@@ -28,30 +28,17 @@
     pointer-events: none;
 }
 
+
+
 /******************/
 /* VideoQueueTile */
 /******************/
+
 .VideoQueueTile
 {
     display:        flex;
     flex-direction: row;
 }
-
-.VideoQueueTile img
-{
-    width:          auto;
-    height:         100%;
-}
-
-.VideoQueueTile > div:first-child
-{
-    border-radius:  var(--radius);
-    overflow:       hidden;
-    width:          var(--artworkwidth-small);
-    height:         calc(var(--artworkwidth-small) / 1.77778);
-    /* 1.77778 = 16/9 */
-}
-
 
 .VideoQueueTile > div:last-child
 {
@@ -87,7 +74,7 @@
 /* SmallVideoTile */
 /******************/
 
-.smallvideotile
+.VideoTile
 {
     position:       relative;
     max-width:      var(--artworkwidth-medium);
@@ -95,36 +82,21 @@
     white-space:    nowrap;
 }
 
-.smallvideotile span
+.VideoTile span
 {
     display:        block;
 }
 
-.smallvideotile img
-{
-    width:          auto;
-    height:         100%;
-}
-
-.smallvideotile > div:first-child
-{
-    border-radius:  var(--radius);
-    overflow:       hidden;
-    width:          var(--artworkwidth-medium);
-    height:         calc(var(--artworkwidth-medium) / 1.77778);
-    /* 1.77778 = 16/9 */
-}
-
-.smallvideotile[data-enabled=false]
+.VideoTile[data-enabled=false]
 {
     opacity:        0.5;
 }
-.smallvideotile[data-enabled=false] img
+.VideoTile[data-enabled=false] img
 {
     filter:         brightness(70%) saturate(0%) !important;
 }
 
-.smallvideotile > .ButtonBox
+.VideoTile > .ButtonBox
 {
     position:       absolute;
     top:            0.2em;
@@ -135,91 +107,6 @@
     background-color:   rgba(0, 0, 0, 0.8);
     padding:            0.5em;
 }
-
-
-
-
-div.VT_videoentry
-{
-    display:        inline-block;
-    margin-left:    5px;
-    margin-right:   5px;
-}
-div.VT_videoentry[data-size=medium] {
-    max-width:      150px;
-}
-div.VT_videoentry[data-size=small] {
-    max-width:      60px;
-}
-
-div.VT_videocover
-{
-    border-radius:  5px;
-    overflow:       hidden;
-}
-div.VT_videocover[data-size=medium] {
-    width:          150px;
-    height:          85px; /* 16:9 */
-}
-div.VT_videocover[data-size=small] {
-    width:          107px; /* 16:9 */
-    height:          60px;
-}
-
-/* on small screens use alwasy the small variant*/
-@media only screen and (max-width: 1600px) 
-{
-    div.VT_videoentry[data-size=medium] {
-        max-width:      120px;
-    }
-    div.VT_videocover[data-size=medium] {
-        width:          120px;
-        height:          68px; /* 16:9 */
-    }
-}
-
-
-div.VT_videocover img
-{
-    width:          auto;
-    height:         100%;
-}
-
-div.VT_videobuttons
-{
-    border-radius:  5px;
-    background-color: rgba(0.1, 0.1, 0.1, 0.6);
-
-    display:        flex;
-    position:       absolute;
-    margin-top:     5px;
-    z-index:        100;
-}
-div.VT_videobuttons[data-size=medium] {
-    margin-left:    100px; /*150px;*/
-}
-div.VT_videobuttons[data-size=small] {
-    margin-left:     10px; /*60px;*/
-}
-
-div.VT_videometadata
-{
-    overflow:       hidden;
-    white-space:    nowrap;
-}
-
-span.VT_videoname
-{
-    display:        inline-block;
-    overflow:       hidden;
-    white-space:    nowrap;
-}
-span.VT_videorelease
-{
-    display:        inline-block;
-    float:          right;
-}
-
 
 
 
