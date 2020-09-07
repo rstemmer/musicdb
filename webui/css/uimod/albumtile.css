@@ -4,7 +4,7 @@
 /******************/
 .albumtile
 {
-    max-width:      var(--artworkwidth-small);
+    max-width:      var(--artworkwidth-medium);
     overflow:       hidden;
     white-space:    nowrap;
 }
@@ -23,20 +23,6 @@
 {
     display:        inline-block;
     float:          right;
-}
-
-.albumtile img
-{
-    width:          auto;
-    height:         100%;
-}
-
-.albumtile div.imagebox
-{
-    border-radius:  var(--radius);
-    overflow:       hidden;
-    width:          var(--artworkwidth-medium);
-    height:         var(--artworkwidth-medium);
 }
 
 

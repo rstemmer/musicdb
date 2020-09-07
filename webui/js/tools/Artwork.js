@@ -54,6 +54,24 @@ class AlbumArtwork extends Artwork
     constructor(MDBAlbum, size)
     {
         super(size);
+
+        this.element.classList.add("AlbumArtwork");
+        this.albumid = MDBAlbum.id;
+
+        if(size == "small" || size == "medium")
+        {
+            this.imgpath = EncodeArtworkPath(MDBAlbum.artworkpath, "150x150");
+        }
+        this.imageelement.src = this.imgpath;
+    }
+
+
+
+    onClick()
+    {
+        event.preventDefault();
+        event.stopPropagation();
+        MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: this.albumid});
     }
 }
 

@@ -31,6 +31,19 @@
 
 
 
+.AlbumArtwork[data-size=small]
+{
+    width:          var(--artworkwidth-small);
+    height:         var(--artworkwidth-small);
+}
+.AlbumArtwork[data-size=medium]
+{
+    width:          var(--artworkwidth-medium);
+    height:         var(--artworkwidth-medium);
+}
+
+
+
 .VideoArtwork[data-size=small]
 {
     width:          var(--artworkwidth-small);

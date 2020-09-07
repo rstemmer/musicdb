@@ -5,16 +5,11 @@ class AlbumTile
 {
     constructor(MDBAlbum, onclick)
     {
-        this.imgpath     = EncodeArtworkPath(MDBAlbum.artworkpath, "150x150");
         let albumid      = MDBAlbum.id;
         let albumname    = OptimizeAlbumName(MDBAlbum.name);
         let albumrelease = MDBAlbum.release;
 
-        this.imagebox                 = document.createElement("div");
-        this.imagebox.classList.add("imagebox");
-        this.imageelement             = document.createElement("img");
-        this.imageelement.src         = this.imgpath;
-        this.imagebox.appendChild(this.imageelement);
+        this.artwork     = new AlbumArtwork(MDBAlbum, "medium");
 
         this.metadata                 = document.createElement("div");
         this.metadata.classList.add("smallfont");
@@ -30,7 +25,7 @@ class AlbumTile
 
         this.element                  = document.createElement("div");
         this.element.classList.add("albumtile");
-        this.element.appendChild(this.imagebox);
+        this.element.appendChild(this.artwork.GetHTMLElement());
         this.element.appendChild(this.metadata);
         this.element.onclick = onclick;
     }
