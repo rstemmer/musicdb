@@ -229,8 +229,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
             UpdateStyle();    // Update new tags
         }
     }
-    else if(fnc == "GetSongQueue" && sig == "ShowSongQueue")
-        ShowQueue("RightContentBox", args);
 
     else if(fnc == "GetAlbum" && sig == "ShowAlbum") {
         ShowAlbum("MiddleContentBox", args.artist, args.album, args.cds, args.tags, currentsongid);

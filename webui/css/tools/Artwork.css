@@ -46,8 +46,8 @@
 
 .VideoArtwork[data-size=small]
 {
-    width:          var(--artworkwidth-small);
-    height:         calc(var(--artworkwidth-small) / 1.77778);
+    width:          calc(var(--artworkwidth-small) * 2.2);
+    height:         calc(var(--artworkwidth-small) * 2.2 / 1.77778);
     /* 1.77778 = 16/9 */
 }
 .VideoArtwork[data-size=medium]

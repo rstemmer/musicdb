@@ -19,7 +19,7 @@ class VideoQueueTile extends Draggable
         this.element.dataset.musictype = "video";
         this.element.dataset.musicid   = this.videoid;
         this.element.dataset.droptask  = "move";
-        this.element.classList.add("VideoQueueTile");
+        this.element.classList.add("QueueTile");
 
         this.artwork                  = new VideoArtwork(MDBVideo, "small");
 

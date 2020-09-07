@@ -55,6 +55,45 @@ div.Q_hldropzone
 }
 
 
+
+.QueueTile
+{
+    display:        flex;
+    flex-direction: row;
+}
+
+.QueueTile > div:last-child
+{
+    flex-grow:      1;
+}
+
+
+.QueueTile .infobox
+{
+    display:        flex;
+    flex-direction: row;
+    flex-wrap:      wrap;
+    align-items:    center;
+    margin-left:    1em;
+}
+.QueueTile .infobox > div
+{
+    display:        flex;
+}
+.QueueTile .infobox > div:first-child
+{
+    flex-grow:      1;
+}
+.QueueTile .infobox > div:last-child
+{
+    flex-basis:     100%;
+    align-self:     flex-start;
+}
+.QueueTile span + span
+{
+    margin-left:    1ch;
+}
+
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
 

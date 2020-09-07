@@ -66,16 +66,15 @@ class QueueView
             
             // Create Entry
             let buttonbox   = new ButtonBox_QueueEntryControls(musictype, MDBMusic.id, entryid);
+            let dropzone    = new QueueDropZone(entryid);
             let tile        = null;
-            let dropzone    = null;
             if(musictype == "audio")
             {
-                tile        = new SongQueueTile(/*…*/);
+                tile        = new SongQueueTile(MDBMusic, MDBAlbum, MDBArtist, entryid, queueposition, buttonbox);
             }
             else if(musictype == "video")
             {
                 tile        = new VideoQueueTile(MDBMusic, MDBArtist, entryid, queueposition, buttonbox);
-                dropzone    = new QueueDropZone(entryid);
             }
             else
                 continue;   // No song and no video? Should never happen, but who knows…
@@ -90,7 +89,14 @@ class QueueView
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "GetVideoQueue" && sig == "ShowVideoQueue")
+        if(fnc == "GetSongQueue" && sig == "ShowSongQueue")
+        {
+            let mainviewbox = document.getElementById("RightContentBox"); // \_ HACK
+            mainviewbox.innerHTML = "";
+            mainviewbox.appendChild(queueview.GetHTMLElement());           // /  This should do a Main View Manager
+            this.Update("audio", args);
+        }
+        else if(fnc == "GetVideoQueue" && sig == "ShowVideoQueue")
         {
             let mainviewbox = document.getElementById("RightContentBox"); // \_ HACK
             mainviewbox.innerHTML = "";
@@ -110,7 +116,7 @@ class QueueDropZone extends DropTarget
     {
         super();
         this.element    = document.createElement("div");
-        this.element.classList.add("VideoQueueTile");
+        this.element.classList.add("QueueTile");
         this.element.classList.add("QueueDropZone");
         
         this.entryid    = entryid;

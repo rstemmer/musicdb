@@ -18,46 +18,6 @@
 
 
 /******************/
-/* VideoQueueTile */
-/******************/
-
-.VideoQueueTile
-{
-    display:        flex;
-    flex-direction: row;
-}
-
-.VideoQueueTile > div:last-child
-{
-    flex-grow:      1;
-}
-
-
-.VideoQueueTile .infobox
-{
-    display:        flex;
-    flex-direction: row;
-    flex-wrap:      wrap;
-    align-items:    center;
-    margin-left:    1em;
-}
-.VideoQueueTile .infobox > div
-{
-    display:        flex;
-}
-.VideoQueueTile .infobox > div:first-child
-{
-    flex-grow:      1;
-}
-.VideoQueueTile .infobox > div:last-child
-{
-    flex-basis:     100%;
-    align-self:     flex-start;
-}
-
-
-
-/******************/
 /* SmallVideoTile */
 /******************/
 
