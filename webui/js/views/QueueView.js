@@ -47,6 +47,7 @@ class QueueView
         }
 
         this.element.innerHTML = "";
+        let queueposition      = 0;
         for(let entry of MDBQueue)
         {
             let entryid     = entry.entryid;
@@ -66,14 +67,22 @@ class QueueView
             // Create Entry
             let buttonbox   = new ButtonBox_QueueEntryControls(musictype, MDBMusic.id, entryid);
             let tile        = null;
+            let dropzone    = null;
             if(musictype == "audio")
+            {
                 tile        = new SongQueueTile(/*…*/);
+            }
             else if(musictype == "video")
-                tile        = new VideoQueueTile(MDBMusic, MDBArtist, buttonbox);
+            {
+                tile        = new VideoQueueTile(MDBMusic, MDBArtist, entryid, queueposition, buttonbox);
+                dropzone    = new VideoTileDropZone(entryid);
+            }
             else
                 continue;   // No song and no video? Should never happen, but who knows…
 
             this.element.appendChild(tile.GetHTMLElement());
+            this.element.appendChild(dropzone.GetHTMLElement());
+            queueposition += 1;
         }
     }
 
@@ -211,7 +220,7 @@ function ShowQueue(parentID, MDBQueue)
         else if(musictype == "audio")
             MusicDB_Call("MoveSongInQueue", {entryid:srcpos, afterid:dstpos});
         else
-            window.console && console.log("Unknown music type"+musictype)
+            window.console && console.log("Unknown music type"+musictype);
     });
 
     // the entries itself need some DnD-handler too

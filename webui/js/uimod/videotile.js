@@ -15,10 +15,59 @@
  *
  */
 
-class VideoQueueTile
+class VideoTileDropZone extends DropTarget
 {
-    constructor(MDBVideo, MDBArtist, buttonbox)
+    constructor(entryid)
     {
+        super();
+        this.element    = document.createElement("div");
+        //this.element.id = "DropZone_" + position;
+        this.element.classList.add("VideoQueueTile");
+        this.element.classList.add("VideoTileDropZone");
+        
+        this.entryid    = entryid;
+
+        this.BecomeDropTarget();
+    }
+
+
+
+    GetHTMLElement()
+    {
+        return this.element;
+    }
+
+
+
+    onTransfer(draggableid)
+    {
+        let draggable = document.getElementById(draggableid);
+        let entryid   = draggable.dataset.entryid;
+        let musictype = draggable.dataset.musictype;
+        let musicid   = draggable.dataset.musicid;
+        let droptask  = draggable.dataset.droptask;
+
+        switch(droptask)
+        {
+            case "move":
+                if(entryid == this.entryid)
+                    break;
+
+                if(musictype == "song")
+                    MusicDB_Call("MoveSongInQueue", {entryid:entryid, afterid:this.entryid});
+                else if(musictype == "video")
+                    MusicDB_Call("MoveVideoInQueue", {entryid:entryid, afterid:this.entryid});
+                break;
+        }
+        window.console && console.log(draggable.dataset);
+    }
+}
+
+class VideoQueueTile extends Draggable
+{
+    constructor(MDBVideo, MDBArtist, entryid, position, buttonbox)
+    {
+        super();
         this.imgpath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile, 150, 83);
         this.anipath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.previewfile,   150, 83);
         this.videoid     = MDBVideo.id;
@@ -27,9 +76,18 @@ class VideoQueueTile
         let artistname   = MDBArtist.name;
         let artistid     = MDBArtist.id;
 
+        this.element     = document.createElement("div");
+        this.element.id  = entryid;
+        this.element.dataset.entryid   = entryid;
+        this.element.dataset.musictype = "video";
+        this.element.dataset.musicid   = this.videoid;
+        this.element.dataset.droptask  = "move";
+        this.element.classList.add("VideoQueueTile");
+
         this.imagebox                 = document.createElement("div");
         this.imageelement             = document.createElement("img");
         this.imageelement.src         = this.imgpath;
+        this.imageelement.draggable   = false;
         this.imageelement.onmouseover = ()=>{this.imageelement.src = this.anipath;};
         this.imageelement.onmouseout  = ()=>{this.imageelement.src = this.imgpath;};
         this.imagebox.appendChild(this.imageelement);
@@ -49,13 +107,15 @@ class VideoQueueTile
         this.artistelement.onclick    = ()=>{artistsview.ScrollToArtist(artistid);};
 
         this.infobox.appendChild(this.titleelement);
-        this.infobox.appendChild(buttonbox.GetHTMLElement());
+        if(position > 0)
+            this.infobox.appendChild(buttonbox.GetHTMLElement());
         this.infobox.appendChild(this.artistelement);
 
-        this.element                  = document.createElement("div");
-        this.element.classList.add("VideoQueueTile");
         this.element.appendChild(this.imagebox);
         this.element.appendChild(this.infobox);
+
+        if(position > 0)
+            this.BecomeDraggable();
     }
 
 
