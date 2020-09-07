@@ -2,6 +2,7 @@
 "use strict";
 
 
+// TODO: VideoQueueDropZone may be a better name/place
 class VideoTileDropZone extends DropTarget
 {
     constructor(entryid)
@@ -45,8 +46,20 @@ class VideoTileDropZone extends DropTarget
                 else if(musictype == "video")
                     MusicDB_Call("MoveVideoInQueue", {entryid:entryid, afterid:this.entryid});
                 break;
+
+            case "insert":
+                if(musictype == "song")
+                {
+                    window.console && console.log("MusicDB_Call(\"AddSongToQueue\", {videoid: "+musicid+", position:"+this.entryid+");");
+                }
+                else if(musictype == "video")
+                {
+                    window.console && console.log("MusicDB_Call(\"AddVideoToQueue\", {videoid: "+musicid+", position:"+this.entryid+");");
+                }
+                window.console && console.warn("The back-end does not support this featred yet");
+                break;
+
         }
-        window.console && console.log(draggable.dataset);
     }
 }
 
@@ -113,11 +126,13 @@ class VideoQueueTile extends Draggable
 
 
 
-class VideoTile
+class VideoTile extends Draggable
 {
     // flagbar is optional
     constructor(MDBVideo, onclick, flagbar)
     {
+        super();
+
         let videoid      = MDBVideo.id;
         let videoname    = MDBVideo.name;
         let videorelease = MDBVideo.release;
@@ -132,6 +147,10 @@ class VideoTile
         this.buttonbox                = new ButtonBox_AddVideoToQueue(videoid);
 
         this.element                  = document.createElement("div");
+        this.element.id               = videoid;
+        this.element.dataset.musictype= "video";
+        this.element.dataset.musicid  = videoid;
+        this.element.dataset.droptask = "insert";
         this.element.classList.add("VideoTile");
         this.element.appendChild(this.artwork.GetHTMLElement());
         this.element.appendChild(this.buttonbox.GetHTMLElement());
@@ -144,6 +163,8 @@ class VideoTile
             this.SetDisabled();
         else
             this.SetEnabled();
+
+        this.BecomeDraggable();
     }
 
 
