@@ -15,6 +15,64 @@
  *
  */
 
+class VideoQueueTile
+{
+    constructor(MDBVideo, MDBArtist, buttonbox)
+    {
+        this.imgpath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.thumbnailfile, 150, 83);
+        this.anipath     = EncodeVideoThumbnailPath(MDBVideo.framesdirectory, MDBVideo.previewfile,   150, 83);
+        this.videoid     = MDBVideo.id;
+        let videoname    = MDBVideo.name.replace(" - ", " – ");
+        let videorelease = MDBVideo.release;
+        let artistname   = MDBArtist.name;
+        let artistid     = MDBArtist.id;
+
+        this.imagebox                 = document.createElement("div");
+        this.imageelement             = document.createElement("img");
+        this.imageelement.src         = this.imgpath;
+        this.imageelement.onmouseover = ()=>{this.imageelement.src = this.anipath;};
+        this.imageelement.onmouseout  = ()=>{this.imageelement.src = this.imgpath;};
+        this.imagebox.appendChild(this.imageelement);
+        this.imagebox.onclick         = ()=>{this.ShowVideo();};
+
+        this.infobox                  = document.createElement("div");
+        this.infobox.classList.add("infobox");
+
+        this.titleelement             = document.createElement("div");
+        this.titleelement.textContent = videoname;
+        this.titleelement.onclick     = ()=>{this.ShowVideo();};
+
+        this.artistelement            = document.createElement("div");
+        this.artistelement.textContent = artistname;
+        this.artistelement.classList.add("hlcolor");
+        this.artistelement.classList.add("smallfont");
+        this.artistelement.onclick    = ()=>{artistsview.ScrollToArtist(artistid);};
+
+        this.infobox.appendChild(this.titleelement);
+        this.infobox.appendChild(buttonbox.GetHTMLElement());
+        this.infobox.appendChild(this.artistelement);
+
+        this.element                  = document.createElement("div");
+        this.element.classList.add("VideoQueueTile");
+        this.element.appendChild(this.imagebox);
+        this.element.appendChild(this.infobox);
+    }
+
+
+
+    GetHTMLElement()
+    {
+        return this.element;
+    }
+
+
+
+    ShowVideo()
+    {
+        MusicDB_Request("GetVideo", "ShowVideo", {videoid: this.videoid});
+    }
+}
+
 function CreateVideoTile(MDBVideo, MDBAlbum, MDBArtist, topbuttonbox, bottombuttonbox = null, MDBTags = null)
 {
     // Album is not used because it may be undefined very often

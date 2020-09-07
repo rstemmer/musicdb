@@ -1,5 +1,95 @@
+// MusicDB,  a music manager with web-bases UI that focus on music.
+// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 "use strict";
+
+class QueueView
+{
+    constructor()
+    {
+        this.element = document.createElement("div");
+        this.element.classList.add("QueueView");
+    }
+
+
+
+    GetHTMLElement()
+    {
+        return this.element;
+    }
+
+
+
+    // musictype: "audio" or "video"
+    Update(musictype, MDBQueue)
+    {
+        // Reset timer
+        if(MDBQueue[0].song !== undefined)
+        {
+            queuetimemanager.ClearTime("audio");
+        }
+        else if(MDBQueue[0].video !== undefined)
+        {
+            queuetimemanager.ClearTime("video");
+        }
+
+        this.element.innerHTML = "";
+        for(let entry of MDBQueue)
+        {
+            let entryid     = entry.entryid;
+            let MDBAlbum    = entry.album;
+            let MDBArtist   = entry.artist;
+            let MDBMusic    = null;
+            if(musictype == "audio")
+                MDBMusic    = entry.song;
+            else if(musictype == "video")
+                MDBMusic    = entry.video;
+            else
+                continue;   // No song and no video? Should never happen, but who knows…
+
+            // Update timer
+            queuetimemanager.AddTime(musictype, MDBMusic.playtime);
+            
+            // Create Entry
+            let buttonbox   = new ButtonBox_QueueEntryControls(musictype, MDBMusic.id, entryid);
+            let tile        = null;
+            if(musictype == "audio")
+                tile        = new SongQueueTile(/*…*/);
+            else if(musictype == "video")
+                tile        = new VideoQueueTile(MDBMusic, MDBArtist, buttonbox);
+            else
+                continue;   // No song and no video? Should never happen, but who knows…
+
+            this.element.appendChild(tile.GetHTMLElement());
+        }
+    }
+
+
+
+    onMusicDBMessage(fnc, sig, args, pass)
+    {
+        if(fnc == "GetVideoQueue" && sig == "ShowVideoQueue")
+        {
+            let mainviewbox = document.getElementById("RightContentBox"); // \_ HACK
+            mainviewbox.innerHTML = "";
+            mainviewbox.appendChild(queueview.GetHTMLElement());           // /  This should do a Main View Manager
+            this.Update("video", args);
+        }
+    }
+}
 
 /*
  * This class provides the artistloader.
@@ -32,7 +122,7 @@ function ShowQueue(parentID, MDBQueue)
         queuetimemanager.ClearTime("video");
     }
 
-    html += "<div id=QMainBox>"; // main box
+    html += "<div class=QueueView>"; // main box
     for(let pos in MDBQueue)
     {
         let entryid     = MDBQueue[pos].entryid;

@@ -16,6 +16,7 @@ let queuetimemanager    = new QueueTimeManager();
 let aboutmusicdb        = new AboutMusicDB();
 let artistsview         = new ArtistsView();
 let videoview           = new VideoView();
+let queueview           = new QueueView();
 
 // Create Main Menu
 let mainmenu           = new MainMenu("1em", "1em");
@@ -172,6 +173,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     genreselectionview.onMusicDBMessage(fnc, sig, args, pass);
     artistsview.onMusicDBMessage(fnc, sig, args, pass);
     videoview.onMusicDBMessage(fnc, sig, args, pass);
+    queueview.onMusicDBMessage(fnc, sig, args, pass);
 
     window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");
 
@@ -230,9 +232,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetSongQueue" && sig == "ShowSongQueue")
         ShowQueue("RightContentBox", args);
 
-    else if(fnc == "GetVideoQueue" && sig == "ShowVideoQueue")
-        ShowQueue("RightContentBox", args);
-
     else if(fnc == "GetAlbum" && sig == "ShowAlbum") {
         ShowAlbum("MiddleContentBox", args.artist, args.album, args.cds, args.tags, currentsongid);
         currentalbumid = args.album.id;
@@ -245,14 +244,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
     }
     else if(fnc == "Find" && sig == "ShowSearchResults")
         ShowSearchResults(args.artists, args.albums, args.songs);
-
-    /*
-    else if(fnc == "GetFilteredArtistsWithAlbums" && sig == "ShowArtists")
-        ShowArtists("LeftContentBox", args);
-
-    else if(fnc == "GetFilteredArtistsWithVideos" && sig == "ShowArtists")
-        ShowArtists("LeftContentBox", args);
-    */
 
     else if(fnc == "GetSongRelationship" && sig == "ShowSongRelationship")
         ShowSongRelationship("MiddleContentBox", args.songid, args.songs);

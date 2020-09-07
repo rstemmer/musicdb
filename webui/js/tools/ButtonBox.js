@@ -61,5 +61,40 @@ class ButtonBox_AddVideoToQueue extends ButtonBox
     }
 }
 
+
+
+class ButtonBox_QueueEntryControls extends ButtonBox
+{
+    constructor(musictype, entryid, musicid)
+    {
+        super();
+
+        if(musictype == "audio")
+        {
+            this.AddButton(new SVGButton("Relation", ()=>{this.GetSongRelationship(musicid);}));
+            this.AddButton(new SVGButton("Remove",   ()=>{this.RemoveSongFromQueue(entryid);}));
+        }
+        else if(musictype == "video")
+        {
+            this.AddButton(new SVGButton("Remove",   ()=>{this.RemoveVideoFromQueue(entryid);}));
+        }
+    }
+
+
+    GetSongRelationship(musicid)
+    {
+        MusicDB_Request("GetSongRelationship", "ShowSongRelationship", {songid: musicid});
+    }
+    RemoveSongFromQueue(entryid)
+    {
+        MusicDB_Call("RemoveSongFromQueue", {entryid: entryid});
+    }
+    RemoveVideoFromQueue(entryid)
+    {
+        MusicDB_Call("RemoveVideoFromQueue", {entryid: entryid});
+    }
+
+}
+
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
