@@ -41,6 +41,20 @@ div.Q_hldropzone
     height:         60px;   /* hight of an entry */
 }
 
+
+.QueueDropZone
+{
+    display:        flex;
+    width:          100%;
+    padding:        0.5em 0;
+    flex-shrink:    0;
+}
+.QueueDropZone *
+{
+    pointer-events: none;
+}
+
+
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
 

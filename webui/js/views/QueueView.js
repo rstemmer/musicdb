@@ -75,7 +75,7 @@ class QueueView
             else if(musictype == "video")
             {
                 tile        = new VideoQueueTile(MDBMusic, MDBArtist, entryid, queueposition, buttonbox);
-                dropzone    = new VideoTileDropZone(entryid);
+                dropzone    = new QueueDropZone(entryid);
             }
             else
                 continue;   // No song and no video? Should never happen, but who knows…
@@ -99,6 +99,70 @@ class QueueView
         }
     }
 }
+
+
+
+
+
+class QueueDropZone extends DropTarget
+{
+    constructor(entryid)
+    {
+        super();
+        this.element    = document.createElement("div");
+        this.element.classList.add("VideoQueueTile");
+        this.element.classList.add("QueueDropZone");
+        
+        this.entryid    = entryid;
+
+        this.BecomeDropTarget();
+    }
+
+
+
+    GetHTMLElement()
+    {
+        return this.element;
+    }
+
+
+
+    onTransfer(draggableid)
+    {
+        let draggable = document.getElementById(draggableid);
+        let entryid   = draggable.dataset.entryid;
+        let musictype = draggable.dataset.musictype;
+        let musicid   = draggable.dataset.musicid;
+        let droptask  = draggable.dataset.droptask;
+
+        switch(droptask)
+        {
+            case "move":
+                if(entryid == this.entryid)
+                    break;
+
+                if(musictype == "song")
+                    MusicDB_Call("MoveSongInQueue", {entryid:entryid, afterid:this.entryid});
+                else if(musictype == "video")
+                    MusicDB_Call("MoveVideoInQueue", {entryid:entryid, afterid:this.entryid});
+                break;
+
+            case "insert":
+                if(musictype == "song")
+                {
+                    window.console && console.log("MusicDB_Call(\"AddSongToQueue\", {videoid: "+musicid+", position:"+this.entryid+");");
+                }
+                else if(musictype == "video")
+                {
+                    window.console && console.log("MusicDB_Call(\"AddVideoToQueue\", {videoid: "+musicid+", position:"+this.entryid+");");
+                }
+                window.console && console.warn("The back-end does not support this featred yet");
+                break;
+
+        }
+    }
+}
+
 
 /*
  * This class provides the artistloader.
