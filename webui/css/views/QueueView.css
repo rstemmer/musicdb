@@ -94,6 +94,17 @@ div.Q_hldropzone
     margin-left:    1ch;
 }
 
+
+.QueueTile .ButtonBox
+{
+    opacity:        0.1;
+}
+
+.QueueTile:hover .ButtonBox
+{
+    opacity:        1.0;
+}
+
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
 
