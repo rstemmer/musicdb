@@ -1,10 +1,11 @@
 
 "use strict";
 
-class AlbumTile
+class AlbumTile extends Draggable
 {
     constructor(MDBAlbum, onclick)
     {
+        super();
         let albumid      = MDBAlbum.id;
         let albumname    = OptimizeAlbumName(MDBAlbum.name);
         let albumrelease = MDBAlbum.release;
@@ -28,6 +29,12 @@ class AlbumTile
         this.element.appendChild(this.artwork.GetHTMLElement());
         this.element.appendChild(this.metadata);
         this.element.onclick = onclick;
+        this.element.id               = albumid;
+        this.element.dataset.musictype= "album";
+        this.element.dataset.musicid  = albumid;
+        this.element.dataset.droptask = "insert";
+
+        this.BecomeDraggable();
     }
 
 
