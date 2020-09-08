@@ -25,22 +25,6 @@
     width:          100%;
 }
 
-div.Q_entry
-{
-    width:          100%;
-}
-
-div.Q_separator
-{
-    height:         15px;
-    width:          100%;
-    flex-shrink:    0;
-}
-div.Q_hldropzone
-{
-    height:         60px;   /* hight of an entry */
-}
-
 
 .QueueDropZone
 {
