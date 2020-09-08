@@ -2,24 +2,24 @@
 /******************/
 /* Album-related */
 /******************/
-.albumtile
+.AlbumTile
 {
     max-width:      var(--artworkwidth-medium);
     overflow:       hidden;
     white-space:    nowrap;
 }
 
-.albumtile span
+.AlbumTile span
 {
     display:        inline-block;
 }
-.albumtile span
+.AlbumTile span
 {
     display:        inline-block;
     overflow:       hidden;
     white-space:    nowrap;
 }
-.albumtile span:last-child
+.AlbumTile span:last-child
 {
     display:        inline-block;
     float:          right;

@@ -25,7 +25,7 @@ class AlbumTile extends Draggable
         this.metadata.appendChild(this.releaseelement);
 
         this.element                  = document.createElement("div");
-        this.element.classList.add("albumtile");
+        this.element.classList.add("AlbumTile");
         this.element.appendChild(this.artwork.GetHTMLElement());
         this.element.appendChild(this.metadata);
         this.element.onclick = onclick;
