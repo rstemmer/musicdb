@@ -65,7 +65,7 @@ class ButtonBox_AddVideoToQueue extends ButtonBox
 
 class ButtonBox_QueueEntryControls extends ButtonBox
 {
-    constructor(musictype, entryid, musicid)
+    constructor(musictype, musicid, entryid)
     {
         super();
 
