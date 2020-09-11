@@ -44,6 +44,7 @@ class ArtistsView
         this.element.innerHTML = "";
         let firstanchor = document.createElement("div");
         firstanchor.id  = "TOP_mark";
+        firstanchor.classList.add("marker");
         this.element.appendChild(firstanchor);
 
         for(let entry of MDBArtistList)
@@ -68,6 +69,7 @@ class ArtistsView
                 anchor = firstchar;
                 let anchorelement = document.createElement("div");
                 anchorelement.id = anchor + "_mark";
+                anchorelement.classList.add("marker");
                 this.element.appendChild(anchorelement);
             }
 
@@ -78,6 +80,7 @@ class ArtistsView
 
         let lastanchor = document.createElement("div");
         lastanchor.id  = "BTM_mark";
+        lastanchor.classList.add("marker");
         this.element.appendChild(lastanchor);
         return;
     }

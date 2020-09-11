@@ -21,6 +21,15 @@
     transition: 2s;
 }
 
+
+
+.artistsview > .marker
+{
+    flex-basis:         100%;
+}
+
+
+
 .artistentry
 {
     display:            flex;
