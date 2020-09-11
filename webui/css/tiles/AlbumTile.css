@@ -12,17 +12,15 @@
 .AlbumTile span
 {
     display:        inline-block;
-}
-.AlbumTile span
-{
-    display:        inline-block;
     overflow:       hidden;
     white-space:    nowrap;
+    flex-shrink:    0;
 }
-.AlbumTile span:last-child
+
+.AlbumTile > div
 {
-    display:        inline-block;
-    float:          right;
+    display:        flex;
+    justify-content:space-between;
 }
 
 
