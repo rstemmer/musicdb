@@ -35,12 +35,29 @@ class ViewManager
 }
 
 
-
+// Whenever a view gets removed from the Main View Box,
+// its method "onViewRemoved();" gets called if it exists
 class MainViewManager extends ViewManager
 {
     constructor()
     {
         super("MiddleContentBox");
+        this.currentview = null;
+    }
+
+
+
+    MountView(view)
+    {
+        super.MountView(view);
+
+        if(this.currentview != null)
+        {
+            if(typeof this.currentview.onViewRemoved === "function")
+                this.currentview.onViewRemoved();
+        }
+
+        this.currentview = view;
     }
 
 
