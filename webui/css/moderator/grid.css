@@ -151,7 +151,8 @@ div.contentboxheader
 
 div.contentbox
 {
-    overflow:       auto;
+    overflow-y:     auto;
+    overflow-x:     hidden;
     width:          100%;
     height:         100%;
 }
