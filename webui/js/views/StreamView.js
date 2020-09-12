@@ -51,8 +51,6 @@ class StreamView
 
     onLeaveViewPort(entry, observer)
     {
-        //let element = document.getElementById("detachable_video");
-        //let video   = document.getElementById("VideoStreamPlayer");
         window.console && console.log(entry);
         window.console && console.log(observer);
         window.console && console.log(entry.intersectionRatio);
@@ -98,15 +96,6 @@ class StreamView
 
     onMusicDBNotification(fnc, sig, rawdata)
     {
-        /*
-        if(fnc == "MusicDB:VideoStream" && sig == "onStreamNextVideo")
-        {
-            // TODO: HACK: 
-            if(mdbmodemanager.GetCurrentMode() == "video")
-                this.ShowInMainView();
-        }
-        */
-
         this.streamplayer.onMusicDBNotification(fnc, sig, rawdata);
         return;
     }

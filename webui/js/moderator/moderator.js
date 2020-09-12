@@ -84,7 +84,6 @@ window.onload = function ()
     ShowAlphabetBar("Alphabetbar");
     ShowQueueControls("QueueControl");
     ShowSearchInput("Search");
-    CreateIntersectionObserver("detachable_trigger", onDetachableTriggerIntersection);
 }
 
 function onMusicDBConnectionOpen()
