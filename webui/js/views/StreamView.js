@@ -24,7 +24,6 @@ class StreamView
         this.element.classList.add("StreamView");
 
         this.videoelement = document.createElement("video");
-        this.videoelement.controls = true;
         this.element.appendChild(this.videoelement);
 
         this.streamplayer = new VideoStreamPlayer();
@@ -51,11 +50,6 @@ class StreamView
 
     onLeaveViewPort(entry, observer)
     {
-        window.console && console.log(entry);
-        window.console && console.log(observer);
-        window.console && console.log(entry.intersectionRatio);
-        window.console && console.log(entry.isIntersecting);
-
         // Ignore invalid position state - this happens during initialization phase
         if(this.viewposition == null)
             return;
@@ -74,6 +68,14 @@ class StreamView
 
 
 
+    onViewRemoved()
+    {
+        if(this.viewposition == "MainView")
+            this.ShowInQueueView();
+    }
+
+
+
     ShowInMainView()
     {
         window.console && console.log("Show In Main View");
@@ -83,6 +85,7 @@ class StreamView
     ShowInQueueView()
     {
         window.console && console.log("Show In Queue View");
+        queueview.MountStreamView(this);
         this.viewposition = "QueueView";
     }
     ShowInVideoPanel()
