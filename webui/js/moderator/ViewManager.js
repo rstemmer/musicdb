@@ -69,5 +69,13 @@ class MainViewManager extends ViewManager
 
 
 
+class VideoPanelManager extends ViewManager
+{
+    constructor()
+    {
+        super("VideoPanel");
+    }
+}
+
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

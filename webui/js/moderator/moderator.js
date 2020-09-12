@@ -8,14 +8,15 @@ let mdbmodemanager      = new MDBModeManager();
 let tagmanager          = new TagManager();
 let musicdbhud          = new MusicDBHUD();
 let genreselectionview  = new GenreSelectionView();
-let videostreamplayer   = new VideoStreamPlayer();
 let musicdbstatus       = new MusicDBStatus();
 let musicdbcontrols     = new MusicDBControls();
 let queuetimemanager    = new QueueTimeManager();
 
 let mainviewmanager     = null; // Can only be created when the document is created
+let videopanelmanager   = null;
 let aboutmusicdb        = new AboutMusicDB();
 let artistsview         = new ArtistsView();
+let streamview          = new StreamView();
 let videoview           = new VideoView();
 let queueview           = new QueueView();
 
@@ -59,9 +60,6 @@ window.onload = function ()
     let genrebox    = document.getElementById("GenreBox");
     genrebox.appendChild(genreselectionview.GetHTMLElement());
 
-    let videoplayer = document.getElementById("VideoStreamPlayer");
-    videostreamplayer.SetVideoPlayerElement(videoplayer);
-
     let controlsbox = document.getElementById("ControlBox");
     controlsbox.appendChild(musicdbcontrols.GetHTMLElement());
 
@@ -75,6 +73,8 @@ window.onload = function ()
     document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
 
     mainviewmanager     = new MainViewManager();
+    videopanelmanager   = new VideoPanelManager();
+    streamview.ShowInVideoPanel();
 
 
     // Connect to MusicDB
@@ -115,7 +115,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
     musicdbhud.onMusicDBNotification(fnc, sig, rawdata);
     musicdbstatus.onMusicDBNotification(fnc, sig, rawdata);
     queuetimemanager.onMusicDBNotification(fnc, sig, rawdata);
-    videostreamplayer.onMusicDBNotification(fnc, sig, rawdata);
+    streamview.onMusicDBNotification(fnc, sig, rawdata);
 
     window.console && console.log(sig);
     if(fnc == "MusicDB:AudioStream")
@@ -171,9 +171,9 @@ function onMusicDBMessage(fnc, sig, args, pass)
     // Views
     mainviewmanager.onMusicDBMessage(fnc, sig, args, pass);
     musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
-    videostreamplayer.onMusicDBMessage(fnc, sig, args, pass);
     genreselectionview.onMusicDBMessage(fnc, sig, args, pass);
     artistsview.onMusicDBMessage(fnc, sig, args, pass);
+    streamview.onMusicDBMessage(fnc, sig, args, pass);
     videoview.onMusicDBMessage(fnc, sig, args, pass);
     queueview.onMusicDBMessage(fnc, sig, args, pass);
 

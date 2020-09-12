@@ -1,7 +1,7 @@
-
+/*
 div#VideoPanel
 {
-    background-color:   #000000;    /* Make background around videos disappear */
+    background-color:   #000000;
 }
 
 video#VideoStreamPlayer
@@ -17,6 +17,7 @@ video#VideoStreamPlayer[data-visible=false]
 {
     opacity:            0.0;
 }
+*/
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
