@@ -89,6 +89,20 @@
     opacity:        1.0;
 }
 
+
+
+/*
+ * It is possible to mount the StreamView inside the QueueView.
+ * Here are some special settings for this situation
+ */
+.QueueView .StreamView
+{
+    border-radius:      var(--radius);
+    overflow:           hidden;
+    margin-bottom:      0.5em;
+    opacity:            1.0;
+}
+
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
 

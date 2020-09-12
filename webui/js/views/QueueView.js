@@ -22,6 +22,7 @@ class QueueView
     {
         this.element = document.createElement("div");
         this.element.classList.add("QueueView");
+        this.streamviewmount = document.createElement("div");
     }
 
 
@@ -29,6 +30,15 @@ class QueueView
     GetHTMLElement()
     {
         return this.element;
+    }
+
+
+
+    MountStreamView(view)
+    {
+        this.streamviewmount.innerHTML = "";
+        this.streamviewmount.appendChild(view.GetHTMLElement());
+        return;
     }
 
 
@@ -46,7 +56,14 @@ class QueueView
             queuetimemanager.ClearTime("video");
         }
 
+        // Reset QueueView
         this.element.innerHTML = "";
+        if(MDBQueue[0].video !== undefined)
+        {
+            // In video mode, place the mount point for the StreamView
+            this.element.appendChild(this.streamviewmount);
+        }
+
         let queueposition      = 0;
         for(let entry of MDBQueue)
         {
