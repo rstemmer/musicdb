@@ -78,6 +78,10 @@ class MDBModeManager
             MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
             MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
         }
+
+
+        // Update other elements
+        queuecontrolview.Update();
     }
 
 

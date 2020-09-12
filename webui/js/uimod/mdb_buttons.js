@@ -56,28 +56,6 @@ function Button_AddVideoToQueue(videoid)
     return html;
 }
 
-function Button_AddRandomSongToQueue()
-{
-    var html = "";
-    html += "<div class=\"BTN_box\">";
-    
-    html += BTM_TextLeft("Add Random Song:");
-    html += BTN_CreateIconButton(
-        "<i class=\"fa fa-plus-circle\" title=\"Add random song to the queue\"></i>",
-        "MusicDB_Call(\'AddRandomSongToQueue\', {position:\'last\'});");
-    html += BTN_CreateSeparator();
-    html += BTN_CreateIconButton(
-        "<i class=\"fa fa-play-circle\" title=\"Play random song next\"></i>",
-        "MusicDB_Call(\'AddRandomSongToQueue\', {position:\'next\'});");
-    html += BTN_CreateSeparator();
-    html += BTN_CreateIconButton(
-        "<i class=\"fa fa-play-circle\" title=\"Play random video next\"></i>",
-        "MusicDB_Call(\'AddRandomVideoToQueue\', {position:\'next\'});");
-
-    html += "</div>";
-    return html;
-}
-
 function Button_AddAlbumToQueue(albumid)
 {
     var html = "";

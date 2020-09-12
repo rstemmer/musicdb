@@ -19,6 +19,7 @@ let artistsview         = new ArtistsView();
 let streamview          = new StreamView();
 let videoview           = new VideoView();
 let queueview           = new QueueView();
+let queuecontrolview    = new QueueControlView();
 
 // Create Main Menu
 let mainmenu           = new MainMenu("1em", "1em");
@@ -69,6 +70,9 @@ window.onload = function ()
     let artistviewbox   = document.getElementById("LeftContentBox");
     artistviewbox.appendChild(artistsview.GetHTMLElement());
 
+    let queuecontrolsbox   = document.getElementById("QueueControl");
+    queuecontrolsbox.appendChild(queuecontrolview.GetHTMLElement());
+
     document.body.appendChild(mainmenu.GetHTMLElement());
     document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
 
@@ -82,7 +86,6 @@ window.onload = function ()
 
     // Setup the Views
     ShowAlphabetBar("Alphabetbar");
-    ShowQueueControls("QueueControl");
     ShowSearchInput("Search");
 }
 

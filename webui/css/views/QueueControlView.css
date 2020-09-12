@@ -16,16 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.ButtonBox
+.QueueControlView
 {
-    align-items:        center;
+    display:            flex;
+    flex-direction:     row;
+    margin-right:       1ch;
 }
 
-.ButtonBox > .SVGIcon + .SVGIcon
-{
-    margin-left:        1ch;
-}
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
+
 

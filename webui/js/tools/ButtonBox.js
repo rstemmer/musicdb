@@ -96,5 +96,57 @@ class ButtonBox_QueueEntryControls extends ButtonBox
 
 }
 
+
+
+class ButtonBox_QueueControls extends ButtonBox
+{
+    constructor()
+    {
+        super();
+
+        this.addlast = new SVGButton("Add",  ()=>{this.AddRandomMusic("last");});
+        this.addnext = new SVGButton("Next", ()=>{this.AddRandomMusic("next");});
+        this.AddButton(this.addlast);
+        this.AddButton(this.addnext);
+    }
+
+
+
+    AddRandomMusic(position)
+    {
+        let musictype = mdbmodemanager.GetCurrentMode();
+        let command   = null;
+        if(musictype == "audio")
+        {
+            command = "AddRandomSongToQueue";
+        }
+        else if(musictype == "video")
+        {
+            command = "AddRandomVideoToQueue";
+        }
+
+        MusicDB_Call(command, {position: position});
+        return;
+    }
+
+
+
+    UpdateTooltips()
+    {
+        let musictype = mdbmodemanager.GetCurrentMode();
+        if(musictype == "audio")
+        {
+            this.addlast.SetTooltip("Add random song to the queue end");
+            this.addnext.SetTooltip("Add random song to the queue begin");
+        }
+        else if(musictype == "video")
+        {
+            this.addlast.SetTooltip("Add random video to the queue end");
+            this.addnext.SetTooltip("Add random video to the queue begin");
+        }
+        return;
+    }
+}
+
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
