@@ -13,6 +13,7 @@ let musicdbstatus       = new MusicDBStatus();
 let musicdbcontrols     = new MusicDBControls();
 let queuetimemanager    = new QueueTimeManager();
 
+let mainviewmanager     = null; // Can only be created when the document is created
 let aboutmusicdb        = new AboutMusicDB();
 let artistsview         = new ArtistsView();
 let videoview           = new VideoView();
@@ -40,9 +41,7 @@ mainmenu.CreateButton(
 mainmenu.CreateButton(
     new SVGIcon("MusicDB"), "About MusicDB", ()=>
         {
-            let mainviewbox = document.getElementById("MiddleContentBox");
-            mainviewbox.innerHTML = "";
-            mainviewbox.appendChild(aboutmusicdb.GetHTMLElement());
+            mainviewmanager.ShowAboutMusicDB();
         }
     );
 mainmenu.CreateSection("MusicDB Status", musicdbstatus.GetHTMLElement());
@@ -74,6 +73,8 @@ window.onload = function ()
 
     document.body.appendChild(mainmenu.GetHTMLElement());
     document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
+
+    mainviewmanager     = new MainViewManager();
 
 
     // Connect to MusicDB
@@ -168,6 +169,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);
     musicdbstatus.onMusicDBMessage(fnc, sig, args, pass);
     // Views
+    mainviewmanager.onMusicDBMessage(fnc, sig, args, pass);
     musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
     videostreamplayer.onMusicDBMessage(fnc, sig, args, pass);
     genreselectionview.onMusicDBMessage(fnc, sig, args, pass);

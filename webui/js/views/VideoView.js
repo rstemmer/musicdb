@@ -155,10 +155,6 @@ class VideoView
         {
             if(sig == "ShowVideo")
             {
-                let mainviewbox = document.getElementById("MiddleContentBox"); // \_ HACK
-                mainviewbox.innerHTML = "";
-                mainviewbox.appendChild(videoview.GetHTMLElement());           // /  This should do a Main View Manager
-
                 this.UpdateInformation(args.video, args.artist, args.tags);
             }
             else if(sig == "UpdateVideo" || sig == "UpdateTagInput")
