@@ -34,11 +34,21 @@ class QueueView
 
 
 
-    MountStreamView(view)
+    MountStreamView(streamview)
+    {
+        let backbutton = new SVGButton("ToMainView", ()=>
+            {
+                streamview.ShowInMainView();
+            });
+        backbutton.SetTooltip("Show Stream in Main View");
+
+        this.streamviewmount.appendChild(streamview.GetHTMLElement());
+        this.streamviewmount.appendChild(backbutton.GetHTMLElement());
+        return;
+    }
+    UnmountStreamView()
     {
         this.streamviewmount.innerHTML = "";
-        this.streamviewmount.appendChild(view.GetHTMLElement());
-        return;
     }
 
 

@@ -78,19 +78,22 @@ class StreamView
 
     ShowInMainView()
     {
-        window.console && console.log("Show In Main View");
+        if(this.viewposition == "QueueView")
+            queueview.UnmountStreamView();
+
         mainviewmanager.MountView(this);
         this.viewposition = "MainView";
     }
     ShowInQueueView()
     {
-        window.console && console.log("Show In Queue View");
         queueview.MountStreamView(this);
         this.viewposition = "QueueView";
     }
     ShowInVideoPanel()
     {
-        window.console && console.log("Show In Video Panel");
+        if(this.viewposition == "QueueView")
+            queueview.UnmountStreamView();
+
         videopanelmanager.MountView(this);
         this.viewposition = "VideoPanel";
     }

@@ -102,6 +102,14 @@
     margin-bottom:      0.5em;
     opacity:            1.0;
 }
+.QueueView .StreamView + .SVGIcon
+{
+    position:           relative;
+    width:              1.5rem;
+    height:             1.5rem;
+    margin-left:        auto;
+    margin-bottom:      -0.5rem;
+}
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
