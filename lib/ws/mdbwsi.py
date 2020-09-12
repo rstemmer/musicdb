@@ -50,6 +50,7 @@ Videos
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideos`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideo`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddVideoToQueue`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomVideoToQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveVideoFromQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveVideoInQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateVideoStatistic`
@@ -340,6 +341,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.AddSongToQueue(args["songid"], args["position"])
         elif fncname == "AddVideoToQueue":
             retval = self.AddVideoToQueue(args["videoid"], args["position"])
+        elif fncname == "AddRandomVideoToQueue":
+            retval = self.AddRandomVideoToQueue(args["position"])
         elif fncname == "AddAlbumToQueue":
             retval = self.AddAlbumToQueue(args["albumid"])
         elif fncname == "AddRandomSongToQueue":
@@ -422,9 +425,7 @@ class MusicDBWebSocketInterface(object):
         try:
             self.HandleCall(fncname, method, fncsig, arguments, passthrough)
         except Exception as e:
-            logging.error("Unexpected error for async. call-function: %s!", str(fncname))
-            logging.error(e)
-            traceback.print_exc()
+            logging.exception("Unexpected error for async. call-function: %s!", str(fncname))
             return False
 
         return True
@@ -1876,6 +1877,32 @@ class MusicDBWebSocketInterface(object):
 
         # Add video to the queue and update statistics
         self.videoqueue.AddVideo(videoid, position)
+        return None
+
+
+    def AddRandomVideoToQueue(self, position):
+        """
+        Similar to :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddVideoToQueue`.
+        Instead of a specific video, a random video gets chosen by the random music manager *Randy* (See :doc:`/mdbapi/randy`).
+        This is done using the :meth:`mdbapi.randy.Randy.GetVideo` method.
+
+        Args:
+            position (str): ``"next"`` or ``"last"`` - Determines where the song gets added
+
+        Returns:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("AddRandomVideoToQueue", {position:"last"});
+
+        """
+        if position not in ["next", "last"]:
+            logging.warning("Position must have the value \"next\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
+            return None
+
+        self.videoqueue.AddRandomVideo(position)
         return None
 
 

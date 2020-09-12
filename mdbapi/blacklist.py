@@ -402,5 +402,41 @@ class BlacklistInterface(object):
             # Save blacklists to files 
             self.mdbstate.SaveBlacklists(Blacklist)
 
+
+
+    def CheckAllListsForVideo(self, video):
+        """
+        This method checks if a video on the blacklists.
+        If it is so, the method returns ``True``.
+        If none are on the blacklists, ``False`` gets returned.
+
+        If the video is ``None`` nothing happens.
+
+        Args:
+            video (dict/int): A video from the :class:`~lib.db.musicdb.MusicDatabase` or the video ID
+
+        Returns:
+            ``True`` if the video is on blacklist. ``False`` otherwise.
+
+        Raises:
+            TypeError: When ``video`` is not of type ``dict`` or ``int``
+        """
+        if not video:
+            return
+
+        if type(video) == int:
+            video = self.db.GetSongById(video)
+        elif type(video) != dict:
+            raise TypeError("video argument must be of type dict or a video ID (int). Actual type was %s!"%(str(type(video))))
+
+        videobl, songbl, albumbl, artistbl = self.GetValidIDsFromBlacklists()
+
+        if self.artistbllen > 0 and video["artistid"] in artistbl:
+            logging.debug("artist of video on artist-blacklist but this blacklist is ignored for videos")
+        if self.videobllen > 0 and video["id"] in videobl:
+            logging.debug("video on blacklist")
+            return True
+        return False
+
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

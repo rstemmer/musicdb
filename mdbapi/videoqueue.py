@@ -519,7 +519,7 @@ class VideoQueue(object):
 
 
 
-    def AddRandomVideo(self, position="last", albumid=None):
+    def AddRandomVideo(self, position="last"):
         """
         This method adds a random video into the queue.
 
@@ -528,8 +528,7 @@ class VideoQueue(object):
             * ``"last"`` (default): Appends the video at the end of the queue
             * ``"next"``: Inserts the video right after the current playing video.
 
-        When there is an album ID, the randoms video gets selected from that album using :meth:`mdbapi.randy.Randy.GetVideoFromAlbum`.
-        If the album ID is ``None``, the method :meth:`mdbapi.randy.Randy.GetVideo` will be used to get a random video from the activated genres.
+        The method :meth:`mdbapi.randy.Randy.GetVideo` will be used to get a random video from the activated genres.
 
         After selecting the random video, the :meth:`~AddVideo` method gets used to insert the new video into the queue.
         If there is no video found by Randy, then nothing gets added to the queue and ``False`` will be returned.
@@ -546,13 +545,8 @@ class VideoQueue(object):
         """
         if type(position) != str:
             raise TypeError("Position must be a string!")
-        if albumid != None and type(albumid) != int:
-            raise TypeError("Album ID must be an integer!")
 
-        if albumid:
-            mdbvideo = self.randy.GetVideoFromAlbum(albumid)
-        else:
-            mdbvideo = self.randy.GetVideo()
+        mdbvideo = self.randy.GetVideo()
 
         if not mdbvideo:
             return False

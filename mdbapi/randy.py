@@ -242,11 +242,53 @@ class Randy(object):
         return song
 
 
-    def GetVideo(self):
-        raise NotImplementedError()
 
-    def GetVideoFromAlbum(self, albumid):
-        raise NotImplementedError()
+    def GetVideo(self):
+        """
+        This method chooses a random video in a simplified two-stage process as described in the module description.
+        This method will be refined in future to fully behave like the :meth:`~GetSong` method.
+
+        Returns:
+            A video from the :class:`~lib.db.musicdb.MusicDatabase` or ``None`` if an error occurred.
+        """
+        global BlacklistLock
+        global Blacklist
+
+        logging.debug("Randy starts looking for a random video …")
+        t_start = datetime.datetime.now()
+
+        filterlist = self.mdbstate.GetFilterList()
+        if not filterlist:
+            logging.warning("No Genre selected! \033[1;30m(Selecting random video from the whole collection)")
+        else:
+            logging.debug("Genre filter: %s", str(filterlist))
+
+        # Get Random Song - this may take several tries 
+        video    = None
+        while not video:
+            # STAGE 1: Get Mathematical random video (under certain constraints)
+            try:
+                video = self.db.GetRandomVideo(filterlist, self.nodisabled, self.nohated, self.minlen)
+            except Exception as e:
+                logging.error("Getting random video failed with error: \"%s\"!", str(e))
+                return None
+
+            if not video:
+                logging.error("There is no video fulfilling the constraints! \033[1;30m(Check the stage 1 constraints)")
+                return None
+
+            logging.debug("Candidate for next video: \033[0;35m" + video["path"])
+
+
+            # STAGE 2: Make randomness feeling random by checking if the video/artist was recently played
+            if self.blacklist.CheckAllListsForVideo(video):
+                video = None
+                continue
+
+        # New video found \o/
+        t_stop = datetime.datetime.now()
+        logging.debug("Randy found the following video after %s : \033[0;36m%s", str(t_stop-t_start), video["path"])
+        return video
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

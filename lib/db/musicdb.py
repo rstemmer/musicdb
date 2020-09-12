@@ -2197,6 +2197,124 @@ class MusicDatabase(Database):
         return videos
 
 
+    def GetRandomVideo(self, filterlist=None, nodisabled=True, nohated=False, minlen=None, maxlen=None):
+        r"""
+        This method returns a random video that fulfills several constraints.
+
+        The ``filterlist`` can be either a set of genre tag IDs or a set of genre names.
+        When ``filterlist`` is ``None`` no filter gets applied.
+        Otherwise only videos of the genres in the list will be considered.
+
+
+        Getting a random video is done by the following steps:
+
+            #. Get video IDs of all videos in the database
+            #. Translate *filterlist* into a list of tag IDs
+            #. For each video, get its tags and compare that with the set of tag IDs from the filter. (If there is no filter list set, all video IDs are selected)
+            #. Select a random video
+
+
+        Args:
+            filterlist: Optional, default value is ``[]``. A list of genre names or genre tag IDs that limits the search set. The tags have *OR* relations.
+            nodisabled (bool): If ``True`` no disables songs will be selected
+            nohated (bool): If ``True`` no hated songs will be selected
+            minlen (int): If set, no videos with less than *minlen* seconds will be selected
+            maxlen (int): If set, no videos with more than *maxlen* seconds will be selected
+
+        Returns:
+            A random MusicDB Video dictionary that fulfills the constraints,
+            or ``None`` when there is no song fulfilling the constraints
+
+        Raises:
+            TypeError: When *nodisabled* or *nohated* are not of type ``bool``
+            TypeError: When *minlen* or *maxlen* is not ``None`` and not of type integer
+            TypeError: When *filterlist* is not a list and not ``None``
+            ValueError: When minlen is less than ``0``
+            ValueError: When maxlen is less than ``0``
+        """
+        if type(nodisabled) != bool:
+            raise TypeError("nodisabled must be of type bool")
+            
+        if type(nohated) != bool:
+            raise TypeError("nohated must be of type bool")
+
+        if minlen != None and type(minlen) != int:
+            raise TypeError("minlen must be None or of type integer")
+        if maxlen != None and type(maxlen) != int:
+            raise TypeError("maxlen must be None or of type integer")
+
+        if filterlist == None:
+            filterlist = []
+        if type(filterlist) != list:
+            raise TypeError("filterlist must be of type list")
+
+
+        # Prepare sql command
+        sql = "SELECT videoid FROM videos WHERE 1 = 1"
+        if nodisabled:
+            sql += " AND disabled != 1"
+        if nohated:
+            sql += " AND favorite >= 0"
+        if minlen:
+            # make sure the argument does not mess up the query-string
+            if minlen < 0:
+                raise ValueError("minlen must be >= 0")
+            sql += " AND playtime >= " + str(minlen)
+        if maxlen:
+            # make sure the argument does not mess up the query-string
+            if maxlen < 0:
+                raise ValueError("maxlen must be >= 0")
+            sql += " AND playtime <= " + str(maxlen)
+
+
+        # Create a list of tagids that limits the set of videoss
+        with MusicDatabaseLock:
+            tagids = []
+            if len(filterlist) > 0:
+                for filterentry in filterlist:
+                    if type(filterentry) == str:
+                        tag   = self.GetTagByName(filterentry, self.TAG_CLASS_GENRE)
+                        tagid = tag["id"]
+                    else:
+                        tagid = filterentry
+
+                    tagids.append(tagid)
+
+            # create a set from the list to compare it with a set of video tags
+            tagids = set(tagids)
+
+            # Get IDs of all videos existing in the database
+            retval   = self.GetFromDatabase(sql, None)
+            videoids = [entry[self.VIDEO_ID] for entry in retval]
+
+            # Only select videos that have a tag listed in the tagids list
+            selectedvideoids = []
+            if len(tagids) > 0:
+                for videoid in videoids:
+                    # Get tags of the video
+                    videotags = self.GetTargetTags("video", videoid, self.TAG_CLASS_GENRE)
+                    if not videotags:
+                        continue
+
+                    # Check if one tag matches the filter
+                    videotagids = { videotag["id"] for videotag in videotags }
+                    if not tagids & videotagids:
+                        continue
+
+                    selectedvideoids.append(videoid)
+            else:
+                selectedvideoids = videoids
+
+
+        if len(selectedvideoids) == 0:
+            return None
+
+        # Choose a random one
+        videoid   = selectedvideoids[random.randrange(0, len(selectedvideoids))]
+        video     = self.GetVideoById(videoid)
+        return video
+
+
     def SetVideoFrames(self, videoid, framesdirectory=None, thumbnailfile=None, previewfile=None):
         """
         This method updates the frames directory, thumbnail file and preview file entry in the database

@@ -69,6 +69,10 @@ function Button_AddRandomSongToQueue()
     html += BTN_CreateIconButton(
         "<i class=\"fa fa-play-circle\" title=\"Play random song next\"></i>",
         "MusicDB_Call(\'AddRandomSongToQueue\', {position:\'next\'});");
+    html += BTN_CreateSeparator();
+    html += BTN_CreateIconButton(
+        "<i class=\"fa fa-play-circle\" title=\"Play random video next\"></i>",
+        "MusicDB_Call(\'AddRandomVideoToQueue\', {position:\'next\'});");
 
     html += "</div>";
     return html;
