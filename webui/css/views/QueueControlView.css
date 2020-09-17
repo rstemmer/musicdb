@@ -23,6 +23,11 @@
     margin-right:       1ch;
 }
 
+.QueueControlView > label
+{
+    margin-right:       2ch;
+}
+
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
