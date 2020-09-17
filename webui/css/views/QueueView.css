@@ -67,6 +67,8 @@
 .QueueTile .infobox > div:first-child
 {
     flex-grow:      1;
+    white-space:    nowrap;
+    overflow:       hidden;
 }
 .QueueTile .infobox > div:last-child
 {
