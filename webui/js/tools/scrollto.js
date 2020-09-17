@@ -2,6 +2,7 @@
 
 function ScrollToArtist(artistid)
 {
+    window.console && console.log("Deprecated! Use artistsview.ScrollToArtist");
     let element = document.getElementById("Artist_" + artistid);
     element.scrollIntoView({behavior: "smooth"});
     return;

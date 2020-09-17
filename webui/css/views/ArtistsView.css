@@ -39,8 +39,6 @@
 .artistentry > span
 {
     flex-basis:         100%;
-    margin-left:        0.8em;
-    margin-right:      -0.8em;
     width:              0;      /* To align to album entries */
     overflow:           hidden;
 }

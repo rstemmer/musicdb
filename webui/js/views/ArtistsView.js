@@ -142,7 +142,9 @@ class ArtistsView
     ScrollToArtist(artistid)
     {
         let element = document.getElementById("Artist_" + artistid);
-        element.scrollIntoView({behavior: "smooth"});
+        window.console && console.log(artistid);
+        window.console && console.log(element);
+        element.scrollIntoView({behavior: "smooth", block: "start"});
         return;
     }
 
