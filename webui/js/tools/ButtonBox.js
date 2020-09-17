@@ -104,8 +104,8 @@ class ButtonBox_QueueControls extends ButtonBox
     {
         super();
 
-        this.addlast = new SVGButton("Add",  ()=>{this.AddRandomMusic("last");});
-        this.addnext = new SVGButton("Next", ()=>{this.AddRandomMusic("next");});
+        this.addlast = new SVGButton("Add",    ()=>{this.AddRandomMusic("last");});
+        this.addnext = new SVGButton("Insert", ()=>{this.AddRandomMusic("next");});
         this.AddButton(this.addlast);
         this.AddButton(this.addnext);
     }
