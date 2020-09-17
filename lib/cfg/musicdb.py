@@ -234,6 +234,7 @@ class MusicDBConfig(Config):
         self.randy.artistbllen      = self.Get(int,  "Randy",   "artistbllen",  10)
         self.randy.videobllen       = self.Get(int,  "Randy",   "videobllen",   10)
         self.randy.maxblage         = self.Get(int,  "Randy",   "maxblage",     24)
+        self.randy.maxtries         = self.Get(int,  "Randy",   "maxtries",     10)
 
 
         # [log]

@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-The *randy* module provides a way to select random songs that can be put into the Song Queue.
-The selection of random songs follows certain constraints.
+The *randy* module provides a way to select random songs or videos that can be put into the Song/Video Queue.
+The selection of random music follows certain constraints.
 
 
 Song Selection Algorithm
@@ -68,6 +68,14 @@ then the song, a song from the same album or from the same artist was played rec
 So, the chosen song gets dropped and the finding-process starts again.
 
 Is the blacklist length set to 0, the specific blacklist is disabled
+
+
+Video Selection Algorithm
+-------------------------
+
+The selection of a video is a slightly simplified way as done for Songs.
+For the blacklist stage it does not considers any Artist and Album associations and therefore the corresponding blacklists.
+
 """
 
 import logging
@@ -81,7 +89,7 @@ from mdbapi.blacklist   import BlacklistInterface
 
 class Randy(object):
     """
-    This class provides methods to get a random song under certain constraints.
+    This class provides methods to get a random song or video under certain constraints.
 
     Args:
         config: :class:`~lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration
@@ -107,12 +115,19 @@ class Randy(object):
         self.nohated     = self.cfg.randy.nohated
         self.minlen      = self.cfg.randy.minsonglen
         self.maxlen      = self.cfg.randy.maxsonglen
+        self.maxtries    = self.cfg.randy.maxtries
 
 
 
     def GetSong(self):
         """
         This method chooses a random song in a two-stage process as described in the module description.
+
+        .. warning::
+
+            Due to too hard constraints, it may be possible that it becomes impossible to find a new song.
+            If this is the case, the method returns ``None``.
+            The amount of tries can be configured in the MusicDB Configuration
 
         Returns:
             A song from the :class:`~lib.db.musicdb.MusicDatabase` or ``None`` if an error occurred.
@@ -131,7 +146,12 @@ class Randy(object):
 
         # Get Random Song - this may take several tries 
         song    = None
+        tries    = 0
         while not song:
+            tries += 1
+            if tries > self.maxtries:
+                logging.error("There was no valid song found within %i tries! \033[1;30m(Check the constraints)", self.maxtries)
+                return None
             # STAGE 1: Get Mathematical random song (under certain constraints)
             try:
                 song = self.db.GetRandomSong(filterlist, self.nodisabled, self.nohated, self.minlen)
@@ -201,8 +221,9 @@ class Randy(object):
             An album only has a very limited set of songs.
 
             If all the songs are listed in the blacklist, the method would get caught in an infinite loop.
-            To avoid this, there are only 10 tries to find a random song.
-            If after the tenth try, the method leaves returning ``None``
+            To avoid this, there are only a limited amount of tries to find a random song.
+            If the limit is reached, the method returns ``None``.
+            The amount of tries can be configured in the MusicDB Configuration
 
         Args:
             albumid (int): ID of the album the song shall come from
@@ -217,7 +238,7 @@ class Randy(object):
         song       = None
         tries      = 0  # there is just a very limited set of possible songs. Avoid infinite loop when all songs are on the blacklist
 
-        while not song and tries <= 10:
+        while not song and tries <= self.maxtries:
             tries += 1
             # STAGE 1: Get Mathematical random song (under certain constraints)
             try:
@@ -248,6 +269,12 @@ class Randy(object):
         This method chooses a random video in a simplified two-stage process as described in the module description.
         This method will be refined in future to fully behave like the :meth:`~GetSong` method.
 
+        .. warning::
+
+            Due to too hard constraints, it may be possible that it becomes impossible to find a new song.
+            If this is the case, the method returns ``None``.
+            The amount of tries can be configured in the MusicDB Configuration
+
         Returns:
             A video from the :class:`~lib.db.musicdb.MusicDatabase` or ``None`` if an error occurred.
         """
@@ -263,9 +290,15 @@ class Randy(object):
         else:
             logging.debug("Genre filter: %s", str(filterlist))
 
-        # Get Random Song - this may take several tries 
+        # Get Random Video - this may take several tries 
         video    = None
+        tries    = 0
         while not video:
+            tries += 1
+            if tries > self.maxtries:
+                logging.error("There was no valid video found within %i tries! \033[1;30m(Check the constraints)", self.maxtries)
+                return None
+
             # STAGE 1: Get Mathematical random video (under certain constraints)
             try:
                 video = self.db.GetRandomVideo(filterlist, self.nodisabled, self.nohated, self.minlen)
