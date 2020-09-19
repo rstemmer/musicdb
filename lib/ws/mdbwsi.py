@@ -2800,7 +2800,7 @@ class MusicDBWebSocketInterface(object):
 
         try:
             trackerdb = TrackerDatabase(self.cfg.tracker.dbpath)
-            trackerdb.RemoveSongRelations(self.database, songid, relatedsongid)
+            trackerdb.RemoveRelation("song", songid, relatedsongid)
         except Exception as e:
             logging.warning("Removing song relations failed with error: %s", str(e))
         return None
@@ -2823,7 +2823,7 @@ class MusicDBWebSocketInterface(object):
 
         try:
             trackerdb = TrackerDatabase(self.cfg.tracker.dbpath)
-            trackerdb.RemoveVideoRelations(videoid, relatedvideoid)
+            trackerdb.RemoveRelation("video", videoid, relatedvideoid)
         except Exception as e:
             logging.warning("Removing video relations failed with error: %s", str(e))
         return None

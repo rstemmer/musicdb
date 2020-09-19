@@ -250,7 +250,7 @@ def AudioStreamingThread():
     The ``TimeChanged`` event gets triggered approximately every second.
     """
     from lib.stream.icecast import IcecastInterface
-    from mdbapi.tracker     import Tracker
+    from mdbapi.tracker     import SongTracker
 
     global Config
     global RunThread
@@ -259,7 +259,7 @@ def AudioStreamingThread():
 
     # Create all interfaces that are needed by this Thread
     musicdb    = MusicDatabase(Config.database.path)
-    tracker    = Tracker(Config, musicdb)
+    tracker    = SongTracker(Config)
     filesystem = Filesystem(Config.music.path)
     queue      = SongQueue(Config, musicdb)
     randy      = Randy(Config, musicdb)
@@ -357,9 +357,14 @@ def AudioStreamingThread():
             # In case the loop ended because Icecast failed, update the Status
             if icecast.IsConnected():
                 if not queueentry["israndom"]:  # do not track random songs
-                    tracker.AddSong(queueentry["songid"])
+                    try:
+                        tracker.TrackSong(queueentry["songid"])
+                    except Exception as e:
+                        logging.exception("Trying to track song with ID %i failed with error \"%s\".",
+                                queueentry["songid"],
+                                str(e))
                 else:
-                    logging.debug("The played song was added by Randy. So it will not be tracked.");
+                    logging.debug("The played song was added by Randy. So it will not be tracked.")
 
                 if not Config.debug.disablestats:
                     musicdb.UpdateSongStatistic(queueentry["songid"], "lastplayed", int(time.time()))

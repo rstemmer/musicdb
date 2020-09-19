@@ -249,7 +249,7 @@ def VideoStreamingThread():
     It is expected that all clients stop playing the current video if ``isstreaming`` is set to ``Flase``.
     In case it is set to ``True``, all clients that were used to play the videos continue playing the current video.
     """
-    from mdbapi.tracker import Tracker
+    from mdbapi.tracker import VideoTracker
 
     global Config
     global RunThread
@@ -258,7 +258,7 @@ def VideoStreamingThread():
 
     # Create all interfaces that are needed by this Thread
     musicdb = MusicDatabase(Config.database.path)
-    tracker = Tracker(Config, musicdb)
+    tracker = VideoTracker(Config)
     queue   = VideoQueue(Config, musicdb)
 
     State["isplaying"]    = False
@@ -299,7 +299,14 @@ def VideoStreamingThread():
 
             # Track video
             if not queueentry["israndom"]:  # do not track random videos
-                tracker.AddVideo(queueentry["videoid"]);
+                try:
+                    tracker.TrackVideo(queueentry["videoid"]);
+                except Exception as e:
+                    logging.exception("Trying to track video with ID %i failed with error \"%s\".",
+                            queueentry["videoid"],
+                                str(e))
+            else:
+                logging.debug("The played video was added by Randy. So it will not be tracked.")
 
             # Play next video
             queue.NextVideo()

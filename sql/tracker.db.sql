@@ -14,13 +14,13 @@ CREATE TABLE IF NOT EXISTS songrelations
     weight      INTEGER DEFAULT 1
 );
 
-CREATE TABLE IF NOT EXISTS artistrelations
-(
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    artistida   INTEGER,
-    artistidb   INTEGER,
-    weight      INTEGER DEFAULT 1
-);
+-- CREATE TABLE IF NOT EXISTS artistrelations
+-- (
+--     id          INTEGER PRIMARY KEY AUTOINCREMENT,
+--     artistida   INTEGER,
+--     artistidb   INTEGER,
+--     weight      INTEGER DEFAULT 1
+-- );
 
 CREATE TABLE IF NOT EXISTS videorelations
 (
