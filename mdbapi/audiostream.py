@@ -358,6 +358,9 @@ def AudioStreamingThread():
             if icecast.IsConnected():
                 if not queueentry["israndom"]:  # do not track random songs
                     tracker.AddSong(queueentry["songid"])
+                else:
+                    logging.debug("The played song was added by Randy. So it will not be tracked.");
+
                 if not Config.debug.disablestats:
                     musicdb.UpdateSongStatistic(queueentry["songid"], "lastplayed", int(time.time()))
             else:
