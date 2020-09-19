@@ -59,6 +59,8 @@ Videos
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextVideo`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.VideoEnded`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetVideoThumbnail`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoRelationship`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.CutVideoRelationship`
 
 Queue
 ^^^^^
@@ -267,6 +269,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.Find(args["searchstring"], args["limit"])
         elif fncname == "GetSongRelationship":
             retval = self.GetSongRelationship(args["songid"])
+        elif fncname == "GetVideoRelationship":
+            retval = self.GetVideoRelationship(args["videoid"])
         elif fncname == "GetSongLyrics":
             retval = self.GetSongLyrics(args["songid"])
         elif fncname == "GetLyricsCrawlerCache":
@@ -363,6 +367,11 @@ class MusicDBWebSocketInterface(object):
             if method == "request":
                 retval = self.GetSongRelationship(args["songid"])
                 fncname= "GetSongRelationship"
+        elif fncname == "CutVideoRelationship":
+            retval = self.CutVideoRelationship(args["videoid"], args["relatedvideoid"])
+            if method == "request":
+                retval = self.GetVideoRelationship(args["videoid"])
+                fncname= "GetVideoRelationship"
         elif fncname == "SetStreamState":
             logging.warning("SetStreamState is deprecated! Use SetAudioStreamState instead. \033[1;30m(Calling SetAudioStreamState)")
             retval = self.SetAudioStreamState(args["state"])
@@ -2169,6 +2178,87 @@ class MusicDBWebSocketInterface(object):
         return packet 
 
 
+    def GetVideoRelationship(self, videoid):
+        """
+        This method returns the relationship of a video to other videos.
+        It is a list of videos that were played before or after the video with video ID *videoid*.
+
+        The returned dictionary contains the same video ID given as argument to this method, and list of related videos.
+        Each lists entry is a dictionary with the related ``video`` and ``artist`` from the database.
+        Furthermore the ``weight`` is given.
+        The weight indicates how often the two videos were played together.
+        Hated and disabled videos will not appear in the list.
+
+        The list of videos gets sorted by the keys in the following list: (sorted by priority)
+
+            * Artist Name
+            * Video Release
+
+        The ``tags`` of that videos will also be returned separated into ``genre``, ``subgenre`` and ``mood``.
+        See :meth:`~GetVideoTags` for details how they are returned.
+
+        Args:
+            videoid (int): ID so a video
+
+        Returns:
+            A list of related videos
+
+        Example:
+            
+            .. code-block:: javascript
+
+                MusicDB_Request("GetVideoRelationship", "ShowRelations", {videoid:7357});
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "GetVideoRelationship" && sig == "ShowRelations")
+                    {
+                        console.log("Videos related to the one with ID " + args.videoid)
+                        for(let entry of args.videos)
+                            console.log("Video " + entry.video.name + " with weight " + entry.weight);
+                            console.log(entry.tags.genres)
+                    }
+                }
+        """
+        # get raw relationship
+        trackerdb = TrackerDatabase(self.cfg.tracker.dbpath)
+        results   = trackerdb.GetRelations("video", videoid)
+        parentsid = videoid  # store for return value
+
+        # get all videos
+        entries = []
+        for result in results:
+            entry = {}
+            videoid= result["id"]
+            weight = result["weight"]
+            video  = self.database.GetVideoById(videoid)
+
+            # Ignore hated and disabled videos
+            if video["favorite"] == -1 or video["disabled"]:
+                continue
+
+            tags   = self.GetVideoTags(videoid)
+            entry["video"]   = video
+            entry["tags"]    = tags
+            entry["weight"]  = weight
+            entry["artist"]  = self.database.GetArtistById(video["artistid"])
+
+            entries.append(entry)
+
+        # Sort by Artist-ID and Album-ID
+        entries.sort(key = lambda k:( 
+            k["artist"]["name"], 
+            k["video"]["release"]
+            ))
+
+        packet = {}
+        packet["videoid"]  = parentsid
+        packet["videos"]   = entries
+        return packet 
+
+
     def GetSongLyrics(self, songid):
         lyrics = self.database.GetLyrics(songid)
         state  = self.database.GetSongById(songid)["lyricsstate"]
@@ -2713,6 +2803,29 @@ class MusicDBWebSocketInterface(object):
             trackerdb.RemoveSongRelations(self.database, songid, relatedsongid)
         except Exception as e:
             logging.warning("Removing song relations failed with error: %s", str(e))
+        return None
+
+
+    def CutVideoRelationship(self, videoid, relatedvideoid):
+        """
+        This method removes the relation between two videos.
+
+        After executing this method, the MusicDB server broadcasts the result of :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoRelationship`. (``method = "broadcast", fncname = "GetVideoRelationship"``)
+        So each client gets informed about the changes made.
+
+        Args:
+            videoid (int): ID of one video
+            relatedvideoid (int): ID of the related video
+        """
+        if self.cfg.debug.disabletracker:
+            logging.info("Updating tracker disabled. \033[1;33m!!")
+            return None
+
+        try:
+            trackerdb = TrackerDatabase(self.cfg.tracker.dbpath)
+            trackerdb.RemoveVideoRelations(videoid, relatedvideoid)
+        except Exception as e:
+            logging.warning("Removing video relations failed with error: %s", str(e))
         return None
 
 

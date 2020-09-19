@@ -416,6 +416,32 @@ class TrackerDatabase(Database):
 
 
 
+    def RemoveVideoRelations(self, videoida, videoidb):
+        """
+        This method removes the relationship between two videos.
+
+        If the video relation does not exist, nothing will be done.
+
+        Args:
+            videoida (int): ID of one video
+            videoidb (int): ID of the other one
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: Invalid video IDs
+        """
+        if type(videoida) != int or type(videoidb) != int:
+            raise TypeError("Video IDs must be of type int!")
+
+        with TrackerDatabaseLock:
+            self.RemoveRelation("video", videoida, videoidb)
+
+        return None
+
+
+
     def GetRelations(self, target, targetid):
         """
         This method returns the related songs or artists of a song or an artist, depending on the value of *target*. 
