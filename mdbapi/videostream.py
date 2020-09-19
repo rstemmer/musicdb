@@ -296,6 +296,12 @@ def VideoStreamingThread():
                 continue
 
             logging.debug("Finished streaming video with queue entry id %i", argument)
+
+            # Track video
+            if not queueentry["israndom"]:  # do not track random videos
+                tracker.AddVideo(queueentry["videoid"]);
+
+            # Play next video
             queue.NextVideo()
             State["isplaying"] = False
             if not Config.debug.disablestats:
