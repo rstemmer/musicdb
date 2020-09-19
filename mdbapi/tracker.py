@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -120,7 +120,7 @@ class Tracker(object):
         # Check argument (A situation where songID was None leads to chaos.)
         if type(songid) != int:
             self.lastsongid = None
-            if song == None:
+            if songid == None:
                 return True # None is allowed to cut a song chain.
             logging.warning("Song ID of new song is not an integer! The type was $s. \033[0;33m(Ignoring the NewSong-Call and clearing tracking list)", str(type(songid)))
             return False
