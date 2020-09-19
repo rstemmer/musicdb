@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,16 +16,26 @@
 """
 This module is used to manage the Tracker Database.
 
-The database stores the relation between two songs.
-That means, whenever two songs were played after each other, the relation gets created,
+The database stores the relation between two songs or videos.
+That means, whenever two songs or videos were played after each other, this relation gets created
 or its wehight incremented.
 
-There are two tables, one for song relations and one for artists.
-The artist relation could be determined out of the song relations, so the artist relation table can be seen as cache.
+There are three tables, one for song relations one for video relations and one for artists.
+The artist relation will be determined out of the song relations, so the artist relation table can be seen as cache.
 
-Because the two tables, their data and algorithms are similar, all methods are made to work on both tables.
-The parameter *target* is either ``"song"`` or ``"artist"`` and distinguish the tables.
-If the documentation mentions *targetid* it either is the term *songid* or *artistid* depending on the argument of the methond.
+.. important::
+
+    Adding a video relation does not influence the artists relation table.
+    MusicDB focus on audio-aspects. Videos are an addition that have lower priority.
+    So there is a strict separation between songs and videos.
+    This separation my be loosened in future versions, but for now videos shall not influence the old behavior of how song relations are tracked.
+
+Because the three tables sore similar information, their data and algorithms are similar. 
+All methods are made to work on all tables.
+The parameter *target* is either ``"song"``, ``"video"`` or ``"artist"`` and distinguish the tables.
+If the documentation mentions *targetid* it either is the term *songid*, *videoid* or *artistid* depending on the argument of the method.
+
+The tables layout is the following:
 
 
     +----+-----------+-----------+--------+
@@ -36,13 +46,13 @@ id:
     ID of the row
 
 targetida / targetidb:
-    IDs of the songs or artists that were played together.
-    ID A is the smaller number of the two: ``xida < xidb``.
-    There will not be the situation where xida and xidb have the same ID.
+    IDs of the songs, videos or artists that were played together.
+    ID A is the smaller number of the two: ``targetida < targetidb``.
+    There will not be the situation where targetida and targetidb have the same ID.
     It is prevented by the method creating the relation.
 
 weight:
-    Gets incremented whenever the xida/xidb relation occures.
+    Gets incremented whenever the targetida/targetidb relation already occurred in the past.
 
 This classes uses a global lock (using Python ``threading.RLock``) to avoid that relations change during complex operation.
 For example, when removing a songs relation, the artists relation weight must be decreased.
@@ -56,7 +66,7 @@ import threading
 from lib.db.database import Database
 from lib.db.musicdb  import MusicDatabase
 
-TrackerDatabaseLock = threading.RLock() # RLock is mandatory for nested calles!
+TrackerDatabaseLock = threading.RLock() # RLock is mandatory for nested calls!
 
 class TrackerDatabase(Database):
     """
@@ -77,8 +87,8 @@ class TrackerDatabase(Database):
         except Exception as e:
             raise ValueError("Unable to read version number from Tracker Database")
 
-        if version != 2:
-            raise ValueError("Unexpected version number of Tracker Database. Got %i, expected %i", version, 2)
+        if version != 3:
+            raise ValueError("Unexpected version number of Tracker Database. Got %i, expected %i", version, 3)
         
 
     def AddRelation(self, target, ida, idb):
@@ -91,19 +101,19 @@ class TrackerDatabase(Database):
         If *ida* and *idb* are the same ID, they get ignored.
 
         Args:
-            target (str): ``song`` or ``artist``
-            ida (int): Song ID or Artist ID, depending on the target string
-            ida (int): Song ID or Artist ID, depending on the target string
+            target (str): ``"song"``, ``"video"`` or ``"artist"``
+            ida (int): Song ID, Video ID or Artist ID, depending on the target string
+            ida (int): Song ID, Video ID or Artist ID, depending on the target string
 
         Returns:
             ``None``
 
         Raises:
-            ValueError: If *target* not ``"song"`` or ``"artist"``
+            ValueError: If *target* not ``"song"``, ``"video"`` or ``"artist"``
             TypeError: If *ida* or *idb* is not of type int
         """
-        if target not in ["song", "artist"]:
-            raise ValueError("Unknown target \"%s\"! Only \"song\" and \"artist\" allowed.", target)
+        if target not in ["song", "video", "artist"]:
+            raise ValueError("Unknown target \"%s\"! Only \"song\", \"video\" and \"artist\" allowed.", target)
 
         if type(ida) != int or type(idb) != int:
             raise TypeError("IDs must be of type int!")
@@ -140,7 +150,7 @@ class TrackerDatabase(Database):
     def RemoveRelation(self, target, ida, idb):
         """
         This method removes a relation between two targets.
-        A target can be a song or an artist.
+        A target can be a song, a video or an artist.
         
         It does not matter which one is greater, *ida* or *idb*.
         This gets handled automatically.
@@ -158,15 +168,15 @@ class TrackerDatabase(Database):
 
 
         Args:
-            target (str): ``song`` or ``artist``
-            ida (int): Song ID or Artist ID, depending on the target string
-            ida (int): Song ID or Artist ID, depending on the target string
+            target (str): ``"song"``, ``"video"`` or ``"artist"``
+            ida (int): Song ID, Video ID or Artist ID, depending on the target string
+            ida (int): Song ID, Video ID or Artist ID, depending on the target string
 
         Returns:
             ``None``
 
         Raises:
-            ValueError: If *target* not ``"song"`` or ``"artist"``
+            ValueError: If *target* not ``"song"``, ``"video"`` or ``"artist"``
             TypeError: If *ida* or *idb* is not of type int
 
         Examples:
@@ -195,8 +205,8 @@ class TrackerDatabase(Database):
                         trackerdb.RemoveRelation("song", songa["id"], songb["id"])
 
         """
-        if target not in ["song", "artist"]:
-            raise ValueError("Unknown target \"%s\"! Only \"song\" and \"artist\" allowed.", target)
+        if target not in ["song", "video", "artist"]:
+            raise ValueError("Unknown target \"%s\"! Only \"song\", \"video\" and \"artist\" allowed.", target)
 
         if type(ida) != int or type(idb) != int:
             raise TypeError("IDs must be of type int!")

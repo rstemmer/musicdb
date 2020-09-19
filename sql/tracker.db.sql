@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS meta
     key         TEXT,
     value       TEXT DEFAULT ''
 );
-INSERT INTO meta (key, value) VALUES ("version", 2);
+INSERT INTO meta (key, value) VALUES ("version", 3);
 
 CREATE TABLE IF NOT EXISTS songrelations
 (
@@ -19,6 +19,14 @@ CREATE TABLE IF NOT EXISTS artistrelations
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     artistida   INTEGER,
     artistidb   INTEGER,
+    weight      INTEGER DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS videorelations
+(
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    videoida    INTEGER,
+    videoidb    INTEGER,
     weight      INTEGER DEFAULT 1
 );
 
