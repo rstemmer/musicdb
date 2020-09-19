@@ -170,7 +170,7 @@ class MDBState(Config, object):
                 entry = {}
                 entry["entryid"]  = int( row["EntryID"])
                 entry["songid"]   = int( row["SongID"])
-                entry["israndom"] = bool(row["IsRandom"])
+                entry["israndom"] = (row["IsRandom"] == "True")
 
                 queue.append(entry)
             except Exception as e:
@@ -224,7 +224,7 @@ class MDBState(Config, object):
                 entry = {}
                 entry["entryid"]  = int( row["EntryID"])
                 entry["videoid"]  = int( row["VideoID"])
-                entry["israndom"] = bool(row["IsRandom"])
+                entry["israndom"] = (row["IsRandom"] == "True")
 
                 queue.append(entry)
             except Exception as e:
