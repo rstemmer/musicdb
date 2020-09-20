@@ -30,6 +30,11 @@ If only one video shall be updated explicitly, it must be addressed by using the
 
 All new creates files were set to the ownership ``[music]->owner:[music]->group`` and get the permission ``rw-rw-r--``
 
+.. attention::
+
+    This module does not overwrite existing artworks.
+    You have to delete the old files if you want to create new ones (for example after upgrading a video file).
+
 Examples:
 
     Update the whole cache (Using :meth:`~mod.videoframes.videoframes.UpdateArtist`)
