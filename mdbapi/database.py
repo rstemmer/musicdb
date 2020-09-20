@@ -1036,6 +1036,79 @@ class MusicDBDatabase(object):
 
 
 
+    def UpdateVideo(self, videoid, newpath):
+        """
+        This method updates a video entry in the database.
+        The following steps will be done to do this:
+
+            #. Update the *path* entry of the video to the new path (in case the file name is different)
+            #. Reading the video files meta data
+            #. Analyse the path to collect further information from the file system
+            #. Update database entry with the new collected information
+
+        Updates information are:
+
+            * path
+            * name
+            * playtime
+            * origin
+            * release
+            * date the file was added
+            * codec
+            * x/y resolution
+            * video begin/end
+            * checksum
+
+        Args:
+            videoid (int): ID of the video entry that shall be updated
+            newpath (str): Relative path to the new album
+
+        Returns:
+            ``None``
+
+        Raises:
+            AssertionError: When the new path is invalid
+            Exception: When loading the meta data failes
+        """
+        try:
+            newpath = self.fs.RemoveRoot(newpath) # remove the path to the music directory
+        except:
+            pass
+        video     = self.db.GetVideoById(videoid)
+        videopath = newpath
+
+        # Get all information from the video path and its meta data
+        try:
+            self.meta.Load(videopath)
+        except Exception as e:
+            logging.excpetion("Meta data of file %s cannot be load. Error: %s", str(videopath), str(e))
+            raise e
+
+        tagmeta = self.meta.GetAllMetadata()
+        moddate = self.fs.GetModificationDate(videopath)
+        fsmeta  = self.AnalysePath(videopath)
+        if fsmeta == None:
+            raise AssertionError("Invalid path-format: " + videopath)
+
+        # Remember! The file system is always right
+        video["name"]        = fsmeta["video"]
+        video["path"]        = videopath
+        video["playtime"]    = tagmeta["playtime"]
+        video["origin"]      = tagmeta["origin"]
+        video["release"]     = fsmeta["release"]
+        video["added"]       = moddate
+        video["codec"]       = tagmeta["codec"]
+        video["xresolution"] = tagmeta["xresolution"]
+        video["yresolution"] = tagmeta["yresolution"]
+        video["checksum"]    = self.fs.Checksum(videopath)
+        video["vbegin"]      = 0
+        video["vend"]        = video["playtime"]
+
+        self.db.WriteVideo(video)
+        return None
+
+
+
     def RemoveSong(self, songid):
         """
         This method removed a song from the database.
