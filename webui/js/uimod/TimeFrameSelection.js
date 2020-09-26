@@ -231,6 +231,8 @@ class VideoTimeFrameSelection
     {
         this.begintimeselect.SetNewTime(this.vbegin);
         this.endtimeselect.SetNewTime(this.vend);
+        this.begintimeselect.ValidateNewTime(this.vbegin);
+        this.endtimeselect.ValidateNewTime(this.vend);
     }
 }
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
