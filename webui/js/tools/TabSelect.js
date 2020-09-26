@@ -22,6 +22,7 @@ class TabSelect
     {
         this.tabs           = new Array();
         this.buttons        = new Array();
+        this.showcallback   = new Array();  // Will be called when tag gets selected (after integrating into the DOM)
 
         this.element        = document.createElement("div");
         this.element.classList.add("flex-column");
@@ -70,13 +71,19 @@ class TabSelect
 
         tabbutton.dataset.selected = false;
         this.buttons.push(tabbutton);
+        this.showcallback.push(null);
         this.tabbar.appendChild(tabbutton);
 
         if(select === true)
             this.onTabSelect(tabid);
-        return;
+        return tabid;
     }
 
+
+    SetOnShowCallback(tabid, callback)
+    {
+        this.showcallback[tabid] = callback;
+    }
 
 
     onTabSelect(tabid)
@@ -89,6 +96,9 @@ class TabSelect
             button.dataset.selected = false;
         }
         this.buttons[tabid].dataset.selected = true;
+
+        if(typeof this.showcallback[tabid] === "function")
+            this.showcallback[tabid]();
         return;
     }
 
