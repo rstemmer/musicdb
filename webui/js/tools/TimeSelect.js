@@ -58,7 +58,6 @@ class TimeSelect
 
 
         this._CreateElement();
-        this.Reset();
         // The sliders dimensions are not yet known because it is not placed in the DOM
         return;
     }
