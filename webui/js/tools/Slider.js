@@ -85,10 +85,15 @@ class Slider
     }
 
 
-    // pos as number in percent
+    // pos as number relative (0..1)
     SetPosition(relpos)
     {
         if(isNaN(relpos))
+            return;
+
+        // If the slider is not in the DOM, it does not have a width.
+        // The width is mandatory to calculate the handle position.
+        if(document.contains(this.slidebar) == false)
             return;
 
         let slidebarwidth = this.slidebar.offsetWidth;
