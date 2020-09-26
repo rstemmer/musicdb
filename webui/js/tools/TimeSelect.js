@@ -20,11 +20,13 @@ class TimeSelect
 {
     // reseticonname and resetvalue are optional.
     // If reseticonname is undefined, there will be no reset functionality
-    constructor(label, videoelement, initialtime, slidericon, reseticonname, resetvalue)
+    // The slider covers the range from 0 to maxtime
+    constructor(label, videoelement, initialtime, maxtime, slidericon, reseticonname, resetvalue)
     {
         this.elementorientation = "left";
         this.labeltext          = document.createTextNode(label);
         this.initialtime        = initialtime;
+        this.maxtime            = maxtime;
         this.resetvalue         = resetvalue;
         this.videoelement       = videoelement;
         this.validationfunction = null;
@@ -57,10 +59,7 @@ class TimeSelect
 
         this._CreateElement();
         this.Reset();
-        // SetNewTime positions the slider depending on the video-element duration attribute.
-        // This attribute is usually not set when this constructor is called because it is loaded
-        // from the video meta data that is still on its way.
-        // Furthermore the sliders dimensions are not yet known because it is not placed in the DOM
+        // The sliders dimensions are not yet known because it is not placed in the DOM
         return;
     }
 
@@ -120,11 +119,8 @@ class TimeSelect
 
     onSliderMoved(sliderpos)
     {
-        let totaltime = this.videoelement.duration;
-        if(isNaN(totaltime))
-            return;
-
-        let newtime = Math.round(totaltime * sliderpos);
+        let totaltime = this.maxtime;
+        let newtime   = Math.round(totaltime * sliderpos);
 
         // Validate new position
         if(! this.ValidateNewTime(newtime))
@@ -193,7 +189,7 @@ class TimeSelect
     {
         this.videoelement.currentTime = newtime;
         this.inputelement.value       = SecondsToTimeString(newtime);
-        this.slider.SetPosition(newtime / this.videoelement.duration);
+        this.slider.SetPosition(newtime / this.maxtime);
         return;
     }
 
@@ -241,7 +237,7 @@ class TimeSelect
     Reset()
     {
         this.inputelement.value = SecondsToTimeString(this.initialtime);
-        this.slider.SetPosition(this.initialtime / this.videoelement.duration);
+        this.slider.SetPosition(this.initialtime / this.maxtime);
         return;
     }
 
@@ -252,18 +248,18 @@ class TimeSelect
 
 class BeginTimeSelect extends TimeSelect
 {
-    constructor(label, videoelement, initialtime, resetvalue)
+    constructor(label, videoelement, initialtime, maxtime, resetvalue)
     {
-        super(label, videoelement, initialtime, "vBegin", "vMin", resetvalue);
+        super(label, videoelement, initialtime, maxtime, "vBegin", "vMin", resetvalue);
         this.SetOrientationLeft()
     }
 }
 
 class EndTimeSelect extends TimeSelect
 {
-    constructor(label, videoelement, initialtime, resetvalue)
+    constructor(label, videoelement, initialtime, maxtime, resetvalue)
     {
-        super(label, videoelement, initialtime, "vEnd", "vMax", resetvalue);
+        super(label, videoelement, initialtime, maxtime, "vEnd", "vMax", resetvalue);
         this.SetOrientationRight()
     }
     

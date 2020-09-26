@@ -9,8 +9,8 @@ class VideoTimeFrameSelection
         this.vend               = MDBVideo.vend;
         this.vplaytime          = MDBVideo.playtime;
 
-        this.begintimeselect    = new BeginTimeSelect("Video Begin", this.videoplayer, this.vbegin, 0);
-        this.endtimeselect      = new EndTimeSelect(  "Video End",   this.videoplayer, this.vend,   this.vplaytime);
+        this.begintimeselect    = new BeginTimeSelect("Video Begin", this.videoplayer, this.vbegin, this.vplaytime, 0);
+        this.endtimeselect      = new EndTimeSelect(  "Video End",   this.videoplayer, this.vend,   this.vplaytime, this.vplaytime);
 
         this.savebutton         = new SVGButton("Save", ()=>{this.onSave();});
         this.savebutton.SetTooltip("Save selected time frame at MusicDB server");
