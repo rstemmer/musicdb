@@ -60,7 +60,9 @@ class VideoView
         this.settings           = new TabSelect();
         this.settings.AddTab(new SVGIcon("Tags"),      "Flags & Tags",      this.settings_flags, true);
         this.settings.AddTab(new SVGIcon("Artwork"),   "Thumbnail & Color", this.settings_artwork);
-        this.settings.AddTab(new SVGIcon("TimeFrame"), "Played Time Frame", this.settings_timeframe);
+        let tftabid = this.settings.AddTab(new SVGIcon("TimeFrame"), "Played Time Frame", this.settings_timeframe);
+        // Because of the slider these initialization must take place after putting the elements into the DOM
+        this.settings.SetOnShowCallback(tftabid, ()=>{this.timeframeselect.Initialize();});
 
         // Create Video View
         this.element  = document.createElement("div");
@@ -108,8 +110,6 @@ class VideoView
             this.timeframeselect    = new VideoTimeFrameSelection(this.videoplayer, MDBVideo);
             this.settings_timeframe.innerHTML = "";
             this.settings_timeframe.appendChild(this.timeframeselect.GetHTMLElement());
-            // Because of the slider these initialization must take place after putting the elements into the DOM
-            this.timeframeselect.Initialize();
 
             this.videoproperties    = new VideoProperties();
             this.propertiesbox.innerHTML = "";
