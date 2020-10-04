@@ -67,7 +67,7 @@ class TabSelect
         tabbutton.classList.add("tabbutton");
         tabbutton.appendChild(icon.GetHTMLElement());
         tabbutton.appendChild(tabtext);
-        tabbutton.onclick = (event)=>{this.onTabSelect(tabid);};
+        tabbutton.onclick = (event)=>{this.SelectTab(tabid);};
 
         tabbutton.dataset.selected = false;
         this.buttons.push(tabbutton);
@@ -75,7 +75,7 @@ class TabSelect
         this.tabbar.appendChild(tabbutton);
 
         if(select === true)
-            this.onTabSelect(tabid);
+            this.SelectTab(tabid);
         return tabid;
     }
 
@@ -86,7 +86,7 @@ class TabSelect
     }
 
 
-    onTabSelect(tabid)
+    SelectTab(tabid)
     {
         this.tabcontent.innerHTML = "";
         this.tabcontent.appendChild(this.tabs[tabid]);

@@ -58,11 +58,11 @@ class VideoView
         this.settings_artwork.appendChild(this.colorbox);
 
         this.settings           = new TabSelect();
-        this.settings.AddTab(new SVGIcon("Tags"),      "Flags & Tags",      this.settings_flags, true);
-        this.settings.AddTab(new SVGIcon("Artwork"),   "Thumbnail & Color", this.settings_artwork);
-        let tftabid = this.settings.AddTab(new SVGIcon("TimeFrame"), "Played Time Frame", this.settings_timeframe);
+        this.tagtabid  = this.settings.AddTab(new SVGIcon("Tags"),      "Flags & Tags",      this.settings_flags, true);
+        this.arttabid  = this.settings.AddTab(new SVGIcon("Artwork"),   "Thumbnail & Color", this.settings_artwork);
+        this.timetabid = this.settings.AddTab(new SVGIcon("TimeFrame"), "Played Time Frame", this.settings_timeframe);
         // Because of the slider these initialization must take place after putting the elements into the DOM
-        this.settings.SetOnShowCallback(tftabid, ()=>{this.timeframeselect.Initialize();});
+        this.settings.SetOnShowCallback(this.timetabid, ()=>{this.timeframeselect.Initialize();});
 
         // Create Video View
         this.element  = document.createElement("div");
@@ -135,6 +135,8 @@ class VideoView
             this.thumbnailbox.appendChild(this.thumbnailsettings.GetHTMLElement());
             this.thumbnailsettings.Initialize();
     
+            // Select first tab
+            this.settings.SelectTab(this.tagtabid);
         }
 
         // For new and already visible videos, all settings need to be synchronized
