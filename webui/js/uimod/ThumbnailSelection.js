@@ -28,7 +28,7 @@ class ThumbnailSelection
         this.vend               = MDBVideo.vend;
         this.vplaytime          = MDBVideo.playtime;
 
-        this.timeselect         = new TimeSelect("Select Frame", this.videoplayer, this.vbegin, "vThis");
+        this.timeselect         = new TimeSelect("Select Frame", this.videoplayer, this.vbegin, this.vplaytime, "vThis");
 
         this.savebutton         = new SVGButton("Save", ()=>{this.onSave();});
         this.savebutton.SetTooltip("Save selected time frame at MusicDB server");
