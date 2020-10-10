@@ -135,9 +135,10 @@ class VideoTimeFrameSelection
     // Call this after the element is append to the DOM
     Initialize()
     {
-        this.begintimeselect.Reset();
-        this.endtimeselect.Reset();
-        this.SetSaveState("unchanged");
+        this.onLoad();
+        //this.begintimeselect.Reset();
+        //this.endtimeselect.Reset();
+        //this.SetSaveState("unchanged");
     }
 
 
