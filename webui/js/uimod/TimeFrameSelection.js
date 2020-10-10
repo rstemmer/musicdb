@@ -136,9 +136,6 @@ class VideoTimeFrameSelection
     Initialize()
     {
         this.onLoad();
-        //this.begintimeselect.Reset();
-        //this.endtimeselect.Reset();
-        //this.SetSaveState("unchanged");
     }
 
 
