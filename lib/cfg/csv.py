@@ -122,21 +122,27 @@ class CSVFile(object):
         Write rows into the csv file.
         The first row will be the header of the table.
 
+        If there is no header given, the keys of the first dictionary will be used.
+        The header also filters the values to store.
+
         Example:
 
             .. code-block:: js
 
                 [
-                    {'name': 'a', 'id': 1},
-                    {'name': 'b', 'id': 2},
-                    {'name': 'c', 'id': 3}
+                    {'name': 'a', 'id': 1, 'temp': 'x'},
+                    {'name': 'b', 'id': 2, 'temp': 'y'},
+                    {'name': 'c', 'id': 3, 'temp': 'z'}
                 ]
 
             .. code-block:: python
 
                 print(table)
-                csv.Write(table)
-                # or: csv.Write(table, ["name", "id"])
+                csv.Write(table, ["name", "id"])
+
+                # When using
+                #csv.Write(table)
+                # also the temp values would be stored
 
             .. code-block:: js
 
@@ -155,15 +161,15 @@ class CSVFile(object):
 
         Raises:
             TypeError: when ``table`` is not a list
-            ValueError: when the ``table`` list has not at least one entry
+            ValueError: when the ``table`` list has not at least one entry and there is no header specified
             TypeError: when the ``table`` list elements are not dictionaries
             TypeError: when ``header`` is not a list and not ``None``
         """
         # Check table
         if type(table) != list:
             raise TypeError("The table argument must be of type list!")
-        if len(table) < 1:
-            raise ValueError("The table argument must be a list with at least one entry!")
+        if header == None and len(table) < 1:
+            raise ValueError("When no header is specified, the table argument must contain at least one entry (dictionary)!")
         if type(table[0]) != dict:
             raise TypeError("The table argument must be a list with elements of type dict!")
 
