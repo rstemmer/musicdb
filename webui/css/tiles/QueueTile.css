@@ -17,48 +17,48 @@
  */
 
 
-.QueueView
+.QueueTile
 {
-    display:        flex;
-    padding:        10px 0;
-    flex-direction: column;
-    width:          100%;
+    margin:    0 1ch;
+}
+
+.QueueTile > div:last-child
+{
+    flex-grow:      1;
 }
 
 
-.QueueDropZone
+.QueueTile .infobox
 {
-    display:        flex;
-    width:          100%;
-    padding:        0.5em 0;
-    flex-shrink:    0;
+    margin-left:    1em;
+    min-width:      0;      /*Allow shrinking for long titles*/
 }
-.QueueDropZone *
+.QueueTile span + span
 {
-    pointer-events: none;
+    margin-left:    1ch;
+}
+.QueueTile .infobox *
+{
+    white-space:    nowrap;
+    justify-content: space-between;
+}
+.QueueTitle,.QueueSubTitle
+{
+    overflow:       hidden;
 }
 
 
+.QueueTile .ButtonBox
+{
+    opacity:        0.1;
+}
 
-/*
- * It is possible to mount the StreamView inside the QueueView.
- * Here are some special settings for this situation
- */
-.QueueView .StreamView
+.QueueTile:hover .ButtonBox
 {
-    border-radius:      var(--radius);
-    overflow:           hidden;
-    margin-bottom:      0.5em;
-    opacity:            1.0;
+    opacity:        1.0;
 }
-.QueueView .StreamView + .SVGIcon
-{
-    position:           relative;
-    width:              1.5rem;
-    height:             1.5rem;
-    margin-left:        auto;
-    margin-bottom:      -0.5rem;
-}
+
+
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */

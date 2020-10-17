@@ -1,58 +1,46 @@
+// MusicDB,  a music manager with web-bases UI that focus on music.
+// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 "use strict";
 
-
-class SongQueueTile extends Draggable
+class SongQueueTile extends QueueTile
 {
     constructor(MDBSong, MDBAlbum, MDBArtist, entryid, position, buttonbox)
     {
         super();
-        this.songid      = MDBSong.id;
-        let songname     = MDBSong.name.replace(" - ", " – ");
-        this.albumid     = MDBAlbum.id;
-        let albumname    = MDBAlbum.name.replace(" - ", " – ");
-        let release      = MDBAlbum.release;
-        let artistname   = MDBArtist.name;
-        let artistid     = MDBArtist.id;
+        this.songid     = MDBSong.id;
+        let songname    = MDBSong.name.replace(" - ", " – ");
+        this.albumid    = MDBAlbum.id;
+        let albumname   = MDBAlbum.name.replace(" - ", " – ");
+        let release     = MDBAlbum.release;
+        let artistname  = MDBArtist.name;
+        let artistid    = MDBArtist.id;
 
-        this.element     = document.createElement("div");
-        this.element.id  = entryid;
-        this.element.dataset.entryid   = entryid;
-        this.element.dataset.musictype = "song";
-        this.element.dataset.musicid   = this.songid;
-        this.element.dataset.droptask  = "move";
-        this.element.classList.add("QueueTile");
+        this.artwork    = new AlbumArtwork(MDBAlbum, "small");
 
-        this.artwork                  = new AlbumArtwork(MDBAlbum, "small");
+        this.title             = document.createElement("span");
+        this.title.textContent = songname;
+        this.title.onclick     = ()=>{this.ShowAlbum();};
 
-        this.infobox                  = document.createElement("div");
-        this.infobox.classList.add("infobox");
+        this.subtitle          = this._CreateSongInformation(MDBAlbum, MDBArtist);
 
-        this.titleelement             = document.createElement("div");
-        this.titleelement.textContent = songname;
-        this.titleelement.onclick     = ()=>{this.ShowAlbum();};
-
-        this.infoelement              = this._CreateSongInformation(MDBAlbum, MDBArtist);
-        this.infoelement.classList.add("hlcolor");
-        this.infoelement.classList.add("smallfont");
-
-        this.infobox.appendChild(this.titleelement);
-        if(position > 0)
-            this.infobox.appendChild(buttonbox.GetHTMLElement());
-        this.infobox.appendChild(this.infoelement);
-
-        this.element.appendChild(this.artwork.GetHTMLElement());
-        this.element.appendChild(this.infobox);
+        this.CreateTile("song", this.songid, entryid, this.artwork, this.title, this.subtitle, buttonbox);
 
         if(position > 0)
             this.BecomeDraggable();
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
