@@ -187,6 +187,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
         MusicDB_Request("GetTags",          "UpdateTagsCache");
         MusicDB_Request("GetAudioStreamState",   "UpdateStreamState");
         MusicDB_Request("GetMDBState",      "UpdateMDBState");
+        MusicDB_Request("GetSongQueue",     "ShowSongQueue");
     }
 
     else if(fnc == "GetAudioStreamState" && sig == "UpdateStreamState") {
