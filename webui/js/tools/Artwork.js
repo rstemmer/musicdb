@@ -56,12 +56,25 @@ class AlbumArtwork extends Artwork
         super(size);
 
         this.element.classList.add("AlbumArtwork");
-        this.albumid = MDBAlbum.id;
+        if(MDBAlbum != null)
+        {
+            this.albumid     = MDBAlbum.id;
+            this.artworkpath = MDBAlbum.artworkpath;
+        }
+        else
+        {
+            this.albumid     = null;
+            this.artworkpath = "default.jpg";
+        }
 
         if(size == "small" || size == "medium")
-        {
-            this.imgpath = EncodeArtworkPath(MDBAlbum.artworkpath, "150x150");
-        }
+            this.dimension = "150x150";
+        else if(size == "large")
+            this.dimension = "500x500";
+        else
+            this.dimension = "500x500"; // default to high resolution
+
+        this.imgpath          = EncodeArtworkPath(this.artworkpath, this.dimension);
         this.imageelement.src = this.imgpath;
     }
 
@@ -71,7 +84,9 @@ class AlbumArtwork extends Artwork
     {
         event.preventDefault();
         event.stopPropagation();
-        MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: this.albumid});
+
+        if(this.albumid != null)
+            MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: this.albumid});
     }
 }
 
