@@ -43,6 +43,11 @@
     width:          var(--artworkwidth-medium);
     height:         var(--artworkwidth-medium);
 }
+.AlbumArtwork[data-size=large]
+{
+    width:          var(--artworkwidth-large);
+    height:         var(--artworkwidth-large);
+}
 
 
 

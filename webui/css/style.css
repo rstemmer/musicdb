@@ -36,8 +36,9 @@
     --color-gold:   #A8A623;
     --color-gray:   #323234;
 
-    --artworkwidth-medium:  10rem; 
-    --artworkwidth-small:    3rem; 
+    --artworkwidth-large:   20vw;
+    --artworkwidth-medium:  10rem;
+    --artworkwidth-small:    3rem;
 }
 
 .fgcolor
