@@ -134,7 +134,7 @@ class ColorSchemeSelection
         if(this.musictype == "video")
             MusicDB_Call("SetVideoColor", {videoid: this.musicid, colorname: colorname, color: colorvalue});
         else if(this.musictype == "audio")
-            MusicDB_Call("SetSongColor",  {songid:  this.musicid, colorname: colorname, color: colorvalue});
+            MusicDB_Call("SetAlbumColor", {albumid: this.musicid, colorname: colorname, color: colorvalue});
     }
 
 
