@@ -74,6 +74,12 @@ class MainViewHeadline
 
 
 
+    /*
+     * MDBMusic must provide the following attributes:
+     *  · MDBMusic.name
+     *  · MDBMusic.release
+     *  · MDBMusic.origin
+     */
     UpdateInformation(MDBMusic, MDBArtist)
     {
         this.contentname.innerText  = MDBMusic.name;
