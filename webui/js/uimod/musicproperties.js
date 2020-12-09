@@ -192,11 +192,15 @@ class VideoProperties extends MusicProperties
     }
 }
 
+
+
 class SongProperties extends MusicProperties
 {
-    constructor()
+    constructor(MDBSong = null)
     {
         super("audio");
+        if(MDBSong != null)
+            this.UpdateButtons(MDBSong);
     }
 }
 
