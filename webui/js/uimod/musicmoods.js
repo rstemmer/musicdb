@@ -164,11 +164,15 @@ class VideoMoods extends MusicMoods
     }
 }
 
+
+
 class SongMoods extends MusicMoods
 {
-    constructor()
+    constructor(MDBSong = null, MDBTags = null)
     {
         super("audio");
+        if(MDBSong != null && MDBTags != null)
+            this.UpdateButtons(MDBSong, MDBTags);
     }
 }
 
