@@ -102,6 +102,24 @@ class TabSelect
         return;
     }
 
+
+
+    ToggleVisibility()
+    {
+        if(this.element.style.display == "none")
+            this.Show();
+        else
+            this.Hide();
+    }
+    Show()
+    {
+        this.element.style.display = "flex";
+    }
+    Hide()
+    {
+        this.element.style.display = "none";
+    }
+
 }
 
 
