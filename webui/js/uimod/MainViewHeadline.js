@@ -88,6 +88,13 @@ class MainViewHeadline
         this.infobox.title          = MDBMusic.origin;
     }
 
+
+
+    SetRightClickCallback(callback)
+    {
+        this.element.oncontextmenu = callback;
+    }
+
 }
 
 
