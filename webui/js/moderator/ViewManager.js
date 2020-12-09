@@ -71,7 +71,14 @@ class MainViewManager extends ViewManager
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "GetVideo")
+        if(fnc == "GetAlbum")
+        {
+            if(sig == "ShowAlbum")
+            {
+                this.MountView(albumview);
+            }
+        }
+        else if(fnc == "GetVideo")
         {
             if(sig == "ShowVideo")
             {

@@ -16,6 +16,7 @@ let mainviewmanager     = null; // Can only be created when the document is crea
 let videopanelmanager   = null;
 let aboutmusicdb        = new AboutMusicDB();
 let artistsview         = new ArtistsView();
+let albumview           = new AlbumView();
 let streamview          = new StreamView();
 let videoview           = new VideoView();
 let queueview           = new QueueView();
@@ -164,6 +165,8 @@ function onMusicDBNotification(fnc, sig, rawdata)
 }
 function onMusicDBMessage(fnc, sig, args, pass)
 {
+    window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");
+
     // Background objects
     tagmanager.onMusicDBMessage(fnc, sig, args, pass);
     mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
@@ -175,11 +178,10 @@ function onMusicDBMessage(fnc, sig, args, pass)
     musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
     genreselectionview.onMusicDBMessage(fnc, sig, args, pass);
     artistsview.onMusicDBMessage(fnc, sig, args, pass);
+    albumview.onMusicDBMessage(fnc, sig, args, pass);
     streamview.onMusicDBMessage(fnc, sig, args, pass);
     videoview.onMusicDBMessage(fnc, sig, args, pass);
     queueview.onMusicDBMessage(fnc, sig, args, pass);
-
-    window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#7a90c8");
 
 
     // Handle Messages form the server
@@ -190,6 +192,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
         MusicDB_Request("GetSongQueue",     "ShowSongQueue");
     }
 
+    /*
     else if(fnc == "GetAudioStreamState" && sig == "UpdateStreamState") {
         if(!args.hasqueue)
         {
@@ -204,6 +207,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
             MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: args.album.id});
         }
     }
+    */
     else if(fnc == "GetMDBState") {
         if(sig == "UpdateMDBState" || sig == "UpdateRelationshipGenreHighlight")
         {
@@ -234,7 +238,14 @@ function onMusicDBMessage(fnc, sig, args, pass)
             UpdateStyle();    // Update new tags
         }
     }
+    else if(fnc == "GetAlbum") {
+        if(sig == "ShowAlbum")
+        {
+            UpdateStyle(args.album.bgcolor, args.album.fgcolor, args.album.hlcolor)
+        }
+    }
 
+    /*
     else if(fnc == "GetAlbum" && sig == "ShowAlbum") {
         ShowAlbum("MiddleContentBox", args.artist, args.album, args.cds, args.tags, currentsongid);
         currentalbumid = args.album.id;
@@ -245,6 +256,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
             Albumview_UpdateAlbum(args.album, args.tags);
         }
     }
+    */
     else if(fnc == "Find" && sig == "ShowSearchResults")
         ShowSearchResults(args.artists, args.albums, args.songs);
 

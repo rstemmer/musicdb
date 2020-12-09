@@ -79,160 +79,111 @@ class SongQueueTile extends QueueTile
     }
 }
 
-/*
- * This class provides the artistloader.
- * It is possible to select a set of genres and/or to reload the artists-list
+
+
+/* Layout:
  *
- * Requirements:
- *   - JQuery
- *   - Font-Awesome
- *   - mdb_songtile.css
- * Show:
- * Functions:
- * Callbacks:
- * Recommended Paths:
- * Trigger: (fnc -> sig)
+ *  # Song Name    Flags (l) (+) (>) |
  *
  */
-
-function CreateSongTile(MDBSong, MDBAlbum, MDBArtist, topbuttonbox, bottombuttonbox, MDBTags = null)
+class SongEntryTile
 {
-    var html        = "";
-    var imgpath     = EncodeArtworkPath(MDBAlbum.artworkpath, "50x50");
-    var albumid     = MDBAlbum.id;
-    var songname    = MDBSong.name.replace(" - ", " – ");
-    var songid      = MDBSong.id;
-    var albumname   = MDBAlbum.name.replace(" - ", " – ");
-    var artistname  = MDBArtist.name;
-    var artistid    = MDBArtist.id;
-    var albumrequest= "MusicDB_Request(\'GetAlbum\', \'ShowAlbum\', {albumid:"+albumid+"});";
-
-    html += "<div class=\"ST_tile\">"; // main box
-
-    // Artwork
-    html += "<div class=\"ST_artworkbox\">";
-        html += "<img class=\"ST_artwork\" ";
-        html += " src=\"" + imgpath + "\" ";
-        html += " onClick=\"" + albumrequest + "\"";
-        html += " title=\"Show this album\"";
-        html += ">";
-    html += "</div>";
-
-    // Body
-    html += "<div class=\"ST_body\">";
-    html += "<div class=\"ST_row\">";
-        // Songname
-        html += "<div";
-        html += " class=\"ST_songname fgcolor\">";
-        html += songname;
-        html += "</div>";
-    html += "</div>";
-    html += "<div class=\"ST_row\">";
-        // Artistname
-        html += "<div class=\"ST_subtitle smallfont\">";
-        html += "<span ";
-        html += " onClick=\'artistsview.ScrollToArtist("+artistid+");\'";
-        html += " title=\"Scroll to this artist\"";
-        html += " class=\"ST_artistname hlcolor\">";
-        html += artistname;
-        html += "</span>";
-
-        html += "<span class=\"ST_separator fgcolor\"> – </span>";
-
-        // Albumname
-        html += "<span ";
-        html += " class=\"ST_albumname hlcolor\"";
-        html += " title=\"Show this album\"";
-        html += " onClick=\"" + albumrequest + "\">";
-        html += albumname;
-        html += "</span>";
-        html += "</div>";
-    html += "</div>";
-    html += "</div>";
-
-    // Tagsbox
-    html += "<div class=\"ST_tagbox hovpacity\">";
-    html += "<div class=\"ST_row\">";
-        html += "<div id=\"SongTileGenre_"+songid+"\" class=\"hlcolor\"></div>";
-    html += "</div>";
-    html += "<div class=\"ST_row\">";
-        html += "<div id=\"SongTileSubgenre_"+songid+"\" class=\"hlcolor\"></div>";
-    html += "</div>";
-    html += "</div>";
-
-    // Buttonbox
-    html += "<div class=\"ST_buttonbox\">";
-    html += "<div class=\"ST_row\">";
-        html += "<div";
-        html += " class=\"hlcolor\">";
-        html += topbuttonbox;
-        html += "</div>";
-    html += "</div>";
-    html += "<div class=\"ST_row\">";
-        if(bottombuttonbox)
-        {
-            html += "<div";
-            html += " class=\"hlcolor\">";
-            html += bottombuttonbox;
-            html += "</div>";
-        }
-    html += "</div>";
-    html += "</div>";
-    /*
-    html += "<div class=\"ST_body\">";
-    html += "<div class=\"ST_row\">";
-    
-    // Songname
-    html += "<div";
-    html += " class=\"ST_songname fgcolor\">";
-    html += songname;
-    html += "</div>";
-    
-    // Buttonbox
-    html += "<div";
-    html += " class=\"ST_buttonbox hlcolor\">";
-    html += topbuttonbox;
-    html += "</div>";
-    
-    html += "</div>";
-    html += "<div class=\"ST_row\">";
-    
-    // Artistname
-    html += "<div class=\"ST_subtitle smallfont\">";
-    html += "<span ";
-    html += " onClick=\'ScrollToArtist("+artistid+");\'";
-    html += " title=\"Scroll to this artist\"";
-    html += " class=\"ST_artistname hlcolor\">";
-    html += artistname;
-    html += "</span>";
-
-    html += "<span class=\"ST_separator fgcolor\"> – </span>";
-
-    // Albumname
-    html += "<span ";
-    html += " class=\"ST_albumname hlcolor\"";
-    html += " title=\"Show this album\"";
-    html += " onClick=\"" + albumrequest + "\">";
-    html += albumname;
-    html += "</span>";
-    html += "</div>";
-    
-    // Buttonbox
-    if(bottombuttonbox)
+    // TODO: Lyrics-integration
+    constructor(MDBSong, MDBTags)
     {
-        html += "<div";
-        html += " class=\"ST_buttonbox hlcolor\">";
-        html += bottombuttonbox;
-        html += "</div>";
+        this.songid  = MDBSong.id;
+        this.element = document.createElement("div");
+
+        this.songnum      = this.CreateSongNumber(MDBSong);
+        this.songname     = this.CreateSongName(MDBSong);
+        this.flagbar      = new FlagBar(MDBSong, MDBTags.moods); // FlagBar needs align-settings (left/right alignment) and no-small-font settings
+        this.appendbutton = new SVGButton("Append", ()=>{this.AddSongToQueue("last");});
+        this.insertbutton = new SVGButton("Insert", ()=>{this.AddSongToQueue("next");});
+        this.appendbutton.SetTooltip("Append song to the queue");
+        this.insertbutton.SetTooltip("Insert song into the queue after current playing song");
+
+        this.element.appendChild(this.songnum);
+        this.element.appendChild(this.songname);
+        this.element.appendChild(this.flagbar.GetHTMLElement());
+        this.element.appendChild(this.appendbutton.GetHTMLElement());
+        this.element.appendChild(this.insertbutton.GetHTMLElement());
+        this.element.classList.add("SongEntryTile");
+        this.element.classList.add("flex-row");
     }
 
-    html += "</div>";
-    html += "</div>";
-    */
 
-    html += "</div>"; // main box
 
-    return html;
+    GetHTMLElement()
+    {
+        return this.element;
+    }
+
+
+
+    AddSongToQueue(position)
+    {
+        MusicDB_Call("AddSongToQueue", {songid: this.songid, position: position});
+    }
+
+
+
+    CreateSongNumber(MDBSong)
+    {
+        let songnum = document.createElement("div");
+        songnum.classList.add("songnumber");
+        songnum.classList.add("hlcolor");
+
+        if(MDBSong.number != 0)
+            songnum.innerText = MDBSong.number
+        else
+            songnum.innerText = "⚪&#x0000FE0E;";
+        return songnum;
+    }
+
+
+
+    // TODO: Highlight when playing
+    // TODO: Highlight when hover over album genre
+    CreateSongName(MDBSong)
+    {
+        let songname   = MDBSong.name;
+        let disabled   = MDBSong.disabled;
+        let lastplayed = new Date(MDBSong.lastplayed * 1000);
+        let element    = document.createElement("div");
+        element.classList.add("songname");
+
+        // Set HLColor if disabled
+        if(disabled)
+            element.classList.add("hlcolor");
+
+        // Create tool tip
+        // Source: https://gist.github.com/kmaida/6045266
+        let yyyy   = lastplayed.getFullYear();
+        let mm     = ('0' + (lastplayed.getMonth() + 1)).slice(-2);   // Months are zero based. Add leading 0.
+        let dd     = ('0' +  lastplayed.getDate()).slice(-2);         // Add leading 0.
+        let lpdate = dd + "." + mm + "." + yyyy;
+
+        let tooltip;
+        if(lastplayed > 0)
+            tooltip = songname + "\u000A" + lpdate;
+        else
+            tooltip = songname;
+
+        element.title = tooltip;
+
+        // Set Name
+        element.innerText = songname;
+
+        return element;
+    }
+
+
+
+    SetRightClickCallback(callback)
+    {
+        this.element.oncontextmenu = callback;
+    }
+
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
