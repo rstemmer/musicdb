@@ -32,6 +32,20 @@ class Draggable
 
 
 
+    /*
+     * !! This method overwrites this.element.id to musictype + "_" + musicid
+     * droptask: "move", "insert"
+     */
+    ConfigDraggable(musictype, musicid, droptask)
+    {
+        this.element.id                = musictype + "_" + musicid;
+        this.element.dataset.musictype = musictype;
+        this.element.dataset.musicid   = musicid;
+        this.element.dataset.droptask  = droptask;
+    }
+
+
+
     BecomeDraggable()
     {
         if(this.element === undefined)

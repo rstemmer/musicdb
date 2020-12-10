@@ -111,10 +111,7 @@ class SongEntryTile extends Draggable
         this.element.classList.add("SongEntryTile");
         this.element.classList.add("flex-row");
 
-        this.element.id               = "song_" + this.songid;
-        this.element.dataset.musictype= "song";
-        this.element.dataset.musicid  = this.songid;
-        this.element.dataset.droptask = "insert";
+        this.ConfigDraggable("song", this.songid, "insert");
         this.BecomeDraggable();
     }
 

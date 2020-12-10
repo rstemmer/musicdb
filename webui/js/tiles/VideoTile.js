@@ -78,10 +78,6 @@ class VideoTile extends Draggable
         this.buttonbox                = new ButtonBox_AddVideoToQueue(videoid);
 
         this.element                  = document.createElement("div");
-        this.element.id               = "video_" + videoid;
-        this.element.dataset.musictype= "video";
-        this.element.dataset.musicid  = videoid;
-        this.element.dataset.droptask = "insert";
         this.element.classList.add("VideoTile");
         this.element.appendChild(this.artwork.GetHTMLElement());
         this.element.appendChild(this.buttonbox.GetHTMLElement());
@@ -95,6 +91,7 @@ class VideoTile extends Draggable
         else
             this.SetEnabled();
 
+        this.ConfigDraggable("video", videoid, "insert");
         this.BecomeDraggable();
     }
 
