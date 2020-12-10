@@ -17,6 +17,13 @@
 "use strict";
 
 
+/*
+ * Draggables must provide the following four attributes!
+        this.element.id               = this.songid;
+        this.element.dataset.musictype= "song";
+        this.element.dataset.musicid  = this.songid;
+        this.element.dataset.droptask = "insert";
+*/
 class Draggable
 {
     constructor()
