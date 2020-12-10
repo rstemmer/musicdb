@@ -17,11 +17,12 @@
 "use strict";
 
 
-class Artwork
+class Artwork extends Draggable
 {
     // size: "small", "medium"
     constructor(size)
     {
+        super();
         this.element                  = document.createElement("div");
         this.element.classList.add("Artwork");
         this.imageelement             = document.createElement("img");
