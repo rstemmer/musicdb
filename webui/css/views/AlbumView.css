@@ -22,6 +22,16 @@ div#AlbumView .AlbumArtwork
     margin:         2rem;
 }
 
+#AlbumView #SongList
+{
+    overflow-y:     auto;
+}
+
+#AlbumView #SongList:last-child
+{
+    margin-bottom:  1rem;
+}
+
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
