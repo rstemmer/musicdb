@@ -70,10 +70,16 @@ class FlagBar
         }
 
         // Set Mood Flags
-        for(let mood of moods)
+        // Iterate over all existing mood IDs and check which of them was set for this song
+        let allmoods = tagmanager.GetMoods();
+        let moodids  = moods.map(mood => mood.id); // List of IDs of set moods for this song
+        for(let mood of allmoods)
         {
-            let flagelement = this._CreateMoodFlag(mood);
-            this.element.appendChild(flagelement);
+            if(moodids.indexOf(mood.id) >= 0 && mood.icon != null)
+            {
+                let flagelement = this._CreateMoodFlag(mood);
+                this.element.appendChild(flagelement);
+            }
         }
     }
 

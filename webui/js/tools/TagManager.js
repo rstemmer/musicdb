@@ -38,6 +38,17 @@ class TagManager
                         return -1;
                 return 0;
             });
+        // Sort moods by row and column
+        this.tagcache.moods.sort((a, b)=>
+            {
+                let arate = a.posy * 1000 + a.posx;
+                let brate = b.posy * 1000 + b.posx;
+                if (arate > brate)
+                        return 1;
+                if (arate < brate)
+                        return -1;
+                return 0;
+            });
     }
     UpdateActiveGenres(albumfilter)
     {
