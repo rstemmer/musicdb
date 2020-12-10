@@ -220,7 +220,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     }
     else if(fnc == "GetSong") {
         // Update album view - in case the song is visible right now…
-        Albumview_UpdateSong(args.album, args.song, args.tags);
+        //Albumview_UpdateSong(args.album, args.song, args.tags);
 
         // Update rest if a tag input element must be updated
         if(sig == "UpdateTagInput")

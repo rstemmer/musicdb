@@ -207,6 +207,24 @@ class AlbumView
 
 
 
+    UpdateSongInformation(MDBSong, MDBTags)
+    {
+        let songid = MDBSong.id;
+        let newsongtile  = new SongEntryTile(MDBSong, MDBTags);
+        let oldsongtile  = this.songtiles[songid].tile;
+        let songsettings = this.songtiles[songid].settings;
+
+        // Update song tile
+        newsongtile.SetRightClickCallback((event)=>{songsettings.ToggleVisibility(); event.preventDefault();});
+        this.songscell.replaceChild(newsongtile.GetHTMLElement(), oldsongtile.GetHTMLElement());
+
+        // Update internal data
+        this.songtiles[songid].tile = newsongtile;
+        this.songtiles[songid].settings.Update(MDBSong, MDBTags);
+    }
+
+
+
     onMusicDBMessage(fnc, sig, args, pass)
     {
         if(fnc == "GetAudioStreamState" && sig == "UpdateStreamState")
@@ -227,8 +245,6 @@ class AlbumView
         }
         else if(fnc == "GetAlbum" && sig == "ShowAlbum")
         {
-            //ShowAlbum("MiddleContentBox", args.artist, args.album, args.cds, args.tags, currentsongid);
-            // TODO
             this.UpdateInformation(args.album, args.artist, args.tags, args.cds);
             this.currentalbumid = args.album.id;
         }
@@ -239,6 +255,13 @@ class AlbumView
                 //Albumview_UpdateAlbum(args.album, args.tags);
                 // TODO: Use a different update method to avoid rebuilding the song-list
                 this.UpdateInformation(args.album, args.artist, args.tags, args.cds);
+            }
+        }
+        else if(fnc == "GetSong")
+        {
+            if(args.album.id == this.currentalbumid)
+            {
+                this.UpdateSongInformation(args.song, args.tags);
             }
         }
         return;
