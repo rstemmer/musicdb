@@ -19,7 +19,7 @@
 .ratiobox
 {
     background-color:   var(--color-red);
-    width:              1ch;
+    width:              0.8ch;
     height:             100%;
     position:           relative;
 }
