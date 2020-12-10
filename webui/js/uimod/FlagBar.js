@@ -18,68 +18,25 @@
 
 class FlagBar
 {
-    constructor(music, moods)
+    constructor(MDBMusic, moods, alignment="right")
     {
-        this.element        = document.createElement("div");
+        this.element = document.createElement("div");
         this.element.classList.add("FlagBar");
         this.element.classList.add("flex-row");
         this.element.classList.add("smallfont");
         this.element.classList.add("hlcolor");
 
-        // Set Ratio Bar
-        let likes    = music.likes;
-        let dislikes = music.dislikes;
-        let ratio;  // in %
-        if(likes + dislikes == 0)
-            ratio = null;
+        if(alignment == "right")
+        {
+            this._AddMoodFlags(moods);
+            this._AddProperties(MDBMusic);
+            this._AddBarGraph(MDBMusic);
+        }
         else
-            ratio = (likes / (likes + dislikes)) * 100;
-
-        let ratiobar = new RatioBar(ratio);
-        ratiobar.SetTooltip(`${likes} / ${dislikes}`);
-
-        this.element.appendChild(ratiobar.GetHTMLElement());
-
-        // Set Property Flags
-        let icon;
-        if(music.favorite == 1)
         {
-            icon = new SVGIcon("Favorite")
-            icon.SetTooltip("Favorite");
-            icon.SetColor("var(--color-gold)");
-            this.element.appendChild(icon.GetHTMLElement());
-        }
-        if(music.liverecording == 1)
-        {
-            icon = new SVGIcon("LiveRecording")
-            icon.SetTooltip("Live Recording");
-            this.element.appendChild(icon.GetHTMLElement());
-        }
-        if(music.badaudio == 1)
-        {
-            icon = new SVGIcon("BadAudio")
-            icon.SetTooltip("Bad Audio");
-            icon.SetColor("var(--color-red)");
-            this.element.appendChild(icon.GetHTMLElement());
-        }
-        if(music.lyricsvideo == 1)
-        {
-            icon = new SVGIcon("LyricsVideo")
-            icon.SetTooltip("Lyrics Video");
-            this.element.appendChild(icon.GetHTMLElement());
-        }
-
-        // Set Mood Flags
-        // Iterate over all existing mood IDs and check which of them was set for this song
-        let allmoods = tagmanager.GetMoods();
-        let moodids  = moods.map(mood => mood.id); // List of IDs of set moods for this song
-        for(let mood of allmoods)
-        {
-            if(moodids.indexOf(mood.id) >= 0 && mood.icon != null)
-            {
-                let flagelement = this._CreateMoodFlag(mood);
-                this.element.appendChild(flagelement);
-            }
+            this._AddBarGraph(MDBMusic);
+            this._AddProperties(MDBMusic);
+            this._AddMoodFlags(moods);
         }
     }
 
@@ -118,6 +75,73 @@ class FlagBar
 
 
 
+    _AddBarGraph(MDBMusic)
+    {
+        // Set Ratio Bar
+        let likes    = MDBMusic.likes;
+        let dislikes = MDBMusic.dislikes;
+        let ratio;  // in %
+        if(likes + dislikes == 0)
+            ratio = null;
+        else
+            ratio = (likes / (likes + dislikes)) * 100;
+
+        let ratiobar = new RatioBar(ratio);
+        ratiobar.SetTooltip(`${likes} / ${dislikes}`);
+
+        this.element.appendChild(ratiobar.GetHTMLElement());
+        return;
+    }
+
+    _AddProperties(MDBMusic)
+    {
+        // Set Property Flags
+        let icon;
+        if(MDBMusic.favorite == 1)
+        {
+            icon = new SVGIcon("Favorite")
+            icon.SetTooltip("Favorite");
+            icon.SetColor("var(--color-gold)");
+            this.element.appendChild(icon.GetHTMLElement());
+        }
+        if(MDBMusic.liverecording == 1)
+        {
+            icon = new SVGIcon("LiveRecording")
+            icon.SetTooltip("Live Recording");
+            this.element.appendChild(icon.GetHTMLElement());
+        }
+        if(MDBMusic.badaudio == 1)
+        {
+            icon = new SVGIcon("BadAudio")
+            icon.SetTooltip("Bad Audio");
+            icon.SetColor("var(--color-red)");
+            this.element.appendChild(icon.GetHTMLElement());
+        }
+        if(MDBMusic.lyricsvideo == 1)
+        {
+            icon = new SVGIcon("LyricsVideo")
+            icon.SetTooltip("Lyrics Video");
+            this.element.appendChild(icon.GetHTMLElement());
+        }
+        return;
+    }
+
+    _AddMoodFlags(moods)
+    {
+        // Set Mood Flags
+        // Iterate over all existing mood IDs and check which of them was set for this song
+        let allmoods = tagmanager.GetMoods();
+        let moodids  = moods.map(mood => mood.id); // List of IDs of set moods for this song
+        for(let mood of allmoods)
+        {
+            if(moodids.indexOf(mood.id) >= 0 && mood.icon != null)
+            {
+                let flagelement = this._CreateMoodFlag(mood);
+                this.element.appendChild(flagelement);
+            }
+        }
+        return;
+    }
 
 
 

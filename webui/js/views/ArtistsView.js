@@ -114,7 +114,7 @@ class ArtistsView
                     {
                         MusicDB_Request("GetVideo", "ShowVideo", {videoid: musicid});
                     },
-                    new FlagBar(entry.video, entry.tags.moods)
+                    new FlagBar(entry.video, entry.tags.moods, "left" /*icons are left aligned*/)
                     );
             }
 
