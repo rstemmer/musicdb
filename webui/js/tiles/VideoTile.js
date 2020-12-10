@@ -78,7 +78,7 @@ class VideoTile extends Draggable
         this.buttonbox                = new ButtonBox_AddVideoToQueue(videoid);
 
         this.element                  = document.createElement("div");
-        this.element.id               = videoid;
+        this.element.id               = "video_" + videoid;
         this.element.dataset.musictype= "video";
         this.element.dataset.musicid  = videoid;
         this.element.dataset.droptask = "insert";
