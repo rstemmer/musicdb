@@ -62,5 +62,15 @@
     padding:        0.5em 1ch;
 }
 
+
+.tabcontent audio
+{
+    display:            block;
+    width:              100%;
+    border-radius:      var(--radius);
+    background-color:   var(--hlcolor);
+    opacity:            0.5;
+}
+
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
