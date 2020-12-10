@@ -133,6 +133,9 @@ class AlbumView
 
             // Update Album
             this.artwork  = new AlbumArtwork(MDBAlbum, "large");
+            this.artwork.ConfigDraggable("album", MDBAlbum.id, "insert");
+            this.artwork.BecomeDraggable();
+
             this.artworkcell.innerHTML = "";
             this.artworkcell.appendChild(this.artwork.GetHTMLElement());
 
