@@ -86,11 +86,12 @@ class SongQueueTile extends QueueTile
  *  # Song Name    Flags (l) (+) (>) |
  *
  */
-class SongEntryTile
+class SongEntryTile extends Draggable
 {
     // TODO: Lyrics-integration
     constructor(MDBSong, MDBTags)
     {
+        super();
         this.songid  = MDBSong.id;
         this.element = document.createElement("div");
 
@@ -109,6 +110,12 @@ class SongEntryTile
         this.element.appendChild(this.insertbutton.GetHTMLElement());
         this.element.classList.add("SongEntryTile");
         this.element.classList.add("flex-row");
+
+        this.element.id               = "song_" + this.songid;
+        this.element.dataset.musictype= "song";
+        this.element.dataset.musicid  = this.songid;
+        this.element.dataset.droptask = "insert";
+        this.BecomeDraggable();
     }
 
 
