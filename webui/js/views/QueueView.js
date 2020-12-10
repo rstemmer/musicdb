@@ -183,11 +183,11 @@ class QueueDropZone extends DropTarget
             case "insert":
                 if(musictype == "song")
                 {
-                    window.console && console.log("MusicDB_Call(\"AddSongToQueue\", {videoid: "+musicid+", position:"+this.entryid+"});");
+                    window.console && console.log("MusicDB_Call(\"AddSongToQueue\", {songid: "+musicid+", position:"+this.entryid+"});");
                 }
                 else if(musictype == "video")
                 {
-                    window.console && console.log("MusicDB_Call(\"AddVideoToQueue\", {songid: "+musicid+", position:"+this.entryid+"});");
+                    window.console && console.log("MusicDB_Call(\"AddVideoToQueue\", {videoid: "+musicid+", position:"+this.entryid+"});");
                 }
                 else if(musictype == "album")
                 {
