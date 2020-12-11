@@ -162,13 +162,10 @@ class AlbumView
 
             // Update Song-List
             this.UpdateSongList(MDBCDs);
+
+            // Update Tags
+            this.UpdateTagInformation(MDBTags);
         }
-
-        this.genreedit.Update(   "album", this.currentalbumid, MDBTags);
-        this.subgenreedit.Update("album", this.currentalbumid, MDBTags);
-
-        this.genreview.Update(   "album", this.currentalbumid, MDBTags.genres);
-        this.subgenreview.Update("album", this.currentalbumid, MDBTags.subgenres);
 
         this.colorselect.SetColors(MDBAlbum.bgcolor, MDBAlbum.fgcolor, MDBAlbum.hlcolor);
 
@@ -236,6 +233,19 @@ class AlbumView
         // Update internal data
         this.songtiles[songid].tile = newsongtile;
         this.songtiles[songid].settings.Update(MDBSong, MDBTags);
+        return
+    }
+
+
+
+    UpdateTagInformation(MDBTags)
+    {
+        this.genreedit.Update(   "album", this.currentalbumid, MDBTags);
+        this.subgenreedit.Update("album", this.currentalbumid, MDBTags);
+
+        this.genreview.Update(   "album", this.currentalbumid, MDBTags.genres);
+        this.subgenreview.Update("album", this.currentalbumid, MDBTags.subgenres);
+        return;
     }
 
 
@@ -267,9 +277,7 @@ class AlbumView
         {
             if(args.album.id == this.currentalbumid)
             {
-                //Albumview_UpdateAlbum(args.album, args.tags);
-                // TODO: Use a different update method to avoid rebuilding the song-list
-                this.UpdateInformation(args.album, args.artist, args.tags, args.cds);
+                this.UpdateTagInformation(args.tags);
             }
         }
         else if(fnc == "GetSong")
