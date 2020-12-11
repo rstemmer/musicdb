@@ -22,6 +22,12 @@ div#AlbumView .AlbumArtwork
     margin:         2rem;
 }
 
+#AlbumView .leftcolumn
+{
+    width:          calc(100% - var(--artworkwidth-large) - 4rem);
+    overflow-y:     auto;
+}
+
 #AlbumView .rightcolumn
 {
     width:          calc(var(--artworkwidth-large) + 4rem);

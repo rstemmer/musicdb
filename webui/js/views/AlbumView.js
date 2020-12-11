@@ -93,7 +93,6 @@ class AlbumView
         rightcolumn.appendChild(this.artworkcell);
         rightcolumn.appendChild(this.tagscell);
 
-        this.settingscell.classList.add("flex-grow");
         this.songscell.classList.add("flex-grow");
         this.songscell.id = "SongList";
         this.tagscell.id  = "TagsCell";
