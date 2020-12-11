@@ -22,6 +22,12 @@ div#AlbumView .AlbumArtwork
     margin:         2rem;
 }
 
+#AlbumView .rightcolumn
+{
+    width:          calc(var(--artworkwidth-large) + 4rem);
+    overflow-y:     auto;
+}
+
 #AlbumView #SongList
 {
     overflow-y:     auto;
@@ -33,6 +39,11 @@ div#AlbumView .AlbumArtwork
 }
 
 
+#AlbumView #TagsCell .tagview
+{
+    flex-wrap:      wrap;
+    margin:         1rem;
+}
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
 

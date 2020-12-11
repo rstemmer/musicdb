@@ -69,12 +69,17 @@ class AlbumView
         this.headline.SetRightClickCallback((event)=>{this.settings.ToggleVisibility(); event.preventDefault();});
         this.settings.Hide();
 
+        // Create Tag-View
+        this.genreview    = new TagListView();
+        this.subgenreview = new TagListView();
+
         // Create Layout
         let  leftcolumn  = document.createElement("div");
         let  rightcolumn = document.createElement("div");
         this.headlinecell= document.createElement("div");
         this.songscell   = document.createElement("div");
         this.artworkcell = document.createElement("div");
+        this.tagscell    = document.createElement("div");
         this.settingscell= document.createElement("div");
 
         leftcolumn.classList.add("leftcolumn");
@@ -86,15 +91,18 @@ class AlbumView
         rightcolumn.classList.add("rightcolumn");
         rightcolumn.classList.add("flex-column");
         rightcolumn.appendChild(this.artworkcell);
-        //rightcolumn.appendChild(this.settingscell);
+        rightcolumn.appendChild(this.tagscell);
 
         this.settingscell.classList.add("flex-grow");
         this.songscell.classList.add("flex-grow");
-        this.songscell.id = "SongList"
+        this.songscell.id = "SongList";
+        this.tagscell.id  = "TagsCell";
 
         this.headlinecell.appendChild(this.headline.GetHTMLElement());
         this.artworkcell.appendChild(this.artwork.GetHTMLElement());
         this.settingscell.appendChild(this.settings.GetHTMLElement());
+        this.tagscell.appendChild(this.genreview.GetHTMLElement());
+        this.tagscell.appendChild(this.subgenreview.GetHTMLElement());
 
         // Create Album View Element
         this.element    = document.createElement("div");
@@ -158,6 +166,10 @@ class AlbumView
 
         this.genreedit.Update(   "album", this.currentalbumid, MDBTags);
         this.subgenreedit.Update("album", this.currentalbumid, MDBTags);
+
+        this.genreview.Update(   "album", this.currentalbumid, MDBTags.genres);
+        this.subgenreview.Update("album", this.currentalbumid, MDBTags.subgenres);
+
         this.colorselect.SetColors(MDBAlbum.bgcolor, MDBAlbum.fgcolor, MDBAlbum.hlcolor);
 
         return;
