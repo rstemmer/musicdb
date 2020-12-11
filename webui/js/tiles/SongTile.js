@@ -111,6 +111,15 @@ class SongEntryTile extends Draggable
         this.element.classList.add("SongEntryTile");
         this.element.classList.add("flex-row");
 
+        if(MDBSong.disabled)
+        {
+            this.element.classList.add("hovpacity");
+        }
+        else if(MDBSong.favorite == -1)
+        {
+            this.element.classList.add("hovpacity");
+        }
+
         this.ConfigDraggable("song", this.songid, "insert");
         this.BecomeDraggable();
     }
