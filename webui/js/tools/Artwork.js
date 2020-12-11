@@ -41,6 +41,14 @@ class Artwork extends Draggable
 
 
 
+    ConfigDraggable(musictype, musicid, droptask)
+    {
+        super.ConfigDraggable(musictype, musicid, droptask);
+        this.element.id = musictype + "artwork_" + musicid; // overwrite ID to avoid conflict with Tiles
+    }
+
+
+
     // This method should be implemented by a derived class
     onClick()
     {
