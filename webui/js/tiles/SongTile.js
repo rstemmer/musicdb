@@ -96,6 +96,9 @@ class SongEntryTile extends Draggable
         this.element = document.createElement("div");
 
         this.songnum      = this.CreateSongNumber(MDBSong);
+        this.playingicon  = new SVGIcon("StatusPlaying");
+        this.playingicon.GetHTMLElement().dataset.playing = false;
+        this.playingicon.GetHTMLElement().classList.add("playingicon");
         this.songname     = this.CreateSongName(MDBSong);
         this.flagbar      = new FlagBar(MDBSong, MDBTags.moods); // FlagBar needs align-settings (left/right alignment) and no-small-font settings
         this.appendbutton = new SVGButton("Append", ()=>{this.AddSongToQueue("last");});
@@ -104,6 +107,7 @@ class SongEntryTile extends Draggable
         this.insertbutton.SetTooltip("Insert song into the queue after current playing song");
 
         this.element.appendChild(this.songnum);
+        this.element.appendChild(this.playingicon.GetHTMLElement());
         this.element.appendChild(this.songname);
         this.element.appendChild(this.flagbar.GetHTMLElement());
         this.element.appendChild(this.appendbutton.GetHTMLElement());
@@ -155,7 +159,6 @@ class SongEntryTile extends Draggable
 
 
 
-    // TODO: Highlight when playing
     // TODO: Highlight when hover over album genre
     CreateSongName(MDBSong)
     {
@@ -197,6 +200,16 @@ class SongEntryTile extends Draggable
         this.element.oncontextmenu = callback;
     }
 
+
+
+    SetPlayingState(state)
+    {
+        this.playingicon.GetHTMLElement().dataset.playing = state;
+    }
+    GetPlayingState()
+    {
+        return this.playingicon.GetHTMLElement().dataset.playing;
+    }
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

@@ -159,11 +159,10 @@ class AlbumView
 
             this.settings.SelectTab(this.tagstabid);
 
-            // Update Song-List
+            // Update/Initialize Album View
             this.UpdateSongList(MDBCDs);
-
-            // Update Tags
             this.UpdateTagInformation(MDBTags);
+            this.ToggleSongPlayingState(true);
         }
 
         this.colorselect.SetColors(MDBAlbum.bgcolor, MDBAlbum.fgcolor, MDBAlbum.hlcolor);
@@ -249,6 +248,24 @@ class AlbumView
 
 
 
+    ToggleSongPlayingState(newstate = null)
+    {
+        // Depending on the call order, some fundamental objects may not yet exist
+        // This is OK because Song-State updates and Album-Updates are decoupled
+        if(typeof this.songtiles != "object")
+            return
+        if(typeof this.songtiles[this.currentsongid] != "object")
+            return
+
+        if(newstate == null)
+            newstate = ! this.songtiles[this.currentsongid].tile.GetPlayingState();
+
+        this.songtiles[this.currentsongid].tile.SetPlayingState(newstate);
+        return;
+    }
+
+
+
     onMusicDBMessage(fnc, sig, args, pass)
     {
         if(fnc == "GetAudioStreamState" && sig == "UpdateStreamState")
@@ -263,7 +280,13 @@ class AlbumView
             // if the song changes, show the new album (or reload for update)
             if(args.song.id != this.currentsongid)
             {
+                this.ToggleSongPlayingState(false);
                 this.currentsongid = args.song.id;   // update current song id
+                this.ToggleSongPlayingState(true);
+
+                // FIXME: The ViewManager should decide if the album needs to be loaded
+                // The request and presentation may be two decisions
+                // If for example a different view is more important than the AlbumView
                 MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: args.album.id});
             }
         }

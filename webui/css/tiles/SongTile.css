@@ -44,6 +44,15 @@
     flex-grow:      1;
 }
 
+.SongEntryTile > .playingicon[data-playing=true]
+{
+    display:        flex;
+}
+.SongEntryTile > .playingicon[data-playing=false]
+{
+    display:        none;
+}
+
 .SongEntryTile > .FlagBar
 {
     opacity:        0.5;
