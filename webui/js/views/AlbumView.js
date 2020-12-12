@@ -185,9 +185,10 @@ class AlbumView
             if(MDBCDs.length > 1)
             {
                 let headline = document.createElement("div");
-                headline.classList.add("small");
+                headline.classList.add("smallfont");
                 headline.classList.add("hlcolor");
-                headline.innerText = "CD " + parseInt(cdnum) + 1;
+                headline.classList.add("CDNumber");
+                headline.innerText = "CD " + (parseInt(cdnum) + 1);
                 this.songscell.appendChild(headline);
             }
 

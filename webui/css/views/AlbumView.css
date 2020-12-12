@@ -56,6 +56,13 @@ div#AlbumView .AlbumArtwork
     border-color:   var(--fmcolor);
 }
 
+#AlbumView #SongList > .CDNumber
+{
+    margin-top:     1rem;
+    margin-bottom: -0.5rem;
+    margin-left:    1rem;
+}
+
 
 #AlbumView #TagsCell .tagview
 {
