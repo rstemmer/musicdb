@@ -28,6 +28,8 @@
     box-shadow:         0 var(--borderwidth) 0      rgba(255, 255, 255, 0.1),
                         0 var(--borderwidth) 0.5rem rgba(  0,   0,   0, 0.4) inset;
     background-color:   rgba(0, 0, 0, 0.2);
+
+    position:           relative;   /*for absolute SearchResultsPopup*/
 }
 
 
@@ -40,6 +42,19 @@
     box-shadow:         none;
 }
 
+
+
+.SearchResultsPopup
+{
+    position:           absolute;
+    left:               3ch;
+    bottom:             2rem;
+    width:              25vw;
+
+    background:         var(--bgcolor);
+    box-shadow:         0 calc(var(--borderwidth) * 4) calc(var(--borderwidth) *  8) rgba(0, 0, 0, 1),
+                        0 calc(var(--borderwidth) * 6) calc(var(--borderwidth) * 20) rgba(0, 0, 0, 0.5);
+}
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */

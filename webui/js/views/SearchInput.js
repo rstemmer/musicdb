@@ -26,6 +26,10 @@ class SearchInput
         this.element.classList.add("hovpacity");
         this.element.classList.add("SearchInput");
         this._AddInputBoxElements();
+
+        this.timeoutinterval = 500;
+        this.preview = new SearchResultsPopup();
+        this.element.appendChild(this.preview.GetHTMLElement());
     }
 
 
@@ -38,9 +42,9 @@ class SearchInput
         this.clearbutton.GetHTMLElement().classList.add("hovpacity");
 
         this.input       = document.createElement("input");
-        this.input.onInput     = ()=>{onInput(event);};
-        this.input.onKeyup     = ()=>{onKeyUp(event);};
-        this.input.onClick     = ()=>{onClick(event);};
+        this.input.oninput     = ()=>{this.onInput(event);};
+        this.input.onkeyup     = ()=>{this.onKeyUp(event);};
+        this.input.onclick     = ()=>{this.onClick(event);};
         this.input.type        = "search";
         this.input.placeholder = "Search…";
 
@@ -59,6 +63,16 @@ class SearchInput
 
 
 
+    Find(searchstring)
+    {
+        window.console && console.log(`Find: ${searchstring}`);
+        // after timeout, this method gets called. So with this function call the handler became invalid.
+        this.timeouthandler = null; 
+        return;
+    }
+
+
+
     ClearInput()
     {
         return;
@@ -69,12 +83,41 @@ class SearchInput
     // Events from the text input element
     onInput(event)
     {
+        if(this.input.value.length <= 0)
+        {
+            window.console && console.log("Hide Preview");
+            return;
+        }
+
+        if(this.timeouthandler)
+            clearTimeout(this.timeouthandler)
+
+        this.timeouthandler = setTimeout(this.Find, this.timeoutinterval, this.input.value);
+        return;
     }
+
+
     onKeyUp(event)
     {
+        let keycode = event.which || event.keyCode;
+        if(keycode == 13 /*ENTER*/ && this.input.value.length > 0)
+        {
+            window.console && console.log("Show full result");
+        }
+        else if(keycode == 27 /*ESC*/)
+        {
+            window.console && console.log("Hide Preview");
+        }
+        return;
     }
+
+
     onClick(event)
     {
+        if(this.input.value.length > 0)
+        {
+            window.console && console.log("Show Preview");
+        }
     }
 
 
@@ -82,6 +125,29 @@ class SearchInput
     onMusicDBMessage(fnc, sig, args, pass)
     {
         return;
+    }
+}
+
+
+
+
+class SearchResultsPopup
+{
+    constructor()
+    {
+        this.element = document.createElement("div");
+        this.element.classList.add("flex-column");
+        this.element.classList.add("frame");
+        this.element.classList.add("SearchResultsPopup");
+
+        this.element.innerText = "Dummy Text";
+    }
+
+
+
+    GetHTMLElement()
+    {
+        return this.element;
     }
 }
 
