@@ -8,6 +8,7 @@ let mdbmodemanager      = new MDBModeManager();
 let tagmanager          = new TagManager();
 let musicdbhud          = new MusicDBHUD();
 let genreselectionview  = new GenreSelectionView();
+let searchinput         = new SearchInput();
 let musicdbstatus       = new MusicDBStatus();
 let musicdbcontrols     = new MusicDBControls();
 let queuetimemanager    = new QueueTimeManager();
@@ -62,6 +63,9 @@ window.onload = function ()
     let genrebox    = document.getElementById("GenreBox");
     genrebox.appendChild(genreselectionview.GetHTMLElement());
 
+    let searchbox    = document.getElementById("SearchBox");
+    searchbox.appendChild(searchinput.GetHTMLElement());
+
     let controlsbox = document.getElementById("ControlBox");
     controlsbox.appendChild(musicdbcontrols.GetHTMLElement());
 
@@ -85,9 +89,8 @@ window.onload = function ()
     // Connect to MusicDB
     ConnectToMusicDB();
 
-    // Setup the Views
+    // Setup the old Views
     ShowAlphabetBar("Alphabetbar");
-    ShowSearchInput("Search");
 }
 
 function onMusicDBConnectionOpen()
@@ -177,6 +180,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     mainviewmanager.onMusicDBMessage(fnc, sig, args, pass);
     musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
     genreselectionview.onMusicDBMessage(fnc, sig, args, pass);
+    searchinput.onMusicDBMessage(fnc, sig, args, pass);
     artistsview.onMusicDBMessage(fnc, sig, args, pass);
     albumview.onMusicDBMessage(fnc, sig, args, pass);
     streamview.onMusicDBMessage(fnc, sig, args, pass);
