@@ -44,7 +44,9 @@ class Tag
         this.element.classList.add("flex-row");
         this.element.classList.add("tag");
         this.element.appendChild(this.nameelement);
-        this.element.onclick = ()=>{this.onClick();};
+        this.element.onclick      = ()=>{this.onClick();};
+        this.element.onmouseenter = ()=>{this.onMouseEnter();};
+        this.element.onmouseleave = ()=>{this.onMouseLeave();};
     }
 
 
@@ -65,6 +67,15 @@ class Tag
     {
         this.onclick = onclick;
     }
+    SetMouseEnterAction(onmouseenter)
+    {
+        this.onmouseenter = onmouseenter;
+    }
+    SetMouseLeaveAction(onmouseleave)
+    {
+        this.onmouseleave = onmouseleave;
+    }
+
     SetAddAction(onclick)
     {
         this.onclick = onclick;
@@ -112,6 +123,21 @@ class Tag
 
         if(typeof this.onclick === "function")
             this.onclick(this.tagid);
+    }
+
+    onMouseEnter()
+    {
+        event.stopPropagation();
+
+        if(typeof this.onmouseenter === "function")
+            this.onmouseenter(this.tagid);
+    }
+    onMouseLeave()
+    {
+        event.stopPropagation();
+
+        if(typeof this.onmouseleave  === "function")
+            this.onmouseleave(this.tagid);
     }
 }
 
@@ -177,6 +203,13 @@ class TagListView
             this.element.appendChild(tag.GetHTMLElement());
         }
 
+    }
+
+
+
+    GetTagList()
+    {
+        return this.taglist;
     }
 
 
