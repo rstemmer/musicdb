@@ -24,6 +24,11 @@
     transition:     box-shadow 1.0s ease-in-out;
 }
 
+.SongEntryTile > div
+{
+    flex-shrink:    0;
+}
+
 .SongEntryTile + .SongSettings
 {
     margin-top:     0;
@@ -49,7 +54,10 @@
 
 .SongEntryTile > .songname
 {
+    display:        flex;
     flex-grow:      1;
+    flex-shrink:    1;
+    flex-wrap:      wrap;
 }
 
 .SongEntryTile > .playingicon[data-playing=true]
