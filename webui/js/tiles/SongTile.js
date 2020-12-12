@@ -114,6 +114,7 @@ class SongEntryTile extends Draggable
         this.element.appendChild(this.insertbutton.GetHTMLElement());
         this.element.classList.add("SongEntryTile");
         this.element.classList.add("flex-row");
+        this.element.dataset.highlight = false;
 
         if(MDBSong.disabled)
         {
@@ -209,6 +210,13 @@ class SongEntryTile extends Draggable
     GetPlayingState()
     {
         return this.playingicon.GetHTMLElement().dataset.playing;
+    }
+
+
+
+    Highlight(state)
+    {
+        this.element.dataset.highlight = state;
     }
 }
 

@@ -206,6 +206,7 @@ class AlbumView
                 this.songtiles[songid] = new Object();
                 this.songtiles[songid].tile     = songtile;
                 this.songtiles[songid].settings = songsettings;
+                this.songtiles[songid].tags     = MDBTags;
 
                 songtile.SetRightClickCallback((event)=>{songsettings.ToggleVisibility(); event.preventDefault();});
                 songsettings.Hide();
@@ -231,6 +232,7 @@ class AlbumView
         // Update internal data
         this.songtiles[songid].tile = newsongtile;
         this.songtiles[songid].settings.Update(MDBSong, MDBTags);
+        this.songtiles[songid].tags = MDBTags;
         return
     }
 
@@ -238,11 +240,54 @@ class AlbumView
 
     UpdateTagInformation(MDBTags)
     {
+        // Update existing tags
         this.genreedit.Update(   "album", this.currentalbumid, MDBTags);
         this.subgenreedit.Update("album", this.currentalbumid, MDBTags);
 
         this.genreview.Update(   "album", this.currentalbumid, MDBTags.genres);
         this.subgenreview.Update("album", this.currentalbumid, MDBTags.subgenres);
+
+        // Update Mouse-Over Action
+        for(let tag of this.genreview.GetTagList())
+        {
+            tag.SetMouseEnterAction((tagid)=>{this.HighlightSongsByTagID(tagid);});
+            tag.SetMouseLeaveAction((tagid)=>{this.HighlightSongsByTagID(null); });
+        }
+        for(let tag of this.subgenreview.GetTagList())
+        {
+            tag.SetMouseEnterAction((tagid)=>{this.HighlightSongsByTagID(tagid);});
+            tag.SetMouseLeaveAction((tagid)=>{this.HighlightSongsByTagID(null); });
+        }
+
+        return;
+    }
+
+
+
+    HighlightSongsByTagID(tagid)
+    {
+        for(let songid in this.songtiles)
+        {
+            let songtile = this.songtiles[songid];
+
+            if(tagid == null)
+            {
+                // Un-highlight tile and continue
+                songtile.tile.Highlight(false);
+                continue;
+            }
+
+            // Get all songs tag IDs
+            let genreids    = songtile.tags.genres.map(genre => genre.id);
+            let subgenreids = songtile.tags.subgenres.map(subgenre => subgenre.id);
+            let tagids      = genreids.concat(subgenreids);
+
+            if(tagids.indexOf(tagid) >= 0)
+            {
+                // Highlight tile
+                songtile.tile.Highlight(true);
+            }
+        }
         return;
     }
 
