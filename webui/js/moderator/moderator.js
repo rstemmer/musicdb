@@ -192,22 +192,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
         MusicDB_Request("GetSongQueue",     "ShowSongQueue");
     }
 
-    /*
-    else if(fnc == "GetAudioStreamState" && sig == "UpdateStreamState") {
-        if(!args.hasqueue)
-        {
-            window.console && console.log("There is no queue and no current song!")
-            return
-        }
-
-        // if the song changes, show the new album (or reload for update)
-        if(args.song.id != currentsongid)
-        {
-            currentsongid = args.song.id;   // update current song id
-            MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: args.album.id});
-        }
-    }
-    */
     else if(fnc == "GetMDBState") {
         if(sig == "UpdateMDBState" || sig == "UpdateRelationshipGenreHighlight")
         {
@@ -219,9 +203,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
         MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists"); // Update artist view
     }
     else if(fnc == "GetSong") {
-        // Update album view - in case the song is visible right now…
-        //Albumview_UpdateSong(args.album, args.song, args.tags);
-
         // Update rest if a tag input element must be updated
         if(sig == "UpdateTagInput")
         {
@@ -241,22 +222,10 @@ function onMusicDBMessage(fnc, sig, args, pass)
     else if(fnc == "GetAlbum") {
         if(sig == "ShowAlbum")
         {
+            // TODO: Move to something like a style-manager
             UpdateStyle(args.album.bgcolor, args.album.fgcolor, args.album.hlcolor)
         }
     }
-
-    /*
-    else if(fnc == "GetAlbum" && sig == "ShowAlbum") {
-        ShowAlbum("MiddleContentBox", args.artist, args.album, args.cds, args.tags, currentsongid);
-        currentalbumid = args.album.id;
-    }
-    else if(fnc == "GetAlbum" && sig == "UpdateTagInput") {
-        if(args.album.id == currentalbumid)
-        {
-            Albumview_UpdateAlbum(args.album, args.tags);
-        }
-    }
-    */
     else if(fnc == "Find" && sig == "ShowSearchResults")
         ShowSearchResults(args.artists, args.albums, args.songs);
 
