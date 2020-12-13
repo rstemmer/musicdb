@@ -1,28 +1,35 @@
 
 "use strict";
 
-class AlbumTile extends Draggable
+class BaseAlbumTile extends Draggable
 {
-    constructor(MDBAlbum, onclick)
+    /*
+     * size: "small", "medium"
+     */
+    constructor(MDBAlbum, onclick, size)
     {
         super();
         let albumid      = MDBAlbum.id;
         let albumname    = OptimizeAlbumName(MDBAlbum.name);
         let albumrelease = MDBAlbum.release;
 
-        this.artwork     = new AlbumArtwork(MDBAlbum, "medium");
+        this.artwork     = new AlbumArtwork(MDBAlbum, size);
 
         this.metadata                 = document.createElement("div");
         this.metadata.classList.add("smallfont");
+
         this.titleelement             = document.createElement("span");
         this.titleelement.textContent = albumname;
         this.titleelement.classList.add("fgcolor");
-        this.releaseelement           = document.createElement("span");
-        this.releaseelement.textContent=albumrelease
-        this.releaseelement.classList.add("hlcolor");
-
         this.metadata.appendChild(this.titleelement);
-        this.metadata.appendChild(this.releaseelement);
+
+        if(size == "medium")
+        {
+            this.releaseelement           = document.createElement("span");
+            this.releaseelement.textContent=albumrelease
+            this.releaseelement.classList.add("hlcolor");
+            this.metadata.appendChild(this.releaseelement);
+        }
 
         this.element                  = document.createElement("div");
         this.element.classList.add("AlbumTile");
@@ -30,7 +37,7 @@ class AlbumTile extends Draggable
         this.element.appendChild(this.metadata);
         this.element.onclick = onclick;
 
-        this.ConfigDraggable("album", albumid, "insert");
+        this.ConfigDraggable("album", albumid, "insert", size); // Use size as ID-Prefix
         this.BecomeDraggable();
     }
 
@@ -39,6 +46,26 @@ class AlbumTile extends Draggable
     GetHTMLElement()
     {
         return this.element;
+    }
+}
+
+
+
+class AlbumTile extends BaseAlbumTile
+{
+    constructor(MDBAlbum, onclick)
+    {
+        super(MDBAlbum, onclick, "medium");
+    }
+}
+
+
+
+class SmallAlbumTile extends BaseAlbumTile
+{
+    constructor(MDBAlbum, onclick)
+    {
+        super(MDBAlbum, onclick, "small");
     }
 }
 
