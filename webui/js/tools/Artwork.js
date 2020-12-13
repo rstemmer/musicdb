@@ -91,7 +91,9 @@ class AlbumArtwork extends Artwork
     onClick()
     {
         event.preventDefault();
-        event.stopPropagation();
+        //event.stopPropagation();
+        // The onClick event must be propagated to the Search Result Preview
+        // so that the preview recognizes an action an can close itself.
 
         if(this.albumid != null)
             MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: this.albumid});

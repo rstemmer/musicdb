@@ -135,6 +135,7 @@ class SearchResultsPopup extends BaseSearchResults
         this.element.classList.add("frame");
         this.element.classList.add("SearchResultsPopup");
 
+        this.element.onclick   = ()=>{this.Hide();};
         this.element.innerText = "Loading …";
     }
 

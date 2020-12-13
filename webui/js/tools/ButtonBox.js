@@ -77,7 +77,9 @@ class ButtonBox_AddSongToQueue extends ButtonBox
     AddSongToQueue(position)
     {
         event.preventDefault();
-        event.stopPropagation();
+        //event.stopPropagation();
+        // The onClick event must be propagated to the Search Result Preview
+        // so that the preview recognizes an action an can close itself.
         MusicDB_Call("AddSongToQueue", {songid: this.songid, position: position});
     }
 }
