@@ -63,6 +63,27 @@ class ButtonBox_AddVideoToQueue extends ButtonBox
 
 
 
+class ButtonBox_AddSongToQueue extends ButtonBox
+{
+    constructor(songid)
+    {
+        super();
+        this.songid = songid;
+        this.AddButton(new SVGButton("Append", ()=>{this.AddSongToQueue("last");}));
+        this.AddButton(new SVGButton("Insert", ()=>{this.AddSongToQueue("next");}));
+    }
+
+
+    AddSongToQueue(position)
+    {
+        event.preventDefault();
+        event.stopPropagation();
+        MusicDB_Call("AddSongToQueue", {songid: this.songid, position: position});
+    }
+}
+
+
+
 class ButtonBox_QueueEntryControls extends ButtonBox
 {
     constructor(musictype, musicid, entryid)
