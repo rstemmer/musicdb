@@ -81,19 +81,19 @@
 
 
 
-.SearchResultsView
+#SearchResultsView
 {
     width:              100%;
 }
 
-.SearchResultsView .SongTile
+#SearchResultsView .SongTile
 {
     padding:        0.5rem;
     border:         var(--borderwidth) solid;
     border-radius:  var(--radius);
     border-color:   transparent;
 }
-.SearchResultsView .SongTile:hover
+#SearchResultsView .SongTile:hover
 {
     border-color:   var(--fmcolor);
 }

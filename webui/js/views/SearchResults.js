@@ -38,9 +38,6 @@ class BaseSearchResults
     Update(MDBArtistResults, MDBAlbumResults, MDBSongResults)
     {
         this.element.innerHTML = "";
-        window.console && console.log(MDBArtistResults);
-        window.console && console.log(MDBAlbumResults);
-        window.console && console.log(MDBSongResults);
         let artistresults = this.CreateArtistResults(MDBArtistResults);
         let albumresults  = this.CreateAlbumResults(MDBAlbumResults);
         let songresults   = this.CreateSongResults(MDBSongResults);
@@ -138,7 +135,7 @@ class SearchResultsPopup extends BaseSearchResults
         this.element.classList.add("frame");
         this.element.classList.add("SearchResultsPopup");
 
-        this.element.innerText = "Dummy Text";
+        this.element.innerText = "Loading …";
     }
 
 
@@ -167,7 +164,7 @@ class SearchResultsView extends BaseSearchResults
     constructor()
     {
         super();
-        this.element.classList.add("SearchResultsView");
+        this.element.id = "SearchResultsView";
     }
 
 
