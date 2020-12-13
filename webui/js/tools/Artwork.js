@@ -43,8 +43,7 @@ class Artwork extends Draggable
 
     ConfigDraggable(musictype, musicid, droptask)
     {
-        super.ConfigDraggable(musictype, musicid, droptask);
-        this.element.id = musictype + "artwork_" + musicid; // overwrite ID to avoid conflict with Tiles
+        super.ConfigDraggable(musictype, musicid, droptask, "artwork");
     }
 
 

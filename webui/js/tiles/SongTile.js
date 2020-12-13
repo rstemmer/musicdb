@@ -89,8 +89,7 @@ class SongTile extends SongQueueTile
         let buttonbox = new ButtonBox_AddSongToQueue(MDBSong.id);
         super(MDBSong, MDBAlbum, MDBArtist, null, null, buttonbox)
 
-        this.ConfigDraggable("song", MDBSong.id, "insert");
-        this.element.id = "songresult_" + MDBSong.id; // overwrite ID to avoid conflict with Queue Tiles
+        this.ConfigDraggable("song", MDBSong.id, "insert", "searchresult_");
         this.BecomeDraggable();
     }
 }
