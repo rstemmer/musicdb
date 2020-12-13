@@ -137,8 +137,18 @@ class SearchResultsPopup extends BaseSearchResults
 
         this.element.onclick   = ()=>{this.Hide();};
         this.element.innerText = "Loading …";
+
+        this.closebutton = new SVGButton("Remove", ()=>{this.Hide();});
+        this.closebutton.SetTooltip("Close search results preview");
+        this.closebutton.GetHTMLElement().classList.add("closebutton");
+        this.element.appendChild(this.closebutton.GetHTMLElement());
     }
 
+    Update(MDBArtistResults, MDBAlbumResults, MDBSongResults)
+    {
+        super.Update(MDBArtistResults, MDBAlbumResults, MDBSongResults);
+        this.element.appendChild(this.closebutton.GetHTMLElement());
+    }
 
 
     ToggleVisibility()

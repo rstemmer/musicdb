@@ -79,6 +79,13 @@
     margin-top:         0.5rem;
 }
 
+.SearchResultsPopup > .closebutton
+{
+    position:           absolute;
+    right:              -0.2rem;
+    top:                -0.2rem;
+    margin:             0;
+}
 
 
 #SearchResultsView
