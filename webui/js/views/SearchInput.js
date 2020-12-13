@@ -37,7 +37,7 @@ class SearchInput
 
     _AddInputBoxElements()
     {
-        this.icon        = new SVGIcon("MusicDB");
+        this.icon        = new SVGIcon("Search");
         
         this.clearbutton = new SVGButton("Remove", ()=>{this.ClearInput();});
         this.clearbutton.GetHTMLElement().classList.add("hovpacity");
