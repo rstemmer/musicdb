@@ -41,6 +41,7 @@ class SearchInput
         
         this.clearbutton = new SVGButton("Remove", ()=>{this.ClearInput();});
         this.clearbutton.GetHTMLElement().classList.add("hovpacity");
+        this.clearbutton.SetTooltip("Clear search input and close preview");
 
         this.input       = document.createElement("input");
         this.input.oninput     = ()=>{this.onInput(event);};
