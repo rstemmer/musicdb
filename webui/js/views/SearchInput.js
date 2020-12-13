@@ -69,6 +69,8 @@ class SearchInput
         window.console && console.log(`Find: ${searchstring}`);
         let limit = 5;
         MusicDB_Request("Find", "ShowPreview", {searchstring:searchstring, limit:limit});
+        limit = 20;
+        MusicDB_Request("Find", "ShowResults", {searchstring:searchstring, limit:limit});
 
         // after timeout, this method gets called. So with this function call the handler became invalid.
         this.timeouthandler = null; 
@@ -146,148 +148,6 @@ class SearchInput
 }
 
 
-
-class SearchResults
-{
-    constructor()
-    {
-        this.element = document.createElement("div");
-        this.element.classList.add("flex-column");
-        this.element.classList.add("fgcolor");
-        this.element.classList.add("SearchResults");
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
-    }
-
-
-
-    Update(MDBArtistResults, MDBAlbumResults, MDBSongResults)
-    {
-        this.element.innerHTML = "";
-        window.console && console.log(MDBArtistResults);
-        window.console && console.log(MDBAlbumResults);
-        window.console && console.log(MDBSongResults);
-        let artistresults = this.CreateArtistResults(MDBArtistResults);
-        let albumresults  = this.CreateAlbumResults(MDBAlbumResults);
-        let songresults   = this.CreateSongResults(MDBSongResults);
-
-        this.element.appendChild(artistresults);
-        this.element.appendChild(albumresults);
-        this.element.appendChild(songresults);
-    }
-
-
-
-    CreateArtistResults(MDBArtistResults)
-    {
-        let preview = document.createElement("div");
-        preview.classList.add("flex-row");
-        preview.classList.add("AlbumResults");
-
-        for(let result of MDBArtistResults)
-        {
-            // Only show artists that have albums
-            if(result.albums.length == 0)
-                continue;
-
-            let MDBArtist     = result.artist;
-            let albumspreview = document.createElement("div");
-            albumspreview.classList.add("flex-row");
-            albumspreview.classList.add("AlbumResults");
-            for(let MDBAlbum of result.albums)
-            {
-                let tile = new SmallAlbumTile(MDBAlbum, ()=>
-                    {
-                        MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});
-                    });
-                albumspreview.appendChild(tile.GetHTMLElement());
-            }
-
-            let artistname = document.createElement("span");
-            artistname.innerText = MDBArtist.name;
-            preview.appendChild(artistname);
-            preview.appendChild(albumspreview);
-        }
-        return preview;
-    }
-
-
-
-    CreateAlbumResults(MDBAlbumResults)
-    {
-        let albumspreview = document.createElement("div");
-        albumspreview.classList.add("flex-row");
-        albumspreview.classList.add("AlbumResults");
-
-        for(let result of MDBAlbumResults)
-        {
-            let MDBAlbum  = result.album;
-            let MDBArtist = result.artist;
-            let tile      = new SmallAlbumTile(MDBAlbum, ()=>
-                {
-                    MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});
-                });
-            albumspreview.appendChild(tile.GetHTMLElement());
-        }
-        return albumspreview;
-    }
-
-
-
-    CreateSongResults(MDBSongResults)
-    {
-        let songspreview = document.createElement("div");
-        songspreview.classList.add("flex-column");
-        songspreview.classList.add("SongResults");
-
-        for(let result of MDBSongResults)
-        {
-            let MDBSong   = result.song;
-            let MDBAlbum  = result.album;
-            let MDBArtist = result.artist;
-            let tile      = new SongTile(MDBSong, MDBAlbum, MDBArtist);
-            songspreview.appendChild(tile.GetHTMLElement());
-        }
-        return songspreview;
-    }
-}
-
-
-
-class SearchResultsPopup extends SearchResults
-{
-    constructor()
-    {
-        super();
-        this.element.classList.add("frame");
-        this.element.classList.add("SearchResultsPopup");
-
-        this.element.innerText = "Dummy Text";
-    }
-
-
-
-    ToggleVisibility()
-    {
-        if(this.element.style.display == "none")
-            this.Show();
-        else
-            this.Hide();
-    }
-    Show()
-    {
-        this.element.style.display = "flex";
-    }
-    Hide()
-    {
-        this.element.style.display = "none";
-    }
-}
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
