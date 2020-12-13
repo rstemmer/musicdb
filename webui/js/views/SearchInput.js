@@ -52,6 +52,10 @@ class SearchInput
         this.element.appendChild(this.icon.GetHTMLElement());
         this.element.appendChild(this.input);
         this.element.appendChild(this.clearbutton.GetHTMLElement());
+
+        this.showpreview = false;
+        this.showresults = false;
+        this.target      = "none";
         return;
     }
 
@@ -64,16 +68,17 @@ class SearchInput
 
 
 
-    Find(searchstring)
+    // Gets executed from from timer -> no this-object
+    Find(searchstring, target)
     {
-        window.console && console.log(`Find: ${searchstring}`);
-        let limit = 5;
-        MusicDB_Request("Find", "ShowPreview", {searchstring:searchstring, limit:limit});
-        limit = 20;
-        MusicDB_Request("Find", "ShowResults", {searchstring:searchstring, limit:limit});
-
-        // after timeout, this method gets called. So with this function call the handler became invalid.
-        this.timeouthandler = null; 
+        if(target == "preview")
+        {
+            MusicDB_Request("Find", "ShowPreview", {searchstring:searchstring, limit:5});
+        }
+        else if(target == "results")
+        {
+            MusicDB_Request("Find", "ShowResults", {searchstring:searchstring, limit:20});
+        }
         return;
     }
 
@@ -88,20 +93,54 @@ class SearchInput
 
 
 
+    ShowPreview()
+    {
+        this.showpreview = true;
+        this.target      = "preview";
+        this.preview.Show();
+    }
+    HidePreview()
+    {
+        this.showpreview = false;
+        this.target      = "none";
+        this.preview.Hide();
+    }
+    ShowResults()
+    {
+        this.HidePreview();
+        this.showresults = true;
+        this.target      = "results";
+    }
+    HideResults()
+    {
+        this.showresults = false;
+        this.target      = "none";
+    }
+
+
+
     // Events from the text input element
     onInput(event)
     {
         if(this.input.value.length <= 0)
         {
-            window.console && console.log("Hide Preview");
-            this.preview.Hide();
+            this.HidePreview();
             return;
         }
 
+        // Check if the results shall be presented in the preview or an open results view
+        let searchresultsview = document.getElementById("SearchResultsView");
+        if(searchresultsview == null)
+        {
+            this.HideResults();
+            this.ShowPreview();
+        }
+
+        // Reset timer and request a new search
         if(this.timeouthandler)
             clearTimeout(this.timeouthandler)
 
-        this.timeouthandler = setTimeout(this.Find, this.timeoutinterval, this.input.value);
+        this.timeouthandler = setTimeout(this.Find, this.timeoutinterval, this.input.value, this.target);
         return;
     }
 
@@ -111,13 +150,12 @@ class SearchInput
         let keycode = event.which || event.keyCode;
         if(keycode == 13 /*ENTER*/ && this.input.value.length > 0)
         {
-            window.console && console.log("Show full result");
-            this.preview.Hide();
+            this.ShowResults();
+            this.timeouthandler = setTimeout(this.Find, this.timeoutinterval, this.input.value, this.target);
         }
         else if(keycode == 27 /*ESC*/)
         {
-            window.console && console.log("Hide Preview");
-            this.preview.Hide();
+            this.HidePreview();
         }
         return;
     }
@@ -127,8 +165,8 @@ class SearchInput
     {
         if(this.input.value.length > 0)
         {
-            window.console && console.log("Show Preview");
-            this.preview.Show();
+            this.ShowPreview();
+            this.HideResults();
         }
     }
 
@@ -141,8 +179,7 @@ class SearchInput
             if(sig == "ShowPreview")
             {
                 this.preview.Update(args.artists, args.albums, args.songs);
-                window.console && console.log("Show Preview");
-                this.preview.Show();
+                this.ShowPreview();
             }
         }
         return;
