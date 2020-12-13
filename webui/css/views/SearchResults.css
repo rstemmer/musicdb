@@ -27,13 +27,6 @@
 
 
 
-.SongResults > div+div
-{
-    margin-top:         0.5rem;
-}
-
-
-
 .AlbumResults
 {
     justify-content:    space-evenly;
@@ -79,6 +72,30 @@
     background:         var(--bgcolor);
     box-shadow:         0 calc(var(--borderwidth) * 4) calc(var(--borderwidth) *  8) rgba(0, 0, 0, 1),
                         0 calc(var(--borderwidth) * 6) calc(var(--borderwidth) * 20) rgba(0, 0, 0, 0.5);
+}
+
+.SearchResultsPopup > .SongResults > div+div
+{
+    margin-top:         0.5rem;
+}
+
+
+
+.SearchResultsView
+{
+    width:              100%;
+}
+
+.SearchResultsView .SongTile
+{
+    padding:        0.5rem;
+    border:         var(--borderwidth) solid;
+    border-radius:  var(--radius);
+    border-color:   transparent;
+}
+.SearchResultsView .SongTile:hover
+{
+    border-color:   var(--fmcolor);
 }
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
