@@ -34,12 +34,13 @@ class SongQueueTile extends QueueTile
         this.title             = document.createElement("span");
         this.title.textContent = songname;
         this.title.onclick     = ()=>{this.ShowAlbum();};
+        this.title.classList.add("fgcolor");
 
         this.subtitle          = this._CreateSongInformation(MDBAlbum, MDBArtist);
 
         this.CreateTile("song", this.songid, entryid, this.artwork, this.title, this.subtitle, buttonbox);
 
-        if(position > 0)
+        if(position > 0 || position === null)
             this.BecomeDraggable();
     }
 
@@ -78,6 +79,22 @@ class SongQueueTile extends QueueTile
         MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: this.albumid});
     }
 }
+
+
+
+class SongTile extends SongQueueTile
+{
+    constructor(MDBSong, MDBAlbum, MDBArtist)
+    {
+        let buttonbox = new ButtonBox_AddSongToQueue(MDBSong.id);
+        super(MDBSong, MDBAlbum, MDBArtist, null, null, buttonbox)
+
+        this.ConfigDraggable("song", MDBSong.id, "insert");
+        this.element.id = "songresult_" + MDBSong.id; // overwrite ID to avoid conflict with Queue Tiles
+        this.BecomeDraggable();
+    }
+}
+
 
 
 
