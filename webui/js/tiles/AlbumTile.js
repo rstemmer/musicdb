@@ -35,7 +35,8 @@ class BaseAlbumTile extends Draggable
         this.element.classList.add("AlbumTile");
         this.element.appendChild(this.artwork.GetHTMLElement());
         this.element.appendChild(this.metadata);
-        this.element.onclick = onclick;
+        this.element.onclick      = onclick;
+        this.element.dataset.size = size;
 
         this.ConfigDraggable("album", albumid, "insert", size); // Use size as ID-Prefix
         this.BecomeDraggable();

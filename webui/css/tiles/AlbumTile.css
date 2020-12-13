@@ -4,9 +4,16 @@
 /******************/
 .AlbumTile
 {
-    max-width:      var(--artworkwidth-medium);
     overflow:       hidden;
     white-space:    nowrap;
+}
+.AlbumTile[data-size="small"]
+{
+    max-width:      var(--artworkwidth-small);
+}
+.AlbumTile[data-size="medium"]
+{
+    max-width:      var(--artworkwidth-medium);
 }
 
 .AlbumTile span
