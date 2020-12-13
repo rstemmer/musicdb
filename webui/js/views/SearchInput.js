@@ -81,6 +81,8 @@ class SearchInput
 
     ClearInput()
     {
+        this.input.value = "";
+        this.preview.Hide();
         return;
     }
 
