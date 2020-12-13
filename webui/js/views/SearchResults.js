@@ -79,6 +79,8 @@ class BaseSearchResults
 
             let artistname = document.createElement("span");
             artistname.innerText = MDBArtist.name;
+            artistname.onclick   = ()=>{artistsview.ScrollToArtist(MDBArtist.id);};
+
             preview.appendChild(artistname);
             preview.appendChild(albumspreview);
         }
