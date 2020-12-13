@@ -55,8 +55,8 @@ class BaseSearchResults
     CreateArtistResults(MDBArtistResults)
     {
         let preview = document.createElement("div");
-        preview.classList.add("flex-row");
-        preview.classList.add("AlbumResults");
+        preview.classList.add("flex-column");
+        preview.classList.add("ArtistResults");
 
         for(let result of MDBArtistResults)
         {
