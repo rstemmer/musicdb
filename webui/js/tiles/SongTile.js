@@ -117,7 +117,7 @@ class SongEntryTile extends Draggable
         this.playingicon.GetHTMLElement().dataset.playing = false;
         this.playingicon.GetHTMLElement().classList.add("playingicon");
         this.songname     = this.CreateSongName(MDBSong);
-        this.flagbar      = new FlagBar(MDBSong, MDBTags.moods); // FlagBar needs align-settings (left/right alignment) and no-small-font settings
+        this.flagbar      = new FlagBar(MDBSong, MDBTags.moods);
         this.appendbutton = new SVGButton("Append", ()=>{this.AddSongToQueue("last");});
         this.insertbutton = new SVGButton("Insert", ()=>{this.AddSongToQueue("next");});
         this.appendbutton.SetTooltip("Append song to the queue");
@@ -177,7 +177,6 @@ class SongEntryTile extends Draggable
 
 
 
-    // TODO: Highlight when hover over album genre
     CreateSongName(MDBSong)
     {
         let songname   = MDBSong.name;
