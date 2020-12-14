@@ -200,12 +200,14 @@ function onMusicDBMessage(fnc, sig, args, pass)
         MusicDB_Request("GetSongQueue",     "ShowSongQueue");
     }
 
+    /*
     else if(fnc == "GetMDBState") {
         if(sig == "UpdateMDBState" || sig == "UpdateRelationshipGenreHighlight")
         {
             UpdateRelationshipGenreHighlight(args);
         }
     }
+    */
     else if(fnc=="sys:refresh" && sig == "UpdateCaches") {
         MusicDB_Request("GetTags", "UpdateTagsCache");                  // Update tag cache
         MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists"); // Update artist view

@@ -22,7 +22,19 @@ class SongRelationsView
     {
         this.element = document.createElement("div");
         this.element.classList.add("flex-column");
-        this.element.classList.add("SongRelations");
+        this.element.id = "SongRelationsView";
+
+        this.headline = new MainViewHeadline(null);
+
+        this.headlinebox = document.createElement("div");
+        this.songsbox    = document.createElement("div");
+        this.songsbox.classList.add("songsbox");
+
+        this.headlinebox.appendChild(this.headline.GetHTMLElement());
+        this.songsbox.classList.add("flex-column");
+
+        this.element.appendChild(this.headlinebox);
+        this.element.appendChild(this.songsbox);
     }
 
 
@@ -34,13 +46,54 @@ class SongRelationsView
 
 
 
+    Update(MDBSong, MDBAlbum, MDBArtist, songentries)
+    {
+        this.songsbox.innerHTML = "";
+        this.headline.UpdateRawInformation(MDBSong.name, MDBArtist.name, MDBAlbum.name, MDBSong.name);
+
+        let currentartistid = -1;
+        for(let entry of songentries)
+        {
+            let song     = entry.song;
+            let album    = entry.album;
+            let artist   = entry.artist;
+
+            // Create new Artist Headline
+            if(artist.id != currentartistid)
+            {
+                this.AddArtistHeadline(artist);
+                currentartistid = artist.id;
+            }
+
+            // Create Song tile
+            let songtile = new SongTile(song, album, artist);
+            this.songsbox.appendChild(songtile.GetHTMLElement());
+        }
+        return;
+    }
+
+
+
+    AddArtistHeadline(MDBArtist)
+    {
+        let artistheadline = document.createElement("span");
+
+        artistheadline.innerText = MDBArtist.name;
+        artistheadline.onclick   = ()=>{artistsview.ScrollToArtist(MDBArtist.id);};
+
+        this.songsbox.appendChild(artistheadline);
+        return;
+    }
+
+
+
     onMusicDBMessage(fnc, sig, args, pass)
     {
         if(fnc == "GetSongRelationship")
         {
             if(sig == "ShowSongRelationship")
             {
-                window.console && console.log(args);
+                this.Update(args.song, args.album, args.artist, args.songs);
             }
         }
         return;
