@@ -56,11 +56,14 @@ class SongRelationsView
         );
 
         let currentartistid = -1;
+        this.songtiles = new Object();
         for(let entry of songentries)
         {
             let song     = entry.song;
+            let songid   = song.id;
             let album    = entry.album;
             let artist   = entry.artist;
+            let tags     = entry.tags;
 
             // Create new Artist Headline
             if(artist.id != currentartistid)
@@ -70,8 +73,11 @@ class SongRelationsView
             }
 
             // Create Song tile
-            let songtile = new SongTile(song, album, artist);
+            let songtile = new TaggedSongTile(song, album, artist, tags);
             this.songsbox.appendChild(songtile.GetHTMLElement());
+
+            this.songtiles[songid] = new Object();
+            this.songtiles[songid].tile = songtile;
         }
         return;
     }
@@ -100,6 +106,7 @@ class SongRelationsView
                 this.Update(args.song, args.album, args.artist, args.songs);
             }
         }
+        // ToDo: Update tags of a song when new tags arrive
         return;
     }
 }

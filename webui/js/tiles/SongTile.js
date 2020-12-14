@@ -34,6 +34,39 @@ class SongTile extends Tile
 
 
 
+class TaggedSongTile extends Tile
+{
+    constructor(MDBSong, MDBAlbum, MDBArtist, MDBTags)
+    {
+        super();
+        let buttonbox     = new ButtonBox_AddSongToQueue(MDBSong.id);
+        let artwork       = new AlbumArtwork(MDBAlbum, "small");
+        this.genreview    = new TagListView();
+        this.subgenreview = new TagListView();
+        this.songid       = MDBSong.id;
+
+        let title         = super.CreateSongTitle(MDBSong);
+        let subtitle      = super.CreateSongSubtitle(MDBAlbum, MDBArtist);
+
+        super.MakeElement(artwork, title, new Array(this.genreview, buttonbox), subtitle, new Array(this.subgenreview));
+        this.element.classList.add("SongTile");
+        this.UpdateTags(MDBTags);
+
+        super.ConfigDraggable("song", MDBSong.id, "insert", "SongTile_");
+        super.BecomeDraggable();
+    }
+
+
+
+    UpdateTags(MDBTags)
+    {
+        this.genreview.Update(   "audio", this.songid, MDBTags.genres);
+        this.subgenreview.Update("audio", this.songid, MDBTags.subgenres);
+    }
+}
+
+
+
 /* Layout:
  *
  *  # Song Name    Flags (l) (+) (>) |
