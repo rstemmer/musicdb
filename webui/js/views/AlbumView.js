@@ -137,6 +137,10 @@ class AlbumView
 
             // Update Headline
             this.headline.UpdateInformation(MDBAlbum, MDBArtist)
+            this.headline.SetSubtitleClickAction(
+                ()=>{artistsview.ScrollToArtist(MDBArtist.id);},
+                null
+            );
 
             // Update Album
             this.artwork  = new AlbumArtwork(MDBAlbum, "large");

@@ -50,6 +50,10 @@ class SongRelationsView
     {
         this.songsbox.innerHTML = "";
         this.headline.UpdateRawInformation(MDBSong.name, MDBArtist.name, MDBAlbum.name, MDBSong.name);
+        this.headline.SetSubtitleClickAction(
+            ()=>{artistsview.ScrollToArtist(MDBArtist.id);},
+            ()=>{MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});}
+        );
 
         let currentartistid = -1;
         for(let entry of songentries)
