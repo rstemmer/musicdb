@@ -2094,7 +2094,9 @@ class MusicDBWebSocketInterface(object):
         This method returns the relationship of a song.
         It is a list of songs that were played before or after the song with song ID *songid*.
 
-        The returned dictionary contains the same song ID given as argument to this method, and list of related songs.
+        The returned dictionary contains the same song ID given as argument to this method,
+        as well as the corresponding song, album and artist entry of that song.
+        Additional the requested list of related songs is given.
         Each lists entry is a dictionary with the related ``song``, ``album`` and ``artist`` album from the database.
         Furthermore the ``weight`` is given.
         The weight indicates how often the two songs were played together.
@@ -2129,7 +2131,8 @@ class MusicDBWebSocketInterface(object):
                 {
                     if(fnc == "GetSongRelationship" && sig == "ShowRelations")
                     {
-                        console.log("Songs related to the one with ID " + args.songid)
+                        console.log("Songs related to the one with ID " + args.songid);
+                        console.log(" … from the album " + args.album.name);
                         for(let entry of args.songs)
                             console.log("Song " + entry.song.name + " with weight " + entry.weight);
                             console.log(entry.tags.genres)
@@ -2174,6 +2177,9 @@ class MusicDBWebSocketInterface(object):
 
         packet = {}
         packet["songid"]  = parentsid
+        packet["song"]    = self.database.GetSongById(songid);
+        packet["album"]   = self.database.GetAlbumById( packet["song"]["albumid"]);
+        packet["artist"]  = self.database.GetArtistById(packet["song"]["artistid"]);
         packet["songs"]   = entries
         return packet 
 
