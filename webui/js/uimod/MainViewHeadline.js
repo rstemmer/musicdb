@@ -16,42 +16,47 @@
 
 "use strict";
 
+/* Layout:
+ *
+ *   headline                       button box
+ *   subtitle 1 - subtitle 2
+ */
 
 class MainViewHeadline
 {
     constructor(buttonarray)
     {
         // Info box
-        this.infobox        = document.createElement("div");
+        this.infobox    = document.createElement("div");
 
-        // Content Name
-        this.contentname    = document.createElement("span");
-        this.contentname.classList.add("fgcolor");
+        // Main Headline
+        this.headline   = document.createElement("span");
+        this.headline.classList.add("fgcolor");
 
-        // Artist Name
-        this.artistname     = document.createElement("span");
-        this.artistname.classList.add("hlcolor");
-        this.artistname.classList.add("smallfont");
+        // Subtitle 1
+        this.sub1       = document.createElement("span");
+        this.sub1.classList.add("hlcolor");
+        this.sub1.classList.add("smallfont");
 
         // Spacer between Artist and Release Year
-        this.spacer         = document.createElement("span");
+        this.spacer      = document.createElement("span");
         this.spacer.classList.add("fgcolor");
         this.spacer.classList.add("smallfont");
         this.spacer.innerText = " — "; // EM DASH
 
-        // Release Year
-        this.releaseyear    = document.createElement("span");
-        this.releaseyear.classList.add("hlcolor");
-        this.releaseyear.classList.add("smallfont");
+        // Subtitle 2
+        this.sub2       = document.createElement("span");
+        this.sub2.classList.add("hlcolor");
+        this.sub2.classList.add("smallfont");
 
         // Info Box for Names
-        this.infobox.appendChild(this.contentname);
-        this.infobox.appendChild(this.artistname);
+        this.infobox.appendChild(this.headline);
+        this.infobox.appendChild(this.sub1);
         this.infobox.appendChild(this.spacer);
-        this.infobox.appendChild(this.releaseyear);
+        this.infobox.appendChild(this.sub2);
 
         // Button box
-        this.buttonbox      = document.createElement("div");
+        this.buttonbox  = document.createElement("div");
         this.buttonbox.classList.add("flex-row");
         this.buttonbox.classList.add("hovpacity");
         if(buttonarray != null)
@@ -63,7 +68,7 @@ class MainViewHeadline
         }
 
         // Full headline
-        this.element = document.createElement("div");
+        this.element    = document.createElement("div");
         this.element.classList.add("mainview_headline");
         this.element.classList.add("flex-row");
         this.element.appendChild(this.infobox);
@@ -82,23 +87,24 @@ class MainViewHeadline
      *  · MDBMusic.name
      *  · MDBMusic.release
      *  · MDBMusic.origin
+     *
+     *  This is usually provided by MDBArtist and MDBAlbum
      */
     UpdateInformation(MDBMusic, MDBArtist)
     {
-        this.contentname.innerText  = MDBMusic.name;
-        this.artistname.innerText   = MDBArtist.name
-        this.releaseyear.innerText  = MDBMusic.release;
-        this.infobox.title          = MDBMusic.origin;
+        this.UpdateRawInformation(MDBMusic.name, MDBArtist.name, MDBMusic.release, MDBMusic.origin);
+        return;
     }
 
 
 
     UpdateRawInformation(headline, sub1, sub2, tooltip)
     {
-        this.contentname.innerText  = headline;
-        this.artistname.innerText   = sub1;
-        this.releaseyear.innerText  = sub2;
+        this.headline.innerText  = headline;
+        this.sub1.innerText   = sub1;
+        this.sub2.innerText  = sub2;
         this.infobox.title          = tooltip;
+        return;
     }
 
 
@@ -106,6 +112,18 @@ class MainViewHeadline
     SetRightClickCallback(callback)
     {
         this.element.oncontextmenu = callback;
+        return;
+    }
+
+
+
+    SetSubtitleClickAction(onsub1, onsub2)
+    {
+        if(typeof onsub1 === "function")
+            this.sub1.onclick = onsub1;
+        if(typeof onsub2 === "function")
+            this.sub2.onclick = onsub2;
+        return;
     }
 
 }
