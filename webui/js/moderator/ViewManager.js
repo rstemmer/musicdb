@@ -92,6 +92,13 @@ class MainViewManager extends ViewManager
                 this.MountView(searchresultsview);
             }
         }
+        else if(fnc == "GetSongRelationship")
+        {
+            if(sig == "ShowSongRelationship")
+            {
+                this.MountView(songrelationsview);
+            }
+        }
         return;
     }
 

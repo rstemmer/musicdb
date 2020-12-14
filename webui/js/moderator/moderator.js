@@ -20,6 +20,7 @@ let artistsview         = new ArtistsView();
 let albumview           = new AlbumView();
 let streamview          = new StreamView();
 let searchresultsview   = new SearchResultsView();
+let songrelationsview   = new SongRelationsView();
 let videoview           = new VideoView();
 let queueview           = new QueueView();
 let queuecontrolview    = new QueueControlView();
@@ -183,6 +184,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     genreselectionview.onMusicDBMessage(fnc, sig, args, pass);
     searchinput.onMusicDBMessage(fnc, sig, args, pass);
     searchresultsview.onMusicDBMessage(fnc, sig, args, pass);
+    songrelationsview.onMusicDBMessage(fnc, sig, args, pass);
     artistsview.onMusicDBMessage(fnc, sig, args, pass);
     albumview.onMusicDBMessage(fnc, sig, args, pass);
     streamview.onMusicDBMessage(fnc, sig, args, pass);
@@ -232,9 +234,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
             UpdateStyle(args.album.bgcolor, args.album.fgcolor, args.album.hlcolor)
         }
     }
-
-    else if(fnc == "GetSongRelationship" && sig == "ShowSongRelationship")
-        ShowSongRelationship("MiddleContentBox", args.songid, args.songs);
 
     else if(fnc == "GetSongLyrics" && sig == "ShowLyrics") {
         parentid = pass.parentid || "MiddleContentBox";
