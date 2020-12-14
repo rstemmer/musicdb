@@ -16,47 +16,6 @@
 
 "use strict";
 
-
-class VideoQueueTile extends QueueTile
-{
-    constructor(MDBVideo, MDBArtist, entryid, position, buttonbox)
-    {
-        super();
-        this.videoid     = MDBVideo.id;
-        let videoname    = MDBVideo.name.replace(" - ", " – ");
-        let videorelease = MDBVideo.release;
-        let artistname   = MDBArtist.name;
-        let artistid     = MDBArtist.id;
-
-        this.artwork                  = new VideoArtwork(MDBVideo, "small");
-
-        this.infobox                  = document.createElement("div");
-        this.infobox.classList.add("infobox");
-
-        this.title             = document.createElement("div");
-        this.title.textContent = videoname;
-        this.title.onclick     = ()=>{this.ShowVideo();};
-
-        this.subtitle            = document.createElement("div");
-        this.subtitle.textContent = artistname;
-        this.subtitle.onclick    = ()=>{artistsview.ScrollToArtist(artistid);};
-
-        this.CreateTile("video", this.videoid, entryid, this.artwork, this.title, this.subtitle, buttonbox);
-
-        if(position > 0)
-            this.BecomeDraggable();
-    }
-
-
-
-    ShowVideo()
-    {
-        MusicDB_Request("GetVideo", "ShowVideo", {videoid: this.videoid});
-    }
-}
-
-
-
 class VideoTile extends Draggable
 {
     // flagbar is optional

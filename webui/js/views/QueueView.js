@@ -97,14 +97,17 @@ class QueueView
             let tile        = null;
             if(musictype == "audio")
             {
-                tile        = new SongQueueTile(MDBMusic, MDBAlbum, MDBArtist, entryid, queueposition, buttonbox);
+                tile        = new SongQueueTile(entryid, MDBMusic, MDBAlbum, MDBArtist, buttonbox);
             }
             else if(musictype == "video")
             {
-                tile        = new VideoQueueTile(MDBMusic, MDBArtist, entryid, queueposition, buttonbox);
+                tile        = new VideoQueueTile(entryid, MDBMusic, MDBArtist, buttonbox);
             }
             else
                 continue;   // No song and no video? Should never happen, but who knows…
+
+            if(queueposition > 0)
+                tile.BecomeDraggable();
 
             this.element.appendChild(tile.GetHTMLElement());
             this.element.appendChild(dropzone.GetHTMLElement());

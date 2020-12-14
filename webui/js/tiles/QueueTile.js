@@ -21,60 +21,54 @@
  * and VideoQueueTile in VideoTile.js
  */
 
-
-class QueueTile extends Draggable
+class QueueTile extends Tile
 {
     constructor()
     {
         super();
     }
 
+
+
     // musictype: "song" or "video"
-    CreateTile(musictype, musicid, entryid, artwork, title, subtitle, buttonbox)
+    MakeElement(queueentryid, musictype, musicid, artwork, title, subtitle, buttonbox)
     {
-        this.element    = document.createElement("div");
-        this.element.id = entryid;
-        this.element.dataset.entryid   = entryid;
-        this.element.dataset.musictype = musictype;
-        this.element.dataset.musicid   = musicid;
-        this.element.dataset.droptask  = "move";
-        this.element.classList.add("flex-row");
-        this.element.classList.add("QueueTile");
-
-        title.classList.add("QueueTitle");
-        subtitle.classList.add("QueueSubtitle");
-        subtitle.classList.add("hlcolor");
-        subtitle.classList.add("smallfont");
-
-        // Create info box
-        this.infobox    = document.createElement("div");
-        this.infobox.classList.add("flex-column");
-        this.infobox.classList.add("infobox");
-
-        this.toprow     = document.createElement("div");
-        this.toprow.classList.add("flex-row");
-        this.toprow.appendChild(title);
-        this.toprow.appendChild(buttonbox.GetHTMLElement());
-
-        this.bottomrow  = document.createElement("div");
-        this.bottomrow.classList.add("flex-row");
-        this.bottomrow.appendChild(subtitle);
-
-        // Create layout
-        this.infobox.appendChild(this.toprow);
-        this.infobox.appendChild(this.bottomrow);
-
-        this.element.appendChild(artwork.GetHTMLElement());
-        this.element.appendChild(this.infobox);
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
+        super.MakeElement(artwork, title, new Array(buttonbox), subtitle, null);
+        super.ConfigDraggable(musictype, musicid, "move", "QueueTile_");
+        this.element.dataset.entryid = queueentryid;
     }
 }
+
+
+
+class SongQueueTile extends QueueTile
+{
+    constructor(queueentryid, MDBSong, MDBAlbum, MDBArtist, buttonbox)
+    {
+        super();
+        let artwork  = new AlbumArtwork(MDBAlbum, "small");
+        let title    = super.CreateSongTitle(MDBSong);
+        let subtitle = super.CreateSongSubtitle(MDBAlbum, MDBArtist);
+
+        super.MakeElement(queueentryid, "song", MDBSong.id, artwork, title, subtitle, buttonbox);
+    }
+}
+
+
+
+class VideoQueueTile extends QueueTile
+{
+    constructor(queueentryid, MDBVideo, MDBArtist, buttonbox)
+    {
+        super();
+        let artwork  = new VideoArtwork(MDBVideo, "small");
+        let title    = super.CreateVideoTitle(MDBVideo);
+        let subtitle = super.CreateVideoSubtitle(MDBArtist);
+
+        super.MakeElement(queueentryid, "video", MDBVideo.id, artwork, title, subtitle, buttonbox);
+    }
+}
+
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

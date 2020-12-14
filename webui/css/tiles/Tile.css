@@ -18,6 +18,45 @@
 
 
 
-/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
- */
+.Tile
+{
+    margin:    0 1ch;
+}
+
+.Tile > div:last-child
+{
+    flex-grow:      1;
+}
+
+
+.Tile .infobox
+{
+    margin-left:    1em;
+    min-width:      0;      /*Allow shrinking for long titles*/
+    overflow:       hidden;
+}
+.Tile span + span
+{
+    margin-left:    1ch;
+}
+.Tile .infobox *
+{
+    white-space:    nowrap;
+    justify-content: space-between;
+}
+.Title,.SubTitle
+{
+    overflow:       hidden;
+}
+
+
+.Tile .ButtonBox
+{
+    opacity:        0.1;
+}
+
+.Tile:hover .ButtonBox
+{
+    opacity:        1.0;
+}
 

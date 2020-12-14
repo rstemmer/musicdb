@@ -16,85 +16,21 @@
 
 "use strict";
 
-class SongQueueTile extends QueueTile
-{
-    constructor(MDBSong, MDBAlbum, MDBArtist, entryid, position, buttonbox)
-    {
-        super();
-        this.songid     = MDBSong.id;
-        let songname    = MDBSong.name.replace(" - ", " – ");
-        this.albumid    = MDBAlbum.id;
-        let albumname   = MDBAlbum.name.replace(" - ", " – ");
-        let release     = MDBAlbum.release;
-        let artistname  = MDBArtist.name;
-        let artistid    = MDBArtist.id;
-
-        this.artwork    = new AlbumArtwork(MDBAlbum, "small");
-
-        this.title             = document.createElement("span");
-        this.title.textContent = songname;
-        this.title.onclick     = ()=>{this.ShowAlbum();};
-        this.title.classList.add("fgcolor");
-
-        this.subtitle          = this._CreateSongInformation(MDBAlbum, MDBArtist);
-
-        this.CreateTile("song", this.songid, entryid, this.artwork, this.title, this.subtitle, buttonbox);
-
-        if(position > 0 || position === null)
-            this.BecomeDraggable();
-    }
-
-
-
-    _CreateSongInformation(MDBAlbum, MDBArtist)
-    {
-        let songinfos             = document.createElement("div");
-        songinfos.classList.add("hlcolor");
-        songinfos.classList.add("smallfont");
-
-        let artist = document.createElement("span");
-        let spacer = document.createElement("span");
-        let album  = document.createElement("span");
-
-        spacer.classList.add("fgcolor");
-        
-        artist.innerText = MDBArtist.name;
-        spacer.innerText = " – ";
-        album.innerText  = MDBAlbum.name;
-
-
-        artist.onclick   = ()=>{artistsview.ScrollToArtist(MDBArtist.id);};
-        album.onclick    = ()=>{this.ShowAlbum();};
-
-        songinfos.appendChild(artist);
-        songinfos.appendChild(spacer);
-        songinfos.appendChild(album);
-        return songinfos;
-    }
-
-
-
-    ShowAlbum()
-    {
-        MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: this.albumid});
-    }
-}
-
-
-
-class SongTile extends SongQueueTile
+class SongTile extends Tile
 {
     constructor(MDBSong, MDBAlbum, MDBArtist)
     {
+        super();
         let buttonbox = new ButtonBox_AddSongToQueue(MDBSong.id);
-        super(MDBSong, MDBAlbum, MDBArtist, null, null, buttonbox)
+        let artwork   = new AlbumArtwork(MDBAlbum, "small");
+        let title     = super.CreateSongTitle(MDBSong);
+        let subtitle  = super.CreateSongSubtitle(MDBAlbum, MDBArtist);
+        super.MakeElement(artwork, title, new Array(buttonbox), subtitle, null);
         this.element.classList.add("SongTile");
-
-        this.ConfigDraggable("song", MDBSong.id, "insert", "searchresult_");
-        this.BecomeDraggable();
+        super.ConfigDraggable("song", MDBSong.id, "insert", "SongTile_");
+        super.BecomeDraggable();
     }
 }
-
 
 
 
