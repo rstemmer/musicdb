@@ -54,9 +54,12 @@ class MainViewHeadline
         this.buttonbox      = document.createElement("div");
         this.buttonbox.classList.add("flex-row");
         this.buttonbox.classList.add("hovpacity");
-        for(let button of buttonarray)
+        if(buttonarray != null)
         {
-            this.buttonbox.appendChild(button.GetHTMLElement());
+            for(let button of buttonarray)
+            {
+                this.buttonbox.appendChild(button.GetHTMLElement());
+            }
         }
 
         // Full headline
@@ -86,6 +89,16 @@ class MainViewHeadline
         this.artistname.innerText   = MDBArtist.name
         this.releaseyear.innerText  = MDBMusic.release;
         this.infobox.title          = MDBMusic.origin;
+    }
+
+
+
+    UpdateRawInformation(headline, sub1, sub2, tooltip)
+    {
+        this.contentname.innerText  = headline;
+        this.artistname.innerText   = sub1;
+        this.releaseyear.innerText  = sub2;
+        this.infobox.title          = tooltip;
     }
 
 
