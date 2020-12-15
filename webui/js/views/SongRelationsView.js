@@ -102,6 +102,23 @@ class SongRelationsView
 
 
 
+    UpdateSongTags(MDBSong, MDBTags)
+    {
+        let songid = MDBSong.id;
+        let entry  = this.songtiles[songid];
+
+        // Check if the updates song is part of the relations-list
+        if(entry === undefined)
+            return;
+
+        // Update Tags
+        let tile    = entry.tile;
+        tile.UpdateTags(MDBTags);
+        return;
+    }
+
+
+
     AddArtistHeadline(MDBArtist)
     {
         let artistheadline = document.createElement("span");
@@ -124,7 +141,13 @@ class SongRelationsView
                 this.Update(args.song, args.album, args.artist, args.songs);
             }
         }
-        // ToDo: Update tags of a song when new tags arrive
+        else if(fnc == "GetSong")
+        {
+            if(sig == "UpdateTagInput")
+            {
+                this.UpdateSongTags(args.song, args.tags);
+            }
+        }
         return;
     }
 }
