@@ -143,7 +143,7 @@ class SongRelationsView
         }
         else if(fnc == "GetSong")
         {
-            if(sig == "UpdateTagInput")
+            if(sig == "UpdateTags")
             {
                 this.UpdateSongTags(args.song, args.tags);
             }

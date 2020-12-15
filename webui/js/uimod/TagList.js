@@ -219,13 +219,13 @@ class TagListView
         switch(this.musictype)
         {
             case "audio":
-                MusicDB_Request("SetSongTag",  "UpdateTagInput", {songid:this.musicid,  tagid:tagid});
+                MusicDB_Request("SetSongTag",  "UpdateTags", {songid:this.musicid,  tagid:tagid});
                 break;
             case "video":
-                MusicDB_Request("SetVideoTag", "UpdateTagInput", {videoid:this.musicid, tagid:tagid});
+                MusicDB_Request("SetVideoTag", "UpdateTags", {videoid:this.musicid, tagid:tagid});
                 break;
             case "album":
-                MusicDB_Request("SetAlbumTag", "UpdateTagInput", {albumid:this.musicid, tagid:tagid});
+                MusicDB_Request("SetAlbumTag", "UpdateTags", {albumid:this.musicid, tagid:tagid});
                 break;
             default:
                 window.console && console.log("Invalid music type: " + this.musictype);
@@ -236,13 +236,13 @@ class TagListView
         switch(this.musictype)
         {
             case "audio":
-                MusicDB_Request("RemoveSongTag",  "UpdateTagInput", {songid:this.musicid,  tagid:tagid});
+                MusicDB_Request("RemoveSongTag",  "UpdateTags", {songid:this.musicid,  tagid:tagid});
                 break;
             case "video":
-                MusicDB_Request("RemoveVideoTag", "UpdateTagInput", {videoid:this.musicid, tagid:tagid});
+                MusicDB_Request("RemoveVideoTag", "UpdateTags", {videoid:this.musicid, tagid:tagid});
                 break;
             case "album":
-                MusicDB_Request("RemoveAlbumTag", "UpdateTagInput", {albumid:this.musicid, tagid:tagid});
+                MusicDB_Request("RemoveAlbumTag", "UpdateTags", {albumid:this.musicid, tagid:tagid});
                 break;
             default:
                 window.console && console.log("Invalid music type: " + this.musictype);
@@ -533,13 +533,13 @@ class TagSelection
         switch(this.musictype)
         {
             case "audio":
-                MusicDB_Request("SetSongTag",  "UpdateTagInput", {songid:this.musicid,  tagid:tagid});
+                MusicDB_Request("SetSongTag",  "UpdateTags", {songid:this.musicid,  tagid:tagid});
                 break;
             case "video":
-                MusicDB_Request("SetVideoTag", "UpdateTagInput", {videoid:this.musicid, tagid:tagid});
+                MusicDB_Request("SetVideoTag", "UpdateTags", {videoid:this.musicid, tagid:tagid});
                 break;
             case "album":
-                MusicDB_Request("SetAlbumTag", "UpdateTagInput", {albumid:this.musicid, tagid:tagid});
+                MusicDB_Request("SetAlbumTag", "UpdateTags", {albumid:this.musicid, tagid:tagid});
                 break;
             default:
                 window.console && console.log("Invalid music type: " + this.musictype);

@@ -345,7 +345,7 @@ class AlbumView
             this.UpdateInformation(args.album, args.artist, args.tags, args.cds);
             this.currentalbumid = args.album.id;
         }
-        else if(fnc == "GetAlbum" && sig == "UpdateTagInput")
+        else if(fnc == "GetAlbum" && sig == "UpdateTags")
         {
             if(args.album.id == this.currentalbumid)
             {

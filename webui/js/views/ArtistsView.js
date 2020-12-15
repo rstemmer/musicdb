@@ -226,7 +226,7 @@ class ArtistsView
             if(sig == "UpdateVideo") // There may be some changes regarding the flags
                 this.UpdateTile(args.video, args.tags);
 
-            if(sig == "UpdateTagInput") // Is the main genre set still intersecting the selected genres?
+            if(sig == "UpdateTags") // Is the main genre set still intersecting the selected genres?
                 this.ValidateTile(args.video, args.tags.genres);
         }
         return;

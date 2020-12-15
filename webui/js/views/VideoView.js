@@ -159,7 +159,7 @@ class VideoView
             {
                 this.UpdateInformation(args.video, args.artist, args.tags);
             }
-            else if(sig == "UpdateVideo" || sig == "UpdateTagInput")
+            else if(sig == "UpdateVideo" || sig == "UpdateTags")
             {
                 // Only update the video shown in the Video View
                 if(args.video.id == this.currentvideoid)
