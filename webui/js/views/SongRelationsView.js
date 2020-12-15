@@ -64,6 +64,7 @@ class SongRelationsView
             let album    = entry.album;
             let artist   = entry.artist;
             let tags     = entry.tags;
+            let weight   = entry.weight;
 
             // Create new Artist Headline
             if(artist.id != currentartistid)
@@ -73,7 +74,9 @@ class SongRelationsView
             }
 
             // Create Song tile
-            let songtile = new TaggedSongTile(song, album, artist, tags);
+            let buttons  = new ButtonBox_RelationControl(MDBSong.id, song.id);
+            let songtile = new TaggedSongTile(song, album, artist, tags, buttons);
+            songtile.GetHTMLElement().title = `Number of consecutive plays: ${weight}`;
             this.songsbox.appendChild(songtile.GetHTMLElement());
 
             this.songtiles[songid] = new Object();

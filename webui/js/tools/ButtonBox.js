@@ -86,6 +86,29 @@ class ButtonBox_AddSongToQueue extends ButtonBox
 
 
 
+class ButtonBox_RelationControl extends ButtonBox
+{
+    constructor(songid, relatedsongid)
+    {
+        super();
+        this.songid        = songid;
+        this.relatedsongid = relatedsongid;
+
+        this.AddButton(new SVGButton("MusicDB", ()=>{this.CutSongRelationship();}));
+    }
+
+
+
+    CutSongRelationship()
+    {
+        MusicDB_Request("CutSongRelationship", "ShowSongRelationship",
+            {songid:this.songid, relatedsongid:this.relatedsongid});
+        return;
+    }
+}
+
+
+
 class ButtonBox_QueueEntryControls extends ButtonBox
 {
     constructor(musictype, musicid, entryid)
