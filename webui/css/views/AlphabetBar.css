@@ -16,8 +16,19 @@
     min-width:          1.7ch;
     text-align:         center;
     margin-bottom:      0.1em;
+
+    padding:            0;
+    transition:         padding 0.2s ease-in-out;
 }
 
+#AlphabetBar > .button:hover
+{
+    color:              var(--fgcolor);
+
+    padding-left:       0.5ch;
+    padding-right:      0.5ch;
+    transition:         padding 0.2s ease-in-out;
+}
 
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
