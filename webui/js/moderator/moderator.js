@@ -200,33 +200,14 @@ function onMusicDBMessage(fnc, sig, args, pass)
         MusicDB_Request("GetSongQueue",     "ShowSongQueue");
     }
 
-    /*
-    else if(fnc == "GetMDBState") {
-        if(sig == "UpdateMDBState" || sig == "UpdateRelationshipGenreHighlight")
-        {
-            UpdateRelationshipGenreHighlight(args);
-        }
-    }
-    */
     else if(fnc=="sys:refresh" && sig == "UpdateCaches") {
         MusicDB_Request("GetTags", "UpdateTagsCache");                  // Update tag cache
         MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists"); // Update artist view
-    }
-    else if(fnc == "GetSong") {
-        // Update rest if a tag input element must be updated
-        if(sig == "UpdateTagInput")
-        {
-            UpdateRelationshipTileTags(pass.taginputid, args.tags);
-        }
     }
     else if(fnc == "GetVideo") {
         if(sig == "ShowVideo")
         {
             UpdateStyle(args.video.bgcolor, args.video.fgcolor, args.video.hlcolor)
-        }
-        else if(sig == "UpdateVideo" || sig == "UpdateTagInput")
-        {
-            UpdateStyle();    // Update new tags
         }
     }
     else if(fnc == "GetAlbum") {
@@ -242,12 +223,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
         mode     = pass.mode     || "view";
         ShowLyrics(parentid, args, mode);
     }
-    else if(fnc == "GetTags")
-    {
-        Tagmanager_onGetTags(args);
-        Songtags_ShowMoodControl("MoodHUD", "MainMoodControl");
-    }
-
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
