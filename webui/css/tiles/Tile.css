@@ -23,6 +23,13 @@
     margin:    0 1ch;
 }
 
+.Tile[data-active=false]
+{
+    opacity:    0.5;
+}
+
+
+
 .Tile > div:last-child
 {
     flex-grow:      1;

@@ -55,6 +55,7 @@ class SongRelationsView
             ()=>{MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: MDBAlbum.id});}
         );
 
+        let activegenres    = tagmanager.GetActiveGenres();
         let currentartistid = -1;
         this.songtiles = new Object();
         for(let entry of songentries)
@@ -64,6 +65,7 @@ class SongRelationsView
             let album    = entry.album;
             let artist   = entry.artist;
             let tags     = entry.tags;
+            let genres   = tags.genres;
             let weight   = entry.weight;
 
             // Create new Artist Headline
@@ -73,10 +75,23 @@ class SongRelationsView
                 currentartistid = artist.id;
             }
 
+            // Check if songs genre matches active genres
+            let inactivegenre = false;
+            for(let genre of genres)
+            {
+                let found = activegenres.find(activegenre => activegenre.id == genre.id);
+                if(found)
+                {
+                    inactivegenre = true;
+                    break;
+                }
+            }
+
             // Create Song tile
             let buttons  = new ButtonBox_RelationControl(MDBSong.id, song.id);
             let songtile = new TaggedSongTile(song, album, artist, tags, buttons);
-            songtile.GetHTMLElement().title = `Number of consecutive plays: ${weight}`;
+            songtile.GetHTMLElement().title          = `Number of consecutive plays: ${weight}`;
+            songtile.GetHTMLElement().dataset.active = inactivegenre;
             this.songsbox.appendChild(songtile.GetHTMLElement());
 
             this.songtiles[songid] = new Object();
