@@ -94,6 +94,7 @@ class ButtonBox_RelationControl extends ButtonBox
         this.songid        = songid;
         this.relatedsongid = relatedsongid;
 
+        this.AddButton(new SVGSpacer());
         this.AddButton(new SVGButton("MusicDB", ()=>{this.CutSongRelationship();}));
     }
 
