@@ -36,7 +36,7 @@ class SongTile extends Tile
 
 class TaggedSongTile extends Tile
 {
-    constructor(MDBSong, MDBAlbum, MDBArtist, MDBTags)
+    constructor(MDBSong, MDBAlbum, MDBArtist, MDBTags, bottombuttons=null)
     {
         super();
         let buttonbox     = new ButtonBox_AddSongToQueue(MDBSong.id);
@@ -48,7 +48,13 @@ class TaggedSongTile extends Tile
         let title         = super.CreateSongTitle(MDBSong);
         let subtitle      = super.CreateSongSubtitle(MDBAlbum, MDBArtist);
 
-        super.MakeElement(artwork, title, new Array(this.genreview, buttonbox), subtitle, new Array(this.subgenreview));
+        let bottomcontrols;
+        if(bottombuttons != null)
+            bottomcontrols = new Array(this.subgenreview, bottombuttons);
+        else
+            bottomcontrols = new Array(this.subgenreview);
+
+        super.MakeElement(artwork, title, new Array(this.genreview, buttonbox), subtitle, bottomcontrols);
         this.element.classList.add("SongTile");
         this.UpdateTags(MDBTags);
 
