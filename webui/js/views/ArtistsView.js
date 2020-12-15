@@ -43,7 +43,7 @@ class ArtistsView
         this.tiles      = new Object();
         this.element.innerHTML = "";
         let firstanchor = document.createElement("div");
-        firstanchor.id  = "TOP_mark";
+        firstanchor.id  = "↑_mark";
         firstanchor.classList.add("marker");
         this.element.appendChild(firstanchor);
 
@@ -79,7 +79,7 @@ class ArtistsView
         }
 
         let lastanchor = document.createElement("div");
-        lastanchor.id  = "BTM_mark";
+        lastanchor.id  = "↓_mark";
         lastanchor.classList.add("marker");
         this.element.appendChild(lastanchor);
         return;
@@ -142,9 +142,16 @@ class ArtistsView
     ScrollToArtist(artistid)
     {
         let element = document.getElementById("Artist_" + artistid);
-        window.console && console.log(artistid);
-        window.console && console.log(element);
-        element.scrollIntoView({behavior: "smooth", block: "start"});
+        if(element != null)
+            element.scrollIntoView({behavior: "smooth", block: "start"});
+        return;
+    }
+
+    ScrollToMarker(marker)
+    {
+        let element = document.getElementById(marker + "_mark");
+        if(element != null)
+            element.scrollIntoView({behavior: "smooth", block: "start"});
         return;
     }
 
