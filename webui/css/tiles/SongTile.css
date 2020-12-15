@@ -16,6 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+.SongTile .tagview
+{
+    margin-right:   1rem;
+    opacity:        0.5;
+}
+
+
 .SongEntryTile
 {
     align-items:    center;
