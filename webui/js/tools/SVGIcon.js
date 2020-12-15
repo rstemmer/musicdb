@@ -16,20 +16,42 @@
 
 "use strict";
 
-class SVGIcon
+class SVGBase
 {
-    constructor(name)
+    constructor()
     {
-        let maskurl  = `url("img/icons/${name}.svg");`;
-
         this.icon    = document.createElement("div");
         this.icon.classList.add("SVGIcon");
-        this.icon.style.cssText = "mask: "+maskurl;
     }
 
     GetHTMLElement()
     {
         return this.icon;
+    }
+}
+
+
+
+// Empty element with the exact size of an SVGIcon or SVGButton
+//  as well as the exact same class SVGIcon.
+class SVGSpacer extends SVGBase
+{
+    constructor()
+    {
+        super();
+        this.icon.style.visibility = "hidden";
+    }
+}
+
+
+
+class SVGIcon extends SVGBase
+{
+    constructor(name)
+    {
+        super();
+        let maskurl  = `url("img/icons/${name}.svg");`;
+        this.icon.style.cssText = "mask: "+maskurl;
     }
 
     SetTooltip(tooltip)
