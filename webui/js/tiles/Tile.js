@@ -82,6 +82,7 @@ class Tile extends Draggable
         title.classList.add("Title");
         title.textContent = songname;
         title.classList.add("fgcolor");
+        title.classList.add("flex-grow");
         return title;
     }
 
@@ -95,6 +96,7 @@ class Tile extends Draggable
         title.textContent = videoname;
         title.onclick     = ()=>{MusicDB_Request("GetVideo", "ShowVideo", {videoid: this.videoid});};
         title.classList.add("fgcolor");
+        title.classList.add("flex-grow");
         return title;
     }
 
@@ -108,6 +110,7 @@ class Tile extends Draggable
         songinfos.classList.add("Subtitle");
         songinfos.classList.add("hlcolor");
         songinfos.classList.add("smallfont");
+        songinfos.classList.add("flex-grow");
 
         let artist = document.createElement("span");
         let spacer = document.createElement("span");
@@ -137,6 +140,7 @@ class Tile extends Draggable
         songinfos.classList.add("Subtitle");
         songinfos.classList.add("hlcolor");
         songinfos.classList.add("smallfont");
+        songinfos.classList.add("flex-grow");
 
         let artist = document.createElement("span");
         artist.innerText = artistname;
