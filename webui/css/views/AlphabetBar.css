@@ -3,7 +3,7 @@
 /* Main Container */
 /******************/
 
-div#MDBAlphabetBar
+#AlphabetBar
 {
     display:            flex;
     flex-direction:     row;
@@ -11,15 +11,11 @@ div#MDBAlphabetBar
     width:              100%;
 }
 
-span.AB_Jumpchar
+#AlphabetBar > .button
 {
-    min-width:          11px;
+    min-width:          1.7ch;
     text-align:         center;
-    margin-bottom:      1px;
-}
-span.AB_Arrow
-{
-    min-width:          15px;
+    margin-bottom:      0.1em;
 }
 
 

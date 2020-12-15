@@ -8,6 +8,7 @@ let mdbmodemanager      = new MDBModeManager();
 let tagmanager          = new TagManager();
 let musicdbhud          = new MusicDBHUD();
 let genreselectionview  = new GenreSelectionView();
+let alphabetbar         = new AlphabetBar();
 let searchinput         = new SearchInput();
 let musicdbstatus       = new MusicDBStatus();
 let musicdbcontrols     = new MusicDBControls();
@@ -65,6 +66,9 @@ window.onload = function ()
     let genrebox    = document.getElementById("GenreBox");
     genrebox.appendChild(genreselectionview.GetHTMLElement());
 
+    let alphabetbox    = document.getElementById("AlphabetBox");
+    alphabetbox.appendChild(alphabetbar.GetHTMLElement());
+
     let searchbox    = document.getElementById("SearchBox");
     searchbox.appendChild(searchinput.GetHTMLElement());
 
@@ -90,9 +94,6 @@ window.onload = function ()
 
     // Connect to MusicDB
     ConnectToMusicDB();
-
-    // Setup the old Views
-    ShowAlphabetBar("Alphabetbar");
 }
 
 function onMusicDBConnectionOpen()
