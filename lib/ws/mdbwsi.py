@@ -2177,7 +2177,7 @@ class MusicDBWebSocketInterface(object):
 
         packet = {}
         packet["songid"]  = parentsid
-        packet["song"]    = self.database.GetSongById(songid);
+        packet["song"]    = self.database.GetSongById(  packet["songid"]);
         packet["album"]   = self.database.GetAlbumById( packet["song"]["albumid"]);
         packet["artist"]  = self.database.GetArtistById(packet["song"]["artistid"]);
         packet["songs"]   = entries
