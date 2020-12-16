@@ -16,23 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-div#AlbumView .AlbumArtwork
-{
-    box-shadow:     0px 0px 10px 5px #080809;
-    margin:         2rem;
-}
-
-#AlbumView .leftcolumn
-{
-    width:          calc(100% - var(--artworkwidth-large) - 4rem);
-    overflow-y:     auto;
-}
-
-#AlbumView .rightcolumn
-{
-    width:          calc(var(--artworkwidth-large) + 4rem);
-    overflow-y:     auto;
-}
 
 #AlbumView #SongList
 {

@@ -35,25 +35,22 @@
  * 
  */
 
-class AlbumView
+class AlbumView extends MainView2
 {
     constructor()
     {
-        this.currentalbumid = -1;
-        this.currentsongid  = -1;
-
         // Button Array
         let appendbutton = new SVGButton("Append", ()=>{this.AddRandomSongToQueue("last");});
         let insertbutton = new SVGButton("Insert", ()=>{this.AddRandomSongToQueue("next");});
         appendbutton.SetTooltip("Append random song from this album to the queue");
         insertbutton.SetTooltip("Insert random song from this album into the queue after current playing song");
-        this.buttons     = new Array();
-        this.buttons.push(appendbutton);
-        this.buttons.push(insertbutton);
 
-        // Create Headline
-        this.headline = new MainViewHeadline(this.buttons);
-        this.artwork  = new AlbumArtwork(null, "large"); // album=null -> default artwork
+        let headline = new MainViewHeadline(new Array(appendbutton, insertbutton));
+        let artwork  = new AlbumArtwork(null, "large"); // album=null -> default artwork
+        super("AlbumView", headline, artwork);
+
+        this.currentalbumid = -1;
+        this.currentsongid  = -1;
 
         // Create Settings
         this.settings_tags  = document.createElement("div");
@@ -74,42 +71,22 @@ class AlbumView
         this.subgenreview = new TagListView();
 
         // Create Layout
-        let  leftcolumn  = document.createElement("div");
-        let  rightcolumn = document.createElement("div");
-        this.headlinecell= document.createElement("div");
-        this.songscell   = document.createElement("div");
-        this.artworkcell = document.createElement("div");
-        this.tagscell    = document.createElement("div");
-        this.settingscell= document.createElement("div");
-
-        leftcolumn.classList.add("leftcolumn");
-        leftcolumn.classList.add("flex-column");
-        leftcolumn.classList.add("flex-grow");
-        leftcolumn.appendChild(this.headlinecell);
-        leftcolumn.appendChild(this.settingscell);
-        leftcolumn.appendChild(this.songscell);
-        rightcolumn.classList.add("rightcolumn");
-        rightcolumn.classList.add("flex-column");
-        rightcolumn.appendChild(this.artworkcell);
-        rightcolumn.appendChild(this.tagscell);
-
+        this.songscell    = document.createElement("div");
         this.songscell.classList.add("flex-grow");
         this.songscell.id = "SongList";
-        this.tagscell.id  = "TagsCell";
 
-        this.headlinecell.appendChild(this.headline.GetHTMLElement());
-        this.artworkcell.appendChild(this.artwork.GetHTMLElement());
-        this.settingscell.appendChild(this.settings.GetHTMLElement());
+        this.tagscell     = document.createElement("div");
+        this.tagscell.id  = "TagsCell";
         this.tagscell.appendChild(this.genreview.GetHTMLElement());
         this.tagscell.appendChild(this.subgenreview.GetHTMLElement());
 
+        this.settingscell = document.createElement("div");
+        this.settingscell.appendChild(this.settings.GetHTMLElement());
+
         // Create Album View Element
-        this.element    = document.createElement("div");
-        this.element.id = "AlbumView";
-        this.element.classList.add("mainview_container");
-        this.element.classList.add("flex-row");
-        this.element.appendChild(leftcolumn);
-        this.element.appendChild(rightcolumn);
+        this.column1.appendChild(this.settingscell);
+        this.column1.appendChild(this.songscell);
+        this.column2.appendChild(this.tagscell);
     }
 
 
@@ -142,13 +119,11 @@ class AlbumView
                 null
             );
 
-            // Update Album
-            this.artwork  = new AlbumArtwork(MDBAlbum, "large");
+            // Update Album Artwork and make it draggable
+            let newartwork  = new AlbumArtwork(MDBAlbum, "large");
+            this.ReplaceArtwork(newartwork);
             this.artwork.ConfigDraggable("album", MDBAlbum.id, "insert");
             this.artwork.BecomeDraggable();
-
-            this.artworkcell.innerHTML = "";
-            this.artworkcell.appendChild(this.artwork.GetHTMLElement());
 
             // Update Settings
             this.colorselect = new ColorSchemeSelection("audio", this.currentalbumid);

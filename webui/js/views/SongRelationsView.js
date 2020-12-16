@@ -16,32 +16,16 @@
 
 "use strict";
 
-class SongRelationsView
+class SongRelationsView extends MainView
 {
     constructor()
     {
-        this.element = document.createElement("div");
-        this.element.classList.add("flex-column");
-        this.element.id = "SongRelationsView";
+        super("SongRelationsView", new MainViewHeadline(null));
 
-        this.headline = new MainViewHeadline(null);
-
-        this.headlinebox = document.createElement("div");
         this.songsbox    = document.createElement("div");
         this.songsbox.classList.add("songsbox");
-
-        this.headlinebox.appendChild(this.headline.GetHTMLElement());
         this.songsbox.classList.add("flex-column");
-
-        this.element.appendChild(this.headlinebox);
         this.element.appendChild(this.songsbox);
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 

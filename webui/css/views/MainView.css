@@ -15,34 +15,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#SongRelationsView
+
+div.MainView
 {
+    width:          100%;
+}
+
+.MainView > .column1
+{
+    width:          calc(100% - var(--artworkwidth-large) - 4rem);
+    overflow-y:     auto;
+}
+
+.MainView > .column2
+{
+    width:          calc(var(--artworkwidth-large) + 4rem);
+    overflow-y:     auto;
 }
 
 
-
-#SongRelationsView > .songsbox
+.MainView .AlbumArtwork
 {
-    margin-left:        2rem;
-    margin-right:       1rem;
-}
-#SongRelationsView > .songsbox > div+span
-{
-    margin-top:         1rem;
-}
-
-
-
-#SongRelationsView .SongTile
-{
-    padding:        0.5rem;
-    border:         var(--borderwidth) solid;
-    border-radius:  var(--radius);
-    border-color:   transparent;
-}
-#SongRelationsView .SongTile:hover
-{
-    border-color:   var(--fmcolor);
+    box-shadow:     0px 0px 10px 5px #080809;
+    margin:         2rem;
 }
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
