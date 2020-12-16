@@ -93,8 +93,11 @@ class SongEntryTile extends Draggable
         this.playingicon.GetHTMLElement().classList.add("playingicon");
         this.songname     = this.CreateSongName(MDBSong);
         this.flagbar      = new FlagBar(MDBSong, MDBTags.moods);
+
+        this.lyricsbutton = new SVGButton(this.LyricsStateToIconName(MDBSong.lyricsstate), ()=>{this.ShowLyrics();});
         this.appendbutton = new SVGButton("Append", ()=>{this.AddSongToQueue("last");});
         this.insertbutton = new SVGButton("Insert", ()=>{this.AddSongToQueue("next");});
+        this.lyricsbutton.SetTooltip("Show song lyrics");
         this.appendbutton.SetTooltip("Append song to the queue");
         this.insertbutton.SetTooltip("Insert song into the queue after current playing song");
 
@@ -102,6 +105,7 @@ class SongEntryTile extends Draggable
         this.element.appendChild(this.playingicon.GetHTMLElement());
         this.element.appendChild(this.songname);
         this.element.appendChild(this.flagbar.GetHTMLElement());
+        this.element.appendChild(this.lyricsbutton.GetHTMLElement());
         this.element.appendChild(this.appendbutton.GetHTMLElement());
         this.element.appendChild(this.insertbutton.GetHTMLElement());
         this.element.classList.add("SongEntryTile");
@@ -133,6 +137,34 @@ class SongEntryTile extends Draggable
     AddSongToQueue(position)
     {
         MusicDB_Call("AddSongToQueue", {songid: this.songid, position: position});
+    }
+
+
+
+    ShowLyrics()
+    {
+        MusicDB_Request("GetSongLyrics", "ShowLyrics", {songid: this.songid});
+    }
+
+
+
+    LyricsStateToIconName(state)
+    {
+        switch(state)
+        {
+            case 0: // empty
+                return "MusicDB";
+            case 1: // from file
+                return "MusicDB";
+            case 2: // from internet
+                return "MusicDB";
+            case 3: // from user / user approved
+                return "MusicDB";
+            case 4: // no lyrics
+                return "MusicDB";
+            default:
+                return "MusicDB";
+        }
     }
 
 
