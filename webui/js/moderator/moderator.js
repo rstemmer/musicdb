@@ -19,6 +19,7 @@ let videopanelmanager   = null;
 let aboutmusicdb        = new AboutMusicDB();
 let artistsview         = new ArtistsView();
 let albumview           = new AlbumView();
+let lyricsview          = new LyricsView();
 let streamview          = new StreamView();
 let searchresultsview   = new SearchResultsView();
 let songrelationsview   = new SongRelationsView();
@@ -188,6 +189,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     songrelationsview.onMusicDBMessage(fnc, sig, args, pass);
     artistsview.onMusicDBMessage(fnc, sig, args, pass);
     albumview.onMusicDBMessage(fnc, sig, args, pass);
+    lyricsview.onMusicDBMessage(fnc, sig, args, pass);
     streamview.onMusicDBMessage(fnc, sig, args, pass);
     videoview.onMusicDBMessage(fnc, sig, args, pass);
     queueview.onMusicDBMessage(fnc, sig, args, pass);
@@ -217,12 +219,6 @@ function onMusicDBMessage(fnc, sig, args, pass)
             // TODO: Move to something like a style-manager
             UpdateStyle(args.album.bgcolor, args.album.fgcolor, args.album.hlcolor)
         }
-    }
-
-    else if(fnc == "GetSongLyrics" && sig == "ShowLyrics") {
-        parentid = pass.parentid || "MiddleContentBox";
-        mode     = pass.mode     || "view";
-        ShowLyrics(parentid, args, mode);
     }
 }
 

@@ -85,6 +85,13 @@ class MainViewManager extends ViewManager
                 this.MountView(videoview);
             }
         }
+        else if(fnc == "GetSongLyrics")
+        {
+            if(sig == "ShowLyrics")
+            {
+                this.MountView(lyricsview);
+            }
+        }
         else if(fnc == "Find")
         {
             if(sig == "ShowResults")
