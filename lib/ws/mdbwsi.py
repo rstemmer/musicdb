@@ -2266,12 +2266,46 @@ class MusicDBWebSocketInterface(object):
 
 
     def GetSongLyrics(self, songid):
-        lyrics = self.database.GetLyrics(songid)
-        state  = self.database.GetSongById(songid)["lyricsstate"]
+        """
+        This method returns the lyrics of a song.
+
+        The returned dictionary contains the same song ID given as argument to this method,
+        as well as the corresponding song, album and artist entry of that song.
+        Additional the requested lyrics and the lyricsstate explicitly.
+
+
+        Args:
+            songid (int): ID so a song
+
+        Returns:
+            The lyrics of the song and additional information
+
+        Example:
+            
+            .. code-block:: javascript
+
+                MusicDB_Request("GetSongLyrics", "ShowLyrics", {songid:songid});
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "GetSongLyrics" && sig == "ShowLyrics")
+                    {
+                        console.log("Song lyrics to the one with ID " + args.songid);
+                        console.log(" … from the album " + args.album.name);
+                        console.log(args.lyrics);
+                        console.log("The lyrics state is " + args.lyricsstate);
+                    }
+                }
+        """
         result = {}
         result["songid"]        = songid
-        result["lyrics"]        = lyrics
-        result["lyricsstate"]   = state
+        result["song"]          = self.database.GetSongById(songid);
+        result["album"]         = self.database.GetAlbumById( result["song"]["albumid"]);
+        result["artist"]        = self.database.GetArtistById(result["song"]["artistid"]);
+        result["lyrics"]        = self.database.GetLyrics(songid)
+        result["lyricsstate"]   = result["song"]["lyricsstate"]
         return result
     
     
