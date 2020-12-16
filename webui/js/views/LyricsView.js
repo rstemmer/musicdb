@@ -29,13 +29,19 @@ class LyricsView extends MainView2
         let headline = new MainViewHeadline(new Array(backbutton, editbutton));
         let artwork  = new AlbumArtwork(null, "large"); // album=null -> default artwork
         super("LyricsView", headline, artwork)
+
+        this.lyricsedit = new LyricsEdit();
+        this.column1.appendChild(this.lyricsedit.GetHTMLElement());
+
+        this.currentalbumid = -1;
+        this.currentsongid  = -1;
     }
 
 
 
     BackToAlbum()
     {
-        // TODO: request this.albumid
+        MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: this.currentalbumid});
     }
 
 
@@ -47,11 +53,44 @@ class LyricsView extends MainView2
 
 
 
+    UpdateInformation(MDBSong, MDBAlbum, MDBArtist, lyrics)
+    {
+        // For new albums, some persistent information need to be updated
+        if(MDBAlbum.id != this.currentalbumid)
+        {
+            this.currentalbumid = MDBAlbum.id;
+
+            // Update Headline
+            this.headline.UpdateInformation(MDBAlbum, MDBArtist)
+            this.headline.SetSubtitleClickAction(
+                ()=>{artistsview.ScrollToArtist(MDBArtist.id);},
+                null
+            );
+
+            // Update Album Artwork and make it draggable
+            let newartwork  = new AlbumArtwork(MDBAlbum, "large");
+            this.ReplaceArtwork(newartwork);
+            this.artwork.ConfigDraggable("album", MDBAlbum.id, "insert");
+            this.artwork.BecomeDraggable();
+        }
+
+        if(MDBSong.id != this.currentsongid)
+        {
+            this.currentsongid = MDBSong.id;
+
+            lyrics = "Dummy Text";
+            this.lyricsedit.SetLyrics(lyrics);
+        }
+        return;
+    }
+
+
     onMusicDBMessage(fnc, sig, args, pass)
     {
         if(fnc == "GetSongLyrics" && sig == "ShowLyrics")
         {
             window.console && console.log(args);
+            this.UpdateInformation(args.song, args.album, args.artist, args.lyrics);
         }
         return;
     }
