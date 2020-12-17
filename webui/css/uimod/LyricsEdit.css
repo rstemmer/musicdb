@@ -19,7 +19,60 @@
 
 .LyricsEdit
 {
-    padding:        1rem;
+    overflow:       hidden;
+}
+
+.LyricsEdit > div+div
+{
+    margin-top:     0.5rem;
+}
+
+
+.LyricsEdit[data-editable=false] .lyricstools
+{
+    display:        none;
+}
+.LyricsEdit[data-editable=true] .lyricstools
+{
+    display:        flex;
+    border-radius:  var(--radius);
+    background:     rgba( 0, 0, 0, 0.2);
+}
+
+
+.LyricsEdit .lyricstext
+{
+    padding:        0.5rem;
+    min-height:     1em;
+
+    overflow-y:     auto;
+    display:        inline;
+    white-space:    pre-wrap;
+}
+.LyricsEdit[data-editable=false] .lyricstext
+{
+}
+.LyricsEdit[data-editable=true] .lyricstext
+{
+    border-radius:  var(--radius);
+    background:     rgba( 0, 0, 0, 0.2);
+}
+
+
+
+.LyricsEdit .lyricstext .refrain
+{
+    color:          var(--fgcolor);
+    padding-left:   4ch;
+}
+.LyricsEdit .lyricstext .background
+{
+    color:          var(--hlcolor);
+}
+.LyricsEdit .lyricstext .comment
+{
+    color:          var(--hlcolor);
+    opacity:        0.5;
 }
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 

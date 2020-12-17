@@ -48,7 +48,7 @@ class LyricsView extends MainView2
 
     EditLyrics()
     {
-        // TODO
+        this.lyricsedit.MakeEditable();
     }
 
 
@@ -77,9 +77,7 @@ class LyricsView extends MainView2
         if(MDBSong.id != this.currentsongid)
         {
             this.currentsongid = MDBSong.id;
-
-            lyrics = "Dummy Text";
-            this.lyricsedit.SetLyrics(lyrics);
+            this.lyricsedit.Update(this.currentsongid, MDBSong.lyricsstate, lyrics);
         }
         return;
     }
@@ -87,10 +85,18 @@ class LyricsView extends MainView2
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "GetSongLyrics" && sig == "ShowLyrics")
+        if(fnc == "GetSongLyrics")
         {
-            window.console && console.log(args);
-            this.UpdateInformation(args.song, args.album, args.artist, args.lyrics);
+            if(sig == "ShowLyrics")
+            {
+                this.UpdateInformation(args.song, args.album, args.artist, args.lyrics);
+            }
+            // Only update lyrics when the current shown lyrics are meant to be updated.
+            else if(sig == "ReloadLyrics" && args.song.id == this.currentsongid)
+            {
+                window.console && console.log(args.song);
+                this.lyricsedit.Update(args.song.id, args.song.lyricsstate, args.lyrics);
+            }
         }
         return;
     }
