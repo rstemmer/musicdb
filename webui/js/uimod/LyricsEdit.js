@@ -170,7 +170,6 @@ class LyricsEdit
     {
         this.lyrics      = this.editbox.value;
         this.lyricsstate = this.stateselect.GetSelectionIndex();
-        window.console && console.log(this.lyrics);
         MusicDB_Call("SetSongLyrics", {songid: this.songid, lyrics: this.lyrics, lyricsstate: this.lyricsstate});
         return;
     }
@@ -291,10 +290,8 @@ class LyricsEdit
     {
         let text = this.editbox.value;
 
-        window.console && console.log(end);
         while(end != text.length && text[end] != '\n')
             end++;
-        window.console && console.log(end);
 
         if(text[end] == '\n')
             end++;
