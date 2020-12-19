@@ -139,9 +139,9 @@ class LyricsEdit
 
     CreateToolBar()
     {
-        let refrainbutton    = new SVGButton("MusicDB", ()=>{this.Format("refrain");});
-        let backgroundbutton = new SVGButton("MusicDB", ()=>{this.Format("background");});
-        let commentbutton    = new SVGButton("MusicDB", ()=>{this.Format("comment");});
+        let refrainbutton    = new SVGButton("FMTRefrain",    ()=>{this.Format("refrain");});
+        let backgroundbutton = new SVGButton("FMTBackground", ()=>{this.Format("background");});
+        let commentbutton    = new SVGButton("FMTComment",    ()=>{this.Format("comment");});
         let toolbar          = new ToolBar();
 
         refrainbutton.SetTooltip("Format selected lines as Refrain");
