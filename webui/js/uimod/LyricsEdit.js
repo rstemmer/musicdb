@@ -179,7 +179,10 @@ class LyricsEdit
     RenderLyrics()
     {
         if(this.lyrics == null)
+        {
+            this.textbox.innerHTML = "";
             return;
+        }
 
         let lines = this.lyrics.split('\n');
         let html  = "";
@@ -208,7 +211,6 @@ class LyricsEdit
             }
         }
 
-        //this.textbox.innerText = this.lyrics;
         this.textbox.innerHTML = html;
         return;
     }
