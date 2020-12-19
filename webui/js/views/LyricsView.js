@@ -21,8 +21,8 @@ class LyricsView extends MainView2
     constructor()
     {
         // Button Array
-        let backbutton = new SVGButton("MusicDB", ()=>{this.BackToAlbum();});
-        let editbutton = new SVGButton("MusicDB", ()=>{this.EditLyrics();});
+        let backbutton = new SVGButton("Back", ()=>{this.BackToAlbum();});
+        let editbutton = new SVGButton("Edit", ()=>{this.EditLyrics();});
         backbutton.SetTooltip("Go back and show album");
         editbutton.SetTooltip("Edit lyrics");
 
