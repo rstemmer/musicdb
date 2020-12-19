@@ -42,13 +42,14 @@ class LyricsView extends MainView2
     BackToAlbum()
     {
         MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: this.currentalbumid});
+        this.lyricsedit.SetViewMode();
     }
 
 
 
     EditLyrics()
     {
-        this.lyricsedit.MakeEditable();
+        this.lyricsedit.SetEditMode();
     }
 
 

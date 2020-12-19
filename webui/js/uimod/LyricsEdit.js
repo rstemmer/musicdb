@@ -82,11 +82,26 @@ class LyricsEdit
 
 
 
-    MakeEditable()
+    SetEditMode()
     {
+        if(this.element.dataset.editable == true)
+            return; // Already editable
+
         this.element.dataset.editable = true;
         this.editbox.value = this.lyrics;
         this.element.replaceChild(this.editbox, this.textbox);
+    }
+
+
+
+    SetViewMode()
+    {
+        if(this.element.dataset.editable == false)
+            return; // Already readonly
+
+        this.element.dataset.editable = false;
+        this.RenderLyrics();
+        this.element.replaceChild(this.textbox, this.editbox);
     }
 
 
