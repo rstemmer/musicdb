@@ -152,6 +152,7 @@ class LyricsEdit
         this.lyricsstate = lyricsstate;
 
         this.stateselect.Select(this.lyricsstate);
+        this.editbox.value = this.lyrics;
         this.RenderLyrics();
     }
 

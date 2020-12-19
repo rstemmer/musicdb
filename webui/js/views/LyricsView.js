@@ -95,7 +95,6 @@ class LyricsView extends MainView2
             // Only update lyrics when the current shown lyrics are meant to be updated.
             else if(sig == "ReloadLyrics" && args.song.id == this.currentsongid)
             {
-                window.console && console.log(args.song);
                 this.lyricsedit.Update(args.song.id, args.song.lyricsstate, args.lyrics);
             }
         }
