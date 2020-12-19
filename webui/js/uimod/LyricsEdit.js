@@ -136,9 +136,8 @@ class LyricsEdit
         this.lyrics      = lyrics;
         this.lyricsstate = lyricsstate;
 
-        window.console && console.log(this.lyricsstate);
         this.stateselect.Select(this.lyricsstate);
-        this.textbox.innerText = this.lyrics; // TODO: parse markup
+        this.RenderLyrics();
     }
 
 
@@ -160,26 +159,57 @@ class LyricsEdit
 
 
 
+    RenderLyrics()
+    {
+        this.textbox.innerText = this.lyrics;
+    }
+
+
+
     Format(style)
+    {
+        switch(style)
+        {
+            case "refrain":
+                this.InsertLinesAroundSelection(":: ref", "::");
+                break;
+            case "background":
+                this.InsertCharactersAroundSelection("<<", ">>");
+                break;
+            case "comment":
+                this.InsertLinesAroundSelection(":: comment", "::");
+                break;
+        }
+        return;
+    }
+
+
+
+    InsertCharactersAroundSelection(text1, text2)
+    {
+        let begin = this.editbox.selectionStart;
+        let end   = this.editbox.selectionEnd;
+        let text  = this.editbox.value;
+
+        let starttext   = text.substring(0,     begin);
+        let middletext  = text.substring(begin, end);
+        let endtext     = text.substring(end,   text.length);
+
+        let newtext = starttext + text1 + middletext + text2 + endtext;
+        this.editbox.value = newtext;
+        return;
+    }
+
+
+
+    InsertLinesAroundSelection(line1, line2)
     {
         let begin = this.editbox.selectionStart;
         let end   = this.editbox.selectionEnd;
 
-        switch(style)
-        {
-            case "refrain":
-                this.InsertLineBeforeSelection(begin, ":: ref");
-                this.InsertLineAfterSelection(end+7, "::");
-                break;
-            case "background":
-                this.InsertLineBeforeSelection(begin, ":: hl");
-                this.InsertLineAfterSelection(end+6, "::");
-                break;
-            case "comment":
-                this.InsertLineBeforeSelection(begin, ":: com");
-                this.InsertLineAfterSelection(end+7, "::");
-                break;
-        }
+        this.InsertLineBeforeSelection(begin, line1);
+        this.InsertLineAfterSelection(end+line1.length+1, line2);
+
         return;
     }
 
