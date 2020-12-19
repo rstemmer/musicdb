@@ -108,11 +108,11 @@ class LyricsEdit
 
     CreateMainBar()
     {
-        let ls_empty   = new SVGButton("MusicDB", ()=>{this.lyricsstate = LYRICSSTATE_EMPTY   ;});
-        let ls_fromfile= new SVGButton("MusicDB", ()=>{this.lyricsstate = LYRICSSTATE_FROMFILE;});
-        let ls_fromnet = new SVGButton("MusicDB", ()=>{this.lyricsstate = LYRICSSTATE_FROMNET ;});
-        let ls_userappr= new SVGButton("MusicDB", ()=>{this.lyricsstate = LYRICSSTATE_FROMUSER;});
-        let ls_none    = new SVGButton("MusicDB", ()=>{this.lyricsstate = LYRICSSTATE_NONE    ;});
+        let ls_empty   = new SVGButton("LyricsEmpty",    ()=>{this.lyricsstate = LYRICSSTATE_EMPTY   ;});
+        let ls_fromfile= new SVGButton("LyricsFromFile", ()=>{this.lyricsstate = LYRICSSTATE_FROMFILE;});
+        let ls_fromnet = new SVGButton("LyricsFromNet",  ()=>{this.lyricsstate = LYRICSSTATE_FROMNET ;});
+        let ls_userappr= new SVGButton("LyricsFromUser", ()=>{this.lyricsstate = LYRICSSTATE_FROMUSER;});
+        let ls_none    = new SVGButton("LyricsNone",     ()=>{this.lyricsstate = LYRICSSTATE_NONE    ;});
         let loadbutton = new SVGButton("Load", ()=>{this.Reload()});
         let savebutton = new SVGButton("Save", ()=>{this.Save()});
         let mainbar    = new ToolBar();

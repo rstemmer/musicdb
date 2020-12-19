@@ -80,7 +80,6 @@ class TaggedSongTile extends Tile
  */
 class SongEntryTile extends Draggable
 {
-    // TODO: Lyrics-integration
     constructor(MDBSong, MDBTags)
     {
         super();
@@ -153,15 +152,15 @@ class SongEntryTile extends Draggable
         switch(state)
         {
             case 0: // empty
-                return "MusicDB";
+                return "LyricsEmpty";
             case 1: // from file
-                return "MusicDB";
+                return "LyricsFromFile";
             case 2: // from internet
-                return "MusicDB";
+                return "LyricsFromNet";
             case 3: // from user / user approved
-                return "MusicDB";
+                return "LyricsFromUser";
             case 4: // no lyrics
-                return "MusicDB";
+                return "LyricsNone";
             default:
                 return "MusicDB";
         }
