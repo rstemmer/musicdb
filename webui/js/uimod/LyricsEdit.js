@@ -84,7 +84,7 @@ class LyricsEdit
 
     SetEditMode()
     {
-        if(this.element.dataset.editable == true)
+        if(this.element.dataset.editable == "true")
             return; // Already editable
 
         this.element.dataset.editable = true;
@@ -96,7 +96,7 @@ class LyricsEdit
 
     SetViewMode()
     {
-        if(this.element.dataset.editable == false)
+        if(this.element.dataset.editable == "false")
             return; // Already readonly
 
         this.element.dataset.editable = false;
