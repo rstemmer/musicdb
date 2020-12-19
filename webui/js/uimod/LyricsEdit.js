@@ -117,6 +117,14 @@ class LyricsEdit
         let savebutton = new SVGButton("Save", ()=>{this.Save()});
         let mainbar    = new ToolBar();
 
+        ls_empty.SetTooltip(   "Set lyrics-state to: Undefined");
+        ls_fromfile.SetTooltip("Set lyrics-state to: Copied from the audio file");
+        ls_fromnet.SetTooltip( "Set lyrics-state to: Copied from the internet");
+        ls_userappr.SetTooltip("Set lyrics-state to: Edited/Approved by the user");
+        ls_none.SetTooltip(    "Set lyrics-state to: No lyrics - instrumental song");
+        loadbutton.SetTooltip( "Reload lyrics and state from the MusicDB database");
+        savebutton.SetTooltip( "Save lyrics and state to the MusicDB database");
+
         mainbar.GetHTMLElement().classList.add("lyricstools");
 
         this.stateselect = new SwitchGroup([ls_empty, ls_fromfile, ls_fromnet, ls_userappr, ls_none], 0);
@@ -135,6 +143,10 @@ class LyricsEdit
         let backgroundbutton = new SVGButton("MusicDB", ()=>{this.Format("background");});
         let commentbutton    = new SVGButton("MusicDB", ()=>{this.Format("comment");});
         let toolbar          = new ToolBar();
+
+        refrainbutton.SetTooltip("Format selected lines as Refrain");
+        backgroundbutton.SetTooltip("Format selected characters as \"Less Important\" / Background");
+        commentbutton.SetTooltip("Format selected lines as Comments");
 
         toolbar.GetHTMLElement().classList.add("lyricstools");
 
