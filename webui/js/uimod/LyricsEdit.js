@@ -55,22 +55,22 @@ class LyricsEdit
         this.mainbar = this.CreateMainBar();
         this.toolbar = this.CreateToolBar();
         this.textbox = document.createElement("div");
-        this.textbox.classList.add("flex-row");
         this.textbox.classList.add("seriffont");
         this.textbox.classList.add("lyricstext");
-        this.textbox.onmouseup  = ()=>{this.onMouseUp(event);};
-        this.textbox.onkeyup    = ()=>{this.onKeyUp(event);};
+        this.editbox = document.createElement("textarea");
+        this.editbox.classList.add("frame");
+        this.editbox.classList.add("seriffont");
+        this.editbox.classList.add("lyricstext");
+        //this.editbox.onmouseup  = ()=>{this.onMouseUp(event);};
+        //this.editbox.onkeyup    = ()=>{this.onKeyUp(event);};
+        //this.editbox.oninput    = ()=>{this.onInput(event);};
+        //this.editbox.oncopy     = ()=>{this.onCopy(event);};
+        //this.editbox.onpaste    = ()=>{this.onPaste(event);};
 
         this.element.dataset.editable = false;
         this.element.appendChild(this.mainbar.GetHTMLElement());
         this.element.appendChild(this.toolbar.GetHTMLElement());
         this.element.appendChild(this.textbox);
-
-        this.selection = new Object();
-        this.selection.firstelement = null;
-        this.selection.startoffset  = null;
-        this.selection.lastelement  = null;
-        this.selection.endoffset    = null;
     }
 
 
@@ -85,7 +85,8 @@ class LyricsEdit
     MakeEditable()
     {
         this.element.dataset.editable = true;
-        this.textbox.contentEditable  = true;
+        this.editbox.value = this.lyrics;
+        this.element.replaceChild(this.editbox, this.textbox);
     }
 
 
@@ -161,88 +162,81 @@ class LyricsEdit
 
     Format(style)
     {
-        window.console && console.log(`Format(${style})`);
-        let start = document.createElement("div");
-        let end   = document.createElement("div");
+        let begin = this.editbox.selectionStart;
+        let end   = this.editbox.selectionEnd;
 
-        this.UpdateStyleFromSelectedLines(style);
-
-        //start.innerText = "+" + style;
-        //this.InsertElementBeforeSelection(start);
-
-        //end.innerText = "-" + style;
-        //this.InsertElementAfterSelection(end);
-        return;
-    }
-
-
-
-    UpdateSelection()
-    {
-        let range = window.getSelection().getRangeAt(0);
-        window.console && console.log(range);
-
-        this.selection.firstelement = range.startContainer.parentNode;
-        this.selection.startoffset  = range.startOffset;
-        this.selection.lastelement  = range.endContainer.parentNode;
-        this.selection.endoffset    = range.endOffset;
-        return;
-    }
-
-
-
-    UpdateStyleFromSelectedLines(classname)
-    {
-        let element = this.selection.firstelement;
-        do
+        switch(style)
         {
-            if(element.classList.contains(classname))
-            {
-                window.console && console.log("remove class");
-                element.classList.remove(classname);
-            }
-            else
-            {
-                window.console && console.log("add class");
-                element.classList.add(classname);
-            }
-            element = element.nextSibling;
+            case "refrain":
+                this.InsertLineBeforeSelection(begin, ":: ref");
+                this.InsertLineAfterSelection(end+7, "::");
+                break;
+            case "background":
+                this.InsertLineBeforeSelection(begin, ":: hl");
+                this.InsertLineAfterSelection(end+6, "::");
+                break;
+            case "comment":
+                this.InsertLineBeforeSelection(begin, ":: com");
+                this.InsertLineAfterSelection(end+7, "::");
+                break;
         }
-        while(element != this.selection.lastelement.nextSibling);
         return;
     }
 
 
 
-    InsertElementBeforeSelection(element)
+    InsertLineBeforeSelection(begin, line)
     {
-        let sibling = this.selection.firstelement;
-        window.console && console.log("Insert Before:");
-        window.console && console.log(sibling);
+        let text  = this.editbox.value;
 
-        this.textbox.insertBefore(element, sibling);
+        while(begin != 0 && text[begin] != '\n')
+            begin--;
+
+        if(text[begin] == '\n')
+            begin++;
+
+        let newtext;
+        newtext  = text.substring(0, begin);
+        newtext += line + '\n';
+        newtext += text.substring(begin);
+
+        this.editbox.value = newtext;
+
         return;
     }
 
 
 
-    InsertElementAfterSelection(element)
+    InsertLineAfterSelection(end, line)
     {
-        let sibling = this.selection.lastelement.nextSibling;
+        let text = this.editbox.value;
 
-        if(sibling != null)
-            this.textbox.insertBefore(element, sibling);
-        else
-            this.textbox.appendChild(element);
+        window.console && console.log(end);
+        while(end != text.length && text[end] != '\n')
+            end++;
+        window.console && console.log(end);
+
+        if(text[end] == '\n')
+            end++;
+        else if(text[end] != '\n')
+            line = '\n' + line;
+
+        let newtext;
+        newtext  = text.substring(0, end);
+        newtext += line + '\n';
+        newtext += text.substring(end);
+
+        this.editbox.value = newtext;
+
         return;
     }
 
 
 
+
+    /*
     onMouseUp(event)
     {
-        window.console && console.log("onMouseUp");
-        this.UpdateSelection();
         return;
     }
 
@@ -250,16 +244,30 @@ class LyricsEdit
 
     onKeyUp(event)
     {
-        let keycode = event.which || event.keyCode;
-        window.console && console.log(`onKeyUp: ${keycode}`);
-        window.console && console.log(this.textbox.innerHTML);
-
-        if(keycode == 16 /*SHIFT*/)
-        {
-            this.UpdateSelection();
-        }
         return;
     }
+
+
+
+    onInput(event)
+    {
+        return;
+    }
+
+
+
+    onCopy(event)
+    {
+        return;
+    }
+
+
+
+    onPaste(event)
+    {
+        return;
+    }
+    */
 }
 
 
