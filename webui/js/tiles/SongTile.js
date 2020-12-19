@@ -99,6 +99,7 @@ class SongEntryTile extends Draggable
         this.lyricsbutton.SetTooltip("Show song lyrics");
         this.appendbutton.SetTooltip("Append song to the queue");
         this.insertbutton.SetTooltip("Insert song into the queue after current playing song");
+        this.lyricsbutton.GetHTMLElement().classList.add("hovpacity");
 
         this.element.appendChild(this.songnum);
         this.element.appendChild(this.playingicon.GetHTMLElement());
