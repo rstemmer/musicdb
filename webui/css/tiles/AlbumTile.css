@@ -1,7 +1,23 @@
+/*
+ * MusicDB,  a music manager with web-bases UI that focus on music.
+ * Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-/******************/
-/* Album-related */
-/******************/
+
+
 .AlbumTile
 {
     overflow:       hidden;
@@ -29,73 +45,6 @@
     display:        flex;
     justify-content:space-between;
 }
-
-
-
-div.AT_albumentry
-{
-    display:        inline-block;
-    margin-left:    5px;
-    margin-right:   5px;
-}
-div.AT_albumentry[data-size=medium] {
-    max-width:      150px;
-}
-div.AT_albumentry[data-size=small] {
-    max-width:      60px;
-}
-
-div.AT_albumcover
-{
-    border-radius:  5px;
-    overflow:       hidden;
-}
-div.AT_albumcover[data-size=medium] {
-    width:          150px;
-    height:         150px;
-}
-div.AT_albumcover[data-size=small] {
-    width:          60px;
-    height:         60px;
-}
-
-/* on small screens use alwasy the small variant*/
-@media only screen and (max-width: 1600px) 
-{
-    div.AT_albumentry[data-size=medium] {
-        max-width:      120px;
-    }
-    div.AT_albumcover[data-size=medium] {
-        width:          120px;
-        height:         120px;
-    }
-}
-
-
-div.AT_albumcover img
-{
-    width:          100%;
-    height:         auto;
-}
-
-div.AT_albummetadata
-{
-    overflow:       hidden;
-    white-space:    nowrap;
-}
-
-span.AT_albumname
-{
-    display:        inline-block;
-    overflow:       hidden;
-    white-space:    nowrap;
-}
-span.AT_albumrelease
-{
-    display:        inline-block;
-    float:          right;
-}
-
 
 
 
