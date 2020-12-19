@@ -62,6 +62,7 @@ class MainView2
     {
         this.headline   = headline;
         this.artwork    = artwork;
+        this.artwork.GetHTMLElement().classList.add("MainArtwork");
         this.element    = document.createElement("div");
         this.element.classList.add("MainView");
         this.element.classList.add("flex-row");
@@ -94,6 +95,7 @@ class MainView2
     {
         this.column2.replaceChild(newartwork.GetHTMLElement(), this.artwork.GetHTMLElement());
         this.artwork = newartwork;
+        this.artwork.GetHTMLElement().classList.add("MainArtwork");
         return;
     }
 }
