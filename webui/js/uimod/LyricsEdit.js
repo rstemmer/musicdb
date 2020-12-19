@@ -152,7 +152,9 @@ class LyricsEdit
 
     Save()
     {
-        window.console && console.log(this.lyricsstate);
+        this.lyrics      = this.editbox.value;
+        this.lyricsstate = this.stateselect.GetSelectionIndex();
+        window.console && console.log(this.lyrics);
         MusicDB_Call("SetSongLyrics", {songid: this.songid, lyrics: this.lyrics, lyricsstate: this.lyricsstate});
         return;
     }
@@ -161,7 +163,39 @@ class LyricsEdit
 
     RenderLyrics()
     {
-        this.textbox.innerText = this.lyrics;
+        if(this.lyrics == null)
+            return;
+
+        let lines = this.lyrics.split('\n');
+        let html  = "";
+        for(let line of lines)
+        {
+            if(line.indexOf("::") == 0) // This is a Tag
+            {
+                if(line.indexOf("ref") > -1)            // :: ref
+                {
+                    html += "<div class=\"refrain\">";
+                }
+                else if(line.indexOf("comment") > -1)   // :: comment
+                {
+                    html += "<div class=\"comment\">";
+                }
+                else                                    // Assume ::
+                {
+                    html += "</div>";
+                }
+            }
+            else
+            {
+                line  = line.replace(/<</g, "<span class=\"background\">");
+                line  = line.replace(/>>/g, "</span>");
+                html += line + "</br>";
+            }
+        }
+
+        //this.textbox.innerText = this.lyrics;
+        this.textbox.innerHTML = html;
+        return;
     }
 
 
