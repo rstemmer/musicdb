@@ -16,11 +16,11 @@
 
 "use strict";
 
-class StreamView
+class StreamView extends MainView
 {
     constructor()
     {
-        this.element = document.createElement("div");
+        super("StreamView");
         this.element.classList.add("StreamView");
 
         this.videoelement = document.createElement("video");
@@ -37,13 +37,6 @@ class StreamView
         this.intersectionobserver.observe(this.videoelement);
 
         this.viewposition = null; // Can be "MainView", "QueueView", "VideoPanel"
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
