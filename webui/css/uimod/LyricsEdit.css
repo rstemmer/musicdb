@@ -41,16 +41,6 @@
 }
 
 
-.LyricsEdit .lyricstext
-{
-    padding:        0.5rem;
-    min-height:     1em;
-
-    overflow-y:     auto;
-    display:        inline;
-    white-space:    pre-wrap;
-}
-
 .LyricsEdit textarea
 {
     resize:         none;
@@ -66,23 +56,28 @@
     background:     rgba( 0, 0, 0, 0.2);
     color:          var(--fgcolor);
 }
-/*
-.LyricsEdit[data-editable=false] .lyricstext
-{
-}
-.LyricsEdit[data-editable=true] .lyricstext
-{
-    border-radius:  var(--radius);
-    background:     rgba( 0, 0, 0, 0.2);
-}
-*/
 
 
+
+.LyricsEdit .lyricstext
+{
+    padding:        0.5rem;
+    min-height:     1em;
+
+    overflow-y:     auto;
+    display:        inline;
+    white-space:    pre-wrap;
+
+    letter-spacing: 0.05em;
+    line-height:    1.6;
+}
 
 .LyricsEdit .lyricstext .refrain
 {
     color:          var(--fgcolor);
-    padding-left:   4ch;
+    font-weight:    bold;
+    font-size:      1.1em;
+    padding-left:   1ch;
 }
 .LyricsEdit .lyricstext .background
 {
