@@ -60,6 +60,9 @@ class MDBModeManager
             if(this.mainmenu)
                 this.mainmenu.ForceEntryState(this.entryid, "a");
 
+            // Update view
+            mainviewmanager.MountView(albumview);
+
             // Request update from server
             MusicDB_Request("GetAudioStreamState",          "UpdateHUD")
             MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
@@ -72,6 +75,9 @@ class MDBModeManager
             videopanel.dataset.visible   = "true";
             if(this.mainmenu)
                 this.mainmenu.ForceEntryState(this.entryid, "b");
+
+            // Update view
+            mainviewmanager.MountView(videoview);
 
             // Request update from server
             MusicDB_Request("GetVideoStreamState",          "UpdateHUD");

@@ -122,12 +122,12 @@ function onMusicDBConnectionClosed()
 
 function onMusicDBNotification(fnc, sig, rawdata)
 {
+    window.console && console.log("%c >> fnc: "+fnc+"; sig: "+sig, "color:#c87a7a");
     musicdbhud.onMusicDBNotification(fnc, sig, rawdata);
     musicdbstatus.onMusicDBNotification(fnc, sig, rawdata);
     queuetimemanager.onMusicDBNotification(fnc, sig, rawdata);
     streamview.onMusicDBNotification(fnc, sig, rawdata);
 
-    window.console && console.log(sig);
     if(fnc == "MusicDB:AudioStream")
     {
         // Handle notifications
@@ -196,11 +196,19 @@ function onMusicDBMessage(fnc, sig, args, pass)
 
 
     // Handle Messages form the server
-    if(fnc == "GetMDBState" && sig == "InitializeWebUI") {
+    if(fnc == "GetMDBState" && sig == "InitializeWebUI")
+    {
+        let uimode = args.uimode;
         MusicDB_Request("GetTags",          "UpdateTagsCache");
-        MusicDB_Request("GetAudioStreamState",   "UpdateStreamState");
         MusicDB_Request("GetMDBState",      "UpdateMDBState");
-        MusicDB_Request("GetSongQueue",     "ShowSongQueue");
+        if(uimode == "audio")
+        {
+            MusicDB_Request("GetAudioStreamState",   "UpdateStreamState");
+        }
+        else if(uimode == "video")
+        {
+            MusicDB_Request("GetVideoStreamState",   "UpdateStreamState");
+        }
     }
 
     else if(fnc=="sys:refresh" && sig == "UpdateCaches") {
