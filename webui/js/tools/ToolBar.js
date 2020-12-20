@@ -106,10 +106,13 @@ class SwitchGroup extends ToolGroup
             let button = buttons[index];
             let box    = this.AddButton(button);
             box.onclick= ()=>{this.Select(index);};
+            box.dataset.selected = false;
+            box.dataset.enabled  = true;
 
             this.buttons.push(new Object());
-            this.buttons[index].button = button;
-            this.buttons[index].box    = box;
+            this.buttons[index].button  = button;
+            this.buttons[index].box     = box;
+            this.buttons[index].enabled = true;
         }
         this.Select(select);
     }
@@ -118,6 +121,10 @@ class SwitchGroup extends ToolGroup
 
     Select(index)
     {
+        // Do not select disabled buttons
+        if(this.buttons[index].enabled == false)
+            return;
+
         for(let entry of this.buttons)
         {
             entry.box.dataset.selected = false;
@@ -126,6 +133,22 @@ class SwitchGroup extends ToolGroup
         this.buttons[index].box.dataset.selected = true;
 
         this.selected = index;
+        return;
+    }
+
+
+
+    Disable(index)
+    {
+        this.buttons[index].box.dataset.enabled = false;
+        this.buttons[index].enabled             = false;
+        return;
+    }
+
+    Enable(index)
+    {
+        this.buttons[index].box.dataset.enabled = true;
+        this.buttons[index].enabled             = true;
         return;
     }
 

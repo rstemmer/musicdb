@@ -66,6 +66,7 @@
 }
 
 
+
 .ToolGroup > div[data-selected=true]
 {
     background-color:   var(--hlcolor);
@@ -73,6 +74,12 @@
 .ToolGroup > div[data-selected=true] > .SVGIcon
 {
     background-color:   var(--bgcolor);
+}
+
+
+.ToolGroup > div[data-enabled=false] > .SVGIcon
+{
+    opacity:            0.5;
 }
 
 
