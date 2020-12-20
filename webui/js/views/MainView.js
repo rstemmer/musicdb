@@ -18,14 +18,15 @@
 
 class MainView
 {
-    constructor(id, headline)
+    constructor(id, headline=null)
     {
         this.headline   = headline
         this.element    = document.createElement("div");
         this.element.classList.add("MainView");
         this.element.classList.add("flex-column");
         this.element.id = id;
-        this.element.appendChild(this.headline.GetHTMLElement());
+        if(this.headline != null)
+            this.element.appendChild(this.headline.GetHTMLElement());
 
         this.UnlockView();
     }
