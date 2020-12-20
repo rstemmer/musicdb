@@ -26,6 +26,8 @@ class MainView
         this.element.classList.add("flex-column");
         this.element.id = id;
         this.element.appendChild(this.headline.GetHTMLElement());
+
+        this.UnlockView();
     }
 
 
@@ -33,6 +35,24 @@ class MainView
     GetHTMLElement()
     {
         return this.element;
+    }
+
+
+
+    // The view lock is checked by the ViewManager and can be used
+    // to avoid automatically switching between views.
+    // If a view is visible and locked, it will never be replaced by a different view
+    LockView()
+    {
+        this.viewlock = true;
+    }
+    UnlockView()
+    {
+        this.viewlock = false;
+    }
+    GetLockState()
+    {
+        return this.viewlock;
     }
 }
 
@@ -56,17 +76,18 @@ class MainView
  * 
  */
 
-class MainView2
+class MainView2 extends MainView
 {
     constructor(id, headline, artwork)
     {
-        this.headline   = headline;
-        this.artwork    = artwork;
-        this.artwork.GetHTMLElement().classList.add("MainArtwork");
-        this.element    = document.createElement("div");
-        this.element.classList.add("MainView");
+        super(id, headline);
+        // reset settings from base class
+        this.element.innerHTML = "";    
+        this.element.classList.remove("flex-column");
         this.element.classList.add("flex-row");
-        this.element.id = id;
+
+        this.artwork = artwork;
+        this.artwork.GetHTMLElement().classList.add("MainArtwork");
 
         this.column1 = document.createElement("div");
         this.column1.classList.add("column1");
@@ -80,13 +101,6 @@ class MainView2
         this.column2.appendChild(this.artwork.GetHTMLElement());
         this.element.appendChild(this.column1);
         this.element.appendChild(this.column2);
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 

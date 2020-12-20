@@ -49,6 +49,11 @@ class MainViewManager extends ViewManager
 
     MountView(view)
     {
+        if(this.currentview != null
+            && typeof this.currentview.GetLockState === "function"
+            && this.currentview.GetLockState() == true)
+            return;
+
         super.MountView(view);
 
         if(this.currentview != null)
