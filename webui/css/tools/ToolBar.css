@@ -80,6 +80,7 @@
 .ToolGroup > div[data-enabled=false] > .SVGIcon
 {
     opacity:            0.5;
+    filter:             brightness(70%) saturate(70%);
 }
 
 
