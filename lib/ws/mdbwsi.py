@@ -325,6 +325,9 @@ class MusicDBWebSocketInterface(object):
             fncname= "GetAlbum"
         elif fncname == "SetSongLyrics":
             retval = self.SetSongLyrics(args["songid"], args["lyrics"], args["lyricsstate"])
+            retval = self.GetSong(args["songid"])
+            method = "broadcast"
+            fncname= "GetSong"
         elif fncname == "SetAlbumColor":
             retval = self.SetAlbumColor(args["albumid"], args["colorname"], args["color"])
         elif fncname == "SetVideoColor":
