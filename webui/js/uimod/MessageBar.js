@@ -74,7 +74,7 @@ class MessageBarWarning extends MessageBar
 {
     constructor(htmlmessage)
     {
-        super(new SVGIcon("MusicDB"), htmlmessage);
+        super(new SVGIcon("StatusBad"), htmlmessage);
         this.element.dataset.messagetype = "warning";
     }
 }
@@ -85,7 +85,7 @@ class MessageBarError extends MessageBar
 {
     constructor(htmlmessage)
     {
-        super(new SVGIcon("MusicDB"), htmlmessage);
+        super(new SVGIcon("StatusBad"), htmlmessage);
         this.element.dataset.messagetype = "error";
     }
 }
@@ -96,7 +96,7 @@ class MessageBarConfirm extends MessageBar
 {
     constructor(htmlmessage)
     {
-        super(new SVGIcon("MusicDB"), htmlmessage);
+        super(new SVGIcon("StatusGood"), htmlmessage);
         this.element.dataset.messagetype = "confirm";
     }
 }
