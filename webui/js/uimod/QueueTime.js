@@ -178,27 +178,6 @@ class QueueTimeManager
     }
 }
 
-function ShowMusicDBStateView(parentID)
-{
-    let html = "";
-
-    html += "<div id=MDBStateView class=\"hlcolor smallfont\">";
-
-    // Playtime
-    html += "<span id=CurrentTime class=\"timestats\" data-playstate=\"unknown\">";
-    html += "00:00:00";
-    html += "</span>";
-    html += " / ";
-    html += "<span id=PlayTime class=\"timestats\" data-playstate=\"unknown\">";
-    html += "00:00:00";
-    html += "</span>";
-
-    html += "</div>";
-    
-    // Create Elements
-    document.getElementById(parentID).innerHTML = html;
-}
-
 
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
