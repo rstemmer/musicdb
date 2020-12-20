@@ -104,6 +104,9 @@ class LyricsEdit
 
     SetViewMode()
     {
+        this.msg_saved.Hide();
+        this.msg_notsaved.Hide();
+
         if(this.element.dataset.editable == "false")
             return; // Already readonly
 
