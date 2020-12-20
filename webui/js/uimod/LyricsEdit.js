@@ -255,6 +255,8 @@ class LyricsEdit
         this.lyricsstate = this.stateselect.GetSelectionIndex();
         MusicDB_Call("SetSongLyrics", {songid: this.songid, lyrics: this.lyrics, lyricsstate: this.lyricsstate});
 
+        this.origlyrics  = this.lyrics || ""; // \_ Save copy to identify changes during editing
+        this.origstate   = this.lyricsstate;  // /
         this.msg_saved.Show();
         this.msg_notsaved.Hide();
         return;
