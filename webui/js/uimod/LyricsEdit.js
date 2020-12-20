@@ -67,7 +67,13 @@ class LyricsEdit
         //this.editbox.oncopy     = ()=>{this.onCopy(event);};
         //this.editbox.onpaste    = ()=>{this.onPaste(event);};
 
+        this.msg_notsaved = new MessageBarWarning("Changes not yet saved!");
+        this.msg_saved    = new MessageBarConfirm("Changes successfully saved");
+
         this.element.dataset.editable = false;
+
+        this.element.appendChild(this.msg_notsaved.GetHTMLElement());
+        this.element.appendChild(this.msg_saved.GetHTMLElement());
         this.element.appendChild(this.mainbar.GetHTMLElement());
         this.element.appendChild(this.toolbar.GetHTMLElement());
         this.element.appendChild(this.textbox);
@@ -130,6 +136,7 @@ class LyricsEdit
         mainbar.GetHTMLElement().classList.add("lyricstools");
 
         this.stateselect = new SwitchGroup([ls_empty, ls_fromfile, ls_fromnet, ls_userappr, ls_none], 0);
+        this.stateselect.SetChangeEvent(()=>{this.ValidateUpdateState();});
 
         mainbar.AddButton(this.stateselect);
         mainbar.AddSpacer(true /*grow*/);
@@ -165,11 +172,15 @@ class LyricsEdit
         this.lyrics      = lyrics;
         this.lyricsstate = lyricsstate;
 
+        this.origlyrics  = lyrics || ""; // \_ Save copy to identify changes during editing
+        this.origstate   = lyricsstate;  // /
+
         this.stateselect.Select(this.lyricsstate);
         this.editbox.value = this.lyrics;
 
         this.RenderLyrics();
         this.ValidateLyricsState();
+        this.ValidateUpdateState();
     }
 
 
@@ -205,8 +216,27 @@ class LyricsEdit
             if(selection == LYRICSSTATE_NONE || selection == LYRICSSTATE_EMPTY)
                 this.stateselect.Select(LYRICSSTATE_FROMNET);
         }
-
         return;
+    }
+
+
+
+    ValidateUpdateState()
+    {
+        let selection = this.stateselect.GetSelectionIndex();
+
+        if(selection != this.origstate)
+        {
+            this.msg_notsaved.Show();
+        }
+        else if(this.editbox.value != this.origlyrics)
+        {
+            this.msg_notsaved.Show();
+        }
+        else
+        {
+            this.msg_notsaved.Hide();
+        }
     }
 
 
@@ -224,6 +254,9 @@ class LyricsEdit
         this.lyrics      = this.editbox.value;
         this.lyricsstate = this.stateselect.GetSelectionIndex();
         MusicDB_Call("SetSongLyrics", {songid: this.songid, lyrics: this.lyrics, lyricsstate: this.lyricsstate});
+
+        this.msg_saved.Show();
+        this.msg_notsaved.Hide();
         return;
     }
 
@@ -368,6 +401,7 @@ class LyricsEdit
     onInput(event)
     {
         this.ValidateLyricsState();
+        this.ValidateUpdateState();
         return;
     }
 
