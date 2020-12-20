@@ -61,9 +61,9 @@ class LyricsEdit
         this.editbox.classList.add("frame");
         this.editbox.classList.add("seriffont");
         this.editbox.classList.add("lyricstext");
+        this.editbox.oninput    = ()=>{this.onInput(event);};
         //this.editbox.onmouseup  = ()=>{this.onMouseUp(event);};
         //this.editbox.onkeyup    = ()=>{this.onKeyUp(event);};
-        //this.editbox.oninput    = ()=>{this.onInput(event);};
         //this.editbox.oncopy     = ()=>{this.onCopy(event);};
         //this.editbox.onpaste    = ()=>{this.onPaste(event);};
 
@@ -90,6 +90,8 @@ class LyricsEdit
         this.element.dataset.editable = true;
         this.editbox.value = this.lyrics;
         this.element.replaceChild(this.editbox, this.textbox);
+
+        this.ValidateLyricsState();
     }
 
 
@@ -165,7 +167,46 @@ class LyricsEdit
 
         this.stateselect.Select(this.lyricsstate);
         this.editbox.value = this.lyrics;
+
         this.RenderLyrics();
+        this.ValidateLyricsState();
+    }
+
+
+
+    ValidateLyricsState()
+    {
+        let hascode   = this.editbox.value.length > 0; // Lyrics markup code length available?
+        let selection = this.stateselect.GetSelectionIndex();
+
+        // 1.: When there are no lyrics, and the state is not "None" (no lyrics),
+        //     force "Empty"-State state and disable From*-States
+        if(hascode == false)
+        {
+            this.stateselect.Enable(LYRICSSTATE_EMPTY);
+            this.stateselect.Enable(LYRICSSTATE_NONE);
+            this.stateselect.Disable(LYRICSSTATE_FROMFILE);
+            this.stateselect.Disable(LYRICSSTATE_FROMNET);
+            this.stateselect.Disable(LYRICSSTATE_FROMUSER);
+
+            if(selection != LYRICSSTATE_NONE)
+                this.stateselect.Select(LYRICSSTATE_EMPTY);
+        }
+
+        // 2.: When there are lyrics, disable "None" and "Empty" states, enable other states
+        else
+        {
+            this.stateselect.Disable(LYRICSSTATE_EMPTY);
+            this.stateselect.Disable(LYRICSSTATE_NONE);
+            this.stateselect.Enable(LYRICSSTATE_FROMFILE);
+            this.stateselect.Enable(LYRICSSTATE_FROMNET);
+            this.stateselect.Enable(LYRICSSTATE_FROMUSER);
+
+            if(selection == LYRICSSTATE_NONE || selection == LYRICSSTATE_EMPTY)
+                this.stateselect.Select(LYRICSSTATE_FROMNET);
+        }
+
+        return;
     }
 
 
@@ -324,6 +365,14 @@ class LyricsEdit
 
 
 
+    onInput(event)
+    {
+        this.ValidateLyricsState();
+        return;
+    }
+
+
+
 
     /*
     onMouseUp(event)
@@ -334,13 +383,6 @@ class LyricsEdit
 
 
     onKeyUp(event)
-    {
-        return;
-    }
-
-
-
-    onInput(event)
     {
         return;
     }
