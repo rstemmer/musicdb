@@ -17,19 +17,17 @@
 "use strict";
 
 
-class VideoView
+class VideoView extends MainView
 {
     constructor()
     {
-        this.currentvideoid = -1;
-
         // Button Array
-        this.buttons        = new Array();
-        this.buttons.push(new SVGButton("Append", ()=>{this.AddVideoToQueue("last");}));
-        this.buttons.push(new SVGButton("Insert", ()=>{this.AddVideoToQueue("next");}));
+        let buttons        = new Array();
+        buttons.push(new SVGButton("Append", ()=>{this.AddVideoToQueue("last");}));
+        buttons.push(new SVGButton("Insert", ()=>{this.AddVideoToQueue("next");}));
+        super("", new MainViewHeadline(buttons));
 
-        // Create Headline
-        this.headline       = new MainViewHeadline(this.buttons);
+        this.currentvideoid = -1;
 
         // Create Video Player
         this.videoplayer    = document.createElement("video");
@@ -65,18 +63,9 @@ class VideoView
         this.settings.SetOnShowCallback(this.timetabid, ()=>{this.timeframeselect.Initialize();});
 
         // Create Video View
-        this.element  = document.createElement("div");
         this.element.classList.add("mainview_container");
-        this.element.appendChild(this.headline.GetHTMLElement());
         this.element.appendChild(this.videoplayer);
         this.element.appendChild(this.settings.GetHTMLElement());
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
