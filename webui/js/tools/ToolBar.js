@@ -119,6 +119,13 @@ class SwitchGroup extends ToolGroup
 
 
 
+    SetChangeEvent(handler)
+    {
+        this.element.onclick = handler;
+    }
+
+
+
     Select(index)
     {
         // Do not select disabled buttons
