@@ -100,27 +100,33 @@ class SwitchGroup extends ToolGroup
     {
         super();
 
-        this.buttons = buttons;
-        for(let index in this.buttons)
+        this.buttons = new Array();
+        for(let index in buttons)
         {
-            let button = this.buttons[index];
+            let button = buttons[index];
             let box    = this.AddButton(button);
             box.onclick= ()=>{this.Select(index);};
+
+            this.buttons.push(new Object());
+            this.buttons[index].button = button;
+            this.buttons[index].box    = box;
         }
         this.Select(select);
-        this.selected = select;
     }
 
 
 
     Select(index)
     {
-        for(let button of this.buttons)
+        for(let entry of this.buttons)
         {
-            button.GetHTMLElement().dataset.selected = false;
+            entry.box.dataset.selected = false;
         }
-        this.buttons[index].GetHTMLElement().dataset.selected = true;
+
+        this.buttons[index].box.dataset.selected = true;
+
         this.selected = index;
+        return;
     }
 
 

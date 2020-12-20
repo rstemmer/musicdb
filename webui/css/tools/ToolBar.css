@@ -66,6 +66,16 @@
 }
 
 
+.ToolGroup > div[data-selected=true]
+{
+    background-color:   var(--hlcolor);
+}
+.ToolGroup > div[data-selected=true] > .SVGIcon
+{
+    background-color:   var(--bgcolor);
+}
+
+
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
 
