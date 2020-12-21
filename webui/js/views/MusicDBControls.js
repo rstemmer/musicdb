@@ -60,6 +60,13 @@ class MusicDBControls
 
     SetAudioStatus(state) // "playing"/"stopped"
     {
+        if(typeof this.predictiontimeout === "number")
+        {
+            window.clearTimeout(this.predictiontimeout);
+            this.predictiontimeout = null;
+            return; // Status is already set
+        }
+
         if(state == "playing")
         {
             this.controls["audio"].playbutton.textContent   = "Pause Audio Stream";
@@ -75,6 +82,13 @@ class MusicDBControls
     }
     SetVideoStatus(state) // "playing"/"stopped"
     {
+        if(typeof this.predictiontimeout === "number")
+        {
+            window.clearTimeout(this.predictiontimeout);
+            this.predictiontimeout = null;
+            return; // Status is already set
+        }
+
         if(state == "playing")
         {
             this.controls["video"].playbutton.textContent   = "Pause Video Stream";
@@ -91,6 +105,50 @@ class MusicDBControls
 
 
 
+    // mode = "audio", "video"
+    onPlayPause(mode)
+    {
+        // To be more responsive, directly update the button state and do not wait on the servers response
+        // The server response that finally sets the actual state.
+        let btnstate = this.controls[mode].playbutton.dataset.state;
+        let newstate;
+
+        // Assume new state
+        if(btnstate == "stop")
+            newstate = "stopped";
+        else if(btnstate == "play")
+            newstate = "playing";
+
+        // Set new state and tell the server
+        if(mode == "audio")
+        {
+            this.SetAudioStatus(newstate);
+            MusicDB_Call("SetAudioStreamState", {state:"playpause"});
+        }
+        else if(mode == "video")
+        {
+            this.SetVideoStatus(newstate);
+            MusicDB_Call("SetVideoStreamState", {state:"playpause"});
+        }
+
+        // In case the server does not response, accept that the prediction failed.
+        this.predictiontimeoutid = window.setTimeout(()=>{this.onPredictionFailed(mode, newstate)}, 1500/*ms*/);
+
+        return;
+    }
+
+
+
+    onPredictionFailed(mode, predictedstate)
+    {
+        this.controls[mode].playbutton.textContent   = "Play/Pause Failed!";
+        this.controls[mode].playbutton.title         = "Connection to MusicDB Server lost";
+        this.controls[mode].playbutton.dataset.state = "error";
+        return;
+    }
+
+
+
     _CreateControls(type)
     {
         let controls   = new Object();
@@ -103,13 +161,13 @@ class MusicDBControls
         {
             playbutton.textContent = "Play/Pause Audio Stream";
             playbutton.title       = "Update Audio Stream State";
-            playbutton.onclick     = (event) => { MusicDB_Call("SetAudioStreamState", {state:"playpause"}); };
+            playbutton.onclick     = (event) => {this.onPlayPause("audio");};
         }
         else if(type == "video")
         {
             playbutton.textContent = "Play/Pause Video Stream";
             playbutton.title       = "Update Video Stream State";
-            playbutton.onclick     = (event) => { MusicDB_Call("SetVideoStreamState", {state:"playpause"}); };
+            playbutton.onclick     = (event) => {this.onPlayPause("video");};
         }
         
         // Create Next Button

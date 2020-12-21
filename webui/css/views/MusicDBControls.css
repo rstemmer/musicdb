@@ -59,6 +59,15 @@
 {
     mask:               url("../../img/icons/Pause.svg");
 }
+.musicdbcontrols .playbutton[data-state=error]::before
+{
+    mask:               url("../../img/icons/StatusBad.svg");
+    background-color:   var(--color-brightred);
+}
+.musicdbcontrols .playbutton[data-state=error]
+{
+    color:              var(--color-brightred);
+}
 
 .musicdbcontrols .nextbutton::before
 {
