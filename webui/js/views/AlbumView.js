@@ -107,7 +107,7 @@ class AlbumView extends MainView2
 
     UpdateInformation(MDBAlbum, MDBArtist, MDBTags, MDBCDs)
     {
-        // For new videos, some persistent information need to be updated
+        // For new albums, some persistent information need to be updated
         if(MDBAlbum.id != this.currentalbumid)
         {
             this.currentalbumid = MDBAlbum.id;
@@ -137,6 +137,7 @@ class AlbumView extends MainView2
             this.settings_tags.appendChild(this.subgenreedit.GetHTMLElement());
 
             this.settings.SelectTab(this.tagstabid);
+            this.settings.Hide();
 
             // Update/Initialize Album View
             this.UpdateSongList(MDBCDs);
