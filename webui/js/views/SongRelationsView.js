@@ -22,6 +22,8 @@ class SongRelationsView extends MainView
     {
         super("SongRelationsView", new MainViewHeadline(null));
 
+        this.songtiles   = null;
+
         this.songsbox    = document.createElement("div");
         this.songsbox.classList.add("songsbox");
         this.songsbox.classList.add("flex-column");
@@ -88,6 +90,10 @@ class SongRelationsView extends MainView
 
     UpdateSongTags(MDBSong, MDBTags)
     {
+        // It is possible, that there exists no tiles, so no update is needed
+        if(this.songtiles == null)
+            return;
+
         let songid = MDBSong.id;
         let entry  = this.songtiles[songid];
 
