@@ -168,6 +168,15 @@ class TagListView
 
 
 
+    AddGhostTag(tag)
+    {
+        let tagelement = tag.GetHTMLElement();
+        tagelement.classList.add("ghost");
+        this.element.appendChild(tagelement);
+    }
+
+
+
     // musictype: "audio" or "video" or "album"
     Update(musictype, musicid, MDBTagArray)
     {

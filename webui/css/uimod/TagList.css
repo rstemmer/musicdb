@@ -23,6 +23,13 @@
 }
 
 
+.tagview > .ghost
+{
+    border-style:       dashed;
+    opacity:            0.5;
+}
+
+
 .tag
 {
     align-items:        center;

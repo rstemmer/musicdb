@@ -30,6 +30,7 @@ class TagListEdit
         this.taginput.type    = "string";
         this.taginput.oninput = ()=>{this.Find(this.taginput.value);};
         this.tagselect  = new TagSelection(tagtype);
+        this.tagselect.SetSelectionEvent((tag)=>{this.onTagSelect(tag);});
         this.listbutton = new SVGButton("DropDown", ()=>{this.tagselect.ToggleSelectionList();});
         this.listbutton.SetTooltip("Show available tags");
 
@@ -51,6 +52,13 @@ class TagListEdit
     GetHTMLElement()
     {
         return this.element;
+    }
+
+
+
+    onTagSelect(tag)
+    {
+        this.tagview.AddGhostTag(tag);
     }
 
 
@@ -116,6 +124,14 @@ class TagSelection
 
 
 
+    // the handler must be a function with the following parameter: Tag-object
+    SetSelectionEvent(handler)
+    {
+        this.onselect = handler;
+    }
+
+
+
     ToggleSelectionList()
     {
         if(this.listbox.style.display == "none")
@@ -161,7 +177,7 @@ class TagSelection
         for(let tag of taglist)
         {
             let item = new Tag(tag);
-            item.SetAddAction((tagid)=>{this.onTagSelect(tagid)});
+            item.SetAddAction((tagid)=>{this.onTagSelect(tagid, item)});
             genrelist.appendChild(item.GetHTMLElement());
             this.tagmap.push({tag: item, genre: tag});
         }
@@ -199,7 +215,7 @@ class TagSelection
                     continue;
 
                 let item = new Tag(subgenre);
-                item.SetAddAction((tagid)=>{this.onTagSelect(tagid)});
+                item.SetAddAction((tagid)=>{this.onTagSelect(tagid, item)});
                 subgenrelist.appendChild(item.GetHTMLElement());
 
                 this.tagmap.push({tag: item, genre: subgenre});
@@ -254,8 +270,11 @@ class TagSelection
 
 
 
-    onTagSelect(tagid)
+    onTagSelect(tagid, tag)
     {
+        if(typeof this.onselect === "function")
+            this.onselect(tag);
+
         switch(this.musictype)
         {
             case "audio":
