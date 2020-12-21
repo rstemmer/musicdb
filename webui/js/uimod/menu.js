@@ -59,6 +59,7 @@ class MainMenu
         button.appendChild(icon.GetHTMLElement());
         button.classList.add("hovpacity");
         button.classList.add("menutogglebutton");
+        button.title = "Show main menu";
 
         button.onclick = ()=>
             {
@@ -86,7 +87,7 @@ class MainMenu
     }
 
 
-    CreateButton(icon, text, onclick)
+    CreateButton(icon, text, onclick, tooltip=null)
     {
         let entry = new Object();
 
@@ -98,6 +99,9 @@ class MainMenu
         entry.element.classList.add("menuentry");
         entry.element.appendChild(entry.icon);
         entry.element.appendChild(entry.text);
+
+        if(tooltip !== null)
+            entry.element.title = tooltip;
 
         entry.element.onclick = (event)=>
             {
@@ -112,7 +116,7 @@ class MainMenu
     }
 
 
-    CreateSwitch(aicon, atext, afunction, bicon, btext, bfunction)
+    CreateSwitch(aicon, atext, afunction, bicon, btext, bfunction, tooltip=null)
     {
         let entry = new Object();
 
@@ -133,6 +137,9 @@ class MainMenu
         entry.element.classList.add("menuentry");
         entry.element.appendChild(entry.aicon);
         entry.element.appendChild(entry.atext);
+
+        if(tooltip !== null)
+            entry.element.title = tooltip;
 
         entry.element.onclick = (event)=>
             {

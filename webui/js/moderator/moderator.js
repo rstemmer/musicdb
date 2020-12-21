@@ -33,11 +33,11 @@ let mainmenu           = new MainMenu("1em", "1em");
 mainmenu.CreateSwitch(
     new SVGIcon("EnterFullscreen"), "Enter Fullscreen", ()=>{fullscreenmanager.EnterFullscreen();},
     new SVGIcon("LeaveFullscreen"), "Leave Fullscreen", ()=>{fullscreenmanager.LeaveFullscreen();}
-    );
+    , "Switch browser between window and fullscreen mode");
 let entryid = mainmenu.CreateSwitch(
     new SVGIcon("Switch2Video"), "Switch to Video Mode", ()=>{mdbmodemanager.SetVideoMode();},
     new SVGIcon("Switch2Audio"), "Switch to Audio Mode", ()=>{mdbmodemanager.SetAudioMode();}
-    );
+    , "Switch MusicDB WebUI between audio and video mode");
 mainmenu.CreateButton(
     new SVGIcon("Reload"), "Reload Artists", ()=>
         {
@@ -46,13 +46,13 @@ mainmenu.CreateButton(
             else
                 MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
         }
-    );
+    , "Reload list with artists and their albums/videos");
 mainmenu.CreateButton(
     new SVGIcon("MusicDB"), "About MusicDB", ()=>
         {
             mainviewmanager.ShowAboutMusicDB();
         }
-    );
+    , "Show information about MusicDB including version numbers");
 mainmenu.CreateSection("MusicDB Status", musicdbstatus.GetHTMLElement());
 mainmenu.UpdateMenuEntryList();
 mdbmodemanager.SetMainMenuHandler(mainmenu, entryid); // This allows updating the menu entry on mode switch from remote

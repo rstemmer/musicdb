@@ -22,10 +22,13 @@ class VideoView extends MainView
     constructor()
     {
         // Button Array
-        let buttons        = new Array();
-        buttons.push(new SVGButton("Append", ()=>{this.AddVideoToQueue("last");}));
-        buttons.push(new SVGButton("Insert", ()=>{this.AddVideoToQueue("next");}));
-        super("", new MainViewHeadline(buttons));
+        let appendbutton = new SVGButton("Append", ()=>{this.AddVideoToQueue("last");});
+        let insertbutton = new SVGButton("Insert", ()=>{this.AddVideoToQueue("next");});
+        appendbutton.SetTooltip("Append this video to the queue");
+        insertbutton.SetTooltip("Insert this video into the queue after current playing video");
+
+        let headline = new MainViewHeadline(new Array(appendbutton, insertbutton));
+        super("VideoView", headline);
 
         this.currentvideoid = -1;
 

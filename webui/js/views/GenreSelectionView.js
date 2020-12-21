@@ -61,9 +61,15 @@ class GenreSelectionView
 
             // Check if genre is active
             if(this.activegenres.indexOf(genre.name) >= 0)
+            {
                 tagelement.dataset.active = true;
+                tagelement.title = "Deactivate genre for album selection";
+            }
             else
+            {
                 tagelement.dataset.active = false;
+                tagelement.title = "Activate genre for album selection";
+            }
 
             // append button
             this.element.appendChild(tagelement);

@@ -35,8 +35,10 @@ class ButtonBox
 
 
 
-    AddButton(svgbutton)
+    AddButton(svgbutton, tooltip=null)
     {
+        if(tooltip !== null)
+            svgbutton.SetTooltip(tooltip);
         this.element.appendChild(svgbutton.GetHTMLElement());
     }
 }
@@ -48,8 +50,8 @@ class ButtonBox_AddVideoToQueue extends ButtonBox
     {
         super();
         this.videoid = videoid;
-        this.AddButton(new SVGButton("Append", ()=>{this.AddVideoToQueue("last");}));
-        this.AddButton(new SVGButton("Insert", ()=>{this.AddVideoToQueue("next");}));
+        this.AddButton(new SVGButton("Append", ()=>{this.AddVideoToQueue("last");}), "Append this video on the queue");
+        this.AddButton(new SVGButton("Insert", ()=>{this.AddVideoToQueue("next");}), "Insert this video into the queue after current playing song");
     }
 
 
@@ -69,8 +71,8 @@ class ButtonBox_AddSongToQueue extends ButtonBox
     {
         super();
         this.songid = songid;
-        this.AddButton(new SVGButton("Append", ()=>{this.AddSongToQueue("last");}));
-        this.AddButton(new SVGButton("Insert", ()=>{this.AddSongToQueue("next");}));
+        this.AddButton(new SVGButton("Append", ()=>{this.AddSongToQueue("last");}), "Append this song on the queue");
+        this.AddButton(new SVGButton("Insert", ()=>{this.AddSongToQueue("next");}), "Insert this song into the queue after current playing song");
     }
 
 
@@ -95,7 +97,7 @@ class ButtonBox_RelationControl extends ButtonBox
         this.relatedsongid = relatedsongid;
 
         this.AddButton(new SVGSpacer());
-        this.AddButton(new SVGButton("CutRelation", ()=>{this.CutSongRelationship();}));
+        this.AddButton(new SVGButton("CutRelation", ()=>{this.CutSongRelationship();}), "Delete relation with this song");
     }
 
 
@@ -118,12 +120,12 @@ class ButtonBox_QueueEntryControls extends ButtonBox
 
         if(musictype == "audio")
         {
-            this.AddButton(new SVGButton("Relation", ()=>{this.GetSongRelationship(musicid);}));
-            this.AddButton(new SVGButton("Remove",   ()=>{this.RemoveSongFromQueue(entryid);}));
+            this.AddButton(new SVGButton("Relation", ()=>{this.GetSongRelationship(musicid);}), "Show related songs");
+            this.AddButton(new SVGButton("Remove",   ()=>{this.RemoveSongFromQueue(entryid);}), "Remove this song from the queue");
         }
         else if(musictype == "video")
         {
-            this.AddButton(new SVGButton("Remove",   ()=>{this.RemoveVideoFromQueue(entryid);}));
+            this.AddButton(new SVGButton("Remove",   ()=>{this.RemoveVideoFromQueue(entryid);}), "Remove this video from the queue");
         }
     }
 
