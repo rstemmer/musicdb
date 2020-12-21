@@ -17,22 +17,70 @@
  */
 
 
-.tagview
+
+.tagedit
 {
+    align-items:        center;
     flex-wrap:          wrap;
 }
 
-
-.tag
+.tagedit > input
 {
-    align-items:        center;
-    padding:            0.2em 1ch;
-    margin:             0.1em 0.5ch;
+    flex-grow:          1;
 }
 
-.tag div + div
+.tagedit > * + *
 {
     margin-left:        1ch;
+}
+
+.tagedit > .SVGIcon
+{
+    width:              1.5em;
+    height:             1.5em;
+}
+
+
+
+.tagselect
+{
+    flex-basis:         100%;
+    background-color:   var(--bgcolor);
+    box-shadow:         0px 4px 8px 0px rgba(1, 0, 0, 1), 0px 6px 20px 0px rgba(0, 0, 0, 0.5);
+    padding:            0.5em 1ch;
+    z-index:            10;
+}
+.tagselect > div
+{
+    align-items:        stretch;
+}
+.tagselect div + div
+{
+    margin-left:        0.5em;
+}
+
+.tagselect .tag
+{
+    margin-top:         0.2em;
+}
+.tagselect .tag[data-highlight=true]
+{
+    background-color:   var(--hlcolor);
+    color:              var(--bgcolor);
+}
+.tagselect .tag[data-highlight=true] > .SVGIcon
+{
+    background-color:   var(--bgcolor);
+}
+
+.tagselect span ~ span
+{
+    margin-top:         0.5em;
+}
+
+.tagselect div.flex-row
+{
+    flex-wrap:          wrap;
 }
 
 
