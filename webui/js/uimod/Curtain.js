@@ -24,6 +24,10 @@ class Curtain
     {
         this.element = document.createElement("div");
         this.element.classList.add("Curtain");
+        this.element.onclick = ()=>{this.onClick();};
+
+        this.clickhandler = new Array();
+
         this.Hide();
     }
 
@@ -32,6 +36,22 @@ class Curtain
     GetHTMLElement()
     {
         return this.element;
+    }
+
+
+
+    onClick()
+    {
+        this.Hide();
+        for(let handler of this.clickhandler)
+            handler();
+    }
+
+
+
+    AddClickEvent(handler)
+    {
+        this.clickhandler.push(handler);
     }
 
 
