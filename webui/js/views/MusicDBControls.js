@@ -60,10 +60,10 @@ class MusicDBControls
 
     SetAudioStatus(state) // "playing"/"stopped"
     {
-        if(typeof this.predictiontimeout === "number")
+        if(typeof this.predictiontimeoutid === "number")
         {
-            window.clearTimeout(this.predictiontimeout);
-            this.predictiontimeout = null;
+            window.clearTimeout(this.predictiontimeoutid);
+            this.predictiontimeoutid = null;
             return; // Status is already set
         }
 
@@ -82,10 +82,10 @@ class MusicDBControls
     }
     SetVideoStatus(state) // "playing"/"stopped"
     {
-        if(typeof this.predictiontimeout === "number")
+        if(typeof this.predictiontimeoutid === "number")
         {
-            window.clearTimeout(this.predictiontimeout);
-            this.predictiontimeout = null;
+            window.clearTimeout(this.predictiontimeoutid);
+            this.predictiontimeoutid = null;
             return; // Status is already set
         }
 
