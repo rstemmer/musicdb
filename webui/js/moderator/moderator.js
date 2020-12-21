@@ -28,6 +28,8 @@ let videoview           = new VideoView();
 let queueview           = new QueueView();
 let queuecontrolview    = new QueueControlView();
 
+let curtain             = new Curtain();
+
 // Create Main Menu
 let mainmenu           = new MainMenu("1em", "1em");
 mainmenu.CreateSwitch(
@@ -86,6 +88,7 @@ window.onload = function ()
     let queuecontrolsbox   = document.getElementById("QueueControl");
     queuecontrolsbox.appendChild(queuecontrolview.GetHTMLElement());
 
+    document.body.appendChild(curtain.GetHTMLElement());
     document.body.appendChild(mainmenu.GetHTMLElement());
     document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
 
