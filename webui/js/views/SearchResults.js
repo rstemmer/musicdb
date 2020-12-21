@@ -129,16 +129,21 @@ class BaseSearchResults
 
 class SearchResultsPopup extends BaseSearchResults
 {
-    constructor()
+    constructor(onhide=null)
     {
         super();
         this.element.classList.add("frame");
         this.element.classList.add("SearchResultsPopup");
 
-        this.element.onclick   = ()=>{this.Hide();};
+        if(onhide == null)
+            this.onhide        = this.Hide;
+        else
+            this.onhide        = onhide;
+
+        this.element.onclick   = ()=>{this.onhide();};
         this.element.innerText = "Loading …";
 
-        this.closebutton = new SVGButton("Remove", ()=>{this.Hide();});
+        this.closebutton = new SVGButton("Remove", ()=>{this.onhide();});
         this.closebutton.SetTooltip("Close search results preview");
         this.closebutton.GetHTMLElement().classList.add("closebutton");
         this.element.appendChild(this.closebutton.GetHTMLElement());

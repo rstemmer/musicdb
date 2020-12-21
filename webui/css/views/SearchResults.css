@@ -68,6 +68,7 @@
     left:               3ch;
     bottom:             2rem;
     width:              25vw;
+    z-index:            100;
 
     background:         var(--bgcolor);
     box-shadow:         0 calc(var(--borderwidth) * 4) calc(var(--borderwidth) *  8) rgba(0, 0, 0, 1),

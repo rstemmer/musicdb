@@ -2,6 +2,8 @@
 var currentsongid   = null; // \_ track current album and song
 var currentalbumid  = null; // /
 
+let curtain             = new Curtain();
+
 // Create Basic MusicDB WebUI Components
 let fullscreenmanager   = new FullscreenManager();
 let mdbmodemanager      = new MDBModeManager();
@@ -10,7 +12,7 @@ let tagmanager          = new TagManager();
 let musicdbhud          = new MusicDBHUD();
 let genreselectionview  = new GenreSelectionView();
 let alphabetbar         = new AlphabetBar();
-let searchinput         = new SearchInput();
+let searchinput         = new SearchInput(curtain);
 let musicdbstatus       = new MusicDBStatus();
 let musicdbcontrols     = new MusicDBControls();
 let queuetimemanager    = new QueueTimeManager();
@@ -28,7 +30,6 @@ let videoview           = new VideoView();
 let queueview           = new QueueView();
 let queuecontrolview    = new QueueControlView();
 
-let curtain             = new Curtain();
 
 // Create Main Menu
 let mainmenu           = new MainMenu("1em", "1em", curtain);

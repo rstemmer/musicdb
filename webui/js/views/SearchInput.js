@@ -18,7 +18,7 @@
 
 class SearchInput
 {
-    constructor()
+    constructor(curtain=null)
     {
         this.element = document.createElement("div");
         this.element.classList.add("flex-row");
@@ -27,8 +27,12 @@ class SearchInput
         this.element.classList.add("SearchInput");
         this._AddInputBoxElements();
 
+        this.curtain = curtain;
+        if(this.curtain)
+            this.curtain.AddClickEvent(()=>{this.HidePreview();});
+
         this.timeoutinterval = 500;
-        this.preview = new SearchResultsPopup();
+        this.preview = new SearchResultsPopup(()=>{this.HidePreview();});
         this.preview.Hide();
         this.element.appendChild(this.preview.GetHTMLElement());
     }
@@ -96,12 +100,18 @@ class SearchInput
 
     ShowPreview()
     {
+        if(this.curtain)
+            this.curtain.Show();
+
         this.showpreview = true;
         this.target      = "preview";
         this.preview.Show();
     }
     HidePreview()
     {
+        if(this.curtain)
+            this.curtain.Hide();
+
         this.showpreview = false;
         this.target      = "none";
         this.preview.Hide();
