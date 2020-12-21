@@ -1203,6 +1203,14 @@ class MusicDBWebSocketInterface(object):
             * **albumfilter:** a list of tag-names of class Genre
             * **MusicDB:**
                 * *uimode*: Defines if UI is in ``"audio"`` or ``"video"`` mode
+            * **audiostream**
+                * **isconnected:** ``True`` if MusicDB is connected to Icecast, otherwise ``False``
+                * **isplaying:** ``True`` if the Streaming Thread is in *playing*-mode, otherwise ``False``
+                * **currentsong:** The song entry from the database for the song that is currently playing or ``None``
+            * **videostream**
+                * **isstreaming:** ``True`` if MusicDB manages the video stream
+                * **isplaying:** ``True`` if the Streaming Thread is in *playing*-mode, otherwise ``False``
+                * **currentvideo:** The video entry from the database for the video that is currently playing or ``None``
 
         Returns:
             Current global MusicDB WebUI state
@@ -1229,10 +1237,37 @@ class MusicDBWebSocketInterface(object):
         """
         albumfilter = self.mdbstate.GetFilterList()
 
+        # Set some information about the audio stream state
+        audiostreamstate = self.audiostream.GetStreamState()
+        audioqueueentry  = self.songqueue.CurrentSong()
+        if audioqueueentry:
+            currentsongid  = audioqueueentry["songid"]
+            currentsong    = self.database.GetSongById(currentsongid)
+        else:
+            currentsong    = None
+
+        # Set some information about the video stream state
+        videostreamstate = self.videostream.GetStreamState()
+        videoqueueentry  = self.videoqueue.CurrentVideo()
+        if videoqueueentry:
+            currentvideoid  = videoqueueentry["videoid"]
+            currentvideo    = self.database.GetVideoById(currentvideoid);
+        else:
+            currentvideo    = None
+
+        # put everything together
         state = {}
         state["albumfilter"] = albumfilter
         state["MusicDB"] = {}
         state["MusicDB"]["uimode"] = self.mdbstate.GetUIMode()
+        state["audiostream"] = {};
+        state["audiostream"]["isconnected"] = audiostreamstate["isconnected"]
+        state["audiostream"]["isplaying"]   = audiostreamstate["isplaying"]
+        state["audiostream"]["currentsong"] = currentsong
+        state["videostream"] = {};
+        state["videostream"]["isstreaming"] = videostreamstate["isstreaming"]
+        state["videostream"]["isplaying"]   = videostreamstate["isplaying"]
+        state["videostream"]["currentvideo"]= currentvideo
         return state
 
 
