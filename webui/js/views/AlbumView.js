@@ -298,7 +298,7 @@ class AlbumView extends MainView2
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "GetAudioStreamState"/* && sig == "UpdateStreamState"*/)
+        if(fnc == "GetAudioStreamState" && sig == "UpdateStreamState")
         {
             // Check is there 
             if(!args.hasqueue)
@@ -317,7 +317,8 @@ class AlbumView extends MainView2
                 // FIXME: The ViewManager should decide if the album needs to be loaded
                 // The request and presentation may be two decisions
                 // If for example a different view is more important than the AlbumView
-                MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: args.album.id});
+                if(args.album.id != this.currentalbumid)
+                    MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: args.album.id});
             }
         }
         else if(fnc == "GetAlbum" && sig == "ShowAlbum")

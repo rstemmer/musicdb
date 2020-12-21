@@ -61,7 +61,7 @@ class MDBModeManager
 
 
 
-    _UpdateWebUI()
+    _UpdateWebUI(MDBMusic)
     {
         // Show/Hide video panel
         let videopanel  = document.getElementById("VideoPanel");
@@ -82,6 +82,7 @@ class MDBModeManager
             MusicDB_Request("GetAudioStreamState",          "UpdateHUD")
             MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
             MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+            MusicDB_Request("GetAlbum",                     "ShowAlbum", {albumid: MDBMusic.albumid});
         }
         else
         {
@@ -98,6 +99,7 @@ class MDBModeManager
             MusicDB_Request("GetVideoStreamState",          "UpdateHUD");
             MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
             MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+            MusicDB_Request("GetVideo",                     "ShowVideo", {videoid: MDBMusic.id});
         }
 
 
@@ -113,7 +115,16 @@ class MDBModeManager
             if(this.mode != args.MusicDB.uimode)
             {
                 this.mode = args.MusicDB.uimode;
-                this._UpdateWebUI();
+
+                let MDBMusic;
+                if(this.mode == "audio")
+                    MDBMusic = args.audiostream.currentsong;
+                else if(this.mode == "video")
+                    MDBMusic = args.videostream.currentvideo;
+                else
+                    MDBMusic = null;
+
+                this._UpdateWebUI(MDBMusic);
             }
         }
 
