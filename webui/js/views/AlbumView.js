@@ -214,6 +214,10 @@ class AlbumView extends MainView2
         this.songtiles[songid].tile = newsongtile;
         this.songtiles[songid].settings.Update(MDBSong, MDBTags);
         this.songtiles[songid].tags = MDBTags;
+
+        this.ToggleSongPlayingState(false);
+        this.currentsongid = MDBSong.id;   // update current song id
+        this.ToggleSongPlayingState(true);
         return
     }
 
