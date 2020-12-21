@@ -84,21 +84,21 @@ class ColorSchemeSelection
         this.bginput = new ColorInput(
             "Background Color",
             "Change background color",
-            lastbgcolor,
+            colormanager.GetBGColor(),
             (color)=>{this.onSave("bgcolor", color);}, 
             (color)=>{this.onPreview("bgcolor", color);});
 
         this.fginput = new ColorInput(
             "Primary Color",
             "Change primary foreground color",
-            lastfgcolor,
+            colormanager.GetFGColor(),
             (color)=>{this.onSave("fgcolor", color);}, 
             (color)=>{this.onPreview("fgcolor", color);});
 
         this.hlinput = new ColorInput(
             "Secondary Color",
             "Change secondary foreground color",
-            lasthlcolor,
+            colormanager.GetHLColor(),
             (color)=>{this.onSave("hlcolor", color);}, 
             (color)=>{this.onPreview("hlcolor", color);});
 
@@ -153,7 +153,7 @@ class ColorSchemeSelection
         let fgcolor = this.fginput.GetColor();
         let hlcolor = this.hlinput.GetColor();
 
-        UpdateStyle(bgcolor, fgcolor, hlcolor);
+        colormanager.UpdateColor(fgcolor, hlcolor, bgcolor);
     }
 }
 

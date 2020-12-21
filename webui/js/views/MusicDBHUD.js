@@ -225,8 +225,6 @@ class MusicDBHUD
         this.subgenrelist = new TagListView();
         this.subgenre.appendChild(this.subgenrelist.GetHTMLElement());
         this.subgenrelist.Update("audio", MDBSong.id, MDBSongTags.subgenres);
-
-        UpdateStyle();    // Update new tags
     }
 
     UpdateHUDForVideo(MDBVideo, MDBArtist, MDBVideoTags, reset)
@@ -259,8 +257,6 @@ class MusicDBHUD
         this.subgenrelist = new TagListView();
         this.subgenre.appendChild(this.subgenrelist.GetHTMLElement());
         this.subgenrelist.Update("video", MDBVideo.id, MDBVideoTags.subgenres);
-
-        UpdateStyle();    // Update new tags
     }
 
 

@@ -5,6 +5,7 @@ var currentalbumid  = null; // /
 // Create Basic MusicDB WebUI Components
 let fullscreenmanager   = new FullscreenManager();
 let mdbmodemanager      = new MDBModeManager();
+let colormanager        = new ColorManager();
 let tagmanager          = new TagManager();
 let musicdbhud          = new MusicDBHUD();
 let genreselectionview  = new GenreSelectionView();
@@ -177,6 +178,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     // Background objects
     tagmanager.onMusicDBMessage(fnc, sig, args, pass);
     mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
+    colormanager.onMusicDBMessage(fnc, sig, args, pass);
     // Controls
     musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);
     musicdbstatus.onMusicDBMessage(fnc, sig, args, pass);
@@ -210,24 +212,13 @@ function onMusicDBMessage(fnc, sig, args, pass)
             MusicDB_Request("GetVideoStreamState",   "UpdateStreamState");
         }
     }
-
-    else if(fnc=="sys:refresh" && sig == "UpdateCaches") {
+    else if(fnc=="sys:refresh" && sig == "UpdateCaches")    // TODO: Update (make uimode conform)
+    {
         MusicDB_Request("GetTags", "UpdateTagsCache");                  // Update tag cache
         MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists"); // Update artist view
     }
-    else if(fnc == "GetVideo") {
-        if(sig == "ShowVideo")
-        {
-            UpdateStyle(args.video.bgcolor, args.video.fgcolor, args.video.hlcolor)
-        }
-    }
-    else if(fnc == "GetAlbum") {
-        if(sig == "ShowAlbum")
-        {
-            // TODO: Move to something like a style-manager
-            UpdateStyle(args.album.bgcolor, args.album.fgcolor, args.album.hlcolor)
-        }
-    }
+
+    return;
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
