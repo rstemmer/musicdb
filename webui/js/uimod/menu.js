@@ -20,7 +20,7 @@
 
 class MainMenu
 {
-    constructor(topoffset, rightoffset)
+    constructor(topoffset, rightoffset, curtain=null)
     {
         this.icon        = new SVGIcon("Menu");
         this.entryarray  = new Array(); // For regular menu entries
@@ -31,6 +31,9 @@ class MainMenu
 
         this.menubutton  = this._CreateMenuToggleButton(this.icon);
 
+        this.curtain     = curtain;
+        if(this.curtain)
+            this.curtain.AddClickEvent(()=>{this.HideMenu();});
 
         this.entrylistelement = document.createElement("div");
         this.entrylistelement.classList.add("menuentrylist");
@@ -211,17 +214,34 @@ class MainMenu
     }
 
 
+
+    HideMenu()
+    {
+        if(this.curtain)
+            this.curtain.Hide();
+
+        this.entrylistelement.style.display = "none";
+        this.isopen = false;
+    }
+
+    ShowMenu()
+    {
+        if(this.curtain)
+            this.curtain.Show();
+
+        this.entrylistelement.style.display = "flex";
+        this.isopen = true;
+    }
+
     ToggleMenu()
     {
         if(this.isopen)
         {
-            this.entrylistelement.style.display = "none";
-            this.isopen = false;
+            this.HideMenu();
         }
         else
         {
-            this.entrylistelement.style.display = "flex";
-            this.isopen = true;
+            this.ShowMenu();
         }
     }
 

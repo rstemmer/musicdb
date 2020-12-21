@@ -31,7 +31,7 @@ let queuecontrolview    = new QueueControlView();
 let curtain             = new Curtain();
 
 // Create Main Menu
-let mainmenu           = new MainMenu("1em", "1em");
+let mainmenu           = new MainMenu("1em", "1em", curtain);
 mainmenu.CreateSwitch(
     new SVGIcon("EnterFullscreen"), "Enter Fullscreen", ()=>{fullscreenmanager.EnterFullscreen();},
     new SVGIcon("LeaveFullscreen"), "Leave Fullscreen", ()=>{fullscreenmanager.LeaveFullscreen();}
