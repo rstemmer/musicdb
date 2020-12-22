@@ -26,7 +26,8 @@ from lib.filesystem     import Filesystem
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
 from lib.logging        import MusicDBLogger
-from maintain.musicdatabase import MusicDatabaseMaintainer
+from maintain.musicdatabase   import MusicDatabaseMaintainer
+from maintain.trackerdatabase import TrackerDatabaseMaintainer
 
 
 VERSION = None
@@ -86,13 +87,19 @@ def LoadAllModules():
 
 def CheckDatabases(musicdbpath, trackerdbpath, lycradbpath):
     # 2nd argument is the expected version number
-    musicdbmaintainer = MusicDatabaseMaintainer(musicdbpath, 5)
+    musicdbmaintainer   = MusicDatabaseMaintainer(  musicdbpath,   5)
+    trackerdbmaintainer = TrackerDatabaseMaintainer(trackerdbpath, 3)
 
     logging.info("Checking \033[0;36m%s", musicdbpath)
     if not musicdbmaintainer.CheckVersion():
         logging.warning("%s is too old!\033[1;34m Upgrading …", musicdbpath)
         musicdbmaintainer.Upgrade()
-    return True
+
+    logging.info("Checking \033[0;36m%s", trackerdbpath)
+    if not trackerdbmaintainer.CheckVersion():
+        logging.warning("%s is too old!\033[1;34m Upgrading …", trackerdbpath)
+        trackerdbmaintainer.Upgrade()
+    return None
 
 
 
