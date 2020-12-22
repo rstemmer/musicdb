@@ -26,6 +26,8 @@ from lib.filesystem     import Filesystem
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
 from lib.logging        import MusicDBLogger
+
+from maintain.configuration   import ConfigurationMaintainer
 from maintain.musicdatabase   import MusicDatabaseMaintainer
 from maintain.trackerdatabase import TrackerDatabaseMaintainer
 
@@ -102,6 +104,17 @@ def CheckDatabases(musicdbpath, trackerdbpath, lycradbpath):
     return None
 
 
+def CheckConfiguration(configpath):
+    # 2nd argument is the expected version number
+    configuration = ConfigurationMaintainer(configpath, 5)
+
+    logging.info("Checking \033[0;36m%s", configpath)
+    if not configuration.CheckVersion():
+        logging.warning("%s is too old!\033[1;34m Upgrading …", configpath)
+        configuration.Upgrade()
+    return None
+
+
 
 if __name__ == "__main__":
     ReadVersion()
@@ -158,6 +171,8 @@ if __name__ == "__main__":
     if not fs.IsFile(args.config):
         print("\033[1;31mFATAL ERROR: Config-file does not exist!\033[0m (" + args.config + ")")
         exit(1)
+
+    CheckConfiguration(args.config)
 
     try:
         config = MusicDBConfig(args.config)
