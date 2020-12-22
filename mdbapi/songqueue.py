@@ -484,7 +484,7 @@ class SongQueue(object):
             israndom (bool): Defines whether the song is randomly selected or not
 
         Returns:
-            *Nothing*
+            The new Queue Entry ID as integer
 
         Raises:
             TypeError: When ``songid`` is not of type ``int``
@@ -525,7 +525,7 @@ class SongQueue(object):
         self.blacklist.AddSong(songid)
 
         self.Event_SongQueueChanged()
-        return
+        return entryid
 
 
 

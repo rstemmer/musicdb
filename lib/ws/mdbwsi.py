@@ -351,7 +351,7 @@ class MusicDBWebSocketInterface(object):
         elif fncname == "AddRandomVideoToQueue":
             retval = self.AddRandomVideoToQueue(args["position"])
         elif fncname == "AddAlbumToQueue":
-            retval = self.AddAlbumToQueue(args["albumid"])
+            retval = self.AddAlbumToQueue(args["albumid"], args["position"])
         elif fncname == "AddRandomSongToQueue":
             if "albumid" in args:
                 retval = self.AddRandomSongToQueue(args["position"], args["albumid"])
@@ -1858,9 +1858,6 @@ class MusicDBWebSocketInterface(object):
         if type(position) == str and position not in ["next", "last"]:
             logging.warning("Position must have the value \"next\" or \"last\" or an integer. Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
             return None
-        elif type(position) != int:
-            logging.warning("Position must have the value \"next\" or \"last\" or an integer. Given was %s. \033[1;30m(Doing nothing)", str(position))
-            return None
 
         # Add song to the queue and update statistics
         self.songqueue.AddSong(songid, position)
@@ -1938,9 +1935,6 @@ class MusicDBWebSocketInterface(object):
         if type(position) == str and position not in ["next", "last"]:
             logging.warning("Position must have the value \"next\" or \"last\" or an integer. Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
             return None
-        elif type(position) != int:
-            logging.warning("Position must have the value \"next\" or \"last\" or an integer. Given was %s. \033[1;30m(Doing nothing)", str(position))
-            return None
 
         # Add video to the queue and update statistics
         self.videoqueue.AddVideo(videoid, position)
@@ -1973,16 +1967,21 @@ class MusicDBWebSocketInterface(object):
         return None
 
 
-    def AddAlbumToQueue(self, albumid):
+    def AddAlbumToQueue(self, albumid, position):
         """
         This method adds all songs of an album (from all CDs) at the end of the queue.
 
-        The *adds*-statistic gets **not** incremented when a whole album gets add to the queue.
+        The position can be ``"next"`` if the songs shall be placed behind the current playing song.
+        So, all new added songs will be played next.
+        Alternative ``"last"`` can be used to place the songs at the end of the queue.
+        In case position is an integer, it is interpreted as an entry ID of the SongQueue.
+        Then the songs get append to that addressed entry.
 
         If a song is flagged as "hated" or disabled, than it gets discarded.
 
         Args:
             albumid (int): ID of the album that shall be added
+            position (str/int): ``"next"``, ``"last"`` or Song-Queue Entry ID - Determines where the songs get added
 
         Returns:
             ``None``
@@ -1993,13 +1992,22 @@ class MusicDBWebSocketInterface(object):
                 MusicDB_Call("AddAlbumToQueue", {albumid:23});
 
         """
+        try:
+            position = int(position)
+        except:
+            pass
+
+        if type(position) == str and position not in ["next", "last"]:
+            logging.warning("Position must have the value \"next\" or \"last\" or an integer. Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
+            return None
+
         sortedcds = self.GetSortedAlbumCDs(albumid)
         for cd in sortedcds:
             for entry in cd:
                 song = entry["song"]
                 if song["disabled"] == 1 or song["favorite"] == -1:
                     continue
-                self.songqueue.AddSong(song["id"])
+                position = self.songqueue.AddSong(song["id"], position)
         return None
     
         

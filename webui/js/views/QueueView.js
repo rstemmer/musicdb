@@ -194,7 +194,7 @@ class QueueDropZone extends DropTarget
                 }
                 else if(musictype == "album")
                 {
-                    window.console && console.log("MusicDB_Call(\"AddAlbumToQueue\", {albumid: "+musicid+", position:"+this.entryid+"});");
+                    MusicDB_Call("AddAlbumToQueue", {albumid: musicid, position: this.entryid});
                 }
                 break;
 
