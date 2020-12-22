@@ -298,7 +298,7 @@ class AlbumView extends MainView2
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "GetAudioStreamState" && sig == "UpdateStreamState")
+        if(fnc == "GetAudioStreamState"/* && sig == "UpdateStreamState"*/)
         {
             // Check is there 
             if(!args.hasqueue)
