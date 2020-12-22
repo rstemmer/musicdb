@@ -1908,10 +1908,12 @@ class MusicDBWebSocketInterface(object):
         The position can be ``"next"`` if the video shall be places behind the current playing video.
         So, the new added video will be played next.
         Alternative ``"last"`` can be used to place the video at the end of the queue.
+        In case position is an integer, it is interpreted as an entry ID of the VideoQueue.
+        Then the video gets append to that entry.
 
         Args:
             videoid (int): ID of the video that shall be added
-            position (str): ``"next"`` or ``"last"`` - Determines where the video gets added
+            position (str/int): ``"next"``, ``"last"`` or Video-Queue Entry ID - Determines where the song gets added
 
         Returns:
             ``None``
@@ -1928,8 +1930,16 @@ class MusicDBWebSocketInterface(object):
             logging.warning("Invalid video ID: %s! \033[1;30m(ignoring AddVideoToQueue command)", str(videoid))
             return None
 
-        if position not in ["next", "last"]:
-            logging.warning("Position must have the value \"next\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
+        try:
+            position = int(position)
+        except:
+            pass
+
+        if type(position) == str and position not in ["next", "last"]:
+            logging.warning("Position must have the value \"next\" or \"last\" or an integer. Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
+            return None
+        elif type(position) != int:
+            logging.warning("Position must have the value \"next\" or \"last\" or an integer. Given was %s. \033[1;30m(Doing nothing)", str(position))
             return None
 
         # Add video to the queue and update statistics

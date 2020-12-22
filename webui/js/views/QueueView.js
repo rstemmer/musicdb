@@ -190,13 +190,12 @@ class QueueDropZone extends DropTarget
                 }
                 else if(musictype == "video")
                 {
-                    window.console && console.log("MusicDB_Call(\"AddVideoToQueue\", {videoid: "+musicid+", position:"+this.entryid+"});");
+                    MusicDB_Call("AddVideoToQueue", {videoid: musicid, position: this.entryid});
                 }
                 else if(musictype == "album")
                 {
                     window.console && console.log("MusicDB_Call(\"AddAlbumToQueue\", {albumid: "+musicid+", position:"+this.entryid+"});");
                 }
-                window.console && console.warn("The back-end does not support this feature yet");
                 break;
 
         }

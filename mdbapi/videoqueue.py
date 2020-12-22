@@ -469,6 +469,7 @@ class VideoQueue(object):
 
             * ``"last"`` (default): Appends the video at the end of the queue
             * ``"next"``: Inserts the video right after the current playing video.
+            * *Integer*: Entry-ID after that the video shall be inserted.
 
         On success, this method triggers the ``VideoQueueChanged`` event.
 
@@ -480,7 +481,7 @@ class VideoQueue(object):
 
         Args:
             videoid (int): The ID of the video that shall be added to the queue
-            position (str): Defines the position where the video gets inserted
+            position (str/int): Defines the position where the video gets inserted
             israndom (bool): Defines whether the video is randomly selected or not
 
         Returns:
@@ -494,21 +495,30 @@ class VideoQueue(object):
 
         entryid = self.GenerateID()
 
-        entry = {}
-        entry["entryid"]  = entryid
-        entry["videoid"]  = videoid
-        entry["israndom"] = israndom
+        newentry = {}
+        newentry["entryid"]  = entryid
+        newentry["videoid"]  = videoid
+        newentry["israndom"] = israndom
 
         global Queue
         global QueueLock
 
         with QueueLock:
             if position == "next":
-                Queue.insert(1, entry)
+                Queue.insert(1, newentry)
+
             elif position == "last":
-                Queue.append(entry)
+                Queue.append(newentry)
+
+            elif type(position) == int:
+                for index, entry in enumerate(Queue):
+                    if entry["entryid"] == position:
+                        Queue.insert(index+1, newentry)
+                        break;
+                else:
+                    logging.warning("Queue Entry ID %s does not exist. \033[1;30m(Doing nothing)", str(position))
             else:
-                logging.warning("Position must have the value \"next\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
+                logging.warning("Position must have the value \"next\" or \"last\" or an Queue Entry ID. Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
                 return
 
         # add to blacklist
