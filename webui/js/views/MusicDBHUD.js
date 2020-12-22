@@ -102,7 +102,6 @@ class MusicDBHUD
         textelement.textContent = text;
 
         let infoelement = document.createElement("div");
-        infoelement.classList.add("mdbhud_infoelement");
         infoelement.appendChild(icon.GetHTMLElement());
         infoelement.appendChild(textelement);
 
