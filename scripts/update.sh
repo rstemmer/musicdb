@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="2.0.0"
+SCRIPTVERSION="2.0.1"
 echo -e "\e[1;31mMusicDB-QuickUpdate [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 source ./install/core.sh
@@ -28,7 +28,7 @@ fi
 
 
 SERVERDIR="$(dirname "$(which musicdb)")"
-MDBGROUP="$(sed -nr '/\[music\]/,/\[/{/group/p}' /etc/musicdb.ini | cut -d "=" -f 2)"
+MDBGROUP="$(sed -nr '/\[music\]/,/\[/{/group/p}' /etc/musicdb.ini | cut -d "=" -f 2 | tr -d '[:space:]')"
 MDBUSER="musicdb"
 
 SOURCEDIR="$(dirname "$(pwd)")"
