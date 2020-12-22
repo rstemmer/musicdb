@@ -168,7 +168,7 @@ class QueueDropZone extends DropTarget
         let draggable = document.getElementById(draggableid);
         let entryid   = draggable.dataset.entryid;
         let musictype = draggable.dataset.musictype;
-        let musicid   = draggable.dataset.musicid;
+        let musicid   = parseInt(draggable.dataset.musicid);
         let droptask  = draggable.dataset.droptask;
 
         switch(droptask)
@@ -186,7 +186,7 @@ class QueueDropZone extends DropTarget
             case "insert":
                 if(musictype == "song")
                 {
-                    window.console && console.log("MusicDB_Call(\"AddSongToQueue\", {songid: "+musicid+", position:"+this.entryid+"});");
+                    MusicDB_Call("AddSongToQueue", {songid: musicid, position: this.entryid});
                 }
                 else if(musictype == "video")
                 {

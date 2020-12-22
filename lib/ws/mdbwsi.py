@@ -1828,10 +1828,12 @@ class MusicDBWebSocketInterface(object):
         The position can be ``"next"`` if the song shall be places behind the current playing song.
         So, the new added song will be played next.
         Alternative ``"last"`` can be used to place the song at the end of the queue.
+        In case position is an integer, it is interpreted as an entry ID of the SongQueue.
+        Then the song gets append to that entry.
 
         Args:
             songid (int): ID of the song that shall be added
-            position (str): ``"next"`` or ``"last"`` - Determines where the song gets added
+            position (str/int): ``"next"``, ``"last"`` or Song-Queue Entry ID - Determines where the song gets added
 
         Returns:
             ``None``
@@ -1848,8 +1850,16 @@ class MusicDBWebSocketInterface(object):
             logging.warning("Invalid song ID: %s! \033[1;30m(ignoring AddSongToQueue command)", str(songid))
             return None
 
-        if position not in ["next", "last"]:
-            logging.warning("Position must have the value \"next\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
+        try:
+            position = int(position)
+        except:
+            pass
+
+        if type(position) == str and position not in ["next", "last"]:
+            logging.warning("Position must have the value \"next\" or \"last\" or an integer. Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
+            return None
+        elif type(position) != int:
+            logging.warning("Position must have the value \"next\" or \"last\" or an integer. Given was %s. \033[1;30m(Doing nothing)", str(position))
             return None
 
         # Add song to the queue and update statistics
