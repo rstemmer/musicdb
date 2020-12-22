@@ -282,6 +282,8 @@ class MusicDBHUD
 
             if(sig == "UpdateHUD")
             {
+                this.currentsongid = args.song.id;
+
                 // UpdateHUD can imply a mode switch
                 if(this.mode != "audio")
                 {
