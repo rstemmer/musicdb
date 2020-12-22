@@ -142,13 +142,15 @@ I then will fix MusicDB as soon as possible.
 
 ## Installation and Update
 
+### Installation of MusicDB
+
 To install MusicDB, read [:notebook: How to Install MusicDB](https://rstemmer.github.io/musicdb/build/html/usage/install.html) in the documentation.
 
-For updating, you can do one of the following steps.
+### Update to a New Version
+
+For updating, you can do following steps.
 Read the *Important News* for manual steps to do before updating to a new major release.
 Only execute the scripts as root, that are followed by the comment "as root"!
-
-### Update to a New Minor Version
 
 ``` bash
 git checkout master # Only install from master branch!
@@ -156,25 +158,6 @@ git pull
 
 cd scripts
 ./update.sh # as root
-```
-
-### Update to a New Major Version
-
-For major upgrades there exists two strategies.
-Strategy 1 is recommended.
-
-``` bash
-git checkout master # Only install from master branch!
-git pull
-
-cd scripts
-
-# Statgey 1
-./update.sh --major # as root
-
-# Statrgy 2
-./install.sh        # as root
-musicdb upgrade
 ```
 
 

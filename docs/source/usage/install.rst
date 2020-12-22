@@ -258,12 +258,12 @@ So if your WebSocket address is ``wss://localhost:9000`` visit `https://localhos
 Update
 ------
 
-For updating, you can do one of the following steps.
+For updating, you can do following steps.
 Read the *Important News* of the README.md file for manual steps to do before updating to a new major release.
 Only execute the scripts as root, that are followed by the comment "as root"!
 
-Update to a New Minor Version
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Update to a New Version
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
@@ -272,26 +272,6 @@ Update to a New Minor Version
 
    cd scripts
    ./update.sh # as root
-
-Update to a New Major Version
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-For major upgrades there exists two strategies.
-Strategy 1 is recommended.
-
-.. code-block:: bash
-
-   git checkout master # Only install from master branch!
-   git pull
-
-   cd scripts
-
-   # Statgey 1
-   ./update.sh --major # as root
-
-   # Statrgy 2
-   ./install.sh        # as root
-   musicdb upgrade
 
 
 

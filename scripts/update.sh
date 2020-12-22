@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="2.0.1"
+SCRIPTVERSION="2.1.0"
 echo -e "\e[1;31mMusicDB-QuickUpdate [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 source ./install/core.sh
@@ -53,10 +53,6 @@ fi
 
 InstallMusicDBFiles "$SOURCEDIR" "$SERVERDIR" "$MDBUSER" "$MDBGROUP"
 
-# Last step: upgrading internal files
-if [ "$1" == "--major" ] ; then
-    su -l -c "musicdb upgrade" $MDBUSER
-fi
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

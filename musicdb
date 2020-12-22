@@ -221,7 +221,6 @@ if __name__ == "__main__":
 
 
     # get, check and open the database from path
-    # In case the module is "upgrade", do not open MusicDatabase - it my be outdated
     databasepath = config.database.path
 
     if not fs.IsFile(databasepath):
@@ -236,10 +235,7 @@ if __name__ == "__main__":
     CheckDatabases(databasepath, config.tracker.dbpath, config.lycra.dbpath)
 
     try:
-        if modulename == "upgrade":
-            database = None
-        else:
-            database = MusicDatabase(databasepath)
+        database = MusicDatabase(databasepath)
     except Exception as e:
         print("\033[1;31mFATAL ERROR: Opening database failed!\033[0m (" + databasepath + ")")
         print(e)
