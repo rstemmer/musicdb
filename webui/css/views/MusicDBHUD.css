@@ -30,6 +30,11 @@ div.MusicDBHUD
     box-shadow:     inset 0px 0px 10px 0px;
 }
 
+div.MusicDBHUD > div
+{
+    flex-shrink:    0;
+}
+
 
 
 /******************/
@@ -69,7 +74,9 @@ div.MusicDBHUD .ArtworkBox[data-musictype="video"]
 div.MusicDBHUD .InformationBox
 {
     flex-grow:      1;
+    flex-shrink:    1;
     margin-left:    5px;
+    overflow:       hidden;
 }
 
 div.MusicDBHUD .GenreBox
@@ -83,19 +90,24 @@ div.MusicDBHUD .GenreBox
 /* Song Information */
 /********************/
 
-div.MusicDBHUD .InformationBoxElement
+div.MusicDBHUD .InformationBoxElement > div
+{
+    display:        flex;
+    align-items:    center;
+}
+
+div.MusicDBHUD .InformationBoxElement span
 {
     white-space:    nowrap;
     overflow:       hidden;
-    vertical-align: middle;
 }
 
 div.MusicDBHUD .InformationBoxElement .SVGIcon
 {
-    display:            inline-block;
+    display:            inline-flex;
+    flex-shrink:        0;
     margin-right:       1ch;
     margin-left:        1ch;
-    vertical-align:     middle;
     opacity:            0.5;
 }
 
