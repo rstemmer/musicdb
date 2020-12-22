@@ -19,7 +19,9 @@ used by MusicDB.
 """
 
 import logging
+from datetime           import datetime
 from lib.db.database    import Database
+from lib.filesystem     import Filesystem
 
 
 class DatabaseTools(Database):
@@ -40,6 +42,7 @@ class DatabaseTools(Database):
             raise TypeError("Version number must be of type integer")
 
         self.expectedversion = version
+        self.databasepath    = databasepath
 
 
 
@@ -201,6 +204,24 @@ class DatabaseTools(Database):
         self.Execute(sql)
         return;
 
+
+    def Backup(self):
+        """
+        Creates a backup of the database file.
+        The path of the backup will be the same as the source file.
+        It gets the following extension: ``.YYYY-MM-DDTHH:MM.bak``
+
+        Returns:
+            *Nothing*
+        """
+        backuppath  = self.databasepath
+        backuppath += "."
+        backuppath += datetime.now().isoformat(timespec='minutes')
+        backuppath += ".bak"
+
+        fs = Filesystem()
+        fs.CopyFile(self.databasepath, backuppath)
+        return
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

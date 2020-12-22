@@ -38,10 +38,13 @@ class MusicDatabaseMaintainer(DatabaseTools):
     def Upgrade(self):
         """
         This method successively upgrades the database to the latest version number.
+        Before the update process starts, a backup will be created
 
         Returns:
             *Nothing*
         """
+        self.Backup()
+
         actualversion = self.GetActualVersion()
         if actualversion == 4:
             self.UpgradeTo5()
