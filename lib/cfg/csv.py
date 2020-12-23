@@ -125,6 +125,8 @@ class CSVFile(object):
         If there is no header given, the keys of the first dictionary will be used.
         The header also filters the values to store.
 
+        If the table is empty, a header is required.
+
         Example:
 
             .. code-block:: js
@@ -170,7 +172,7 @@ class CSVFile(object):
             raise TypeError("The table argument must be of type list!")
         if header == None and len(table) < 1:
             raise ValueError("When no header is specified, the table argument must contain at least one entry (dictionary)!")
-        if type(table[0]) != dict:
+        if len(table) > 0 and type(table[0]) != dict:
             raise TypeError("The table argument must be a list with elements of type dict!")
 
         # Check header

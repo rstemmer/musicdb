@@ -121,16 +121,19 @@ class MDBState(Config, object):
         return rows
 
 
-    def WriteList(self, listname, rows):
+    def WriteList(self, listname, rows, header=None):
         """
         This method write a list of rows into the related file.
         The ``listname`` argument defines which file gets written: ``config.server.statedir/listname.csv``.
+
+        When there is no header given (list of column names), the keys of the rows-dictionaries are used.
 
         This method should only be used by class internal methods.
 
         Args:
             listname (str): Name of the list to read without trailing .csv
             rows(list): The list that shall be stored
+            header (list): Optional list with column names as string.
 
         Returns:
             ``True`` on success, otherwise ``False``
@@ -143,9 +146,10 @@ class MDBState(Config, object):
 
         try:
             csv  = CSVFile(path)
-            csv.Write(rows)
+            csv.Write(rows, header)
         except Exception as e:
             logging.warning("Accessing file \"%s\" failed with error %s", str(path), str(e))
+            logging.debug("Header: %s", str(header))
             logging.debug("Data: %s", str(rows))
             return False
         return True
@@ -340,7 +344,7 @@ class MDBState(Config, object):
 
             rows.append(row)
 
-        self.WriteList(filename, rows)
+        self.WriteList(filename, rows, [idname, "TimeStamp"])
         return
 
     def SaveBlacklists(self, blacklists):
