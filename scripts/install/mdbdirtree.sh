@@ -83,7 +83,7 @@ function CreateDirectoryTree {
     fi
 
     # Create Video frames cache
-    if [ ! -d "$DATADIR/artwork" ] ; then
+    if [ ! -d "$DATADIR/videoframes" ] ; then
         echo -e -n "\t\e[1;34mCreating \e[0;36m$DARADIR/videoframes/* \e[1;31m"
         mkdir $DATADIR/videoframes
         chown -R $MUSICUSER:$MDBGROUP $DATADIR/videoframes
