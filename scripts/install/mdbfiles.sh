@@ -42,7 +42,7 @@ function InstallMusicDBFiles {
     if [ -f "/tmp/mdbwebuicfg.bak" ] ; then
         mv "/tmp/mdbwebuicfg.bak" "$WSCONFIG"
     else
-        sed -i -e "s;WSAPIKEY;$WSAPIKEY;g" $WSCONFIG
+        sed -i -e "s;WSAPIKEY;\"$WSAPIKEY\";g" $WSCONFIG
     fi
     chown -R $MDBUSER:$MDBGROUP $SERVERDIR
 
