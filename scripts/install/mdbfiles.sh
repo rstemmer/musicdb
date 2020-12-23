@@ -6,6 +6,7 @@ function InstallMusicDBFiles {
     local SERVERDIR="$2"
     local MDBUSER="$3"
     local MDBGROUP="$4"
+    local WSAPIKEY="$5"
 
     _ExpectingTool  rsync
     _ExpectingUser  $MDBUSER
@@ -40,6 +41,8 @@ function InstallMusicDBFiles {
 
     if [ -f "/tmp/mdbwebuicfg.bak" ] ; then
         mv "/tmp/mdbwebuicfg.bak" "$WSCONFIG"
+    else
+        sed -i -e "s;WSAPIKEY;$WSAPIKEY;g" $WSCONFIG
     fi
     chown -R $MDBUSER:$MDBGROUP $SERVERDIR
 

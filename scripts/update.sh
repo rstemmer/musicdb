@@ -30,6 +30,7 @@ fi
 SERVERDIR="$(dirname "$(which musicdb)")"
 MDBGROUP="$(sed -nr '/\[music\]/,/\[/{/group/p}' /etc/musicdb.ini | cut -d "=" -f 2 | tr -d '[:space:]')"
 MDBUSER="musicdb"
+WSAPIKEY="$(sed -nr '/\[websocket\]/,/\[/{/apikey/p}' /etc/musicdb.ini | cut -d "=" -f 2 | tr -d '[:space:]')"
 
 SOURCEDIR="$(dirname "$(pwd)")"
 if [ ! -d "$SOURCEDIR/.git" ] ; then
@@ -39,10 +40,11 @@ if [ ! -d "$SOURCEDIR/.git" ] ; then
 fi
 
 
-echo -e "\t\e[1;34mSource directory: \e[0;36m$SOURCEDIR"
-echo -e "\t\e[1;34mServer directory: \e[0;36m$SERVERDIR"
-echo -e "\t\e[1;34mMusicDB group:    \e[0;36m$MDBGROUP"
-echo -e "\t\e[1;34mMusicDB user:     \e[0;36m$MDBUSER"
+echo -e "\t\e[1;34mSource directory:  \e[0;36m$SOURCEDIR"
+echo -e "\t\e[1;34mServer directory:  \e[0;36m$SERVERDIR"
+echo -e "\t\e[1;34mMusicDB group:     \e[0;36m$MDBGROUP"
+echo -e "\t\e[1;34mMusicDB user:      \e[0;36m$MDBUSER"
+echo -e "\t\e[1;34mWebSocket API Key: \e[0;36m$WSAPIKEY"
 
 if [ "$SERVERDIR" == "." ] ; then
     echo -e "\e[1;33mUnable to find the server directory! \e[1;30m(Server directory must be in \$PATH)"
@@ -51,7 +53,7 @@ fi
 
 
 
-InstallMusicDBFiles "$SOURCEDIR" "$SERVERDIR" "$MDBUSER" "$MDBGROUP"
+InstallMusicDBFiles "$SOURCEDIR" "$SERVERDIR" "$MDBUSER" "$MDBGROUP" "$WSAPIKEY"
 
 
 

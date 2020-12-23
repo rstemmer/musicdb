@@ -16,6 +16,7 @@ function InstallMusicDBConfiguration {
     local SSLKEY="$8"
     local SSLCRT="$9"
     local CONFIGFILE="$DATADIR/musicdb.ini"
+    local WSAPIKEY="${10}"
 
     _ExpectingUser  $USER
     _ExpectingUser  $MDBUSER
@@ -42,6 +43,7 @@ function InstallMusicDBConfiguration {
     sed -i -e "s;USER;$USER;g"             $CONFIGFILE
     sed -i -e "s;SSLKEY;$SSLKEY;g"         $CONFIGFILE
     sed -i -e "s;SSLCRT;$SSLCRT;g"         $CONFIGFILE
+    sed -i -e "s;WSAPIKEY;$WSAPIKEY;g"     $CONFIGFILE
 
     # Create a link in /etc because this is the default path to look for the configuration
     ln -sf $DATADIR/musicdb.ini /etc/musicdb.ini
