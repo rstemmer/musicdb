@@ -404,12 +404,16 @@ class MDBState(Config, object):
     def GetUIMode(self):
         """
         This method simply returns the content of ``[MusicDB]->uimode`` in the state.ini file.
-        In case the value is not set, ``"audio"`` gets returned.
+        In case the value is invalid or not set, ``"audio"`` gets returned.
+
+        Valid strings are ``"audio"`` or ``"video"``
 
         Returns:
             A string ``"audio"`` or ``"video"``
         """
         mode = self.Get(str, "MusicDB", "uimode", "audio")
+        if mode not in ["audio", "video"]:
+            mode = "audio"
         return mode
 
     def SetUIMode(self, mode):
