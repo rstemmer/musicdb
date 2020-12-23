@@ -82,7 +82,9 @@ class MDBModeManager
             MusicDB_Request("GetAudioStreamState",          "UpdateHUD")
             MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
             MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
-            MusicDB_Request("GetAlbum",                     "ShowAlbum", {albumid: MDBMusic.albumid});
+            // A fresh installes MusicDB may have no queue!
+            if(MDBMusic !== null)
+                MusicDB_Request("GetAlbum",                 "ShowAlbum", {albumid: MDBMusic.albumid});
         }
         else
         {
@@ -99,7 +101,9 @@ class MDBModeManager
             MusicDB_Request("GetVideoStreamState",          "UpdateHUD");
             MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
             MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
-            MusicDB_Request("GetVideo",                     "ShowVideo", {videoid: MDBMusic.id});
+            // A fresh installes MusicDB may have no queue!
+            if(MDBMusic !== null)
+                MusicDB_Request("GetVideo",                 "ShowVideo", {videoid: MDBMusic.id});
         }
 
 

@@ -56,6 +56,11 @@ class QueueView
     // musictype: "audio" or "video"
     Update(musictype, MDBQueue)
     {
+        // Nothing in the queue? -> Nothing to do
+        // A fresh installes MusicDB may have no queue!
+        if(MDBQueue.length === 0)
+            return;
+
         // Reset timer
         if(MDBQueue[0].song !== undefined)
         {

@@ -271,6 +271,10 @@ class MusicDBHUD
         // Song Part
         if(fnc == "GetAudioStreamState")
         {
+            // A fresh installes MusicDB may have no queue!
+            if(args.song == null)
+                return; // Nothing to do here
+
             let reset = this.currentsongid != args.song.id; // Reset like/dislike for new songs
 
             // New song playing?
@@ -305,6 +309,10 @@ class MusicDBHUD
         // Video Part
         else if(fnc == "GetVideoStreamState")
         {
+            // A fresh installes MusicDB may have no queue!
+            if(args.video == null)
+                return; // Nothing to do here
+
             let reset = this.currentvideoid != args.video.id; // Reset like/dislike for new songs
             this.currentvideoid = args.video.id;
 
