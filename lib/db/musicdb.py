@@ -240,12 +240,15 @@ Data structure:
     | albumid | artistid | name | path | numofsongs | numofcds | origin | release |
     +---------+----------+------+------+------------+----------+--------+---------+
 
-    +-------------+---------+---------+---------+-------+
-    | artworkpath | bgcolor | fgcolor | hlcolor | added |
-    +-------------+---------+---------+---------+-------+
+    +-------------+---------+---------+---------+-------+--------+
+    | artworkpath | bgcolor | fgcolor | hlcolor | added | hidden |
+    +-------------+---------+---------+---------+-------+--------+
 
 added (Integer)
     This is the time the album got added to the collection as unixtime rounded to an integer (full seconds)
+
+hidden (Integer)
+    When ``1``, the album will not be included in some SQL query results. See the documentation of the specific methods to identify if hidden albums are included or not.
 
 Album Related Methods
 ^^^^^^^^^^^^^^^^^^^^^
@@ -506,6 +509,7 @@ class MusicDatabase(Database):
     ALBUM_FGCOLOR    = 10
     ALBUM_HLCOLOR    = 11
     ALBUM_ADDED      = 12
+    ALBUM_HIDDEN     = 13
 
     SONG_ID         = 0
     SONG_ALBUMID    = 1
@@ -621,6 +625,7 @@ class MusicDatabase(Database):
         album["fgcolor"]    = entry[self.ALBUM_FGCOLOR]
         album["hlcolor"]    = entry[self.ALBUM_HLCOLOR]
         album["added"]      = entry[self.ALBUM_ADDED]
+        album["hidden"]     = entry[self.ALBUM_HIDDEN]
         return album
 
     def __SongEntryToDict(self, entry):
@@ -746,7 +751,8 @@ class MusicDatabase(Database):
             bgcolor=:bgcolor,
             fgcolor=:fgcolor,
             hlcolor=:hlcolor,
-            added=:added
+            added=:added,
+            hidden=:hidden
         WHERE
             albumid=:id
         """
@@ -1064,13 +1070,14 @@ class MusicDatabase(Database):
 
     def GetAlbumByPath(self, path):
         """
-        Returns an album entry if available
+        Returns an album entry if available.
+        It also returns the entry when the album is hidden!
 
         Args:
             path (str): relative path of an album
 
         Returns:
-            An album entry or ``None`` it the album does not exits
+            An album entry or ``None`` it the album does not exits.
 
         Raises:
             TypeError: If *path* is not of type ``str``
@@ -1098,7 +1105,8 @@ class MusicDatabase(Database):
     # Get album by its id otherwise None
     def GetAlbumById(self, albumid):
         """
-        Returns an album entry if available
+        Returns an album entry if available.
+        It also returns the entry, when the album is hidden!
 
         Args:
             albumid: entry ID of the album in the album table
@@ -1148,6 +1156,8 @@ class MusicDatabase(Database):
         If the *withsongs* parameter is ``True``, for each album all songs will be included.
         They are added as list into each album entry under the key ``songs``
 
+        Hidden albums are *not* included!
+
         Example:
 
             The following example prints all songs of the artist with the ID ``1000``
@@ -1164,7 +1174,7 @@ class MusicDatabase(Database):
             withsongs (bool): also return all songs of the album.
 
         Returns:
-            A list with all albums.
+            A list with all non-hidden albums.
 
         Raises:
             TypeError: If *withsongs* is not of type ``bool``
@@ -1173,10 +1183,10 @@ class MusicDatabase(Database):
             raise TypeError("WithSongs must have a boolean value!")
 
         if artistid:
-            sql   = "SELECT * FROM albums WHERE artistid = ?"
+            sql   = "SELECT * FROM albums WHERE artistid = ? AND hidden = 0"
             value = int(artistid)
         else:
-            sql   = "SELECT * FROM albums"
+            sql   = "SELECT * FROM albums WHERE hidden = 0"
             value = None
 
         with MusicDatabaseLock:
@@ -1194,12 +1204,24 @@ class MusicDatabase(Database):
         return albums
 
 
-    def GetAllAlbumIds(self):
+    def GetAllAlbumIds(self, includehidden=False):
         """
+        Returns a list of all album Ids.
+        
+        If the optional ``includehidden`` argument is not set to ``true``,
+        hidden albums are *not* included!
+
+        Args:
+            includehidden (bool): When true, hidden albums are also included
+
         Returns:
             Returns a list of all album IDs
         """
-        sql = "SELECT albumid FROM albums"
+        if includehidden == True:
+            sql = "SELECT albumid FROM albums"
+        else:
+            sql = "SELECT albumid FROM albums WHERE hidden = 0"
+
         with MusicDatabaseLock:
             albumids = self.GetFromDatabase(sql)
         retval = [x[0] for x in albumids] # do not use tuples

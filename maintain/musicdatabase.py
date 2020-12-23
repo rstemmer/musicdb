@@ -55,10 +55,13 @@ class MusicDatabaseMaintainer(DatabaseTools):
     def UpgradeTo5(self):
         """
         Creates the *videos* and *videotags* table uses since MusicDB 7.0.0.
+        It adds a *hidden* column to *albums*.
         Furthermore a *liverecording* and *badaudio* column gets added to the *songs* table.
         """
         self.AddColumn("songs", "liverecording", "INTEGER", "0");
         self.AddColumn("songs", "badaudio     ", "INTEGER", "0");
+
+        self.AddColumn("albums", "hidden       ", "INTEGER", "0");
 
         self.CreateTable("videos", "videoid")
         self.AddColumn("videos", "songid       ", "INTEGER", "NULL");

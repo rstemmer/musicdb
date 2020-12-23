@@ -29,7 +29,8 @@ CREATE TABLE IF NOT EXISTS albums
     bgcolor     TEXT DEFAULT '#101010',
     fgcolor     TEXT DEFAULT '#F0F0F0',
     hlcolor     TEXT DEFAULT '#909090',
-    added       INTEGER DEFAULT 0
+    added       INTEGER DEFAULT 0,
+    hidden      INTEGER DEFAULT 0
 );
 
 
