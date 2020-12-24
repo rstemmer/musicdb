@@ -85,6 +85,17 @@ class MusicDBStatus
         if(typeof state !== "string")
             return;
 
+        if(state == "hide")
+        {
+            this.musicdbstatus[key].element.style.display = "none";
+            return;
+        }
+        else if(state == "show")
+        {
+            this.musicdbstatus[key].element.style.display = "block";
+            return;
+        }
+
         let cssstatename = "unknown";
 
         if(state == "connected")
