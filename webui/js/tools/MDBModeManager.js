@@ -54,7 +54,6 @@ class MDBModeManager
 
     SetMainMenuHandler(mainmenu, entryid)
     {
-        window.console && console.log("Entry ID: " + entryid);
         this.mainmenu = mainmenu;
         this.entryid  = entryid;
     }
