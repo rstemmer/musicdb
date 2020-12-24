@@ -1,7 +1,4 @@
 
-var currentsongid   = null; // \_ track current album and song
-var currentalbumid  = null; // /
-
 let curtain             = new Curtain();
 
 // Create Basic MusicDB WebUI Components
