@@ -27,6 +27,7 @@ let videoview           = new VideoView();
 let queueview           = new QueueView();
 let queuecontrolview    = new QueueControlView();
 
+let configuration       = null; // Needs to be loaded from the Server
 
 // Create Main Menu
 let mainmenu           = new MainMenu("1em", "1em", curtain);
@@ -34,7 +35,7 @@ mainmenu.CreateSwitch(
     new SVGIcon("EnterFullscreen"), "Enter Fullscreen", ()=>{fullscreenmanager.EnterFullscreen();},
     new SVGIcon("LeaveFullscreen"), "Leave Fullscreen", ()=>{fullscreenmanager.LeaveFullscreen();}
     , "Switch browser between window and fullscreen mode");
-let entryid = mainmenu.CreateSwitch(
+let modeswitchentryid = mainmenu.CreateSwitch(
     new SVGIcon("Switch2Video"), "Switch to Video Mode", ()=>{mdbmodemanager.SetVideoMode();},
     new SVGIcon("Switch2Audio"), "Switch to Audio Mode", ()=>{mdbmodemanager.SetAudioMode();}
     , "Switch MusicDB WebUI between audio and video mode");
@@ -55,7 +56,7 @@ mainmenu.CreateButton(
     , "Show information about MusicDB including version numbers");
 mainmenu.CreateSection("MusicDB Status", musicdbstatus.GetHTMLElement());
 mainmenu.UpdateMenuEntryList();
-mdbmodemanager.SetMainMenuHandler(mainmenu, entryid); // This allows updating the menu entry on mode switch from remote
+mdbmodemanager.SetMainMenuHandler(mainmenu, modeswitchentryid); // This allows updating the menu entry on mode switch from remote
 
 
 
@@ -104,7 +105,7 @@ function onMusicDBConnectionOpen()
     window.console && console.log("[MDB] Open");
     musicdbstatus.onMusicDBConnectionOpen();
 
-    MusicDB_Request("GetMDBState",  "InitializeWebUI");
+    MusicDB_Request("LoadWebUIConfiguration", "SetupWebUI");
 }
 function onMusicDBConnectionError()
 {
@@ -199,7 +200,29 @@ function onMusicDBMessage(fnc, sig, args, pass)
 
 
     // Handle Messages form the server
-    if(fnc == "GetMDBState" && sig == "InitializeWebUI")
+    if(fnc == "LoadWebUIConfiguration" && sig == "SetupWebUI")
+    {
+        configuration = args;
+
+        if(configuration.WebUI.videomode == "enabled")
+        {
+            mainmenu.ShowEntry(modeswitchentryid);
+            musicdbstatus.SetStatus("videostream", "show");
+        }
+        else
+        {
+            mainmenu.HideEntry(modeswitchentryid);
+            musicdbstatus.SetStatus("videostream", "hide");
+        }
+
+        /* TODO:
+         *  · lyrics
+         *  · blurartwork
+         */
+
+        MusicDB_Request("GetMDBState", "InitializeWebUI");
+    }
+    else if(fnc == "GetMDBState" && sig == "InitializeWebUI")
     {
         let uimode = args.uimode;
         MusicDB_Request("GetTags",          "UpdateTagsCache");
