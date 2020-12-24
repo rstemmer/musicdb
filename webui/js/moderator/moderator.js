@@ -215,10 +215,8 @@ function onMusicDBMessage(fnc, sig, args, pass)
             musicdbstatus.SetStatus("videostream", "hide");
         }
 
-        /* TODO:
-         *  · lyrics
-         *  · blurartwork
-         */
+        if(configuration.debug.blurartwork == true)
+            document.documentElement.style.setProperty("--artworkfilter", "blur(5px)");
 
         MusicDB_Request("GetMDBState", "InitializeWebUI");
     }

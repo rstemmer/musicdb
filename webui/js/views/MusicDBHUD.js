@@ -58,6 +58,7 @@ class MusicDBHUD
 
         // Artwork box
         this.artworkbox.classList.add("ArtworkBox");
+        this.artworkbox.classList.add("Artwork");
         this.artworkbox.appendChild(this.artworkimg);
 
         // Music information box

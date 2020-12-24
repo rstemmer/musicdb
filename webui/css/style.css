@@ -41,6 +41,7 @@
     --artworkwidth-large:   20vw;
     --artworkwidth-medium:  10rem;
     --artworkwidth-small:    3rem;
+    --artworkfilter:        none;
 }
 
 .fgcolor
