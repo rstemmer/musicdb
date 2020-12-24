@@ -215,6 +215,17 @@ class MainMenu
 
 
 
+    HideEntry(entryid)
+    {
+        this.entryarray[entryid].element.style.display = "none";
+    }
+    ShowEntry(entryid)
+    {
+        this.entryarray[entryid].element.style.display = "flex";
+    }
+
+
+
     HideMenu()
     {
         if(this.curtain)
