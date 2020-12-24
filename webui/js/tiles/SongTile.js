@@ -105,7 +105,8 @@ class SongEntryTile extends Draggable
         this.element.appendChild(this.playingicon.GetHTMLElement());
         this.element.appendChild(this.songname);
         this.element.appendChild(this.flagbar.GetHTMLElement());
-        this.element.appendChild(this.lyricsbutton.GetHTMLElement());
+        if(configuration.WebUI.lyrics == "enabled")
+            this.element.appendChild(this.lyricsbutton.GetHTMLElement());
         this.element.appendChild(this.appendbutton.GetHTMLElement());
         this.element.appendChild(this.insertbutton.GetHTMLElement());
         this.element.classList.add("SongEntryTile");
