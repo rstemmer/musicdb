@@ -108,6 +108,8 @@ Other
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTables`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SaveWebUIConfiguration`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.LoadWebUIConfiguration`
 
 """
 import random
@@ -116,6 +118,7 @@ from lib.db.trackerdb   import TrackerDatabase
 from lib.db.musicdb     import MusicDatabase
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.cfg.mdbstate   import MDBState
+from lib.cfg.webui      import WebUIConfig
 from lib.filesystem     import Filesystem
 import os
 from mdbapi.lycra       import Lycra
@@ -277,7 +280,11 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetLyricsCrawlerCache(args["songid"])
         elif fncname == "RunLyricsCrawler":
             retval = self.RunLyricsCrawler(args["songid"])
+        elif fncname == "LoadWebUIConfiguration":
+            retval = self.LoadWebUIConfiguration()
         # Call-Methods (retval will be ignored unless method gets not changed)
+        elif fncname == "SaveWebUIConfiguration":
+            retval = self.SaveWebUIConfiguration(args["config"])
         elif fncname == "SetMDBState":
             retval = self.SetMDBState(args["category"], args["name"], args["value"])
             retval = self.GetMDBState()
@@ -1269,6 +1276,72 @@ class MusicDBWebSocketInterface(object):
         state["videostream"]["isplaying"]   = videostreamstate["isplaying"]
         state["videostream"]["currentvideo"]= currentvideo
         return state
+
+
+    def LoadWebUIConfiguration(self):
+        """
+        This method loads the configuration for the WebUI from the MusicDB state directory.
+
+        The configurations are described at :mod:`~lib.cfg.webui`
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Request("LoadWebUIConfiguration", "ShowConfig");
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "LoadWebUIConfiguration" && sig == "ShowConfig")
+                    {
+                        console.log("Video mode is " + args.WebUI.videomode); // "enabled" or "disabled"
+                        console.log("Lyrics are " + args.WebUI.lyrics);       // "enabled" or "disabled"
+                    }
+                }
+
+        Returns:
+            A dictionary with all configurations
+        """
+        webuicfg = WebUIConfig(self.cfg.server.statedir)
+        return webuicfg.LoadConfig()
+
+
+    def SaveWebUIConfiguration(self, config):
+        """
+        This method saves the whole configuration back into the MusicDB state directory.
+        The argument to this method must be a dict with the whole configuration as returned by :meth:`~LoadWebUIConfiguration`
+
+        The configurations are described at :mod:`~lib.cfg.webui`
+
+        This function should be called using the ``MusicDB_Broadcast`` method to allow propagating the changes
+        to other connected clients.
+        When using the request method the new configuration gets returned similar to :meth:`~LoadWebUIConfiguration`.
+
+        Example:
+            .. code-block:: javascript
+
+                webuiconfig.WebUI.videomode = "enabled";
+                MusicDB_Broadcast("SaveWebUIConfiguration", "UpdateConfig", {config: webuiconfig});
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "SaveWebUIConfiguration" && sig == "UpdateConfig")
+                    {
+                        console.log("Someone changed the configuration:");
+                        console.log("Video mode is " + args.WebUI.videomode); // "enabled" or "disabled"
+                        console.log("Lyrics are " + args.WebUI.lyrics);       // "enabled" or "disabled"
+                    }
+                }
+
+        Returns:
+            A dictionary with all configurations
+        """
+        webuicfg = WebUIConfig(self.cfg.server.statedir)
+        webuicfg.SaveConfig(config)
+        return webuicfg.LoadConfig()
 
 
     def GetAudioStreamState(self):
