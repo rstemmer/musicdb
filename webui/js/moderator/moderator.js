@@ -17,6 +17,7 @@ let queuetimemanager    = new QueueTimeManager();
 let mainviewmanager     = null; // Can only be created when the document is created
 let videopanelmanager   = null;
 let aboutmusicdb        = new AboutMusicDB();
+let welcome             = new Welcome();
 let artistsview         = new ArtistsView();
 let albumview           = new AlbumView();
 let lyricsview          = new LyricsView();
@@ -222,6 +223,12 @@ function onMusicDBMessage(fnc, sig, args, pass)
     }
     else if(fnc == "GetMDBState" && sig == "InitializeWebUI")
     {
+        if(args.audiostream.currentsong == null && args.videostream.currentvideo == null)
+        {
+            // All queues empty -> fresh install
+            mainviewmanager.ShowWelcome();
+        }
+
         let uimode = args.uimode;
         MusicDB_Request("GetTags",          "UpdateTagsCache");
         MusicDB_Request("GetMDBState",      "UpdateMDBState");

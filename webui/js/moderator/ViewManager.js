@@ -71,6 +71,10 @@ class MainViewManager extends ViewManager
     {
         this.MountView(aboutmusicdb);
     }
+    ShowWelcome()
+    {
+        this.MountView(welcome);
+    }
 
 
 

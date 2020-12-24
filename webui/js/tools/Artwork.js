@@ -57,6 +57,23 @@ class Artwork extends Draggable
 
 
 
+class MusicDBLogo extends Artwork
+{
+    constructor()
+    {
+        super("large");
+        this.element.classList.add("AlbumArtwork"); // For symmetry
+        this.imageelement.src = "img/mdblogo-light.svg";
+    }
+
+    onClick()
+    {
+        event.preventDefault();
+    }
+}
+
+
+
 class AlbumArtwork extends Artwork
 {
     constructor(MDBAlbum, size)
