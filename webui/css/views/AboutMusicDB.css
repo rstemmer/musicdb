@@ -29,7 +29,7 @@
 {
 
     background:         #0A0808;
-    background-image:   url(../../pics/BGTexture05.png); /*root is css/ -> css/../pics/ */
+    background-image:   url(../../img/Noise10.png);
     color:              var(--color-white);
     height:             100%;
     width:              100%;
