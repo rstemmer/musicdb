@@ -269,6 +269,21 @@ def VideoStreamingThread():
     else:
         State["currententry"] = queueentry["entryid"]
 
+
+    # Do nothing if video streaming is disabled
+    if Config.debug.disablevideos:
+        logging.warning("Video streaming disabled!")
+
+        State["isplaying"]   = False
+        State["isstreaming"] = False
+        Event_StatusChanged()
+
+        while RunThread:
+            time.sleep(1)
+
+        return
+
+
     while RunThread:
         # Sleep a bit to reduce the load on the CPU. If not in streaming , sleep a bit longer
         if State["isstreaming"]:

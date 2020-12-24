@@ -137,6 +137,9 @@ class ConfigurationMaintainer(object):
         self.AddValue("videoframes", "scales",        "150x83");
         self.AddValue("videoframes", "previewlength", "3");
 
+        self.AddValue("debug", "disableicecast", "0");
+        self.AddValue("debug", "disablevideos",  "1");
+
         self.SaveConfiguration(5)
         return
 

@@ -256,6 +256,7 @@ class MusicDBConfig(Config):
         self.debug.disableai        = self.Get(int, "debug",    "disableai",        1)
         self.debug.disabletagging   = self.Get(int, "debug",    "disabletagging",   0)
         self.debug.disableicecast   = self.Get(int, "debug",    "disableicecast",   0)
+        self.debug.disablevideos    = self.Get(int, "debug",    "disablevideos",    0)
 
         logging.info("\033[1;32mdone")
 
