@@ -43,7 +43,7 @@ class SettingsEntry extends Element
     // icon: SVGIcon, SVGButton, …
     constructor(name, infos, icon)
     {
-        super("div", ["SettingsEntry", "flex-row"]);
+        super("div", ["SettingsEntry", "flex-row", "hoverframe"]);
 
         this.description = document.createElement("div");
         this.description.classList.add("flew-column");

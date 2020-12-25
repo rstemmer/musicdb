@@ -19,15 +19,19 @@
 
 .SettingsList
 {
-    margin:         1.5rem;
+    margin:         0.5rem;
 }
 .SettingsList > div+div
 {
-    margin-top:     1.5rem;
+    margin-top:     0.5rem;
 }
 
 
 
+.SettingsEntry
+{
+    padding:        1rem;
+}
 .SettingsEntry > div+div
 {
     margin-left:    1.5rem;
