@@ -16,32 +16,13 @@
 
 "use strict";
 
+// Whenever a view gets removed from the Main View Box,
+// its method "onViewRemoved();" gets called if it exists
 class ViewManager
 {
     constructor(containerid)
     {
-        this.container = document.getElementById(containerid);
-    }
-
-
-
-    MountView(view)
-    {
-        let element = view.GetHTMLElement();
-        this.container.innerHTML = "";
-        this.container.appendChild(element);
-        return;
-    }
-}
-
-
-// Whenever a view gets removed from the Main View Box,
-// its method "onViewRemoved();" gets called if it exists
-class MainViewManager extends ViewManager
-{
-    constructor()
-    {
-        super("MiddleContentBox");
+        this.container   = document.getElementById(containerid);
         this.currentview = null;
     }
 
@@ -49,13 +30,19 @@ class MainViewManager extends ViewManager
 
     MountView(view)
     {
+        // Check if View is locked.
+        // If it is locked, do not replace it with a different view
         if(this.currentview != null
             && typeof this.currentview.GetLockState === "function"
             && this.currentview.GetLockState() == true)
             return;
 
-        super.MountView(view);
+        // Mount View
+        let element = view.GetHTMLElement();
+        this.container.innerHTML = "";
+        this.container.appendChild(element);
 
+        // Call "onViewRemoved" if it is an existing method
         if(this.currentview != null)
         {
             if(typeof this.currentview.onViewRemoved === "function")
@@ -63,6 +50,34 @@ class MainViewManager extends ViewManager
         }
 
         this.currentview = view;
+        return;
+    }
+}
+
+
+
+class LeftViewManager extends ViewManager
+{
+    constructor()
+    {
+        super("LeftContentBox");
+    }
+
+
+
+    onMusicDBMessage(fnc, sig, args, pass)
+    {
+        return;
+    }
+}
+
+
+
+class MainViewManager extends ViewManager
+{
+    constructor()
+    {
+        super("MiddleContentBox");
     }
 
 
