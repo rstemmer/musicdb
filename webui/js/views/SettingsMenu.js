@@ -25,12 +25,12 @@ class SettingsMenu extends LeftView
 
         this.AddMenuEntry(
             new SVGIcon("Back"),
-            "Back to Normal", 
+            "Back to Artists", 
             ()=>{
                 this.UnlockView();
                 leftviewmanager.ShowArtistsView();
                 },
-            "Close Management Views");
+            "Hide Management menu and show Artists");
 
         this.AddMenuEntry(
             new SVGIcon("MusicDB"),
