@@ -172,6 +172,14 @@ class MusicDBStatus
             else
                 this.SetStatus("videostream", "stopped");
         }
+
+        else if(fnc == "LoadWebUIConfiguration" || sig == "UpdateConfig")
+        {
+            if(args.WebUI.videomode == "enabled")
+                this.SetStatus("videostream", "show");
+            else
+                this.SetStatus("videostream", "hide");
+        }
         return;
     }
 

@@ -214,21 +214,14 @@ function onMusicDBMessage(fnc, sig, args, pass)
     {
         configuration = args;
 
-        if(configuration.WebUI.videomode == "enabled")
-        {
-            mainmenu.ShowEntry(modeswitchentryid);
-            musicdbstatus.SetStatus("videostream", "show");
-        }
-        else
-        {
-            mainmenu.HideEntry(modeswitchentryid);
-            musicdbstatus.SetStatus("videostream", "hide");
-        }
-
         if(configuration.debug.blurartwork == true)
             document.documentElement.style.setProperty("--artworkfilter", "blur(5px)");
 
         MusicDB_Request("GetMDBState", "InitializeWebUI");
+    }
+    else if(sig == "UpdateConfig")
+    {
+        configuration = args;
     }
     else if(fnc == "GetMDBState" && sig == "InitializeWebUI")
     {

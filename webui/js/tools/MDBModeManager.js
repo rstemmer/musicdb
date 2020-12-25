@@ -124,6 +124,13 @@ class MDBModeManager
                 this._UpdateWebUI(MDBMusic);
             }
         }
+        else if(fnc == "LoadWebUIConfiguration" || sig == "UpdateConfig")
+        {
+            if(args.WebUI.videomode == "enabled")
+                this.mainmenu.ShowEntry(this.entryid);
+            else
+                this.mainmenu.HideEntry(this.entryid);
+        }
 
         return;
     }
