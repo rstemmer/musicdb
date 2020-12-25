@@ -149,7 +149,7 @@ class MainViewManager extends ViewManager
         {
             if(sig == "ShowWebUISettings")
             {
-                this.MountView(new WebUISettings());
+                this.MountView(webuisettings);
             }
         }
         return;

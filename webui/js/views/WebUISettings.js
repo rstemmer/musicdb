@@ -26,8 +26,19 @@ class WebUISettings extends MainView
 
 
 
+    UpdateView(settings)
+    {
+        window.console && console.log(settings);
+    }
+
+
+
     onMusicDBMessage(fnc, sig, args, pass)
     {
+        if(fnc == "LoadWebUIConfiguration")
+        {
+            this.UpdateView(args);
+        }
         return;
     }
 }

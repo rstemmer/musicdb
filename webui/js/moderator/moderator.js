@@ -27,6 +27,8 @@ let videoview           = new VideoView();
 let queueview           = new QueueView();
 let queuecontrolview    = new QueueControlView();
 
+let webuisettings       = new WebUISettings();
+
 let configuration       = null; // Needs to be loaded from the Server
 
 // Create Main Menu
@@ -203,6 +205,8 @@ function onMusicDBMessage(fnc, sig, args, pass)
     streamview.onMusicDBMessage(fnc, sig, args, pass);
     videoview.onMusicDBMessage(fnc, sig, args, pass);
     queueview.onMusicDBMessage(fnc, sig, args, pass);
+    // Setting Views
+    webuisettings.onMusicDBMessage(fnc, sig, args, pass);
 
 
     // Handle Messages form the server
