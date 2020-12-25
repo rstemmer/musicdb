@@ -25,6 +25,7 @@
 #GenreSettings > .genreeditors
 {
     justify-content:    space-around;
+    overflow:           hidden;
 }
 
 #GenreSettings .GenreListEditor

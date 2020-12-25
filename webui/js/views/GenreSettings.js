@@ -23,8 +23,12 @@ class GenreSettings extends MainView
         let headline = new SimpleMainViewHeadline("Genre and Subgenre Manager")
         super("GenreSettings", headline);
 
-        this.genrelisteditor    = new GenreListEditor("Genres",     (tag)=>{this.onAddGenre(tag);});
-        this.subgenrelisteditor = new GenreListEditor("Sub-Genres", (tag)=>{this.onAddSubgenre(tag);});
+        this.genrelisteditor    = new GenreListEditor("Genres",
+            (MDBTag)=>{return this.onSelectGenre(MDBTag);},
+            (tag)=>{this.onAddGenre(tag);});
+        this.subgenrelisteditor = new GenreListEditor("Sub-Genres",
+            null,
+            (tag)=>{this.onAddSubgenre(tag);});
 
         let settingsbox = document.createElement("div");
         settingsbox.classList.add("flex-row");
@@ -34,6 +38,10 @@ class GenreSettings extends MainView
         settingsbox.appendChild(this.subgenrelisteditor.GetHTMLElement());
 
         this.element.appendChild(settingsbox);
+
+        this.genres    = [];
+        this.subgenres = [];
+        this.selectedgenre = null;
     }
 
 
@@ -42,9 +50,31 @@ class GenreSettings extends MainView
     {
         window.console && console.log(genres);
         window.console && console.log(subgenres);
-        this.genrelisteditor.UpdateList(genres);
+        this.genres    = genres;
+        this.subgenres = subgenres;
+        this.genrelisteditor.UpdateList(this.genres);
+        this.UpdateSubgenreView();
+        return;
+    }
+
+    UpdateSubgenreView()
+    {
+        if(this.selectedgenre == null)
+            return;
+
+        let subgenres = this.subgenres.filter(tag => tag.parentid == this.selectedgenre.id);
         this.subgenrelisteditor.UpdateList(subgenres);
         return;
+    }
+
+
+
+    onSelectGenre(MDBTag)
+    {
+        // Update Sub-Genre view
+        this.selectedgenre = MDBTag;
+        this.UpdateSubgenreView();
+        return true;
     }
 
 
