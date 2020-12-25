@@ -22,6 +22,31 @@ class WebUISettings extends MainView
     {
         let headline = new SimpleMainViewHeadline("WebUI Settings")
         super("WebUISettings", headline, new MusicDBLogo);
+
+        this.videocheckbox = new SettingsCheckbox(
+            "Video Mode",
+            "This switch allows hiding or showing all WebUI elements corresponding to music videos.</br>This includes the Song/Video mode switch in the main menu.",
+            (state)=>{
+                if(state == true) this.ChangeSetting("WebUI", "videomode", "enabled");
+                else              this.ChangeSetting("WebUI", "videomode", "disabled");
+            }
+        );
+
+        this.lyricscheckbox = new SettingsCheckbox(
+            "Lyrics",
+            "When lyrics are disabled, the Lyrics-State icon of songs listed in the Album Views are hidden.</br>This switch will not remove any information, it just hides the related user interface elements.",
+            (state)=>{
+                if(state == true) this.ChangeSetting("WebUI", "lyrics", "enabled");
+                else              this.ChangeSetting("WebUI", "lyrics", "disabled");
+            }
+        );
+
+        let settingslist = new SettingsList();
+        settingslist.AddEntry(this.videocheckbox);
+        settingslist.AddEntry(this.lyricscheckbox);
+
+        this.element.appendChild(settingslist.GetHTMLElement());
+        this.settings = null;
     }
 
 
@@ -29,6 +54,18 @@ class WebUISettings extends MainView
     UpdateView(settings)
     {
         window.console && console.log(settings);
+        this.settings = settings;
+
+        this.videocheckbox.SetState(settings.WebUI.videomode == "enabled");
+        this.videocheckbox.SetState(settings.WebUI.lyrics    == "enabled");
+        return;
+    }
+
+
+
+    ChangeSetting(section, key, value)
+    {
+        window.console && console.log(`Change [${section}]->${key} = ${value}`);
     }
 
 
