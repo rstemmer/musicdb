@@ -2516,6 +2516,7 @@ class MusicDatabase(Database):
     def GetTagStatistics(self, tagid):
         """
         Returns three integers telling how often the given tag is used for songs, albums and videos.
+        It is also checked how many other tags used the tagid as parent tag.
 
         The level of confidence or if the tag was approved for the song/video/album is not considered.
         All set tags are counted.
@@ -2524,7 +2525,7 @@ class MusicDatabase(Database):
             tagid(int): ID of the tag to count
 
         Returns:
-            songs(int), albums(int), videos(int)
+            songs(int), albums(int), videos(int), children(int)
 
         Raises:
             TypeError: When *tagid* is not an integer
@@ -2533,10 +2534,11 @@ class MusicDatabase(Database):
             raise TypeError("Tag ID must be of type int")
 
         with MusicDatabaseLock:
-            songs  = self.GetFromDatabase("SELECT COUNT(*) FROM songtags  WHERE tagid = ?", tagid)[0][0]
-            albums = self.GetFromDatabase("SELECT COUNT(*) FROM albumtags WHERE tagid = ?", tagid)[0][0]
-            videos = self.GetFromDatabase("SELECT COUNT(*) FROM videotags WHERE tagid = ?", tagid)[0][0]
-        return songs, albums, videos
+            songs    = self.GetFromDatabase("SELECT COUNT(*) FROM songtags  WHERE tagid    = ?", tagid)[0][0]
+            albums   = self.GetFromDatabase("SELECT COUNT(*) FROM albumtags WHERE tagid    = ?", tagid)[0][0]
+            videos   = self.GetFromDatabase("SELECT COUNT(*) FROM videotags WHERE tagid    = ?", tagid)[0][0]
+            children = self.GetFromDatabase("SELECT COUNT(*) FROM tags      WHERE parentid = ?", tagid)[0][0]
+        return songs, albums, videos, children
 
 
 

@@ -1035,6 +1035,7 @@ class MusicDBWebSocketInterface(object):
           * **songs:** The amount of songs tagged with this tag as integer
           * **albums:** The amount of albums tagged with this tag as integer
           * **videos:** The amount of videos tagged with this tag as integer
+          * **children:** Number of child tags as integer
 
         The level of confidence or if the tag was approved for the song/video/album is not considered.
         All set tags are counted.
@@ -1065,13 +1066,14 @@ class MusicDBWebSocketInterface(object):
             tagid = tag["id"]
             key   = str(tagid)
 
-            songs, albums, videos = self.database.GetTagStatistics(tagid)
+            songs, albums, videos, children = self.database.GetTagStatistics(tagid)
 
             retval[key] = {}
-            retval[key]["tag"]    = tag;
-            retval[key]["songs"]  = songs;
-            retval[key]["albums"] = albums;
-            retval[key]["videos"] = videos;
+            retval[key]["tag"]      = tag;
+            retval[key]["songs"]    = songs;
+            retval[key]["albums"]   = albums;
+            retval[key]["videos"]   = videos;
+            retval[key]["children"] = children;
         return retval
 
 
