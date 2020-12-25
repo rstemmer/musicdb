@@ -28,17 +28,6 @@
     margin-left:    1rem;
 }
 
-#AlbumView #SongList .SongEntryTile
-{
-    border:         var(--borderwidth) solid;
-    border-radius:  var(--radius);
-    border-color:   transparent;
-}
-#AlbumView #SongList .SongEntryTile:hover
-{
-    border-color:   var(--fmcolor);
-}
-
 #AlbumView #SongList > .CDNumber
 {
     margin-top:     1rem;

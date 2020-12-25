@@ -17,11 +17,26 @@
  */
 
 
-
-#SettingsMenu
+.frame
 {
-    padding:            0.5em;
+    border:             var(--borderwidth) solid;
+    border-radius:      var(--radius);
+    border-color:       var(--fmcolor);
+    box-sizing:         border-box;
 }
+
+
+.hoverframe
+{
+    border:         var(--borderwidth) solid;
+    border-radius:  var(--radius);
+    border-color:   transparent;
+}
+.hoverframe:hover
+{
+    border-color:   var(--fmcolor);
+}
+
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */

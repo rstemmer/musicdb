@@ -108,16 +108,6 @@
 /* default element style */
 /*************************/
 
-.frame
-{
-    border:             var(--borderwidth) solid;
-    border-radius:      var(--radius);
-    border-color:       var(--fmcolor);
-    box-sizing:         border-box;
-}
-
-
-
 div
 {
     scrollbar-width:    none;

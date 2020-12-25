@@ -110,6 +110,7 @@ class SongEntryTile extends Draggable
         this.element.appendChild(this.appendbutton.GetHTMLElement());
         this.element.appendChild(this.insertbutton.GetHTMLElement());
         this.element.classList.add("SongEntryTile");
+        this.element.classList.add("hoverframe");
         this.element.classList.add("flex-row");
         this.element.dataset.highlight = false;
 
