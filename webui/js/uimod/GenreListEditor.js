@@ -105,14 +105,35 @@ class GenreListEditor extends Element
 
 
 
-    UpdateList(MDBTags)
+    // MDBTags is allowed to be [] -> List will be emptied
+    // MDBTagsStats is allowed to be {} -> No stats will be shown
+    UpdateList(MDBTags, MDBTagsStats)
     {
         this.listelement.innerHTML = "";
         this.list = new Array();
 
+        if(typeof MDBTagsStats !== "object")
+            MDBTagsStats = {};  // Get a defined state for MDBTagsStats
+
+        if(MDBTags === [])
+            return;
+
         for(let MDBTag of MDBTags)
         {
-            this.AddEntry(MDBTag);
+            let tagid       = MDBTag.id;
+            let numsongs    = null;
+            let numalbums   = null;
+            let numvideos   = null;
+            let numchildren = null;
+            let stats       = MDBTagsStats[tagid]
+            if(typeof stats === "object")
+            {
+                numsongs    = stats["songs"];
+                numalbums   = stats["albums"];
+                numvideos   = stats["videos"];
+                numchildren = stats["children"];
+            }
+            this.AddEntry(MDBTag, numsongs, numalbums, numvideos, numchildren);
         }
 
         return;
@@ -120,7 +141,7 @@ class GenreListEditor extends Element
 
 
 
-    AddEntry(MDBTag)
+    AddEntry(MDBTag, numsongs, numalbums, numvideos, numchildren=null)
     {
         let element = document.createElement("div");
         element.classList.add("listentry");
@@ -138,8 +159,18 @@ class GenreListEditor extends Element
         infos.classList.add("flex-row");
         infos.classList.add("smallfont");
         infos.classList.add("hlcolor");
-        infos.innerText = "x Songs, y Albums, z Videos, n Sub-Genres";
 
+        let infotext = "";
+        if(typeof numsongs    === "number" && numsongs    > 0) infotext += `<span>${numsongs   } Songs</span>`;
+        if(typeof numalbums   === "number" && numalbums   > 0) infotext += `<span>${numalbums  } Albums</span>`;
+        if(typeof numvideos   === "number" && numvideos   > 0) infotext += `<span>${numvideos  } Videos</span>`;
+        if(typeof numchildren === "number" && numchildren > 0) infotext += `<span>${numchildren} Sub-Genres</span>`;
+        if(infotext == "") infotext = "<span>This tag is not used yet</span>"
+        infos.innerHTML = infotext;
+
+        // When there are dependencies, make the remove-button a bit less opaque
+        if(numsongs + numalbums + numvideos + numchildren > 0)
+            removebutton.GetHTMLElement().classList.add("hovpacity");
 
         element.appendChild(name);
         element.appendChild(removebutton.GetHTMLElement());
@@ -147,8 +178,12 @@ class GenreListEditor extends Element
         this.listelement.appendChild(element);
 
         let entry = new Object();
-        entry.element = element;
-        entry.tag     = MDBTag;
+        entry.element   = element;
+        entry.tag       = MDBTag;
+        entry.numsongs  = numsongs;
+        entry.numalbums = numalbums;
+        entry.numvideos = numvideos;
+        entry.numvideos = numchildren;
         this.list.push(entry);
     }
 }

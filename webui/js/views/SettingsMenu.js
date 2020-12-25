@@ -45,6 +45,7 @@ class SettingsMenu extends LeftView
             "Genre Manager",
             ()=>{
                 MusicDB_Request("GetTags", "ShowGenreSettings");
+                MusicDB_Request("GetTagsStatistics", "UpdateTagsStatistics");
                 },
             "Manage, Add and Remove Genres and Subgenres");
     }

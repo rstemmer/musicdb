@@ -48,9 +48,14 @@
     padding:            0.5rem;
 }
 
+
 .GenreListEditor .taginfos
 {
     flex-basis:         100%;
+}
+.GenreListEditor .taginfos > span+span
+{
+    margin-left:        1.5ch;
 }
 
 

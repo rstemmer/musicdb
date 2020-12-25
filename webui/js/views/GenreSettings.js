@@ -41,6 +41,7 @@ class GenreSettings extends MainView
 
         this.genres    = [];
         this.subgenres = [];
+        this.tagsstats = {};
         this.selectedgenre = null;
     }
 
@@ -48,22 +49,23 @@ class GenreSettings extends MainView
 
     UpdateView(genres, subgenres)
     {
-        window.console && console.log(genres);
-        window.console && console.log(subgenres);
-        this.genres    = genres;
-        this.subgenres = subgenres;
-        this.genrelisteditor.UpdateList(this.genres);
-        this.UpdateSubgenreView();
+        this.UpdateGenreEditor();
+        this.UpdateSubgenreEditor();
         return;
     }
 
-    UpdateSubgenreView()
+    UpdateGenreEditor()
+    {
+        this.genrelisteditor.UpdateList(this.genres, this.tagsstats);
+        return;
+    }
+    UpdateSubgenreEditor()
     {
         if(this.selectedgenre == null)
             return;
 
         let subgenres = this.subgenres.filter(tag => tag.parentid == this.selectedgenre.id);
-        this.subgenrelisteditor.UpdateList(subgenres);
+        this.subgenrelisteditor.UpdateList(subgenres, this.tagsstats);
         return;
     }
 
@@ -71,9 +73,9 @@ class GenreSettings extends MainView
 
     onSelectGenre(MDBTag)
     {
-        // Update Sub-Genre view
+        // Update Sub-Genre Editor
         this.selectedgenre = MDBTag;
-        this.UpdateSubgenreView();
+        this.UpdateSubgenreEditor();
         return true;
     }
 
@@ -92,7 +94,16 @@ class GenreSettings extends MainView
     {
         if(fnc == "GetTags")
         {
-            this.UpdateView(args.genres, args.subgenres);
+            window.console && console.log(args);
+            this.genres    = args.genres;
+            this.subgenres = args.subgenres;
+            this.UpdateView();
+        }
+        else if(fnc == "GetTagsStatistics")
+        {
+            window.console && console.log(args);
+            this.tagsstats = args;
+            this.UpdateView();
         }
         return;
     }
