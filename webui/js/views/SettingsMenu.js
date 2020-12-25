@@ -33,7 +33,7 @@ class SettingsMenu extends LeftView
             "Hide Management menu and show Artists");
 
         this.AddMenuEntry(
-            new SVGIcon("MusicDB"),
+            new SVGIcon("Settings"),
             "WebUI Settings",
             ()=>{
                 MusicDB_Request("LoadWebUIConfiguration", "ShowWebUISettings");

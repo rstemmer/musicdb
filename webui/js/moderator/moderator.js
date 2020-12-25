@@ -52,7 +52,7 @@ mainmenu.CreateButton(
         }
     , "Reload list with artists and their albums/videos");
 mainmenu.CreateButton(
-    new SVGIcon("MusicDB"), "MusicDB Manager", ()=>
+    new SVGIcon("Settings"), "MusicDB Manager", ()=>
         {
             leftviewmanager.ShowSettingsMenu();
             mainviewmanager.ShowAboutMusicDB();
