@@ -28,6 +28,7 @@ let queueview           = new QueueView();
 let queuecontrolview    = new QueueControlView();
 
 let webuisettings       = new WebUISettings();
+let genresettings       = new GenreSettings();
 
 let configuration       = null; // Needs to be loaded from the Server
 
@@ -207,6 +208,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     queueview.onMusicDBMessage(fnc, sig, args, pass);
     // Setting Views
     webuisettings.onMusicDBMessage(fnc, sig, args, pass);
+    genresettings.onMusicDBMessage(fnc, sig, args, pass);
 
 
     // Handle Messages form the server

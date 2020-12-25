@@ -39,6 +39,14 @@ class SettingsMenu extends LeftView
                 MusicDB_Request("LoadWebUIConfiguration", "ShowWebUISettings");
                 },
             "Show WebUI Settings");
+
+        this.AddMenuEntry(
+            new SVGIcon("Tags"),
+            "Genre Manager",
+            ()=>{
+                MusicDB_Request("GetTags", "ShowGenreSettings");
+                },
+            "Manage, Add and Remove Genres and Subgenres");
     }
 
 
