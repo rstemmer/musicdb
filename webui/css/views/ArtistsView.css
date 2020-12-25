@@ -22,19 +22,19 @@
 /* Main Container */
 /******************/
 
-.artistsview
+#ArtistView
 {
     flex-wrap:          wrap;
     padding:            0.5em;
     margin-bottom:      auto;
 }
 
-.artistsview img
+#ArtistView img
 {
     filter: brightness(70%) saturate(70%);
     transition: 4s;
 }
-.artistsview:hover img
+#ArtistView:hover img
 {
     filter: brightness(100%) saturate(100%);
     transition: 2s;
@@ -42,7 +42,7 @@
 
 
 
-.artistsview > .marker
+#ArtistView > .marker
 {
     flex-basis:         100%;
 }

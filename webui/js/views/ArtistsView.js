@@ -16,22 +16,14 @@
 
 "use strict";
 
-class ArtistsView
+class ArtistsView extends LeftView
 {
     constructor()
     {
-        this.element = document.createElement("div");
-        this.element.classList.add("flex-row");
-        this.element.classList.add("artistsview");
+        super("ArtistView", ["artistview", "flex-row"]);
+        this.element.classList.remove("flex-column");
         this.mode    = null; // Gets defined in the onMusicDBMessage method
         this.tiles   = null; // Will be set during rendering the tiles
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
