@@ -170,7 +170,10 @@ class GenreListEditor extends Element
 
         // When there are dependencies, make the remove-button a bit less opaque
         if(numsongs + numalbums + numvideos + numchildren > 0)
+        {
+            removebutton.SetColor("var(--color-red)");
             removebutton.GetHTMLElement().classList.add("hovpacity");
+        }
 
         element.appendChild(name);
         element.appendChild(removebutton.GetHTMLElement());
