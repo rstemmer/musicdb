@@ -21,7 +21,7 @@ class WebUISettings extends MainView
     constructor()
     {
         let headline = new SimpleMainViewHeadline("WebUI Settings")
-        super("WebUISettings", headline, new MusicDBLogo);
+        super("WebUISettings", headline);
 
         this.videocheckbox = new SettingsCheckbox(
             "Video Mode",
