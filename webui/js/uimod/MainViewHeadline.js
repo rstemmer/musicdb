@@ -16,6 +16,31 @@
 
 "use strict";
 
+class SimpleMainViewHeadline extends Element
+{
+    constructor(text=null)
+    {
+        super("div", ["mainview_headline", "flex-row"]);
+
+        // Main Headline
+        this.headline   = document.createElement("span");
+        this.headline.classList.add("fgcolor");
+
+        if(typeof text === "string")
+            this.UpdateRawInformation(text);
+
+        this.element.appendChild(this.headline);
+    }
+
+
+
+    UpdateRawInformation(headline)
+    {
+        this.headline.innerText  = headline;
+        return;
+    }
+}
+
 /* Layout:
  *
  *   headline                       button box
