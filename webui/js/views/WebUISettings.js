@@ -53,11 +53,10 @@ class WebUISettings extends MainView
 
     UpdateView(settings)
     {
-        window.console && console.log(settings);
         this.settings = settings;
 
-        this.videocheckbox.SetState(settings.WebUI.videomode == "enabled");
-        this.videocheckbox.SetState(settings.WebUI.lyrics    == "enabled");
+        this.videocheckbox.SetState( settings.WebUI.videomode == "enabled");
+        this.lyricscheckbox.SetState(settings.WebUI.lyrics    == "enabled");
         return;
     }
 
@@ -65,14 +64,15 @@ class WebUISettings extends MainView
 
     ChangeSetting(section, key, value)
     {
-        window.console && console.log(`Change [${section}]->${key} = ${value}`);
+        this.settings[section][key] = value;
+        MusicDB_Broadcast("SaveWebUIConfiguration", "UpdateConfig", {config: this.settings});
     }
 
 
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "LoadWebUIConfiguration")
+        if(fnc == "LoadWebUIConfiguration" || fnc == "SaveWebUIConfiguration")
         {
             this.UpdateView(args);
         }

@@ -97,9 +97,9 @@ class SettingsCheckbox extends SettingsEntry
         this.control.innerHTML = "";
 
         if(this.ischecked)
-            this.control.appendChild(this.iconchecked.GetHTMLElement())
+            this.control.appendChild(this.iconchecked.GetHTMLElement());
         else
-            this.control.appendChild(this.iconunchecked.GetHTMLElement())
+            this.control.appendChild(this.iconunchecked.GetHTMLElement());
         return;
     }
 
