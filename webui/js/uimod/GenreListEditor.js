@@ -20,15 +20,21 @@
 
 class GenreListEditor extends Element
 {
+    // headliner: string
     // addhandler: function called when new tag shall be added - parameter is an object describing the tag
-    constructor(addhandler)
+    constructor(headline, addhandler)
     {
         super("div", ["GenreListEditor", "flex-column"]);
 
         this.addhandler = addhandler;
 
+        this.headelement  = document.createElement("span");
+        this.headelement.classList.add("flex-center");
+        this.headelement.innerText = headline;
+
         this.listelement  = document.createElement("div");
         this.listelement.classList.add("flex-column");
+        this.listelement.classList.add("flex-grow");
         this.listelement.classList.add("frame");
 
         this.inputbar     = document.createElement("div");
@@ -42,6 +48,7 @@ class GenreListEditor extends Element
         this.inputbar.appendChild(this.inputelement);
         this.inputbar.appendChild(this.addbutton.GetHTMLElement());
 
+        this.element.appendChild(this.headelement);
         this.element.appendChild(this.listelement);
         this.element.appendChild(this.inputbar);
     }

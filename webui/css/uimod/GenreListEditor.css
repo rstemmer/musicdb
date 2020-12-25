@@ -23,9 +23,20 @@
 
 
 
+.GenreListEditor > *
+{
+    margin-bottom:      1.5rem;
+}
+
+
+
 .GenreListEditor > .inputbar
 {
     align-items:        center;
+}
+.GenreListEditor > .inputbar > *+*
+{
+    margin-left:        1.5rem;
 }
 
 
