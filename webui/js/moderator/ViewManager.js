@@ -65,8 +65,23 @@ class LeftViewManager extends ViewManager
 
 
 
+    ShowArtistsView()
+    {
+        this.MountView(artistsview);
+    }
+    ShowSettingsMenu()
+    {
+        this.MountView(new SettingsMenu());
+    }
+
+
+
     onMusicDBMessage(fnc, sig, args, pass)
     {
+        if(sig == "ShowArtists")
+        {
+            this.ShowArtistsView();
+        }
         return;
     }
 }
@@ -84,11 +99,11 @@ class MainViewManager extends ViewManager
 
     ShowAboutMusicDB()
     {
-        this.MountView(aboutmusicdb);
+        this.MountView(new AboutMusicDB());
     }
     ShowWelcome()
     {
-        this.MountView(welcome);
+        this.MountView(new Welcome());
     }
 
 

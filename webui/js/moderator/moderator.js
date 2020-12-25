@@ -14,10 +14,9 @@ let musicdbstatus       = new MusicDBStatus();
 let musicdbcontrols     = new MusicDBControls();
 let queuetimemanager    = new QueueTimeManager();
 
-let mainviewmanager     = null; // Can only be created when the document is created
+let leftviewmanager     = null; // \_
+let mainviewmanager     = null; // / Can only be created when the document is created
 let videopanelmanager   = null;
-let aboutmusicdb        = new AboutMusicDB();
-let welcome             = new Welcome();
 let artistsview         = new ArtistsView();
 let albumview           = new AlbumView();
 let lyricsview          = new LyricsView();
@@ -49,6 +48,13 @@ mainmenu.CreateButton(
                 MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
         }
     , "Reload list with artists and their albums/videos");
+mainmenu.CreateButton(
+    new SVGIcon("MusicDB"), "MusicDB Manager", ()=>
+        {
+            leftviewmanager.ShowSettingsMenu();
+            mainviewmanager.ShowAboutMusicDB();
+        }
+    , "Show Settings and Management Tools");
 mainmenu.CreateButton(
     new SVGIcon("MusicDB"), "About MusicDB", ()=>
         {
@@ -82,9 +88,6 @@ window.onload = function ()
     let queuetimebar= document.getElementById("MDBQueueTimeBar");
     queuetimebar.appendChild(queuetimemanager.GetHTMLElement());
 
-    let artistviewbox   = document.getElementById("LeftContentBox");
-    artistviewbox.appendChild(artistsview.GetHTMLElement());
-
     let queuecontrolsbox   = document.getElementById("QueueControl");
     queuecontrolsbox.appendChild(queuecontrolview.GetHTMLElement());
 
@@ -92,6 +95,7 @@ window.onload = function ()
     document.body.appendChild(mainmenu.GetHTMLElement());
     document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
 
+    leftviewmanager     = new LeftViewManager();
     mainviewmanager     = new MainViewManager();
     videopanelmanager   = new VideoPanelManager();
     streamview.ShowInVideoPanel();
@@ -186,6 +190,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);
     musicdbstatus.onMusicDBMessage(fnc, sig, args, pass);
     // Views
+    leftviewmanager.onMusicDBMessage(fnc, sig, args, pass);
     mainviewmanager.onMusicDBMessage(fnc, sig, args, pass);
     musicdbhud.onMusicDBMessage(fnc, sig, args, pass);
     genreselectionview.onMusicDBMessage(fnc, sig, args, pass);
