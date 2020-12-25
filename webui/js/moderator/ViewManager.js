@@ -145,6 +145,13 @@ class MainViewManager extends ViewManager
                 this.MountView(songrelationsview);
             }
         }
+        else if(fnc == "LoadWebUIConfiguration")
+        {
+            if(sig == "ShowWebUISettings")
+            {
+                this.MountView(new WebUISettings());
+            }
+        }
         return;
     }
 

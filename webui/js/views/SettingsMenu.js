@@ -31,6 +31,14 @@ class SettingsMenu extends LeftView
                 leftviewmanager.ShowArtistsView();
                 },
             "Close Management Views");
+
+        this.AddMenuEntry(
+            new SVGIcon("MusicDB"),
+            "WebUI Settings",
+            ()=>{
+                MusicDB_Request("LoadWebUIConfiguration", "ShowWebUISettings");
+                },
+            "Show WebUI Settings");
     }
 
 
