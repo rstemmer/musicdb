@@ -2513,6 +2513,35 @@ class MusicDatabase(Database):
 
 
 
+    def GetTagStatistics(self, tagid):
+        """
+        Returns three integers telling how often the given tag is used for songs, albums and videos.
+
+        The level of confidence or if the tag was approved for the song/video/album is not considered.
+        All set tags are counted.
+
+        Args:
+            tagid(int): ID of the tag to count
+
+        Returns:
+            songs(int), albums(int), videos(int)
+
+        Raises:
+            TypeError: When *tagid* is not an integer
+        """
+        if type(tagid) != int:
+            raise TypeError("Tag ID must be of type int")
+
+        with MusicDatabaseLock:
+            songs  = self.GetFromDatabase("SELECT COUNT(*) FROM songtags  WHERE tagid = ?", tagid)[0][0]
+            albums = self.GetFromDatabase("SELECT COUNT(*) FROM albumtags WHERE tagid = ?", tagid)[0][0]
+            videos = self.GetFromDatabase("SELECT COUNT(*) FROM videotags WHERE tagid = ?", tagid)[0][0]
+        return songs, albums, videos
+
+
+
+
+
     def CreateTag(self, tagname, tagclass, parentid=None):
         """
         This method creates a new tag in the tags-table.

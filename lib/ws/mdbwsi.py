@@ -78,6 +78,7 @@ Queue
 Tag related
 ^^^^^^^^^^^
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTagsStatistics`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoTags`
@@ -249,6 +250,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetSong(args["songid"])
         elif fncname == "GetTags":
             retval = self.GetTags()
+        elif fncname == "GetTagsStatistics":
+            retval = self.GetTagsStatistics()
         elif fncname == "GetSongTags":
             retval = self.GetSongTags(args["songid"])
         elif fncname == "GetAlbumTags":
@@ -1020,6 +1023,57 @@ class MusicDBWebSocketInterface(object):
         tags["subgenres"] = subgenres
         tags["moods"]     = moods
         return tags
+
+
+    def GetTagsStatistics(self):
+        """
+        This method returns the usage statistics as a dictionary with an entry for each tag.
+        The key is the tag ID.
+        The value is another dictionary with the following keys:
+
+          * **tag:** The whole tag entry for the corresponding ID
+          * **songs:** The amount of songs tagged with this tag as integer
+          * **albums:** The amount of albums tagged with this tag as integer
+          * **videos:** The amount of videos tagged with this tag as integer
+
+        The level of confidence or if the tag was approved for the song/video/album is not considered.
+        All set tags are counted.
+
+        Returns:
+            A dictionary with usage-statistics of all tags
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Request("GetTagsStatictics", "ShowTags");
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "GetTagsStatistics" && sig == "ShowTags")
+                    {
+                        for(let entry of args)
+                            console.log(`The tag ${entry.tag.name} is assigned to ${entry.songs} songs.`);
+                    }
+                }
+
+        """
+        tags   = self.database.GetAllTags()
+        retval = {}
+        for tag in tags:
+            tagid = tag["id"]
+            key   = str(tagid)
+
+            songs, albums, videos = self.database.GetTagStatistics(tagid)
+
+            retval[key] = {}
+            retval[key]["tag"]    = tag;
+            retval[key]["songs"]  = songs;
+            retval[key]["albums"] = albums;
+            retval[key]["videos"] = videos;
+        return retval
+
 
 
     def GetSongTags(self, songid):
