@@ -16,17 +16,11 @@
 
 "use strict";
 
-class SVGBase
+class SVGBase extends Element
 {
     constructor()
     {
-        this.icon    = document.createElement("div");
-        this.icon.classList.add("SVGIcon");
-    }
-
-    GetHTMLElement()
-    {
-        return this.icon;
+        super("div", ["SVGIcon"]);
     }
 }
 
@@ -39,7 +33,7 @@ class SVGSpacer extends SVGBase
     constructor()
     {
         super();
-        this.icon.style.visibility = "hidden";
+        this.element.style.visibility = "hidden";
     }
 }
 
@@ -50,27 +44,27 @@ class SVGIcon extends SVGBase
     constructor(name)
     {
         super();
-        let maskurl  = `url("img/icons/${name}.svg");`;
-        this.icon.style.cssText = "mask: "+maskurl;
+        let maskurl = `url("img/icons/${name}.svg");`;
+        this.element.style.cssText = "mask: "+maskurl;
     }
 
     SetTooltip(tooltip)
     {
-        this.icon.title = tooltip;
+        this.element.title = tooltip;
     }
 
     SetColor(htmlcolor)
     {
-        this.icon.style.backgroundColor = htmlcolor;
+        this.element.style.backgroundColor = htmlcolor;
     }
 
     Show()
     {
-        this.icon.style.display = "block";
+        this.element.style.display = "block";
     }
     Hide()
     {
-        this.icon.style.display = "none";
+        this.element.style.display = "none";
     }
 }
 
@@ -81,7 +75,7 @@ class SVGButton extends SVGIcon
     constructor(name, onclick)
     {
         super(name)
-        this.icon.onclick = onclick;
+        this.element.onclick = onclick;
     }
 }
 
@@ -92,9 +86,9 @@ class SVGToggleButton extends SVGIcon
     constructor(name, onclick)
     {
         super(name)
-        this.onclick               = onclick;
-        this.icon.dataset.selected = false;
-        this.icon.onclick          = ()=>{this.onIconClick();};
+        this.onclick                  = onclick;
+        this.element.dataset.selected = false;
+        this.element.onclick          = ()=>{this.onIconClick();};
     }
 
     onIconClick()
@@ -112,12 +106,12 @@ class SVGToggleButton extends SVGIcon
 
     GetSelectionState()
     {
-        let state = this.icon.dataset.selected;
+        let state = this.element.dataset.selected;
         return (state === "true");
     }
     SetSelectionState(state)
     {
-        this.icon.dataset.selected = state;
+        this.element.dataset.selected = state;
     }
 }
 
@@ -130,12 +124,12 @@ class UnicodeToggleButton extends SVGToggleButton
         super("", onclick);
 
         // Destroy SVG icon
-        this.icon.classList.remove("SVGIcon")
-        this.icon.style.cssText = "";
+        this.element.classList.remove("SVGIcon")
+        this.element.style.cssText = "";
 
         // Create Unicode icon
-        this.icon.innerText     = character;
-        this.icon.classList.add("unicodeicon");
+        this.element.innerText     = character;
+        this.element.classList.add("unicodeicon");
     }
 }
 
