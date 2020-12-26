@@ -27,12 +27,13 @@ class GenreListEditor extends Element
     // addhandler: function called when new tag shall be added - parameter is an object describing the tag
     // removehandler: function called when tag shall be removed - parameter is an object describing the tag
     // handler can be null
-    constructor(headline, selecthandler, addhandler, removehandler)
+    constructor(headline, selecthandler, addhandler, removehandler, renamehandler)
     {
         super("div", ["GenreListEditor", "flex-column"]);
 
         this.addhandler    = addhandler;
         this.removehandler = removehandler;
+        this.renamehandler = renamehandler;
         this.selecthandler = selecthandler;
 
         this.headelement  = document.createElement("span");
@@ -145,6 +146,47 @@ class GenreListEditor extends Element
         {
             this.onAdd();
         }
+        return;
+    }
+
+
+
+    // TODO: Something like a dedicated "EditableElement" would be useful
+    // Double click on the tags name -> start renaming-mode
+    onStartRenaming(element, MDBTag)
+    {
+        if(typeof this.renamehandler !== "function")
+            return;
+
+        let inputelement = document.createElement("input");
+        inputelement.value   = MDBTag.name;
+        inputelement.onkeyup = (event)=>
+            {
+                let keycode = event.which || event.keyCode;
+
+                if(keycode != 13 && keycode != 27)
+                    return;
+
+                let name = document.createElement("span");
+                name.ondblclick = ()=>{this.onStartRenaming(name, MDBTag);}
+
+                if(keycode == 13 /*ENTER*/)
+                {
+                    if(typeof this.renamehandler === "function")
+                        this.renamehandler(MDBTag.id, event.target.value);
+                    name.innerText = event.target.value;
+                }
+                else if(keycode == 27 /*ESC*/)
+                {
+                    name.innerText = MDBTag.name;
+                }
+
+                event.target.replaceWith(name);
+                event.preventDefault();
+                return;
+
+            }
+        element.replaceWith(inputelement);
         return;
     }
 
@@ -270,7 +312,8 @@ class GenreListEditor extends Element
         element.onclick = ()=>{this.onSelect(MDBTag);};
 
         let name = document.createElement("span");
-        name.innerText = MDBTag.name;
+        name.innerText  = MDBTag.name;
+        name.ondblclick = ()=>{this.onStartRenaming(name, MDBTag);}
 
         let infos = document.createElement("div");
         infos.classList.add("taginfos");

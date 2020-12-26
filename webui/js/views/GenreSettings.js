@@ -32,13 +32,15 @@ class GenreSettings extends MainView
         this.genrelisteditor    = new GenreListEditor("Genres",
             (MDBTag)=>{return this.onSelectGenre(MDBTag);},
             (tagname)=>{this.onAddGenre(tagname);},
-            (tagid)=>{this.onRemoveGenre(tagid);}
+            (tagid)=>{this.onRemoveGenre(tagid);},
+            (tagid, newname)=>{this.onRenameGenre(tagid, newname);}
         );
 
         this.subgenrelisteditor = new GenreListEditor("Sub-Genres",
             null,
             (tagname)=>{this.onAddSubgenre(tagname);},
-            (tagid)=>{this.onRemoveSubgenre(tagid);}
+            (tagid)=>{this.onRemoveSubgenre(tagid);},
+            (tagid, newname)=>{this.onRenameSubgenre(tagid, newname);}
         );
 
         let settingsbox = document.createElement("div");
@@ -123,6 +125,15 @@ class GenreSettings extends MainView
     onRemoveSubgenre(tagid)
     {
         MusicDB_Request("DeleteTag", "UpdateTags", {tagid: tagid}, {origin: "GenreSettings"});
+    }
+
+    onRenameGenre(tagid, newname)
+    {
+        window.console && console.log(`Rename Genre ${tagid} to "${newname}"`);
+    }
+    onRenameSubgenre(tagid, newname)
+    {
+        window.console && console.log(`Rename Sub-Genre ${tagid} to "${newname}"`);
     }
 
 
