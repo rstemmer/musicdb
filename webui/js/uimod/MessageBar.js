@@ -40,9 +40,18 @@ class MessageBar
         this.Hide();
     }
 
+
+
     GetHTMLElement()
     {
         return this.element;
+    }
+
+
+
+    UpdateMessage(htmlmessage)
+    {
+        this.message.innerHTML = htmlmessage;
     }
 
 
