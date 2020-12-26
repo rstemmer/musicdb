@@ -57,16 +57,9 @@ class AlbumView extends MainView2
         this.settings_tags.classList.add("flex-grow");
         this.settings_color = document.createElement("div");
         this.settings_color.classList.add("flex-grow");
-        //this.settings_hide  = document.createElement("div");
-        //this.settings_hide.classList.add("flex-grow");
         this.settings_hide  = new SettingsCheckbox(
             "Hide Album",
-            "When the album is hidden, it will not be shown in the Artists list.</br>Furthermore it is not considered by the random song selection algorithm.</br>You can make the album visible again with the MusicDB Management tools (See Main Menu).",
-            (state)=>{
-                if(state == true) window.console && console.log("Hide Album");
-                else              window.console && console.log("Show Album");
-            }
-        );
+            "When the album is hidden, it will not be shown in the Artists list.</br>Furthermore it is not considered by the random song selection algorithm.</br>You can make the album visible again with the MusicDB Management tools (See Main Menu).");
 
         this.settings   = new TabSelect();
         this.tagstabid  = this.settings.AddTab(new SVGIcon("Tags"),    "Genre Tags",   this.settings_tags, true);
@@ -142,6 +135,11 @@ class AlbumView extends MainView2
             this.settings_color.appendChild(this.colorselect.GetHTMLElement());
 
             this.settings_hide.SetState(MDBAlbum.hidden);
+            this.settings_hide.SetHandler((state)=>
+                {
+                    MusicDB_Call("HideAlbum", {albumid: MDBAlbum.id, hide: state});
+                }
+            );
 
             this.genreedit          = new TagListEdit("genre");
             this.subgenreedit       = new TagListEdit("subgenre");
