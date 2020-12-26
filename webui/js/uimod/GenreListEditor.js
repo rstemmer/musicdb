@@ -25,12 +25,14 @@ class GenreListEditor extends Element
     //                When selecthandler returns a boolean true, then the selected entry gets highlighted
     //                A boolean false un-highlights all entries. All other return values will be ignored
     // addhandler: function called when new tag shall be added - parameter is an object describing the tag
+    // removehandler: function called when tag shall be removed - parameter is an object describing the tag
     // handler can be null
-    constructor(headline, selecthandler, addhandler)
+    constructor(headline, selecthandler, addhandler, removehandler)
     {
         super("div", ["GenreListEditor", "flex-column"]);
 
         this.addhandler    = addhandler;
+        this.removehandler = removehandler;
         this.selecthandler = selecthandler;
 
         this.headelement  = document.createElement("span");
@@ -49,16 +51,67 @@ class GenreListEditor extends Element
 
         this.inputelement = document.createElement("input");
         this.inputelement.classList.add("flex-grow");
+        this.inputelement.oninput = ()=>{this.onInput()};
+        this.inputelement.onkeyup = (event)=>{this.onKeyUp(event)};
         this.addbutton    = new SVGButton("Add", ()=>{this.onAdd();});
 
         this.inputbar.appendChild(this.inputelement);
         this.inputbar.appendChild(this.addbutton.GetHTMLElement());
 
+        this.msg_added  = new MessageBarConfirm("");
+        this.msg_double = new MessageBarError("");
+
         this.element.appendChild(this.headelement);
         this.element.appendChild(this.listelement);
+        this.element.appendChild(this.msg_added.GetHTMLElement());
+        this.element.appendChild(this.msg_double.GetHTMLElement());
         this.element.appendChild(this.inputbar);
 
         this.list = new Array();
+    }
+
+
+
+    onInput()
+    {
+        let tagname = this.inputelement.value;
+
+        // Is there a name?
+        if(tagname.length == 0)
+        {
+            this.inputelement.dataset.valid = "";
+            return;
+        }
+
+        // Check if name already exists
+        for(let entry of this.list)
+        {
+            if(entry.tag.name == tagname)
+            {
+                this.msg_double.UpdateMessage(`Tag "${tagname}" already exists!`);
+                this.msg_double.Show();
+                this.inputelement.dataset.valid = false;
+                return;
+            }
+        }
+        this.msg_double.Hide();
+
+        // Seems to be Valid
+        this.inputelement.dataset.valid = true;
+        return;
+    }
+
+
+
+    onKeyUp(event)
+    {
+        let keycode = event.which || event.keyCode;
+
+        if(keycode == 13 /*ENTER*/)
+        {
+            this.onAdd();
+        }
+        return;
     }
 
 
@@ -90,17 +143,38 @@ class GenreListEditor extends Element
         if(typeof this.addhandler != "function")
             return;
 
-        // TODO: Create tag
-        let tag;
+        if(this.inputelement.dataset.valid != "true") // could be undefined
+            return;
 
-        this.addhandler(tag);
+        // Add Tag
+        let tagname = this.inputelement.value;
+        this.addhandler(tagname);
+
+        // Clear input after adding tag
+        this.inputelement.dataset.valid = "";
+        this.inputelement.value         = "";
+
+        // TODO: Show info that tag was added
+        this.msg_added.UpdateMessage(`Tag "${tagname}" added.`);
+        this.msg_added.Show();
     }
 
 
 
-    onRemove(MDBTag)
+    onRemove(MDBTag, numdependencies)
     {
-        // TODO: Remove Tag
+        if(typeof this.removehandler != "function")
+            return;
+
+        if(numdependenvies > 0)
+        {
+            // Ask for confirmation
+            return;
+        }
+
+        // Remove Tag
+        let tagid = MDBTag.id;
+        this.removehandler(tagid);
     }
 
 
@@ -152,8 +226,6 @@ class GenreListEditor extends Element
         let name = document.createElement("span");
         name.innerText = MDBTag.name;
 
-        let removebutton = new SVGButton("Remove", ()=>{this.onRemove(MDBTag);});
-
         let infos = document.createElement("div");
         infos.classList.add("taginfos");
         infos.classList.add("flex-row");
@@ -168,8 +240,11 @@ class GenreListEditor extends Element
         if(infotext == "") infotext = "<span>This tag is not used yet</span>"
         infos.innerHTML = infotext;
 
+        let numdependencies = numsongs + numalbums + numvideos + numchildren;
+        let removebutton    = new SVGButton("Remove", ()=>{this.onRemove(MDBTag, numdependencies);});
+
         // When there are dependencies, make the remove-button a bit less opaque
-        if(numsongs + numalbums + numvideos + numchildren > 0)
+        if(numdependencies > 0)
         {
             removebutton.SetColor("var(--color-red)");
             removebutton.GetHTMLElement().classList.add("hovpacity");
