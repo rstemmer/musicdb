@@ -35,6 +35,11 @@
     flex-grow:      1;
 }
 
+.flex-wrap
+{
+    flex-wrap:      wrap;
+}
+
 .flex-center
 {
     display:            flex;
