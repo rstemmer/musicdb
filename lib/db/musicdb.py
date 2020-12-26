@@ -2585,6 +2585,13 @@ class MusicDatabase(Database):
 
     def DeleteTag(self, tagname, tagclass):
         """
+        See :meth:`~DeleteTagByName`
+        """
+        logging.debug("DEPRECATED! Please call DeleteTagByName instead (same behavior)");
+        return self.DeleteTag(tagname, tagclass)
+
+    def DeleteTagByName(self, tagname, tagclass):
+        """
         Deletes an entry from the tags-table with the name *tagname* and that belongs to *tagclass*.
 
         .. warning::
