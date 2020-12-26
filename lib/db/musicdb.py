@@ -1150,11 +1150,17 @@ class MusicDatabase(Database):
         return self.GetAlbums(artistid)
 
     # returns a list with all artists. Each list element is a dictionary with all columns of the database
-    def GetAlbums(self, artistid = None, withsongs = False):
+    def GetAlbums(self, artistid = None, withsongs = False, hidden = "no"):
         """
         This method returns a list with all albums in the database, or all albums of an artist if *artistid* is not ``None``.
         If the *withsongs* parameter is ``True``, for each album all songs will be included.
         They are added as list into each album entry under the key ``songs``
+
+        The *hidden* parameter is a string that can have the following values to describe how hidden albums should be handled:
+
+            * ``"no"``: No hidden albums included
+            * ``"include"``: Hidden and not hidden albums returned
+            * ``"only"``: Only return hidden albums
 
         Hidden albums are *not* included!
 
@@ -1172,21 +1178,41 @@ class MusicDatabase(Database):
         Args:
             artistid: ID for an artist whose albums shall be returned. If ``None`` the albums get not filtered by *artistid*.
             withsongs (bool): also return all songs of the album.
+            hidden (str): optional modify for handling hidden albums
 
         Returns:
             A list with all non-hidden albums.
 
         Raises:
             TypeError: If *withsongs* is not of type ``bool``
+            TypeError: If *hidden* is not a string
+            ValueError: When *hidden* has not one of the above listed values
         """
         if type(withsongs) != bool:
             raise TypeError("WithSongs must have a boolean value!")
 
+        if type(hidden) != str:
+            raise TypeError("hidden must be a string!");
+
+        if hidden not in ["no", "include", "only"]:
+            raise ValueError("Invalid value for the hidden-parameter: %s"%(str(hidden)))
+
+        if hidden == "no":
+            hiddenmodifier = "hidden = 0"
+        elif hidden == "include":
+            hiddenmodifier = ""
+        elif hidden == "only":
+            hiddenmodifier = "hidden = 1"
+
         if artistid:
-            sql   = "SELECT * FROM albums WHERE artistid = ? AND hidden = 0"
+            sql = "SELECT * FROM albums WHERE artistid = ?"
+            if hiddenmodifier:
+                sql += " AND " + hiddenmodifier
             value = int(artistid)
         else:
-            sql   = "SELECT * FROM albums WHERE hidden = 0"
+            sql = "SELECT * FROM albums"
+            if hiddenmodifier:
+                sql += " WHERE " + hiddenmodifier
             value = None
 
         with MusicDatabaseLock:

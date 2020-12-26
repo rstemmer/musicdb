@@ -26,6 +26,7 @@ Artists
 Albums
 ^^^^^^
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetHiddenAlbums`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.HideAlbum`
@@ -239,6 +240,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetArtistsWithAlbums(applyfilter=True)
         elif fncname == "GetFilteredArtistsWithVideos":
             retval = self.GetFilteredArtistsWithVideos()
+        elif fncname == "GetHiddenAlbums":
+            retval = self.GetHiddenAlbums()
         elif fncname == "GetAlbums":
             retval = self.GetAlbums(args["artistid"], args["applyfilter"])
         elif fncname == "GetAlbum":
@@ -605,6 +608,63 @@ class MusicDBWebSocketInterface(object):
             entry["videos"] = videos
             artistlist.append(entry)
         return artistlist 
+
+
+    def GetHiddenAlbums(self):
+        """
+        GetHiddenAlbums returns a list of all albums that are flagged as *hidden*.
+
+        The list is sorted by artist and release date of the album, starting with the earliest one.
+        Actually the list is sorted by the albums path.
+        Because of the naming scheme it leads to push alphabetic artists order and release-date order.
+
+        Each entry in the list has the following two elements:
+
+            * **album:** An album entry from the database.
+            * **tags:** The returned tag entry by :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbumTags`
+
+        Returns:
+            A list of albums and their tags
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Request("GetHiddenAlbums", "ShowAlbums");
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "GetHiddenAlbums" && sig == "ShowAlbums")
+                    {
+                        for(let listentry of args)
+                        {
+                            let album, tags;
+                            album = listentry.album;
+                            tags  = listentry.tags;
+
+                            console.log("Tags of " + album.name + ":");
+                            console.log(tags);
+                        }
+                    }
+                }
+        """
+        # Get albums by this artist
+        albums = self.database.GetAlbums(hidden="only")
+
+        # sort albums for release year
+        albums = sorted(albums, key = lambda k: k["path"])
+
+        # assign tags to albums
+        albumlist = []
+        for album in albums:
+            tags  = self.GetAlbumTags(album["id"])
+            entry = {}
+            entry["album"]   = album
+            entry["tags"]    = tags
+            albumlist.append(entry)
+
+        return albumlist
 
 
     def GetAlbums(self, artistid, applyfilter=False):
