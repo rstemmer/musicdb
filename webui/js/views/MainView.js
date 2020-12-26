@@ -16,26 +16,16 @@
 
 "use strict";
 
-class MainView
+class MainView extends Element
 {
     constructor(id, headline=null)
     {
+        super("div", ["MainView", "flex-column"], id);
         this.headline   = headline
-        this.element    = document.createElement("div");
-        this.element.classList.add("MainView");
-        this.element.classList.add("flex-column");
-        this.element.id = id;
         if(this.headline != null)
             this.element.appendChild(this.headline.GetHTMLElement());
 
         this.UnlockView();
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
