@@ -58,16 +58,50 @@ class GenreListEditor extends Element
         this.inputbar.appendChild(this.inputelement);
         this.inputbar.appendChild(this.addbutton.GetHTMLElement());
 
-        this.msg_added  = new MessageBarConfirm("");
-        this.msg_double = new MessageBarError("");
+        this.msg_info   = new MessageBarInfo();
+        this.msg_added  = new MessageBarConfirm();
+        this.msg_double = new MessageBarError();
 
         this.element.appendChild(this.headelement);
         this.element.appendChild(this.listelement);
+        this.element.appendChild(this.msg_info.GetHTMLElement());
         this.element.appendChild(this.msg_added.GetHTMLElement());
         this.element.appendChild(this.msg_double.GetHTMLElement());
         this.element.appendChild(this.inputbar);
 
         this.list = new Array();
+    }
+
+
+
+    // This method can be handy when there are external conditions to fulfill until the input element can be used
+    ForceInputElementState(enabled, infomessage=null)
+    {
+        this.inputelement.disabled = !enabled;
+
+        if(enabled == false)
+        {
+            this.inputelement.dataset.valid =  enabled;
+            this.inputelement.value         = "";
+        }
+
+        if(typeof infomessage === "string")
+        {
+            this.msg_info.UpdateMessage(infomessage);
+            this.msg_info.Show();
+        }
+        else
+        {
+            this.msg_info.Hide();
+        }
+        return;
+    }
+
+
+
+    UpdateHeadline(headlinetext)
+    {
+        this.headelement.innerText = headlinetext;
     }
 
 
@@ -154,7 +188,7 @@ class GenreListEditor extends Element
         this.inputelement.dataset.valid = "";
         this.inputelement.value         = "";
 
-        // TODO: Show info that tag was added
+        // Show info that tag was added
         this.msg_added.UpdateMessage(`Tag "${tagname}" added.`);
         this.msg_added.Show();
     }
