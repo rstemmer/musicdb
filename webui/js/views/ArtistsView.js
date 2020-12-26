@@ -228,6 +228,13 @@ class ArtistsView extends LeftView
             if(sig == "UpdateTags") // Is the main genre set still intersecting the selected genres?
                 this.ValidateTile(args.video, args.tags.genres);
         }
+        else if(fnc == "HideAlbum" && sig == "UpdateArtists")
+        {
+            if(mdbmodemanager.GetCurrentMode() == "audio")
+                MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+            else
+                MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+        }
         return;
     }
 }

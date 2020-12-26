@@ -137,7 +137,7 @@ class AlbumView extends MainView2
             this.settings_hide.SetState(MDBAlbum.hidden);
             this.settings_hide.SetHandler((state)=>
                 {
-                    MusicDB_Call("HideAlbum", {albumid: MDBAlbum.id, hide: state});
+                    MusicDB_Broadcast("HideAlbum", "UpdateArtists", {albumid: MDBAlbum.id, hide: state});
                 }
             );
 
