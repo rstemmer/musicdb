@@ -2908,7 +2908,7 @@ class MusicDatabase(Database):
                 sql      = "SELECT * FROM tags WHERE tagid = ?"
                 tagentry = self.GetFromDatabase(sql, mapping["tagid"])
                 if len(tagentry) == 0:
-                    logging.warning("\033[1;33mUnknown tag ID " + str(mapping["tagid"]) + " for " + target + " ID " + str(songid))
+                    logging.warning("\033[1;33mUnknown tag ID " + str(mapping["tagid"]) + " for " + target + " ID " + str(targetid))
                     continue
 
                 tag = self.__TagEntryToDict(tagentry[0])
