@@ -2623,6 +2623,38 @@ class MusicDatabase(Database):
         return None
 
 
+    def DeleteTagById(self, tagid):
+        """
+        This method deletes a tag addressed by its tag ID.
+        Before deleting the tag, this tag as well as its child-tags (sub-genre tag) will be removed from all
+        songs, albums and videos.
+
+        .. warning::
+
+            This method has a very different behavior compared to :meth:`~DeleteTagByName`!
+
+        Args:
+            tagid (int): ID of the tag to delete
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: When *tagid* is not an integer
+        """
+        if type(tagid) != int:
+            raise TypeError("TagID must be an integer!")
+
+        sql = ""
+        sql = ""
+        with MusicDatabaseLock:
+            self.Execute("DELETE FROM tags      WHERE tagid    = ?", tagid)
+            self.Execute("DELETE FROM tags      WHERE parentid = ?", tagid)
+            self.Execute("DELETE FROM albumtags WHERE tagid    = ?", tagid)
+            self.Execute("DELETE FROM songtags  WHERE tagid    = ?", tagid)
+            self.Execute("DELETE FROM videotags WHERE tagid    = ?", tagid)
+        return None
+
 
     def ModifyTag(self, tagname, tagclass, columnname, newvalue):
         """
