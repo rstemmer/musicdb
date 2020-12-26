@@ -64,7 +64,7 @@ class MessageBarInfo extends MessageBar
 {
     constructor(htmlmessage=null)
     {
-        super(new SVGIcon("MusicDB"), htmlmessage);
+        super(new SVGIcon("StatusInfo"), htmlmessage);
         this.element.dataset.messagetype = "info";
     }
 }
