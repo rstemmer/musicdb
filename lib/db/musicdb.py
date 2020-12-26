@@ -2708,6 +2708,53 @@ class MusicDatabase(Database):
         return None
 
 
+    def ModifyTagById(self, tagid, columnname, newvalue):
+        """
+        This method allows to modify most of the attributes of a tag.
+        The *tagid* addresses the tag, *columnname* the attribute.
+        *newvalue* is the new attribute set for the tag.
+
+        In case the icon gets modified, take care that the icon type is up to date. (update order does not matter).
+
+        Args:
+            tagid (int): ID of the tag to modify
+            columnname (str): The name of the attribute that shall be modified
+            newvalue: The new value. Read the introduction at the top of the document to see what values are possible for a specific attribute
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: if *tagid* is not an integer
+            ValueError: If columnname is not "name", "parentid", "icontype", "icon", "color", "posx", "posy"
+            ValueError: If columnname is "color" and *newvalue* is not a valid #RRGGBB-Formated string
+            ValueError: If columnname is "icontype" and *newvalue* is not valid
+        """
+        if type(tagid) != int:
+            raise TypeError("Tag ID must be an integer!")
+
+        if columnname not in ["name", "parentid", "icontype", "icon", "color", "posx", "posy"]:
+            raise ValueError("Invalid column name \"%s\"!", columnname)
+
+        if columnname == "color":
+            if newvalue[0] != "#":
+                raise ValueError("First char in color-code must be \'#\': #RRGGBB !")
+            if len(newvalue) != 7:
+                raise ValueError("Color-code must have a length of 7 character: #RRGGBB !")
+
+        if columnname == "icontype":
+            if newvalue not in [self.TAG_ICONTYPE_UNICODE, self.TAG_ICONTYPE_HTML]:
+                raise ValueError("Invalid icontype")
+
+        data = {}
+        data["value"] = newvalue
+        data["id"]    = tagid
+        sql = "UPDATE tags SET " + columnname + "=:value WHERE tagid=:id"
+        with MusicDatabaseLock:
+            self.Execute(sql, data)
+        return None
+
+
 
     def SetTargetTag(self, target, targetid, tagid, approval=1, confidence=None):
         """
