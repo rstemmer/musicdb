@@ -129,11 +129,11 @@ class GenreSettings extends MainView
 
     onRenameGenre(tagid, newname)
     {
-        window.console && console.log(`Rename Genre ${tagid} to "${newname}"`);
+        MusicDB_Request("ModifyTag", "UpdateTags", {tagid: tagid, attribute: "name", value: newname}, {origin: "GenreSettings"});
     }
     onRenameSubgenre(tagid, newname)
     {
-        window.console && console.log(`Rename Sub-Genre ${tagid} to "${newname}"`);
+        MusicDB_Request("ModifyTag", "UpdateTags", {tagid: tagid, attribute: "name", value: newname}, {origin: "GenreSettings"});
     }
 
 
@@ -142,9 +142,6 @@ class GenreSettings extends MainView
     {
         if(fnc == "GetTags")
         {
-            window.console && console.log(args);
-            window.console && console.log(pass);
-
             // When tags were added, update the view
             if(pass != null && pass.origin == "GenreSettings")
                 MusicDB_Request("GetTagsStatistics", "UpdateTagsStatistics");
@@ -155,7 +152,6 @@ class GenreSettings extends MainView
         }
         else if(fnc == "GetTagsStatistics")
         {
-            window.console && console.log(args);
             this.tagsstats = args;
             this.UpdateView();
         }
