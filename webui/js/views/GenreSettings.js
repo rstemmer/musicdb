@@ -70,6 +70,7 @@ class GenreSettings extends MainView
         {
             // Disable input for sub-genres when no genre is selected
             this.subgenrelisteditor.ForceInputElementState(false, "Select a genre to edit its sub-genres");
+            this.subgenrelisteditor.UpdateHeadline(`Sub-Genres`);
             return;
         }
 
@@ -95,23 +96,25 @@ class GenreSettings extends MainView
 
     onAddGenre(tagname)
     {
-        window.console && console.log(`Add Genre "${tagname}"`);
         MusicDB_Request("AddGenre", "UpdateTags", {name: tagname}, {origin: "GenreSettings"});
     }
     onAddSubgenre(tagname)
     {
-        window.console && console.log(`Add Sub-Genre "${tagname}" with parend "${this.selectedgenre.name}"`);
         MusicDB_Request("AddSubgenre", "UpdateTags", {name: tagname, parentname: this.selectedgenre.name}, {origin: "GenreSettings"});
     }
 
     onRemoveGenre(tagid)
     {
-        window.console && console.log(`Remove Genre ${tagid}`);
         MusicDB_Request("DeleteTag", "UpdateTags", {tagid: tagid}, {origin: "GenreSettings"});
+
+        if(tagid == this.selectedgenre.id)
+        {
+            this.selectedgenre = null;
+            this.UpdateSubgenreEditor();
+        }
     }
     onRemoveSubgenre(tagid)
     {
-        window.console && console.log(`Remove Sub-Genre ${tagid}`);
         MusicDB_Request("DeleteTag", "UpdateTags", {tagid: tagid}, {origin: "GenreSettings"});
     }
 

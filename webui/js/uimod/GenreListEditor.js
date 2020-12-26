@@ -207,6 +207,8 @@ class GenreListEditor extends Element
 
     onRemove(MDBTag, numdependencies)
     {
+        event.stopPropagation();
+
         if(typeof this.removehandler != "function")
             return;
 
