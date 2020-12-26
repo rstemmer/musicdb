@@ -28,6 +28,7 @@ Albums
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbum`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.HideAlbum`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.Find`
@@ -350,6 +351,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetSong(args["songid"])
             method = "broadcast"
             fncname= "GetSong"
+        elif fncname == "HideAlbum":
+            retval = self.HideAlbum(args["albumid"], args["hide"])
         elif fncname == "SetAlbumColor":
             retval = self.SetAlbumColor(args["albumid"], args["colorname"], args["color"])
         elif fncname == "SetVideoColor":
@@ -2576,6 +2579,33 @@ class MusicDBWebSocketInterface(object):
         except Exception as e:
             logging.exception("Setting Lyrics failed with error: %s", str(e))
         return None 
+
+
+
+    def HideAlbum(self, albumid, hide):
+        """
+        Hides or shows an album depending on the *hide* state.
+        When ``hide == True`` the album gets hidden,
+        when ``hide == False`` the hidden state gets reset to make the album visible again.
+        
+        Args:
+            albumid (int): ID of the album
+            hide (boolean): Hide or Show the album
+
+        Return:
+            ``None``
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Call("HideAlbum", {albumid: 1000, hide: false});
+        """
+        if type(hide) != bool:
+            logging.warning("Hide-state is not a boolean, it is of type %s!", str(type(hide)));
+
+        self.database.SetAlbumHiddenState(albumid, hide)
+        return None
+
 
 
     def SetAlbumColor(self, albumid, colorname, color):
