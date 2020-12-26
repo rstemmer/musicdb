@@ -77,6 +77,7 @@ class GenreSettings extends MainView
         this.subgenrelisteditor.UpdateList(subgenres, this.tagsstats);
         this.subgenrelisteditor.ForceInputElementState(true);   // Enable input for sub-genres
         this.subgenrelisteditor.UpdateHeadline(`${this.selectedgenre.name} Sub-Genres`);
+        this.genrelisteditor.ForceSelection(this.selectedgenre);// Reselect after update
         return;
     }
 
@@ -95,12 +96,12 @@ class GenreSettings extends MainView
     onAddGenre(tagname)
     {
         window.console && console.log(`Add Genre "${tagname}"`);
-        //MusicDB_Call("AddGenre", {name: tagname});
+        MusicDB_Request("AddGenre", "UpdateTags", {name: tagname}, {origin: "GenreSettings"});
     }
     onAddSubgenre(tagname)
     {
         window.console && console.log(`Add Sub-Genre "${tagname}" with parend "${this.selectedgenre.name}"`);
-        //MusicDB_Call("AddSubGenre", {name: tagname, parentname: this.selectedgenre.name});
+        MusicDB_Request("AddSubgenre", "UpdateTags", {name: tagname, parentname: this.selectedgenre.name}, {origin: "GenreSettings"});
     }
 
     onRemoveGenre(tagid)
@@ -119,6 +120,12 @@ class GenreSettings extends MainView
         if(fnc == "GetTags")
         {
             window.console && console.log(args);
+            window.console && console.log(pass);
+
+            // When tags were added, update the view
+            if(pass != null && pass.origin == "GenreSettings")
+                MusicDB_Request("GetTagsStatistics", "UpdateTagsStatistics");
+
             this.genres    = args.genres;
             this.subgenres = args.subgenres;
             this.UpdateView();

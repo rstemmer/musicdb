@@ -150,24 +150,34 @@ class GenreListEditor extends Element
 
 
 
+    // When highlight is false, nothing gets selected, otherwise the MDBTag
+    ForceSelection(MDBTag, highlight=true)
+    {
+        if(typeof MDBTag !== "object")
+            return;
+
+        for(let entry of this.list)
+        {
+            if(highlight === true && entry.tag.id == MDBTag.id)
+                entry.element.dataset.highlight = true;
+            else
+                entry.element.dataset.highlight = false;
+        }
+        return;
+    }
+
+
+
     onSelect(MDBTag)
     {
-        if(typeof this.selecthandler != "function")
+        if(typeof this.selecthandler !== "function")
             return;
 
         let highlight = this.selecthandler(MDBTag);
         if(typeof highlight !== "boolean")
             return;
 
-        for(let entry of this.list)
-        {
-            entry.element.dataset.highlight = false;
-            if(highlight === true)
-            {
-                if(entry.tag == MDBTag)
-                    entry.element.dataset.highlight = true;
-            }
-        }
+        this.ForceSelection(MDBTag, highlight);
     }
 
 
