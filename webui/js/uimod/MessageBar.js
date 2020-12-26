@@ -36,6 +36,8 @@ class MessageBar extends Element
         this.element.appendChild(this.message);
         this.element.appendChild(this.closebutton.GetHTMLElement());
 
+        this.autohidedelay = null;
+
         this.Hide();
     }
 
@@ -48,10 +50,31 @@ class MessageBar extends Element
 
 
 
+    // When delay != null, then a timer automatically hides the message after delay milliseconds
+    SetTimer(delay)
+    {
+        this.autohidedelay = delay;
+    }
+
+
+
     Show()
     {
         this.element.style.display = "flex";
+
+        if(typeof this.autohidedelay === "number")
+        {
+            this.closebutton.Hide();
+            window.setTimeout(()=>{this.Hide()}, this.autohidedelay);
+        }
+        else
+        {
+            this.closebutton.Show();
+        }
     }
+
+
+
     Hide()
     {
         this.element.style.display = "none";
