@@ -17,10 +17,11 @@
 "use strict";
 
 
-class MessageBar
+class MessageBar extends Element
 {
     constructor(svgicon, htmlmessage)
     {
+        super("div", ["MessageBar", "flex-row"]);
         this.icon = svgicon;
         
         this.message = document.createElement("div");
@@ -30,21 +31,11 @@ class MessageBar
         this.closebutton = new SVGButton("Approve", ()=>{this.Hide();});
         this.closebutton.SetTooltip("Confirm and hide this message");
 
-        this.element    = document.createElement("div");
-        this.element.classList.add("MessageBar");
-        this.element.classList.add("flex-row");
         this.element.appendChild(this.icon.GetHTMLElement());
         this.element.appendChild(this.message);
         this.element.appendChild(this.closebutton.GetHTMLElement());
 
         this.Hide();
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
