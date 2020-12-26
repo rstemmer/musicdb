@@ -20,8 +20,14 @@ class GenreSettings extends MainView
 {
     constructor()
     {
-        let headline = new SimpleMainViewHeadline("Genre and Subgenre Manager")
+        let headline = new SimpleMainViewHeadline("Genre and Subgenre Manager");
         super("GenreSettings", headline);
+
+        let infotext = document.createElement("span");
+        infotext.classList.add("flex");
+        infotext.classList.add("smallfont");
+        infotext.classList.add("hlcolor");
+        infotext.innerText = "Select genre to edit its sub-genres. Double click on name for renaming.";
 
         this.genrelisteditor    = new GenreListEditor("Genres",
             (MDBTag)=>{return this.onSelectGenre(MDBTag);},
@@ -43,6 +49,7 @@ class GenreSettings extends MainView
         settingsbox.appendChild(this.subgenrelisteditor.GetHTMLElement());
 
         this.element.appendChild(settingsbox);
+        //this.element.appendChild(infotext);
 
         this.genres    = [];
         this.subgenres = [];
