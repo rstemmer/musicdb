@@ -2738,6 +2738,7 @@ class MusicDatabase(Database):
             ValueError: If ``approval`` not in ``{0,1,2}``
             ValueError: If ``targetid == None or tagid == None``
             AssertionError: If there already exists more than one entry
+            ValueError: When there is no tag existing with the given tagid
         """
         if targetid == None or tagid == None:
             raise TypeError("Target ID and Tag ID must have a value!")
@@ -2763,9 +2764,15 @@ class MusicDatabase(Database):
         else:
             raise ValueError("target must be \"song\", \"video\" or \"album\"!")
 
-        # check if already tagged
-        sql = "SELECT * FROM " + tablename + " WHERE " + idname + " = ? AND tagid = ?"
         with MusicDatabaseLock:
+            # check if tag exists
+            sql = "SELECT * FROM tags WHERE tagid = ?"
+            result = self.GetFromDatabase(sql, tagid)
+            if not result:
+                raise ValueError("Invalid tag ID %s! There is no tag with this ID."%(str(tagid)))
+
+            # check if already tagged
+            sql = "SELECT * FROM " + tablename + " WHERE " + idname + " = ? AND tagid = ?"
             result = self.GetFromDatabase(sql, (targetid, tagid))
             if len(result) > 1:
                 raise AssertionError("More that one tag entry found!")
