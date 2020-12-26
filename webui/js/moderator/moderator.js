@@ -30,6 +30,7 @@ let queuecontrolview    = new QueueControlView();
 let webuisettings       = new WebUISettings();
 let genresettings       = new GenreSettings();
 let hiddenalbums        = new HiddenAlbums();
+let moodmanager         = new MoodManager();
 
 let configuration       = null; // Needs to be loaded from the Server
 
@@ -211,6 +212,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     webuisettings.onMusicDBMessage(fnc, sig, args, pass);
     genresettings.onMusicDBMessage(fnc, sig, args, pass);
     hiddenalbums.onMusicDBMessage(fnc, sig, args, pass);
+    moodmanager.onMusicDBMessage(fnc, sig, args, pass);
 
 
     // Handle Messages form the server

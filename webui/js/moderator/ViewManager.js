@@ -110,63 +110,43 @@ class MainViewManager extends ViewManager
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "GetAlbum")
+        if(fnc == "GetAlbum" && sig == "ShowAlbum")
         {
-            if(sig == "ShowAlbum")
-            {
-                this.MountView(albumview);
-            }
+            this.MountView(albumview);
         }
-        else if(fnc == "GetVideo")
+        else if(fnc == "GetVideo" && sig == "ShowVideo")
         {
-            if(sig == "ShowVideo")
-            {
-                this.MountView(videoview);
-            }
+            this.MountView(videoview);
         }
-        else if(fnc == "GetSongLyrics")
+        else if(fnc == "GetSongLyrics" && sig == "ShowLyrics")
         {
-            if(sig == "ShowLyrics")
-            {
-                this.MountView(lyricsview);
-            }
+            this.MountView(lyricsview);
         }
-        else if(fnc == "Find")
+        else if(fnc == "Find" && sig == "ShowResults")
         {
-            if(sig == "ShowResults")
-            {
-                this.MountView(searchresultsview);
-            }
+            this.MountView(searchresultsview);
         }
-        else if(fnc == "GetSongRelationship")
+        else if(fnc == "GetSongRelationship" && sig == "ShowSongRelationship")
         {
-            if(sig == "ShowSongRelationship")
-            {
-                this.MountView(songrelationsview);
-            }
+            this.MountView(songrelationsview);
         }
 
         // Settings
-        else if(fnc == "LoadWebUIConfiguration")
+        else if(fnc == "LoadWebUIConfiguration" && sig == "ShowWebUISettings")
         {
-            if(sig == "ShowWebUISettings")
-            {
-                this.MountView(webuisettings);
-            }
+            this.MountView(webuisettings);
         }
-        else if(fnc == "GetTags")
+        else if(fnc == "GetTags" && sig == "ShowGenreSettings")
         {
-            if(sig == "ShowGenreSettings")
-            {
-                this.MountView(genresettings);
-            }
+            this.MountView(genresettings);
         }
-        else if(fnc == "GetHiddenAlbums")
+        else if(fnc == "GetHiddenAlbums" && sig == "ShowHiddenAlbums")
         {
-            if(sig == "ShowHiddenAlbums")
-            {
-                this.MountView(hiddenalbums);
-            }
+            this.MountView(hiddenalbums);
+        }
+        else if(fnc == "GetTags" && sig == "ShowMoodManager")
+        {
+            this.MountView(moodmanager);
         }
         return;
     }

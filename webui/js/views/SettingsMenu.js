@@ -50,6 +50,14 @@ class SettingsMenu extends LeftView
             "Manage, Add and Remove Genres and Subgenres");
 
         this.AddMenuEntry(
+            new SVGIcon("Tags"),
+            "Mood Manager",
+            ()=>{
+                MusicDB_Request("GetTags", "ShowMoodManager");
+                },
+            "Manage, Add and Remove Mood Flags");
+
+        this.AddMenuEntry(
             new SVGIcon("Hide"),
             "Hidden Albums",
             ()=>{
