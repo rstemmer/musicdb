@@ -55,6 +55,7 @@ class GenreListEditor extends Element
         this.inputelement.oninput = ()=>{this.onInput()};
         this.inputelement.onkeyup = (event)=>{this.onKeyUp(event)};
         this.addbutton    = new SVGButton("Add", ()=>{this.onAdd();});
+        this.addbutton.SetTooltip("Create new Tag with the given name");
 
         this.inputbar.appendChild(this.inputelement);
         this.inputbar.appendChild(this.addbutton.GetHTMLElement());
@@ -313,6 +314,7 @@ class GenreListEditor extends Element
 
         let name = document.createElement("span");
         name.innerText  = MDBTag.name;
+        name.title      = "Double Click to rename the Tag\n(Enter to confirm, ESC to cancle renaming)"
         name.ondblclick = ()=>{this.onStartRenaming(name, MDBTag);}
 
         let infos = document.createElement("div");
@@ -337,6 +339,11 @@ class GenreListEditor extends Element
         {
             removebutton.SetColor("var(--color-red)");
             removebutton.GetHTMLElement().classList.add("hovpacity");
+            removebutton.SetTooltip("Delete Tag (and sub-tags) and remove Tag from all songs, albums and videos");
+        }
+        else
+        {
+            removebutton.SetTooltip("Delete Tag");
         }
 
         element.appendChild(name);
