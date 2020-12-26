@@ -64,6 +64,8 @@ class GenreListEditor extends Element
         this.msg_added  = new MessageBarConfirm();
         this.msg_double = new MessageBarError();
 
+        this.msg_added.SetTimer(3000/*ms*/);
+
         this.element.appendChild(this.headelement);
         this.element.appendChild(this.listelement);
         this.element.appendChild(this.msg_info.GetHTMLElement());
