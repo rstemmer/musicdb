@@ -18,8 +18,16 @@
 
 
 
-#HiddenAlbums
+#HiddenAlbums .albumsbox
 {
+    margin:         0 1.5rem;
+    overflow:       scroll;
+    align-content:  flex-start;
+}
+
+#HiddenAlbums .albumsbox > div
+{
+    margin:         0.5rem;
 }
 
 

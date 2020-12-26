@@ -23,11 +23,27 @@ class HiddenAlbums extends MainView
         let headline = new SimpleMainViewHeadline("Hidden Albums");
         super("HiddenAlbums", headline);
 
-        let settingsbox = document.createElement("div");
-        settingsbox.classList.add("flex-row");
-        settingsbox.classList.add("flex-grow");
+        this.albumsbox = document.createElement("div");
+        this.albumsbox.classList.add("flex-row");
+        this.albumsbox.classList.add("flex-grow");
+        this.albumsbox.classList.add("flex-wrap");
+        this.albumsbox.classList.add("albumsbox");
 
-        this.element.appendChild(settingsbox);
+        this.element.appendChild(this.albumsbox);
+    }
+
+
+
+    UpdateView(albumslist)
+    {
+        this.albumsbox.innerHTML = "";
+        for(let entry of albumslist)
+        {
+            let MDBAlbum = entry.album;
+            let MDBTags  = entry.tags;
+            let tile = new AlbumTile(MDBAlbum, ()=>{window.console&&console.log(`Clicked on ${MDBAlbum.name}`);});
+            this.albumsbox.appendChild(tile.GetHTMLElement());
+        }
     }
 
 
@@ -36,7 +52,7 @@ class HiddenAlbums extends MainView
     {
         if(fnc == "GetHiddenAlbums" && sig == "ShowHiddenAlbums")
         {
-            window.console && console.log(args);
+            this.UpdateView(args);
         }
         return;
     }
