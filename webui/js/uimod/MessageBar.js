@@ -19,13 +19,14 @@
 
 class MessageBar extends Element
 {
-    constructor(svgicon, htmlmessage)
+    constructor(svgicon, htmlmessage=null)
     {
         super("div", ["MessageBar", "flex-row"]);
         this.icon = svgicon;
         
         this.message = document.createElement("div");
-        this.message.innerHTML = htmlmessage;
+        if(typeof htmlmessage === "string")
+            this.message.innerHTML = htmlmessage;
         this.message.classList.add("message");
 
         this.closebutton = new SVGButton("Approve", ()=>{this.Hide();});
@@ -61,7 +62,7 @@ class MessageBar extends Element
 
 class MessageBarInfo extends MessageBar
 {
-    constructor(htmlmessage)
+    constructor(htmlmessage=null)
     {
         super(new SVGIcon("MusicDB"), htmlmessage);
         this.element.dataset.messagetype = "info";
@@ -72,7 +73,7 @@ class MessageBarInfo extends MessageBar
 
 class MessageBarWarning extends MessageBar
 {
-    constructor(htmlmessage)
+    constructor(htmlmessage=null)
     {
         super(new SVGIcon("StatusBad"), htmlmessage);
         this.element.dataset.messagetype = "warning";
@@ -83,7 +84,7 @@ class MessageBarWarning extends MessageBar
 
 class MessageBarError extends MessageBar
 {
-    constructor(htmlmessage)
+    constructor(htmlmessage=null)
     {
         super(new SVGIcon("StatusBad"), htmlmessage);
         this.element.dataset.messagetype = "error";
@@ -94,7 +95,7 @@ class MessageBarError extends MessageBar
 
 class MessageBarConfirm extends MessageBar
 {
-    constructor(htmlmessage)
+    constructor(htmlmessage=null)
     {
         super(new SVGIcon("StatusGood"), htmlmessage);
         this.element.dataset.messagetype = "confirm";
