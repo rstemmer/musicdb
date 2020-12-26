@@ -64,7 +64,7 @@ class AlbumView extends MainView2
         this.settings   = new TabSelect();
         this.tagstabid  = this.settings.AddTab(new SVGIcon("Tags"),    "Genre Tags",   this.settings_tags, true);
         this.colortabid = this.settings.AddTab(new SVGIcon("Artwork"), "Color Scheme", this.settings_color);
-        this.hidetabid  = this.settings.AddTab(new SVGIcon("MusicDB"), "Hide Album",   this.settings_hide.GetHTMLElement());
+        this.hidetabid  = this.settings.AddTab(new SVGIcon("Hide"),    "Hide Album",   this.settings_hide.GetHTMLElement());
 
         // Show settings on right click
         this.headline.SetRightClickCallback((event)=>{this.settings.ToggleVisibility(); event.preventDefault();});
