@@ -161,6 +161,13 @@ class MainViewManager extends ViewManager
                 this.MountView(genresettings);
             }
         }
+        else if(fnc == "GetHiddenAlbums")
+        {
+            if(sig == "ShowHiddenAlbums")
+            {
+                this.MountView(hiddenalbums);
+            }
+        }
         return;
     }
 

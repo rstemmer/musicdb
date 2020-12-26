@@ -48,6 +48,14 @@ class SettingsMenu extends LeftView
                 MusicDB_Request("GetTagsStatistics", "UpdateTagsStatistics");
                 },
             "Manage, Add and Remove Genres and Subgenres");
+
+        this.AddMenuEntry(
+            new SVGIcon("Hide"),
+            "Hidden Albums",
+            ()=>{
+                MusicDB_Request("GetHiddenAlbums", "ShowHiddenAlbums");
+                },
+            "Show list of hidden albums that can be made visible again");
     }
 
 
