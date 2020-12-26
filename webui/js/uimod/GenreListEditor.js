@@ -210,10 +210,10 @@ class GenreListEditor extends Element
         if(typeof this.removehandler != "function")
             return;
 
-        if(numdependenvies > 0)
+        if(numdependencies > 0)
         {
             // Ask for confirmation
-            return;
+            //return;
         }
 
         // Remove Tag

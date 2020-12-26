@@ -147,6 +147,7 @@ class TagSelection
     Show()
     {
         this.listbox.style.display = "flex";
+        this.Update();  // Update genre lists with latest tags
     }
     Hide()
     {

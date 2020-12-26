@@ -107,10 +107,12 @@ class GenreSettings extends MainView
     onRemoveGenre(tagid)
     {
         window.console && console.log(`Remove Genre ${tagid}`);
+        MusicDB_Request("DeleteTag", "UpdateTags", {tagid: tagid}, {origin: "GenreSettings"});
     }
     onRemoveSubgenre(tagid)
     {
         window.console && console.log(`Remove Sub-Genre ${tagid}`);
+        MusicDB_Request("DeleteTag", "UpdateTags", {tagid: tagid}, {origin: "GenreSettings"});
     }
 
 
