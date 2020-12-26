@@ -126,7 +126,7 @@ class GenreSelectionView
         {
             this.Update(args);
         }
-        else if(fnc == "GetTags" && sig == "NewGenre")
+        else if(fnc == "GetTags" && sig == "UpdateTags")
         {
             this.Update();
         }
