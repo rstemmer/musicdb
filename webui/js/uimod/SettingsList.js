@@ -71,7 +71,7 @@ class SettingsEntry extends Element
 
 class SettingsCheckbox extends SettingsEntry
 {
-    constructor(name, infos, onclick)
+    constructor(name, infos, onclick=null)
     {
         let iconchecked   = new SVGIcon("Checked");
         let iconunchecked = new SVGIcon("Unchecked");
@@ -101,6 +101,13 @@ class SettingsCheckbox extends SettingsEntry
         else
             this.control.appendChild(this.iconunchecked.GetHTMLElement());
         return;
+    }
+
+
+
+    SetHandler(onclick)
+    {
+        this.clickhandler = onclick;
     }
 
 
