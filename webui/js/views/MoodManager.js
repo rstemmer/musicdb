@@ -22,13 +22,50 @@ class MoodManager extends MainView
     {
         let headline = new SimpleMainViewHeadline("Mood Manager");
         super("MoodManager", headline);
+
+        this.addbutton         = new SVGButton("Add",     ()=>{onAddMood();});
+        this.deletebutton      = new SVGButton("Remove",  ()=>{onDeleteMood();});
+        let grp1 = new ToolGroup([this.addbutton, this.deletebutton]);
+
+        this.changecolorbutton = new SVGButton("MusicDB", ()=>{onChangeColor();});
+        this.changeiconbutton  = new SVGButton("MusicDB", ()=>{onChangeIcon();});
+        let grp2 = new ToolGroup([this.changecolorbutton, this.changeiconbutton]);
+
+        this.movebutton_left   = new SVGButton("MusicDB", ()=>{onMoveMood("left" );});
+        this.movebutton_right  = new SVGButton("MusicDB", ()=>{onMoveMood("right");});
+        this.movebutton_up     = new SVGButton("MusicDB", ()=>{onMoveMood("up"   );});
+        this.movebutton_down   = new SVGButton("MusicDB", ()=>{onMoveMood("down" );});
+        let grp3 = new ToolGroup([this.movebutton_left, this.movebutton_right, this.movebutton_up, this.movebutton_down]);
+
+        this.addbutton.SetTooltip(        "Create new flag");
+        this.deletebutton.SetTooltip(     "Delete marked flag");
+        this.changecolorbutton.SetTooltip("Change color of marked flag");
+        this.changeiconbutton.SetTooltip( "Change icon of marked flag");
+        this.movebutton_left.SetTooltip(  "Move marked flag one to the left");
+        this.movebutton_right.SetTooltip( "Move marked flag one to the right");
+        this.movebutton_up.SetTooltip(    "Move marked flag up");
+        this.movebutton_down.SetTooltip(  "Move marked flag down");
+
+        this.toolbar = new ToolBar();
+        this.toolbar.AddButton(grp2);
+        this.toolbar.AddSpacer(true /*grow*/);
+        this.toolbar.AddButton(grp3);
+        this.toolbar.AddSpacer(true /*grow*/);
+        this.toolbar.AddButton(grp1);
+
+        this.table     = new MoodsTable();
+        this.moods     = [];
+        this.moodstats = {};
+
+        this.element.appendChild(this.toolbar.GetHTMLElement());
+        this.element.appendChild(this.table.GetHTMLElement());
     }
 
 
 
-    UpdateView(MDBMoods)
+    UpdateView()
     {
-        this.moods = MDBMoods;
+        this.table.Update(this.moods, this.moodstats);
     }
 
 
@@ -37,9 +74,20 @@ class MoodManager extends MainView
     {
         if(fnc == "GetTags")
         {
+            // When tags were added, update the view
+            if(pass != null && pass.origin == "MoodsSettings")
+                MusicDB_Request("GetTagsStatistics", "UpdateTagsStatistics");
+
             //&& sig == "ShowMoodManager")
             window.console && console.log(args.moods);
-            this.UpdateView(args.moods);
+            this.moods = args.moods;
+            this.UpdateView();
+        }
+        else if(fnc == "GetTagsStatistics")
+        {
+            window.console && console.log(args);
+            this.moodstats = args;
+            this.UpdateView();
         }
         return;
     }

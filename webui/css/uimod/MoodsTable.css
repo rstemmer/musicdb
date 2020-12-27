@@ -16,19 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-
-#MoodManager > .ToolBar
+.MoodsTableRow span+span
 {
-    margin:         0 1.5rem;
+    margin-left:        1.5ch;
 }
 
-#MoodManager > table
+.MoodsTable
 {
-    margin:         1rem 1.5rem;
-    overflow:       scroll;
 }
-
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
