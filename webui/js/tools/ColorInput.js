@@ -18,12 +18,10 @@
 
 class ColorInput extends Element
 {
+    // when label == null, no label will be created
     constructor(label, tooltip, initcolor, onsave, onpreview)
     {
         super("div");
-        this.label          = document.createElement("label");
-        this.label.innerText= label;
-        this.label.title    = tooltip;
 
         this.input          = document.createElement("input");
         this.input.type     = "color";
@@ -35,12 +33,17 @@ class ColorInput extends Element
         this.input.title    = tooltip;
 
         // Connect label and input with random name
-        this.name           = Math.random().toString(16);
-        this.input.name     = this.name;
-        this.label.for      = this.name;
+        if(label != null)
+        {
+            this.label          = document.createElement("label");
+            this.label.innerText= label;
+            this.label.title    = tooltip;
+            this.name           = Math.random().toString(16);
+            this.input.name     = this.name;
+            this.label.for      = this.name;
+            this.element.appendChild(this.label);
+        }
 
-        // Compose final element
-        this.element.appendChild(this.label);
         this.element.appendChild(this.input);
     }
 
