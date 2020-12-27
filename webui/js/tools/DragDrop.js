@@ -64,7 +64,8 @@ class Draggable
 
     onDragStart(ev)
     {
-        ev.dataTransfer.setData("draggableid", ev.target.id);
+        ev.dataTransfer.setData("draggableid",   ev.target.id);
+        ev.dataTransfer.setData("draggabletype", ev.target.dataset.musictype);
         ev.dataTransfer.dropEffect = "move";
 
         // Use data-dragging to make these settings configurable in CSS
@@ -82,8 +83,11 @@ class Draggable
 }
 class DropTarget
 {
-    constructor()
+    // allowedtypes: list of strings with allowed draggable musictypes (like "song", "album")
+    // Only those types of draggable elements are considered
+    constructor(allowedtypes=[])
     {
+        this.allowedtypes = allowedtypes;
     }
 
 
@@ -108,9 +112,18 @@ class DropTarget
 
     onDragEnter(ev)
     {
-        let draggableid = ev.dataTransfer.getData("draggableid");
-        let draggable   = document.getElementById(draggableid);
-        let preview     = draggable.cloneNode(true /* include child nodes */);
+        let draggableid   = ev.dataTransfer.getData("draggableid");
+        let draggabletype = ev.dataTransfer.getData("draggabletype");
+
+        // If unsupported type, do nothing
+        if(this.allowedtypes.indexOf(draggabletype) < 0)
+        {
+            ev.preventDefault();
+            return;
+        }
+
+        let draggable     = document.getElementById(draggableid);
+        let preview       = draggable.cloneNode(true /* include child nodes */);
         preview.style.opacity = 0.5;
         this.element.appendChild(preview);
     }
@@ -124,9 +137,17 @@ class DropTarget
 
     onDrop(ev)
     {
-        this.element.innerHTML = "";
+        let draggableid   = ev.dataTransfer.getData("draggableid");
+        let draggabletype = ev.dataTransfer.getData("draggabletype");
         ev.preventDefault();
-        let draggableid = ev.dataTransfer.getData("draggableid");
+
+        // If unsupported type, do nothing
+        if(this.allowedtypes.indexOf(draggabletype) < 0)
+        {
+            return;
+        }
+
+        this.element.innerHTML = "";
         this.onTransfer(draggableid);
     }
 
