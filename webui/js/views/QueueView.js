@@ -149,13 +149,9 @@ class QueueDropZone extends DropTarget
 {
     constructor(entryid)
     {
-        super();
-        this.element    = document.createElement("div");
-        this.element.classList.add("QueueTile");
-        this.element.classList.add("QueueDropZone");
+        super("div", ["QueueDropZone", "QueueTile"], "dropzone"+entryid, ["song", "video", "album"]);
         
         this.entryid    = entryid;
-
         this.BecomeDropTarget();
     }
 

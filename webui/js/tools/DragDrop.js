@@ -81,12 +81,16 @@ class Draggable
     }
 
 }
-class DropTarget
+
+
+
+class DropTarget extends Element
 {
     // allowedtypes: list of strings with allowed draggable musictypes (like "song", "album")
     // Only those types of draggable elements are considered
-    constructor(allowedtypes=[])
+    constructor(elementtype, classes, elementid, allowedtypes=[])
     {
+        super(elementtype, classes, elementid);
         this.allowedtypes = allowedtypes;
     }
 
