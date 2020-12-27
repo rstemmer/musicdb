@@ -133,6 +133,15 @@ class MoodsTableRow extends MoodsTableRowBase
         {
             colorstatebutton = new SVGButton("Checked", ()=>{this.onRemoveColor(MDBMood);});
             colorstatebutton.SetTooltip("Remove color from mood so that is adopedt to the color scheme");
+            let colorinput   = new ColorInput(null /*no label*/, "Change Flag-Color", color,
+                ()=>{this.onChangeColor(MDBMood);},
+                ()=>{this.onPreviewColor(MDBMood);}
+                );
+            colorelement = colorinput.GetHTMLElement();
+            //colorelement = document.createElement("span");
+            //colorelement.innerText   = color;
+            //colorelement.style.color = color;
+            icon.GetHTMLElement().style.color = color;
         }
 
         this.SetContent(ICON_COLUMN    , icon.GetHTMLElement());
@@ -161,6 +170,18 @@ class MoodsTableRow extends MoodsTableRowBase
     onRemoveColor(MDBMood)
     {
         window.console && console.log(`Remove color from ${MDBMood.name}`);
+    }
+
+
+    onChangeColor(MDBMood)
+    {
+        window.console && console.log(`Change color from ${MDBMood.name}`);
+    }
+
+
+    onPreviewColor(MDBMood)
+    {
+        window.console && console.log(`Preview color from ${MDBMood.name}`);
     }
 }
 
