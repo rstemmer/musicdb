@@ -1,10 +1,11 @@
 
 "use strict";
 
-class ColorInput
+class ColorInput extends Element
 {
     constructor(label, tooltip, initcolor, onsave, onpreview)
     {
+        super("div");
         this.label          = document.createElement("label");
         this.label.innerText= label;
         this.label.title    = tooltip;
@@ -24,16 +25,8 @@ class ColorInput
         this.label.for      = this.name;
 
         // Compose final element
-        this.element        = document.createElement("div");
         this.element.appendChild(this.label);
         this.element.appendChild(this.input);
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
@@ -74,10 +67,11 @@ class ColorInput
 
 
 
-class ColorSchemeSelection
+class ColorSchemeSelection extends Element
 {
     constructor(musictype, musicid)  // Musictype: audio/video
     {
+        super("div", ["colorsettings", "flex-column"]);
         this.musictype  = musictype;
         this.musicid    = musicid;
 
@@ -102,19 +96,9 @@ class ColorSchemeSelection
             (color)=>{this.onSave("hlcolor", color);}, 
             (color)=>{this.onPreview("hlcolor", color);});
 
-        this.element    = document.createElement("div");
-        this.element.classList.add("flex-cloumn");
-        this.element.classList.add("colorsettings");
         this.element.appendChild(this.bginput.GetHTMLElement());
         this.element.appendChild(this.fginput.GetHTMLElement());
         this.element.appendChild(this.hlinput.GetHTMLElement());
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
