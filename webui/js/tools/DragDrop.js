@@ -118,22 +118,38 @@ class DropTarget extends Element
     {
         let draggableid   = ev.dataTransfer.getData("draggableid");
         let draggabletype = ev.dataTransfer.getData("draggabletype");
+        ev.preventDefault();
 
         // If unsupported type, do nothing
         if(this.allowedtypes.indexOf(draggabletype) < 0)
         {
-            ev.preventDefault();
             return;
         }
 
         let draggable     = document.getElementById(draggableid);
+        if(draggable == null)
+        {
+            return;
+        }
+
         let preview       = draggable.cloneNode(true /* include child nodes */);
         preview.style.opacity = 0.5;
+        preview.id            = null;
+        preview.draggable     = false;
+        preview.ondragover    = null;
+        preview.ondrop        = null;
+        preview.ondragenter   = null;
+        preview.ondragleave   = null;
+        preview.ondragstart   = null;
+        preview.ondragend     = null;
+
+        this.element.innerHTML = "";
         this.element.appendChild(preview);
     }
 
     onDragLeave(ev)
     {
+        ev.preventDefault();
         this.element.innerHTML = "";
     }
 
@@ -161,7 +177,7 @@ class DropTarget extends Element
     // This method should be implemented by a derived class
     onTransfer(draggableid)
     {
-        window.console && console.warning("This method should have been implemented by a derived class!");
+        window.console && console.warn("This method should have been implemented by a derived class!");
     }
 }
 
