@@ -79,7 +79,19 @@ class MoodsTableRow extends MoodsTableRowBase
         if(usagetext == "") usagetext = "<span>This tag is not used yet</span>"
         let usageelement = document.createElement("div");
         usageelement.innerHTML = usagetext;
-        let numdependencies     = numsongs + numalbums + numvideos;
+
+        let removebutton = new SVGButton("Remove", ()=>{this.onDeleteMood(MDBMood);});
+        let numdependencies = numsongs + numalbums + numvideos;
+        if(numdependencies > 0)
+        {
+            removebutton.SetColor("var(--color-red)");
+            removebutton.GetHTMLElement().classList.add("hovpacity");
+            removebutton.SetTooltip("Delete Mood-Flag and remove Flag from all songs, albums and videos");
+        }
+        else
+        {
+            removebutton.SetTooltip("Delete Mood-Flag");
+        }
 
         let name    = MDBMood.name;
         let moodid  = MDBMood.id;
@@ -101,7 +113,8 @@ class MoodsTableRow extends MoodsTableRowBase
         {
             case 1: // Unicode Character
                 icon = new UnicodeToggleButton(MDBMood.icon, null); // no click handler
-                icon.SetTooltip(MDBMood.name);
+                icon.SetTooltip("Click so see appearance when flag is Set/Reset");
+                icon.SetSelectionState(true);
 
                 typename = "Unicode"
                 break;
@@ -127,7 +140,7 @@ class MoodsTableRow extends MoodsTableRowBase
         this.SetContent(HASCOLOR_COLUMN, colorstatebutton.GetHTMLElement());
         this.SetContent(COLOR_COLUMN   , document.createTextNode(color)); // TODO: Color-Button
         this.SetContent(USAGE_COLUMN   , usageelement);
-        this.SetContent(DELETE_COLUMN  , new SVGButton("Remove", ()=>{this.onDeleteMood(MDBMood);}).GetHTMLElement());
+        this.SetContent(DELETE_COLUMN  , removebutton.GetHTMLElement());
     }
 
 
