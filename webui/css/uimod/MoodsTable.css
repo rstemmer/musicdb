@@ -21,15 +21,45 @@
 {
 }
 
+.MoodsTable > tr:first-child
+{
+    color:              var(--bgcolor);
+    background-color:   var(--hlcolor);
+    font-weight:        bold;
+    letter-spacing:     0.05rem;
+}
+.MoodsTable > tr:last-child
+{
+    border-top:         var(--borderwidth) solid var(--hlcolor);
+}
+
+
 
 .MoodsTableRow span+span
 {
     margin-left:        1.5ch;
 }
 
-.MoodsTableRow input
+.MoodsTableRow td:nth-child(1) > input
+{
+    width:              2ch;
+}
+.MoodsTableRow td:nth-child(1) > div
+{
+    margin:             auto;
+    text-align:         center;
+}
+.MoodsTableRow td:nth-child(3) > input
 {
     width:              10ch;
+}
+.MoodsTableRow td:nth-child(4) > div
+{
+    margin:             auto;
+}
+.MoodsTableRow td:nth-child(7) > div
+{
+    margin-left:        auto;
 }
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 

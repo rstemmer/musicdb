@@ -16,6 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+.Table
+{
+    border-collapse: collapse;
+}
+
 .Table td
 {
     padding:        0.5rem;

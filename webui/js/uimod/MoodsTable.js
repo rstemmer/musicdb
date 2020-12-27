@@ -73,7 +73,7 @@ class MoodsTableRow extends MoodsTableRowBase
         let usagetext = "";
         if(typeof numsongs  === "number" && numsongs  > 0) usagetext += `<span>${numsongs } Songs</span>`;
         if(typeof numvideos === "number" && numvideos > 0) usagetext += `<span>${numvideos} Videos</span>`;
-        if(usagetext == "") usagetext = "<span>This tag is not used yet</span>"
+        if(usagetext == "") usagetext = "<span class=\"hlcolor\">This tag is not used yet</span>"
         let usageelement = document.createElement("div");
         usageelement.innerHTML = usagetext;
 
@@ -120,11 +120,14 @@ class MoodsTableRow extends MoodsTableRowBase
         }
 
         let colorstatebutton;
+        let colorelement;
         if(color === null)
         {
             colorstatebutton = new SVGButton("Unchecked",    ()=>{this.onAddColor(MDBMood);});
             colorstatebutton.SetTooltip("Give this mood a fixed color");
-            color = "No Color";
+            colorelement = document.createElement("span");
+            colorelement.innerText = "No Color";
+            colorelement.classList.add("hlcolor");
         }
         else
         {
@@ -136,7 +139,7 @@ class MoodsTableRow extends MoodsTableRowBase
         this.SetContent(ICONTYPE_COLUMN, document.createTextNode(typename));
         this.SetContent(MOODNAME_COLUMN, document.createTextNode(name));
         this.SetContent(HASCOLOR_COLUMN, colorstatebutton.GetHTMLElement());
-        this.SetContent(COLOR_COLUMN   , document.createTextNode(color)); // TODO: Color-Button
+        this.SetContent(COLOR_COLUMN   , colorelement); // TODO: Color-Button
         this.SetContent(USAGE_COLUMN   , usageelement);
         this.SetContent(DELETE_COLUMN  , removebutton.GetHTMLElement());
     }
