@@ -16,13 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+.MoodsTable
+{
+}
+
+
 .MoodsTableRow span+span
 {
     margin-left:        1.5ch;
 }
 
-.MoodsTable
+.MoodsTableRow input
 {
+    width:              10ch;
 }
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 

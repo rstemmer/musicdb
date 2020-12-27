@@ -166,12 +166,46 @@ class MoodsTableRow extends MoodsTableRowBase
 
 
 
+class MoodsTableEditRow extends MoodsTableRowBase
+{
+    constructor(MDBMood, MDBTagStats)
+    {
+        super();
+        this.iconinput        = document.createElement("input");
+        this.nameinput        = document.createElement("input");
+        this.colorstatebutton = new SVGButton("Unchecked", ()=>{this.onAddColor();});
+        this.colorstatebutton.SetTooltip("Give this mood a fixed color");
+        this.confirmbutton    = new SVGButton("Save", ()=>{this.onSave();});
+        this.confirmbutton.SetTooltip("Create new Flag with the given attributes");
+
+        this.SetContent(ICON_COLUMN    , this.iconinput); 
+        this.SetContent(ICONTYPE_COLUMN, document.createTextNode("Unicode"));
+        this.SetContent(MOODNAME_COLUMN, this.nameinput);
+        this.SetContent(HASCOLOR_COLUMN, this.colorstatebutton.GetHTMLElement());
+        this.SetContent(COLOR_COLUMN   , document.createTextNode("No Color")); // TODO: Color-Button
+        this.SetContent(USAGE_COLUMN   , document.createTextNode("This Flag does not exists yet"));
+        this.SetContent(DELETE_COLUMN  , this.confirmbutton.GetHTMLElement());
+    }
+
+
+
+    onAddColor()
+    {
+    }
+    onSave()
+    {
+    }
+}
+
+
+
 class MoodsTable extends Table
 {
     constructor(MDBMoods)
     {
         super(["MoodsTable"]);
         this.headline = new MoodsTableHeadline();
+        this.editrow  = new MoodsTableEditRow();
         this.Update(MDBMoods);
     }
 
@@ -193,6 +227,8 @@ class MoodsTable extends Table
             let stats  = MDBMoodStats[moodid];
             this.AddRow(new MoodsTableRow(MDBMood, stats));
         }
+
+        this.AddRow(this.editrow);
         return;
     }
 }
