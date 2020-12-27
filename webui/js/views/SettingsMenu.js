@@ -54,6 +54,7 @@ class SettingsMenu extends LeftView
             "Mood Manager",
             ()=>{
                 MusicDB_Request("GetTags", "ShowMoodManager");
+                MusicDB_Request("GetTagsStatistics", "UpdateTagsStatistics");
                 },
             "Manage, Add and Remove Mood Flags");
 
