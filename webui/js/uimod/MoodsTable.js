@@ -127,6 +127,7 @@ class MoodsTableRow extends MoodsTableRowBase
         {
             colorstatebutton = new SVGButton("Unchecked",    ()=>{this.onAddColor(MDBMood);});
             colorstatebutton.SetTooltip("Give this mood a fixed color");
+            color = "No Color";
         }
         else
         {
