@@ -34,11 +34,9 @@ class Grid
             let tablecolumns = new Array();
             for(let x=0; x<columns; x++)
             {
-                let cellelement = document.createElement("td");
-                cellelement.classList.add("grid-cell");
-                rowelement.appendChild(cellelement);
-
-                tablecolumns.push(cellelement);
+                let cell = new Element("td", ["grid-cell"]);
+                rowelement.appendChild(cell.GetHTMLElement());
+                tablecolumns.push(cell.GetHTMLElement());
             }
 
             this.tableelement.appendChild(rowelement);
