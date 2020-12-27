@@ -64,24 +64,21 @@ class MoodsTableRow extends MoodsTableRowBase
     Update(MDBMood, stats)
     {
         let numsongs    = null;
-        let numalbums   = null;
         let numvideos   = null;
         if(typeof stats === "object")
         {
             numsongs    = stats["songs"];
-            numalbums   = stats["albums"];
             numvideos   = stats["videos"];
         }
         let usagetext = "";
         if(typeof numsongs  === "number" && numsongs  > 0) usagetext += `<span>${numsongs } Songs</span>`;
-        if(typeof numalbums === "number" && numalbums > 0) usagetext += `<span>${numalbums} Albums</span>`;
         if(typeof numvideos === "number" && numvideos > 0) usagetext += `<span>${numvideos} Videos</span>`;
         if(usagetext == "") usagetext = "<span>This tag is not used yet</span>"
         let usageelement = document.createElement("div");
         usageelement.innerHTML = usagetext;
 
         let removebutton = new SVGButton("Remove", ()=>{this.onDeleteMood(MDBMood);});
-        let numdependencies = numsongs + numalbums + numvideos;
+        let numdependencies = numsongs + numvideos;
         if(numdependencies > 0)
         {
             removebutton.SetColor("var(--color-red)");
