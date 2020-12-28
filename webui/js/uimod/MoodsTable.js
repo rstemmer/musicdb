@@ -155,28 +155,29 @@ class MoodsTableRow extends MoodsTableRowBase
                 window.console && console.error(`Unsupported mood icon type ${icontype}!`);
         }
 
-        let colorstatebutton;
+        let colorstateicon;
         let colorelement;
         if(color === null)
         {
-            colorstatebutton = new SVGIcon("StatusBad");
+            colorstateicon = new SVGIcon("StatusBad");
             colorelement = document.createElement("span");
             colorelement.innerText = "No Color";
             colorelement.classList.add("hlcolor");
         }
         else
         {
-            colorstatebutton = new SVGIcon("StatusGood");
+            colorstateicon = new SVGIcon("StatusGood");
             colorelement = document.createElement("span");
             colorelement.innerText   = color.toUpperCase();
             colorelement.style.color = color;
-            icon.GetHTMLElement().style.color = color;
+            colorstateicon.SetColor(color);
+            icon.SetColor(color);
         }
 
         this.SetContent(ICON_COLUMN    , icon.GetHTMLElement());
         this.SetContent(ICONTYPE_COLUMN, document.createTextNode(typename));
         this.SetContent(MOODNAME_COLUMN, document.createTextNode(name));
-        this.SetContent(HASCOLOR_COLUMN, colorstatebutton.GetHTMLElement());
+        this.SetContent(HASCOLOR_COLUMN, colorstateicon.GetHTMLElement());
         this.SetContent(COLOR_COLUMN   , colorelement);
         this.SetContent(USAGE_COLUMN   , usageelement);
         this.SetContent(BUTTON_COLUMN  , buttonbox.GetHTMLElement());
