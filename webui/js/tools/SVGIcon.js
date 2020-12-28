@@ -44,8 +44,7 @@ class SVGIcon extends SVGBase
     constructor(name)
     {
         super();
-        let maskurl = `url("img/icons/${name}.svg");`;
-        this.element.style.cssText = "mask: "+maskurl;
+        this.SetIcon(name);
     }
 
     SetTooltip(tooltip)
@@ -56,6 +55,12 @@ class SVGIcon extends SVGBase
     SetColor(htmlcolor)
     {
         this.element.style.backgroundColor = htmlcolor;
+    }
+
+    SetIcon(name)
+    {
+        let maskurl = `url("img/icons/${name}.svg");`;
+        this.element.style.cssText = "mask: "+maskurl;
     }
 
     Show()
@@ -76,6 +81,47 @@ class SVGButton extends SVGIcon
     {
         super(name)
         this.element.onclick = onclick;
+    }
+}
+
+
+
+class SVGCheckBox extends SVGButton
+{
+    constructor(onstatechange, checked=false)
+    {
+        let iconname;
+        if(checked === true)
+            iconname = "Checked";
+        else
+            iconname = "Unchecked";
+
+        super(iconname, ()=>{this.onClick();});
+        this.checked = checked;
+        this.onclick = onstatechange;
+    }
+
+    onClick()
+    {
+        this.SetSelectionState(!this.GetSelectionState());
+
+        if(typeof this.onclick === "function")
+            this.onclick(this.checked);
+    }
+
+    GetSelectionState()
+    {
+        return this.checked;
+    }
+    SetSelectionState(state)
+    {
+        this.checked = state;
+        let iconname;
+        if(this.checked === true)
+            iconname = "Checked";
+        else
+            iconname = "Unchecked";
+        this.SetIcon(iconname);
     }
 }
 
