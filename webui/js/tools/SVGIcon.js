@@ -86,42 +86,78 @@ class SVGButton extends SVGIcon
 
 
 
-class SVGCheckBox extends SVGButton
+// The switch can have one of the two different states: "a" or "b"
+class SVGSwitch extends SVGButton
 {
-    constructor(onstatechange, checked=false)
+    constructor(icona, iconb, onstatechange, initstate="a")
     {
         let iconname;
-        if(checked === true)
-            iconname = "Checked";
+        if(initstate == "a")
+            iconname = icona;
         else
-            iconname = "Unchecked";
+            iconname = iconb;
 
         super(iconname, ()=>{this.onClick();});
-        this.checked = checked;
-        this.onclick = onstatechange;
+        this.iconname_a = icona;
+        this.iconname_b = iconb;
+        this.state      = initstate;
+        this.onclick    = onstatechange;
     }
 
     onClick()
     {
-        this.SetSelectionState(!this.GetSelectionState());
+        if(this.state == "a")
+            this.SetSelectionState("b");
+        else
+            this.SetSelectionState("a");
 
         if(typeof this.onclick === "function")
-            this.onclick(this.checked);
+            this.onclick(this.state);
     }
 
     GetSelectionState()
     {
-        return this.checked;
+        return this.state;
     }
     SetSelectionState(state)
     {
-        this.checked = state;
+        this.state = state;
         let iconname;
-        if(this.checked === true)
-            iconname = "Checked";
+        if(this.state === "a")
+            iconname = this.iconname_a;
         else
-            iconname = "Unchecked";
+            iconname = this.iconname_b;
         this.SetIcon(iconname);
+    }
+}
+
+
+
+class SVGCheckBox extends SVGSwitch
+{
+    constructor(oncheckstatechange, checked=false)
+    {
+        super("Checked", "Unchecked", ()=>{this.onStateChange();}, (checked)?"a":"b");
+        this.oncheckstatechange = oncheckstatechange;
+    }
+
+    onStateChange()
+    {
+        if(typeof this.oncheckstatechange === "function")
+            this.oncheckstatechange(this.GetSelectionState());
+    }
+
+    GetSelectionState()
+    {
+        return super.GetSelectionState() == "a";
+    }
+    SetSelectionState(state)
+    {
+        if(state === true)
+            state = "a";
+        else if(state === false)
+            state = "b";
+        super.SetSelectionState(state);
     }
 }
 
