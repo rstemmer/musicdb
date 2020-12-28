@@ -200,12 +200,14 @@ class MoodsTableEditRow extends MoodsTableRowBase
             this.posx            = MDBMood.posx;
             this.posy            = MDBMood.posy;
             this.SetContent(COLOR_COLUMN, this.colorinput.GetHTMLElement());
+            this.mood            = MDBMood;
         }
         else
         {
             this.posx = 0;
             this.posy = 0;
             this.SetContent(COLOR_COLUMN, document.createTextNode("No Color"));
+            this.mood = null;
         }
 
         this.Validate();
@@ -305,9 +307,25 @@ class MoodsTableEditRow extends MoodsTableRowBase
         if(this.colorstatebutton.GetSelectionState())
             color = this.colorinput.GetColor();
 
-        // Save
-        window.console && console.log(`AddMoodFlag(${name}, ${icon}, ${color}, ${posx}, ${posy});`)
-        MusicDB_Call("AddMoodFlag", {name: name, icon: icon, color: color, posx: posx, posy: posy});
+        // If mood does not exist, create one.
+        // Otherwise just updated changes
+        if(this.mood == null)
+        {
+            window.console && console.log(`AddMoodFlag(${name}, ${icon}, ${color}, ${posx}, ${posy});`)
+            MusicDB_Call("AddMoodFlag", {name: name, icon: icon, color: color, posx: posx, posy: posy});
+        }
+        else
+        {
+            let tagid = this.mood.id;
+
+            window.console && console.log(`Modify Mood Flag: ${name}, ${icon}, ${color}`)
+            if(name != this.mood.name)
+                MusicDB_Call("ModifyTag", {tagid: tagid, attribute: "name", value: name});
+            if(icon != this.mood.icon)
+                MusicDB_Call("ModifyTag", {tagid: tagid, attribute: "icon", value: icon});
+            if(color != this.mood.color)
+                MusicDB_Call("ModifyTag", {tagid: tagid, attribute: "color", value: color});
+        }
 
         // Clear inputs for new data
         this.posx += 1;
