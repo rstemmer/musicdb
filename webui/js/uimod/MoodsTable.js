@@ -189,7 +189,6 @@ class MoodsTableEditRow extends MoodsTableRowBase
 
         this.iconinput.oninput = ()=>{this.Validate();}
         this.nameinput.oninput = ()=>{this.Validate();}
-        this.Validate();
 
         if(typeof MDBMood === "object" && MDBMood != null)
         {
@@ -197,20 +196,24 @@ class MoodsTableEditRow extends MoodsTableRowBase
             this.iconinput.value = MDBMood.icon;
             this.nameinput.value = MDBMood.name;
             this.colorinput.SetColor(MDBMood.color);
+            this.colorstatebutton.SetSelectionState(true);
             this.posx            = MDBMood.posx;
             this.posy            = MDBMood.posy;
+            this.SetContent(COLOR_COLUMN, this.colorinput.GetHTMLElement());
         }
         else
         {
             this.posx = 0;
             this.posy = 0;
+            this.SetContent(COLOR_COLUMN, document.createTextNode("No Color"));
         }
+
+        this.Validate();
 
         this.SetContent(ICON_COLUMN    , this.iconinput); 
         this.SetContent(ICONTYPE_COLUMN, document.createTextNode("Unicode"));
         this.SetContent(MOODNAME_COLUMN, this.nameinput);
         this.SetContent(HASCOLOR_COLUMN, this.colorstatebutton.GetHTMLElement());
-        this.SetContent(COLOR_COLUMN   , document.createTextNode("No Color")); // TODO: Color-Button
         this.SetContent(USAGE_COLUMN   , document.createTextNode("This Flag does not exists yet"));
         this.SetContent(BUTTON_COLUMN  , this.confirmbutton.GetHTMLElement());
     }
