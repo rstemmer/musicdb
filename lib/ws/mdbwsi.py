@@ -3182,7 +3182,7 @@ class MusicDBWebSocketInterface(object):
         The following attributes are allowed: ``"name"`` ``"icon"`` ``"icontype"`` ``"color"`` ``"posx"`` ``"posy"``.
         See :mod:`~lib.db.musicdb` for details about the attributes!
 
-        In case the icon gets modified, take care that the icon type is up to date. (update order does not matter).
+        In case the icon gets modified, the icon-type will be updated automatically via :meth:`~mdbapi.tags.MusicDBTags.AnalyseIcon`
 
         After executing this command, :meth:`~GetTags` gets executed.
         Its return value gets send via broadcast.
@@ -3200,6 +3200,11 @@ class MusicDBWebSocketInterface(object):
             return None
 
         self.database.ModifyTagById(tagid, attribute, value)
+
+        if attribute == "icon":
+            iconype, _ = self.tags.AnalyseIcon(value)
+            self.database.ModifyTagById(tagid, "icontype", icontype)
+
         return None
 
 
