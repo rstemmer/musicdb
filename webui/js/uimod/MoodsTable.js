@@ -158,6 +158,7 @@ class MoodsTableRow extends MoodsTableRowBase
     onDeleteMood(MDBMood)
     {
         window.console && console.log(`Delete ${MDBMood.name}`);
+        MusicDB_Call("DeleteTag", {tagid: MDBMood.id});
     }
 
 
