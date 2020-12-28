@@ -3184,11 +3184,6 @@ class MusicDBWebSocketInterface(object):
 
         In case the icon gets modified, take care that the icon type is up to date. (update order does not matter).
 
-        Args:
-            tagid (int): ID of the tag to modify
-            attribute (str): The name of the attribute that shall be modified
-            newvalue: The new value. Read the introduction at the top of the document to see what values are possible for a specific attribute
-
         After executing this command, :meth:`~GetTags` gets executed.
         Its return value gets send via broadcast.
 
@@ -3196,8 +3191,9 @@ class MusicDBWebSocketInterface(object):
         The broadcast gets send anyway.
 
         Args:
-            name (str): Name of the new subgenre
-            parentname (str): Name of the main genre
+            tagid (int): ID of the tag to modify
+            attribute (str): The name of the attribute that shall be modified
+            newvalue: The new value. Read the introduction at the top of the document to see what values are possible for a specific attribute
         """
         if self.cfg.debug.disabletagging:
             logging.info("Changing tags disabled. \033[1;33m!!")
