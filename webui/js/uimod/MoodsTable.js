@@ -129,24 +129,17 @@ class MoodsTableRow extends MoodsTableRowBase
         let colorelement;
         if(color === null)
         {
-            colorstatebutton = new SVGButton("Unchecked",    ()=>{this.onAddColor(MDBMood);});
-            colorstatebutton.SetTooltip("Give this mood a fixed color");
+            colorstatebutton = new SVGIcon("StatusBad");
             colorelement = document.createElement("span");
             colorelement.innerText = "No Color";
             colorelement.classList.add("hlcolor");
         }
         else
         {
-            colorstatebutton = new SVGButton("Checked", ()=>{this.onRemoveColor(MDBMood);});
-            colorstatebutton.SetTooltip("Remove color from mood so that is adopedt to the color scheme");
-            let colorinput   = new ColorInput(null /*no label*/, "Change Flag-Color", color,
-                ()=>{this.onChangeColor(MDBMood);},
-                ()=>{this.onPreviewColor(MDBMood);}
-                );
-            colorelement = colorinput.GetHTMLElement();
-            //colorelement = document.createElement("span");
-            //colorelement.innerText   = color;
-            //colorelement.style.color = color;
+            colorstatebutton = new SVGIcon("StatusGood");
+            colorelement = document.createElement("span");
+            colorelement.innerText   = color.toUpperCase();
+            colorelement.style.color = color;
             icon.GetHTMLElement().style.color = color;
         }
 
@@ -172,30 +165,6 @@ class MoodsTableRow extends MoodsTableRowBase
         // Replace this Row with an Edit-Row
         let editrow = new MoodsTableEditRow(MDBMood);
         this.element.replaceWith(editrow.GetHTMLElement());
-    }
-
-
-    onAddColor(MDBMood)
-    {
-        window.console && console.log(`Add color to ${MDBMood.name}`);
-    }
-
-
-    onRemoveColor(MDBMood)
-    {
-        window.console && console.log(`Remove color from ${MDBMood.name}`);
-    }
-
-
-    onChangeColor(MDBMood)
-    {
-        window.console && console.log(`Change color from ${MDBMood.name}`);
-    }
-
-
-    onPreviewColor(MDBMood)
-    {
-        window.console && console.log(`Preview color from ${MDBMood.name}`);
     }
 }
 
