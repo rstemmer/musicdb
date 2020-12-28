@@ -199,6 +199,10 @@ class MoodsTableEditRow extends MoodsTableRowBase
         this.confirmbutton    = new SVGButton("Save", ()=>{this.onSave();});
         this.confirmbutton.SetTooltip("Create new Flag with the given attributes");
 
+        this.iconinput.oninput = ()=>{this.Validate();}
+        this.nameinput.oninput = ()=>{this.Validate();}
+        this.Validate();
+
         this.SetContent(ICON_COLUMN    , this.iconinput); 
         this.SetContent(ICONTYPE_COLUMN, document.createTextNode("Unicode"));
         this.SetContent(MOODNAME_COLUMN, this.nameinput);
@@ -210,11 +214,53 @@ class MoodsTableEditRow extends MoodsTableRowBase
 
 
 
+    Validate()
+    {
+        let valid = true;
+        valid &&= this.ValidateIcon();
+        valid &&= this.ValidateName();
+
+        if(valid === true)
+            this.confirmbutton.Show();
+        else
+            this.confirmbutton.Hide();
+    }
+
+    ValidateIcon()
+    {
+        let icon  = this.iconinput.value;
+        let valid = false;
+        if(typeof icon === "string" && icon.length == 1)
+            valid = true;
+
+        this.iconinput.dataset.valid = valid;
+        return valid;
+    }
+    ValidateName()
+    {
+        let name  = this.nameinput.value;
+        let valid = false;
+        if(typeof name === "string" && name.length > 0)
+            valid = true;
+        // TODO: Check if name already exists
+
+        this.nameinput.dataset.valid = valid;
+        return valid;
+    }
+
+
+
     onAddColor()
     {
     }
     onSave()
     {
+        let name  = this.nameinput.value;
+        let icon  = this.iconinput.value;
+        let color = null;
+        let posx  = 0;
+        let posy  = 0;
+        //MusicDB_Call("AddMoodFlag", {name: name, icon: icon, color: color, posx: posx, posy: posy});
     }
 }
 
