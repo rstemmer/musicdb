@@ -195,11 +195,18 @@ class MoodsTableEditRow extends MoodsTableRowBase
             // Initialize everything
             this.iconinput.value = MDBMood.icon;
             this.nameinput.value = MDBMood.name;
-            this.colorinput.SetColor(MDBMood.color);
-            this.colorstatebutton.SetSelectionState(true);
             this.posx            = MDBMood.posx;
             this.posy            = MDBMood.posy;
-            this.SetContent(COLOR_COLUMN, this.colorinput.GetHTMLElement());
+            if(typeof MDBMood.color === "string")
+            {
+                this.colorinput.SetColor(MDBMood.color);
+                this.colorstatebutton.SetSelectionState(true);
+                this.SetContent(COLOR_COLUMN, this.colorinput.GetHTMLElement());
+            }
+            else
+            {
+                this.SetContent(COLOR_COLUMN, document.createTextNode("No Color"));
+            }
             this.mood            = MDBMood;
         }
         else
