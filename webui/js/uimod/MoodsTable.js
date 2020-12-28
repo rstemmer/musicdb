@@ -17,14 +17,14 @@
 "use strict";
 
 
-const MOODTABLEHEADLINE = ["Icon", "Icon Type", "Mood Name", "Own Color", "Mood Color", "Usage", "Delete"];
+const MOODTABLEHEADLINE = ["Icon", "Icon Type", "Mood Name", "Own Color", "Mood Color", "Usage", "Controls"];
 const ICON_COLUMN       = 0;
 const ICONTYPE_COLUMN   = 1;
 const MOODNAME_COLUMN   = 2;
 const HASCOLOR_COLUMN   = 3;
 const COLOR_COLUMN      = 4;
 const USAGE_COLUMN      = 5;
-const DELETE_COLUMN     = 6;
+const BUTTON_COLUMN     = 6;
 
 
 class MoodsTableRowBase extends TableRow
@@ -77,7 +77,9 @@ class MoodsTableRow extends MoodsTableRowBase
         let usageelement = document.createElement("div");
         usageelement.innerHTML = usagetext;
 
-        let removebutton = new SVGButton("Remove", ()=>{this.onDeleteMood(MDBMood);});
+        let editbutton   = new SVGButton("Edit",   ()=>{this.onEdit(MDBMood);});
+        editbutton.SetTooltip("Edit this Mood-Flag entry");
+        let removebutton = new SVGButton("Remove", ()=>{this.onDelete(MDBMood);});
         let numdependencies = numsongs + numvideos;
         if(numdependencies > 0)
         {
@@ -89,6 +91,10 @@ class MoodsTableRow extends MoodsTableRowBase
         {
             removebutton.SetTooltip("Delete Mood-Flag");
         }
+
+        let buttonbox = new ButtonBox()
+        buttonbox.AddButton(editbutton);
+        buttonbox.AddButton(removebutton);
 
         let name    = MDBMood.name;
         let moodid  = MDBMood.id;
@@ -150,15 +156,22 @@ class MoodsTableRow extends MoodsTableRowBase
         this.SetContent(HASCOLOR_COLUMN, colorstatebutton.GetHTMLElement());
         this.SetContent(COLOR_COLUMN   , colorelement); // TODO: Color-Button
         this.SetContent(USAGE_COLUMN   , usageelement);
-        this.SetContent(DELETE_COLUMN  , removebutton.GetHTMLElement());
+        this.SetContent(BUTTON_COLUMN  , buttonbox.GetHTMLElement());
     }
 
 
 
-    onDeleteMood(MDBMood)
+    onDelete(MDBMood)
     {
         window.console && console.log(`Delete ${MDBMood.name}`);
         MusicDB_Call("DeleteTag", {tagid: MDBMood.id});
+    }
+
+    onEdit(MDBMood)
+    {
+        // Replace this Row with an Edit-Row
+        let editrow = new MoodsTableEditRow(MDBMood);
+        this.element.replaceWith(editrow.GetHTMLElement());
     }
 
 
@@ -230,7 +243,7 @@ class MoodsTableEditRow extends MoodsTableRowBase
         this.SetContent(HASCOLOR_COLUMN, this.colorstatebutton.GetHTMLElement());
         this.SetContent(COLOR_COLUMN   , document.createTextNode("No Color")); // TODO: Color-Button
         this.SetContent(USAGE_COLUMN   , document.createTextNode("This Flag does not exists yet"));
-        this.SetContent(DELETE_COLUMN  , this.confirmbutton.GetHTMLElement());
+        this.SetContent(BUTTON_COLUMN  , this.confirmbutton.GetHTMLElement());
     }
 
 

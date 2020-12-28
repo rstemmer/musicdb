@@ -60,6 +60,7 @@
 .MoodsTableRow td:nth-child(7) > div
 {
     margin-left:        auto;
+    justify-content:    flex-end;
 }
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
