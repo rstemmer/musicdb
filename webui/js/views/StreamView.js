@@ -61,7 +61,7 @@ class StreamView extends MainView
 
 
 
-    onViewRemoved()
+    onViewUnmounted()
     {
         if(this.viewposition == "MainView")
             this.ShowInQueueView();

@@ -45,11 +45,17 @@ class ViewManager
         // Call "onViewRemoved" if it is an existing method
         if(this.currentview != null)
         {
-            if(typeof this.currentview.onViewRemoved === "function")
-                this.currentview.onViewRemoved();
+            if(typeof this.currentview.onViewUnmounted === "function")
+                this.currentview.onViewUnmounted();
         }
 
         this.currentview = view;
+
+        if(this.currentview != null)
+        {
+            if(typeof this.currentview.onViewMounted === "function")
+                this.currentview.onViewMounted();
+        }
         return;
     }
 }

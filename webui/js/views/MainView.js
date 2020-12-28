@@ -45,6 +45,13 @@ class MainView extends Element
     {
         return this.viewlock;
     }
+
+    onViewMounted()
+    {
+    }
+    onViewUnmounted()
+    {
+    }
 }
 
 
