@@ -225,6 +225,11 @@ class UnicodeToggleButton extends SVGToggleButton
         this.element.innerText     = character;
         this.element.classList.add("unicodeicon");
     }
+
+    SetColor(htmlcolor)
+    {
+        this.element.style.color = htmlcolor;
+    }
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
