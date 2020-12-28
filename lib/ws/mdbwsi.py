@@ -92,6 +92,7 @@ Tag related
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveVideoTag`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddGenre`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSubgenre`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddMoodFlag`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.DeleteTag`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.ModifyTag`
 
@@ -326,6 +327,11 @@ class MusicDBWebSocketInterface(object):
             fncname= "GetTags"
         elif fncname == "AddSubgenre":
             retval = self.AddSubgenre(args["name"], args["parentname"])
+            retval = self.GetTags()
+            method = "broadcast"
+            fncname= "GetTags"
+        elif fncname == "AddMoodFlag":
+            retval = self.AddMoodFlag(args["name"], args["icon"], args["color"], args["posx"], args["posy"])
             retval = self.GetTags()
             method = "broadcast"
             fncname= "GetTags"
@@ -3098,6 +3104,46 @@ class MusicDBWebSocketInterface(object):
         return None
 
 
+    def AddMoodFlag(self, name, icon, color, posx, posy):
+        """
+        This method creates a new Mood Falg.
+        If the tag already exists, nothing happens.
+
+        See :mod:`~lib.db.musicdb` for details about the attributes!
+        
+        If *color* is ``null``, no color is used for the flag.
+        This should be the default case, because the mood flags should adopt to the WebUI color scheme.
+        Otherwise the color must be given in 7-character HTML notation: ``#RRGGBB``.
+
+        The icon type gets derived from the content of the *icon* parameter via :meth:`~mdbapi.tags.MusicDBTags.AnalyseIcon`
+
+        After executing this command, :meth:`~GetTags` gets executed.
+        Its return value gets send via broadcast.
+
+        If tagging is disabled nothing will be changed.
+        The broadcast gets send anyway.
+
+        Args:
+            name (str): Name of the new subgenre
+            icon (str): Icon for that flag
+            color (str): (optional) HTML Color
+            posx (int): X-Position in the moods-grid
+            posy (int): X-Position in the moods-grid
+        """
+        if self.cfg.debug.disabletagging:
+            logging.info("Changing tags disabled. \033[1;33m!!")
+            return None
+
+        tag = self.database.GetTagByName(name, MusicDatabase.TAG_CLASS_MOOD)
+        if tag:
+            logging.warning("There is already a Mood-Flag called \"%s\"! \033[1;30m(Adding mood \"%s\" canceled)", name, name)
+            return None
+
+        self.tags.CreateMood(name)
+        self.tags.ModifyMood(name, None, icon, color, posx, posy)
+        return None
+
+
     def DeleteTag(self, tagid):
         """
         This method deletes a tag addressed by its tag ID.
@@ -3132,6 +3178,9 @@ class MusicDBWebSocketInterface(object):
         This method allows to modify most of the attributes of a tag.
         The *tagid* addresses the tag, *attribute* the attribute.
         *value* is the new attribute set for the tag.
+
+        The following attributes are allowed: ``"name"`` ``"icon"`` ``"icontype"`` ``"color"`` ``"posx"`` ``"posy"``.
+        See :mod:`~lib.db.musicdb` for details about the attributes!
 
         In case the icon gets modified, take care that the icon type is up to date. (update order does not matter).
 
