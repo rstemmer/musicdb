@@ -56,6 +56,7 @@ class GenreListEditor extends Element
         this.inputelement.onkeyup = (event)=>{this.onKeyUp(event)};
         this.addbutton    = new SVGButton("Add", ()=>{this.onAdd();});
         this.addbutton.SetTooltip("Create new Tag with the given name");
+        this.addbutton.Disable();
 
         this.inputbar.appendChild(this.inputelement);
         this.inputbar.appendChild(this.addbutton.GetHTMLElement());
@@ -85,8 +86,9 @@ class GenreListEditor extends Element
 
         if(enabled == false)
         {
-            this.inputelement.dataset.valid =  enabled;
+            this.inputelement.dataset.valid = false;
             this.inputelement.value         = "";
+            this.addbutton.Disable();
         }
 
         if(typeof infomessage === "string")
@@ -118,6 +120,7 @@ class GenreListEditor extends Element
         if(tagname.length == 0)
         {
             this.inputelement.dataset.valid = "";
+            this.addbutton.Disable();
             return;
         }
 
@@ -129,6 +132,7 @@ class GenreListEditor extends Element
                 this.msg_double.UpdateMessage(`Tag "${tagname}" already exists!`);
                 this.msg_double.Show();
                 this.inputelement.dataset.valid = false;
+                this.addbutton.Disable();
                 return;
             }
         }
@@ -136,6 +140,7 @@ class GenreListEditor extends Element
 
         // Seems to be Valid
         this.inputelement.dataset.valid = true;
+        this.addbutton.Enable();
         return;
     }
 
