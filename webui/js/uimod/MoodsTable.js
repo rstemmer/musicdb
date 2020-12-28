@@ -189,12 +189,17 @@ class MoodsTableRow extends MoodsTableRowBase
 
 class MoodsTableEditRow extends MoodsTableRowBase
 {
-    constructor(MDBMood, MDBTagStats)
+    constructor(MDBMood)
     {
         super();
         this.iconinput        = document.createElement("input");
+        this.iconinput.style.color = "var(--hlcolor)";
         this.nameinput        = document.createElement("input");
-        this.colorstatebutton = new SVGButton("Unchecked", ()=>{this.onAddColor();});
+        this.colorinput       = new ColorInput(null /*no label*/, "Change Flag-Color", "#FFFFFF",
+            ()=>{this.onPreviewColor();},
+            ()=>{this.onPreviewColor();}
+            );
+        this.colorstatebutton = new SVGCheckBox((newstate)=>{this.onToggleColor(newstate);});
         this.colorstatebutton.SetTooltip("Give this mood a fixed color");
         this.confirmbutton    = new SVGButton("Save", ()=>{this.onSave();});
         this.confirmbutton.SetTooltip("Create new Flag with the given attributes");
@@ -202,6 +207,21 @@ class MoodsTableEditRow extends MoodsTableRowBase
         this.iconinput.oninput = ()=>{this.Validate();}
         this.nameinput.oninput = ()=>{this.Validate();}
         this.Validate();
+
+        if(typeof MDBMood === "object" && MDBMood != null)
+        {
+            // Initialize everything
+            this.iconinput.value = MDBMood.icon;
+            this.nameinput.value = MDBMood.name;
+            this.colorinput.SetColor(MDBMood.color);
+            this.posx            = MDBMood.posx;
+            this.posy            = MDBMood.posy;
+        }
+        else
+        {
+            this.posx = 0;
+            this.posy = 0;
+        }
 
         this.SetContent(ICON_COLUMN    , this.iconinput); 
         this.SetContent(ICONTYPE_COLUMN, document.createTextNode("Unicode"));
@@ -214,11 +234,24 @@ class MoodsTableEditRow extends MoodsTableRowBase
 
 
 
+    SetMoodPosition(posx, posy)
+    {
+        if(typeof posx === "number")
+            this.posx = posx;
+        if(typeof posy === "number")
+            this.posy = posy;
+        return;
+    }
+
+
+
     Validate()
     {
         let valid = true;
-        valid &&= this.ValidateIcon();
-        valid &&= this.ValidateName();
+        if(this.ValidateIcon() !== true)
+            valid = false;
+        if(this.ValidateName() !== true)
+            valid = false;
 
         if(valid === true)
             this.confirmbutton.Show();
@@ -250,17 +283,43 @@ class MoodsTableEditRow extends MoodsTableRowBase
 
 
 
-    onAddColor()
+    onToggleColor(newstate)
     {
+        window.console && console.log(`New color state: ${newstate}`);
+        if(newstate == false)
+        {
+            this.SetContent(COLOR_COLUMN, document.createTextNode("No Color"));
+            this.iconinput.style.color = "var(--hlcolor)";
+            return;
+        }
+
+        // Color enabled
+        this.SetContent(COLOR_COLUMN, this.colorinput.GetHTMLElement());
+        this.onPreviewColor();
+        return;
     }
+    onPreviewColor()
+    {
+        let color = this.colorinput.GetColor();
+        this.iconinput.style.color = color;
+        return;
+    }
+
+
+
     onSave()
     {
         let name  = this.nameinput.value;
         let icon  = this.iconinput.value;
         let color = null;
-        let posx  = 0;
-        let posy  = 0;
-        //MusicDB_Call("AddMoodFlag", {name: name, icon: icon, color: color, posx: posx, posy: posy});
+        let posx  = this.posx;
+        let posy  = this.posy;
+
+        if(this.colorstatebutton.GetSelectionState())
+            color = this.colorinput.GetColor();
+
+        window.console && console.log(`AddMoodFlag(${name}, ${icon}, ${color}, ${posx}, ${posy});`)
+        MusicDB_Call("AddMoodFlag", {name: name, icon: icon, color: color, posx: posx, posy: posy});
     }
 }
 
@@ -285,16 +344,22 @@ class MoodsTable extends Table
         this.Clear();
         this.AddRow(this.headline);
 
-        if(typeof MDBMoods !== "object")
+        if(typeof MDBMoods !== "object" || MDBMoods === null)
             return;
 
+        let maxposx = 0;
         for(let MDBMood of MDBMoods)
         {
             let moodid = MDBMood.id;
+            let posx   = MDBMood.posx;
             let stats  = MDBMoodStats[moodid];
             this.AddRow(new MoodsTableRow(MDBMood, stats));
+
+            if(maxposx < posx)
+                maxposx = posx;
         }
 
+        this.editrow.SetMoodPosition(maxposx+1, 0);
         this.AddRow(this.editrow);
         return;
     }
