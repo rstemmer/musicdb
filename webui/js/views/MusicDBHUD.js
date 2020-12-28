@@ -39,6 +39,8 @@ class MusicDBHUD
         this.currentsongid = -1;
         this.currentvideoid= -1;
         this.mode          = "unknown"; // can be "audio", "video", "unknown"
+        this.music         = null;
+        this.tags          = null;
     }
 
     GetHTMLElement()
@@ -197,6 +199,9 @@ class MusicDBHUD
 
     UpdateHUDForSong(MDBSong, MDBAlbum, MDBArtist, MDBSongTags, reset)
     {
+        this.music = MDBSong;
+        this.tags  = MDBSongTags;
+
         this.SetAlbumArtwork(MDBAlbum);
         this.SetSongInformation(MDBSong, MDBAlbum, MDBArtist);
 
@@ -229,6 +234,9 @@ class MusicDBHUD
 
     UpdateHUDForVideo(MDBVideo, MDBArtist, MDBVideoTags, reset)
     {
+        this.music = MDBVideo;
+        this.tags  = MDBVideoTags;
+
         this.SetVideoArtwork(MDBVideo);
         this.SetVideoInformation(MDBVideo, MDBArtist);
 
@@ -334,6 +342,26 @@ class MusicDBHUD
             if(args.video.id == this.currentvideoid)
             {
                 this.UpdateHUDForVideo(args.video, args.artist, args.tags, false /*no reset*/)
+            }
+        }
+
+        if(fnc == "GetTags")
+        {
+            if(pass != null && pass.origin == "MoodSettings")
+            {
+                // Update Mood-Flags
+                window.console && console.log("HUD Update");
+                if(this.mode == "video")
+                {
+                    this.moods = new VideoMoods();
+                }
+                else
+                {
+                    this.moods = new SongMoods();
+                }
+                this.moodbox.innerHTML = "";
+                this.moodbox.appendChild(this.moods.GetHTMLElement());
+                this.moods.UpdateButtons(this.music, this.tags);
             }
         }
     }

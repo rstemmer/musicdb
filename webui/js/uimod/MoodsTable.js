@@ -157,7 +157,7 @@ class MoodsTableRow extends MoodsTableRowBase
     onDelete(MDBMood)
     {
         window.console && console.log(`Delete ${MDBMood.name}`);
-        MusicDB_Call("DeleteTag", {tagid: MDBMood.id});
+        MusicDB_Request("DeleteTag", "UpdateTags", {tagid: MDBMood.id}, {origin: "MoodSettings"});
     }
 
     onEdit(MDBMood)
@@ -319,7 +319,7 @@ class MoodsTableEditRow extends MoodsTableRowBase
         if(this.mood == null)
         {
             window.console && console.log(`AddMoodFlag(${name}, ${icon}, ${color}, ${posx}, ${posy});`)
-            MusicDB_Call("AddMoodFlag", {name: name, icon: icon, color: color, posx: posx, posy: posy});
+            MusicDB_Request("AddMoodFlag", "UpdateTags", {name: name, icon: icon, color: color, posx: posx, posy: posy}, {origin: "MoodSettings"});
         }
         else
         {
@@ -332,6 +332,7 @@ class MoodsTableEditRow extends MoodsTableRowBase
                 MusicDB_Call("ModifyTag", {tagid: tagid, attribute: "icon", value: icon});
             if(color != this.mood.color)
                 MusicDB_Call("ModifyTag", {tagid: tagid, attribute: "color", value: color});
+            MusicDB_Request("GetTags", "UpdateTags", {}, {origin: "MoodSettings"});
         }
 
         // Clear inputs for new data
