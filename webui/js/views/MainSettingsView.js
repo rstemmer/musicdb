@@ -16,46 +16,19 @@
 
 "use strict";
 
-class MoodManager extends MainSettingsView
+class MainSettingsView extends MainView
 {
-    constructor()
+    constructor(id, headlinetext)
     {
-        super("MoodManager", "Mood Manager");
-
-        this.table     = new MoodsTable();
-        this.moods     = [];
-        this.moodstats = {};
-
-        this.element.appendChild(this.table.GetHTMLElement());
+        super(id, new SimpleMainViewHeadline(headlinetext))
     }
 
 
-
-    UpdateView()
+    onViewMounted()
     {
-        this.table.Update(this.moods, this.moodstats);
     }
-
-
-
-    onMusicDBMessage(fnc, sig, args, pass)
+    onViewUnmounted()
     {
-        if(fnc == "GetTags")
-        {
-            // When tags were added, update the view
-            if(pass != null && pass.origin == "MoodsSettings")
-                MusicDB_Request("GetTagsStatistics", "UpdateTagsStatistics");
-
-            //&& sig == "ShowMoodManager")
-            this.moods = args.moods;
-            this.UpdateView();
-        }
-        else if(fnc == "GetTagsStatistics")
-        {
-            this.moodstats = args;
-            this.UpdateView();
-        }
-        return;
     }
 }
 

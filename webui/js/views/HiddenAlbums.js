@@ -16,12 +16,11 @@
 
 "use strict";
 
-class HiddenAlbums extends MainView
+class HiddenAlbums extends MainSettingsView
 {
     constructor()
     {
-        let headline = new SimpleMainViewHeadline("Hidden Albums");
-        super("HiddenAlbums", headline);
+        super("HiddenAlbums", "Hidden Albums");
 
         this.albumsbox = document.createElement("div");
         this.albumsbox.classList.add("flex-row");

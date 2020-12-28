@@ -16,12 +16,11 @@
 
 "use strict";
 
-class GenreSettings extends MainView
+class GenreSettings extends MainSettingsView
 {
     constructor()
     {
-        let headline = new SimpleMainViewHeadline("Genre and Subgenre Manager");
-        super("GenreSettings", headline);
+        super("GenreSettings", "Genre and Subgenre Manager");
 
         let infotext = document.createElement("span");
         infotext.classList.add("flex");

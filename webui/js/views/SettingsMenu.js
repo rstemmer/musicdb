@@ -86,6 +86,12 @@ class SettingsMenu extends LeftView
         this.element.appendChild(entry);
         return;
     }
+
+
+
+    ClearHighlight()
+    {
+    }
 }
 
 

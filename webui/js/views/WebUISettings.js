@@ -16,12 +16,11 @@
 
 "use strict";
 
-class WebUISettings extends MainView
+class WebUISettings extends MainSettingsView
 {
     constructor()
     {
-        let headline = new SimpleMainViewHeadline("WebUI Settings")
-        super("WebUISettings", headline);
+        super("WebUISettings", "WebUI Settings");
 
         this.videocheckbox = new SettingsCheckbox(
             "Video Mode",
