@@ -3202,7 +3202,7 @@ class MusicDBWebSocketInterface(object):
         self.database.ModifyTagById(tagid, attribute, value)
 
         if attribute == "icon":
-            iconype, _ = self.tags.AnalyseIcon(value)
+            icontype, _ = self.tags.AnalyseIcon(value)
             self.database.ModifyTagById(tagid, "icontype", icontype)
 
         return None
