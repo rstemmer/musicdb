@@ -80,7 +80,19 @@ class SVGButton extends SVGIcon
     constructor(name, onclick)
     {
         super(name)
-        this.element.onclick = onclick;
+        this.onclick = onclick;
+        this.Enable();
+    }
+
+    Enable()
+    {
+        this.element.dataset.disabled = false;
+        this.element.onclick = this.onclick;
+    }
+    Disable()
+    {
+        this.element.dataset.disabled = true;
+        this.element.onclick = null;
     }
 }
 

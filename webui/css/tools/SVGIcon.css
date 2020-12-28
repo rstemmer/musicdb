@@ -32,6 +32,15 @@
     opacity:            1.0;
 }
 
+.SVGIcon[data-disabled=false]
+{
+    opacity:            1.0;
+}
+.SVGIcon[data-disabled=true]
+{
+    opacity:            0.5;
+    filter:             brightness(70%) saturate(70%);
+}
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
