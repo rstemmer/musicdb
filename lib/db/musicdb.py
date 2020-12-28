@@ -2719,6 +2719,8 @@ class MusicDatabase(Database):
 
         In case the icon gets modified, take care that the icon type is up to date. (update order does not matter).
 
+        For colors, ``None`` is a valid type to remove color
+
         Args:
             tagname (str): Name of the tag that shall be modified
             tagclass (int): Class of the tag
@@ -2730,6 +2732,7 @@ class MusicDatabase(Database):
 
         Raises:
             TypeError: if *tagname* is not a string or *parentid* does not have the value it should have regarding the specification
+            TypeError: When *color* is not a string and not ``None``
             ValueError: When *tagclass* has an invalid value
             ValueError: If columnname is not "name", "parentid", "icontype", "icon", "color", "posx", "posy"
             ValueError: If columnname is "color" and *newvalue* is not a valid #RRGGBB-Formated string
@@ -2744,10 +2747,15 @@ class MusicDatabase(Database):
             raise ValueError("Invalid column name \"%s\"!", columnname)
 
         if columnname == "color":
-            if newvalue[0] != "#":
-                raise ValueError("First char in color-code must be \'#\': #RRGGBB !")
-            if len(newvalue) != 7:
-                raise ValueError("Color-code must have a length of 7 character: #RRGGBB !")
+            if newvalue == None or newvalue == "":
+                newvalue = None   # remove color
+            else:
+                if type(newvalue) != str:
+                    raise TypeError("Color must be a string or None");
+                if newvalue[0] != "#":
+                    raise ValueError("First char in color-code must be \'#\': #RRGGBB !")
+                if len(newvalue) != 7:
+                    raise ValueError("Color-code must have a length of 7 character: #RRGGBB !")
 
         if columnname == "icontype":
             if newvalue not in [self.TAG_ICONTYPE_UNICODE, self.TAG_ICONTYPE_HTML]:
@@ -2771,6 +2779,8 @@ class MusicDatabase(Database):
 
         In case the icon gets modified, take care that the icon type is up to date. (update order does not matter).
 
+        For colors, ``None`` is a valid type to remove color
+
         Args:
             tagid (int): ID of the tag to modify
             columnname (str): The name of the attribute that shall be modified
@@ -2781,6 +2791,7 @@ class MusicDatabase(Database):
 
         Raises:
             TypeError: if *tagid* is not an integer
+            TypeError: When *color* is not a string and not ``None``
             ValueError: If columnname is not "name", "parentid", "icontype", "icon", "color", "posx", "posy"
             ValueError: If columnname is "color" and *newvalue* is not a valid #RRGGBB-Formated string
             ValueError: If columnname is "icontype" and *newvalue* is not valid
@@ -2792,10 +2803,15 @@ class MusicDatabase(Database):
             raise ValueError("Invalid column name \"%s\"!", columnname)
 
         if columnname == "color":
-            if newvalue[0] != "#":
-                raise ValueError("First char in color-code must be \'#\': #RRGGBB !")
-            if len(newvalue) != 7:
-                raise ValueError("Color-code must have a length of 7 character: #RRGGBB !")
+            if newvalue == None or newvalue == "":
+                newvalue = None   # remove color
+            else:
+                if type(newvalue) != str:
+                    raise TypeError("Color must be a string or None");
+                if newvalue[0] != "#":
+                    raise ValueError("First char in color-code must be \'#\': #RRGGBB !")
+                if len(newvalue) != 7:
+                    raise ValueError("Color-code must have a length of 7 character: #RRGGBB !")
 
         if columnname == "icontype":
             if newvalue not in [self.TAG_ICONTYPE_UNICODE, self.TAG_ICONTYPE_HTML]:
