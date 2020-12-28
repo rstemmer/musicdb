@@ -35,13 +35,26 @@
 
 
 
+.MoodsTableRow input
+{
+    display:            block;
+}
+
 .MoodsTableRow span+span
 {
     margin-left:        1.5ch;
 }
 
+.MoodsTableRow:nth-child(1) > td
+{
+    margin:             auto;
+    text-align:         center;
+}
+
 .MoodsTableRow td:nth-child(1) > input
 {
+    margin:             auto;
+    text-align:         center;
     width:              2ch;
 }
 .MoodsTableRow td:nth-child(1) > div
