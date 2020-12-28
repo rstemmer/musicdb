@@ -23,6 +23,18 @@
     padding:            0.5em;
 }
 
+
+#SettingsMenu > .menuentry[data-highlight=true]
+{
+    color:              var(--bgcolor);
+    background-color:   var(--hlcolor);
+}
+#SettingsMenu > .menuentry[data-highlight=true] > .SVGIcon
+{
+    color:              var(--hlcolor);
+    background-color:   var(--bgcolor);
+}
+
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
 

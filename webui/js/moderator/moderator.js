@@ -29,8 +29,9 @@ let queuecontrolview    = new QueueControlView();
 
 let webuisettings       = new WebUISettings();
 let genresettings       = new GenreSettings();
-let hiddenalbums        = new HiddenAlbums();
 let moodmanager         = new MoodManager();
+let hiddenalbums        = new HiddenAlbums();
+let settingsmenu        = new SettingsMenu(); // Accesses references to settings views
 
 let configuration       = null; // Needs to be loaded from the Server
 

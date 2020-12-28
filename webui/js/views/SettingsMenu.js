@@ -21,8 +21,11 @@ class SettingsMenu extends LeftView
     constructor()
     {
         super("SettingsMenu");
-        this.LockView();
+        this.entries = new Array();
+        this.views   = new Array();
+        // ! The index of a view must match the index of an menu entry !
 
+        this.views.push(null);
         this.AddMenuEntry(
             new SVGIcon("Back"),
             "Back to Artists", 
@@ -32,6 +35,7 @@ class SettingsMenu extends LeftView
                 },
             "Hide Management menu and show Artists");
 
+        this.views.push(webuisettings);
         this.AddMenuEntry(
             new SVGIcon("Settings"),
             "WebUI Settings",
@@ -40,6 +44,7 @@ class SettingsMenu extends LeftView
                 },
             "Show WebUI Settings");
 
+        this.views.push(genresettings);
         this.AddMenuEntry(
             new SVGIcon("Tags"),
             "Genre Manager",
@@ -49,6 +54,7 @@ class SettingsMenu extends LeftView
                 },
             "Manage, Add and Remove Genres and Subgenres");
 
+        this.views.push(moodmanager);
         this.AddMenuEntry(
             new SVGIcon("Tags"),
             "Mood Manager",
@@ -58,6 +64,7 @@ class SettingsMenu extends LeftView
                 },
             "Manage, Add and Remove Mood Flags");
 
+        this.views.push(hiddenalbums);
         this.AddMenuEntry(
             new SVGIcon("Hide"),
             "Hidden Albums",
@@ -84,13 +91,28 @@ class SettingsMenu extends LeftView
         entry.appendChild(text);
 
         this.element.appendChild(entry);
+        this.entries.push(entry);
         return;
     }
 
 
 
-    ClearHighlight()
+    HighlightMenuEntry(viewref)
     {
+        let index = this.views.indexOf(viewref);
+        if(typeof index === "number")
+            this.entries[index].dataset.highlight = true;
+        return;
+    }
+
+
+
+    ClearHighlightedEntries()
+    {
+        for(let entry of this.entries)
+        {
+            entry.dataset.highlight = false;
+        }
     }
 }
 

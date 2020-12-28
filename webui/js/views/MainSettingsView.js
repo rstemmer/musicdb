@@ -26,9 +26,11 @@ class MainSettingsView extends MainView
 
     onViewMounted()
     {
+        settingsmenu.HighlightMenuEntry(this);
     }
     onViewUnmounted()
     {
+        settingsmenu.ClearHighlightedEntries();
     }
 }
 

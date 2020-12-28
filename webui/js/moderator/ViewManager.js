@@ -77,7 +77,8 @@ class LeftViewManager extends ViewManager
     }
     ShowSettingsMenu()
     {
-        this.MountView(new SettingsMenu());
+        settingsmenu.LockView()
+        this.MountView(settingsmenu);
     }
 
 
