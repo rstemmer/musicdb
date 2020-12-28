@@ -53,9 +53,10 @@ class MoodsTableHeadline extends MoodsTableRowBase
 
 class MoodsTableRow extends MoodsTableRowBase
 {
-    constructor(MDBMood, MDBTagStats)
+    constructor(MDBMood, MDBTagStats, onmovemood)
     {
         super();
+        this.onmovemood = onmovemood;
         this.Update(MDBMood, MDBTagStats);
     }
 
@@ -92,7 +93,36 @@ class MoodsTableRow extends MoodsTableRowBase
             removebutton.SetTooltip("Delete Mood-Flag");
         }
 
+        let moveleftbutton  = new SVGButton("MoveLeft",  ()=>{this.onMove(MDBMood, "left");});
+        let moverightbutton = new SVGButton("MoveRight", ()=>{this.onMove(MDBMood, "right");});
+        let posyswitch      = new SVGSwitch("MoveToBottomRow", "MoveToTopRow", (state)=>
+            {
+                if(state=="a")
+                    this.onMove(MDBMood, "up");
+                else
+                    this.onMove(MDBMood, "down");
+            });
+
+        if(MDBMood.posy === 1)
+        {
+            posyswitch.SetSelectionState("b");
+        }
+        posyswitch.SetTooltip("Switch between top and bottom row");
+        if(MDBMood.posx === 0)
+        {
+            moveleftbutton.Disable();
+            moveleftbutton.SetTooltip("Icon already on the very left");
+        }
+        else
+        {
+            moveleftbutton.SetTooltip("Move icon to the left");
+        }
+        moverightbutton.SetTooltip("Move icon to the right");
+
         let buttonbox = new ButtonBox()
+        buttonbox.AddButton(moveleftbutton);
+        buttonbox.AddButton(moverightbutton);
+        buttonbox.AddButton(posyswitch);
         buttonbox.AddButton(editbutton);
         buttonbox.AddButton(removebutton);
 
@@ -150,6 +180,14 @@ class MoodsTableRow extends MoodsTableRowBase
         this.SetContent(COLOR_COLUMN   , colorelement); // TODO: Color-Button
         this.SetContent(USAGE_COLUMN   , usageelement);
         this.SetContent(BUTTON_COLUMN  , buttonbox.GetHTMLElement());
+    }
+
+
+
+    onMove(MDBMood, direction)
+    {
+        if(typeof this.onmovemood === "function")
+            this.onmovemood(MDBMood, direction);
     }
 
 
@@ -249,9 +287,17 @@ class MoodsTableEditRow extends MoodsTableRowBase
             valid = false;
 
         if(valid === true)
-            this.confirmbutton.Show();
+        {
+            this.confirmbutton.Enable();
+            this.confirmbutton.SetTooltip("Create new Flag with the given attributes");
+        }
         else
-            this.confirmbutton.Hide();
+        {
+            this.confirmbutton.Disable();
+            this.confirmbutton.SetTooltip("Set an unicode icon and define a name to create a new Mood-Flag");
+        }
+
+        return;
     }
 
     ValidateIcon()
@@ -355,6 +401,7 @@ class MoodsTable extends Table
         super(["MoodsTable"]);
         this.headline = new MoodsTableHeadline();
         this.editrow  = new MoodsTableEditRow();
+        this.moods    = null;
         this.Update(MDBMoods);
     }
 
@@ -370,13 +417,15 @@ class MoodsTable extends Table
         if(typeof MDBMoods !== "object" || MDBMoods === null)
             return;
 
+        this.moods = MDBMoods;
+
         let maxposx = 0;
         for(let MDBMood of MDBMoods)
         {
             let moodid = MDBMood.id;
             let posx   = MDBMood.posx;
             let stats  = MDBMoodStats[moodid];
-            this.AddRow(new MoodsTableRow(MDBMood, stats));
+            this.AddRow(new MoodsTableRow(MDBMood, stats, (mood, direction)=>{this.onMoveMood(mood, direction);}));
 
             if(maxposx < posx)
                 maxposx = posx;
@@ -385,6 +434,128 @@ class MoodsTable extends Table
         this.editrow.SetMoodPosition(maxposx+1, 0);
         this.AddRow(this.editrow);
         return;
+    }
+
+
+
+    onMoveMood(MDBMood, direction)
+    {
+        let neighbour;
+        switch(direction)
+        {
+            case "left":
+                neighbour = this.MoveIconLeft(MDBMood);
+                break;
+            case "right":
+                neighbour = this.MoveIconRight(MDBMood);
+                break;
+            case "up":
+                neighbour = this.MoveIconUp(MDBMood);
+                break;
+            case "down":
+                neighbour = this.MoveIconDown(MDBMood);
+                break;
+            default:
+                return;
+        }
+
+        if(direction == "left" || direction == "right") // update posx
+        {
+            MusicDB_Call("ModifyTag", {tagid: MDBMood.id, attribute: "posx", value: MDBMood.posx});
+            if(neighbour != null)
+                MusicDB_Call("ModifyTag", {tagid: neighbour.id, attribute: "posx", value: neighbour.posx});
+        }
+        else if(direction == "up" || direction == "down") // update posy
+        {
+            MusicDB_Call("ModifyTag", {tagid: MDBMood.id, attribute: "posy", value: MDBMood.posy});
+            if(neighbour != null)
+                MusicDB_Call("ModifyTag", {tagid: neighbour.id, attribute: "posy", value: neighbour.posy});
+        }
+
+        MusicDB_Request("GetTags", "UpdateTags", {}, {origin: "MoodSettings"});
+        return;
+    }
+
+
+    GetMoodByPosition(x, y)
+    {
+        for(let mood of this.moods)
+        {
+            if(mood.posx == x && mood.posy == y)
+                return mood;
+        }
+        return null;
+    }
+
+
+
+    MoveIconUp(MDBMood)
+    {
+        if(MDBMood == null)
+            return null;
+
+        let posx = MDBMood.posx;
+        let posy = MDBMood.posy;
+
+        if(posy == 0)   // is already up
+            return null;
+
+        let neighbour  = this.GetMoodByPosition(posx, 0);
+        if(neighbour != null)
+            neighbour.posy = 1;
+        MDBMood.posy   = 0;
+        return neighbour;
+    }
+
+    MoveIconDown(MDBMood)
+    {
+        if(MDBMood == null)
+            return;
+
+        let posx = MDBMood.posx;
+        let posy = MDBMood.posy;
+
+        if(posy == 1)   // is already down
+            return;
+
+        let neighbour  = this.GetMoodByPosition(posx, 1);
+        if(neighbour != null)
+            neighbour.posy = 0;
+        MDBMood.posy   = 1;
+        return neighbour;
+    }
+
+    MoveIconLeft(MDBMood)
+    {
+        if(MDBMood == null)
+            return null;
+
+        let posx = MDBMood.posx;
+        let posy = MDBMood.posy;
+
+        if(posx == 0)   // already very left
+            return null;
+
+        let neighbour  = this.GetMoodByPosition(posx-1, posy);
+        if(neighbour != null)
+            neighbour.posx++;
+        MDBMood.posx--;
+        return neighbour;
+    }
+
+    MoveIconRight(MDBMood)
+    {
+        if(MDBMood == null)
+            return null;
+
+        let posx = MDBMood.posx;
+        let posy = MDBMood.posy;
+
+        let neighbour  = this.GetMoodByPosition(posx+1, posy);
+        if(neighbour != null)
+            neighbour.posx--;
+        MDBMood.posx++;
+        return neighbour;
     }
 }
 
