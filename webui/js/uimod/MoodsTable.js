@@ -309,6 +309,7 @@ class MoodsTableEditRow extends MoodsTableRowBase
 
     onSave()
     {
+        // Get all data
         let name  = this.nameinput.value;
         let icon  = this.iconinput.value;
         let color = null;
@@ -318,8 +319,18 @@ class MoodsTableEditRow extends MoodsTableRowBase
         if(this.colorstatebutton.GetSelectionState())
             color = this.colorinput.GetColor();
 
+        // Save
         window.console && console.log(`AddMoodFlag(${name}, ${icon}, ${color}, ${posx}, ${posy});`)
         MusicDB_Call("AddMoodFlag", {name: name, icon: icon, color: color, posx: posx, posy: posy});
+
+        // Clear inputs for new data
+        this.posx += 1;
+        this.iconinput.value = "";
+        this.nameinput.value = "";
+        this.colorinput.SetColor("#ffffff");
+        this.colorstatebutton.SetSelectionState(false);
+        this.Validate();
+        return;
     }
 }
 
