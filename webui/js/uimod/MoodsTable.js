@@ -177,7 +177,7 @@ class MoodsTableRow extends MoodsTableRowBase
         this.SetContent(ICONTYPE_COLUMN, document.createTextNode(typename));
         this.SetContent(MOODNAME_COLUMN, document.createTextNode(name));
         this.SetContent(HASCOLOR_COLUMN, colorstatebutton.GetHTMLElement());
-        this.SetContent(COLOR_COLUMN   , colorelement); // TODO: Color-Button
+        this.SetContent(COLOR_COLUMN   , colorelement);
         this.SetContent(USAGE_COLUMN   , usageelement);
         this.SetContent(BUTTON_COLUMN  , buttonbox.GetHTMLElement());
     }
@@ -194,7 +194,6 @@ class MoodsTableRow extends MoodsTableRowBase
 
     onDelete(MDBMood)
     {
-        window.console && console.log(`Delete ${MDBMood.name}`);
         MusicDB_Request("DeleteTag", "UpdateTags", {tagid: MDBMood.id}, {origin: "MoodSettings"});
     }
 
@@ -326,7 +325,6 @@ class MoodsTableEditRow extends MoodsTableRowBase
 
     onToggleColor(newstate)
     {
-        window.console && console.log(`New color state: ${newstate}`);
         if(newstate == false)
         {
             this.SetContent(COLOR_COLUMN, document.createTextNode("No Color"));
@@ -364,14 +362,12 @@ class MoodsTableEditRow extends MoodsTableRowBase
         // Otherwise just updated changes
         if(this.mood == null)
         {
-            window.console && console.log(`AddMoodFlag(${name}, ${icon}, ${color}, ${posx}, ${posy});`)
             MusicDB_Request("AddMoodFlag", "UpdateTags", {name: name, icon: icon, color: color, posx: posx, posy: posy}, {origin: "MoodSettings"});
         }
         else
         {
             let tagid = this.mood.id;
 
-            window.console && console.log(`Modify Mood Flag: ${name}, ${icon}, ${color}`)
             if(name != this.mood.name)
                 MusicDB_Call("ModifyTag", {tagid: tagid, attribute: "name", value: name});
             if(icon != this.mood.icon)
