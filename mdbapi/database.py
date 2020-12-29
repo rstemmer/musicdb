@@ -182,7 +182,7 @@ class MusicDBDatabase(object):
                 newpaths["songs"].append(path)
 
         # Check Videos
-        videos          = self.db.GetAllVideos()
+        videos          = self.db.GetVideos()
         knownvideopaths = [video["path"] for video in videos if self.fs.IsFile(video["path"])]
         videopaths      = self.fs.GetFiles(knownartistpaths)
 
@@ -193,8 +193,8 @@ class MusicDBDatabase(object):
             if extension not in ["mp4", "m4v", "webm"]:
                 continue
 
-            if path not in knownsongpaths:
-                newpaths["video"].append(path)
+            if path not in knownvideopaths:
+                newpaths["videos"].append(path)
 
         return newpaths
 
