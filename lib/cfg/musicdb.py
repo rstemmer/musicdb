@@ -78,6 +78,8 @@ class ARTWORK:
     pass
 class VIDEOFRAMES:
     pass
+class UPLOAD:
+    pass
 class EXTERN:
     pass
 class TRACKER:
@@ -194,6 +196,11 @@ class MusicDBConfig(Config):
                 width, height   = map(int, scale.split("x"))
             except Exception as e:
                 logging.error("Invalid video scale format in [videoframes]->scales: Expected format WxH, with W and H as integers. Actual format: %s.", scale)
+
+        # [upload]
+        self.upload = UPLOAD()
+        self.upload.allow           = self.Get(bool,    "upload", "allow",      False)
+        self.upload.tmppath         = self.GetDirectory("upload", "tmpdir",     "/tmp")
 
 
         # [extern]

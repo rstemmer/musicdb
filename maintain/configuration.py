@@ -128,14 +128,19 @@ class ConfigurationMaintainer(object):
         The videoframs directory will have the same root as the artwork directory.
         """
         artworkpath = self.config.get("artwork", "path")
-        videoframespath  = "/".join(artworkpath.split("/")[:-1])
-        videoframespath += "/videoframes"
+        datapath    = "/".join(artworkpath.split("/")[:-1])
+        videoframespath = datapath + "/videoframes"
+        temppath    = datapath + "/upload"
 
         self.CreateSection("videoframes")
         self.AddValue("videoframes", "path",          videoframespath);
         self.AddValue("videoframes", "frames",        "5");
         self.AddValue("videoframes", "scales",        "150x83");
         self.AddValue("videoframes", "previewlength", "3");
+
+        self.CreateSection("uploads")
+        self.AddValue("uploads", "allow",   "True");
+        self.AddValue("uploads", "tmppath", "True");
 
         self.AddValue("debug", "disableicecast", "0");
         self.AddValue("debug", "disablevideos",  "1");
