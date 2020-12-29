@@ -72,6 +72,15 @@ class SettingsMenu extends LeftView
                 MusicDB_Request("GetHiddenAlbums", "ShowHiddenAlbums");
                 },
             "Show list of hidden albums that can be made visible again");
+
+        this.views.push(videoimport);
+        this.AddMenuEntry(
+            new SVGIcon("MusicDB"),
+            "Import Video",
+            ()=>{
+                MusicDB_Request("GetTags", "ShowVideoImport"); // TODO: Request non-imported video files
+                },
+            "Upload and/or Import Music Videos");
     }
 
 

@@ -31,6 +31,7 @@ let webuisettings       = new WebUISettings();
 let genresettings       = new GenreSettings();
 let moodmanager         = new MoodManager();
 let hiddenalbums        = new HiddenAlbums();
+let videoimport         = new VideoImport();
 let settingsmenu        = new SettingsMenu(); // Accesses references to settings views
 
 let configuration       = null; // Needs to be loaded from the Server
@@ -212,8 +213,9 @@ function onMusicDBMessage(fnc, sig, args, pass)
     // Setting Views
     webuisettings.onMusicDBMessage(fnc, sig, args, pass);
     genresettings.onMusicDBMessage(fnc, sig, args, pass);
-    hiddenalbums.onMusicDBMessage(fnc, sig, args, pass);
     moodmanager.onMusicDBMessage(fnc, sig, args, pass);
+    hiddenalbums.onMusicDBMessage(fnc, sig, args, pass);
+    videoimport.onMusicDBMessage(fnc, sig, args, pass);
 
 
     // Handle Messages form the server

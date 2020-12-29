@@ -147,13 +147,17 @@ class MainViewManager extends ViewManager
         {
             this.MountView(genresettings);
         }
+        else if(fnc == "GetTags" && sig == "ShowMoodManager")
+        {
+            this.MountView(moodmanager);
+        }
         else if(fnc == "GetHiddenAlbums" && sig == "ShowHiddenAlbums")
         {
             this.MountView(hiddenalbums);
         }
-        else if(fnc == "GetTags" && sig == "ShowMoodManager")
+        else if(fnc == "GetTags" && sig == "ShowVideoImport")   // TODO: update fnc
         {
-            this.MountView(moodmanager);
+            this.MountView(videoimport);
         }
         return;
     }
