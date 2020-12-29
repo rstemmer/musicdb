@@ -52,6 +52,10 @@ class FileSelect extends Element
         window.console && console.log(type);
         window.console && console.log(date);
 
+        // Start Upload (TODO: Move to dedicated button)
+        uploadmanager.UploadFile(fileinfos);
+
+        // Update Label
         let newlabel = `${name} <span class="hlcolor">${size}&#8239;MiB</span>`;
         this.text.innerHTML = newlabel;
     }

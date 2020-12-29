@@ -4,6 +4,7 @@ let curtain             = new Curtain();
 // Create Basic MusicDB WebUI Components
 let fullscreenmanager   = new FullscreenManager();
 let mdbmodemanager      = new MDBModeManager();
+let uploadmanager       = new UploadManager();
 let colormanager        = new ColorManager();
 let tagmanager          = new TagManager();
 let musicdbhud          = new MusicDBHUD();
