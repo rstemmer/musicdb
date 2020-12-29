@@ -139,7 +139,7 @@ class MusicDBDatabase(object):
 
         Returns:
             A dictionary with 4 entries: ``"artists"``, ``"albums"``, ``"songs"`` and ``"videos"``.
-            Each a list of paths that are valid but unknown by the database. Empty lists if there is no invalid entry.
+            Each a list of paths that are valid but unknown by the database. Empty lists if there is no valid entry.
         """
         newpaths = {}
         newpaths["artists"] = []

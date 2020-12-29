@@ -55,9 +55,10 @@ class MetaTags(object):
 
         Supported file extensions for video files:
 
-            * For MPEG4: ``m4v``
+            * For MPEG4: ``m4v`` (``mp4``)
+            * For WebM: ``webm``
 
-        The corner case of an ``mp4`` file gets not handled because it is not clear if it shall be handled as audio
+        The corner case of an ``mp4`` file gets not handled as video because it is not clear if it shall be handled as audio
         or video file.
         A warning gets written into the log and a ``ValueError`` exception raised.
 
