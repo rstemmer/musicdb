@@ -17,7 +17,7 @@
 "use strict";
 
 
-const VIDEOIMPORTTABLEHEADLINE = ["Artist Name", "Release", "Video Name", "Full Path", "Controls"];
+const VIDEOIMPORTTABLEHEADLINE = ["Artist Name", "Release", "Video Name", "Source Path", "Controls"];
 const VIT_ARTIST_COLUMN     = 0;
 const VIT_RELEASE_COLUMN    = 1;
 const VIT_NAME_COLUMN       = 2;
@@ -115,7 +115,7 @@ class VideoImportTable extends Table
 {
     constructor(videos)
     {
-        super(["MoodsTable"]);
+        super(["VideoImportTable"]);
         this.headline = new VideoImportTableHeadline();
         this.videos   = null;
         this.Update(videos);
