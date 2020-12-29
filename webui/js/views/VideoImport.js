@@ -22,7 +22,9 @@ class VideoImport extends MainSettingsView
     {
         super("VideoImport", "Upload and Import Videos");
 
+        this.upload = new FileSelect("Select Video", "Tooltip");
         this.table = new VideoImportTable();
+        this.element.appendChild(this.upload.GetHTMLElement());
         this.element.appendChild(this.table.GetHTMLElement());
     }
 
