@@ -27,6 +27,7 @@ class VideoImport extends MainSettingsView
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
+        window.console && console.log(args);
         /*
         if(fnc == "LoadWebUIConfiguration" || fnc == "SaveWebUIConfiguration")
         {

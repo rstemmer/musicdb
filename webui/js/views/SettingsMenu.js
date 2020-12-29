@@ -78,7 +78,7 @@ class SettingsMenu extends LeftView
             new SVGIcon("MusicDB"),
             "Import Video",
             ()=>{
-                MusicDB_Request("GetTags", "ShowVideoImport"); // TODO: Request non-imported video files
+                MusicDB_Request("FindNewPaths", "ShowVideoImport");
                 },
             "Upload and/or Import Music Videos");
     }

@@ -116,6 +116,7 @@ Other
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTables`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SaveWebUIConfiguration`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.LoadWebUIConfiguration`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.FindNewPaths`
 
 """
 import random
@@ -159,6 +160,7 @@ class MusicDBWebSocketInterface(object):
             self.videostream= VideoStreamManager(self.cfg, self.database)
             self.songqueue  = SongQueue(self.cfg, self.database)
             self.videoqueue = VideoQueue(self.cfg, self.database)
+            self.music      = MusicDBDatabase(self.cfg, self.database)
         except Exception as e:
             logging.exception(e)
             raise e
@@ -292,6 +294,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.RunLyricsCrawler(args["songid"])
         elif fncname == "LoadWebUIConfiguration":
             retval = self.LoadWebUIConfiguration()
+        elif fncname == "FindNewPaths":
+            retval = self.FindNewPaths()
         # Call-Methods (retval will be ignored unless method gets not changed)
         elif fncname == "SaveWebUIConfiguration":
             retval = self.SaveWebUIConfiguration(args["config"])
@@ -3275,6 +3279,36 @@ class MusicDBWebSocketInterface(object):
         except Exception as e:
             logging.warning("Removing video relations failed with error: %s", str(e))
         return None
+
+
+
+    def FindNewPaths(self):
+        """
+        This method is a direct interface to :meth:`~mdbapi.database.MusicDBDatabase.FindNewPaths`
+
+        Returns:
+            A list of paths (strings) to artists, albums, songs and videos that are not existing in the database
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Request("FindNewPaths", "ListPaths");
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "FindNewPaths" && sig == "ListPaths")
+                    {
+                        console.log(args.songs); // list of song paths or "[]"
+                        console.log(args.albums);
+                        console.log(args.artists);
+                        console.log(args.videos);
+                    }
+                }
+        """
+        paths = self.music.FindNewPaths()
+        return paths
 
 
 
