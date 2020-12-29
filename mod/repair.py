@@ -205,7 +205,10 @@ class repair(MDBModule, MusicDBDatabase):
             *Nothing*
         """
         self.lostartists, self.lostalbums, self.lostsongs = self.FindLostPaths()
-        self.newartists,  self.newalbums,  self.newsongs  = self.FindNewPaths()
+        self.newpaths = self.FindNewPaths()
+        self.newartists = self.newpaths["artists"]
+        self.newalbums  = self.newpaths["albums"]
+        self.newsongs   = self.newpaths["songs"]
 
 
     def UpdateDatabase(self, target, targetid, path):

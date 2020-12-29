@@ -138,11 +138,14 @@ class MusicDBDatabase(object):
         It does not lead to an error that the old path is still in the database.
 
         Returns:
-            A three lists of paths that are valid but unknown by the database. Empty lists if there is no invalid entrie.
+            A dictionary with 4 entries: ``"artists"``, ``"albums"``, ``"songs"`` and ``"videos"``.
+            Each a list of paths that are valid but unknown by the database. Empty lists if there is no invalid entry.
         """
-        newartists = []
-        newalbums  = []
-        newsongs   = []
+        newpaths = {}
+        newpaths["artists"] = []
+        newpaths["albums"]  = []
+        newpaths["songs"]   = []
+        newpaths["videos"]  = []
 
         # Check Artists
         artists          = self.db.GetAllArtists()
@@ -152,7 +155,7 @@ class MusicDBDatabase(object):
         for path in artistpaths:
             path = self.fs.RemoveRoot(path)
             if path not in knownartistpaths:
-                newartists.append(path)
+                newpaths["artists"].append(path)
 
         # Check Albums
         albums          = self.db.GetAllAlbums()
@@ -161,7 +164,7 @@ class MusicDBDatabase(object):
         
         for path in albumpaths:
             if path not in knownalbumpaths:
-                newalbums.append(path)
+                newpaths["albums"].append(path)
 
         # Check Songs
         songs           = self.db.GetAllSongs()
@@ -176,9 +179,24 @@ class MusicDBDatabase(object):
                 continue
 
             if path not in knownsongpaths:
-                newsongs.append(path)
+                newpaths["songs"].append(path)
 
-        return newartists, newalbums, newsongs
+        # Check Videos
+        songs           = self.db.GetAllSongs()
+        knownsongpaths  = [song["path"] for song in songs if self.fs.IsFile(song["path"])]
+        songpaths       = self.fs.GetFiles(knownalbumpaths, self.ignoresongs)
+
+        for path in songpaths:
+
+            # check if this is really an audio file
+            extension = self.fs.GetFileExtension(path)
+            if extension not in ["mp4", "aac", "m4a", "mp3", "flac", "MP3"]:
+                continue
+
+            if path not in knownsongpaths:
+                newpaths["songs"].append(path)
+
+        return newpaths
 
 
 
