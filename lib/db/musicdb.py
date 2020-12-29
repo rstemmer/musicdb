@@ -225,6 +225,7 @@ The following methods exist to handle video entries in the database:
     * :meth:`~lib.db.musicdb.MusicDatabase.AddFullVideo`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetVideoByPath`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetVideoById`
+    * :meth:`~lib.db.musicdb.MusicDatabase.GetVideos`
     * :meth:`~lib.db.musicdb.MusicDatabase.GetVideosByArtistId`
     * :meth:`~lib.db.musicdb.MusicDatabase.UpdateVideoStatistic`
     * :meth:`~lib.db.musicdb.MusicDatabase.SetColorThemeByVideoId`
@@ -1139,15 +1140,15 @@ class MusicDatabase(Database):
 
     def GetAllAlbums(self):
         """
-        See :meth:`~lib.db.musicdb.MusicDatabase.GetAlbums` (``GetAlbums(artistid=None, withsongs=False``)
+        See :meth:`~lib.db.musicdb.MusicDatabase.GetAlbums` (``GetAlbums(artistid=None, withsongs=False, hidden="include")``)
         """
-        return self.GetAlbums()
+        return self.GetAlbums(hidden="include")
 
     def GetAlbumsByArtistId(self, artistid):
         """
-        See :meth:`~lib.db.musicdb.MusicDatabase.GetAlbums` (``GetAlbums(artistid, withsongs=False``)
+        See :meth:`~lib.db.musicdb.MusicDatabase.GetAlbums` (``GetAlbums(artistid, withsongs=False, hidden="include")``)
         """
-        return self.GetAlbums(artistid)
+        return self.GetAlbums(artistid, hidden="include")
 
     # returns a list with all artists. Each list element is a dictionary with all columns of the database
     def GetAlbums(self, artistid = None, withsongs = False, hidden = "no"):
@@ -2236,6 +2237,38 @@ class MusicDatabase(Database):
         return retval
 
 
+    def GetVideos(self):
+        """
+        This method returns an unsorted list with all videos.
+
+        Example:
+
+            The following example prints all videos
+
+            .. code-block:: python
+
+                albums = musicdb.GetVideos()
+                for video in videos:
+                    print(video["name"])
+
+        Returns:
+            A list with all videos in the database.
+        """
+        sql   = "SELECT * FROM videos"
+
+        with MusicDatabaseLock:
+            result = self.GetFromDatabase(sql)
+
+        videos = []
+        for entry in result:
+            video = self.__VideoEntryToDict(entry)
+
+            videos.append(video)
+
+        return videos
+
+
+
     def GetVideosByArtistId(self, artistid):
         """
         This method returns an unsorted list with all videos of an artist.
@@ -2255,9 +2288,6 @@ class MusicDatabase(Database):
 
         Returns:
             A list with all videos of an artist.
-
-        Raises:
-            TypeError: If *withsongs* is not of type ``bool``
         """
         sql   = "SELECT * FROM videos WHERE artistid = ?"
         value = int(artistid)
