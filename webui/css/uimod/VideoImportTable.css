@@ -44,9 +44,7 @@
 
 .VideoImportTableRow td:nth-child(2) > input
 {
-    /*
-    width:              15ch;
-    */
+    width:              4ch;
 }
 
 

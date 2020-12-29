@@ -38,7 +38,7 @@ class VideoImport extends MainSettingsView
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "FindNewPaths" || fnc == "ShowVideoImport")
+        if(fnc == "FindNewContent" || fnc == "ShowVideoImport")
         {
             window.console && console.log(args.videos);
             this.UpdateView(args.videos);

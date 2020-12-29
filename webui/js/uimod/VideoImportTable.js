@@ -51,29 +51,30 @@ class VideoImportTableHeadline extends VideoImportTableRowBase
 
 class VideoImportTableRow extends VideoImportTableRowBase
 {
-    constructor(videopath)
+    constructor(video)
     {
         super();
-        this.Update(videopath)
+        this.Update(video)
     }
 
 
 
-    Update(videopath)
+    Update(video)
     {
         // Get all data
-        let artistname;
-        let videoname;
-        let release;
+        let artistname = video.artistname;
+        let videoname  = video.videoname;
+        let release    = video.release;
+        let videopath  = video.path;
 
         // Create cells
         let  artistelement = document.createTextNode(artistname);
         this.releaseinput  = document.createElement("input");
-        this.releaseinput.oninput   = ()=>{onReleaseInput();};
+        this.releaseinput.oninput   = ()=>{this.onReleaseInput();};
         this.releaseinput.type      = "number";
         this.releaseinput.value     = release;
         this.nameinput     = document.createElement("input");
-        this.nameinput.oninput  = ()=>{onNameInput();};
+        this.nameinput.oninput  = ()=>{this.onNameInput();};
         this.nameinput.type     = "text";
         this.nameinput.value    = videoname;
         let  pathelement      = document.createTextNode(videopath);
@@ -112,30 +113,30 @@ class VideoImportTableRow extends VideoImportTableRowBase
 
 class VideoImportTable extends Table
 {
-    constructor(videopaths)
+    constructor(videos)
     {
         super(["MoodsTable"]);
-        this.headline   = new VideoImportTableHeadline();
-        this.videopaths = null;
-        this.Update(videopaths);
+        this.headline = new VideoImportTableHeadline();
+        this.videos   = null;
+        this.Update(videos);
     }
 
 
 
-    Update(videopaths)
+    Update(videos)
     {
         this.Clear();
         this.AddRow(this.headline);
 
-        if(typeof videopaths !== "object" || videopaths === null)
+        if(typeof videos !== "object" || videos === null)
             return;
 
-        this.videopaths = videopaths;
+        this.videos = videos;
 
         let maxposx = 0;
-        for(let videopath of this.videopaths)
+        for(let video of this.videos)
         {
-            this.AddRow(new VideoImportTableRow(videopath));
+            this.AddRow(new VideoImportTableRow(video));
         }
 
         return;

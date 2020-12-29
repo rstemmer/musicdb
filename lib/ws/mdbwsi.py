@@ -116,7 +116,7 @@ Other
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTables`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SaveWebUIConfiguration`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.LoadWebUIConfiguration`
-* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.FindNewPaths`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.FindNewContent`
 
 """
 import random
@@ -294,8 +294,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.RunLyricsCrawler(args["songid"])
         elif fncname == "LoadWebUIConfiguration":
             retval = self.LoadWebUIConfiguration()
-        elif fncname == "FindNewPaths":
-            retval = self.FindNewPaths()
+        elif fncname == "FindNewContent":
+            retval = self.FindNewContent()
         # Call-Methods (retval will be ignored unless method gets not changed)
         elif fncname == "SaveWebUIConfiguration":
             retval = self.SaveWebUIConfiguration(args["config"])
@@ -3282,33 +3282,61 @@ class MusicDBWebSocketInterface(object):
 
 
 
-    def FindNewPaths(self):
+    def FindNewContent(self):
         """
-        This method is a direct interface to :meth:`~mdbapi.database.MusicDBDatabase.FindNewPaths`
+        This method uses :meth:`~mdbapi.database.MusicDBDatabase.FindNewPaths` to get all new albums and videos.
 
+        The lists of albums and videos contain objects with the following keys:
+
+        * For Videos:
+            * ``"path"``: Path to the new video
+            * ``"artistname"``:
+            * ``"videoname"``:
+            * ``"release"``:
+            * ``"extension"``:
+        * For Albums:
+            * ???
+        
         Returns:
-            A list of paths (strings) to artists, albums, songs and videos that are not existing in the database
+            A dict with two listst: ``"albums"`` and ``"videos"``. Each list entry is another object with the key listed in the description.
 
         Example:
             .. code-block:: javascript
 
-                MusicDB_Request("FindNewPaths", "ListPaths");
+                MusicDB_Request("FindNewContent", "ListContent");
 
                 // …
 
                 function onMusicDBMessage(fnc, sig, args, pass)
                 {
-                    if(fnc == "FindNewPaths" && sig == "ListPaths")
+                    if(fnc == "FindNewContent" && sig == "ListContent")
                     {
-                        console.log(args.songs); // list of song paths or "[]"
                         console.log(args.albums);
-                        console.log(args.artists);
                         console.log(args.videos);
                     }
                 }
         """
+        # FIXME: Scan new artists for alums
         paths = self.music.FindNewPaths()
-        return paths
+        albumpaths = paths["albums"]
+        videopaths = paths["videos"]
+
+        newcontent = {}
+        newcontent["albums"] = []
+        newcontent["videos"] = []
+
+        for path in videopaths:
+            entry = {}
+            infos = self.music.AnalysePath(path)
+
+            entry["path"]       = path
+            entry["artistname"] = infos["artist"]
+            entry["videoname"]  = infos["video"]
+            entry["release"]    = infos["release"]
+            entry["extension"]  = infos["extension"]
+            newcontent["videos"].append(entry)
+
+        return newcontent
 
 
 
