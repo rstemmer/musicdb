@@ -410,11 +410,12 @@ class add(MDBModule, MusicDBDatabase):
         # Also find new artists and list their albums.
         newpaths   = self.FindNewPaths()
         newartists = newpaths["artists"]
-        newalbums  = newpaths["albuns"]
+        newalbums  = newpaths["albums"]
 
-        for newartist in newartists:
-            albumpaths = self.fs.GetSubdirectories(newartist, self.cfg.music.ignorealbums)
-            newalbums.extend(albumpaths)
+        # With MusicDB 7.0.0 all new albums are listed in new album paths, not only of known artists
+        #for newartist in newartists:
+        #    albumpaths = self.fs.GetSubdirectories(newartist, self.cfg.music.ignorealbums)
+        #    newalbums.extend(albumpaths)
 
         return newalbums
 

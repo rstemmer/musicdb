@@ -3327,7 +3327,15 @@ class MusicDBWebSocketInterface(object):
 
         for path in videopaths:
             entry = {}
+            # Try analyse path. If it fails, assume infos
             infos = self.music.AnalysePath(path)
+            if infos == None:
+                infos = {}
+                infos["artist"]    = path.split("/")[0]
+                infos["video"]     = path.split("/")[1:]
+                infos["release"]   = None
+                infos["extension"] = path.split(".")[-1]
+
 
             entry["path"]       = path
             entry["artistname"] = infos["artist"]

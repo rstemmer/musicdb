@@ -127,8 +127,8 @@ class MusicDBDatabase(object):
         Each representing an artist, album, song or video that is not known by the database yet.
         Files and directories in the configured ignore-list will be ignored.
 
-        If a new directory was found, the subdirectories will not be added!
-        So for a new album, the new songs are implicit and not listed in the new-songs-list.
+        If a new directory was found, the subdirectories will also be added!
+        So for a new album, the new songs are explicit added as well.
 
         This method is very optimistic. It will also list empty directories.
         The user may want to check if the results of this method are valid for him.
@@ -147,20 +147,21 @@ class MusicDBDatabase(object):
         newpaths["songs"]   = []
         newpaths["videos"]  = []
 
+        artistpaths = self.fs.GetSubdirectories(None, self.ignoreartists)
+        artistpaths = [self.fs.RemoveRoot(path) for path in artistpaths]
+
         # Check Artists
         artists          = self.db.GetAllArtists()
         knownartistpaths = [artist["path"] for artist in artists if self.fs.IsDirectory(artist["path"])]
-        artistpaths      = self.fs.GetSubdirectories(None, self.ignoreartists)
 
         for path in artistpaths:
-            path = self.fs.RemoveRoot(path)
             if path not in knownartistpaths:
                 newpaths["artists"].append(path)
 
         # Check Albums
         albums          = self.db.GetAllAlbums()
         knownalbumpaths = [album["path"] for album in albums if self.fs.IsDirectory(album["path"])]
-        albumpaths      = self.fs.GetSubdirectories(knownartistpaths, self.ignorealbums)
+        albumpaths      = self.fs.GetSubdirectories(artistpaths, self.ignorealbums)
         
         for path in albumpaths:
             if path not in knownalbumpaths:
@@ -169,7 +170,7 @@ class MusicDBDatabase(object):
         # Check Songs
         songs           = self.db.GetAllSongs()
         knownsongpaths  = [song["path"] for song in songs if self.fs.IsFile(song["path"])]
-        songpaths       = self.fs.GetFiles(knownalbumpaths, self.ignoresongs)
+        songpaths       = self.fs.GetFiles(albumpaths, self.ignoresongs)
 
         for path in songpaths:
 
@@ -184,7 +185,7 @@ class MusicDBDatabase(object):
         # Check Videos
         videos          = self.db.GetVideos()
         knownvideopaths = [video["path"] for video in videos if self.fs.IsFile(video["path"])]
-        videopaths      = self.fs.GetFiles(knownartistpaths)
+        videopaths      = self.fs.GetFiles(artistpaths)
 
         for path in videopaths:
 
