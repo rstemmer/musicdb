@@ -17,12 +17,36 @@
  */
 
 
-
-#VideoImport > table
+.VideoImportTable
 {
-    margin:         1rem auto;
-    width:          95%;
-    overflow:       scroll;
+}
+
+.VideoImportTable > tr:first-child
+{
+    color:              var(--bgcolor);
+    background-color:   var(--hlcolor);
+    font-weight:        bold;
+    letter-spacing:     0.05rem;
+}
+
+
+
+.VideoImportTableRow:nth-child(1) > td
+{
+    margin:             auto;
+    text-align:         center;
+}
+.VideoImportTableRow td:nth-child(5) > div
+{
+    margin-left:        auto;
+    justify-content:    flex-end;
+}
+
+.VideoImportTableRow td:nth-child(2) > input
+{
+    /*
+    width:              15ch;
+    */
 }
 
 

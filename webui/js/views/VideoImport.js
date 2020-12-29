@@ -21,19 +21,28 @@ class VideoImport extends MainSettingsView
     constructor()
     {
         super("VideoImport", "Upload and Import Videos");
+
+        this.table = new VideoImportTable();
+        this.element.appendChild(this.table.GetHTMLElement());
+    }
+
+
+
+    UpdateView(newvideopaths)
+    {
+        this.table.Update(newvideopaths);
+        return;
     }
 
 
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        window.console && console.log(args);
-        /*
-        if(fnc == "LoadWebUIConfiguration" || fnc == "SaveWebUIConfiguration")
+        if(fnc == "FindNewPaths" || fnc == "ShowVideoImport")
         {
-            this.UpdateView(args);
+            window.console && console.log(args.videos);
+            this.UpdateView(args.videos);
         }
-        */
         return;
     }
 }
