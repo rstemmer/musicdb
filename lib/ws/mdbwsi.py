@@ -3331,10 +3331,11 @@ class MusicDBWebSocketInterface(object):
             infos = self.music.AnalysePath(path)
             if infos == None:
                 infos = {}
-                infos["artist"]    = path.split("/")[0]
-                infos["video"]     = path.split("/")[1:]
+                infos["artist"]    = "".join(path.split("/")[0])
+                infos["video"]     = "".join(path.split("/")[1:])
+                infos["video"]     = "".join(infos["video"].split(".")[:-1]) # remove file extension
                 infos["release"]   = None
-                infos["extension"] = path.split(".")[-1]
+                infos["extension"] = "".join(path.split(".")[-1])
 
 
             entry["path"]       = path
