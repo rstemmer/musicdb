@@ -180,7 +180,7 @@ class SongEntryTile extends Draggable
         if(MDBSong.number != 0)
             songnum.innerText = MDBSong.number
         else
-            songnum.innerText = "⚪&#x0000FE0E;";
+            songnum.innerText = "⚪";
         return songnum;
     }
 
