@@ -106,6 +106,7 @@ Lyrics
 Uploading
 ^^^^^^^^^
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateUpload`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.UploadChunk`
 
 Other
 ^^^^^
@@ -450,6 +451,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.SetVideoThumbnail(args["videoid"], args["timestamp"])
         elif fncname == "InitiateUpload":
             retval = self.InitiateUpload(args["uploadid"], args["mimetype"], args["filesize"], args["checksum"], args["filename"])
+        elif fncname == "UploadChunk":
+            retval = self.UploadChunk(args["uploadid"], args["chunkdata"])
         else:
             logging.warning("Unknown function: %s! \033[0;33m(will be ignored)", str(fncname))
             return None
@@ -483,7 +486,7 @@ class MusicDBWebSocketInterface(object):
             logging.debug("Packet: %s", str(packet))
             return False
 
-        logging.debug("method: %s, fncname: \033[1;37m%s\033[1;30m, fncsig: %s, arguments: %s, pass: %s", 
+        logging.debug("method: %s, fncname: \033[1;37m%s\033[1;30m, fncsig: %s, arguments: %.200s, pass: %s", 
                 str(method),str(fncname),str(fncsig),str(arguments),str(passthrough))
 
         if apikey != self.cfg.websocket.apikey:
@@ -3385,6 +3388,19 @@ class MusicDBWebSocketInterface(object):
 
         """
         self.uploadmanager.InitiateUpload(uploadid, mimetype, filesize, checksum, filename)
+        return
+
+
+    def UploadChunk(self, uploadid, chunkdata):
+        """
+        Args:
+            chunkdata (str): base64 encoded chunk data
+        """
+        #import base64
+        #rawdata = bytes(base64.b64decode(chunkdata))
+
+        rawdata  = bytes.fromhex(chunkdata) # TODO: JavaScript does not provide a better way
+        self.uploadmanager.NewChunk(uploadid, rawdata);
         return
 
 

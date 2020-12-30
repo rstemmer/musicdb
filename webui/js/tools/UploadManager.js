@@ -80,16 +80,34 @@ class UploadManager
     }
 
 
+    UploadNextChunk(state)
+    {
+        window.console && console.log("UploadNextChunk");
+        let uploadid  = state.uploadid;
+        let task      = this.uploads[uploadid]
+        let rawdata   = task.data.subarray(task["offset"], task["offset"] + state.chunksize)
+        //let chunkdata = btoa(rawdata); // FIXME: Does not work. rawdata will be implicit converted to string
+        let chunkdata = BufferToHexString(rawdata)
+        task.offset  += rawdata.length;
 
-    onMusicDBNotification(fnc, sig, rawdata)
+        window.console && console.log(rawdata);
+        window.console && console.log(chunkdata);
+        window.console && console.log(task);
+        MusicDB_Call("UploadChunk", {uploadid: uploadid, chunkdata: chunkdata});
+    }
+
+
+
+    onMusicDBNotification(fnc, sig, state)
     {
         if(fnc == "MusicDB:Upload" && sig == "ChunkRequest")
         {
-            window.console && console.log(rawdata);
+            window.console && console.log(state);
+            this.UploadNextChunk(state)
         }
         else if(fnc == "MusicDB:Upload" && sig == "UploadComplete")
         {
-            window.console && console.log(rawdata);
+            window.console && console.log(state);
         }
     }
 

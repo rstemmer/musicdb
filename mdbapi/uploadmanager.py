@@ -18,15 +18,15 @@ The communication is handled via notification to allow continuing uploading even
 
 Upload states
 
-    * ``"init"``
-    * ``"newchunk"``
     * ``"waitforchunk"``
+    * ``"complete"``
 """
 
 import logging
 import datetime
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
+from lib.filesystem     import Filesystem
 
 Config      = None
 Thread      = None
@@ -110,7 +110,7 @@ def UploadManagementThread():
     global Callbacks
     global TaskQueue
 
-    filesystem = Filesystem(Config.uploads.tmppath)
+    filesystem = Filesystem(Config.uploads.tmpdir)
 
     if not Config.uploads.allow:
         logging.warning("Uploads not allowed! \033[1;30m(See MusicDB Configuration: [uploads]->allow)")
@@ -159,6 +159,7 @@ class UploadManager(object):
 
         self.db         = database
         self.cfg        = config
+        self.tmpfs      = Filesystem(self.cfg.uploads.tmpdir)
 
 
 
@@ -253,14 +254,16 @@ class UploadManager(object):
         """
         # TODO: Check arguments
         task = {}
-        task["id"       ] = uploadid
-        task["size"     ] = filesize
-        task["offset"   ] = 0
-        task["data"     ] = None
-        task["mimetype" ] = mimetype
-        task["sourcefilename"] = sourcefilename
-        task["sourcechecksum"] = checksum
-        task["state"    ] = "waitforchunk"
+        task["id"             ] = uploadid
+        task["filesize"       ] = filesize
+        task["offset"         ] = 0
+        task["mimetype"       ] = mimetype
+        task["sourcefilename" ] = sourcefilename
+        task["sourcechecksum" ] = checksum
+        task["destinationpath"] = self.cfg.uploads.tmpdir + "/" + sourcefilename # TODO: Generate file name
+        task["state"          ] = "waitforchunk"
+
+        # TODO: Remove existing upload if destination path exists
 
         global TaskQueue
         TaskQueue[uploadid] = task
@@ -270,27 +273,59 @@ class UploadManager(object):
 
 
 
-    def NewChunk(uploadid, chunksize, rawdata):
+    def NewChunk(self, uploadid, rawdata, lastchunk=False):
         """
         Args:
             uploadid (str): Unique ID to identify the upload task
-            chunksize (int): Number of bytes to add to the uploaded data
-            rawdata (ByteArray): Raw data to append to the uploaded data
-        """
-        global TaskQueue
-        task = TaskQueue[uploadid]
+            rawdata (bytes): Raw data to append to the uploaded data
 
+        Raises:
+            TypeError: When *rawdata* is not of type ``bytes``
+            TypeError: When *uploadid* is not of type ``str``
+            ValueError: When *uploadid* is not included in the Task Queue
+        """
+        # TODO: Send Error Notifications
+        # TODO: Check arguments
+        if type(rawdata) != bytes:
+            raise TypeError("raw data must be of type bytes. Type was \"%s\""%(str(type(rawdata))))
+        if type(uploadid) != str:
+            raise TypeError("Upload ID must be a string. Type was \"%s\""%(str(type(uploadid))))
+
+        global TaskQueue
+        if uploadid not in TaskQueue:
+            logging.debug(TaskQueue)
+            raise ValueError("Upload ID \"%s\" not in Task Queue.", str(uploadid))
+
+        task      = TaskQueue[uploadid]
+        chunksize = len(rawdata)
+        filepath  = task["destinationpath"]
+
+        # TODO: check permission of directory
+        # TODO: check permission of file
+
+        with open(filepath, "ab") as fd:
+            fd.write(rawdata)
+
+        task["offset"] += chunksize
+        if task["offset"] >= task["filesize"]:
+            # Upload complete
+            self.UploadCompleted(task)
+        else:
+            # Get next chunk of data
+            self.NotifyClient("ChunkRequest", task)
         return
 
 
 
-    def AppendDataChunk(uploadid, data):
-        task = self.GetTaskById(uploadid)
-        if task["state"] != "waitfordata":
-            pass
+    def UploadCompleted(self, task):
+        """
+        """
+        # TODO: Check checksum
+        task["state"] = "complete"
+        logging.info("Upload Complete: \033[0;36m%s", task["destinationpath"]);
+        self.NotifyClient("UploadComplete", task)
+        return
 
-        task["data"]  = data
-        task["state"] = "newdata"
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
