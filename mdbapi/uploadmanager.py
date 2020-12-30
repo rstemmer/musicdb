@@ -14,12 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+The communication is handled via notification to allow continuing uploading even when the connection gets lost in the meanwhile.
 
 Upload states
 
     * ``"init"``
-    * ``"newdata"``
-    * ``"waitfordata"``
+    * ``"newchunk"``
+    * ``"waitforchunk"``
 """
 
 import logging
@@ -31,7 +32,7 @@ Config      = None
 Thread      = None
 Callbacks   = []
 RunThread   = False
-TaskQueue   = []
+TaskQueue   = {}
 
 def StartUploadManagementThread(config, musicdb):
     """
@@ -63,7 +64,7 @@ def StartUploadManagementThread(config, musicdb):
     logging.debug("Initialize Upload Management Thread environment")
     Config       = config
     Callbacks    = []
-    TaskQueue    = []
+    TaskQueue    = {}
 
     logging.debug("Starting Upload Management Thread")
     RunThread = True
@@ -126,7 +127,7 @@ def UploadManagementThread():
         else:
             time.sleep(1)
 
-        for task in TaskQueue:
+        for key, task in TaskQueue.items():
             state = task["state"]
             if state == "init":
                 pass    # request data
@@ -204,35 +205,81 @@ class UploadManager(object):
 
 
 
+    def NotifyClient(self, notification, task):
+        """
+        Args:
+            notification (str): Name of the notification
+            task (dict): Task structure
+
+        Returns:
+            *Nothing*
+
+        Raises:
+            ValueError: When notification has an unknown notification name
+        """
+        if not notification in ["ChunkRequest", "UploadComplete"]:
+            raise ValueError("Unknown notification \"%s\""%(notification))
+
+        status = {}
+        status["uploadid"]  = task["id"]
+        status["offset"]    = task["offset"]    # offset of the data to request
+        status["chunksize"] = 4096*100          # Upload 400KiB (TODO: Make configurable)
+        status["state"]     = task["state"]
+
+        global Callbacks
+        for callback in Callbacks:
+            try:
+                callback(notification, status)
+            except Exception as e:
+                logging.exception("A Upload Management event callback function crashed!")
+
+
     #####################################################################
     # Management Functions                                              #
     #####################################################################
 
 
 
-    def InitiateUpload(uploadid, mimetype, extension, filesize, checksum):
+    def InitiateUpload(self, uploadid, mimetype, filesize, checksum, sourcefilename):
         """
         Initiates an upload of a file into a MusicDB managed file space
 
         Args:
             uploadid (str): Unique ID to identify the upload task 
             mimetype (str): MIME-Type of the file (example: ``"image/png"``)
-            extension (str): File extension (example: ``"png"``)
             filesize (int): Size of the complete file in bytes
-            checksum (str): SHA-512 check sum of the source file
+            sourcefilename (str): File name (example: ``"test.png"``)
+            checksum (str): SHA-1 check sum of the source file
         """
+        # TODO: Check arguments
         task = {}
         task["id"       ] = uploadid
         task["size"     ] = filesize
         task["offset"   ] = 0
         task["data"     ] = None
         task["mimetype" ] = mimetype
-        task["extension"] = extension
-        task["checksum" ] = checksum
-        task["state"    ] = "init"
+        task["sourcefilename"] = sourcefilename
+        task["sourcechecksum"] = checksum
+        task["state"    ] = "waitforchunk"
 
         global TaskQueue
-        TaskQueue.append(task)
+        TaskQueue[uploadid] = task
+
+        self.NotifyClient("ChunkRequest", task)
+        return
+
+
+
+    def NewChunk(uploadid, chunksize, rawdata):
+        """
+        Args:
+            uploadid (str): Unique ID to identify the upload task
+            chunksize (int): Number of bytes to add to the uploaded data
+            rawdata (ByteArray): Raw data to append to the uploaded data
+        """
+        global TaskQueue
+        task = TaskQueue[uploadid]
+
         return
 
 

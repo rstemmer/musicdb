@@ -143,6 +143,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
     musicdbstatus.onMusicDBNotification(fnc, sig, rawdata);
     queuetimemanager.onMusicDBNotification(fnc, sig, rawdata);
     streamview.onMusicDBNotification(fnc, sig, rawdata);
+    uploadmanager.onMusicDBNotification(fnc, sig, rawdata);
 
     if(fnc == "MusicDB:AudioStream")
     {

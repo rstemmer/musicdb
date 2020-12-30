@@ -103,6 +103,10 @@ Lyrics
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RunLyricsCrawler`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongLyrics`
 
+Uploading
+^^^^^^^^^
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateUpload`
+
 Other
 ^^^^^
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAudioStreamState`
@@ -137,6 +141,7 @@ from mdbapi.videostream import VideoStreamManager
 from mdbapi.songqueue   import SongQueue
 from mdbapi.videoqueue  import VideoQueue
 from mdbapi.videoframes import VideoFrames
+from mdbapi.uploadmanager   import UploadManager
 import logging
 from threading          import Thread
 import traceback
@@ -161,6 +166,7 @@ class MusicDBWebSocketInterface(object):
             self.songqueue  = SongQueue(self.cfg, self.database)
             self.videoqueue = VideoQueue(self.cfg, self.database)
             self.music      = MusicDBDatabase(self.cfg, self.database)
+            self.uploadmanager = UploadManager(self.cfg, self.database)
         except Exception as e:
             logging.exception(e)
             raise e
@@ -171,6 +177,7 @@ class MusicDBWebSocketInterface(object):
         self.videostream.RegisterCallback(self.onVideoStreamEvent)
         self.songqueue.RegisterCallback(self.onSongQueueEvent)
         self.videoqueue.RegisterCallback(self.onVideoQueueEvent)
+        self.uploadmanager.RegisterCallback(self.onUploadEvent)
         return None
         
 
@@ -179,6 +186,7 @@ class MusicDBWebSocketInterface(object):
         self.videostream.RemoveCallback(self.onVideoStreamEvent)
         self.songqueue.RemoveCallback(self.onSongQueueEvent)
         self.videoqueue.RemoveCallback(self.onVideoQueueEvent)
+        self.uploadmanager.RemoveCallback(self.onUploadEvent)
         return None
 
 
@@ -225,6 +233,18 @@ class MusicDBWebSocketInterface(object):
         response["method"]      = "notification"
         response["fncname"]     = "MusicDB:VideoQueue"
         response["fncsig"]      = "on"+event
+        response["arguments"]   = data
+        response["pass"]        = None
+        success = self.SendPacket(response)
+        return success
+
+    def onUploadEvent(self, notification, data):
+        # This function is called from a different thread. Therefore NO sqlite3-access is allowed.
+        # So there will be just a notification so that the clients can request related functions.
+        response    = {}
+        response["method"]      = "notification"
+        response["fncname"]     = "MusicDB:Upload"
+        response["fncsig"]      = notification
         response["arguments"]   = data
         response["pass"]        = None
         success = self.SendPacket(response)
@@ -428,6 +448,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.VideoEnded(args["entryid"])
         elif fncname == "SetVideoThumbnail":
             retval = self.SetVideoThumbnail(args["videoid"], args["timestamp"])
+        elif fncname == "InitiateUpload":
+            retval = self.InitiateUpload(args["uploadid"], args["mimetype"], args["filesize"], args["checksum"], args["filename"])
         else:
             logging.warning("Unknown function: %s! \033[0;33m(will be ignored)", str(fncname))
             return None
@@ -3347,6 +3369,23 @@ class MusicDBWebSocketInterface(object):
 
         return newcontent
 
+
+    def InitiateUpload(self, uploadid, mimetype, filesize, checksum, filename):
+        """
+        This method uses :meth:`~mdbapi.uploadmanager.UploadManager.InitiateUpload`.
+
+        
+        Returns:
+            *Nothing*
+
+        Example:
+            .. code-block:: javascript
+
+                // TODO
+
+        """
+        self.uploadmanager.InitiateUpload(uploadid, mimetype, filesize, checksum, filename)
+        return
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

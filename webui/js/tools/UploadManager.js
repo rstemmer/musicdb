@@ -54,34 +54,40 @@ class UploadManager
     async StartUpload(filedescription, rawdata)
     {
         
-        let task = new Object();
-        task.id       = Math.random().toString(16);
+        // ! SHA-1 is used as ID and object key in the server and client because it is short.
+        // Furthermore it is used to check if the upload was successful.
+        // It is not, and never should be, used for security relevant tasks
+        let checksum  = BufferToHexString(await crypto.subtle.digest("SHA-1", rawdata));
+        let task      = new Object();
+        task.id       = checksum;
         task.data     = rawdata;
-        task.size     = rawdata.length;
+        task.filesize = rawdata.length;
         task.offset   = 0;
-        task.type     = filedescription.type;
-        task.checksum = new Uint8Array(await crypto.subtle.digest("SHA-512", rawdata));
-        this.uploads.push(task);
+        task.mimetype = filedescription.type;
+        task.checksum = checksum;
+        task.filename = filedescription.name
+        this.uploads[task.id] = task;
         
         MusicDB_Call("InitiateUpload", 
             {
                 uploadid: task.id,
-                type:     task.type,
-                size:     task.size,
-                checksum: task.checksum
+                mimetype: task.mimetype,
+                filesize: task.filesize,
+                checksum: task.checksum,
+                filename: task.filename
             });
-        window.console && console.log(uploadtask);
+        window.console && console.log(task);
     }
 
 
 
     onMusicDBNotification(fnc, sig, rawdata)
     {
-        if(fnc == "MusicDB:Upload" && sig == "onChunkRequest")
+        if(fnc == "MusicDB:Upload" && sig == "ChunkRequest")
         {
             window.console && console.log(rawdata);
         }
-        else if(fnc == "MusicDB:Upload" && sig == "onUploadComplete")
+        else if(fnc == "MusicDB:Upload" && sig == "UploadComplete")
         {
             window.console && console.log(rawdata);
         }
