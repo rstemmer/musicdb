@@ -139,8 +139,8 @@ class ConfigurationMaintainer(object):
         self.AddValue("videoframes", "previewlength", "3");
 
         self.CreateSection("uploads")
-        self.AddValue("uploads", "allow",   "True");
-        self.AddValue("uploads", "tmppath", "True");
+        self.AddValue("uploads", "allow",  "True");
+        self.AddValue("uploads", "tmpdir", temppath);
 
         self.AddValue("debug", "disableicecast", "0");
         self.AddValue("debug", "disablevideos",  "1");
