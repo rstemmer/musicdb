@@ -29,6 +29,9 @@
     --radius:       0.3em;
     --borderwidth:  0.1em;
 
+    --normalfontsize: 12pt;
+    --smallfontsize:   9pt;
+
     --inputbgcolor:     rgba(0, 0, 0, 0.2);
     --inputradius:      1rem;
     --inputboxshadow:   0 var(--borderwidth) 0      rgba(255, 255, 255, 0.1),
@@ -47,6 +50,14 @@
     --artworkwidth-medium:  10rem;
     --artworkwidth-small:    3rem;
     --artworkfilter:        none;
+}
+@media only screen and (min-width: 3000px)
+{
+    :root
+    {
+        --normalfontsize:       16pt;
+        --smallfontsize:        12pt;
+    }
 }
 
 .fgcolor
@@ -73,14 +84,7 @@
 
 .smallfont
 {
-    font-size:      9pt;
-}
-@media only screen and (min-width: 3000px)
-{
-    .smallfont
-    {
-        font-size:      12pt;
-    }
+    font-size:      var(--smallfontsize);
 }
 .tinyfont
 {
@@ -147,8 +151,9 @@ input
 {
     padding:            0.2rem 1ch;
     padding-bottom:     0;                                      /* because of the border-bottom */
+    font-family:        SourceSansPro, DejaVuSans;
+    font-size:          var(--normalfontsize);
     color:              var(--fgcolor);
-    font-size:          1rem;
     box-shadow:         var(--inputboxshadow);
     background-color:   var(--inputbgcolor);
     border:             0px none;
