@@ -20,7 +20,7 @@ class SimpleMainViewHeadline extends Element
 {
     constructor(text=null)
     {
-        super("div", ["MainViewHeadline", "flex-row"]);
+        super("div", ["MainViewHeadline", "flex"]);
 
         // Main Headline
         this.headline = document.createElement("span");
@@ -40,6 +40,28 @@ class SimpleMainViewHeadline extends Element
         return;
     }
 }
+
+
+
+class SettingsHeadline extends SimpleMainViewHeadline
+{
+    constructor(headlinetext=null, infotext=null)
+    {
+        super(headlinetext);
+        this.element.classList.add("flex-column");
+
+        this.infoelement = document.createElement("span");
+        this.infoelement.classList.add("hlcolor");
+        this.infoelement.classList.add("smallfont");
+
+        if(typeof infotext === "string")
+            this.infoelement.innerText = infotext;
+
+        this.element.appendChild(this.infoelement);
+    }
+}
+
+
 
 /* Layout:
  *
