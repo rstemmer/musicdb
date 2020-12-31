@@ -107,6 +107,7 @@ Uploading
 ^^^^^^^^^
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateUpload`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.UploadChunk`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads`
 
 Other
 ^^^^^
@@ -317,6 +318,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.LoadWebUIConfiguration()
         elif fncname == "FindNewContent":
             retval = self.FindNewContent()
+        elif fncname == "GetUploads":
+            retval = self.GetUploads()
         # Call-Methods (retval will be ignored unless method gets not changed)
         elif fncname == "SaveWebUIConfiguration":
             retval = self.SaveWebUIConfiguration(args["config"])
@@ -3377,6 +3380,13 @@ class MusicDBWebSocketInterface(object):
         """
         This method uses :meth:`~mdbapi.uploadmanager.UploadManager.InitiateUpload`.
 
+        Args:
+            uploadid (str): Unique ID to identify the upload task 
+            mimetype (str): MIME-Type of the file (example: ``"image/png"``)
+            contenttype (str): Type of the content: (``"video"``, ``"album"``, ``"artwork"``)
+            filesize (int): Size of the complete file in bytes
+            checksum (str): SHA-1 check sum of the source file
+            sourcefilename (str): File name (example: ``"test.png"``)
         
         Returns:
             *Nothing*
@@ -3394,7 +3404,8 @@ class MusicDBWebSocketInterface(object):
     def UploadChunk(self, uploadid, chunkdata):
         """
         Args:
-            chunkdata (str): base64 encoded chunk data
+            uploadid (str): Unique ID to identify the upload task
+            chunkdata (str): Hex-string of the chunk
         """
         #import base64
         #rawdata = bytes(base64.b64decode(chunkdata))
@@ -3402,6 +3413,13 @@ class MusicDBWebSocketInterface(object):
         rawdata  = bytes.fromhex(chunkdata) # TODO: JavaScript does not provide a better way
         self.uploadmanager.NewChunk(uploadid, rawdata);
         return
+
+
+    def GetUploads(self):
+        """
+        Returns a list with information about all yet unprocessed uploads
+        """
+        return []
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
