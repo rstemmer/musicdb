@@ -3449,7 +3449,6 @@ class MusicDBWebSocketInterface(object):
         retval["artworks"] = []
         for key, task in tasksdict.items():
             contentlist = task["contenttype"] + "s"
-            logging.debug(task)
             retval[contentlist].append(task)
 
         return retval
