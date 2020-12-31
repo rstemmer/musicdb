@@ -26,6 +26,14 @@
     padding:        0.5rem;
 }
 
+/* TODO: This is just an idea
+.Table > tr.ContextRow > div
+{
+    box-shadow      0 0.5rem 1rem 2rem rgba(0, 0, 0, 1.0);
+}
+*/
+
+
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
 

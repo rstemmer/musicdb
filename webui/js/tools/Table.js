@@ -41,6 +41,27 @@ class Table extends Element
         this.rows.push(tablerow);
         this.element.appendChild(tablerow.GetHTMLElement());
     }
+
+
+
+    AddContextView(htmlelement)
+    {
+        let lastrow    = this.rows[this.rows.length - 1];
+        let tablewidth = lastrow.cells.length;
+        let contextrow = new TableSpanRow(tablewidth, ["ContextRow"], htmlelement);
+
+        // Show/Hide on right click on previous cell
+        contextrow.Hide();
+        lastrow.GetHTMLElement().oncontextmenu = (event)=>
+            {
+                event.preventDefault();
+                event.stopPropagation();
+                contextrow.ToggleVisibility();
+            };
+
+        // Add row
+        this.AddRow(contextrow);
+    }
 }
 
 
@@ -66,6 +87,46 @@ class TableRow extends Element
     {
         this.cells[cellnum].innerHTML = "";
         this.cells[cellnum].appendChild(htmlelement);
+    }
+
+
+
+    Show()
+    {
+        this.element.style.display = "table-row";
+    }
+    Hide()
+    {
+        this.element.style.display = "none";
+    }
+    ToggleVisibility()
+    {
+        if(this.element.style.display == "none")
+            this.Show();
+        else
+            this.Hide();
+    }
+}
+
+
+
+class TableSpanRow extends TableRow
+{
+    constructor(numcells, classes=[], htmlcontent)
+    {
+        super(1, classes);
+        this.cells[0].colSpan = numcells;
+
+        // Set content if available
+        if(htmlcontent !== null)
+            this.SetContent(htmlcontent);
+    }
+
+
+
+    SetContent(htmlelement)
+    {
+        super.SetContent(0, htmlelement);
     }
 }
 
