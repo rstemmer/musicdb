@@ -20,29 +20,29 @@
 /* Headline       */
 /******************/
 
-.mainview_headline
+.MainViewHeadline
 {
     justify-content:    space-between;
     width:              auto;
     margin:             2em 3em;
 }
 
-.mainview_headline > div
+.MainViewHeadline > div
 {
     align-items:        center;
 }
 
-.mainview_headline span:first-child
+.MainViewHeadline span:first-child
 {
     display:            block;
 }
 
-.mainview_headline span
+.MainViewHeadline span
 {
     margin-right:       0.5em;
 }
 
-.mainview_headline .SVGIcon
+.MainViewHeadline .SVGIcon
 {
     margin-left:        0.5em;
 }

@@ -20,10 +20,10 @@ class SimpleMainViewHeadline extends Element
 {
     constructor(text=null)
     {
-        super("div", ["mainview_headline", "flex-row"]);
+        super("div", ["MainViewHeadline", "flex-row"]);
 
         // Main Headline
-        this.headline   = document.createElement("span");
+        this.headline = document.createElement("span");
         this.headline.classList.add("fgcolor");
 
         if(typeof text === "string")
@@ -34,9 +34,9 @@ class SimpleMainViewHeadline extends Element
 
 
 
-    UpdateRawInformation(headline)
+    UpdateRawInformation(headlinetext)
     {
-        this.headline.innerText  = headline;
+        this.headline.innerText = headlinetext;
         return;
     }
 }
@@ -47,10 +47,12 @@ class SimpleMainViewHeadline extends Element
  *   subtitle 1 - subtitle 2
  */
 
-class MainViewHeadline
+class MainViewHeadline extends Element
 {
     constructor(buttonarray)
     {
+        super("div", ["MainViewHeadline", "flex-row"]);
+
         // Info box
         this.infobox    = document.createElement("div");
 
@@ -93,16 +95,8 @@ class MainViewHeadline
         }
 
         // Full headline
-        this.element    = document.createElement("div");
-        this.element.classList.add("mainview_headline");
-        this.element.classList.add("flex-row");
         this.element.appendChild(this.infobox);
         this.element.appendChild(this.buttonbox);
-    }
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
@@ -123,12 +117,12 @@ class MainViewHeadline
 
 
 
-    UpdateRawInformation(headline, sub1, sub2, tooltip)
+    UpdateRawInformation(headlinetext, sub1, sub2, tooltip)
     {
-        this.headline.innerText  = headline;
-        this.sub1.innerText   = sub1;
-        this.sub2.innerText  = sub2;
-        this.infobox.title          = tooltip;
+        this.headline.innerText = headlinetext;
+        this.sub1.innerText     = sub1;
+        this.sub2.innerText     = sub2;
+        this.infobox.title      = tooltip;
         return;
     }
 
