@@ -32,7 +32,7 @@ class Input extends Element
 
 class TextInput extends Input
 {
-    constructor(oninput, initvalue, tooltip="")
+    constructor(oninput, initvalue="", tooltip="")
     {
         super("text", oninput, initvalue, tooltip)
     }
@@ -40,7 +40,7 @@ class TextInput extends Input
 
 class NumberInput extends Input
 {
-    constructor(oninput, initvalue, tooltip="")
+    constructor(oninput, initvalue="", tooltip="")
     {
         super("number", oninput, initvalue, tooltip)
     }
