@@ -7,6 +7,7 @@ let mdbmodemanager      = new MDBModeManager();
 let uploadmanager       = new UploadManager();
 let colormanager        = new ColorManager();
 let tagmanager          = new TagManager();
+let artistscache        = new ArtistsCache();
 let musicdbhud          = new MusicDBHUD();
 let genreselectionview  = new GenreSelectionView();
 let alphabetbar         = new AlphabetBar();
@@ -193,6 +194,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
 
     // Background objects
     tagmanager.onMusicDBMessage(fnc, sig, args, pass);
+    artistscache.onMusicDBMessage(fnc, sig, args, pass);
     mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
     colormanager.onMusicDBMessage(fnc, sig, args, pass);
     // Controls
@@ -243,8 +245,9 @@ function onMusicDBMessage(fnc, sig, args, pass)
         }
 
         let uimode = args.uimode;
-        MusicDB_Request("GetTags",          "UpdateTagsCache");
-        MusicDB_Request("GetMDBState",      "UpdateMDBState");
+        MusicDB_Request("GetArtists",  "UpdateArtistsCache");
+        MusicDB_Request("GetTags",     "UpdateTagsCache");
+        MusicDB_Request("GetMDBState", "UpdateMDBState");
         if(uimode == "audio")
         {
             MusicDB_Request("GetAudioStreamState",   "UpdateStreamState");
@@ -256,7 +259,8 @@ function onMusicDBMessage(fnc, sig, args, pass)
     }
     else if(fnc=="sys:refresh" && sig == "UpdateCaches")    // TODO: Update (make uimode conform)
     {
-        MusicDB_Request("GetTags", "UpdateTagsCache");                  // Update tag cache
+        MusicDB_Request("GetTags",    "UpdateTagsCache");
+        MusicDB_Request("GetArtists", "UpdateArtistsCache");
         MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists"); // Update artist view
     }
 
