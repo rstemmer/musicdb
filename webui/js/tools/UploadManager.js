@@ -37,21 +37,21 @@ class UploadManager
 
 
 
-    UploadFile(filedescription)
+    UploadFile(contenttype, filedescription)
     {
         let reader = new FileReader();
 
         reader.onload = (event)=>
             {
                 let contents = event.target.result;
-                this.StartUpload(filedescription, new Uint8Array(contents));
+                this.StartUpload(contenttype, filedescription, new Uint8Array(contents));
             };
         reader.readAsArrayBuffer(filedescription);
     }
 
 
 
-    async StartUpload(filedescription, rawdata)
+    async StartUpload(contenttype, filedescription, rawdata)
     {
         
         // ! SHA-1 is used as ID and object key in the server and client because it is short.
@@ -63,6 +63,7 @@ class UploadManager
         task.data     = rawdata;
         task.filesize = rawdata.length;
         task.offset   = 0;
+        task.contenttype = contenttype;
         task.mimetype = filedescription.type;
         task.checksum = checksum;
         task.filename = filedescription.name
@@ -72,6 +73,7 @@ class UploadManager
             {
                 uploadid: task.id,
                 mimetype: task.mimetype,
+                contenttype: task.contenttype,
                 filesize: task.filesize,
                 checksum: task.checksum,
                 filename: task.filename
@@ -107,7 +109,11 @@ class UploadManager
         }
         else if(fnc == "MusicDB:Upload" && sig == "UploadComplete")
         {
-            window.console && console.log(state);
+            window.console && console.info(state);
+        }
+        else if(fnc == "MusicDB:Upload" && sig == "UploadFailed")
+        {
+            window.console && console.error(state);
         }
     }
 

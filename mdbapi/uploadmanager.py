@@ -241,22 +241,29 @@ class UploadManager(object):
 
 
 
-    def InitiateUpload(self, uploadid, mimetype, filesize, checksum, sourcefilename):
+    def InitiateUpload(self, uploadid, mimetype, contenttype, filesize, checksum, sourcefilename):
         """
         Initiates an upload of a file into a MusicDB managed file space
 
         Args:
             uploadid (str): Unique ID to identify the upload task 
             mimetype (str): MIME-Type of the file (example: ``"image/png"``)
+            contenttype (str): Type of the content: (``"video"``, ``"album"``, ``"artwork"``)
             filesize (int): Size of the complete file in bytes
             sourcefilename (str): File name (example: ``"test.png"``)
             checksum (str): SHA-1 check sum of the source file
+
+        Raises:
+            ValueError: When *contenttype* does not have the expected values
         """
+        if contenttype not in ["video", "album", "artwork"]:
+            raise ValueError("contenttype \"%s\" not valid. \"video\", \"album\" or \"artwork\" expected."%(str(contenttype)))
         # TODO: Check arguments
         task = {}
         task["id"             ] = uploadid
         task["filesize"       ] = filesize
         task["offset"         ] = 0
+        task["contenttype"    ] = contenttype
         task["mimetype"       ] = mimetype
         task["sourcefilename" ] = sourcefilename
         task["sourcechecksum" ] = checksum
@@ -323,6 +330,8 @@ class UploadManager(object):
         # TODO: Check checksum
         task["state"] = "complete"
         logging.info("Upload Complete: \033[0;36m%s", task["destinationpath"]);
+
+        # TODO: Analyse File (Get Meta-Data, Unzip, …)
         self.NotifyClient("UploadComplete", task)
         return
 

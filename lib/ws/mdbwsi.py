@@ -450,7 +450,7 @@ class MusicDBWebSocketInterface(object):
         elif fncname == "SetVideoThumbnail":
             retval = self.SetVideoThumbnail(args["videoid"], args["timestamp"])
         elif fncname == "InitiateUpload":
-            retval = self.InitiateUpload(args["uploadid"], args["mimetype"], args["filesize"], args["checksum"], args["filename"])
+            retval = self.InitiateUpload(args["uploadid"], args["mimetype"], args["contenttype"], args["filesize"], args["checksum"], args["filename"])
         elif fncname == "UploadChunk":
             retval = self.UploadChunk(args["uploadid"], args["chunkdata"])
         else:
@@ -3373,7 +3373,7 @@ class MusicDBWebSocketInterface(object):
         return newcontent
 
 
-    def InitiateUpload(self, uploadid, mimetype, filesize, checksum, filename):
+    def InitiateUpload(self, uploadid, mimetype, contenttype, filesize, checksum, filename):
         """
         This method uses :meth:`~mdbapi.uploadmanager.UploadManager.InitiateUpload`.
 
@@ -3387,7 +3387,7 @@ class MusicDBWebSocketInterface(object):
                 // TODO
 
         """
-        self.uploadmanager.InitiateUpload(uploadid, mimetype, filesize, checksum, filename)
+        self.uploadmanager.InitiateUpload(uploadid, mimetype, contenttype, filesize, checksum, filename)
         return
 
 
