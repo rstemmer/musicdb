@@ -22,17 +22,24 @@ class VideoImport extends MainSettingsView
     {
         super("VideoImport", "Upload and Import Videos");
 
-        this.upload = new FileSelect("Select Video", "Tooltip");
-        this.table = new VideoImportTable();
+        this.upload      = new FileSelect("Select Video", "Tooltip");
+        this.uploadtable = new UploadTable();
+        this.importtable = new VideoImportTable();
         this.element.appendChild(this.upload.GetHTMLElement());
-        this.element.appendChild(this.table.GetHTMLElement());
+        this.element.appendChild(this.uploadtable.GetHTMLElement());
+        this.element.appendChild(this.importtable.GetHTMLElement());
+
+        this.highlightupload = ""; // TODO: Highlight latest upload
     }
 
 
 
-    UpdateView(newvideopaths)
+    UpdateView(newvideopaths, newvideouploads)
     {
-        this.table.Update(newvideopaths);
+        if(newvideopaths != null)
+            this.importtable.Update(newvideopaths);
+        if(newvideouploads != null)
+            this.uploadtable.Update(newvideouploads);
         return;
     }
 
@@ -43,12 +50,16 @@ class VideoImport extends MainSettingsView
         if(fnc == "FindNewContent" && sig == "ShowVideoImport")
         {
             window.console && console.log(args.videos);
-            this.UpdateView(args.videos);
+            this.UpdateView(args.videos, null);
         }
         else if(fnc == "GetUploads" && sig == "ShowUploads")
         {
             window.console && console.log(args);
             window.console && console.log(pass);
+            if(pass != null)
+                this.highlightupload = pass.lastuploadid;
+
+            this.UpdateView(null, args.videos);
         }
         return;
     }
