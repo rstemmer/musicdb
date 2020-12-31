@@ -68,16 +68,10 @@ class VideoImportTableRow extends VideoImportTableRowBase
         let videopath  = video.path;
 
         // Create cells
-        let  artistelement = document.createTextNode(artistname);
-        this.releaseinput  = document.createElement("input");
-        this.releaseinput.oninput   = ()=>{this.onReleaseInput();};
-        this.releaseinput.type      = "number";
-        this.releaseinput.value     = release;
-        this.nameinput     = document.createElement("input");
-        this.nameinput.oninput  = ()=>{this.onNameInput();};
-        this.nameinput.type     = "text";
-        this.nameinput.value    = videoname;
-        let  pathelement      = document.createTextNode(videopath);
+        let artistelement = document.createTextNode(artistname);
+        let releaseinput  = new NumberInput(()=>{this.onReleaseInput();}, release);
+        let nameinput     = new TextInput(()=>{this.onNameInput();}, videoname);
+        let pathelement   = document.createTextNode(videopath);
 
         // Control buttons
         let importbutton = new SVGButton("Save", ()=>{this.onImport();});
@@ -85,11 +79,11 @@ class VideoImportTableRow extends VideoImportTableRowBase
         buttonbox.AddButton(importbutton);
 
         // Set cells
-        this.SetContent(VIT_ARTIST_COLUMN,    artistelement);
-        this.SetContent(VIT_RELEASE_COLUMN,   this.releaseinput);
-        this.SetContent(VIT_NAME_COLUMN,      this.nameinput);
-        this.SetContent(VIT_PATH_COLUMN,      pathelement);
-        this.SetContent(VIT_BUTTON_COLUMN,    buttonbox.GetHTMLElement());
+        this.SetContent(VIT_ARTIST_COLUMN,  artistelement);
+        this.SetContent(VIT_RELEASE_COLUMN, releaseinput.GetHTMLElement());
+        this.SetContent(VIT_NAME_COLUMN,    nameinput.GetHTMLElement());
+        this.SetContent(VIT_PATH_COLUMN,    pathelement);
+        this.SetContent(VIT_BUTTON_COLUMN,  buttonbox.GetHTMLElement());
     }
 
 
