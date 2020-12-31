@@ -325,6 +325,7 @@ class UploadManager(object):
         """
         Initiates an upload of a file into a MusicDB managed file space.
         After calling this method, a notification gets triggered to request the first chunk of data from the clients.
+        In case uploads are deactivated in the MusicDB Configuration, an ``"InternalError"`` Notification gets sent to the clients.
 
         Args:
             uploadid (str): Unique ID to identify the upload task 
@@ -354,6 +355,11 @@ class UploadManager(object):
             raise TypeError("Checksum must be of type string")
         if type(sourcefilename) != str:
             raise TypeError("Source file name must be of type string")
+
+        if not self.cfg.uploads.allow:
+            self.NotifyClient("InternalError", None, "Uploads deactivated")
+            logging.warning("Uploads not allowed! \033[1;30m(See MusicDB Configuration: [uploads]->allow)")
+            return
 
         fileextension   = self.uploadfs.GetFileExtension(sourcefilename)
         destinationname = contenttype + "-" + checksum + "." + fileextension
