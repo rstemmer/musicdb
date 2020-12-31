@@ -39,8 +39,10 @@ The file name is the task ID (equivalent to the Upload ID) + ``.json``.
 # TODO: Describe task-keys
 
 import json
+import time
 import logging
 import datetime
+import threading
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
 from lib.filesystem     import Filesystem
@@ -50,10 +52,12 @@ Config      = None
 Thread      = None
 Callbacks   = []
 RunThread   = False
-Tasks   = {}
+Tasks       = None
 
 def StartUploadManagementThread(config, musicdb):
     """
+    This method starts the Upload management thread.
+
     Args:
         config: :class:`~lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration
         database: A :class:`~lib.db.musicdb.MusicDatabase` instance
@@ -79,12 +83,9 @@ def StartUploadManagementThread(config, musicdb):
     if type(musicdb) != MusicDatabase:
         raise TypeError("database argument not of type MusicDatabase")
 
-    logging.debug("Initialize Upload Management Thread environment")
-    Config       = config
-    Callbacks    = []
-    Tasks    = {}
 
     logging.debug("Starting Upload Management Thread")
+    Config    = config
     RunThread = True
     Thread    = threading.Thread(target=UploadManagementThread)
     Thread.start()
@@ -133,19 +134,16 @@ def UploadManagementThread():
     global Tasks
 
     filesystem = Filesystem(Config.uploads.path)
+    manager    = UploadManager(Config)
 
     if not Config.uploads.allow:
         logging.warning("Uploads not allowed! \033[1;30m(See MusicDB Configuration: [uploads]->allow)")
-
-        while RunThread:
-            time.sleep(1)
-        return
 
     # Start streaming …
     while RunThread:
         # Sleep a bit to reduce the load on the CPU. If nothing to do, sleep a bit longer
         if len(Tasks) > 0:
-            time.sleep(0.1)
+            time.sleep(1)
         else:
             time.sleep(1)
 
@@ -169,17 +167,17 @@ class UploadManager(object):
     
     Args:
         config: :class:`~lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration
-        database: A :class:`~lib.db.musicdb.MusicDatabase` instance
+        database: (optional) A :class:`~lib.db.musicdb.MusicDatabase` instance
 
     Raises:
         TypeError: When the arguments are not of the correct type.
     """
 
-    def __init__(self, config, database):
+    def __init__(self, config, database=None):
         if type(config) != MusicDBConfig:
             raise TypeError("config argument not of type MusicDBConfig")
-        if type(database) != MusicDatabase:
-            raise TypeError("database argument not of type MusicDatabase")
+        if database != None and type(database) != MusicDatabase:
+            raise TypeError("database argument not of type MusicDatabase or None")
 
         self.db         = database
         self.cfg        = config
@@ -188,6 +186,10 @@ class UploadManager(object):
         self.artworkfs  = Filesystem(self.cfg.artwork.path)
         # TODO: check write permission of all directories
         self.fileprocessing = Fileprocessing(self.cfg.uploads.path)
+
+        global Tasks
+        if Tasks == None:
+            self.LoadTasks()
 
 
 
@@ -310,6 +312,43 @@ class UploadManager(object):
 
         with open(path, "w+") as fd:
             fd.write(data)
+
+        return
+
+
+
+    def LoadTasks(self):
+        """
+        Loads all task from the JSON files inside the tasks-directory.
+        The list of active tasks will be replaced by the loaded tasks.
+
+        Returns:
+            *Nothing*
+        """
+        logging.debug("Loading Upload-Tasks…")
+        
+        taskfilenames = self.uploadfs.ListDirectory("tasks")
+
+        global Tasks
+        Tasks = {}
+        for taskfilename in taskfilenames:
+            taskpath = self.cfg.uploads.path + "/tasks/" + taskfilename
+
+            if self.uploadfs.GetFileExtension(taskpath) != "json":
+                continue
+
+            try:
+                with open(taskpath) as fd:
+                    task = json.load(fd)
+            except Exception as e:
+                logging.warning("Loading task file \"%s\" failed with error \"%s\". \033[1;30m(File will be ignored)", str(taskpath), str(e))
+                continue
+
+            if "id" not in task:
+                logging.warning("File \"%s\" is not a valid task (ID missing). \033[1;30m(File will be ignored)", str(taskpath), str(e))
+                continue
+
+            Tasks[task["id"]] = task
 
         return
 

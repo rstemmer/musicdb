@@ -64,6 +64,7 @@ from lib.ws.server      import MusicDBWebSocketServer
 from mdbapi.mise        import MusicDBMicroSearchEngine
 from mdbapi.audiostream import StartAudioStreamingThread, StopAudioStreamingThread
 from mdbapi.videostream import StartVideoStreamingThread, StopVideoStreamingThread
+from mdbapi.uploadmanager   import StartUploadManagementThread, StopUploadManagementThread
 import logging
 
 # Global objects
@@ -158,6 +159,7 @@ def Initialize(configobj, databaseobj):
         #. Assign the *configobj* and *databaseobj* to global variables ``cfg`` and ``database`` to share them between multiple connections
         #. Seed Python's random number generator
         #. Instantiate a global :meth:`mdbapi.mise.MusicDBMicroSearchEngine` object
+        #. Starting the upload management via :meth:`mdbapi.uploadmanager.StartUploadManagementThread`
         #. Start the Audio Streaming Thread via :meth:`mdbapi.audiostream.StartAudioStreamingThread` (see :doc:`/mdbapi/audiostream` for details)
         #. Start the Video Streaming Thread via :meth:`mdbapi.videostream.StartVideoStreamingThread` (see :doc:`/mdbapi/audiostream` for details)
         #. Update MiSE cache via :meth:`mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache`
@@ -193,6 +195,9 @@ def Initialize(configobj, databaseobj):
     logging.debug("Initializing MicroSearchEngine…")
     global mise
     mise   = MusicDBMicroSearchEngine(database)
+
+    logging.debug("Starting Upload Management…")
+    StartUploadManagementThread(cfg, database)
 
     # Start/Connect all interfaces
     logging.debug("Starting Streaming Thread…")
@@ -249,6 +254,7 @@ def Shutdown():
 
     The following things happen when this function gets called:
 
+        #. Stopping upload management via :meth:`mdbapi.uploadmanager.StopUploadManagementThread`
         #. Stop the Audio Streaming Thread via :meth:`mdbapi.audiostream.StopAudioStreamingThread`
         #. Stop the Video Streaming Thread via :meth:`mdbapi.videostream.StopVideoStreamingThread`
         #. Removing FIFO file for named pipe
@@ -268,7 +274,10 @@ def Shutdown():
         logging.debug("Disconnect from clients…")
         tlswsserver.factory.CloseConnections()
     
-    logging.debug("Stopping Streaming Thread…")
+    logging.debug("Stopping Upload Management Thread…")
+    StopUploadManagementThread()
+
+    logging.debug("Stopping Streaming Threads…")
     StopAudioStreamingThread()
     StopVideoStreamingThread()
     
