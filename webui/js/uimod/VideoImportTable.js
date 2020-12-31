@@ -105,15 +105,15 @@ class VideoImportTableRow extends VideoImportTableRowBase
     onImport()
     {
         //MusicDB_Request("DeleteTag", "UpdateTags", {tagid: MDBMood.id}, {origin: "MoodSettings"});
+        window.console && console.log("Import Video");
     }
 }
 
 
 
-
 class VideoImportTable extends Table
 {
-    constructor(videos)
+    constructor(videos=null)
     {
         super(["VideoImportTable"]);
         this.headline = new VideoImportTableHeadline();
@@ -133,7 +133,6 @@ class VideoImportTable extends Table
 
         this.videos = videos;
 
-        let maxposx = 0;
         for(let video of this.videos)
         {
             this.AddRow(new VideoImportTableRow(video));
@@ -143,6 +142,7 @@ class VideoImportTable extends Table
     }
 
 }
+
 
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
