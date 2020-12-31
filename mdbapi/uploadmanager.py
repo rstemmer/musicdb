@@ -581,8 +581,8 @@ class UploadManager(object):
 
         # Get all meta infos (for videos, this does not include any interesting information.
         # Maybe the only useful part is the Load-method to check if the file is supported by MusicDB
-        tags = meta.GetAllMetadata()
-        logging.debug(tags)
+        #tags = meta.GetAllMetadata()
+        #logging.debug(tags)
         return True
 
 
