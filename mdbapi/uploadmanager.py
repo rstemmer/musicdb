@@ -39,6 +39,7 @@ import datetime
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
 from lib.filesystem     import Filesystem
+from lib.fileprocessing import Fileprocessing
 
 Config      = None
 Thread      = None
@@ -180,6 +181,7 @@ class UploadManager(object):
         self.musicfs    = Filesystem(self.cfg.music.path)
         self.awfs       = Filesystem(self.cfg.artwork.path)
         # TODO: check write permission of all directories
+        self.fileprocessing = Fileprocessing(self.cfg.uploads.tmpdir)
 
 
 
@@ -400,24 +402,30 @@ class UploadManager(object):
         This method continues the file management after an upload was completed.
         The following tasks were performed:
 
-            * Checking the checksum of the destination file.
+            * Checking the checksum of the destination file (SHA1) and compares it with the ``"sourcechecksum"`` from the *task*-dict.
 
         When the upload was successful, it notifies the clients with a ``"UploadComplete"`` notification.
         Otherwise with a ``"UploadFailed"`` one.
 
         Args:
             task (dict): The task that upload was completed
+
+        Returns:
+            ``True`` When the upload was successfully complete, otherwise ``False``
         """
         # Check checksum
-        #task["state"] = "failed"
-        #logging.info("Upload Failed: \033[0;36m%s", task["destinationpath"]);
-        #self.NotifyClient("UploadFailed", task, "")
+        destchecksum = self.fileprocessing.Checksum(task["destinationpath"], "sha1")
+        if destchecksum != task["sourcechecksum"]:
+            task["state"] = "failed"
+            logging.error("Upload Failed: \033[0;36m%s \e[1;30m(Checksum mismatch)", task["destinationpath"]);
+            self.NotifyClient("UploadFailed", task, "Checksum mismatch")
+            return False
 
         # TODO: Analyse File (Get Meta-Data, Unzip, …) -- Other process?
         task["state"] = "complete"
         logging.info("Upload Complete: \033[0;36m%s", task["destinationpath"]);
         self.NotifyClient("UploadComplete", task)
-        return
+        return True
 
 
 
