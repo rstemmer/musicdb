@@ -25,8 +25,13 @@ Task states
 
     * ``"waitforchunk"``: A new chunk of data was requested, and is expected from the client
     * ``"uploadcomplete"``: The whole file is now available in the temporary upload directory
-    * ``"failed"``: The upload failed
+    * ``"uploadfailed"``: The upload failed
     * ``"notexisting"`` *virtual state* in case an Upload ID does not match an Upload. This task does not exist.
+    * ``"postprocessed"``: The uploaded file was successfully post processed
+    * ``"invalidcontent"``: Post processing failed. The content was unexpected or invalid.
+
+After upload is complete,
+the Management Thread takes care about post processing or removing no longer needed content
 
 The uploaded file follows the following naming scheme: *contenttype* + ``-`` + *checksum* + ``.`` + source-file-extension
 
@@ -37,6 +42,7 @@ The file name is the task ID (equivalent to the Upload ID) + ``.json``.
 
 """
 # TODO: Describe task-keys
+# TODO: Visualize state machine
 
 import json
 import time
@@ -47,6 +53,7 @@ from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
 from lib.filesystem     import Filesystem
 from lib.fileprocessing import Fileprocessing
+from lib.metatags       import MetaTags
 
 Config      = None
 Thread      = None
@@ -149,12 +156,10 @@ def UploadManagementThread():
 
         for key, task in Tasks.items():
             state = task["state"]
-            if state == "init":
-                pass    # request data
-            elif state == "newdata":
-                pass    # process new data
-            else:
-                pass
+            if state == "uploadfailed":
+                pass    # TODO: Clean up everything
+            elif state == "uploadcomplete":
+                manager.PostProcessUploadedFile(task)
 
     return
 
@@ -504,7 +509,7 @@ class UploadManager(object):
         # Check checksum
         destchecksum = self.fileprocessing.Checksum(task["destinationpath"], "sha1")
         if destchecksum != task["sourcechecksum"]:
-            task["state"] = "failed"
+            task["state"] = "uploadfailed"
             logging.error("Upload Failed: \033[0;36m%s \e[1;30m(Checksum mismatch)", task["destinationpath"]);
             self.NotifyClient("UploadFailed", task, "Checksum mismatch")
             return False
@@ -514,6 +519,7 @@ class UploadManager(object):
 
         logging.info("Upload Complete: \033[0;36m%s", task["destinationpath"]);
         self.NotifyClient("UploadComplete", task)
+        # Now, the Management Thread takes care about post processing or removing no longer needed content
         return True
 
 
@@ -525,6 +531,63 @@ class UploadManager(object):
 
         global Tasks
         return Tasks
+
+
+
+    def PostProcessUploadedFile(self, task):
+        """
+        This method initiates post processing of an uploaded file.
+        Depending on the *contenttype* different post processing methods are called:
+
+            * ``"video"``: :meth:`~PostProcessVideo`
+
+        The task must be in ``"uploadcomplete"`` state, otherwise nothing happens but printing an error message.
+        If post processing was successful, the task state gets updated to ``"postprocessed"``.
+        When an error occurred, the state will become ``"invalidcontent"``.
+
+        Returns:
+            *Nothing*
+        """
+        if task["state"] != "uploadcomplete":
+            logging.error("task must be in \"uploadcomplete\" state for post processing. Actual state was \"%s\". \033[1;30m(Such a mistake should not happen. Anyway, the task won\'t be post process and nothing bad will happen.)", task["state"])
+            return
+
+        # Perform post processing
+        logging.debug("Post processing upload %s -> %s", str(task["sourcefilename"]), str(task["destinationpath"]))
+        success = False
+        if task["contenttype"] == "video":
+            success = self.PostProcessVideo(task)
+
+        # Update task state
+        if success == True:
+            task["state"] = "postprocessed"
+        else:
+            task["state"] = "invalidcontent"
+        self.SaveTask(task)
+
+        return
+
+
+
+    def PostProcessVideo(self, task):
+        """
+        """
+        meta = MetaTags()
+        try:
+            meta.Load(task["destinationpath"])
+        except ValueError:
+            logging.error("The file \"%s\" uploaded as video to %s is not a valid video or the file format is not supported. \033[1;30m(File will be not further processed.)", task["sourcefilename"], task["destinationpath"])
+            return False
+
+        # Get all meta infos (for videos, this does not include any interesting information.
+        # Maybe the only useful part is the Load-method to check if the file is supported by MusicDB
+        tags = meta.GetAllMetadata()
+        logging.debug(tags)
+        return True
+
+
+
+
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
