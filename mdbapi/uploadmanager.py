@@ -182,9 +182,9 @@ class UploadManager(object):
 
         self.db         = database
         self.cfg        = config
-        self.tmpfs      = Filesystem(self.cfg.uploads.path)
+        self.uploadfs   = Filesystem(self.cfg.uploads.path)
         self.musicfs    = Filesystem(self.cfg.music.path)
-        self.awfs       = Filesystem(self.cfg.artwork.path)
+        self.artworkfs  = Filesystem(self.cfg.artwork.path)
         # TODO: check write permission of all directories
         self.fileprocessing = Fileprocessing(self.cfg.uploads.path)
 
@@ -301,7 +301,16 @@ class UploadManager(object):
         """
         taskid = task["id"]
         data = json.dumps(task)
-        path = self.cfg.uploads.path + "tasks/" + taskid + ".json"
+        path = self.cfg.uploads.path + "/tasks/" + taskid + ".json"
+
+        if not self.uploadfs.IsDirectory("tasks"):
+            logging.debug("tasks directory missing. Creating \"%s\"", self.cfg.uploads.path + "/tasks")
+            self.uploadfs.CreateSubdirectory("tasks")
+
+        with open(path, "w+") as fd:
+            fd.write(data)
+
+        return
 
 
 
@@ -345,12 +354,15 @@ class UploadManager(object):
         if type(sourcefilename) != str:
             raise TypeError("Source file name must be of type string")
 
-        fileextension   = self.tmpfs.GetFileExtension(sourcefilename)
+        fileextension   = self.uploadfs.GetFileExtension(sourcefilename)
         destinationname = contenttype + "-" + checksum + "." + fileextension
         destinationpath = self.cfg.uploads.path + "/" + destinationname
 
+        # TODO: Check if there is already a task with the given ID.
+        # If this task is in waitforchunk state, the upload can be continued instead of restarting it.
+
         # Remove existing upload if destination path exists
-        self.tmpfs.RemoveFile(destinationpath)  # Removes file when it exists
+        self.uploadfs.RemoveFile(destinationpath)  # Removes file when it exists
         
         # Create File
         with open(destinationpath, "w+b"):
@@ -366,6 +378,7 @@ class UploadManager(object):
         task["sourcechecksum" ] = checksum
         task["destinationpath"] = destinationpath
         task["state"          ] = "waitforchunk"
+        self.SaveTask(task)
 
         global TaskQueue
         TaskQueue[uploadid] = task
@@ -414,6 +427,8 @@ class UploadManager(object):
             return False
 
         task["offset"] += chunksize
+        self.SaveTask(task)
+
         if task["offset"] >= task["filesize"]:
             # Upload complete
             self.UploadCompleted(task)
@@ -448,8 +463,9 @@ class UploadManager(object):
             self.NotifyClient("UploadFailed", task, "Checksum mismatch")
             return False
 
-        # TODO: Analyse File (Get Meta-Data, Unzip, …) -- Other process?
         task["state"] = "uploadcomplete"
+        self.SaveTask(task)
+
         logging.info("Upload Complete: \033[0;36m%s", task["destinationpath"]);
         self.NotifyClient("UploadComplete", task)
         return True
