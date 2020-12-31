@@ -16,11 +16,23 @@
 """
 The communication is handled via notification to allow continuing uploading even when the connection gets lost in the meanwhile.
 
+The upload is performed chunk-wise.
+After initiating an Upload, this upload manager requests chunks of data via MusicDB Notifications from the clients.
+All clients are informed about the upload process, not only the client that initiated the upload.
+So each client can show the progress and state.
+
 Upload states
 
     * ``"waitforchunk"``
     * ``"complete"``
+    * ``"failed"``
+    * ``"notexisting"`` (In case an Upload ID does not match an Upload
+
+The uploaded file follows the following naming scheme: *contenttype* + ``-`` + *checksum* + ``.`` + source-file-extension
+
+The upload manager also takes care about the validity of the uploaded file (via checksum).
 """
+#TODO: Store tasks as .json file to allow continuing uploads after the server was restarted
 
 import logging
 import datetime
@@ -104,6 +116,9 @@ def StopUploadManagementThread():
 def UploadManagementThread():
     """
     """
+    # TODO: Remove left over uploads (uploaded files without task-ID)
+    # TODO: Continue uploads that were interrupted
+    # TODO: Identify discontinued uploads
     global Config
     global Thread
     global RunThread
@@ -142,7 +157,9 @@ def UploadManagementThread():
 
 class UploadManager(object):
     """
-
+    This class manages uploading content to the server MusicDB runs on.
+    All data is stored in the uploads-directory configured in the MusicDB configuration.
+    
     Args:
         config: :class:`~lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration
         database: A :class:`~lib.db.musicdb.MusicDatabase` instance
@@ -160,6 +177,9 @@ class UploadManager(object):
         self.db         = database
         self.cfg        = config
         self.tmpfs      = Filesystem(self.cfg.uploads.tmpdir)
+        self.musicfs    = Filesystem(self.cfg.music.path)
+        self.awfs       = Filesystem(self.cfg.artwork.path)
+        # TODO: check write permission of all directories
 
 
 
@@ -206,11 +226,24 @@ class UploadManager(object):
 
 
 
-    def NotifyClient(self, notification, task):
+    def NotifyClient(self, notification, task, message=None):
         """
+        This method triggers a client-notification.
+        The notification comes with the current status of the upload process.
+        This includes the following keys - independent of the state of the upload:
+
+            * uploadid: ID of the upload the notification is associated with
+            * offset: Offset of the requested data in the source file
+            * chunksize: The maximum chunk size
+            * state: The current state of the upload task
+            * message: ``null``/``None`` or a message from the server
+
+        *task* can be ``None`` in case the notification is meant to be an information that a given upload ID is invalid.
+
         Args:
             notification (str): Name of the notification
             task (dict): Task structure
+            message (str): (optional) text message (like an error message) to the client
 
         Returns:
             *Nothing*
@@ -218,14 +251,22 @@ class UploadManager(object):
         Raises:
             ValueError: When notification has an unknown notification name
         """
-        if not notification in ["ChunkRequest", "UploadComplete"]:
+        if not notification in ["ChunkRequest", "UploadComplete", "UploadFailed", "InternalError"]: # TODO -> documentation
             raise ValueError("Unknown notification \"%s\""%(notification))
 
         status = {}
-        status["uploadid"]  = task["id"]
-        status["offset"]    = task["offset"]    # offset of the data to request
-        status["chunksize"] = 4096*100          # Upload 400KiB (TODO: Make configurable)
-        status["state"]     = task["state"]
+        if task != None:
+            status["uploadid"]  = task["id"]
+            status["offset"]    = task["offset"]    # offset of the data to request
+            status["chunksize"] = 4096*100          # Upload 400KiB (TODO: Make configurable)
+            status["state"]     = task["state"]
+        else:
+            status["uploadid"]  = None
+            status["offset"]    = None
+            status["chunksize"] = None
+            status["state"]     = "notexisting"
+
+        status["message"]   = message
 
         global Callbacks
         for callback in Callbacks:
@@ -243,22 +284,49 @@ class UploadManager(object):
 
     def InitiateUpload(self, uploadid, mimetype, contenttype, filesize, checksum, sourcefilename):
         """
-        Initiates an upload of a file into a MusicDB managed file space
+        Initiates an upload of a file into a MusicDB managed file space.
+        After calling this method, a notification gets triggered to request the first chunk of data from the clients.
 
         Args:
             uploadid (str): Unique ID to identify the upload task 
             mimetype (str): MIME-Type of the file (example: ``"image/png"``)
             contenttype (str): Type of the content: (``"video"``, ``"album"``, ``"artwork"``)
             filesize (int): Size of the complete file in bytes
-            sourcefilename (str): File name (example: ``"test.png"``)
             checksum (str): SHA-1 check sum of the source file
+            sourcefilename (str): File name (example: ``"test.png"``)
 
         Raises:
+            TypeError: When one of the arguments has not the expected type
             ValueError: When *contenttype* does not have the expected values
         """
+        if type(uploadid) != str:
+            raise TypeError("Upload ID must be of type string")
+        if type(mimetype) != str:
+            raise TypeError("mime type must be of type string")
+        if type(contenttype) != str:
+            raise TypeError("content type must be of type string")
         if contenttype not in ["video", "album", "artwork"]:
-            raise ValueError("contenttype \"%s\" not valid. \"video\", \"album\" or \"artwork\" expected."%(str(contenttype)))
-        # TODO: Check arguments
+            raise ValueError("content type \"%s\" not valid. \"video\", \"album\" or \"artwork\" expected."%(str(contenttype)))
+        if type(filesize) != int:
+            raise TypeError("file size must be of type int")
+        if filesize <= 0:
+            raise ValueError("file size must be greater than 0")
+        if type(checksum) != str:
+            raise TypeError("Checksum must be of type string")
+        if type(sourcefilename) != str:
+            raise TypeError("Source file name must be of type string")
+
+        fileextension   = self.tmpfs.GetFileExtension(sourcefilename)
+        destinationname = contenttype + "-" + checksum + "." + fileextension
+        destinationpath = self.cfg.uploads.tmpdir + "/" + destinationname
+
+        # Remove existing upload if destination path exists
+        self.tmpfs.RemoveFile(destinationpath)  # Removes file when it exists
+        
+        # Create File
+        with open(destinationpath, "w+b"):
+            pass
+
         task = {}
         task["id"             ] = uploadid
         task["filesize"       ] = filesize
@@ -267,10 +335,8 @@ class UploadManager(object):
         task["mimetype"       ] = mimetype
         task["sourcefilename" ] = sourcefilename
         task["sourcechecksum" ] = checksum
-        task["destinationpath"] = self.cfg.uploads.tmpdir + "/" + sourcefilename # TODO: Generate file name
+        task["destinationpath"] = destinationpath
         task["state"          ] = "waitforchunk"
-
-        # TODO: Remove existing upload if destination path exists
 
         global TaskQueue
         TaskQueue[uploadid] = task
@@ -280,19 +346,22 @@ class UploadManager(object):
 
 
 
-    def NewChunk(self, uploadid, rawdata, lastchunk=False):
+    def NewChunk(self, uploadid, rawdata):
         """
+        This method processes a new chunk received from the uploading client.
+
         Args:
             uploadid (str): Unique ID to identify the upload task
             rawdata (bytes): Raw data to append to the uploaded data
+
+        Returns:
+            ``False`` in case an error occurs. Otherwise ``True``.
 
         Raises:
             TypeError: When *rawdata* is not of type ``bytes``
             TypeError: When *uploadid* is not of type ``str``
             ValueError: When *uploadid* is not included in the Task Queue
         """
-        # TODO: Send Error Notifications
-        # TODO: Check arguments
         if type(rawdata) != bytes:
             raise TypeError("raw data must be of type bytes. Type was \"%s\""%(str(type(rawdata))))
         if type(uploadid) != str:
@@ -300,18 +369,20 @@ class UploadManager(object):
 
         global TaskQueue
         if uploadid not in TaskQueue:
-            logging.debug(TaskQueue)
+            self.NotifiyClient("InternalError", None, "Invalid Upload ID")
             raise ValueError("Upload ID \"%s\" not in Task Queue.", str(uploadid))
 
         task      = TaskQueue[uploadid]
         chunksize = len(rawdata)
         filepath  = task["destinationpath"]
 
-        # TODO: check permission of directory
-        # TODO: check permission of file
-
-        with open(filepath, "ab") as fd:
-            fd.write(rawdata)
+        try:
+            with open(filepath, "ab") as fd:
+                fd.write(rawdata)
+        except Exception as e:
+            logging.warning("Writing chunk of uploaded data \"%s\" failed: %s", filepath, str(e))
+            self.NotifyClient("InternalError", task, "Writing data failed with error: \"%s\""%(str(e)))
+            return False
 
         task["offset"] += chunksize
         if task["offset"] >= task["filesize"]:
@@ -320,18 +391,31 @@ class UploadManager(object):
         else:
             # Get next chunk of data
             self.NotifyClient("ChunkRequest", task)
-        return
+        return True
 
 
 
     def UploadCompleted(self, task):
         """
+        This method continues the file management after an upload was completed.
+        The following tasks were performed:
+
+            * Checking the checksum of the destination file.
+
+        When the upload was successful, it notifies the clients with a ``"UploadComplete"`` notification.
+        Otherwise with a ``"UploadFailed"`` one.
+
+        Args:
+            task (dict): The task that upload was completed
         """
-        # TODO: Check checksum
+        # Check checksum
+        #task["state"] = "failed"
+        #logging.info("Upload Failed: \033[0;36m%s", task["destinationpath"]);
+        #self.NotifyClient("UploadFailed", task, "")
+
+        # TODO: Analyse File (Get Meta-Data, Unzip, …) -- Other process?
         task["state"] = "complete"
         logging.info("Upload Complete: \033[0;36m%s", task["destinationpath"]);
-
-        # TODO: Analyse File (Get Meta-Data, Unzip, …)
         self.NotifyClient("UploadComplete", task)
         return
 
