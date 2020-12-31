@@ -20,13 +20,18 @@ class VideoImport extends MainSettingsView
 {
     constructor()
     {
-        super("VideoImport", "Upload and Import Videos");
+        super("VideoImport", "Upload New Videos", "Upload video files to import them into the MusicDB database. Uploaded files are listed in the table within this section.");
 
-        this.upload      = new FileSelect("Select Video", "Tooltip");
+        // Upload Section
+        this.upload      = new FileSelect("Select Video File", "Select a video file from the local computer");
         this.uploadtable = new UploadTable();
         this.importtable = new VideoImportTable();
         this.element.appendChild(this.upload.GetHTMLElement());
         this.element.appendChild(this.uploadtable.GetHTMLElement());
+
+        // Import Section
+        let importheadline = new SettingsHeadline("Import Existing Videos", "Import videos that have bin found in the music collection but is not yet available in the database.");
+        this.element.appendChild(importheadline.GetHTMLElement());
         this.element.appendChild(this.importtable.GetHTMLElement());
 
         this.highlightupload = ""; // TODO: Highlight latest upload

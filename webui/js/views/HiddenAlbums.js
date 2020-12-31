@@ -20,7 +20,7 @@ class HiddenAlbums extends MainSettingsView
 {
     constructor()
     {
-        super("HiddenAlbums", "Hidden Albums");
+        super("HiddenAlbums", "Hidden Albums", "All albums marked to be hidden are listed here. Clicking on them opens the album view. They can then be made visible again within the album settings (right click on the headline of the album view).");
 
         this.albumsbox = document.createElement("div");
         this.albumsbox.classList.add("flex-row");

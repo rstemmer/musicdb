@@ -20,7 +20,7 @@ class GenreSettings extends MainSettingsView
 {
     constructor()
     {
-        super("GenreSettings", "Genre and Subgenre Manager");
+        super("GenreSettings", "Genre and Subgenre Manager", "Create new genre or sub-genre tags, or remove existing ones. When existing tags are removed, their association to tagged content will be removed as well. When a genre gets removed, its sub-genres will also be removed.");
 
         let infotext = document.createElement("span");
         infotext.classList.add("flex");

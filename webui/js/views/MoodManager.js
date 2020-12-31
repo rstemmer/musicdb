@@ -20,7 +20,7 @@ class MoodManager extends MainSettingsView
 {
     constructor()
     {
-        super("MoodManager", "Mood Manager");
+        super("MoodManager", "Mood Manager", "Create, modify or remove mood flags. When a flag gets removed, all the associations to the content marked with that flag gets removed.");
 
         this.table     = new MoodsTable();
         this.moods     = [];

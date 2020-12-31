@@ -20,7 +20,7 @@ class WebUISettings extends MainSettingsView
 {
     constructor()
     {
-        super("WebUISettings", "WebUI Settings");
+        super("WebUISettings", "WebUI Settings", "Enable or disable features of the WebUI. These settings are applied to all clients. The behavior of the MusicDB server is not affected in any way.");
 
         this.videocheckbox = new SettingsCheckbox(
             "Video Mode",

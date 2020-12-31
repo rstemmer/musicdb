@@ -18,9 +18,14 @@
 
 class MainSettingsView extends MainView
 {
-    constructor(id, headlinetext)
+    constructor(id, headlinetext, infotext=null)
     {
-        super(id, new SimpleMainViewHeadline(headlinetext))
+        let headline;
+        if(typeof infotext === "string")
+            headline = new SettingsHeadline(headlinetext, infotext);
+        else
+            headline = new SimpleMainViewHeadline(headlinetext);
+        super(id, headline);
     }
 
 
