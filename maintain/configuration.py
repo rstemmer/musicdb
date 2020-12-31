@@ -140,7 +140,7 @@ class ConfigurationMaintainer(object):
 
         self.CreateSection("uploads")
         self.AddValue("uploads", "allow",  "True");
-        self.AddValue("uploads", "tmpdir", temppath);
+        self.AddValue("uploads", "path",   temppath);
 
         self.AddValue("debug", "disableicecast", "0");
         self.AddValue("debug", "disablevideos",  "1");

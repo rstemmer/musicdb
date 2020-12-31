@@ -200,7 +200,7 @@ class MusicDBConfig(Config):
         # [uploads]
         self.uploads = UPLOAD()
         self.uploads.allow           = self.Get(bool,    "uploads", "allow",      False)
-        self.uploads.tmpdir          = self.GetDirectory("uploads", "tmpdir",     "/tmp")
+        self.uploads.path            = self.GetDirectory("uploads", "path",       "/tmp")
 
 
         # [extern]

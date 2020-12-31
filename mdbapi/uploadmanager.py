@@ -21,19 +21,23 @@ After initiating an Upload, this upload manager requests chunks of data via Musi
 All clients are informed about the upload process, not only the client that initiated the upload.
 So each client can show the progress and state.
 
-Upload states
+Task states
 
-    * ``"waitforchunk"``
-    * ``"complete"``
-    * ``"failed"``
-    * ``"notexisting"`` (In case an Upload ID does not match an Upload
+    * ``"waitforchunk"``: A new chunk of data was requested, and is expected from the client
+    * ``"uploadcomplete"``: The whole file is now available in the temporary upload directory
+    * ``"failed"``: The upload failed
+    * ``"notexisting"`` *virtual state* in case an Upload ID does not match an Upload. This task does not exist.
 
 The uploaded file follows the following naming scheme: *contenttype* + ``-`` + *checksum* + ``.`` + source-file-extension
 
-The upload manager also takes care about the validity of the uploaded file (via checksum).
-"""
-#TODO: Store tasks as .json file to allow continuing uploads after the server was restarted
+The upload manager also takes care about the validity of the uploaded file (via SHA-1 checksum).
 
+The task state is persistently stored inside the uploads directory within a JSON file in a *tasks* sub-directory.
+The file name is the task ID (equivalent to the Upload ID) + ``.json``.
+
+"""
+
+import json
 import logging
 import datetime
 from lib.cfg.musicdb    import MusicDBConfig
@@ -120,13 +124,14 @@ def UploadManagementThread():
     # TODO: Remove left over uploads (uploaded files without task-ID)
     # TODO: Continue uploads that were interrupted
     # TODO: Identify discontinued uploads
+    # TODO: Handle failed uploads (clean up)
     global Config
     global Thread
     global RunThread
     global Callbacks
     global TaskQueue
 
-    filesystem = Filesystem(Config.uploads.tmpdir)
+    filesystem = Filesystem(Config.uploads.path)
 
     if not Config.uploads.allow:
         logging.warning("Uploads not allowed! \033[1;30m(See MusicDB Configuration: [uploads]->allow)")
@@ -177,11 +182,11 @@ class UploadManager(object):
 
         self.db         = database
         self.cfg        = config
-        self.tmpfs      = Filesystem(self.cfg.uploads.tmpdir)
+        self.tmpfs      = Filesystem(self.cfg.uploads.path)
         self.musicfs    = Filesystem(self.cfg.music.path)
         self.awfs       = Filesystem(self.cfg.artwork.path)
         # TODO: check write permission of all directories
-        self.fileprocessing = Fileprocessing(self.cfg.uploads.tmpdir)
+        self.fileprocessing = Fileprocessing(self.cfg.uploads.path)
 
 
 
@@ -279,6 +284,28 @@ class UploadManager(object):
 
 
     #####################################################################
+    # State management                                                  #
+    #####################################################################
+
+
+
+    def SaveTask(self, task):
+        """
+        This method saves a task in the uploads directory under ``tasks/${Task ID}.json``
+
+        Args:
+            task (dict): The task to save
+
+        Returns:
+            *Nothing*
+        """
+        taskid = task["id"]
+        data = json.dumps(task)
+        path = self.cfg.uploads.path + "tasks/" + taskid + ".json"
+
+
+
+    #####################################################################
     # Management Functions                                              #
     #####################################################################
 
@@ -320,7 +347,7 @@ class UploadManager(object):
 
         fileextension   = self.tmpfs.GetFileExtension(sourcefilename)
         destinationname = contenttype + "-" + checksum + "." + fileextension
-        destinationpath = self.cfg.uploads.tmpdir + "/" + destinationname
+        destinationpath = self.cfg.uploads.path + "/" + destinationname
 
         # Remove existing upload if destination path exists
         self.tmpfs.RemoveFile(destinationpath)  # Removes file when it exists
@@ -422,7 +449,7 @@ class UploadManager(object):
             return False
 
         # TODO: Analyse File (Get Meta-Data, Unzip, …) -- Other process?
-        task["state"] = "complete"
+        task["state"] = "uploadcomplete"
         logging.info("Upload Complete: \033[0;36m%s", task["destinationpath"]);
         self.NotifyClient("UploadComplete", task)
         return True
