@@ -110,6 +110,7 @@ class UploadManager
         else if(fnc == "MusicDB:Upload" && sig == "UploadComplete")
         {
             window.console && console.info(state);
+            MusicDB_Request("GetUploads", "ShowUploads", null, {lastuploadid: state.uploadid});
         }
         else if(fnc == "MusicDB:Upload" && sig == "UploadFailed")
         {

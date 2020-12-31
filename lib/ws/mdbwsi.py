@@ -3417,9 +3417,42 @@ class MusicDBWebSocketInterface(object):
 
     def GetUploads(self):
         """
-        Returns a list with information about all yet unprocessed uploads
+        This method gets all tasks from the :mod:`~mdbapi.uploadmanager`.
+        This list then gets split into three lists:
+
+            * *videos*: A list of all available video uploads
+            * *albums*: Album uploads
+            * *artworks*: Artwork uploads
+
+        Returns:
+            a list with information about all yet unprocessed uploads
+
+        Example:
+
+            .. code-block:: javascript
+
+                MusicDB_Request("GetUploads", "ShowUploads");
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    console.log(args.albums);
+                    console.log(args.videos);
+                    console.log(args.artworks);
+                }
         """
-        return []
+        tasksdict = self.uploadmanager.GetTasks()
+        retval    = {}
+        retval["videos"]   = []
+        retval["albums"]   = []
+        retval["artworks"] = []
+        for key, task in tasksdict.items():
+            contentlist = task["contenttype"] + "s"
+            logging.debug(task)
+            retval[contentlist].append(task)
+
+        return retval
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

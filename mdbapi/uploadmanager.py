@@ -36,6 +36,7 @@ The task state is persistently stored inside the uploads directory within a JSON
 The file name is the task ID (equivalent to the Upload ID) + ``.json``.
 
 """
+# TODO: Describe task-keys
 
 import json
 import logging
@@ -49,7 +50,7 @@ Config      = None
 Thread      = None
 Callbacks   = []
 RunThread   = False
-TaskQueue   = {}
+Tasks   = {}
 
 def StartUploadManagementThread(config, musicdb):
     """
@@ -67,7 +68,7 @@ def StartUploadManagementThread(config, musicdb):
     global Thread
     global RunThread
     global Callbacks
-    global TaskQueue
+    global Tasks
 
     if Thread != None:
         logging.warning("Upload Management Thread already running")
@@ -81,7 +82,7 @@ def StartUploadManagementThread(config, musicdb):
     logging.debug("Initialize Upload Management Thread environment")
     Config       = config
     Callbacks    = []
-    TaskQueue    = {}
+    Tasks    = {}
 
     logging.debug("Starting Upload Management Thread")
     RunThread = True
@@ -129,7 +130,7 @@ def UploadManagementThread():
     global Thread
     global RunThread
     global Callbacks
-    global TaskQueue
+    global Tasks
 
     filesystem = Filesystem(Config.uploads.path)
 
@@ -143,12 +144,12 @@ def UploadManagementThread():
     # Start streaming …
     while RunThread:
         # Sleep a bit to reduce the load on the CPU. If nothing to do, sleep a bit longer
-        if len(TaskQueue) > 0:
+        if len(Tasks) > 0:
             time.sleep(0.1)
         else:
             time.sleep(1)
 
-        for key, task in TaskQueue.items():
+        for key, task in Tasks.items():
             state = task["state"]
             if state == "init":
                 pass    # request data
@@ -380,8 +381,8 @@ class UploadManager(object):
         task["state"          ] = "waitforchunk"
         self.SaveTask(task)
 
-        global TaskQueue
-        TaskQueue[uploadid] = task
+        global Tasks
+        Tasks[uploadid] = task
 
         self.NotifyClient("ChunkRequest", task)
         return
@@ -409,12 +410,12 @@ class UploadManager(object):
         if type(uploadid) != str:
             raise TypeError("Upload ID must be a string. Type was \"%s\""%(str(type(uploadid))))
 
-        global TaskQueue
-        if uploadid not in TaskQueue:
+        global Tasks
+        if uploadid not in Tasks:
             self.NotifiyClient("InternalError", None, "Invalid Upload ID")
             raise ValueError("Upload ID \"%s\" not in Task Queue.", str(uploadid))
 
-        task      = TaskQueue[uploadid]
+        task      = Tasks[uploadid]
         chunksize = len(rawdata)
         filepath  = task["destinationpath"]
 
@@ -470,6 +471,15 @@ class UploadManager(object):
         self.NotifyClient("UploadComplete", task)
         return True
 
+
+    def GetTasks(self):
+        """
+        Returns:
+            The dictionary with all upload tasks
+        """
+
+        global Tasks
+        return Tasks
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
