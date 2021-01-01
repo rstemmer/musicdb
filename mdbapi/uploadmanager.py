@@ -252,6 +252,7 @@ class UploadManager(object):
             * chunksize: The maximum chunk size
             * state: The current state of the upload task
             * message: ``null``/``None`` or a message from the server
+            * annotation: object with annotated information
 
         *task* can be ``None`` in case the notification is meant to be an information that a given upload ID is invalid.
 
@@ -266,7 +267,7 @@ class UploadManager(object):
         Raises:
             ValueError: When notification has an unknown notification name
         """
-        if not notification in ["ChunkRequest", "UploadComplete", "UploadFailed", "InternalError"]: # TODO -> documentation
+        if not notification in ["ChunkRequest", "UploadComplete", "UploadFailed", "InternalError", "Processed", "Annotated"]: # TODO -> documentation
             raise ValueError("Unknown notification \"%s\""%(notification))
 
         status = {}
@@ -275,11 +276,13 @@ class UploadManager(object):
             status["offset"]    = task["offset"]    # offset of the data to request
             status["chunksize"] = 4096*100          # Upload 400KiB (TODO: Make configurable)
             status["state"]     = task["state"]
+            status["annotations"]= task["annotations"]
         else:
             status["uploadid"]  = None
             status["offset"]    = None
             status["chunksize"] = None
             status["state"]     = "notexisting"
+            status["annotations"]= None
 
         status["message"]   = message
 
@@ -429,6 +432,7 @@ class UploadManager(object):
         task["sourcechecksum" ] = checksum
         task["destinationpath"] = destinationpath
         task["state"          ] = "waitforchunk"
+        task["annotations"    ] = {}
         self.SaveTask(task)
 
         global Tasks
@@ -565,6 +569,7 @@ class UploadManager(object):
             task["state"] = "invalidcontent"
         self.SaveTask(task)
 
+        self.NotifyClient("Processed", task)
         return
 
 
@@ -602,14 +607,12 @@ class UploadManager(object):
 
         task = Tasks[uploadid]
 
-        if "annotations" not in task:
-            task["annotations"] = {}
-
         for key in ["name", "artistname", "artistid", "release", "origin"]:
             if key in annotations:
                 task["annotations"][key] = annotations[key]
 
         self.SaveTask(task)
+        self.NotifyClient("Annotated", task)
         return
 
 
