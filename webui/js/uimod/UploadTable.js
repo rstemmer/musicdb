@@ -81,8 +81,10 @@ class UploadTableRow extends UploadTableRowBase
 
     onRemove()
     {
+        event.preventDefault();
+        event.stopPropagation();
         //MusicDB_Request("DeleteTag", "UpdateTags", {tagid: MDBMood.id}, {origin: "MoodSettings"});
-        window.console && console.log("Import Upload");
+        window.console && console.log("Remove Upload");
     }
 }
 

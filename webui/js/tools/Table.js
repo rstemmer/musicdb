@@ -63,6 +63,7 @@ class Table extends Element
                 }
                 contextrow.ToggleVisibility();
             };
+        lastrow.GetHTMLElement().onclick = lastrow.GetHTMLElement().oncontextmenu;
 
         // Add row
         this.AddRow(contextrow);
