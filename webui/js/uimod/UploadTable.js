@@ -109,6 +109,17 @@ class UploadTable extends Table
         for(let upload of uploads)
         {
             this.AddRow(new UploadTableRow(upload));
+
+            let importform = null;
+            switch(upload.contenttype)
+            {
+                case "video":
+                    importform = new VideoImportForm("Unknown Artist", upload.sourcefilename, "Internet", 2000, upload);
+                    break;
+            }
+
+            if(importform != null)
+                this.AddContextView(importform.GetHTMLElement());
         }
 
         return;

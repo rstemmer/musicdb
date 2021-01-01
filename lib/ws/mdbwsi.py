@@ -108,6 +108,7 @@ Uploading
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateUpload`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.UploadChunk`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AnnotateUpload`
 
 Other
 ^^^^^
@@ -320,6 +321,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.FindNewContent()
         elif fncname == "GetUploads":
             retval = self.GetUploads()
+        elif fncname == "AnnotateUpload":
+            retval = self.AnnotateUpload(args["uploadid"], args)
         # Call-Methods (retval will be ignored unless method gets not changed)
         elif fncname == "SaveWebUIConfiguration":
             retval = self.SaveWebUIConfiguration(args["config"])
@@ -3452,6 +3455,40 @@ class MusicDBWebSocketInterface(object):
             retval[contentlist].append(task)
 
         return retval
+
+
+    def AnnotateUpload(self, uploadid, annotations):
+        """
+        Adds some information to an uploaded file that can help during the import process.
+        For example a video or album name can be annotated so that after the upload was complete,
+        the file already has the correct name for importing.
+
+        Annotation is an object that can have the following keys:
+
+            * ``"name"``: Album or Video name
+            * ``"artistname"``: Name of an artist
+            * ``"artistid"``: ID of an existing artist in the database
+            * ``"release"``: Release year
+            * ``"origin"``: Origin of the file like "Internet" or "iTunes"
+
+        All keys are optional.
+
+        Args:
+            uploadid (str): Unique ID to identify the upload task
+            annotations (dict): An object with some of the keys listed above
+
+        Returns:
+            *Nothing*
+        """
+        infos = {}
+        # copy only valid items
+        for key in ["name", "artistname", "artistid", "release", "origin"]:
+            if key in annotations:
+                infos[key] = annotations[key]
+        
+        # Annotate upload
+        self.uploadmanager.AnnotateUpload(uploadid, infos)
+        return
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

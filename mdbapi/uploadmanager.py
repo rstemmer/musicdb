@@ -586,6 +586,33 @@ class UploadManager(object):
         return True
 
 
+    def AnnotateUpload(self, uploadid, annotations):
+        """
+        Raises:
+            TypeError: When *uploadid* is not of type ``str``
+            ValueError: When *uploadid* is not included in the Task Queue
+        """
+        if type(uploadid) != str:
+            raise TypeError("Upload ID must be a string. Type was \"%s\""%(str(type(uploadid))))
+
+        global Tasks
+        if uploadid not in Tasks:
+            self.NotifiyClient("InternalError", None, "Invalid Upload ID")
+            raise ValueError("Upload ID \"%s\" not in Task Queue.", str(uploadid))
+
+        task = Tasks[uploadid]
+
+        if "annotations" not in task:
+            task["annotations"] = {}
+
+        for key in ["name", "artistname", "artistid", "release", "origin"]:
+            if key in annotations:
+                task["annotations"][key] = annotations[key]
+
+        self.SaveTask(task)
+        return
+
+
 
 
 
