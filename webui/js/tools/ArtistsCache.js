@@ -39,16 +39,26 @@ class ArtistsCache
 
 
 
-    // valid algorithms: "Levenshtein"
+    // valid algorithms: "Levenshtein", "strcmp"
     // Returns a list of MDBArtist entries
     FindArtist(searchstring, algorithm="Levenshtein")
     {
         let results = new Array();
 
+        // strcmp
+        if(algorithm == "strcmp")
+        {
+            for(let artist of this.artists)
+                if(artist.name === searchstring)
+                    return [artist]
+            return [];
+        }
+
+        // Levenshtein
         for(let artist of this.artists)
         {
             let artistname = artist.name;
-            let similarity = Similarity(seachstring, artistname);
+            let similarity = Similarity(searchstring, artistname);
             if(similarity > 0.5)
                 results.push(artist);
         }
