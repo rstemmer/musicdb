@@ -52,6 +52,19 @@ class VideoImportFormTable extends Table
 
 
 
+    Validate()
+    {
+        if(this.artistinput.GetValidState() == false)
+            return false;
+        if(this.nameinput.GetValidState() == false)
+            return false;
+        if(this.releaseinput.GetValidState() == false)
+            return false;
+        if(this.origininput.GetValidState() == false)
+            return false;
+        return true;
+    }
+
     onArtistInput(value)
     {
         // TODO other input element
@@ -104,14 +117,23 @@ class VideoImportForm extends ImportForm
     {
         let table    = new VideoImportFormTable(artist, name, origin, release);
         let onsave   = null;
-        let onimport = null;
+        let onimport = ()=>{this.onImport();};
 
         if(typeof uploadtask === "object")
         {
             onsave = ()=>{this.onSave(uploadtask.id);};
         }
-        super(table, onsave, onimport);
-        this.table = table;
+
+        super(table, onsave, onimport, uploadtask);
+
+        this.table      = table;
+    }
+
+
+
+    ValidateInputs()
+    {
+        return this.table.Validate();
     }
 
 
@@ -125,6 +147,13 @@ class VideoImportForm extends ImportForm
 
         MusicDB_Call("AnnotateUpload", {uploadid: uploadid, name: name, artistid: artist, release: release, origin: origin});
         //MusicDB_Broadcast("GetUploads", "ShowUploads"); // Update other clients views with the new annotation
+    }
+
+
+
+    onImport()
+    {
+        window.console && console.log("Import Video");
     }
 }
 

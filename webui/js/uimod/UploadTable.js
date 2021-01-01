@@ -94,35 +94,73 @@ class UploadTable extends Table
     {
         super(["UploadTable"]);
         this.headline = new UploadTableHeadline();
+        this.Clear();
+        this.AddRow(this.headline);
+
+        this.entries = new Object();
     }
 
 
 
     Update(uploads)
     {
-        this.Clear();
-        this.AddRow(this.headline);
-
         if(typeof uploads !== "object" || uploads === null)
             return;
 
         for(let upload of uploads)
         {
-            this.AddRow(new UploadTableRow(upload));
-
-            let importform = null;
-            switch(upload.contenttype)
+            if(! this.TryUpdateRow(upload))
             {
-                case "video":
-                    importform = new VideoImportForm("Unknown Artist", upload.sourcefilename, "Internet", 2000, upload);
-                    break;
+                this.CreateNewRow(upload);
             }
-
-            if(importform != null)
-                this.AddContextView(importform.GetHTMLElement());
         }
 
+        // TODO: Remove row of no longer existing uploads
+
         return;
+    }
+
+
+
+    TryUpdateRow(upload)
+    {
+        let key = upload.id;
+        if(! (key in this.entries))
+            return false;
+
+        this.entries[key].row.Update(upload);
+        this.entries[key].form.UpdateUploadTask(upload);
+        this.entries[key].form.ValidateForm();
+
+        return true;
+    }
+
+
+
+    CreateNewRow(upload)
+    {
+        let  newrow = new UploadTableRow(upload);
+        this.AddRow(newrow);
+
+        let importform = null;
+        switch(upload.contenttype)
+        {
+            case "video":
+                importform = new VideoImportForm("Unknown Artist", upload.sourcefilename, "Internet", 2000, upload);
+                break;
+        }
+
+        if(importform != null)
+        {
+            this.AddContextView(importform.GetHTMLElement());
+            importform.ValidateForm();
+        }
+
+        // Save row
+        let key = upload.id;
+        this.entries[key] = new Object();
+        this.entries[key].row  = newrow;
+        this.entries[key].form = importform;
     }
 }
 

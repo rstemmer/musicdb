@@ -19,26 +19,79 @@
 
 class ImportForm extends Element
 {
-    constructor(formtable, onsavedraft, onimportfile)
+    constructor(formtable, onsavedraft, onimportfile, uploadtask=null)
     {
         super("div", ["ImportForm", "flex-row"]);
 
         let rightcolumn = document.createElement("div");
         rightcolumn.classList.add("flex-column");
 
+        this.savebutton   = new SVGButton("Save",    onsavedraft);
         if(typeof onsavedraft === "function")
-        {
-            let savebutton   = new SVGButton("Save",    onsavedraft);
-            rightcolumn.appendChild(savebutton.GetHTMLElement());
-        }
+            rightcolumn.appendChild(this.savebutton.GetHTMLElement());
+
+        this.importbutton = new SVGButton("MusicDB", onimportfile);
         if(typeof onimportfile === "function")
-        {
-            let importbutton = new SVGButton("MusicDB", onimportfile);
-            rightcolumn.appendChild(importbutton.GetHTMLElement());
-        }
+            rightcolumn.appendChild(this.importbutton.GetHTMLElement());
+
+        this.uploadtask = uploadtask;
 
         this.element.appendChild(formtable.GetHTMLElement());
         this.element.appendChild(rightcolumn);
+
+        formtable.GetHTMLElement().oninput = ()=>{this.ValidateForm();}; // Validate whenever something was edited
+    }
+
+
+
+    UpdateUploadTask(uploadtask)
+    {
+        this.uploadtask = uploadtask;
+        this.ValidateForm();
+    }
+
+
+
+    ValidateForm()
+    {
+        let uploadvalid = this.ValidateUpload();
+        let inputsvalid = this.ValidateInputs();
+
+        if(uploadvalid && inputsvalid)
+        {
+            this.EnableImport(true);
+            return true;
+        }
+
+        this.EnableImport(false);
+        return false;
+    }
+
+    ValidateUpload()
+    {
+        if(this.uploadtask === null)
+            return true;
+
+        if(this.uploadtask.state === "postprocessed")
+            return true;
+
+        return false;
+    }
+
+    ValidateInputs()
+    {
+        window.console && console.error("This method must be implemented by derived classes");
+        return false;
+    }
+
+
+
+    EnableImport(state=true)
+    {
+        if(state === true)
+            this.importbutton.Enable();
+        else
+            this.importbutton.Disable();
     }
 }
 
