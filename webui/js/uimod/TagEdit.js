@@ -30,6 +30,7 @@ class TagListEdit extends Element
         this.taginput   = document.createElement("input");
         this.taginput.type    = "string";
         this.taginput.oninput = ()=>{this.Find(this.taginput.value);};
+        this.taginput.onkeyup = (event)=>{this.onKeyUp(event);};
         this.tagselect  = new TagSelection(tagtype);
         this.tagselect.SetSelectionEvent((tag)=>{this.onTagSelect(tag);});
         this.listbutton = new SVGButton("DropDown", ()=>{this.tagselect.ToggleSelectionList();});
@@ -47,6 +48,27 @@ class TagListEdit extends Element
     onTagSelect(tag)
     {
         this.tagview.AddGhostTag(tag);
+    }
+
+
+    onKeyUp(event)
+    {
+        let keycode = event.which || event.keyCode;
+        if(keycode == 13 /*ENTER*/ && this.taginput.value.length > 0)
+        {
+            // Get highlighted tags. If only one is highlighted, select it.
+            let highlighted = this.tagselect.GetHighlightedTags();
+            if(highlighted.length === 1)
+            {
+                highlighted[0].tagobject.onClick(); // == Add Tag
+                this.taginput.value = "";
+            }
+        }
+        else if(keycode == 27 /*ESC*/)
+        {
+            this.taginput.value = "";
+            this.taginput.oninput();
+        }
     }
 
 
@@ -243,6 +265,23 @@ class TagSelection extends Element
             }
         }
 
+        return foundtags;
+    }
+
+
+
+    // Get all tags that were highlighted by Find(…)
+    GetHighlightedTags()
+    {
+        let foundtags = new Array(); // return a list of MDBTags that match
+        for(let tag of this.tagmap)
+        {
+            let tagobject = tag.tag;
+            let element   = tagobject.GetHTMLElement();
+            let dbentry   = tag.genre;
+            if(element.dataset.highlight === "true")
+                foundtags.push({tagobject: tagobject, mdbtag: dbentry});
+        }
         return foundtags;
     }
 
