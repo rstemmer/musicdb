@@ -22,9 +22,30 @@ class Input extends Element
     {
         super("input", ["Input"]);
         this.element.type    = type;
-        this.element.oninput = oninput;
+        this.element.oninput = ()=>{this.onInput();};
         this.element.value   = initvalue;
         this.element.title   = tooltip;
+        this.oninput         = oninput;
+        this.onInput(); // initialization is something like input
+    }
+
+
+
+    onInput()
+    {
+        if(typeof this.oninput !== "function")
+            return;
+
+        let value = this.element.value;
+        let valid = this.oninput(value);
+        this.SetValidState(valid);
+    }
+
+
+
+    SetValidState(valid)
+    {
+        this.element.dataset.valid = valid;
     }
 
 
