@@ -17,11 +17,12 @@
 "use strict";
 
 
-class TagListEdit
+class TagListEdit extends Element
 {
     // tagtype: "genre", "subgenre"
     constructor(tagtype)
     {
+        super("div", ["TagListEdit", "flex-row", "smallfont", "hlcolor"]);
         this.tagtype    = tagtype;
 
         this.infoicon   = new SVGIcon("Tags");
@@ -34,24 +35,11 @@ class TagListEdit
         this.listbutton = new SVGButton("DropDown", ()=>{this.tagselect.ToggleSelectionList();});
         this.listbutton.SetTooltip("Show available tags");
 
-        this.element    = document.createElement("div");
-        this.element.classList.add("tagedit");
-        this.element.classList.add("flex-row");
-        this.element.classList.add("smallfont");
-        this.element.classList.add("hlcolor");
-
         this.element.appendChild(this.infoicon.GetHTMLElement());
         this.element.appendChild(this.tagview.GetHTMLElement());
         this.element.appendChild(this.taginput);
         this.element.appendChild(this.listbutton.GetHTMLElement());
         this.element.appendChild(this.tagselect.GetHTMLElement());
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
@@ -80,6 +68,7 @@ class TagListEdit
 
     Find(string)
     {
+        this.tagselect.Update();  // Update genre lists with latest tags
         let result = this.tagselect.Find(string);
 
         if(result.length === 1)
@@ -97,29 +86,18 @@ class TagListEdit
 
 
 
-class TagSelection
+class TagSelection extends Element
 {
     // tagtype: "genre", "subgenre"
     constructor(tagtype)
     {
+        super("div", ["TagSelect", "smallfont", "hlcolor", "frame"]);
         this.tagtype    = tagtype;
         this.musictype  = null;
         this.musicid    = null;
         this.mdbtags    = null;
 
-        this.listbox    = document.createElement("div");
-        this.listbox.classList.add("tagselect");
-        this.listbox.classList.add("smallfont");
-        this.listbox.classList.add("hlcolor");
-        this.listbox.classList.add("frame");
-        this.listbox.style.display = "none";
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.listbox;
+        this.element.style.display = "none";
     }
 
 
@@ -134,7 +112,7 @@ class TagSelection
 
     ToggleSelectionList()
     {
-        if(this.listbox.style.display == "none")
+        if(this.element.style.display == "none")
         {
             this.Show();
         }
@@ -146,12 +124,11 @@ class TagSelection
 
     Show()
     {
-        this.listbox.style.display = "flex";
-        this.Update();  // Update genre lists with latest tags
+        this.element.style.display = "flex";
     }
     Hide()
     {
-        this.listbox.style.display = "none";
+        this.element.style.display = "none";
     }
 
 
@@ -178,7 +155,7 @@ class TagSelection
         for(let tag of taglist)
         {
             let item = new Tag(tag);
-            item.SetAddAction((tagid)=>{this.onTagSelect(tagid, item)});
+            item.SetAddAction((tagid)=>{this.onTagSelect(tagid, item);});
             genrelist.appendChild(item.GetHTMLElement());
             this.tagmap.push({tag: item, genre: tag});
         }
@@ -216,7 +193,7 @@ class TagSelection
                     continue;
 
                 let item = new Tag(subgenre);
-                item.SetAddAction((tagid)=>{this.onTagSelect(tagid, item)});
+                item.SetAddAction((tagid)=>{this.onTagSelect(tagid, item);});
                 subgenrelist.appendChild(item.GetHTMLElement());
 
                 this.tagmap.push({tag: item, genre: subgenre});
@@ -317,8 +294,8 @@ class TagSelection
             listelement = this._CreateSubgenreList(this.mdbtags.genres, this.mdbtags.subgenres);
         }
 
-        this.listbox.innerHTML = "";
-        this.listbox.appendChild(listelement);    
+        this.element.innerHTML = "";
+        this.element.appendChild(listelement);    
 
     }
 }

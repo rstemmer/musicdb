@@ -18,23 +18,23 @@
 
 
 
-.tagedit
+.TagListEdit
 {
     align-items:        center;
     flex-wrap:          wrap;
 }
 
-.tagedit > input
+.TagListEdit > input
 {
     flex-grow:          1;
 }
 
-.tagedit > * + *
+.TagListEdit > * + *
 {
     margin-left:        1ch;
 }
 
-.tagedit > .SVGIcon
+.TagListEdit > .SVGIcon
 {
     width:              1.5em;
     height:             1.5em;
@@ -42,7 +42,7 @@
 
 
 
-.tagselect
+.TagSelect
 {
     flex-basis:         100%;
     background-color:   var(--bgcolor);
@@ -50,35 +50,35 @@
     padding:            0.5em 1ch;
     z-index:            10;
 }
-.tagselect > div
+.TagSelect > div
 {
     align-items:        stretch;
 }
-.tagselect div + div
+.TagSelect div + div
 {
     margin-left:        0.5em;
 }
 
-.tagselect .tag
+.TagSelect .tag
 {
     margin-top:         0.2em;
 }
-.tagselect .tag[data-highlight=true]
+.TagSelect .tag[data-highlight=true]
 {
     background-color:   var(--hlcolor);
     color:              var(--bgcolor);
 }
-.tagselect .tag[data-highlight=true] > .SVGIcon
+.TagSelect .tag[data-highlight=true] > .SVGIcon
 {
     background-color:   var(--bgcolor);
 }
 
-.tagselect span ~ span
+.TagSelect span ~ span
 {
     margin-top:         0.5em;
 }
 
-.tagselect div.flex-row
+.TagSelect div.flex-row
 {
     flex-wrap:          wrap;
 }
