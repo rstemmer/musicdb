@@ -92,8 +92,8 @@ class UploadManager
         let chunkdata = BufferToHexString(rawdata)
         task.offset  += rawdata.length;
 
-        window.console && console.log(rawdata);
-        window.console && console.log(chunkdata);
+        //window.console && console.log(rawdata);
+        //window.console && console.log(chunkdata);
         window.console && console.log(task);
         MusicDB_Call("UploadChunk", {uploadid: uploadid, chunkdata: chunkdata});
     }
