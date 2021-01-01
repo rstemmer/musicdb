@@ -107,6 +107,13 @@ class UploadManager
             window.console && console.log(state);
             this.UploadNextChunk(state)
         }
+
+        if(fnc == "MusicDB:Upload")
+        {
+            window.console && console.info(state);
+            MusicDB_Request("GetUploads", "ShowUploads");
+        }
+        /*
         else if(fnc == "MusicDB:Upload" && sig == "UploadComplete")
         {
             window.console && console.info(state);
@@ -116,6 +123,7 @@ class UploadManager
         {
             window.console && console.error(state);
         }
+        */
     }
 
 
