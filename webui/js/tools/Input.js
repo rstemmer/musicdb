@@ -54,6 +54,12 @@ class Input extends Element
 
 
 
+    SetValue(value)
+    {
+        this.element.value = value;
+        this.onInput();
+        return;
+    }
     GetValue()
     {
         return this.element.value;
