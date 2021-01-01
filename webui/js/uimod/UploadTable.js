@@ -131,6 +131,7 @@ class UploadTable extends Table
         this.entries[key].row.Update(upload);
         this.entries[key].form.UpdateUploadTask(upload);
         this.entries[key].form.ValidateForm();
+        // TODO: Update annotations
 
         return true;
     }
@@ -139,14 +140,34 @@ class UploadTable extends Table
 
     CreateNewRow(upload)
     {
+        // Create row showing the uploaded file
         let  newrow = new UploadTableRow(upload);
         this.AddRow(newrow);
 
+        // Check/define meta information about the file
+        let artistid = "Unknown Artist"; // TODO
+        let musicname= upload.sourcefilename;
+        let origin   = "Internet";
+        let release  = 2000;
+        if("annotations" in upload)
+        {
+            let annotations = upload.annotations;
+            if("artistid" in annotations)
+                artistid = annotations.artistid;
+            if("name" in annotations)
+                name = annotations.name;
+            if("origin" in annotations)
+                origin = annotations.origin;
+            if("release" in annotations)
+                release = annotations.release;
+        }
+
+        // Create import form
         let importform = null;
         switch(upload.contenttype)
         {
             case "video":
-                importform = new VideoImportForm("Unknown Artist", upload.sourcefilename, "Internet", 2000, upload);
+                importform = new VideoImportForm(artistid, name, origin, release, upload);
                 break;
         }
 
