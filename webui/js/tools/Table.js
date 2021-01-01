@@ -56,6 +56,11 @@ class Table extends Element
             {
                 event.preventDefault();
                 event.stopPropagation();
+                for(let row of this.rows)
+                {
+                    if(row.element.classList.contains("ContextRow") && row != contextrow)
+                        row.Hide();
+                }
                 contextrow.ToggleVisibility();
             };
 
