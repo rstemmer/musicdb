@@ -77,11 +77,13 @@ class SVGIcon extends SVGBase
 
 class SVGButton extends SVGIcon
 {
-    constructor(name, onclick)
+    constructor(name, onclick, tooltip=null)
     {
         super(name)
         this.onclick = onclick;
         this.Enable();
+        if(typeof tooltip === "string")
+            this.SetTooltip(tooltip);
     }
 
     Enable()
