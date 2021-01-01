@@ -41,7 +41,7 @@ class VideoImportFormTable extends Table
         this.artistinput  = new TextInput(()=>{}, artist);   // TODO: create better artist input with search
         this.nameinput    = new TextInput(()=>{}, name);
         this.origininput  = new TextInput(()=>{}, origin);
-        this.releaseinput = new NumberInput(()=>{}, origin);
+        this.releaseinput = new NumberInput(()=>{}, release);
 
         this.AddRow(new VideoImportFormRow("Artist Name:",  this.artistinput) );
         this.AddRow(new VideoImportFormRow("Video Name:",   this.nameinput)   );
