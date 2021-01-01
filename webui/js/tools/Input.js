@@ -26,6 +26,13 @@ class Input extends Element
         this.element.value   = initvalue;
         this.element.title   = tooltip;
     }
+
+
+
+    GetValue()
+    {
+        return this.element.value;
+    }
 }
 
 
