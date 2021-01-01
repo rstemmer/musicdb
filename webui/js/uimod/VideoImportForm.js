@@ -38,15 +38,42 @@ class VideoImportFormTable extends Table
         super(["VideoImportForm"]);
 
         // Name, Artist, Origin, Release Date, Genre, Sub-Genre
-        this.artistinput  = new TextInput(()=>{}, artist);   // TODO: create better artist input with search
-        this.nameinput    = new TextInput(()=>{}, name);
-        this.origininput  = new TextInput(()=>{}, origin);
-        this.releaseinput = new NumberInput(()=>{}, release);
+        // TODO: create better artist input with search
+        this.artistinput  = new TextInput(  (value)=>{return this.onArtistInput(value); }, artist);
+        this.nameinput    = new TextInput(  (value)=>{return this.onNameInput(value);   }, name);
+        this.origininput  = new TextInput(  (value)=>{return this.onOriginInput(value); }, origin);
+        this.releaseinput = new NumberInput((value)=>{return this.onReleaseInput(value);}, release);
 
         this.AddRow(new VideoImportFormRow("Artist Name:",  this.artistinput) );
         this.AddRow(new VideoImportFormRow("Video Name:",   this.nameinput)   );
         this.AddRow(new VideoImportFormRow("Release Date:", this.releaseinput));
         this.AddRow(new VideoImportFormRow("File Origin:",  this.origininput) );
+    }
+
+
+
+    onArtistInput(value)
+    {
+        // TODO other input element
+        return true;
+    }
+    onNameInput(value)
+    {
+        if(value.length > 0)
+            return true;
+        return false;
+    }
+    onOriginInput(value)
+    {
+        if(value.length > 0)
+            return true;
+        return false;
+    }
+    onReleaseInput(value)
+    {
+        if(value < 1000 || value > 2000)
+            return false;
+        return true;
     }
 
 
