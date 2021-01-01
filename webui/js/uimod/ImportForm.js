@@ -26,11 +26,11 @@ class ImportForm extends Element
         let rightcolumn = document.createElement("div");
         rightcolumn.classList.add("flex-column");
 
-        this.savebutton   = new SVGButton("Save",    onsavedraft);
+        this.savebutton   = new SVGButton("Save",    onsavedraft,  "Save Formular as Draft");
         if(typeof onsavedraft === "function")
             rightcolumn.appendChild(this.savebutton.GetHTMLElement());
 
-        this.importbutton = new SVGButton("MusicDB", onimportfile);
+        this.importbutton = new SVGButton("MusicDB", onimportfile, "Import Music");
         if(typeof onimportfile === "function")
             rightcolumn.appendChild(this.importbutton.GetHTMLElement());
 
