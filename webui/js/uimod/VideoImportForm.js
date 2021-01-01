@@ -124,6 +124,7 @@ class VideoImportForm extends ImportForm
         let origin  = this.table.GetOrigin();
 
         MusicDB_Call("AnnotateUpload", {uploadid: uploadid, name: name, artistid: artist, release: release, origin: origin});
+        //MusicDB_Broadcast("GetUploads", "ShowUploads"); // Update other clients views with the new annotation
     }
 }
 
