@@ -67,7 +67,7 @@ class UploadTableRow extends UploadTableRowBase
         let stateelement = document.createTextNode(state);
 
         // Control buttons
-        let importbutton = new SVGButton("Save", ()=>{this.onImport();});
+        let importbutton = new SVGButton("Remove", ()=>{this.onRemove();}, "Delete this uploaded file");
         let buttonbox    = new ButtonBox()
         buttonbox.AddButton(importbutton);
 
@@ -79,7 +79,7 @@ class UploadTableRow extends UploadTableRowBase
 
 
 
-    onImport()
+    onRemove()
     {
         //MusicDB_Request("DeleteTag", "UpdateTags", {tagid: MDBMood.id}, {origin: "MoodSettings"});
         window.console && console.log("Import Upload");
