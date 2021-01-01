@@ -39,7 +39,7 @@ class VideoImportFormTable extends Table
 
         // Name, Artist, Origin, Release Date, Genre, Sub-Genre
         // TODO: create better artist input with search
-        this.artistinput  = new TextInput(  (value)=>{return this.onArtistInput(value); }, artist);
+        this.artistinput  = new ArtistInput((id, name)=>{return this.onArtistInput(id, name); }, artist);
         this.nameinput    = new TextInput(  (value)=>{return this.onNameInput(value);   }, name);
         this.origininput  = new TextInput(  (value)=>{return this.onOriginInput(value); }, origin);
         this.releaseinput = new NumberInput((value)=>{return this.onReleaseInput(value);}, release);
@@ -65,10 +65,13 @@ class VideoImportFormTable extends Table
         return true;
     }
 
-    onArtistInput(value)
+    onArtistInput(artistid, artistname)
     {
-        // TODO other input element
-        return true;
+        if(typeof artistname !== "string")
+            return false;
+        if(artistname.length > 0)
+            return true;
+        return false;
     }
     onNameInput(value)
     {
