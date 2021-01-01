@@ -47,6 +47,10 @@ class Input extends Element
     {
         this.element.dataset.valid = valid;
     }
+    GetValidState(valid)
+    {
+        return this.element.dataset.valid === "true";
+    }
 
 
 
