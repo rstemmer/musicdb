@@ -57,6 +57,7 @@ ul.ImportStateList
 {
     mask:               url("../../img/icons/StatusOpen.svg");
     background-color:   var(--hlcolor);
+    opacity:            0.5;
 }
 .ImportStateList li[data-state=active]::before
 {
