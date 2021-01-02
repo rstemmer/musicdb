@@ -700,9 +700,35 @@ class UploadManager(object):
         task["videofile"] = videofile
         logging.debug("Integrating upload %s -> %s", str(uploadedfile), str(videofile))
 
-        # TODO: Check if videofile already exists
-        # TODO: Copy file, create Artist directory if not existing
-        return False
+        # Check if video file already exists
+        if self.musicfs.Exists(videofile):
+            logging.warning("File \"%s\" already exists in the music directory! \033[1;30m(It will NOT be overwritten)", str(videofile))
+            self.NotifyClient("InternalError", task, "File already exists in the music directory")
+            return False
+
+        # Check if artist directory exists
+        if not self.musicfs.IsDirectory(artistname):
+            logging.info("Artist directory for \"%s\" does not exist and will be created.", str(artistname))
+            try:
+                self.musicfs.CreateSubdirectory(artistname)
+            except PermissionError:
+                logging.error("Creating artist sub-directory \"%s\" failed! - Permission denied! \033[1;30m(MusicDB requires write permission to the music file tree)", str(artistname))
+                self.NotifyClient("InternalError", task, "Creating artist directory failed - Permission denied")
+                return False
+
+        # Copy file, create Artist directory if not existing
+        try:
+            success = self.musicfs.CopyFile(uploadedfile, videofile)
+        except PermissionError:
+            logging.error("Copying video file to \"%s\" failed! - Permission denied! \033[1;30m(MusicDB requires write permission to the music file tree)", str(videofile))
+            self.NotifyClient("InternalError", task, "Copying failed - Permission denied")
+            return False
+
+        if(success):
+            logging.info("New video file at %s", str(videofile))
+        else:
+            logging.warning("Copying video file to \"%s\" failed!", str(videofile))
+        return success
 
 
 
