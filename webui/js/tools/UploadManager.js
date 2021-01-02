@@ -111,13 +111,13 @@ class UploadManager
         if(fnc == "MusicDB:Upload")
         {
             window.console && console.info(state);
-            if(fnc == "MusicDB:Upload" && sig == "ChunkRequest")
+            if(sig == "ChunkRequest")
             {
                 this.UploadNextChunk(state)
             }
             else
             {
-                this.videouploadstable.Update(args.uploadslist.videos);
+                this.videouploadstable.Update(state.uploadslist.videos);
             }
         }
     }

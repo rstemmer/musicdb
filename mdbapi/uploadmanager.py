@@ -27,8 +27,8 @@ Task states
     * ``"uploadcomplete"``: The whole file is now available in the temporary upload directory
     * ``"uploadfailed"``: The upload failed
     * ``"notexisting"`` *virtual state* in case an Upload ID does not match an Upload. This task does not exist.
-    * ``"postprocessed"``: The uploaded file was successfully post processed
-    * ``"invalidcontent"``: Post processing failed. The content was unexpected or invalid.
+    * ``"preprocessed"``: The uploaded file was successfully pre-processed and is ready for importing
+    * ``"invalidcontent"``: Pre-processing failed. The content was unexpected or invalid.
 
 After upload is complete,
 the Management Thread takes care about post processing or removing no longer needed content
@@ -159,7 +159,7 @@ def UploadManagementThread():
             if state == "uploadfailed":
                 pass    # TODO: Clean up everything
             elif state == "uploadcomplete":
-                manager.PostProcessUploadedFile(task)
+                manager.PreProcessUploadedFile(task)
 
     return
 
@@ -539,15 +539,15 @@ class UploadManager(object):
 
 
 
-    def PostProcessUploadedFile(self, task):
+    def PreProcessUploadedFile(self, task):
         """
-        This method initiates post processing of an uploaded file.
+        This method initiates pre-processing of an uploaded file.
         Depending on the *contenttype* different post processing methods are called:
 
-            * ``"video"``: :meth:`~PostProcessVideo`
+            * ``"video"``: :meth:`~PreProcessVideo`
 
         The task must be in ``"uploadcomplete"`` state, otherwise nothing happens but printing an error message.
-        If post processing was successful, the task state gets updated to ``"postprocessed"``.
+        If post processing was successful, the task state gets updated to ``"preprocessed"``.
         When an error occurred, the state will become ``"invalidcontent"``.
 
         Returns:
@@ -558,14 +558,14 @@ class UploadManager(object):
             return
 
         # Perform post processing
-        logging.debug("Post processing upload %s -> %s", str(task["sourcefilename"]), str(task["destinationpath"]))
+        logging.debug("Preprocessing upload %s -> %s", str(task["sourcefilename"]), str(task["destinationpath"]))
         success = False
         if task["contenttype"] == "video":
-            success = self.PostProcessVideo(task)
+            success = self.PreProcessVideo(task)
 
         # Update task state
         if success == True:
-            task["state"] = "postprocessed"
+            task["state"] = "preprocessed"
         else:
             task["state"] = "invalidcontent"
         self.SaveTask(task)
@@ -575,7 +575,7 @@ class UploadManager(object):
 
 
 
-    def PostProcessVideo(self, task):
+    def PreProcessVideo(self, task):
         """
         """
         meta = MetaTags()

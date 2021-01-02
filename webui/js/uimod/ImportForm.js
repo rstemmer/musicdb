@@ -72,7 +72,7 @@ class ImportForm extends Element
         if(this.uploadtask === null)
             return true;
 
-        if(this.uploadtask.state === "postprocessed")
+        if(this.uploadtask.state === "preprocessed")
             return true;
 
         return false;
