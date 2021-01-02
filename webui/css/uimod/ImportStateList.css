@@ -64,7 +64,7 @@ ul.ImportStateList
     background-color:   var(--hlcolor);
 
     animation-name:             spin;
-    animation-duration:         5s;
+    animation-duration:         4s;
     animation-iteration-count:  infinite;
     animation-timing-function:  linear;
 }

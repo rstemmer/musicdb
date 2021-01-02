@@ -60,11 +60,6 @@ class ImportStateList extends Element
         this.AddState("integrate",     "Integrating upload into the music directory");
         this.AddState("importmusic",   "Importing upload into the music database");
         this.AddState("importartwork", "Generating artwork for the user interface");
-
-        this.states["uploading"].SetState("good");
-        this.states["preprocess"].SetState("bad");
-        this.states["integrate"].SetState("active");
-        this.states["importmusic"].SetState("open");
     }
 
 
@@ -75,6 +70,13 @@ class ImportStateList extends Element
         this.states[statename] = item;
         this.element.appendChild(item.GetHTMLElement());
         return;
+    }
+
+
+
+    SetState(statename, state)
+    {
+        this.states[statename].SetState(state);
     }
 }
 

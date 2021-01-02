@@ -36,6 +36,7 @@ class ImportForm extends Element
 
         this.uploadtask = uploadtask;
         this.uploadstate = new ImportStateList();
+        this.UpdateStates();
         rightcolumn.appendChild(this.uploadstate.GetHTMLElement());
 
         this.element.appendChild(formtable.GetHTMLElement());
@@ -48,8 +49,99 @@ class ImportForm extends Element
 
     UpdateUploadTask(uploadtask)
     {
+        if(typeof uploadtask !== "object")
+            return;
+
         this.uploadtask = uploadtask;
+        this.UpdateStates();
         this.ValidateForm();
+    }
+
+
+
+    UpdateStates()
+    {
+        let state = this.uploadtask["state"];
+        switch(state)
+        {
+            case "waitforchunk":
+                this.uploadstate.SetState("uploading",     "active");
+                this.uploadstate.SetState("preprocess",    "open");
+                this.uploadstate.SetState("integrate",     "open");
+                this.uploadstate.SetState("importmusic",   "open");
+                this.uploadstate.SetState("importartwork", "open");
+                break;
+            case "uploadcomplete":
+                this.uploadstate.SetState("uploading",     "good");
+                this.uploadstate.SetState("preprocess",    "active");
+                this.uploadstate.SetState("integrate",     "open");
+                this.uploadstate.SetState("importmusic",   "open");
+                this.uploadstate.SetState("importartwork", "open");
+                break;
+            case "uploadfailed":
+                this.uploadstate.SetState("uploading",     "bad");
+                this.uploadstate.SetState("preprocess",    "open");
+                this.uploadstate.SetState("integrate",     "open");
+                this.uploadstate.SetState("importmusic",   "open");
+                this.uploadstate.SetState("importartwork", "open");
+                break;
+            case "preprocessed":
+                this.uploadstate.SetState("uploading",     "good");
+                this.uploadstate.SetState("preprocess",    "good");
+                this.uploadstate.SetState("integrate",     "open");
+                this.uploadstate.SetState("importmusic",   "open");
+                this.uploadstate.SetState("importartwork", "open");
+                break;
+            case "invalidcontent":
+                this.uploadstate.SetState("uploading",     "good");
+                this.uploadstate.SetState("preprocess",    "bad");
+                this.uploadstate.SetState("integrate",     "open");
+                this.uploadstate.SetState("importmusic",   "open");
+                this.uploadstate.SetState("importartwork", "open");
+                break;
+            case "integrated":
+                this.uploadstate.SetState("uploading",     "good");
+                this.uploadstate.SetState("preprocess",    "good");
+                this.uploadstate.SetState("integrate",     "good");
+                this.uploadstate.SetState("importmusic",   "open");
+                this.uploadstate.SetState("importartwork", "open");
+                break;
+            case "integrationfailed":
+                this.uploadstate.SetState("uploading",     "good");
+                this.uploadstate.SetState("preprocess",    "good");
+                this.uploadstate.SetState("integrate",     "bad");
+                this.uploadstate.SetState("importmusic",   "open");
+                this.uploadstate.SetState("importartwork", "open");
+                break;
+            case "startimport":
+                this.uploadstate.SetState("uploading",     "good");
+                this.uploadstate.SetState("preprocess",    "good");
+                this.uploadstate.SetState("integrate",     "good");
+                this.uploadstate.SetState("importmusic",   "active");
+                this.uploadstate.SetState("importartwork", "open");
+                break;
+            case "importfailed":
+                this.uploadstate.SetState("uploading",     "good");
+                this.uploadstate.SetState("preprocess",    "good");
+                this.uploadstate.SetState("integrate",     "good");
+                this.uploadstate.SetState("importmusic",   "bad");
+                this.uploadstate.SetState("importartwork", "bad");
+                break;
+            case "importartwork":
+                this.uploadstate.SetState("uploading",     "good");
+                this.uploadstate.SetState("preprocess",    "good");
+                this.uploadstate.SetState("integrate",     "good");
+                this.uploadstate.SetState("importmusic",   "good");
+                this.uploadstate.SetState("importartwork", "active");
+                break;
+            case "importcomplete":
+                this.uploadstate.SetState("uploading",     "good");
+                this.uploadstate.SetState("preprocess",    "good");
+                this.uploadstate.SetState("integrate",     "good");
+                this.uploadstate.SetState("importmusic",   "good");
+                this.uploadstate.SetState("importartwork", "good");
+                break;
+        }
     }
 
 
