@@ -86,6 +86,7 @@ class ArtistInput extends Element
         this.oninput = oninput;
         this.popup = new ArtistsPopup((id,name)=>{this.onArtistSelect(id, name);});
         this.input = new TextInput((value)=>{return this.onInput(value);}, artistname);
+        this.popup.Hide(); // May become visible due to initializing the TextInput
 
         this.element.title = tooltip;
         this.element.appendChild(this.input.GetHTMLElement());
