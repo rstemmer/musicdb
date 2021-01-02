@@ -35,6 +35,8 @@ class ImportForm extends Element
             rightcolumn.appendChild(this.importbutton.GetHTMLElement());
 
         this.uploadtask = uploadtask;
+        this.uploadstate = new ImportStateList();
+        rightcolumn.appendChild(this.uploadstate.GetHTMLElement());
 
         this.element.appendChild(formtable.GetHTMLElement());
         this.element.appendChild(rightcolumn);
