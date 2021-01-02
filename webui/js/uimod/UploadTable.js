@@ -148,7 +148,9 @@ class UploadTable extends Table
 
         // Check/define meta information about the file
         let artistname = "Unknown Artist"; // TODO
-        let musicname  = upload.sourcefilename;
+        let sourcefile = upload.sourcefilename;
+        let extindex   = sourcefile.lastIndexOf(".")
+        let musicname  = sourcefile.slice(0, extindex);
         let origin     = "Internet";
         let release    = 2000;
         if("annotations" in upload)

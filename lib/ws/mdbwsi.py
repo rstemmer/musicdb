@@ -109,6 +109,7 @@ Uploading
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.UploadChunk`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AnnotateUpload`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.IntegrateUpload`
 
 Other
 ^^^^^
@@ -328,6 +329,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetUploads()
         elif fncname == "AnnotateUpload":
             retval = self.AnnotateUpload(args["uploadid"], args)
+        elif fncname == "IntegrateUpload":
+            retval = self.IntegrateUpload(args["uploadid"])
         # Call-Methods (retval will be ignored unless method gets not changed)
         elif fncname == "SaveWebUIConfiguration":
             retval = self.SaveWebUIConfiguration(args["config"])
@@ -3493,6 +3496,20 @@ class MusicDBWebSocketInterface(object):
         
         # Annotate upload
         self.uploadmanager.AnnotateUpload(uploadid, infos)
+        return
+
+
+    def IntegrateUpload(self, uploadid):
+        """
+        This method integrated the uploaded files into the music directory.
+        The whole file tree will be created following the MusicDB naming scheme.
+
+        The upload task must be in ``preprocesses`` state. If not, nothing happens.
+
+        Args:
+            uploadid (str): ID to identify the upload
+        """
+        self.uploadmanager.IntegrateUploadedFile(uploadid)
         return
 
 

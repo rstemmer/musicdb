@@ -30,7 +30,7 @@ class ImportForm extends Element
         if(typeof onsavedraft === "function")
             rightcolumn.appendChild(this.savebutton.GetHTMLElement());
 
-        this.importbutton = new SVGButton("MusicDB", onimportfile, "Import Music");
+        this.importbutton = new SVGButton("MusicDB", onimportfile, "Save Formular and Import Music");
         if(typeof onimportfile === "function")
             rightcolumn.appendChild(this.importbutton.GetHTMLElement());
 

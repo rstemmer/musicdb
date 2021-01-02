@@ -29,6 +29,8 @@ Task states
     * ``"notexisting"`` *virtual state* in case an Upload ID does not match an Upload. This task does not exist.
     * ``"preprocessed"``: The uploaded file was successfully pre-processed and is ready for importing
     * ``"invalidcontent"``: Pre-processing failed. The content was unexpected or invalid.
+    * ``"integrated"``: The uploaded file was successfully integrated into the music directory
+    * ``"integrationfailed"``: Integrating the uploaded file into the music directory failed
 
 After upload is complete,
 the Management Thread takes care about post processing or removing no longer needed content
@@ -432,6 +434,7 @@ class UploadManager(object):
         task["sourcefilename" ] = sourcefilename
         task["sourcechecksum" ] = checksum
         task["destinationpath"] = destinationpath
+        task["videofile"      ] = None              # Path to the video file in the music directory
         task["state"          ] = "waitforchunk"
         task["annotations"    ] = {}
         self.SaveTask(task)
@@ -550,6 +553,9 @@ class UploadManager(object):
         If post processing was successful, the task state gets updated to ``"preprocessed"``.
         When an error occurred, the state will become ``"invalidcontent"``.
 
+        Args:
+            task (dict): the task object of an upload-task
+
         Returns:
             *Nothing*
         """
@@ -562,6 +568,9 @@ class UploadManager(object):
         success = False
         if task["contenttype"] == "video":
             success = self.PreProcessVideo(task)
+        else:
+            logging.warning("Unsupported content type of upload: \"%s\" \033[1;30m(Upload will be ignored)", str(task["contenttype"]))
+            return
 
         # Update task state
         if success == True:
@@ -577,6 +586,9 @@ class UploadManager(object):
 
     def PreProcessVideo(self, task):
         """
+
+        Args:
+            task (dict): the task object of an upload-task
         """
         meta = MetaTags()
         try:
@@ -594,6 +606,10 @@ class UploadManager(object):
 
     def AnnotateUpload(self, uploadid, annotations):
         """
+
+        Args:
+            uploadid (str): ID to identify the upload
+
         Raises:
             TypeError: When *uploadid* is not of type ``str``
             ValueError: When *uploadid* is not included in the Task Queue
@@ -616,6 +632,77 @@ class UploadManager(object):
         self.NotifyClient("Annotated", task)
         return
 
+
+
+    def IntegrateUploadedFile(self, uploadid):
+        """
+        This method integrated the uploaded files into the music directory.
+        The whole file tree will be created following the MusicDB naming scheme.
+
+        The upload task must be in ``preprocesses`` state. If not, nothing happens.
+
+        Args:
+            uploadid (str): ID to identify the upload
+
+        Raises:
+            TypeError: When *uploadid* is not of type ``str``
+            ValueError: When *uploadid* is not included in the Task Queue
+        """
+        if type(uploadid) != str:
+            raise TypeError("Upload ID must be a string. Type was \"%s\""%(str(type(uploadid))))
+
+        global Tasks
+        if uploadid not in Tasks:
+            self.NotifiyClient("InternalError", None, "Invalid Upload ID")
+            raise ValueError("Upload ID \"%s\" not in Task Queue.", str(uploadid))
+
+        task = Tasks[uploadid]
+        if task["state"] != "preprocessed":
+            logging.warning("Cannot integrate an upload that is not in \"preprocessed\" state. Upload with ID \"%s\" was in \"%s\" state! \033[1;30m(Nothing will be done)", str(task["id"]), str(task["state"]))
+            return
+
+        # Perform post processing
+        success = False
+        if task["contenttype"] == "video":
+            success = self.IntegrateVideo(task)
+        else:
+            logging.warning("Unsupported content type of upload: \"%s\" \033[1;30m(Upload will be ignored)", str(task["contenttype"]))
+            return
+
+        # Update task state
+        if success == True:
+            task["state"] = "integrated"
+        else:
+            task["state"] = "integrationfailed"
+        self.SaveTask(task)
+
+        self.NotifyClient("Processed", task)
+        return
+
+
+
+    def IntegrateVideo(self, task):
+        """
+        When an annotation needed for creating the video file path in the music directory is missing, ``False`` gets returned and an error message written into the log
+        """
+        uploadedfile  = task["destinationpath"]    # uploaded file
+        try:
+            artistname    = task["annotations"]["artistname"]
+            releasedate   = task["annotations"]["release"]
+            videoname     = task["annotations"]["name"]
+        except KeyError as e:
+            logging.error("Collection video information for creating its path name failed with key-error for: %s \033[1;30m(Make sure all important annotations are given to that upload: name, artistname, release)", str(e))
+            return False
+
+        fileextension = self.uploadfs.GetFileExtension(uploadedfile)
+        videofile     = artistname + "/" + releasedate + " - " + videoname + "." + fileextension
+
+        task["videofile"] = videofile
+        logging.debug("Integrating upload %s -> %s", str(uploadedfile), str(videofile))
+
+        # TODO: Check if videofile already exists
+        # TODO: Copy file, create Artist directory if not existing
+        return False
 
 
 

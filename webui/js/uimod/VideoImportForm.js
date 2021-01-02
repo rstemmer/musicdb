@@ -120,16 +120,17 @@ class VideoImportForm extends ImportForm
     {
         let table    = new VideoImportFormTable(artistname, musicname, origin, release);
         let onsave   = null;
-        let onimport = ()=>{this.onImport();};
+        let onimport = null;
 
         if(typeof uploadtask === "object")
         {
-            onsave = ()=>{this.onSave(uploadtask.id);};
+            onsave   = ()=>{this.onSave(uploadtask.id);};
+            onimport = ()=>{this.onImport(uploadtask.id);};
         }
 
         super(table, onsave, onimport, uploadtask);
 
-        this.table      = table;
+        this.table = table;
     }
 
 
@@ -154,9 +155,11 @@ class VideoImportForm extends ImportForm
 
 
 
-    onImport()
+    onImport(uploadid)
     {
+        this.onSave(uploadid);  // Make sure all changes of the annotations are saved
         window.console && console.log("Import Video");
+        MusicDB_Call("IntegrateUpload", {uploadid: uploadid});
     }
 }
 
