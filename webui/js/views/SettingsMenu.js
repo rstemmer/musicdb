@@ -75,7 +75,7 @@ class SettingsMenu extends LeftView
 
         this.views.push(videoimport);
         this.AddMenuEntry(
-            new SVGIcon("MusicDB"),
+            new SVGIcon("Import"),
             "Import Video",
             ()=>{
                 MusicDB_Request("FindNewContent", "ShowVideoImport");

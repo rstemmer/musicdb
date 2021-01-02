@@ -25,7 +25,7 @@ class FileSelect extends Element
         this.input = document.createElement("input")
         this.input.type     = "file";
         this.input.onchange = (event)=>{this.onFileSelected(event);};
-        this.icon  = new SVGIcon("MusicDB");
+        this.icon  = new SVGIcon("VideoFile");  // TODO: Move to constructor
         this.text  = document.createElement("span");
         this.text.innerText = labeltext;
 

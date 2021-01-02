@@ -55,12 +55,12 @@ ul.ImportStateList
 }
 .ImportStateList li[data-state=open]::before
 {
-    mask:               url("../../img/icons/MusicDB.svg");
+    mask:               url("../../img/icons/StatusOpen.svg");
     background-color:   var(--hlcolor);
 }
 .ImportStateList li[data-state=active]::before
 {
-    mask:               url("../../img/icons/MusicDB.svg");
+    mask:               url("../../img/icons/StatusActive.svg");
     background-color:   var(--hlcolor);
 
     animation-name:             spin;
