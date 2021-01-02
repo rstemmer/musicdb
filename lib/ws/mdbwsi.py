@@ -244,6 +244,11 @@ class MusicDBWebSocketInterface(object):
     def onUploadEvent(self, notification, data):
         # This function is called from a different thread. Therefore NO sqlite3-access is allowed.
         # So there will be just a notification so that the clients can request related functions.
+
+        # Append uploads to notification except for high frequent ChunkRequest
+        if event != "ChunkRequest":
+            data["uploadslist"] = self.GetUploads()
+
         response    = {}
         response["method"]      = "notification"
         response["fncname"]     = "MusicDB:Upload"

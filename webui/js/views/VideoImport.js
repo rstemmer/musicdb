@@ -24,7 +24,7 @@ class VideoImport extends MainSettingsView
 
         // Upload Section
         this.upload      = new FileSelect("Select Video File", "Select a video file from the local computer");
-        this.uploadtable = new UploadTable();
+        this.uploadtable = uploadmanager.GetVideoUploadsTable();
         this.importtable = new VideoImportTable();
         this.element.appendChild(this.upload.GetHTMLElement());
         this.element.appendChild(this.uploadtable.GetHTMLElement());
@@ -33,18 +33,14 @@ class VideoImport extends MainSettingsView
         let importheadline = new SettingsHeadline("Import Existing Videos", "Import videos that have bin found in the music collection but is not yet available in the database.");
         this.element.appendChild(importheadline.GetHTMLElement());
         this.element.appendChild(this.importtable.GetHTMLElement());
-
-        this.highlightupload = ""; // TODO: Highlight latest upload
     }
 
 
 
-    UpdateView(newvideopaths, newvideouploads)
+    UpdateView(newvideopaths)
     {
         if(newvideopaths != null)
             this.importtable.Update(newvideopaths);
-        if(newvideouploads != null)
-            this.uploadtable.Update(newvideouploads);
         return;
     }
 
@@ -55,16 +51,7 @@ class VideoImport extends MainSettingsView
         if(fnc == "FindNewContent" && sig == "ShowVideoImport")
         {
             window.console && console.log(args.videos);
-            this.UpdateView(args.videos, null);
-        }
-        else if(fnc == "GetUploads" && sig == "ShowUploads")
-        {
-            window.console && console.log(args);
-            window.console && console.log(pass);
-            if(pass != null)
-                this.highlightupload = pass.lastuploadid;
-
-            this.UpdateView(null, args.videos);
+            this.UpdateView(args.videos);
         }
         return;
     }

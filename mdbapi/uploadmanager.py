@@ -253,6 +253,7 @@ class UploadManager(object):
             * state: The current state of the upload task
             * message: ``null``/``None`` or a message from the server
             * annotation: object with annotated information
+            * uploadslist: Except for ``ChunkRequest`` events, the WebSocket server append the result of :meth:`lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads` to the notification
 
         *task* can be ``None`` in case the notification is meant to be an information that a given upload ID is invalid.
 

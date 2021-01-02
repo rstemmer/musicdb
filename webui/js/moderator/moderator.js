@@ -197,6 +197,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     artistscache.onMusicDBMessage(fnc, sig, args, pass);
     mdbmodemanager.onMusicDBMessage(fnc, sig, args, pass);
     colormanager.onMusicDBMessage(fnc, sig, args, pass);
+    uploadmanager.onMusicDBMessage(fnc, sig, args, pass);
     // Controls
     musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);
     musicdbstatus.onMusicDBMessage(fnc, sig, args, pass);

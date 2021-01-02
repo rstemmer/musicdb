@@ -33,6 +33,14 @@ class UploadManager
     constructor()
     {
         this.uploads = new Object;
+        this.videouploadstable = new UploadTable();
+    }
+
+
+
+    GetVideoUploadsTable()
+    {
+        return this.videouploadstable;
     }
 
 
@@ -92,8 +100,6 @@ class UploadManager
         let chunkdata = BufferToHexString(rawdata)
         task.offset  += rawdata.length;
 
-        //window.console && console.log(rawdata);
-        //window.console && console.log(chunkdata);
         window.console && console.log(task);
         MusicDB_Call("UploadChunk", {uploadid: uploadid, chunkdata: chunkdata});
     }
@@ -102,37 +108,30 @@ class UploadManager
 
     onMusicDBNotification(fnc, sig, state)
     {
-        if(fnc == "MusicDB:Upload" && sig == "ChunkRequest")
-        {
-            window.console && console.log(state);
-            this.UploadNextChunk(state)
-        }
-
         if(fnc == "MusicDB:Upload")
         {
             window.console && console.info(state);
-            MusicDB_Request("GetUploads", "ShowUploads");
+            if(fnc == "MusicDB:Upload" && sig == "ChunkRequest")
+            {
+                this.UploadNextChunk(state)
+            }
+            else
+            {
+                this.videouploadstable.Update(args.uploadslist.videos);
+            }
         }
-        /*
-        else if(fnc == "MusicDB:Upload" && sig == "UploadComplete")
-        {
-            window.console && console.info(state);
-            MusicDB_Request("GetUploads", "ShowUploads", null, {lastuploadid: state.uploadid});
-        }
-        else if(fnc == "MusicDB:Upload" && sig == "UploadFailed")
-        {
-            window.console && console.error(state);
-        }
-        */
     }
 
 
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        //if(fnc == "GetMDBState" && sig == "UpdateMDBState")
-        //{
-        //}
+        if(fnc == "GetUploads" && sig == "ShowUploads")
+        {
+            window.console && console.log(args);
+            window.console && console.log(pass);
+            this.videouploadstable.Update(args.videos);
+        }
 
         return;
     }
