@@ -246,7 +246,7 @@ class MusicDBWebSocketInterface(object):
         # So there will be just a notification so that the clients can request related functions.
 
         # Append uploads to notification except for high frequent ChunkRequest
-        if event != "ChunkRequest":
+        if notification != "ChunkRequest":
             data["uploadslist"] = self.GetUploads()
 
         response    = {}
