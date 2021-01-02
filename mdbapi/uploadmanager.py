@@ -31,6 +31,7 @@ Task states
     * ``"invalidcontent"``: Pre-processing failed. The content was unexpected or invalid.
     * ``"integrated"``: The uploaded file was successfully integrated into the music directory
     * ``"integrationfailed"``: Integrating the uploaded file into the music directory failed
+    * TODO: startimport, importfailed, importartwork, importcomplete
 
 After upload is complete,
 the Management Thread takes care about post processing or removing no longer needed content
@@ -56,6 +57,8 @@ from lib.db.musicdb     import MusicDatabase
 from lib.filesystem     import Filesystem
 from lib.fileprocessing import Fileprocessing
 from lib.metatags       import MetaTags
+from mdbapi.database    import MusicDBDatabase
+from mdbapi.videoframes import VideoFrames
 
 Config      = None
 Thread      = None
@@ -142,8 +145,9 @@ def UploadManagementThread():
     global Callbacks
     global Tasks
 
+    musicdb    = MusicDatabase(Config.database.path)
     filesystem = Filesystem(Config.uploads.path)
-    manager    = UploadManager(Config)
+    manager    = UploadManager(Config, musicdb)
 
     if not Config.uploads.allow:
         logging.warning("Uploads not allowed! \033[1;30m(See MusicDB Configuration: [uploads]->allow)")
@@ -157,11 +161,40 @@ def UploadManagementThread():
             time.sleep(1)
 
         for key, task in Tasks.items():
-            state = task["state"]
-            if state == "uploadfailed":
+            state       = task["state"]
+            contenttype = task["contenttype"]
+
+            if state == "uploadfailed" or state == "importfailed" or state == "importcomplete":
                 pass    # TODO: Clean up everything
+
             elif state == "uploadcomplete":
                 manager.PreProcessUploadedFile(task)
+
+            elif state == "startimport":
+                if contenttype == "video":
+                    success = manager.ImportVideo(task)
+
+                if success:
+                    task["state"] = "importartwork"
+                    manager.SaveTask(task)
+                    manager.NotifyClient("Importing", task)
+                else:
+                    task["state"] = "importfailed"
+                    manager.SaveTask(task)
+                    manager.NotifyClient("ImportFailed", task)
+
+            elif state == "importartwork":
+                if contenttype == "video":
+                    success = manager.ImportVideoArtwork(task)
+
+                if success:
+                    task["state"] = "importcomplete"
+                    manager.SaveTask(task)
+                    manager.NotifyClient("ImportComplete", task)
+                else:
+                    task["state"] = "importfailed"
+                    manager.SaveTask(task)
+                    manager.NotifyClient("ImportFailed", task)
 
     return
 
@@ -180,7 +213,7 @@ class UploadManager(object):
         TypeError: When the arguments are not of the correct type.
     """
 
-    def __init__(self, config, database=None):
+    def __init__(self, config, database):
         if type(config) != MusicDBConfig:
             raise TypeError("config argument not of type MusicDBConfig")
         if database != None and type(database) != MusicDatabase:
@@ -193,6 +226,7 @@ class UploadManager(object):
         self.artworkfs  = Filesystem(self.cfg.artwork.path)
         # TODO: check write permission of all directories
         self.fileprocessing = Fileprocessing(self.cfg.uploads.path)
+        self.dbmanager  = MusicDBDatabase(config, database)
 
         global Tasks
         if Tasks == None:
@@ -270,7 +304,7 @@ class UploadManager(object):
         Raises:
             ValueError: When notification has an unknown notification name
         """
-        if not notification in ["ChunkRequest", "UploadComplete", "UploadFailed", "InternalError", "Processed", "Annotated"]: # TODO -> documentation
+        if not notification in ["ChunkRequest", "UploadComplete", "UploadFailed", "InternalError", "Processed", "Annotated", "Importing", "ImportFailed", "ImportComplete"]: # TODO -> documentation
             raise ValueError("Unknown notification \"%s\""%(notification))
 
         status = {}
@@ -634,12 +668,15 @@ class UploadManager(object):
 
 
 
-    def IntegrateUploadedFile(self, uploadid):
+    def IntegrateUploadedFile(self, uploadid, triggerimport):
         """
         This method integrated the uploaded files into the music directory.
         The whole file tree will be created following the MusicDB naming scheme.
 
         The upload task must be in ``preprocesses`` state. If not, nothing happens.
+
+        When *triggerimport* is ``true``, the upload manager start importing the music.
+        This happens asynchronously inside the Upload Manager Thread.
 
         Args:
             uploadid (str): ID to identify the upload
@@ -675,8 +712,15 @@ class UploadManager(object):
         else:
             task["state"] = "integrationfailed"
         self.SaveTask(task)
-
         self.NotifyClient("Processed", task)
+
+        # Trigger import
+        if success == False or triggerimport == False:
+            return  # … but only if wanted, and previous step was successful
+
+        task["state"] = "startimport"   # The upload management thread will do the rest
+        self.SaveTask(task)
+        self.NotifyClient("Importing", task)
         return
 
 
@@ -730,6 +774,106 @@ class UploadManager(object):
             logging.warning("Copying video file to \"%s\" failed!", str(videofile))
         return success
 
+
+
+    def ImportVideo(self, task):
+        """
+        Tast state must be ``"startimport"`` and content type must be ``"video"``
+
+        Returns:
+            ``True`` on success.
+        """
+        # Check task state and type
+        if task["state"] != "startimport":
+            logging.warning("Cannot import an upload that is not in \"startimport\" state. Upload with ID \"%s\" was in \"%s\" state! \033[1;30m(Nothing will be done)", str(task["id"]), str(task["state"]))
+            return False
+
+        success = False
+        if task["contenttype"] != "video":
+            logging.warning("Video expected. Actual type of upload: \"%s\" \033[1;30m(No video will be imported)", str(task["contenttype"]))
+            return False
+
+        # Get important information
+        try:
+            artistname = task["annotations"]["artistname"]
+            videopath  = task["videofile"]
+        except KeyError as e:
+            logging.error("Collecting video information for importing failed with key-error for: %s \033[1;30m(Make sure the artist name is annotated to the upload)", str(e))
+            return False
+
+        # Check if the artist already exists in the database - if not, add it
+        artist = self.db.GetArtistByPath(artistname)
+        if artist == None:
+            logging.info("Importing new artist: \"%s\"", artistname)
+            try:
+                self.dbmanager.AddArtist(artistname)
+            except Exception as e:
+                logging.error("Importing artist \"%s\" failed with error: %s \033[1;30m(Video upload canceled)", str(artistname), str(e))
+                self.NotifyClient("InternalError", task, "Importing artist failed")
+                return False
+            artist = self.db.GetArtistByPath(artistname)
+
+        # Import video
+        try:
+            success = self.dbmanager.AddVideo(videopath, artist["id"])
+        except Exception as e:
+            logging.error("Importing video \"%s\" failed with error: %s \033[1;30m(Video upload canceled)", str(videopath), str(e))
+            self.NotifyClient("InternalError", task, "Importing video failed")
+            return False
+
+        if not success:
+            logging.error("Importing video \"%s\" failed. \033[1;30m(Video upload canceled)", str(videopath), str(e))
+            self.NotifyClient("InternalError", task, "Importing video failed")
+            return False
+
+        # Add origin information to database if annotated
+        try:
+            origin = task["annotations"]["origin"]
+        except KeyError as e:
+            pass
+        else:
+            video = self.db.GetVideoByPath(videopath)
+            video["origin"] = origin
+            self.db.WriteVideo(video)
+
+        logging.info("Importing Video succeeded")
+        return True
+
+
+
+    def ImportVideoArtwork(self, task):
+        """
+        Returns:
+            ``True`` on success
+        """
+        # Check task state and type
+        if task["state"] != "importartwork":
+            logging.warning("Cannot import artwork that is not in \"importartwork\" state. Upload with ID \"%s\" was in \"%s\" state! \033[1;30m(Nothing will be done)", str(task["id"]), str(task["state"]))
+            return False
+
+        if task["contenttype"] != "video":
+            logging.warning("Video expected. Actual type of upload: \"%s\" \033[1;30m(No video will be imported)", str(task["contenttype"]))
+            return False
+
+        # Start generating the artworks
+        videopath    = task["videofile"]
+        framemanager = VideoFrames(self.cfg, self.db)
+
+        video = self.db.GetVideoByPath(videopath)
+        if not video:
+            logging.error("Getting video \"%s\" from database failed. \033[1;30m(Artwork import canceled)", str(videopath), str(e))
+            self.NotifyClient("InternalError", task, "Video artwork import failed")
+            return False
+
+        retval = framemanager.UpdateVideoFrames(video)
+        if retval == False:
+            print("\033[1;31mGenerating video Frames and Preview failed!\033[0m")
+            logging.error("Generating video frames and preview failed for video \"%s\". \033[1;30m(Artwork import canceled)", str(videopath), str(e))
+            self.NotifyClient("InternalError", task, "Video artwork import failed")
+            return False
+
+        logging.info("Importing Video thumbnails and previews succeeded")
+        return True
 
 
 

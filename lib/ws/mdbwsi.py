@@ -330,7 +330,7 @@ class MusicDBWebSocketInterface(object):
         elif fncname == "AnnotateUpload":
             retval = self.AnnotateUpload(args["uploadid"], args)
         elif fncname == "IntegrateUpload":
-            retval = self.IntegrateUpload(args["uploadid"])
+            retval = self.IntegrateUpload(args["uploadid"], args["triggerimport"])
         # Call-Methods (retval will be ignored unless method gets not changed)
         elif fncname == "SaveWebUIConfiguration":
             retval = self.SaveWebUIConfiguration(args["config"])
@@ -3499,17 +3499,21 @@ class MusicDBWebSocketInterface(object):
         return
 
 
-    def IntegrateUpload(self, uploadid):
+    def IntegrateUpload(self, uploadid, triggerimport):
         """
         This method integrated the uploaded files into the music directory.
         The whole file tree will be created following the MusicDB naming scheme.
 
         The upload task must be in ``preprocesses`` state. If not, nothing happens.
 
+        When *triggerimport* is ``true``, the upload manager start importing the music.
+        This happens asynchronously inside the Upload Manager Thread.
+
         Args:
             uploadid (str): ID to identify the upload
+            triggerimport (boolean): When ``true``, the upload manager also imports the music
         """
-        self.uploadmanager.IntegrateUploadedFile(uploadid)
+        self.uploadmanager.IntegrateUploadedFile(uploadid, triggerimport)
         return
 
 

@@ -159,7 +159,7 @@ class VideoImportForm extends ImportForm
     {
         this.onSave(uploadid);  // Make sure all changes of the annotations are saved
         window.console && console.log("Import Video");
-        MusicDB_Call("IntegrateUpload", {uploadid: uploadid});
+        MusicDB_Call("IntegrateUpload", {uploadid: uploadid, triggerimport: true});
     }
 }
 
