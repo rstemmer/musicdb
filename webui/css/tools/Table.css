@@ -26,12 +26,17 @@
     padding:        0.5rem;
 }
 
-/* TODO: This is just an idea
-.Table > tr.ContextRow > div
+
+
+.Table > tr.ContextRow > td > div
 {
-    box-shadow      0 0.5rem 1rem 2rem rgba(0, 0, 0, 1.0);
+    padding:            1.0rem;
+    padding-top:        0;
+    justify-content:    space-around;
+
+    box-shadow:         0rem 1.5rem 1rem rgba(0, 0, 0, 0.6);
+    border-radius:      var(--radius);
 }
-*/
 
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
