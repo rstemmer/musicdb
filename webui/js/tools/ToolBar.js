@@ -35,6 +35,7 @@ class ToolBar
 
 
 
+    // FIXME BUG: Only ToolGroup elements are supported (CSS Issue with .SVGIcons vs border)
     // button: objects like SVGButton or ToolGroup
     // button.GetHTMLElement() must exist and return a div element
     AddButton(button)
