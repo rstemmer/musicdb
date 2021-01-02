@@ -116,19 +116,21 @@ class VideoImportFormTable extends Table
 
 class VideoImportForm extends ImportForm
 {
-    constructor(artistname, musicname, origin, release, uploadtask=null)
+    constructor(artistname, videoname, origin, release, uploadtask=null)
     {
-        let table    = new VideoImportFormTable(artistname, musicname, origin, release);
+        let table    = new VideoImportFormTable(artistname, videoname, origin, release);
         let onsave   = null;
         let onimport = null;
+        let onremove = null;
 
         if(typeof uploadtask === "object")
         {
             onsave   = ()=>{this.onSave(uploadtask.id);};
             onimport = ()=>{this.onImport(uploadtask.id);};
+            onremove = ()=>{this.onRemove(uploadtask.id);};
         }
 
-        super(table, onsave, onimport, uploadtask);
+        super(table, onsave, onimport, onremove, uploadtask);
 
         this.table = table;
     }
@@ -158,8 +160,16 @@ class VideoImportForm extends ImportForm
     onImport(uploadid)
     {
         this.onSave(uploadid);  // Make sure all changes of the annotations are saved
-        window.console && console.log("Import Video");
         MusicDB_Call("IntegrateUpload", {uploadid: uploadid, triggerimport: true});
+    }
+
+
+
+    onRemove(uploadid)
+    {
+        this.onSave(uploadid);  // Make sure all changes of the annotations are saved
+        window.console && console.log("Remove Video");
+        //MusicDB_Call("IntegrateUpload", {uploadid: uploadid, triggerimport: true});
     }
 }
 

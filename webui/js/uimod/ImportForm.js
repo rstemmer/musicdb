@@ -19,24 +19,37 @@
 
 class ImportForm extends Element
 {
-    constructor(formtable, onsavedraft, onimportfile, uploadtask=null)
+    constructor(formtable, onsavedraft, onimportfile, onremovefile, uploadtask=null)
     {
         super("div", ["ImportForm", "flex-row"]);
 
         let rightcolumn = document.createElement("div");
         rightcolumn.classList.add("flex-column");
 
-        this.savebutton   = new SVGButton("Save",    onsavedraft,  "Save Formular as Draft");
-        if(typeof onsavedraft === "function")
-            rightcolumn.appendChild(this.savebutton.GetHTMLElement());
-
+        this.toolbar      = new ToolBar();
+        this.savebutton   = new SVGButton("Save",    onsavedraft, "Save Formular as Draft");
         this.importbutton = new SVGButton("Import", onimportfile, "Save Formular and Import Music");
-        if(typeof onimportfile === "function")
-            rightcolumn.appendChild(this.importbutton.GetHTMLElement());
+        this.removebutton = new SVGButton("Remove", onremovefile, "Delete File from Server");
 
-        this.uploadtask = uploadtask;
+        if(typeof onsavedraft === "function" && typeof onimportfile === "function")
+            this.toolbar.AddButton(new ToolGroup([this.savebutton, this.importbutton]));
+        else if(typeof onsavedraft === "function")
+            this.toolbar.AddButton(this.savebutton);
+        else if(typeof onimportfile === "function")
+            this.toolbar.AddButton(this.importbutton);
+
+        if(typeof onremovefile === "function")
+        {
+            this.toolbar.AddSpacer(true /*grow*/);
+            this.toolbar.AddButton(new ToolGroup([this.removebutton]));
+        }
+
+
+        this.uploadtask  = uploadtask;
         this.uploadstate = new ImportStateList();
         this.UpdateStates();
+
+        rightcolumn.appendChild(this.toolbar.GetHTMLElement());
         rightcolumn.appendChild(this.uploadstate.GetHTMLElement());
 
         this.element.appendChild(formtable.GetHTMLElement());

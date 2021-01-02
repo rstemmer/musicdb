@@ -66,15 +66,16 @@ class UploadTableRow extends UploadTableRowBase
         let pathelement  = document.createTextNode(path);
         let stateelement = document.createTextNode(state);
 
-        // Control buttons
-        let importbutton = new SVGButton("Remove", ()=>{this.onRemove();}, "Delete this uploaded file");
-        let buttonbox    = new ButtonBox()
-        buttonbox.AddButton(importbutton);
+        //// Control buttons
+        // TODO: Pause/Continue
+        //let importbutton = new SVGButton("Remove", ()=>{this.onRemove();}, "Delete this uploaded file");
+        //let buttonbox    = new ButtonBox()
+        //buttonbox.AddButton(importbutton);
 
         // Set cells
         this.SetContent(UT_PATH_COLUMN,   pathelement);
         this.SetContent(UT_STATUS_COLUMN, stateelement);
-        this.SetContent(UT_BUTTON_COLUMN, buttonbox.GetHTMLElement());
+        //this.SetContent(UT_BUTTON_COLUMN, buttonbox.GetHTMLElement());
     }
 
 
