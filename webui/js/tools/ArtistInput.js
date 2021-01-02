@@ -80,12 +80,12 @@ class ArtistsPopup extends PopupElement
 class ArtistInput extends Element
 {
     // oninput(Artist ID (=null, when there is no known artist), Artist Name)
-    constructor(oninput, initvalue, tooltip="")
+    constructor(oninput, artistname, tooltip="")
     {
         super("div", ["ArtistInput", "PopupParent"]);
         this.oninput = oninput;
         this.popup = new ArtistsPopup((id,name)=>{this.onArtistSelect(id, name);});
-        this.input = new TextInput((value)=>{return this.onInput(value);}, initvalue);
+        this.input = new TextInput((value)=>{return this.onInput(value);}, artistname);
 
         this.element.title = tooltip;
         this.element.appendChild(this.input.GetHTMLElement());

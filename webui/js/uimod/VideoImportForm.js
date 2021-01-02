@@ -33,14 +33,14 @@ class VideoImportFormRow extends TableRow
 
 class VideoImportFormTable extends Table
 {
-    constructor(artist, name, origin, release)
+    constructor(artistname, musicname, origin, release)
     {
         super(["VideoImportForm"]);
 
         // Name, Artist, Origin, Release Date, Genre, Sub-Genre
         // TODO: create better artist input with search
-        this.artistinput  = new ArtistInput((id, name)=>{return this.onArtistInput(id, name); }, artist);
-        this.nameinput    = new TextInput(  (value)=>{return this.onNameInput(value);   }, name);
+        this.artistinput  = new ArtistInput((id, name)=>{return this.onArtistInput(id, name); }, artistname);
+        this.nameinput    = new TextInput(  (value)=>{return this.onNameInput(value);   }, musicname);
         this.origininput  = new TextInput(  (value)=>{return this.onOriginInput(value); }, origin);
         this.releaseinput = new NumberInput((value)=>{return this.onReleaseInput(value);}, release);
 
@@ -116,9 +116,9 @@ class VideoImportFormTable extends Table
 
 class VideoImportForm extends ImportForm
 {
-    constructor(artist, name, origin, release, uploadtask=null)
+    constructor(artistname, musicname, origin, release, uploadtask=null)
     {
-        let table    = new VideoImportFormTable(artist, name, origin, release);
+        let table    = new VideoImportFormTable(artistname, musicname, origin, release);
         let onsave   = null;
         let onimport = ()=>{this.onImport();};
 
@@ -148,7 +148,7 @@ class VideoImportForm extends ImportForm
         let release = this.table.GetRelease();
         let origin  = this.table.GetOrigin();
 
-        MusicDB_Call("AnnotateUpload", {uploadid: uploadid, name: name, artistid: artist, release: release, origin: origin});
+        MusicDB_Call("AnnotateUpload", {uploadid: uploadid, name: name, artistname: artist, release: release, origin: origin});
         //MusicDB_Broadcast("GetUploads", "ShowUploads"); // Update other clients views with the new annotation
     }
 

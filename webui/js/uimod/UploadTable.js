@@ -147,17 +147,17 @@ class UploadTable extends Table
         this.AddRow(newrow);
 
         // Check/define meta information about the file
-        let artistid = "Unknown Artist"; // TODO
-        let musicname= upload.sourcefilename;
-        let origin   = "Internet";
-        let release  = 2000;
+        let artistname = "Unknown Artist"; // TODO
+        let musicname  = upload.sourcefilename;
+        let origin     = "Internet";
+        let release    = 2000;
         if("annotations" in upload)
         {
             let annotations = upload.annotations;
-            if("artistid" in annotations)
-                artistid = annotations.artistid;
+            if("artistname" in annotations)
+                artistname = annotations.artistname;
             if("name" in annotations)
-                name = annotations.name;
+                musicname = annotations.name;
             if("origin" in annotations)
                 origin = annotations.origin;
             if("release" in annotations)
@@ -169,7 +169,7 @@ class UploadTable extends Table
         switch(upload.contenttype)
         {
             case "video":
-                importform = new VideoImportForm(artistid, name, origin, release, upload);
+                importform = new VideoImportForm(artistname, musicname, origin, release, upload);
                 break;
         }
 
