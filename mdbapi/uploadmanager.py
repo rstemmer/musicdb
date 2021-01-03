@@ -21,7 +21,7 @@ After initiating an Upload, this upload manager requests chunks of data via Musi
 All clients are informed about the upload process, not only the client that initiated the upload.
 So each client can show the progress and state.
 
-Task states
+Task states:
 
     * ``"waitforchunk"``: A new chunk of data was requested, and is expected from the client
     * ``"uploadcomplete"``: The whole file is now available in the temporary upload directory
@@ -31,7 +31,10 @@ Task states
     * ``"invalidcontent"``: Pre-processing failed. The content was unexpected or invalid.
     * ``"integrated"``: The uploaded file was successfully integrated into the music directory
     * ``"integrationfailed"``: Integrating the uploaded file into the music directory failed
-    * TODO: startimport, importfailed, importartwork, importcomplete
+    * ``"startimport"``: Importing the integrated file into the music database started
+    * ``"importfailed"``: Import process failed (importing the music or generating the artwork)
+    * ``"importartwork"``: Importing succeeded and generating the artwork started
+    * ``"importcomplete"``: Import process complete and successful
 
 After upload is complete,
 the Management Thread takes care about post processing or removing no longer needed content
@@ -44,7 +47,6 @@ The task state is persistently stored inside the uploads directory within a JSON
 The file name is the task ID (equivalent to the Upload ID) + ``.json``.
 
 """
-# TODO: Describe task-keys
 # TODO: Visualize state machine
 
 import json
@@ -132,6 +134,8 @@ def StopUploadManagementThread():
 
 def UploadManagementThread():
     """
+    This thread handles the uploaded files.
+    It maintains the storage of temporary data and allows asynchronous file management and importing
     """
     # TODO: Remove left over uploads (uploaded files without task-ID)
     # TODO: Continue uploads that were interrupted
@@ -281,7 +285,7 @@ class UploadManager(object):
         There are three kind of notifications:
 
             * ``"ChunkRequest"``: A new chunk of data is requested
-            * ``"StateUpdate"``: The state of an upload-task has been changed. See ``"state"`` value.
+            * ``"StateUpdate"``: The state or annotations of an upload-task has been changed. See ``"state"`` value.
             * ``"InternalError"``: There is an internal error occurred during. See ``"message"`` value.
 
         The notification comes with the current status of the upload process.
@@ -484,6 +488,60 @@ class UploadManager(object):
         return
 
 
+    def GetTaskByID(self, uploadid):
+        """
+        This method returns an existing task from the tasklist.
+        The task gets identified by its ID aka Upload ID
+
+        When the task does not exits, the clients get an ``"InternalError"`` notification.
+        The tasks state is then ``"notexisting"``.
+
+        Args:
+            uploadid (str): ID of the upload-task
+
+        Returns:
+            A task dictionary
+
+        Raises:
+            TypeError: When *uploadid* is not a string
+            ValueError: When *uploadid* is not a valid key in the Tasks-dictionary
+        """
+        if type(uploadid) != str:
+            raise TypeError("Upload ID must be a string. Type was \"%s\"."%(str(type(uploadid))))
+
+        global Tasks
+        if uploadid not in Tasks:
+            self.NotifiyClient("InternalError", None, "Invalid Upload ID")
+            raise ValueError("Upload ID \"%s\" not in Task Queue.", str(uploadid))
+
+        return Tasks[uploadid]
+
+
+
+    def UpdateTaskState(self, task, state, errormessage=None):
+        """
+        This method updates and saves the state of an task.
+        An ``"StateUpdate"`` notification gets send as well.
+
+        If *errormessage* is not ``None``, the notification gets send as ``"InternalError"`` with the message
+
+        Args:
+            task (dict): Task object to update
+            state (str): New state
+            message (str): Optional message
+
+        Returns:
+            *Nothing*
+        """
+        task["state"] = state
+        self.SaveTask(task)
+        if errormessage:
+            self.NotifyClient("InternalError", task, errormessage)
+        else:
+            self.NotifyClient("StateUpdate", task)
+        return
+
+
 
     def NewChunk(self, uploadid, rawdata):
         """
@@ -498,20 +556,16 @@ class UploadManager(object):
 
         Raises:
             TypeError: When *rawdata* is not of type ``bytes``
-            TypeError: When *uploadid* is not of type ``str``
-            ValueError: When *uploadid* is not included in the Task Queue
         """
         if type(rawdata) != bytes:
             raise TypeError("raw data must be of type bytes. Type was \"%s\""%(str(type(rawdata))))
-        if type(uploadid) != str:
-            raise TypeError("Upload ID must be a string. Type was \"%s\""%(str(type(uploadid))))
 
-        global Tasks
-        if uploadid not in Tasks:
-            self.NotifiyClient("InternalError", None, "Invalid Upload ID")
-            raise ValueError("Upload ID \"%s\" not in Task Queue.", str(uploadid))
+        try:
+            task = self.GetTaskByID(uploadid)
+        except Exception as e:
+            logging.error("Internal error while requesting a new chunk of data: %s", str(e))
+            return False
 
-        task      = Tasks[uploadid]
         chunksize = len(rawdata)
         filepath  = task["destinationpath"]
 
@@ -519,8 +573,8 @@ class UploadManager(object):
             with open(filepath, "ab") as fd:
                 fd.write(rawdata)
         except Exception as e:
-            logging.warning("Writing chunk of uploaded data \"%s\" failed: %s", filepath, str(e))
-            self.NotifyClient("InternalError", task, "Writing data failed with error: \"%s\""%(str(e)))
+            logging.warning("Writing chunk of uploaded data into \"%s\" failed: %s \033[1;30m(Upload canceled)", filepath, str(e))
+            self.UpdateTaskState(task, "uploadfailed", "Writing data failed with error: \"%s\""%(str(e)))
             return False
 
         task["offset"] += chunksize
@@ -555,18 +609,15 @@ class UploadManager(object):
         # Check checksum
         destchecksum = self.fileprocessing.Checksum(task["destinationpath"], "sha1")
         if destchecksum != task["sourcechecksum"]:
-            task["state"] = "uploadfailed"
             logging.error("Upload Failed: \033[0;36m%s \e[1;30m(Checksum mismatch)", task["destinationpath"]);
-            self.NotifyClient("StateUpdate", task, "Checksum mismatch")
+            self.UpdateTaskState(task, "uploadfailed", "Checksum mismatch")
             return False
 
-        task["state"] = "uploadcomplete"
-        self.SaveTask(task)
-
         logging.info("Upload Complete: \033[0;36m%s", task["destinationpath"]);
-        self.NotifyClient("StateUpdate", task)
+        self.UpdateTaskState(task, "uploadcomplete")
         # Now, the Management Thread takes care about post processing or removing no longer needed content
         return True
+
 
 
     def GetTasks(self):
@@ -574,7 +625,6 @@ class UploadManager(object):
         Returns:
             The dictionary with all upload tasks
         """
-
         global Tasks
         return Tasks
 
@@ -595,11 +645,11 @@ class UploadManager(object):
             task (dict): the task object of an upload-task
 
         Returns:
-            *Nothing*
+            ``True`` on success, otherwise ``False``
         """
         if task["state"] != "uploadcomplete":
             logging.error("task must be in \"uploadcomplete\" state for post processing. Actual state was \"%s\". \033[1;30m(Such a mistake should not happen. Anyway, the task won\'t be post process and nothing bad will happen.)", task["state"])
-            return
+            return False
 
         # Perform post processing
         logging.debug("Preprocessing upload %s -> %s", str(task["sourcefilename"]), str(task["destinationpath"]))
@@ -608,17 +658,17 @@ class UploadManager(object):
             success = self.PreProcessVideo(task)
         else:
             logging.warning("Unsupported content type of upload: \"%s\" \033[1;30m(Upload will be ignored)", str(task["contenttype"]))
-            return
+            self.UpdateTaskState(task, "invalidcontent", "Unsupported content type")
+            return False
 
         # Update task state
         if success == True:
-            task["state"] = "preprocessed"
+            newstate = "preprocessed"
         else:
-            task["state"] = "invalidcontent"
-        self.SaveTask(task)
+            newstate = "invalidcontent"
 
-        self.NotifyClient("StateUpdate", task)
-        return
+        self.UpdateTaskState(task, newstate)
+        return success
 
 
 
@@ -642,25 +692,27 @@ class UploadManager(object):
         return True
 
 
+
     def AnnotateUpload(self, uploadid, annotations):
         """
+        This method can be used to add additional information to an upload.
+        This can be done during or after the upload process.
 
         Args:
             uploadid (str): ID to identify the upload
+
+        Returns:
+            ``True`` on success, otherwise ``False``
 
         Raises:
             TypeError: When *uploadid* is not of type ``str``
             ValueError: When *uploadid* is not included in the Task Queue
         """
-        if type(uploadid) != str:
-            raise TypeError("Upload ID must be a string. Type was \"%s\""%(str(type(uploadid))))
-
-        global Tasks
-        if uploadid not in Tasks:
-            self.NotifiyClient("InternalError", None, "Invalid Upload ID")
-            raise ValueError("Upload ID \"%s\" not in Task Queue.", str(uploadid))
-
-        task = Tasks[uploadid]
+        try:
+            task = self.GetTaskByID(uploadid)
+        except Exception as e:
+            logging.error("Internal error while requesting a new chunk of data: %s", str(e))
+            return False
 
         for key in ["name", "artistname", "artistid", "release", "origin"]:
             if key in annotations:
@@ -668,7 +720,7 @@ class UploadManager(object):
 
         self.SaveTask(task)
         self.NotifyClient("StateUpdate", task)
-        return
+        return True
 
 
 
@@ -685,19 +737,19 @@ class UploadManager(object):
         Args:
             uploadid (str): ID to identify the upload
 
+        Returns:
+            ``True`` on success, otherwise ``False``
+
         Raises:
             TypeError: When *uploadid* is not of type ``str``
             ValueError: When *uploadid* is not included in the Task Queue
         """
-        if type(uploadid) != str:
-            raise TypeError("Upload ID must be a string. Type was \"%s\""%(str(type(uploadid))))
+        try:
+            task = self.GetTaskByID(uploadid)
+        except Exception as e:
+            logging.error("Internal error while requesting a new chunk of data: %s", str(e))
+            return False
 
-        global Tasks
-        if uploadid not in Tasks:
-            self.NotifiyClient("InternalError", None, "Invalid Upload ID")
-            raise ValueError("Upload ID \"%s\" not in Task Queue.", str(uploadid))
-
-        task = Tasks[uploadid]
         if task["state"] != "preprocessed":
             logging.warning("Cannot integrate an upload that is not in \"preprocessed\" state. Upload with ID \"%s\" was in \"%s\" state! \033[1;30m(Nothing will be done)", str(task["id"]), str(task["state"]))
             return
@@ -708,23 +760,21 @@ class UploadManager(object):
             success = self.IntegrateVideo(task)
         else:
             logging.warning("Unsupported content type of upload: \"%s\" \033[1;30m(Upload will be ignored)", str(task["contenttype"]))
+            self.UpdateTaskState(task, "integrationfailed", "Unsupported content type")
             return
 
         # Update task state
         if success == True:
-            task["state"] = "integrated"
+            newstate = "integrated"
         else:
-            task["state"] = "integrationfailed"
-        self.SaveTask(task)
-        self.NotifyClient("StateUpdate", task)
+            newstate = "integrationfailed"
+        self.UpdateTaskState(task, newstate)
 
         # Trigger import
         if success == False or triggerimport == False:
             return  # … but only if wanted, and previous step was successful
 
-        task["state"] = "startimport"   # The upload management thread will do the rest
-        self.SaveTask(task)
-        self.NotifyClient("StateUpdate", task)
+        self.UpdateTaskState(task, "startimport") # The upload management thread will do the rest
         return
 
 
@@ -782,7 +832,7 @@ class UploadManager(object):
 
     def ImportVideo(self, task):
         """
-        Tast state must be ``"startimport"`` and content type must be ``"video"``
+        Task state must be ``"startimport"`` and content type must be ``"video"``
 
         Returns:
             ``True`` on success.
@@ -871,7 +921,6 @@ class UploadManager(object):
 
         retval = framemanager.UpdateVideoFrames(video)
         if retval == False:
-            print("\033[1;31mGenerating video Frames and Preview failed!\033[0m")
             logging.error("Generating video frames and preview failed for video \"%s\". \033[1;30m(Artwork import canceled)", str(videopath), str(e))
             self.NotifyClient("InternalError", task, "Video artwork import failed")
             return False
