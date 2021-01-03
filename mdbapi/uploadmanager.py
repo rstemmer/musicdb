@@ -296,7 +296,7 @@ class UploadManager(object):
             * chunksize: The maximum chunk size
             * state: The current state of the upload task
             * message: ``null``/``None`` or a message from the server
-            * annotation: object with annotated information
+            * uploadtask: The task dictionary itself
             * uploadslist: Except for ``ChunkRequest`` events, the WebSocket server append the result of :meth:`lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads` to the notification
 
         *task* can be ``None`` in case the notification is meant to be an information that a given upload ID is invalid.
@@ -321,13 +321,13 @@ class UploadManager(object):
             status["offset"]    = task["offset"]    # offset of the data to request
             status["chunksize"] = 4096*100          # Upload 400KiB (TODO: Make configurable)
             status["state"]     = task["state"]
-            status["annotations"]= task["annotations"]
+            status["uploadtask"]= task
         else:
             status["uploadid"]  = None
             status["offset"]    = None
             status["chunksize"] = None
             status["state"]     = "notexisting"
-            status["annotations"]= None
+            status["uploadtask"]= None
 
         status["message"]   = message
 
