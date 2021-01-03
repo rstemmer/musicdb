@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,32 +18,14 @@
 
 /*
  * TODO:
- *  - general list class
  *  - rename to UploadStateList? (or two lists?)
  * */
 
-class ImportStateListItem extends Element
+class ImportStateListItem extends StatusElementBase
 {
     constructor(text, state=null)
     {
-        super("li", ["ImportStateListItem", "flex-row"]);
-        this.SetText(text);
-        if(typeof state === "string")
-            this.SetState(state);
-    }
-
-
-    // state: unknown, good, bad, active, open
-    SetState(state)
-    {
-        this.element.dataset.state = state;
-    }
-
-
-
-    SetText(text)
-    {
-        this.element.innerText = text;
+        super("li", ["ImportStateListItem", "flex-row"], text, state);
     }
 }
 
