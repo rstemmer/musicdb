@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -113,6 +113,7 @@ class UploadManager
             window.console && console.info(state);
             if(sig == "ChunkRequest")
             {
+                this.videouploadstable.TryUpdateRow(state.uploadtask);
                 this.UploadNextChunk(state)
             }
             else // "StateUpdate", "InternalError"

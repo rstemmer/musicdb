@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,10 +16,11 @@
 
 "use strict";
 
-const UPLOADTABLEHEADLINE = ["Source Path", "Status", "Controls"];
-const UT_PATH_COLUMN   = 0;
-const UT_STATUS_COLUMN = 1;
-const UT_BUTTON_COLUMN = 2;
+const UPLOADTABLEHEADLINE = ["Source Path", "Upload Progress", "Status", "Controls"];
+const UT_PATH_COLUMN      = 0;
+const UT_PROGRESS_COLUMN  = 1;
+const UT_STATUS_COLUMN    = 2;
+const UT_BUTTON_COLUMN    = 3;
 
 
 
@@ -52,6 +53,7 @@ class UploadTableRow extends UploadTableRowBase
     constructor(upload)
     {
         super();
+        this.progressbar = new ProgressBar();
         this.Update(upload);
     }
 
@@ -59,10 +61,12 @@ class UploadTableRow extends UploadTableRowBase
 
     Update(upload)
     {
-        let path  = upload.sourcefilename;
-        let state = upload.state;
+        let path     = upload.sourcefilename;
+        let state    = upload.state;
+        let filesize = upload.filesize;
+        let offset   = upload.offset;
 
-        // Create cells
+        // Create text cells
         let pathelement  = document.createTextNode(path);
         let stateelement = document.createTextNode(state);
 
@@ -72,9 +76,15 @@ class UploadTableRow extends UploadTableRowBase
         //let buttonbox    = new ButtonBox()
         //buttonbox.AddButton(importbutton);
 
+        // Update progress
+        window.console && console.log("Updating Progress … ");
+        let progress = Math.round((offset / filesize) * 100);
+        this.progressbar.SetProgress(progress);
+
         // Set cells
-        this.SetContent(UT_PATH_COLUMN,   pathelement);
-        this.SetContent(UT_STATUS_COLUMN, stateelement);
+        this.SetContent(UT_PATH_COLUMN,     pathelement);
+        this.SetContent(UT_PROGRESS_COLUMN, this.progressbar.GetHTMLElement());
+        this.SetContent(UT_STATUS_COLUMN,   stateelement);
         //this.SetContent(UT_BUTTON_COLUMN, buttonbox.GetHTMLElement());
     }
 
