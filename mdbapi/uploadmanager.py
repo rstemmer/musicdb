@@ -83,8 +83,6 @@ def StartUploadManagementThread(config, musicdb):
     global Config
     global Thread
     global RunThread
-    global Callbacks
-    global Tasks
 
     if Thread != None:
         logging.warning("Upload Management Thread already running")
@@ -142,7 +140,6 @@ def UploadManagementThread():
     global Config
     global Thread
     global RunThread
-    global Callbacks
     global Tasks
 
     musicdb    = MusicDatabase(Config.database.path)
