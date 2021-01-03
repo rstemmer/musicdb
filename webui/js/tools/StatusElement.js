@@ -50,8 +50,7 @@ class StatusText extends StatusElementBase
 {
     constructor(text, state=null)
     {
-        //super("span", ["flex-row"], text, state);
-        super("span", [], text, state);
+        super("span", ["flex-row"], text, state);
     }
 }
 

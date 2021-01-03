@@ -68,7 +68,7 @@ class UploadTableRow extends UploadTableRowBase
 
         // Create text cells
         let pathelement  = document.createTextNode(path);
-        let stateelement = document.createTextNode(state);
+        let stateelement = this._CreateStateElement(state);
 
         //// Control buttons
         // TODO: Pause/Continue
@@ -77,15 +77,35 @@ class UploadTableRow extends UploadTableRowBase
         //buttonbox.AddButton(importbutton);
 
         // Update progress
-        window.console && console.log("Updating Progress … ");
         let progress = Math.round((offset / filesize) * 100);
         this.progressbar.SetProgress(progress);
 
         // Set cells
         this.SetContent(UT_PATH_COLUMN,     pathelement);
         this.SetContent(UT_PROGRESS_COLUMN, this.progressbar.GetHTMLElement());
-        this.SetContent(UT_STATUS_COLUMN,   stateelement);
+        this.SetContent(UT_STATUS_COLUMN,   stateelement.GetHTMLElement());
         //this.SetContent(UT_BUTTON_COLUMN, buttonbox.GetHTMLElement());
+    }
+
+
+
+    _CreateStateElement(state)
+    {
+        switch(state)
+        {
+            case "waitforchunk"     : return new StatusText("Uploading …",              "active");
+            case "uploadcomplete"   : return new StatusText("Upload Succeeded",         "good");
+            case "uploadfailed"     : return new StatusText("Upload Failed",            "bad");
+            case "notexisting"      : return new StatusText("Internal Chaos",           "bad");
+            case "preprocessed"     : return new StatusText("Upload Succeeded",         "good");
+            case "invalidcontent"   : return new StatusText("Invalid Content",          "bad");
+            case "integrated"       : return new StatusText("Integration Succeeded",    "good");
+            case "integrationfailed": return new StatusText("Integration Failed",       "bad");
+            case "startimport"      : return new StatusText("Importing …",              "active");
+            case "importfailed"     : return new StatusText("Import Failed",            "bad");
+            case "importartwork"    : return new StatusText("Importing …",              "active");
+            case "importcomplete"   : return new StatusText("Import Succeeded",         "good");
+        }
     }
 
 
