@@ -174,11 +174,11 @@ def UploadManagementThread():
                 if success:
                     task["state"] = "importartwork"
                     manager.SaveTask(task)
-                    manager.NotifyClient("Importing", task)
+                    manager.NotifyClient("StateUpdate", task)
                 else:
                     task["state"] = "importfailed"
                     manager.SaveTask(task)
-                    manager.NotifyClient("ImportFailed", task)
+                    manager.NotifyClient("StateUpdate", task)
 
             elif state == "importartwork":
                 if contenttype == "video":
@@ -187,11 +187,11 @@ def UploadManagementThread():
                 if success:
                     task["state"] = "importcomplete"
                     manager.SaveTask(task)
-                    manager.NotifyClient("ImportComplete", task)
+                    manager.NotifyClient("StateUpdate", task)
                 else:
                     task["state"] = "importfailed"
                     manager.SaveTask(task)
-                    manager.NotifyClient("ImportFailed", task)
+                    manager.NotifyClient("StateUpdate", task)
 
     return
 
@@ -277,6 +277,13 @@ class UploadManager(object):
     def NotifyClient(self, notification, task, message=None):
         """
         This method triggers a client-notification.
+
+        There are three kind of notifications:
+
+            * ``"ChunkRequest"``: A new chunk of data is requested
+            * ``"StateUpdate"``: The state of an upload-task has been changed. See ``"state"`` value.
+            * ``"InternalError"``: There is an internal error occurred during. See ``"message"`` value.
+
         The notification comes with the current status of the upload process.
         This includes the following keys - independent of the state of the upload:
 
@@ -301,7 +308,7 @@ class UploadManager(object):
         Raises:
             ValueError: When notification has an unknown notification name
         """
-        if not notification in ["ChunkRequest", "UploadComplete", "UploadFailed", "InternalError", "Processed", "Annotated", "Importing", "ImportFailed", "ImportComplete"]: # TODO -> documentation
+        if not notification in ["ChunkRequest", "StateUpdate", "InternalError"]:
             raise ValueError("Unknown notification \"%s\""%(notification))
 
         status = {}
@@ -550,14 +557,14 @@ class UploadManager(object):
         if destchecksum != task["sourcechecksum"]:
             task["state"] = "uploadfailed"
             logging.error("Upload Failed: \033[0;36m%s \e[1;30m(Checksum mismatch)", task["destinationpath"]);
-            self.NotifyClient("UploadFailed", task, "Checksum mismatch")
+            self.NotifyClient("StateUpdate", task, "Checksum mismatch")
             return False
 
         task["state"] = "uploadcomplete"
         self.SaveTask(task)
 
         logging.info("Upload Complete: \033[0;36m%s", task["destinationpath"]);
-        self.NotifyClient("UploadComplete", task)
+        self.NotifyClient("StateUpdate", task)
         # Now, the Management Thread takes care about post processing or removing no longer needed content
         return True
 
@@ -610,7 +617,7 @@ class UploadManager(object):
             task["state"] = "invalidcontent"
         self.SaveTask(task)
 
-        self.NotifyClient("Processed", task)
+        self.NotifyClient("StateUpdate", task)
         return
 
 
@@ -660,7 +667,7 @@ class UploadManager(object):
                 task["annotations"][key] = annotations[key]
 
         self.SaveTask(task)
-        self.NotifyClient("Annotated", task)
+        self.NotifyClient("StateUpdate", task)
         return
 
 
@@ -709,7 +716,7 @@ class UploadManager(object):
         else:
             task["state"] = "integrationfailed"
         self.SaveTask(task)
-        self.NotifyClient("Processed", task)
+        self.NotifyClient("StateUpdate", task)
 
         # Trigger import
         if success == False or triggerimport == False:
@@ -717,7 +724,7 @@ class UploadManager(object):
 
         task["state"] = "startimport"   # The upload management thread will do the rest
         self.SaveTask(task)
-        self.NotifyClient("Importing", task)
+        self.NotifyClient("StateUpdate", task)
         return
 
 

@@ -115,7 +115,7 @@ class UploadManager
             {
                 this.UploadNextChunk(state)
             }
-            else
+            else // "StateUpdate", "InternalError"
             {
                 this.videouploadstable.Update(state.uploadslist.videos);
             }
