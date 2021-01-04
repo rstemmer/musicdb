@@ -45,11 +45,16 @@
     mask:               url("../../img/icons/StatusUnknown.svg");
     background-color:   var(--color-yellow);
 }
+.StatusElement[data-state=info]::before
+{
+    mask:               url("../../img/icons/StatusInfo.svg");
+    background-color:   var(--color-blue);
+}
 .StatusElement[data-state=open]::before
 {
-    mask:               url("../../img/icons/StatusOpen.svg");
-    background-color:   var(--hlcolor);
-    opacity:            0.5;
+mask:               url("../../img/icons/StatusOpen.svg");
+background-color:   var(--hlcolor);
+opacity:            0.5;
 }
 .StatusElement[data-state=active]::before
 {
