@@ -32,9 +32,18 @@ class StatusElementBase extends Element
 
 
     // state: unknown, good, bad, active, open
-    SetState(state, text=null)
+    SetState(state)
     {
         this.element.dataset.state = state;
+        if(typeof text === "string")
+            this.SetText(text);
+    }
+
+
+
+    SetStatus(state, text=null)
+    {
+        this.SetState(state);
         if(typeof text === "string")
             this.SetText(text);
     }
