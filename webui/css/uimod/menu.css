@@ -114,27 +114,27 @@ div.menuentry > .SVGIcon
 .menu .sectionbody div[data-state=unknown]::after
 {
     mask:               url("../../img/icons/StatusUnknown.svg");
-    background-color:   var(--color-yellow);
+    background-color:   var(--color-brightyellow);
 }
 .menu .sectionbody div[data-state=bad]::after
 {
     mask:               url("../../img/icons/StatusBad.svg");
-    background-color:   var(--color-red);
+    background-color:   var(--color-brightred);
 }
 .menu .sectionbody div[data-state=paused]::after
 {
     mask:               url("../../img/icons/StatusPaused.svg");
-    background-color:   var(--color-red);
+    background-color:   var(--color-brightred);
 }
 .menu .sectionbody div[data-state=good]::after
 {
     mask:               url("../../img/icons/StatusGood.svg");
-    background-color:   var(--color-green);
+    background-color:   var(--color-brightgreen);
 }
 .menu .sectionbody div[data-state=playing]::after
 {
     mask:               url("../../img/icons/StatusPlaying.svg");
-    background-color:   var(--color-green);
+    background-color:   var(--color-brightgreen);
 }
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
