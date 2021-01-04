@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -37,8 +37,7 @@ class VideoImportFormTable extends Table
     {
         super(["VideoImportForm"]);
 
-        // Name, Artist, Origin, Release Date, Genre, Sub-Genre
-        // TODO: create better artist input with search
+        // Name, Artist, Origin, Release Date
         this.artistinput  = new ArtistInput((id, name)=>{return this.onArtistInput(id, name); }, artistname);
         this.nameinput    = new TextInput(  (value)=>{return this.onNameInput(value);   }, musicname);
         this.origininput  = new TextInput(  (value)=>{return this.onOriginInput(value); }, origin);
@@ -152,7 +151,6 @@ class VideoImportForm extends ImportForm
         let origin  = this.table.GetOrigin();
 
         MusicDB_Call("AnnotateUpload", {uploadid: uploadid, name: name, artistname: artist, release: release, origin: origin});
-        //MusicDB_Broadcast("GetUploads", "ShowUploads"); // Update other clients views with the new annotation
     }
 
 
