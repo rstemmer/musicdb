@@ -44,6 +44,31 @@ class Table extends Element
 
 
 
+    RemoveRow(tablerow, includecontextrow=false)
+    {
+        let rowelement   = tablerow.element;
+        window.console && console.log(tablerow);
+
+        // Remove rows from the DOM
+        let rowstoremove = 1
+        if(includecontextrow === true)
+        {
+            rowelement.nextElementSibling.remove();
+            rowstoremove++;
+        }
+
+        rowelement.remove();
+
+        // Remove rows from the internal array
+        let index = this.rows.indexOf(tablerow);
+        if(index > -1)
+            this.rows.splice(index, rowstoremove);
+
+        return;
+    }
+
+
+
     AddContextView(htmlelement)
     {
         let lastrow    = this.rows[this.rows.length - 1];
