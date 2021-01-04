@@ -29,7 +29,7 @@ class ImportForm extends Element
         this.toolbar      = new ToolBar();
         this.savebutton   = new SVGButton("Save",    onsavedraft, "Save Formular as Draft");
         this.importbutton = new SVGButton("Import", onimportfile, "Save Formular and Import Music");
-        this.removebutton = new SVGButton("Remove", onremovefile, "Delete File from Server");
+        this.removebutton = new SVGButton("Remove", onremovefile, "Delete Uploaded File from Server. The copy integrated int the music file system will not be deleted.");
 
         if(typeof onsavedraft === "function" && typeof onimportfile === "function")
             this.toolbar.AddButton(new ToolGroup([this.savebutton, this.importbutton]));

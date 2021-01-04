@@ -110,6 +110,7 @@ Uploading
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AnnotateUpload`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.IntegrateUpload`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveUpload`
 
 Other
 ^^^^^
@@ -331,6 +332,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.AnnotateUpload(args["uploadid"], args)
         elif fncname == "IntegrateUpload":
             retval = self.IntegrateUpload(args["uploadid"], args["triggerimport"])
+        elif fncname == "RemoveUpload":
+            retval = self.RemoveUpload(args["uploadid"])
         # Call-Methods (retval will be ignored unless method gets not changed)
         elif fncname == "SaveWebUIConfiguration":
             retval = self.SaveWebUIConfiguration(args["config"])
@@ -3514,6 +3517,23 @@ class MusicDBWebSocketInterface(object):
             triggerimport (boolean): When ``true``, the upload manager also imports the music
         """
         self.uploadmanager.IntegrateUploadedFile(uploadid, triggerimport)
+        return
+
+
+    def RemoveUpload(self, uploadid):
+        """
+        This method triggers removing a specific upload.
+        This includes the uploaded file as well as the upload task information and annotations.
+
+        The upload task can be in any state.
+        When the remove-operation is triggered, its state gets changed to ``"remove"``.
+
+        See :meth:`~mdbapi.uploadmanager.UploadManager.RequestRemoveUpload` for details.
+
+        Args:
+            uploadid (str): ID to identify the upload
+        """
+        self.uploadmanager.RequestRemoveUpload(uploadid)
         return
 
 

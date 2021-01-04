@@ -35,6 +35,7 @@ Task states:
     * ``"importfailed"``: Import process failed (importing the music or generating the artwork)
     * ``"importartwork"``: Importing succeeded and generating the artwork started
     * ``"importcomplete"``: Import process complete and successful
+    * ``"remove"``: Upload is going to be removed - after this state appears, the task ID should no longer be considered as valid.
 
 After upload is complete,
 the Management Thread takes care about post processing or removing no longer needed content
@@ -161,6 +162,7 @@ def UploadManagementThread():
         else:
             time.sleep(1)
 
+        deletekeys = []
         for key, task in Tasks.items():
             state       = task["state"]
             contenttype = task["contenttype"]
@@ -197,6 +199,13 @@ def UploadManagementThread():
                     manager.SaveTask(task)
                     manager.NotifyClient("StateUpdate", task)
 
+            elif state == "remove":
+                manager.RemoveTask(task)
+                deletekeys.append(task["id"])
+
+        # Remove all deleted tasks
+        for key in deletekeys:
+            Tasks.pop(key, None)
     return
 
 
@@ -486,6 +495,33 @@ class UploadManager(object):
 
         self.NotifyClient("ChunkRequest", task)
         return
+
+
+
+    def RequestRemoveUpload(self, uploadid):
+        """
+        This method triggers removing a specific upload.
+        This includes the uploaded file as well as the upload task information and annotations.
+
+        The upload task can be in any state.
+        When the remove-operation is triggered, its state gets changed to ``"remove"``.
+
+        Only the ``"remove"`` state gets set. Removing will be done by the Management Thread.
+
+        Args:
+            uploadid (str): ID of the upload-task
+
+        Returns:
+            ``True`` on success
+        """
+        try:
+            task = self.GetTaskByID(uploadid)
+        except Exception as e:
+            logging.error("Internal error while requesting a new chunk of data: %s", str(e))
+            return False
+
+        self.UpdateTaskState(task, "remove")
+        return True
 
 
     def GetTaskByID(self, uploadid):
@@ -926,6 +962,22 @@ class UploadManager(object):
             return False
 
         logging.info("Importing Video thumbnails and previews succeeded")
+        return True
+
+
+
+    def RemoveTask(self, task):
+        """
+        ``tasks/${Task ID}.json``
+        """
+        logging.info("Removing uploaded \"%s\" file and task \"%s\" information.", task["sourcefilename"], task["id"])
+        datapath = task["destinationpath"]
+        taskpath = "tasks/" + task["id"] + ".json"
+
+        logging.debug("Removing %s", self.uploadfs.AbsolutePath(datapath))
+        self.uploadfs.RemoveFile(datapath)
+        logging.debug("Removing %s", self.uploadfs.AbsolutePath(taskpath))
+        self.uploadfs.RemoveFile(taskpath)
         return True
 
 

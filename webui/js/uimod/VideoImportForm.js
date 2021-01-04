@@ -167,9 +167,8 @@ class VideoImportForm extends ImportForm
 
     onRemove(uploadid)
     {
-        this.onSave(uploadid);  // Make sure all changes of the annotations are saved
         window.console && console.log("Remove Video");
-        //MusicDB_Call("IntegrateUpload", {uploadid: uploadid, triggerimport: true});
+        MusicDB_Call("RemoveUpload", {uploadid: uploadid});
     }
 }
 

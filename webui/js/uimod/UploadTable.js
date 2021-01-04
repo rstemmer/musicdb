@@ -105,6 +105,7 @@ class UploadTableRow extends UploadTableRowBase
             case "importfailed"     : return new StatusText("Import Failed",            "bad");
             case "importartwork"    : return new StatusText("Importing …",              "active");
             case "importcomplete"   : return new StatusText("Import Succeeded",         "good");
+            case "remove"           : return new StatusText("Removing Upload",          "active");
         }
     }
 
