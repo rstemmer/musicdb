@@ -131,6 +131,7 @@ class ConfigurationMaintainer(object):
         datapath    = "/".join(artworkpath.split("/")[:-1])
         videoframespath = datapath + "/videoframes"
         temppath    = datapath + "/upload"
+        webuicfgpath= datapath + "/webui.ini"
 
         self.CreateSection("videoframes")
         self.AddValue("videoframes", "path",          videoframespath);
@@ -144,6 +145,8 @@ class ConfigurationMaintainer(object):
 
         self.AddValue("debug", "disableicecast", "0");
         self.AddValue("debug", "disablevideos",  "1");
+
+        self.AddValue("server", "webuiconfig",  webuicfgpath);
 
         self.SaveConfiguration(5)
         return

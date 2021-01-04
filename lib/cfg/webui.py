@@ -55,15 +55,15 @@ import os
 
 class WebUIConfig(Config):
     """
-    This class holds the MusicDB internal state.
+    This class holds the configuration for the WebUI.
 
     Args:
-        path: Absolute path to the MusicDB state directory
+        path: Absolute path to the WebUI configuration file
     """
 
     def __init__(self, path):
 
-        Config.__init__(self, os.path.join(path, "webui.ini"))
+        Config.__init__(self, path)
 
         version = self.Get(int, "meta", "version", 0)
         if version < 1:

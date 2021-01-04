@@ -1463,7 +1463,7 @@ class MusicDBWebSocketInterface(object):
 
     def LoadWebUIConfiguration(self):
         """
-        This method loads the configuration for the WebUI from the MusicDB state directory.
+        This method loads the configuration for the WebUI from the MusicDB data directory.
 
         The configurations are described at :mod:`~lib.cfg.webui`
 
@@ -1486,13 +1486,13 @@ class MusicDBWebSocketInterface(object):
         Returns:
             A dictionary with all configurations
         """
-        webuicfg = WebUIConfig(self.cfg.server.statedir)
+        webuicfg = WebUIConfig(self.cfg.server.webuiconfig)
         return webuicfg.LoadConfig()
 
 
     def SaveWebUIConfiguration(self, config):
         """
-        This method saves the whole configuration back into the MusicDB state directory.
+        This method saves the whole configuration back into the MusicDB data directory.
         The argument to this method must be a dict with the whole configuration as returned by :meth:`~LoadWebUIConfiguration`
 
         The configurations are described at :mod:`~lib.cfg.webui`
@@ -1522,7 +1522,7 @@ class MusicDBWebSocketInterface(object):
         Returns:
             A dictionary with all configurations
         """
-        webuicfg = WebUIConfig(self.cfg.server.statedir)
+        webuicfg = WebUIConfig(self.cfg.server.webuiconfig)
         webuicfg.SaveConfig(config)
         return webuicfg.LoadConfig()
 
