@@ -143,13 +143,19 @@ class UploadTable extends Table
 
         for(let upload of uploads)
         {
-            if(! this.TryUpdateRow(upload))
+            if(upload.state == "remove")
+            {
+                // Remove row of no longer existing uploads
+                let uploadid = upload.id;
+                let tablerow = this.entries[uploadid].row;
+                this.RemoveRow(tablerow, true); // Remove row including context row
+                delete this.entries[uploadid];
+            }
+            else if(! this.TryUpdateRow(upload))
             {
                 this.CreateNewRow(upload);
             }
         }
-
-        // TODO: Remove row of no longer existing uploads
 
         return;
     }
