@@ -38,12 +38,14 @@ class VideoImportFormTable extends Table
         super(["VideoImportForm"]);
 
         // Name, Artist, Origin, Release Date
+        this.artiststatus = new StatusText();
         this.artistinput  = new ArtistInput((id, name)=>{return this.onArtistInput(id, name); }, artistname);
         this.nameinput    = new TextInput(  (value)=>{return this.onNameInput(value);   }, musicname);
         this.origininput  = new TextInput(  (value)=>{return this.onOriginInput(value); }, origin);
         this.releaseinput = new NumberInput((value)=>{return this.onReleaseInput(value);}, release);
 
         this.AddRow(new VideoImportFormRow("Artist Name:",  this.artistinput) );
+        this.AddRow(new VideoImportFormRow("",              this.artiststatus));
         this.AddRow(new VideoImportFormRow("Video Name:",   this.nameinput)   );
         this.AddRow(new VideoImportFormRow("Release Date:", this.releaseinput));
         this.AddRow(new VideoImportFormRow("File Origin:",  this.origininput) );
@@ -68,6 +70,15 @@ class VideoImportFormTable extends Table
     {
         if(typeof artistname !== "string")
             return false;
+
+        //if(typeof artistid === "string" && artistid.length > 0)
+        if(typeof artistid === "number")
+            this.artiststatus.SetStatus("good", "Artist exists in Database");
+        else if(artistname.length > 0)
+            this.artiststatus.SetStatus("info", "Creating new artist");
+        else
+            this.artiststatus.SetStatus("bad",  "Please enter artist name");
+
         if(artistname.length > 0)
             return true;
         return false;
