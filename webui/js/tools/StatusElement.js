@@ -21,10 +21,11 @@ class StatusElementBase extends Element
 {
     // type: "li", "div"
     // classes: CSS classes list
-    constructor(type, classes, text, state=null)
+    constructor(type, classes, text=null, state=null)
     {
         super(type, ["StatusElement", ...classes]);
-        this.SetText(text);
+        if(typeof text === "string")
+            this.SetText(text);
         if(typeof state === "string")
             this.SetState(state);
     }
@@ -48,7 +49,7 @@ class StatusElementBase extends Element
 
 class StatusText extends StatusElementBase
 {
-    constructor(text, state=null)
+    constructor(text=null, state=null)
     {
         super("span", ["flex-row"], text, state);
     }
