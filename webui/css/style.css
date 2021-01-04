@@ -44,7 +44,10 @@
     --color-white:  #F0F0F0;
     --color-gold:   #A8A623;
     --color-gray:   #323234;
-    --color-brightred:  #CF4545;
+    --color-brightred:      #CF4545;
+    --color-brightgreen:    #2C832C;
+    --color-brightblue:     #4545CF;
+    --color-brightyellow:   #ADAD3F;
 
     --artworkwidth-large:   20vw;
     --artworkwidth-medium:  10rem;

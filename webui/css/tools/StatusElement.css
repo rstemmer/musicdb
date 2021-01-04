@@ -33,22 +33,22 @@
 .StatusElement[data-state=good]::before
 {
     mask:               url("../../img/icons/StatusGood.svg");
-    background-color:   var(--color-green);
+    background-color:   var(--color-brightgreen);
 }
 .StatusElement[data-state=bad]::before
 {
     mask:               url("../../img/icons/StatusBad.svg");
-    background-color:   var(--color-red);
+    background-color:   var(--color-brightred);
 }
 .StatusElement[data-state=unknown]::before
 {
     mask:               url("../../img/icons/StatusUnknown.svg");
-    background-color:   var(--color-yellow);
+    background-color:   var(--color-brightyellow);
 }
 .StatusElement[data-state=info]::before
 {
     mask:               url("../../img/icons/StatusInfo.svg");
-    background-color:   var(--color-blue);
+    background-color:   var(--color-brightblue);
 }
 .StatusElement[data-state=open]::before
 {
