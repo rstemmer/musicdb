@@ -54,6 +54,17 @@
     --artworkwidth-small:    3rem;
     --artworkfilter:        none;
 }
+
+/* < Full HD*/
+@media only screen and (max-width: 1900px)
+{
+    :root
+    {
+        --artworkwidth-medium:  8vw; 
+    }
+}
+
+/* 4K */
 @media only screen and (min-width: 3000px)
 {
     :root
