@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,16 +16,13 @@
 
 "use strict";
 
-class QueueControlView
+class QueueControlView extends Element
 {
     constructor()
     {
-        this.element = document.createElement("div");
+        super("div", ["QueueControlView", "flex-row", "hlcolor", "hovpacity"]);
         this.label   = document.createElement("label");
         this.buttons = new ButtonBox_QueueControls();
-        this.element.classList.add("QueueControlView");
-        this.element.classList.add("hlcolor");
-        this.element.classList.add("hovpacity");
         this.element.appendChild(this.label);
         this.element.appendChild(this.buttons.GetHTMLElement());
     }
@@ -48,13 +45,6 @@ class QueueControlView
         this.label.innerText = label;
         this.buttons.UpdateTooltips();
         return;
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 }
 
