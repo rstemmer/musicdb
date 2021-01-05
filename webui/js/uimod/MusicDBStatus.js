@@ -26,22 +26,15 @@
 // "playing"    | "playing"/"streaming"
 // "paused"     | "stopped"
 
-class MusicDBStatus
+class MusicDBStatus extends StatusList
 {
     constructor()
     {
-        this.musicdbstatus = new Object();
-        this.CreateStatus("musicdb",     "MusicDB Server");
-        this.CreateStatus("icecast",     "Icecast Server");
-        this.CreateStatus("audiostream", "Audio Stream");
-        this.CreateStatus("videostream", "Video Stream");
-
-        this.element = document.createElement("div");
-        for(let statuskey in this.musicdbstatus)
-        {
-            let statusentry = this.musicdbstatus[statuskey];
-            this.element.appendChild(statusentry.element);
-        }
+        super();
+        this.AddState("musicdb",     "MusicDB Server");
+        this.AddState("icecast",     "Icecast Server");
+        this.AddState("audiostream", "Audio Stream");
+        this.AddState("videostream", "Video Stream");
 
         // Create reconnect button
         this.reconnectbutton  = new SVGButton("Reconnect", ()=>{ConnectToMusicDB();});
@@ -54,13 +47,6 @@ class MusicDBStatus
         return;
     }
 
-
-
-    GetHTMLElement()
-    {
-        return this.element;
-    }
-
     GetReconnectButtonHTMLElement()
     {
         return this.reconnectelement;
@@ -68,64 +54,38 @@ class MusicDBStatus
 
 
 
-    CreateStatus(key, name)
-    {
-        this.musicdbstatus[key] = new Object();
-        this.musicdbstatus[key].name    = name;
-        this.musicdbstatus[key].state   = "unknown";
-        this.musicdbstatus[key].element = document.createElement("div");
-        this.musicdbstatus[key].element.innerText     = name;
-        this.musicdbstatus[key].element.dataset.state = "unknown";
-        return;
-    }
-
-
-    SetStatus(key, state)
+    SetMusicDBStatus(statename, state)
     {
         if(typeof state !== "string")
             return;
 
         if(state == "hide")
         {
-            this.musicdbstatus[key].element.style.display = "none";
+            this.states[statename].Hide();
             return;
         }
         else if(state == "show")
         {
-            this.musicdbstatus[key].element.style.display = "block";
+            this.states[statename].Show();
             return;
         }
 
-        let cssstatename = "unknown";
-
-        if(state == "connected")
+        // Translate MusicDB States to css data properties values
+        let cssname = "unknown";
+        switch(state)
         {
-            cssstatename = "good";
-        }
-        else if(state == "playing"
-             || state == "streaming")
-        {
-            cssstatename = "playing";
-        }
-        else if(state == "disconnected")
-        {
-            cssstatename = "bad";
-        }
-        else if(state == "stopped")
-        {
-            cssstatename = "paused";
-        }
-        else if(state == "unknown")
-        {
-            cssstatename = "unknown";
-        }
-        else
-        {
-            window.console && console.log("Unknown " + key + " Status " + state);
+            case "connected":    cssname = "good";    break;
+            case "disconnected": cssname = "bad";     break;
+            case "playing":      cssname = "playing"; break;
+            case "streaming":    cssname = "playing"; break;
+            case "stopped":      cssname = "paused";  break;
+            case "unknown":      cssname = "unknown"; break;
+            default:
+                window.console && console.warn("Unknown " + statename + " Status " + state);
         }
 
         // Show / Hide reconnect button
-        if(key == "musicdb")
+        if(statename == "musicdb")
         {
             if(state == "connected")
                 this.reconnectelement.dataset.visible = false;
@@ -134,7 +94,7 @@ class MusicDBStatus
         }
 
         // Apply status
-        this.musicdbstatus[key].element.dataset.state = cssstatename;
+        super.SetState(statename, cssname);
         return;
     }
 
@@ -142,7 +102,7 @@ class MusicDBStatus
 
     onMusicDBNotification(fnc, sig, rawdata)
     {
-        this.SetStatus("musicdb", "connected");
+        this.SetMusicDBStatus("musicdb", "connected");
         return;
     }
 
@@ -150,35 +110,35 @@ class MusicDBStatus
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        this.SetStatus("musicdb", "connected");
+        this.SetMusicDBStatus("musicdb", "connected");
 
         if(fnc == "GetAudioStreamState")
         {
             if(args.isconnected)
-                this.SetStatus("icecast", "connected");
+                this.SetMusicDBStatus("icecast", "connected");
             else
-                this.SetStatus("icecast", "disconnected");
+                this.SetMusicDBStatus("icecast", "disconnected");
 
             if(args.isplaying)
-                this.SetStatus("audiostream", "playing");
+                this.SetMusicDBStatus("audiostream", "playing");
             else
-                this.SetStatus("audiostream", "stopped");
+                this.SetMusicDBStatus("audiostream", "stopped");
         }
 
         else if(fnc == "GetVideoStreamState")
         {
             if(args.isstreaming)
-                this.SetStatus("videostream", "playing");
+                this.SetMusicDBStatus("videostream", "playing");
             else
-                this.SetStatus("videostream", "stopped");
+                this.SetMusicDBStatus("videostream", "stopped");
         }
 
         else if(fnc == "LoadWebUIConfiguration" || sig == "UpdateConfig")
         {
             if(args.WebUI.videomode == "enabled")
-                this.SetStatus("videostream", "show");
+                this.SetMusicDBStatus("videostream", "show");
             else
-                this.SetStatus("videostream", "hide");
+                this.SetMusicDBStatus("videostream", "hide");
         }
         return;
     }
@@ -186,28 +146,28 @@ class MusicDBStatus
 
     onMusicDBConnectionOpen()
     {
-        this.SetStatus("musicdb",     "connected");
+        this.SetMusicDBStatus("musicdb",     "connected");
     }
     onMusicDBConnectionError()
     {
-        this.SetStatus("musicdb",     "disconnected");
-        this.SetStatus("icecast",     "unknown");
-        this.SetStatus("audiostream", "unknown");
-        this.SetStatus("videostream", "unknown");
+        this.SetMusicDBStatus("musicdb",     "disconnected");
+        this.SetMusicDBStatus("icecast",     "unknown");
+        this.SetMusicDBStatus("audiostream", "unknown");
+        this.SetMusicDBStatus("videostream", "unknown");
     }
     onMusicDBWatchdogBarks()
     {
-        this.SetStatus("musicdb",     "disconnected");
-        this.SetStatus("icecast",     "unknown");
-        this.SetStatus("audiostream", "unknown");
-        this.SetStatus("videostream", "unknown");
+        this.SetMusicDBStatus("musicdb",     "disconnected");
+        this.SetMusicDBStatus("icecast",     "unknown");
+        this.SetMusicDBStatus("audiostream", "unknown");
+        this.SetMusicDBStatus("videostream", "unknown");
     }
     onMusicDBConnectionClosed()
     {
-        this.SetStatus("musicdb",     "disconnected");
-        this.SetStatus("icecast",     "unknown");
-        this.SetStatus("audiostream", "unknown");
-        this.SetStatus("videostream", "unknown");
+        this.SetMusicDBStatus("musicdb",     "disconnected");
+        this.SetMusicDBStatus("icecast",     "unknown");
+        this.SetMusicDBStatus("audiostream", "unknown");
+        this.SetMusicDBStatus("videostream", "unknown");
     }
 }
 

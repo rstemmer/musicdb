@@ -81,6 +81,16 @@ li.StatusElement
     animation-iteration-count:  infinite;
     animation-timing-function:  linear;
 }
+.StatusElement[data-state=playing]::before
+{
+    mask:               url("../../img/icons/StatusPlaying.svg");
+    background-color:   var(--color-brightgreen);
+}
+.StatusElement[data-state=paused]::before
+{
+    mask:               url("../../img/icons/StatusPaused.svg");
+    background-color:   var(--color-brightred);
+}
 
 
 @keyframes spin

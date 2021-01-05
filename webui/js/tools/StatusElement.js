@@ -74,6 +74,17 @@ class StatusItem extends StatusElementBase
     {
         super("li", ["flex-row"], text, state);
     }
+
+
+
+    Show()
+    {
+        this.element.style.display = "list-item";
+    }
+    Hide()
+    {
+        this.element.style.display = "none";
+    }
 }
 
 

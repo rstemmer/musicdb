@@ -1,6 +1,6 @@
 /*
  * MusicDB,  a music manager with web-bases UI that focus on music.
- * Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,46 +90,7 @@ div.MenuEntry > .SVGIcon
     margin-bottom:      1em;
 }
 
-.Menu .sectionbody div
-{
-    padding:            0.5em 1.5ch;
-    text-align:         right;
-}
 
-.Menu .sectionbody div::after
-{
-    content:            " ";
-    display:            inline-block;
-    height:             1.0rem;
-    width:              1.0rem;
-    vertical-align:     middle;
-    margin-left:        1.5ch;
-}
-.Menu .sectionbody div[data-state=unknown]::after
-{
-    mask:               url("../../img/icons/StatusUnknown.svg");
-    background-color:   var(--color-brightyellow);
-}
-.Menu .sectionbody div[data-state=bad]::after
-{
-    mask:               url("../../img/icons/StatusBad.svg");
-    background-color:   var(--color-brightred);
-}
-.Menu .sectionbody div[data-state=paused]::after
-{
-    mask:               url("../../img/icons/StatusPaused.svg");
-    background-color:   var(--color-brightred);
-}
-.Menu .sectionbody div[data-state=good]::after
-{
-    mask:               url("../../img/icons/StatusGood.svg");
-    background-color:   var(--color-brightgreen);
-}
-.Menu .sectionbody div[data-state=playing]::after
-{
-    mask:               url("../../img/icons/StatusPlaying.svg");
-    background-color:   var(--color-brightgreen);
-}
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
