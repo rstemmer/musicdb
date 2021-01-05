@@ -54,45 +54,8 @@ let settingsmenu        = new SettingsMenu(); // Accesses references to settings
 let configuration       = null; // Needs to be loaded from the Server
 
 // Create Main Menu
-let mainmenu           = new MainMenu("1em", "1em", curtain);
-mainmenu.CreateSwitch(
-    new SVGIcon("EnterFullscreen"), "Enter Fullscreen", ()=>{fullscreenmanager.EnterFullscreen();},
-    new SVGIcon("LeaveFullscreen"), "Leave Fullscreen", ()=>{fullscreenmanager.LeaveFullscreen();}
-    , "Switch browser between window and fullscreen mode");
-let modeswitchentryid = mainmenu.CreateSwitch(
-    new SVGIcon("Switch2Video"), "Switch to Video Mode", ()=>{mdbmodemanager.SetVideoMode();},
-    new SVGIcon("Switch2Audio"), "Switch to Audio Mode", ()=>{mdbmodemanager.SetAudioMode();}
-    , "Switch MusicDB WebUI between audio and video mode");
-mainmenu.CreateButton(
-    new SVGIcon("Reload"), "Reload Artists", ()=>
-        {
-            if(mdbmodemanager.GetCurrentMode() == "audio")
-                MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
-            else
-                MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
-        }
-    , "Reload list with artists and their albums/videos");
-mainmenu.CreateButton(
-    new SVGIcon("Settings"), "MusicDB Manager", ()=>
-        {
-            leftviewmanager.ShowSettingsMenu();
-            mainviewmanager.ShowAboutMusicDB();
-        }
-    , "Show Settings and Management Tools");
-mainmenu.CreateButton(
-    new SVGIcon("MusicDB"), "About MusicDB", ()=>
-        {
-            mainviewmanager.ShowAboutMusicDB();
-        }
-    , "Show information about MusicDB including version numbers");
-// Disconnect / Reconnect
-mainmenu.CreateSwitch(
-    new SVGIcon("MusicDB"),   "Disconnect", ()=>{DisconnectFromMusicDB();},
-    new SVGIcon("Reconnect"), "Reconnect",  ()=>{ConnectToMusicDB();}
-    , "Toggle connection to the MusicDB WebSocket Server");
-mainmenu.CreateSection("MusicDB Status", musicdbstatus.GetHTMLElement());
-mainmenu.UpdateMenuEntryList();
-mdbmodemanager.SetMainMenuHandler(mainmenu, modeswitchentryid); // This allows updating the menu entry on mode switch from remote
+let mainmenu           = new MainMenu(curtain);
+mainmenu.AddSection("MusicDB Status", musicdbstatus.GetHTMLElement()); // FIXME
 
 
 
@@ -120,7 +83,9 @@ window.onload = function ()
     let queuecontrolsbox   = document.getElementById("QueueControl");
     queuecontrolsbox.appendChild(queuecontrolview.GetHTMLElement());
 
+    let mainmenubutton = new MenuButton("1rem", "1rem", "Menu", ()=>{mainmenu.ToggleMenu();}, "Show main menu");
     document.body.appendChild(curtain.GetHTMLElement());
+    document.body.appendChild(mainmenubutton.GetHTMLElement());
     document.body.appendChild(mainmenu.GetHTMLElement());
     document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
 

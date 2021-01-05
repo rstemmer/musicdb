@@ -16,199 +16,238 @@
 
 "use strict";
 
-
-
-class MainMenu extends Element
+class MenuButton extends SVGButton
 {
-    constructor(topoffset, rightoffset, curtain=null)
+    constructor(offset_top, offset_right, iconname, onclick, tooltip)
     {
-        super("div", ["MainMenu"]);
-        this.entryarray  = new Array(); // For regular menu entries
-        this.sectionarray= new Array(); // For additional sections added as div-elements
-        
-        this.topoffset   = topoffset;
-        this.rightoffset = rightoffset;
+        super(iconname, onclick, tooltip);
+        this.element.classList.add("MenuButton");
+        this.element.classList.add("hovpacity");
 
-        this.menubutton  = this._CreateMenuToggleButton();
+        this.element.style.top   = offset_top;
+        this.element.style.right = offset_right;
+    }
+}
+
+
+
+class MenuEntry extends Element
+{
+    constructor()
+    {
+        super("div", ["MenuEntry", "flex-row", "hoverframe"]);
+    }
+
+
+    Update(icon, label, onclick, tooltip)
+    {
+        let labelelement = document.createElement("label");
+        labelelement.innerText = label;
+
+        this.element.innerHTML = "";
+        this.element.onclick = onclick;
+        this.SetTooltip(tooltip);
+        this.element.appendChild(icon.GetHTMLElement());
+        this.element.appendChild(labelelement);
+    }
+
+    Hide()
+    {
+        this.element.style.display = "none";
+    }
+    Show()
+    {
+        this.element.style.display = "flex";
+    }
+}
+
+class MenuEntryButton extends MenuEntry
+{
+    constructor(icon, label, onclick, tooltip)
+    {
+        super();
+        this.Update(icon, label, onclick, tooltip)
+    }
+}
+
+class MenuEntrySwitch extends MenuEntry
+{
+    constructor(icona, labela, onclicka, tooltipa,
+                iconb, labelb, onclickb, tooltipb)
+    {
+        super();
+        this.icona    = icona;
+        this.labela   = labela;
+        this.onclicka = onclicka;
+        this.tooltipa = tooltipa;
+        this.iconb    = iconb;
+        this.labelb   = labelb;
+        this.onclickb = onclickb;
+        this.tooltipb = tooltipb;
+        this.SwitchToA();
+    }
+
+
+    onClick()
+    {
+        if(this.switchstate === "a")
+            this.onclicka();
+        else
+            this.onclickb();
+        this.Toggle();
+    }
+
+
+    SwitchToA()
+    {
+        this.Update(this.icona, this.labela, ()=>{this.onClick();}, this.tootlipa)
+        this.switchstate = "a";
+    }
+    SwitchToB()
+    {
+        this.Update(this.iconb, this.labelb, ()=>{this.onClick();}, this.tootlipb)
+        this.switchstate = "b";
+    }
+    Toggle()
+    {
+        if(this.switchstate === "a")
+            this.SwitchToB();
+        else
+            this.SwitchToA();
+    }
+}
+
+
+
+class Menu extends Element
+{
+    constructor(classes=[], elementid=null)
+    {
+        super("div", ["Menu", "flex-column", ...classes], elementid);
+        this.entries = new Object();
+        this.HideMenu();
+    }
+
+
+
+    HideMenu()
+    {
+        this.element.style.display = "none";
+        this.isopen = false;
+    }
+
+    ShowMenu()
+    {
+        this.element.style.display = "flex";
+        this.isopen = true;
+    }
+
+    ToggleMenu()
+    {
+        if(this.isopen)
+            this.HideMenu();
+        else
+            this.ShowMenu();
+    }
+
+
+
+    AddButton(name, icon, label, onclick, tooltip)
+    {
+        let entry = new MenuEntryButton(icon, label, ()=>{onclick(); this.ToggleMenu();}, tooltip);
+        this.entries[name] = entry;
+        this.element.appendChild(entry.GetHTMLElement());
+        return
+    }
+
+
+
+    AddSwitch(name, icona, labela, onclicka, tooltipa,
+                    iconb, labelb, onclickb, tooltipb)
+    {
+        let entry = new MenuEntrySwitch(icona, labela, onclicka, tooltipa,
+                                        iconb, labelb, onclickb, tooltipb)
+        this.entries[name] = entry;
+        this.element.appendChild(entry.GetHTMLElement());
+        return
+    }
+
+
+
+    AddSection(headlinetext, htmlelement)
+    {
+        htmlelement.classList.add("sectionbody");
+
+        let sectiontitle = document.createElement("div");
+        sectiontitle.innerText = headlinetext;
+        sectiontitle.classList.add("sectiontitle");
+        sectiontitle.classList.add("hlcolor");
+
+        let element = document.createElement("div");
+        element.classList.add("section");
+        element.appendChild(sectiontitle);
+        element.appendChild(htmlelement);
+        this.element.appendChild(element);
+    }
+
+
+
+    // force can be "a" or "b".
+    SwitchEntry(name, force=null)
+    {
+        let switchentry = this.entries[name];
+        if(force === "a")
+            switchentry.SwitchToA();
+        else if(force === "b")
+            switchentry.SwitchToB();
+        else
+            switchentry.Toggle();
+        return;
+    }
+
+
+
+    HideEntry(entryname)
+    {
+        if(!(entryname in this.entries))
+        {
+            window.console && console.warn(`Invalid menu entry name ${entryname}`);
+            return;
+        }
+        this.entries[entryname].Hide();
+    }
+    ShowEntry(entryname)
+    {
+        if(!(entryname in this.entries))
+        {
+            window.console && console.warn(`Invalid menu entry name ${entryname}`);
+            return;
+        }
+        this.entries[entryname].Show();
+    }
+}
+
+
+
+class MainMenu extends Menu
+{
+    constructor(curtain=null)
+    {
+        super(["frame"], "MainMenu");
 
         this.curtain     = curtain;
         if(this.curtain)
             this.curtain.AddClickEvent(()=>{this.HideMenu();});
 
-        this.entrylistelement = document.createElement("div");
-        this.entrylistelement.classList.add("menuentrylist");
-        this.entrylistelement.style.display = "none"; // Hide by default
-        this.isopen      = false;
+        this._AddFullscreenSwitch();
+        this._AddModeSwitch();
+        this._AddReloadButton();
+        this._AddSettingsButton();
+        this._AddAboutButton();
+        this._AddDisconnectSwitch();
 
-        this.element.style.top      = this.topoffset;
-        this.element.style.right    = this.rightoffset;
-        this.element.appendChild(this.menubutton);
-        this.element.appendChild(this.entrylistelement);
-    }
-
-
-
-    _CreateMenuToggleButton()
-    {
-        let button = new SVGButton("Menu", ()=>{this.ToggleMenu();}, "Show main menu");
-        button.GetHTMLElement().classList.add("hovpacity");
-        button.GetHTMLElement().classList.add("menutogglebutton");
-        return button.GetHTMLElement();
-    }
-
-
-
-    UpdateMenuEntryList()
-    {
-        this.entrylistelement.innerHTML = "";
-
-        for(let entry of this.entryarray)
-        {
-            this.entrylistelement.appendChild(entry.element);
-        }
-        for(let section of this.sectionarray)
-        {
-            this.entrylistelement.appendChild(section.element);
-        }
-
-        return;
-    }
-
-
-    CreateButton(icon, text, onclick, tooltip=null)
-    {
-        let entry = new Object();
-
-        entry.icon              = icon.GetHTMLElement();
-        entry.text              = document.createElement("span");
-        entry.text.textContent  = text;
-        entry.onclick           = onclick;
-        entry.element           = document.createElement("div");
-        entry.element.classList.add("menuentry");
-        entry.element.classList.add("hoverframe");
-        entry.element.appendChild(entry.icon);
-        entry.element.appendChild(entry.text);
-
-        if(tooltip !== null)
-            entry.element.title = tooltip;
-
-        entry.element.onclick = (event)=>
-            {
-                entry.onclick();
-                this.ToggleMenu(); // Hide menu after menu item clicked
-                return;
-            }
-
-        let newlength = this.entryarray.push(entry);
-        let entryid   = newlength - 1;
-        return entryid;
-    }
-
-
-    CreateSwitch(aicon, atext, afunction, bicon, btext, bfunction, tooltip=null)
-    {
-        let entry = new Object();
-
-        entry.aicon = aicon.GetHTMLElement();
-        entry.bicon = bicon.GetHTMLElement();
-
-        entry.atext             = document.createElement("span");
-        entry.atext.textContent = atext;
-        entry.btext             = document.createElement("span");
-        entry.btext.textContent = btext;
-
-        entry.afunction = afunction;
-        entry.bfunction = bfunction;
-
-        entry.switchstate = "a";
-
-        entry.element = document.createElement("div");
-        entry.element.classList.add("menuentry");
-        entry.element.classList.add("hoverframe");
-        entry.element.appendChild(entry.aicon);
-        entry.element.appendChild(entry.atext);
-
-        if(tooltip !== null)
-            entry.element.title = tooltip;
-
-        entry.element.onclick = (event)=>
-            {
-                if(entry.switchstate == "a")
-                {
-                    entry.afunction();
-                    entry.switchstate = "b";
-                    entry.element.innerHTML = "";
-                    entry.element.appendChild(entry.bicon);
-                    entry.element.appendChild(entry.btext);
-                }
-                else
-                {
-                    entry.bfunction();
-                    entry.switchstate = "a";
-                    entry.element.innerHTML = "";
-                    entry.element.appendChild(entry.aicon);
-                    entry.element.appendChild(entry.atext);
-                }
-
-                this.ToggleMenu(); // Hide menu after menu item clicked
-                return;
-            }
-
-        let newlength = this.entryarray.push(entry);
-        let entryid   = newlength - 1;
-        return entryid;
-    }
-
-
-    CreateSection(sectionname, sectionelement)
-    {
-        sectionelement.classList.add("sectionbody");
-
-        let sectiontitle        = document.createElement("div");
-        sectiontitle.innerText  = sectionname;
-        sectiontitle.classList.add("sectiontitle");
-        sectiontitle.classList.add("hlcolor");
-
-        let section             = new Object();
-        section.element         = document.createElement("div");
-        section.element.classList.add("section");
-        section.element.appendChild(sectiontitle);
-        section.element.appendChild(sectionelement);
-
-        this.sectionarray.push(section);
-        return;
-    }
-
-
-    ForceEntryState(entryid, state)
-    {
-        if(state == "a")
-        {
-            this.entryarray[entryid].switchstate = "a";
-            this.entryarray[entryid].element.innerHTML = "";
-            this.entryarray[entryid].element.appendChild(this.entryarray[entryid].aicon);
-            this.entryarray[entryid].element.appendChild(this.entryarray[entryid].atext);
-        }
-        else if(state == "b")
-        {
-            this.entryarray[entryid].switchstate = "b";
-            this.entryarray[entryid].element.innerHTML = "";
-            this.entryarray[entryid].element.appendChild(this.entryarray[entryid].bicon);
-            this.entryarray[entryid].element.appendChild(this.entryarray[entryid].btext);
-        }
-
-        this.UpdateMenuEntryList();
-    }
-
-
-
-    HideEntry(entryid)
-    {
-        this.entryarray[entryid].element.style.display = "none";
-    }
-    ShowEntry(entryid)
-    {
-        this.entryarray[entryid].element.style.display = "flex";
+        // Clicks propagated through Buttons and Switches shall lead to closing the menu
+        this.element.onclick = ()=>{this.HideMenu();};
     }
 
 
@@ -217,45 +256,161 @@ class MainMenu extends Element
     {
         if(this.curtain)
             this.curtain.Hide();
-
-        this.entrylistelement.style.display = "none";
-        this.isopen = false;
+        super.HideMenu();
     }
 
     ShowMenu()
     {
         if(this.curtain)
             this.curtain.Show();
-
-        this.entrylistelement.style.display = "flex";
-        this.isopen = true;
+        super.ShowMenu();
     }
 
-    ToggleMenu()
+
+
+    _AddFullscreenSwitch()
     {
-        if(this.isopen)
-        {
-            this.HideMenu();
-        }
-        else
-        {
-            this.ShowMenu();
-        }
+        this.AddSwitch("fullscreen",
+            new SVGIcon("EnterFullscreen"),
+            "Enter Fullscreen",
+            ()=>
+            {
+                fullscreenmanager.EnterFullscreen();
+            },
+            "Switch browser into fullscreen mode",
+
+            new SVGIcon("LeaveFullscreen"),
+            "Leave Fullscreen",
+            ()=>
+            {
+                fullscreenmanager.LeaveFullscreen();
+            },
+            "Switch browser into window mode");
     }
+    
+    _AddModeSwitch()
+    {
+        this.AddSwitch("modeswitch",
+            new SVGIcon("Switch2Video"),
+            "Switch to Video Mode",
+            ()=>
+            {
+                mdbmodemanager.SetVideoMode();
+            },
+            "Switch MusicDB WebUI to Video Mode",
+
+            new SVGIcon("Switch2Audio"),
+            "Switch to Audio Mode",
+            ()=>
+            {
+                mdbmodemanager.SetAudioMode();
+            },
+            "Switch MusicDB WebUI to Audio Mode");
+    }
+
+    _AddReloadButton()
+    {
+        this.AddButton("reload",
+            new SVGIcon("Reload"),
+            "Reload Artists",
+            ()=>
+            {
+                if(mdbmodemanager.GetCurrentMode() == "audio")
+                    MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
+                else
+                    MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
+            },
+            "Reload list with artists and their albums/videos");
+    }
+
+    _AddSettingsButton()
+    {
+        this.AddButton("settings",
+            new SVGIcon("Settings"),
+            "MusicDB Manager",
+            ()=>
+            {
+                leftviewmanager.ShowSettingsMenu();
+                mainviewmanager.ShowAboutMusicDB(); // TODO: Show a different view
+            },
+            "Show Settings and Management Tools for the WebUI and Music Content");
+    }
+
+    _AddAboutButton()
+    {
+        this.AddButton("about",
+            new SVGIcon("MusicDB"),
+            "About MusicDB",
+            ()=>
+            {
+                mainviewmanager.ShowAboutMusicDB();
+            },
+            "Show information about MusicDB including version numbers");
+    }
+
+    _AddDisconnectSwitch()
+    {
+        this.AddSwitch("disconnect",
+            new SVGIcon("Disconnect"),
+            "Disconnect",
+            ()=>
+            {
+                DisconnectFromMusicDB();
+            },
+            "Close connection to the MusicDB WebSocket Server",
+
+            new SVGIcon("Reconnect"),
+            "Reconnect",
+            ()=>
+            {
+                ConnectToMusicDB();
+            },
+            "Reconnect to the MusicDB WebSocket Server");
+    }
+
+
+    /* Templates
+    _AddReloadButton()
+    {
+        this.AddButton("",
+            new SVGIcon(""),
+            "",
+            ()=>
+            {
+            },
+            "");
+    }
+
+    _AddModeSwitch()
+    {
+        this.AddSwitch("",
+            new SVGIcon(""),
+            "",
+            ()=>
+            {
+            },
+            "",
+
+            new SVGIcon(""),
+            "",
+            ()=>
+            {
+            },
+            "");
+    }
+    */
 
 
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        /*
         if(fnc == "LoadWebUIConfiguration" || sig == "UpdateConfig")
         {
             if(args.WebUI.videomode == "enabled")
-                this.ShowEntry(this.entryid);
+                this.ShowEntry("modeswitch");
             else
-                this.HideEntry(this.entryid);
+                this.HideEntry("modeswitch");
         }
-        */
 
         return;
     }

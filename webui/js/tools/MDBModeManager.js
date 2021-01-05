@@ -21,7 +21,6 @@ class MDBModeManager
     constructor()
     {
         this.mode     = null;    // ! This variable should only be set as response to the server!
-        this.mainmenu = null;
         this.entryid  = null;
     }
 
@@ -52,14 +51,6 @@ class MDBModeManager
 
 
 
-    SetMainMenuHandler(mainmenu, entryid)
-    {
-        this.mainmenu = mainmenu;
-        this.entryid  = entryid;
-    }
-
-
-
     _UpdateWebUI(MDBMusic)
     {
         // Show/Hide video panel
@@ -71,8 +62,8 @@ class MDBModeManager
             // Update local HTML
             panels.dataset.panels        = "1";
             videopanel.dataset.visible   = "false";
-            if(this.mainmenu)
-                this.mainmenu.ForceEntryState(this.entryid, "a");
+            if(typeof mainmenu === "object")
+                mainmenu.SwitchEntry("modeswitch", "a");
 
             // Request update from server
             MusicDB_Request("GetAudioStreamState",          "UpdateHUD")
@@ -87,8 +78,8 @@ class MDBModeManager
             // Update local HTML
             panels.dataset.panels        = "2";
             videopanel.dataset.visible   = "true";
-            if(this.mainmenu)
-                this.mainmenu.ForceEntryState(this.entryid, "b");
+            if(typeof mainmenu === "object")
+                mainmenu.SwitchEntry("modeswitch", "b");
 
             // Request update from server
             MusicDB_Request("GetVideoStreamState",          "UpdateHUD");
@@ -123,13 +114,6 @@ class MDBModeManager
 
                 this._UpdateWebUI(MDBMusic);
             }
-        }
-        else if(fnc == "LoadWebUIConfiguration" || sig == "UpdateConfig")
-        {
-            if(args.WebUI.videomode == "enabled")
-                this.mainmenu.ShowEntry(this.entryid);
-            else
-                this.mainmenu.HideEntry(this.entryid);
         }
 
         return;

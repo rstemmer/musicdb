@@ -89,7 +89,7 @@ class SettingsMenu extends LeftView
     {
         let entry = document.createElement("div");
         entry.classList.add("flex-row");
-        entry.classList.add("menuentry");
+        entry.classList.add("MenuEntry");
         entry.classList.add("hoverframe");
         entry.title   = tooltip;
         entry.onclick = onclick;
