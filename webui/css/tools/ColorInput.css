@@ -1,6 +1,6 @@
 /*
  * MusicDB,  a music manager with web-bases UI that focus on music.
- * Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,18 @@
  */
 
 
-.colorsettings
+.ColorInput
+{
+    align-items:        center;
+}
+.ColorInput > label
+{
+    margin:             0.2rem 2ch;
+}
+
+
+
+.ColorSchemeSelection
 {
     display:            flex;
     flex-direction:     column;
@@ -25,11 +36,11 @@
     height:             100%;
 }
 
-.colorsettings > div
+.ColorSchemeSelection > div
 {
     display:            flex;
 }
-.colorsettings label
+.ColorSchemeSelection label
 {
     margin-left:        auto;
 }

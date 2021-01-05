@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ class ColorInput extends Element
     // when label == null, no label will be created
     constructor(label, tooltip, initcolor, onsave, onpreview)
     {
-        super("div");
+        super("div", ["ColorInput"]);
 
         this.input          = document.createElement("input");
         this.input.type     = "color";
@@ -89,7 +89,7 @@ class ColorSchemeSelection extends Element
 {
     constructor(musictype, musicid)  // Musictype: audio/video
     {
-        super("div", ["colorsettings", "flex-column"]);
+        super("div", ["ColorSchemeSelection", "flex-column"]);
         this.musictype  = musictype;
         this.musicid    = musicid;
 
