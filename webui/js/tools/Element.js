@@ -31,9 +31,18 @@ class Element
             this.element.id = id;
     }
 
+
+
     GetHTMLElement()
     {
         return this.element;
+    }
+
+
+
+    SetTooltip(tooltip)
+    {
+        this.element.title = tooltip;
     }
 }
 
