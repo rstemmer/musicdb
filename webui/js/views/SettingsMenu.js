@@ -87,21 +87,11 @@ class SettingsMenu extends LeftView
 
     AddMenuEntry(icon, name, onclick, tooltip)
     {
-        let entry = document.createElement("div");
-        entry.classList.add("flex-row");
-        entry.classList.add("MenuEntry");
-        entry.classList.add("hoverframe");
-        entry.title   = tooltip;
-        entry.onclick = onclick;
+        let entry = new MenuEntryButton(icon, name, onclick, tooltip);
+        let element = entry.GetHTMLElement();
 
-        let text = document.createElement("span");
-        text.innerText = name;
-
-        entry.appendChild(icon.GetHTMLElement());
-        entry.appendChild(text);
-
-        this.element.appendChild(entry);
-        this.entries.push(entry);
+        this.element.appendChild(element);
+        this.entries.push(element);
         return;
     }
 
