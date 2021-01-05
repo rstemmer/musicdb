@@ -88,9 +88,17 @@ class MusicDBStatus extends StatusList
         if(statename == "musicdb")
         {
             if(state == "connected")
+            {
+                if(typeof mainmenu === "object")
+                    mainmenu.SwitchEntry("disconnect", "a"); // Show Disconnect Entry
                 this.reconnectelement.dataset.visible = false;
+            }
             else
+            {
+                if(typeof mainmenu === "object")
+                    mainmenu.SwitchEntry("disconnect", "b"); // Show Reconnect Entry
                 this.reconnectelement.dataset.visible = true;
+            }
         }
 
         // Apply status
