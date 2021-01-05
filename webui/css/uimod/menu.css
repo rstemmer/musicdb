@@ -38,16 +38,12 @@ div#MDBReconnectButton[data-visible=false]
 
 
 
-div.menu
+div.MainMenu
 {
     position:           absolute;
 }
 
 div.menutogglebutton
-{
-}
-
-div.menutogglebutton .SVGIcon
 {
     margin-left:        auto;
     width:              1.5em;
@@ -89,20 +85,20 @@ div.menuentry > .SVGIcon
 /* Status Container */
 /********************/
 
-.menu .sectiontitle
+.MainMenu .sectiontitle
 {
     text-align:         center;
     margin-top:         2em;
     margin-bottom:      1em;
 }
 
-.menu .sectionbody div
+.MainMenu .sectionbody div
 {
     padding:            0.5em 1.5ch;
     text-align:         right;
 }
 
-.menu .sectionbody div::after
+.MainMenu .sectionbody div::after
 {
     content:            " ";
     display:            inline-block;
@@ -111,27 +107,27 @@ div.menuentry > .SVGIcon
     vertical-align:     middle;
     margin-left:        1.5ch;
 }
-.menu .sectionbody div[data-state=unknown]::after
+.MainMenu .sectionbody div[data-state=unknown]::after
 {
     mask:               url("../../img/icons/StatusUnknown.svg");
     background-color:   var(--color-brightyellow);
 }
-.menu .sectionbody div[data-state=bad]::after
+.MainMenu .sectionbody div[data-state=bad]::after
 {
     mask:               url("../../img/icons/StatusBad.svg");
     background-color:   var(--color-brightred);
 }
-.menu .sectionbody div[data-state=paused]::after
+.MainMenu .sectionbody div[data-state=paused]::after
 {
     mask:               url("../../img/icons/StatusPaused.svg");
     background-color:   var(--color-brightred);
 }
-.menu .sectionbody div[data-state=good]::after
+.MainMenu .sectionbody div[data-state=good]::after
 {
     mask:               url("../../img/icons/StatusGood.svg");
     background-color:   var(--color-brightgreen);
 }
-.menu .sectionbody div[data-state=playing]::after
+.MainMenu .sectionbody div[data-state=playing]::after
 {
     mask:               url("../../img/icons/StatusPlaying.svg");
     background-color:   var(--color-brightgreen);

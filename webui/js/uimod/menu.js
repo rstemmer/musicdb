@@ -18,18 +18,18 @@
 
 
 
-class MainMenu
+class MainMenu extends Element
 {
     constructor(topoffset, rightoffset, curtain=null)
     {
-        this.icon        = new SVGIcon("Menu");
+        super("div", ["MainMenu"]);
         this.entryarray  = new Array(); // For regular menu entries
         this.sectionarray= new Array(); // For additional sections added as div-elements
         
         this.topoffset   = topoffset;
         this.rightoffset = rightoffset;
 
-        this.menubutton  = this._CreateMenuToggleButton(this.icon);
+        this.menubutton  = this._CreateMenuToggleButton();
 
         this.curtain     = curtain;
         if(this.curtain)
@@ -40,35 +40,20 @@ class MainMenu
         this.entrylistelement.style.display = "none"; // Hide by default
         this.isopen      = false;
 
-        this.element     = document.createElement("div");
-        this.element.classList.add("menu");
         this.element.style.top      = this.topoffset;
         this.element.style.right    = this.rightoffset;
         this.element.appendChild(this.menubutton);
         this.element.appendChild(this.entrylistelement);
     }
 
-    GetHTMLElement()
+
+
+    _CreateMenuToggleButton()
     {
-        return this.element;
-    }
-
-
-
-    _CreateMenuToggleButton(icon)
-    {
-        let button = document.createElement("div");
-
-        button.appendChild(icon.GetHTMLElement());
-        button.classList.add("hovpacity");
-        button.classList.add("menutogglebutton");
-        button.title = "Show main menu";
-
-        button.onclick = ()=>
-            {
-                this.ToggleMenu();
-            };
-        return button;
+        let button = new SVGButton("Menu", ()=>{this.ToggleMenu();}, "Show main menu");
+        button.GetHTMLElement().classList.add("hovpacity");
+        button.GetHTMLElement().classList.add("menutogglebutton");
+        return button.GetHTMLElement();
     }
 
 
@@ -100,6 +85,7 @@ class MainMenu
         entry.onclick           = onclick;
         entry.element           = document.createElement("div");
         entry.element.classList.add("menuentry");
+        entry.element.classList.add("hoverframe");
         entry.element.appendChild(entry.icon);
         entry.element.appendChild(entry.text);
 
@@ -138,6 +124,7 @@ class MainMenu
 
         entry.element = document.createElement("div");
         entry.element.classList.add("menuentry");
+        entry.element.classList.add("hoverframe");
         entry.element.appendChild(entry.aicon);
         entry.element.appendChild(entry.atext);
 
@@ -256,6 +243,22 @@ class MainMenu
         }
     }
 
+
+
+    onMusicDBMessage(fnc, sig, args, pass)
+    {
+        /*
+        if(fnc == "LoadWebUIConfiguration" || sig == "UpdateConfig")
+        {
+            if(args.WebUI.videomode == "enabled")
+                this.ShowEntry(this.entryid);
+            else
+                this.HideEntry(this.entryid);
+        }
+        */
+
+        return;
+    }
 }
 
 
