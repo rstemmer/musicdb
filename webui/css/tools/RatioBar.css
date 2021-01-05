@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.ratiobox
+.RatioBar
 {
     background-color:   var(--color-red);
     width:              0.8ch;
@@ -24,7 +24,7 @@
     position:           relative;
 }
 
-.ratiobar
+.RatioBar > .bar
 {
     background-color:   var(--color-green);
     width:              100%;
@@ -32,7 +32,7 @@
     bottom:             0;
 }
 
-.nullratiobar
+.RatioBar > .empty
 {
     background-color:   var(--color-gray);
     width:              100%;

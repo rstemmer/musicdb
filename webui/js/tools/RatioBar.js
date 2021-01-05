@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,40 +16,29 @@
 
 "use strict";
 
-class RatioBar
+class RatioBar extends Element
 {
     // if ratio is null, a gray box will be shown
-    constructor(percent)
+    constructor(percent, tooltip=null)
     {
-        this.element        = document.createElement("div");
-        this.element.classList.add("ratiobox");
+        super("div", ["RatioBar"]);
 
-        this.bar            = document.createElement("div");
-        if(percent)
+        this.bar = document.createElement("div");
+        if(typeof percent === "number")
         {
-            this.bar.classList.add("ratiobar");
+            this.bar.classList.add("bar");
             this.bar.style.height = percent + "%";
         }
         else
         {
-            this.bar.classList.add("nullratiobar");
+            this.bar.classList.add("empty");
             this.bar.style.height = "100%";
         }
+
+        if(typeof tooltip === "string")
+            this.SetTooltip(tooltip);
+
         this.element.appendChild(this.bar);
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
-    }
-
-
-
-    SetTooltip(tooltip)
-    {
-        this.element.title = tooltip;
     }
 }
 
