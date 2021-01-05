@@ -66,5 +66,42 @@ class StatusText extends StatusElementBase
     }
 }
 
+
+
+class StatusItem extends StatusElementBase
+{
+    constructor(text, state=null)
+    {
+        super("li", ["flex-row"], text, state);
+    }
+}
+
+
+
+class StatusList extends Element
+{
+    constructor()
+    {
+        super("ul", ["StatusList", "flex-column"]);
+        this.states = new Object();
+    }
+
+
+
+    AddState(statename, statelabel)
+    {
+        let item = new StatusItem(statelabel, "unknown");
+        this.states[statename] = item;
+        this.element.appendChild(item.GetHTMLElement());
+        return;
+    }
+
+
+
+    SetState(statename, state)
+    {
+        this.states[statename].SetState(state);
+    }
+}
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

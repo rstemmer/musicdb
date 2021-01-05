@@ -16,51 +16,20 @@
 
 "use strict";
 
-/*
- * TODO:
- *  - rename to UploadStateList? (or two lists?)
- * */
-
-class ImportStateListItem extends StatusElementBase
-{
-    constructor(text, state=null)
-    {
-        super("li", ["ImportStateListItem", "flex-row"], text, state);
-    }
-}
-
-
-class ImportStateList extends Element
+class ImportStateList extends StatusList
 {
     constructor()
     {
-        super("ul", ["ImportStateList", "flex-column"]);
+        super()
 
-        this.states = new Object();
         this.AddState("uploading",     "Uploading selected file");
         this.AddState("preprocess",    "Preprocessing uploaded file");
         this.AddState("integrate",     "Integrating upload into the music directory");
         this.AddState("importmusic",   "Importing upload into the music database");
         this.AddState("importartwork", "Generating artwork for the user interface");
     }
-
-
-
-    AddState(statename, statelabel)
-    {
-        let item = new ImportStateListItem(statelabel, "unknown");
-        this.states[statename] = item;
-        this.element.appendChild(item.GetHTMLElement());
-        return;
-    }
-
-
-
-    SetState(statename, state)
-    {
-        this.states[statename].SetState(state);
-    }
 }
+
 
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

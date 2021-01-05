@@ -17,18 +17,6 @@
  */
 
 
-ul.ImportStateList
-{
-    list-style:         none;
-    padding:            0;
-    margin:             1rem;
-}
-
-.ImportStateList li
-{
-    margin:             0.5rem;
-}
-
 
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 

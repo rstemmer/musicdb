@@ -16,6 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+ul.StatusList
+{
+    list-style:         none;
+    padding:            0;
+    margin:             1rem;
+}
+
+
 
 .StatusElement
 {
@@ -29,6 +37,13 @@
     width:              1.0rem;
     margin-right:       1.5ch;
 }
+
+
+li.StatusElement
+{
+    margin:             0.5rem;
+}
+
 
 .StatusElement[data-state=good]::before
 {
@@ -52,9 +67,9 @@
 }
 .StatusElement[data-state=open]::before
 {
-mask:               url("../../img/icons/StatusOpen.svg");
-background-color:   var(--hlcolor);
-opacity:            0.5;
+    mask:               url("../../img/icons/StatusOpen.svg");
+    background-color:   var(--hlcolor);
+    opacity:            0.5;
 }
 .StatusElement[data-state=active]::before
 {
