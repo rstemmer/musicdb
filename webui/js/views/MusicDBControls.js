@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,27 +20,16 @@
 // The state represents the action that will be done when pressing the button
 
 
-class MusicDBControls
+class MusicDBControls extends Element
 {
     constructor()
     {
-        this.element        = document.createElement("div");
-        this.element.classList.add("musicdbcontrolsslot");
-        this.element.classList.add("hlcolor");
-        this.element.classList.add("frame");
-        this.element.classList.add("hovpacity");
+        super("div", ["MusicDBControlsBox", "frame", "hovpacity", "hlcolor"]);
 
         this.controls = new Object();
         this.controls["audio"] = this._CreateControls("audio");
         this.controls["video"] = this._CreateControls("video");
         this.ShowAudioControls();
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
