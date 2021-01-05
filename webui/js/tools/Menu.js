@@ -100,12 +100,12 @@ class MenuEntrySwitch extends MenuEntry
 
     SwitchToA()
     {
-        this.Update(this.icona, this.labela, ()=>{this.onClick();}, this.tootlipa)
+        this.Update(this.icona, this.labela, ()=>{this.onClick();}, this.tooltipa)
         this.switchstate = "a";
     }
     SwitchToB()
     {
-        this.Update(this.iconb, this.labelb, ()=>{this.onClick();}, this.tootlipb)
+        this.Update(this.iconb, this.labelb, ()=>{this.onClick();}, this.tooltipb)
         this.switchstate = "b";
     }
     Toggle()
