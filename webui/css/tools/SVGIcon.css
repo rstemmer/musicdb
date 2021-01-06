@@ -22,6 +22,7 @@
     width:              1.0em;
     height:             1.0em;
     font-family:        DejaVuSans;  /* To have a uniform font style with the mood flags */
+    flex-shrink:        0;
 }
 .SVGIcon[data-selected=false]
 {
