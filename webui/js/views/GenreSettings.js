@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ class GenreSettings extends MainSettingsView
 {
     constructor()
     {
-        super("GenreSettings", "Genre and Subgenre Manager", "Create new genre or sub-genre tags, or remove existing ones. When existing tags are removed, their association to tagged content will be removed as well. When a genre gets removed, its sub-genres will also be removed.");
+        super("GenreSettings", "Genre and Subgenre Manager", "Create new genre or sub-genre tags, or remove existing ones. When existing tags are removed, their association to tagged content will be removed as well. When a genre gets removed, its sub-genres will also be removed. Double click on the name to change it.");
 
         let infotext = document.createElement("span");
         infotext.classList.add("flex");
