@@ -100,7 +100,7 @@ The MusicDB Server send in a period of several seconds (max 3) the state of the 
 On Windows systems, packages can be stuck inside Windows internal buffers for a long time (several seconds).
 Keep this in mind when configuring the Watchdog.
 
-To configure the watchdog set the following variables in the *musicdb.js* file:
+To configure the watchdog set the following variables in the *config.js* file:
 
 WATCHDOG_RUN (boolean):
    If ``true`` the watchdog function checks if there is still a connection the server.
@@ -110,7 +110,7 @@ WATCHDOG_INTERVAL (integer):
 
 The following functions implement the Watchdog.
 They are used internal by the socket object as shown in the figure above.
-Usualy they need not to be called from the user of the *musicdb.js* file.
+Usually they need not to be called from the user of the *musicdb.js* file.
 
 .. js:autofunction:: MDB_WebsocketWatchdog
 
@@ -122,12 +122,23 @@ Usualy they need not to be called from the user of the *musicdb.js* file.
 Communication with the server
 -----------------------------
 
-The address of the server can be set in the following variable in *musicdb.js*:
+The address of the server can be set in the following variable in *config.js*:
 
 WEBSOCKET_URL (string):
    The URL to the websocket server. For example: ``"wss://testserver.org:9000"``.
-   By default, the domain of the website with port ``9001`` will be used.
+   By default, the domain of the website with port ``9000`` will be used.
+   It is required to use a secured websocket communication ``"wss"``.
 
+.. attention::
+
+   In case you use a self signed certificate, access URL including the port number via ``"https"`` to tell the browser that you trust that certificate.
+   So with the example configuration, access ``"https://testserver.org:9000"`` and confirm the certificate.
+   Then, a version note of the  *Autobahn* websocket framework is shown when everything is set up correct.
+
+WEBSOCKET_APIKEY (string):
+   To be able to communicate with the MusicDB WebSocket server, the correct API key must be set here.
+   This is the same key as in the MusicDB configuration (musicdb.ini) under ``[websocket]->apikey``.
+   This key gets generated during the first installation of MusicDB with a random key and can be changed if wanted.
 
 Sending Data
 ^^^^^^^^^^^^
