@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -255,7 +255,7 @@ class GenreListEditor extends Element
 
 
 
-    onRemove(MDBTag, numdependencies)
+    onRemove(MDBTag, numdependencies=0)
     {
         event.stopPropagation();
 
@@ -265,7 +265,12 @@ class GenreListEditor extends Element
         if(numdependencies > 0)
         {
             // Ask for confirmation
-            //return;
+            for(let entry of this.list)
+            {
+                if(entry.tag.id == MDBTag.id)
+                    entry.confirmmessage.Show();
+            }
+            return;
         }
 
         // Remove Tag
@@ -339,12 +344,13 @@ class GenreListEditor extends Element
         infos.innerHTML = infotext;
 
         let numdependencies = numsongs + numalbums + numvideos + numchildren;
+        let confirmmessage  = new MessageBarConfirmDelete(`Do you want to delete all ${numdependencies} associations to the "${MDBTag.name}" Tag?<br>Enter "${numdependencies}" and confirm with <i>Enter</i>`, `${numdependencies}`, ()=>{this.onRemove(MDBTag);});
         let removebutton    = new SVGButton("Remove", ()=>{this.onRemove(MDBTag, numdependencies);});
 
         // When there are dependencies, make the remove-button a bit less opaque
         if(numdependencies > 0)
         {
-            removebutton.SetColor("var(--color-red)");
+            removebutton.SetColor("var(--color-brightred)");
             removebutton.GetHTMLElement().classList.add("hovpacity");
             removebutton.SetTooltip("Delete Tag (and sub-tags) and remove Tag from all songs, albums and videos");
         }
@@ -353,6 +359,7 @@ class GenreListEditor extends Element
             removebutton.SetTooltip("Delete Tag");
         }
 
+        element.appendChild(confirmmessage.GetHTMLElement());
         element.appendChild(name);
         element.appendChild(removebutton.GetHTMLElement());
         element.appendChild(infos);
@@ -365,6 +372,7 @@ class GenreListEditor extends Element
         entry.numalbums = numalbums;
         entry.numvideos = numvideos;
         entry.numvideos = numchildren;
+        entry.confirmmessage = confirmmessage;
         this.list.push(entry);
     }
 }
