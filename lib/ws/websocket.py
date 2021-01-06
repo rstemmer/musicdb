@@ -207,7 +207,7 @@ class WebSocket(WebSocketServerProtocol):
 
             .. code-block:: python
 
-                packet  = self.BeautifyValues(packet, "name", "∕", "/");
+                #packet  = self.BeautifyValues(packet, "name", "∕", "/");
                 rawdata = json.dumps(packet)        # Python Dict to JSON string
                 rawdata = rawdata.encode("utf-8")   # Encode as UTF-8
                 self.sendMessage(rawdata, False)    # isBinary = False
@@ -251,8 +251,8 @@ class WebSocket(WebSocketServerProtocol):
             logging.warning("Socket not conneced! \033[1;30m(message will be discard) %s", str(self))
             return False
 
-        packet  = self.BeautifyValues(packet, "name", "∕",   "/");
-        packet  = self.BeautifyValues(packet, "name", " - ", " – ");
+        #packet  = self.BeautifyValues(packet, "name", "∕",   "/");
+        #packet  = self.BeautifyValues(packet, "name", " - ", " – ");
         rawdata = json.dumps(packet)
         rawdata = rawdata.encode("utf-8")
         
