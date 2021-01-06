@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -126,6 +126,47 @@ class MessageBarConfirm extends MessageBar
 }
 
 
+
+class MessageBarConfirmDelete extends MessageBar
+{
+
+    constructor(htmlmessage, expectedinput, ondelete)
+    {
+        super(new SVGIcon("StatusWarning"), htmlmessage);
+        this.element.dataset.messagetype = "warning";
+        this.closebutton.SetTooltip("Cancel deletion and hide this message");
+
+        this.ondelete      = ondelete;
+        this.expectedinput = expectedinput;
+        this.input = new TextInput((value)=>{return this.onInput(value);});
+        this.input.SetWidth(expectedinput.length + "ch");
+        this.input.GetHTMLElement().onkeyup = (event)=>{this.onKeyUp(event);};
+
+        this.element.appendChild(this.input.GetHTMLElement());
+    }
+
+
+
+    onInput(value)
+    {
+        if(value == this.expectedinput)
+            return true;
+        else
+            return false;
+    }
+
+
+
+    onKeyUp(event)
+    {
+        let keycode = event.which || event.keyCode;
+        if(keycode == 13 /*ENTER*/ && this.input.GetHTMLElement().value == this.expectedinput)
+        {
+            this.Hide();
+            this.ondelete();
+        }
+    }
+}
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
