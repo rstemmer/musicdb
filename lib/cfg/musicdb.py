@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -57,6 +57,7 @@ Now, the new option is availabe in the configuration object created using this c
 import logging
 import grp
 import pwd
+import stat
 from lib.cfg.config import Config
 from lib.filesystem import Filesystem
 
@@ -270,25 +271,42 @@ class MusicDBConfig(Config):
 
 
 
-    def GetDirectory(self, section, option, default, logger=logging.error):
+    def GetDirectory(self, section, option, default):
         """
         This method gets a string from the config file and checks if it is an existing directory.
-        If not it prints an error.
+        If not it prints a warning and creates the directory if possible.
+        If it fails with an permission-error an additional error gets printed.
         Except printing the error nothing is done.
-        The \"invalid\" will be returned anyway, because it may be OK that the directory does not exist yet.
+        The \"invalid\" path will be returned anyway, because it may be OK that the directory does not exist yet.
+
+        The permissions of the new created directory will be ``rwxrwxr-x``
         
         Args:
             section (str): Section of an ini-file
             option (str): Option inside the section of an ini-file
-            default (str): Default directory if option is not set in the file
-            logger: Logging-handler. Default is logging.error. logging.warning can be more appropriate in some situations.
+            default (str): Default directory path if option is not set in the file
 
         Returns:
             The value of the option set in the config-file or the default value.
         """
         path = self.Get(str, section, option, default)
-        if not self.fs.IsDirectory(path):
-            logger("Value of [%s]->%s does not address an existing directory.", section, option)
+        if self.fs.IsDirectory(path):
+            return path
+
+        # Create Directory
+        logging.warning("Value of [%s]->%s does not address an existing directory. \033[1;30m(Directory \"%s\" will be created)", section, option, path)
+        try:
+            self.fs.CreateSubdirectory(path)
+        except Exception as e:
+            logging.error("Creating directory %s failed with error: %s.", path, str(e))
+
+        # Set mode
+        mode = stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH
+        try:
+            self.fs.SetAttributes(path, None, None, mode);
+        except Exception as e:
+            logging.error("Creating directory %s failed with error: %s.", path, str(e))
+
         return path # return path anyway, it does not matter if correct or not. Maybe it will be created later on.
 
 

@@ -17,6 +17,7 @@ Run  git log --oneline  for more details
 │ + Support for uploading new content via WebUI integrated (Still alpha, deactivated for 7.0.0)
 │ * Update process improved - just a simple script call (scripts/update.sh)
 │ * musicdb checks versions of configuration and database when executed. If something is outdated it becomes updated automatically
+│    + Automatic creation of the following configured directories: music, artwork, videoframes, uploads
 │ + License for images is now explicit creative commons (CC BY-SA 3.0)
 │ * Lots of bug-fixes due to rewriting some code fragments to integrate video management
 │ + Albums can be hidden in case they shall not appear in the WebUI, but removing would be too much.
