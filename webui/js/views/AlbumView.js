@@ -112,8 +112,8 @@ class AlbumView extends MainView2
     UpdateInformation(MDBAlbum, MDBArtist, MDBTags, MDBCDs)
     {
         // For new albums, some persistent information need to be updated
-        if(MDBAlbum.id != this.currentalbumid)
-        {
+        //if(MDBAlbum.id != this.currentalbumid) // … for other also, for example when tags were removed
+        //{
             this.currentalbumid = MDBAlbum.id;
 
             // Update Headline
@@ -154,7 +154,7 @@ class AlbumView extends MainView2
             this.UpdateSongList(MDBCDs);
             this.UpdateTagInformation(MDBTags);
             this.ToggleSongPlayingState(true);
-        }
+        //}
 
         this.colorselect.SetColors(MDBAlbum.bgcolor, MDBAlbum.fgcolor, MDBAlbum.hlcolor);
 
@@ -340,9 +340,13 @@ class AlbumView extends MainView2
         else if(fnc == "GetAlbum" && sig == "UpdateTags")
         {
             if(args.album.id == this.currentalbumid)
-            {
                 this.UpdateTagInformation(args.tags);
-            }
+        }
+        else if(fnc == "GetTags" || fnc == "RemoveSongTag")
+        {
+            // In case there are changes with the tags, refresh the album view
+            if(sig == "UpdateTags")
+                MusicDB_Request("GetAlbum", "UpdateTags", {albumid: this.currentalbumid});
         }
         else if(fnc == "GetSong")
         {
