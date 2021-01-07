@@ -91,22 +91,7 @@ class UploadTableRow extends UploadTableRowBase
 
     _CreateStateElement(state)
     {
-        switch(state)
-        {
-            case "waitforchunk"     : return new StatusText("Uploading …",              "active");
-            case "uploadcomplete"   : return new StatusText("Upload Succeeded",         "good");
-            case "uploadfailed"     : return new StatusText("Upload Failed",            "bad");
-            case "notexisting"      : return new StatusText("Internal Chaos",           "bad");
-            case "preprocessed"     : return new StatusText("Upload Succeeded",         "good");
-            case "invalidcontent"   : return new StatusText("Invalid Content",          "bad");
-            case "integrated"       : return new StatusText("Integration Succeeded",    "good");
-            case "integrationfailed": return new StatusText("Integration Failed",       "bad");
-            case "startimport"      : return new StatusText("Importing …",              "active");
-            case "importfailed"     : return new StatusText("Import Failed",            "bad");
-            case "importartwork"    : return new StatusText("Importing …",              "active");
-            case "importcomplete"   : return new StatusText("Import Succeeded",         "good");
-            case "remove"           : return new StatusText("Removing Upload",          "active");
-        }
+        return new UploadStatusText(state);
     }
 
 

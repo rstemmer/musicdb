@@ -68,6 +68,32 @@ class StatusText extends StatusElementBase
 
 
 
+class UploadStatusText extends StatusText
+{
+    constructor(uploadstatus="")
+    {
+        switch(uploadstatus)
+        {
+            case "waitforchunk"     : super("Uploading …",              "active");
+            case "uploadcomplete"   : super("Upload Succeeded",         "good");
+            case "uploadfailed"     : super("Upload Failed",            "bad");
+            case "notexisting"      : super("Internal Chaos",           "bad");
+            case "preprocessed"     : super("Upload Succeeded",         "good");
+            case "invalidcontent"   : super("Invalid Content",          "bad");
+            case "integrated"       : super("Integration Succeeded",    "good");
+            case "integrationfailed": super("Integration Failed",       "bad");
+            case "startimport"      : super("Importing …",              "active");
+            case "importfailed"     : super("Import Failed",            "bad");
+            case "importartwork"    : super("Importing …",              "active");
+            case "importcomplete"   : super("Import Succeeded",         "good");
+            case "remove"           : super("Removing Upload",          "active");
+            default                 : super("No upload processing",     "open");
+        }
+    }
+}
+
+
+
 class StatusItem extends StatusElementBase
 {
     constructor(text, state=null)
