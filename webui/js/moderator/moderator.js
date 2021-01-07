@@ -202,6 +202,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     videoview.onMusicDBMessage(fnc, sig, args, pass);
     queueview.onMusicDBMessage(fnc, sig, args, pass);
     // Setting Views
+    settingsmenu.onMusicDBMessage(fnc, sig, args, pass);
     webuisettings.onMusicDBMessage(fnc, sig, args, pass);
     genresettings.onMusicDBMessage(fnc, sig, args, pass);
     moodmanager.onMusicDBMessage(fnc, sig, args, pass);
