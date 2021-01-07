@@ -58,7 +58,7 @@ function CreateDirectoryTree {
     # Create directory if not exists
     if [ ! -d "$DATADIR" ] ; then
         echo -e -n "\t\e[1;34mCreating \e[0;36m$DARADIR \e[1;31m"
-        mkdir -p $DATADIR
+        mkdir -p $DATADIR/artwork
         chown -R $MDBUSER:$MDBGROUP $DATADIR
         echo -e "\e[1;32mdone"
         chmod g+w $DATADIR
