@@ -18,16 +18,20 @@
 
 class FileSelect extends Element
 {
-    constructor(labeltext, tooltip)
+    // content type: "video", "artwork"
+    constructor(labeltext, tooltip, icon, contenttype, accept)
     {
         super("label", ["FileSelect", "flex-row"]);
 
         this.input = document.createElement("input")
         this.input.type     = "file";
+        this.input.accept   = accept;
         this.input.onchange = (event)=>{this.onFileSelected(event);};
-        this.icon  = new SVGIcon("VideoFile");  // TODO: Move to constructor
+        this.icon  = icon;
         this.text  = document.createElement("span");
         this.text.innerText = labeltext;
+
+        this.contenttype = contenttype;
 
         this.element.classList.add("flex-row");
         this.element.title = tooltip;
@@ -52,12 +56,32 @@ class FileSelect extends Element
         window.console && console.log(type);
         window.console && console.log(date);
 
-        // Start Upload (TODO: Move to dedicated button)
-        uploadmanager.UploadFile("video", fileinfos);
+        // Start Upload
+        uploadmanager.UploadFile(this.contenttype, fileinfos);
 
         // Update Label
         let newlabel = `${name} <span class="hlcolor">${size}&#8239;MiB</span>`;
         this.text.innerHTML = newlabel;
+    }
+}
+
+
+
+class VideoFileSelect extends FileSelect
+{
+    constructor(labeltext, tooltip)
+    {
+        super(labeltext, tooltip, new SVGIcon("VideoFile"), "video", "video/*");
+    }
+}
+
+
+
+class ArtworkFileSelect extends FileSelect
+{
+    constructor(labeltext, tooltip)
+    {
+        super(labeltext, tooltip, new SVGIcon("ArtworkFile"), "artwork", "image/*");
     }
 }
 
