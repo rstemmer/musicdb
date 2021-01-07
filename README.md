@@ -53,6 +53,7 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* or 
   * **:wrench: Change:** Reload WebUI *after* update
 * Changes in the configuration file and music database (See CHANGELOG for details)
 * Experimental support for Music Videos added (needs to be enabled explicitly)
+  * **:wrench: Change:** Provide `videoframes` directory access for HTTPS to see its content in the WebUI
 
 <details>
 <summary>01.08.2020: 5.x.x → 6.0.0+ </summary>
