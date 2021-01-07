@@ -45,21 +45,22 @@ class UploadManager
 
 
 
-    UploadFile(contenttype, filedescription)
+    // initialannotations: an object with initial annotations
+    UploadFile(contenttype, filedescription, initialannotations=null)
     {
         let reader = new FileReader();
 
         reader.onload = (event)=>
             {
                 let contents = event.target.result;
-                this.StartUpload(contenttype, filedescription, new Uint8Array(contents));
+                this.StartUpload(contenttype, filedescription, new Uint8Array(contents), initialannotations);
             };
         reader.readAsArrayBuffer(filedescription);
     }
 
 
 
-    async StartUpload(contenttype, filedescription, rawdata)
+    async StartUpload(contenttype, filedescription, rawdata, initialannotations=null)
     {
         
         // ! SHA-1 is used as ID and object key in the server and client because it is short.
@@ -86,6 +87,10 @@ class UploadManager
                 checksum: task.checksum,
                 filename: task.filename
             });
+
+        if(typeof initialannotations === "object")
+            MusicDB_Call("AnnotateUpload", {uploadid: task.id, ...initialannotations});
+
         window.console && console.log(task);
     }
 

@@ -19,7 +19,8 @@
 class FileSelect extends Element
 {
     // content type: "video", "artwork"
-    constructor(labeltext, tooltip, icon, contenttype, accept)
+    // annotations: an object with initial annotations
+    constructor(labeltext, tooltip, icon, contenttype, accept, annotations=null)
     {
         super("label", ["FileSelect", "flex-row"]);
 
@@ -32,6 +33,7 @@ class FileSelect extends Element
         this.text.innerText = labeltext;
 
         this.contenttype = contenttype;
+        this.annotations = annotations;
 
         this.element.classList.add("flex-row");
         this.element.title = tooltip;
@@ -57,7 +59,7 @@ class FileSelect extends Element
         window.console && console.log(date);
 
         // Start Upload
-        uploadmanager.UploadFile(this.contenttype, fileinfos);
+        uploadmanager.UploadFile(this.contenttype, fileinfos, this.annotations);
 
         // Update Label
         let newlabel = `${name} <span class="hlcolor">${size}&#8239;MiB</span>`;
@@ -79,9 +81,10 @@ class VideoFileSelect extends FileSelect
 
 class ArtworkFileSelect extends FileSelect
 {
-    constructor(labeltext, tooltip)
+    // Optional initial annotations. MusicDB requires a "artistname", "albumname" and "albumid" for artworks
+    constructor(labeltext, tooltip, initialannotations=null)
     {
-        super(labeltext, tooltip, new SVGIcon("ArtworkFile"), "artwork", "image/*");
+        super(labeltext, tooltip, new SVGIcon("ArtworkFile"), "artwork", "image/*", initialannotations);
     }
 }
 
