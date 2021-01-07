@@ -54,9 +54,8 @@ class AlbumView extends MainView2
 
         // Create Settings
         this.settings_tags  = document.createElement("div");
-        this.settings_tags.classList.add("flex-grow");
         this.settings_color = document.createElement("div");
-        this.settings_color.classList.add("flex-grow");
+        this.settings_color.classList.add("flex-row");
         this.settings_hide  = new SettingsCheckbox(
             "Hide Album",
             "When the album is hidden, it will not be shown in the Artists list.</br>Furthermore it is not considered by the random song selection algorithm.</br>You can make the album visible again with the MusicDB Management tools (See Main Menu).");
@@ -130,8 +129,10 @@ class AlbumView extends MainView2
             this.artwork.BecomeDraggable();
 
             // Update Settings
-            this.colorselect = new ColorSchemeSelection("audio", this.currentalbumid);
+            this.colorselect     = new ColorSchemeSelection("audio", this.currentalbumid);
+            this.artworkuploader = new ArtworkUploader(MDBArtist.name, MDBAlbum.name, MDBAlbum.id);
             this.settings_color.innerHTML = "";
+            this.settings_color.appendChild(this.artworkuploader.GetHTMLElement());
             this.settings_color.appendChild(this.colorselect.GetHTMLElement());
 
             this.settings_hide.SetState(MDBAlbum.hidden);

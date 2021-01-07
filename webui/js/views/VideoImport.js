@@ -23,7 +23,7 @@ class VideoImport extends MainSettingsView
         super("VideoImport", "Upload New Videos", "Upload video files to import them into the MusicDB database. Uploaded files are listed in the table within this section.");
 
         // Upload Section
-        this.upload      = new FileSelect("Select Video File", "Select a video file from the local computer");
+        this.upload      = new VideoFileSelect("Select Video File", "Select a video file from the local computer");
         this.uploadtable = uploadmanager.GetVideoUploadsTable();
         this.importtable = new VideoImportTable();
         this.element.appendChild(this.upload.GetHTMLElement());
