@@ -425,6 +425,32 @@ class Filesystem(object):
         This method sets attributes for a file or directory.
         The *mode* is the access permissions as defined in the *stats* module.
 
+        When *mode* is ``None``, the permissions will not be changed.
+        When *owner* **or** *group* are ``None``, the ownership will not be changed.
+
+        Mode-attributes can be an bitwise-OR combination of the following flags:
+
+            * ``stat.S_ISUID``
+            * ``stat.S_ISGID``
+            * ``stat.S_ENFMT``
+            * ``stat.S_ISVTX``
+            * ``stat.S_IREAD``
+            * ``stat.S_IWRITE``
+            * ``stat.S_IEXEC``
+            * ``stat.S_IRWXU``
+            * ``stat.S_IRUSR``
+            * ``stat.S_IWUSR``
+            * ``stat.S_IXUSR``
+            * ``stat.S_IRWXG``
+            * ``stat.S_IRGRP``
+            * ``stat.S_IWGRP``
+            * ``stat.S_IXGRP``
+            * ``stat.S_IRWXO``
+            * ``stat.S_IROTH``
+            * ``stat.S_IWOTH``
+            * ``stat.S_IXOTH``
+
+
         Args:
             xpath (str): Path to the file or directory
             owner (str): Name of the owner of the file or directory
@@ -443,13 +469,18 @@ class Filesystem(object):
                 
                 # -rw-rw-r--
                 permissions = stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH
-
                 fs.SetAttributes("test.txt", "user", "group", permissions)
+
+                # drwxrwxr-x
+                mode = stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH
+                fs.SetAttributes("testdirectory", None, None, mode) # make directory writeable for group members
 
         """
         abspath = self.AbsolutePath(xpath)
-        os.chmod(abspath, mode)
-        shutil.chown(abspath, owner, group)
+        if mode != None:
+            os.chmod(abspath, mode)
+        if owner != None and group != None:
+            shutil.chown(abspath, owner, group)
         return None
 
 
