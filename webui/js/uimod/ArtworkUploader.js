@@ -22,13 +22,26 @@ class ArtworkUploader extends Element
     constructor(artistname, albumname, albumid)
     {
         super("div", ["ArtworkUploader", "flex-column", "flex-grow"]);
-        this.artistname = artistname;
-        this.albumname  = albumname;
-        this.albumid    = albumid;
-        // TODO: Somehow annotate upload with artist-name, album-name and album ID
 
-        this.fileselect = new ArtworkFileSelect("Select Artwork File", "Select an artwork file (.jpg) form your local computer.");
+        let annotations = new Object();
+        annotations["artistname"] = artistname;
+        annotations["albumname" ] = albumname;
+        annotations["albumid"   ] = albumid;
+
+        this.fileselect = new ArtworkFileSelect("Select Artwork File", "Select an artwork file (.jpg) form your local computer.", annotations);
+        let  statustext = new StatusText(); // Empty UploadStatusText as place holder
         this.element.appendChild(this.fileselect.GetHTMLElement());
+        this.element.appendChild(statustext.GetHTMLElement());
+    }
+
+
+
+    UpdateUploadStatus(uploadstatus)
+    {
+        this.element.innerHTML = "";
+        this.element.appendChild(this.fileselect.GetHTMLElement());
+        let  statustext = new UploadStatusText(uploadstatus);
+        this.element.appendChild(statustext.GetHTMLElement());
     }
 }
 

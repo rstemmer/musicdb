@@ -308,6 +308,23 @@ class AlbumView extends MainView2
 
 
 
+    onMusicDBNotification(fnc, sig, rawdata)
+    {
+        if(fnc == "MusicDB:Upload" && sig == "StateUpdate")
+        {
+            let task        = rawdata.uploadtask;
+            let annotations = task.annotations;
+            let albumid     = annotations.albumid;
+            let state       = rawdata.state;
+            if(albumid === this.currentalbumid)
+            {
+                this.artworkuploader.UpdateUploadStatus(state);
+            }
+        }
+    }
+
+
+
     onMusicDBMessage(fnc, sig, args, pass)
     {
         if(fnc == "GetAudioStreamState"/* && sig == "UpdateStreamState"*/)
