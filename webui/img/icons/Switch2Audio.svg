@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-50,-80)">
+        <g id="Menu">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio" transform="matrix(1,0,0,1,-0.0676869,25)">
+            <g transform="matrix(1,0,0,1,0.0676869,-25)">
+                <path d="M59.814,90.609L59.814,96.615C59.814,96.852 59.759,97.077 59.661,97.276C59.373,98.193 58.502,99.077 57.293,99.553C55.496,100.261 53.629,99.8 53.126,98.523C52.623,97.247 53.674,95.636 55.471,94.927C55.922,94.75 56.377,94.646 56.814,94.61L56.814,93.112L59.756,90.661C59.776,90.644 59.796,90.627 59.814,90.609ZM56.814,86.105L56.815,85.064C56.788,84.4 57.209,83.774 57.874,83.57L67.287,80.681C68.079,80.438 68.918,80.883 69.162,81.675L69.748,83.587C69.799,83.75 69.819,83.916 69.814,84.078C69.814,84.09 69.814,84.102 69.814,84.115L69.814,94.115C69.814,94.249 69.797,94.378 69.764,94.502C69.782,95.635 68.8,96.864 67.293,97.457C65.496,98.165 63.629,97.704 63.126,96.428C62.623,95.151 63.674,93.54 65.471,92.832C65.922,92.654 66.377,92.55 66.814,92.514L66.814,86.056L59.814,88.205L59.814,88.608C59.796,88.59 59.776,88.573 59.756,88.556L56.814,86.105Z"/>
+            </g>
+            <g transform="matrix(1.07157e-16,1.75,-1.42857,8.74748e-17,180.086,27.8585)">
+                <path d="M20.359,85.122C20.505,84.866 20.745,84.713 21,84.713C21.255,84.713 21.495,84.866 21.641,85.122C22.298,86.271 23.326,88.07 24.071,89.375C24.252,89.69 24.274,90.102 24.128,90.444C23.983,90.786 23.695,91 23.381,91C22.007,91 20.044,91 18.659,91C18.337,91 18.042,90.781 17.893,90.431C17.744,90.081 17.767,89.658 17.951,89.335C18.695,88.034 19.709,86.26 20.359,85.122Z"/>
+            </g>
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Insert-Template" serif:id="Insert Template">
+        </g>
+        <g id="Play-Template" serif:id="Play Template">
+        </g>
+    </g>
+</svg>

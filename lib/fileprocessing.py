@@ -59,16 +59,22 @@ class Fileprocessing(Filesystem):
 
 
 
-    def Checksum(self, path):
+    def Checksum(self, path, algorithm="sha256"):
         """
-        This method calculates the *sha256* checksum of a file and returns it hexadecimal encoded as a string.
+        This method calculates the checksum of a file and returns it hexadecimal encoded as a string.
         If the file does not exists, ``None`` gets returned.
+
+        The default algorithm is SHA-256
 
         Args:
             path (str): Path to the file from that the checksum shall be calculated
+            algorithm (str): Checksum algorithm: ``"sha256"``, ``"sha1"``
 
         Returns:
             Checksum as string, or ``None`` if the file does not exist.
+
+        Raises:
+            ValueError: For unknown algorithm argument.
 
         Example:
 
@@ -77,13 +83,19 @@ class Fileprocessing(Filesystem):
                 checksum = fs.Checksum(song["path"])
                 print("Checksum: %s" % (checksum))
         """
+        if algorithm not in ["sha256", "sha1"]:
+            raise ValueError("algorithm must be \"sha256\" or \"sha1\"")
+
         abspath = self.AbsolutePath(path)
 
         if not self.IsFile(abspath):
             return None
 
         with open(abspath, "rb") as f:
-            checksum = hashlib.sha256(f.read()).hexdigest()
+            if algorithm == "sha256":
+                checksum = hashlib.sha256(f.read()).hexdigest()
+            elif algorithm == "sha1":
+                checksum = hashlib.sha1(f.read()).hexdigest()
 
         return checksum
 

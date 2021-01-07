@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="2.1.0"
+SCRIPTVERSION="2.2.0"
 echo -e "\e[1;31mMusicDB-Install [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
@@ -64,12 +64,13 @@ if [ -f "/etc/musicdb.ini" ] ; then
     # When there is already an installation, get as much as possible information from it
     DATADIR="$(dirname "$(readlink /etc/musicdb.ini)")"
     SERVERDIR="$(dirname "$(which musicdb)")"
-    MUSICDIR="$(sed -nr '/\[music\]/,/\[/{/path/p}'  /etc/musicdb.ini | cut -d "=" -f 2)"
-    MDBGROUP="$(sed -nr '/\[music\]/,/\[/{/group/p}' /etc/musicdb.ini | cut -d "=" -f 2)"
-    USER="$(    sed -nr '/\[music\]/,/\[/{/owner/p}' /etc/musicdb.ini | cut -d "=" -f 2)" # The music owner, not the MDB user!
-    SSLKEY="$(  sed -nr '/\[tls\]/,/\[/{/key/p}'     /etc/musicdb.ini | cut -d "=" -f 2)"
-    SSLCRT="$(  sed -nr '/\[tls\]/,/\[/{/cert/p}'    /etc/musicdb.ini | cut -d "=" -f 2)"
+    MUSICDIR="$(sed -nr '/\[music\]/,/\[/{/path/p}'  /etc/musicdb.ini | cut -d "=" -f 2 | tr -d '[:space:]')"
+    MDBGROUP="$(sed -nr '/\[music\]/,/\[/{/group/p}' /etc/musicdb.ini | cut -d "=" -f 2 | tr -d '[:space:]')"
+    USER="$(    sed -nr '/\[music\]/,/\[/{/owner/p}' /etc/musicdb.ini | cut -d "=" -f 2 | tr -d '[:space:]')" # The music owner, not the MDB user!
+    SSLKEY="$(  sed -nr '/\[tls\]/,/\[/{/key/p}'     /etc/musicdb.ini | cut -d "=" -f 2 | tr -d '[:space:]')"
+    SSLCRT="$(  sed -nr '/\[tls\]/,/\[/{/cert/p}'    /etc/musicdb.ini | cut -d "=" -f 2 | tr -d '[:space:]')"
     MDBUSER="musicdb"
+    WSAPIKEY="$(sed -nr '/\[websocket\]/,/\[/{/apikey/p}' /etc/musicdb.ini | cut -d "=" -f 2 | tr -d '[:space:]')"
 
     if [ "$SERVERDIR" == "." ] ; then
         echo -e "\t\e[1;33mUnable to find the server directory! \e[1;30m(Server directory must be in \$PATH)"
@@ -93,6 +94,7 @@ else
     SSLKEY="/etc/ssl/musicdb/musicdb.key"
     SSLCRT="/etc/ssl/musicdb/musicdb.cert"
     MDBUSER="musicdb"
+    WSAPIKEY="$(openssl rand -base64 32)"
 fi
 
 
@@ -157,13 +159,13 @@ echo -e "\t\e[1;34mSSL certificate:  \e[0;36m$SSLCRT"
 SetupUsersAndGroups "$MDBUSER" "$MDBGROUP" "$USER"
 CreateMusicDBSSLKeys "$SSLKEY" "$SSLCRT" "$HTTPGROUP"
 CreateDirectoryTree "$SOURCEDIR" "$SERVERDIR" "$DATADIR" "$MUSICDIR" "$USER" "$MDBUSER" "$MDBGROUP"
-InstallMusicDBConfiguration "$SOURCEDIR" "$SERVERDIR" "$DATADIR" "$MUSICDIR" "$USER" "$MDBUSER" "$MDBGROUP" "$SSLKEY" "$SSLCRT"
+InstallMusicDBConfiguration "$SOURCEDIR" "$SERVERDIR" "$DATADIR" "$MUSICDIR" "$USER" "$MDBUSER" "$MDBGROUP" "$SSLKEY" "$SSLCRT" "$WSAPIKEY"
 InstallMusicDBDatabases "$SOURCEDIR" "$DATADIR" "$MDBUSER" "$MDBGROUP"
 SetupIcecastEnvironment "$SOURCEDIR" "$DATADIR" "$MDBGROUP" "$SSLCRT"
 InstallLogrotateConfiguration "$SOURCEDIR" "$DATADIR" "$MDBUSER" "$MDBGROUP"
 InstallShellProfile "$SOURCEDIR" "$SERVERDIR" 
 InstallID3Edit
-InstallMusicDBFiles "$SOURCEDIR" "$SERVERDIR" "$MDBUSER" "$MDBGROUP"
+InstallMusicDBFiles "$SOURCEDIR" "$SERVERDIR" "$MDBUSER" "$MDBGROUP" "$WSAPIKEY"
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

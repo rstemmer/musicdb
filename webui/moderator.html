@@ -10,93 +10,207 @@
 
         <!-- Make things fancy -->
         <!-- icons -->
-        <link rel="icon"              type="image/png" href="pics/MusicDB.png"  >
+        <link rel="icon"              type="image/svg+xml" href="img/mdblogo-dark.svg">
         <link rel="apple-touch-icon" sizes="152x152"   href="pics/TouchIcon.png">
-        <!-- libs -->
-        <link rel="stylesheet" href="lib/nanoscroller/nanoscroller.css">
-        <link rel="stylesheet" href="lib/jquery-ui/jquery-ui.min.css">
-        <link rel="stylesheet" href="lib/font-awesome/font-awesome.css">
         <!-- styles -->
         <link rel="stylesheet" href="css/fonts.css">
         <link rel="stylesheet" href="css/base.css">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/moderator/grid.css">
         <link rel="stylesheet" href="css/moderator/frames.css">
+        <link rel="stylesheet" href="css/moderator/panels.css">
         <link rel="stylesheet" href="css/moderator/animation.css">
         <!-- tools/helper -->
         <link rel="stylesheet" href="css/tools/hovpacity.css">
+        <link rel="stylesheet" href="css/tools/frames.css">
+        <link rel="stylesheet" href="css/tools/Table.css">
+        <link rel="stylesheet" href="css/tools/ProgressBar.css">
+        <link rel="stylesheet" href="css/tools/StatusElement.css">
+        <link rel="stylesheet" href="css/tools/flex.css">
+        <link rel="stylesheet" href="css/tools/PopupElement.css">
+        <link rel="stylesheet" href="css/tools/Menu.css">
         <link rel="stylesheet" href="css/tools/ColorInput.css">
         <link rel="stylesheet" href="css/tools/CreateGrid.css">
+        <link rel="stylesheet" href="css/tools/Slider.css">
+        <link rel="stylesheet" href="css/tools/TimeSelect.css">
+        <link rel="stylesheet" href="css/tools/TabSelect.css">
+        <link rel="stylesheet" href="css/tools/RatioBar.css">
+        <link rel="stylesheet" href="css/tools/ButtonBox.css">
+        <link rel="stylesheet" href="css/tools/ToolBar.css">
+        <link rel="stylesheet" href="css/tools/SVGIcon.css">
+        <link rel="stylesheet" href="css/tools/Artwork.css">
+        <link rel="stylesheet" href="css/tools/FileSelect.css">
+        <link rel="stylesheet" href="css/tools/Input.css">
+        <link rel="stylesheet" href="css/tools/ArtistInput.css">
         <!-- mods -->
-        <link rel="stylesheet" href="css/uimod/mdb_buttons.css">
-        <link rel="stylesheet" href="css/uimod/mdb_songtile.css">
-        <link rel="stylesheet" href="css/uimod/albumtile.css">
-        <link rel="stylesheet" href="css/uimod/mdb_hud.css">
-        <link rel="stylesheet" href="css/uimod/mdb_mpdcontrol.css">
-        <link rel="stylesheet" href="css/uimod/queuecontrol.css">
-        <link rel="stylesheet" href="css/uimod/albumtags.css">
-        <link rel="stylesheet" href="css/uimod/songtags.css">
+        <link rel="stylesheet" href="css/uimod/MessageBar.css">
+        <link rel="stylesheet" href="css/uimod/TimeFrameSelection.css">
+        <link rel="stylesheet" href="css/uimod/TagList.css">
+        <link rel="stylesheet" href="css/uimod/TagEdit.css">
+        <link rel="stylesheet" href="css/uimod/FlagBar.css">
         <link rel="stylesheet" href="css/uimod/songproperties.css">
-        <link rel="stylesheet" href="css/uimod/fullscreenbutton.css">
-        <link rel="stylesheet" href="css/uimod/mdbstate.css">
-        <link rel="stylesheet" href="css/uimod/mdbsearch.css">
-        <link rel="stylesheet" href="css/uimod/taginput.css">
-        <link rel="stylesheet" href="css/uimod/lyrics.css">
-        <link rel="stylesheet" href="css/uimod/songrelationship.css">
-        <link rel="stylesheet" href="css/uimod/alphabetbar.css">
-        <link rel="stylesheet" href="css/uimod/artistloader.css">
-        <link rel="stylesheet" href="css/uimod/mdb_artistview.css">
-        <link rel="stylesheet" href="css/uimod/mdb_albumview.css">
-        <link rel="stylesheet" href="css/uimod/mdb_queueview.css">
+        <link rel="stylesheet" href="css/uimod/musicproperties.css">
+        <link rel="stylesheet" href="css/uimod/musicmoods.css">
+        <link rel="stylesheet" href="css/uimod/Curtain.css">
+        <link rel="stylesheet" href="css/uimod/LyricsEdit.css">
+        <link rel="stylesheet" href="css/uimod/MainViewHeadline.css">
+        <link rel="stylesheet" href="css/uimod/SettingsList.css">
+        <link rel="stylesheet" href="css/uimod/GenreListEditor.css">
+        <link rel="stylesheet" href="css/uimod/MoodsTable.css">
+        <link rel="stylesheet" href="css/uimod/UploadTable.css">
+        <link rel="stylesheet" href="css/uimod/VideoImportTable.css">
+        <link rel="stylesheet" href="css/uimod/ImportForm.css">
+        <link rel="stylesheet" href="css/uimod/ImportStateList.css">
+        <link rel="stylesheet" href="css/uimod/VideoImportForm.css">
+        <!-- Tiles -->
+        <link rel="stylesheet" href="css/tiles/Tile.css">
+        <link rel="stylesheet" href="css/tiles/QueueTile.css">
+        <link rel="stylesheet" href="css/tiles/SongTile.css">
+        <link rel="stylesheet" href="css/tiles/AlbumTile.css">
+        <link rel="stylesheet" href="css/tiles/VideoTile.css">
+        <!-- Views -->
+        <link rel="stylesheet" href="css/views/MainMenu.css">
+        <link rel="stylesheet" href="css/views/LeftView.css">
+        <link rel="stylesheet" href="css/views/MainView.css">
+
+        <link rel="stylesheet" href="css/views/GenreSelectionView.css">
+        <link rel="stylesheet" href="css/views/MusicDBHUD.css">
+        <link rel="stylesheet" href="css/views/MusicDBControls.css">
+        <link rel="stylesheet" href="css/views/SearchInput.css">
+        <link rel="stylesheet" href="css/views/AlphabetBar.css">
+        <link rel="stylesheet" href="css/views/ArtistsView.css">
+        <link rel="stylesheet" href="css/views/SettingsMenu.css">
+
+        <link rel="stylesheet" href="css/views/AlbumView.css">
+        <link rel="stylesheet" href="css/views/LyricsView.css">
+        <link rel="stylesheet" href="css/views/VideoView.css">
+        <link rel="stylesheet" href="css/views/StreamView.css">
+        <link rel="stylesheet" href="css/views/AboutMusicDB.css">
+        <link rel="stylesheet" href="css/views/SearchResults.css">
+        <link rel="stylesheet" href="css/views/SongRelationsView.css">
+
+        <link rel="stylesheet" href="css/views/GenreSettings.css">
+        <link rel="stylesheet" href="css/views/MoodManager.css">
+        <link rel="stylesheet" href="css/views/HiddenAlbums.css">
+        <link rel="stylesheet" href="css/views/VideoImport.css">
+
+        <link rel="stylesheet" href="css/views/QueueTimeBar.css">
+        <link rel="stylesheet" href="css/views/QueueView.css">
+        <link rel="stylesheet" href="css/views/QueueControlView.css">
 
 
 
         <!-- Make things work -->
-        <!-- libs -->
-        <script src="lib/jquery/jquery-3.min.js"></script>  
-        <script src="lib/jquery-ui/jquery-ui.min.js"></script>  
-        <script src="lib/nanoscroller/jquery.nanoscroller.min.js"></script>  
         <!-- tools -->
-        <script src="js/tools/CSSClassName.js"></script>  
-        <script src="js/tools/EncodePath.js"></script>  
+        <script src="js/tools/Element.js"></script>
+        <script src="js/tools/PopupElement.js"></script>
+        <script src="js/tools/Levenshtein.js"></script>
+        <script src="js/tools/BufferToHexString.js"></script>
+        <script src="js/tools/EncodePath.js"></script>
         <script src="js/tools/CreateGrid.js"></script>
-        <script src="js/tools/ColorInput.js"></script>  
-        <script src="js/tools/scrollto.js"></script>  
-        <script src="js/style.js"></script>  
+        <script src="js/tools/Table.js"></script>
+        <script src="js/tools/ProgressBar.js"></script>
+        <script src="js/tools/StatusElement.js"></script>
+        <script src="js/tools/ColorInput.js"></script>
+        <script src="js/tools/AudioPlayer.js"></script>
+        <script src="js/tools/Time.js"></script>
+        <script src="js/tools/TimeSelect.js"></script>
+        <script src="js/tools/TabSelect.js"></script>
+        <script src="js/tools/FullscreenManager.js"></script>
+        <script src="js/tools/MDBModeManager.js"></script>
+        <script src="js/tools/UploadManager.js"></script>
+        <script src="js/tools/ColorManager.js"></script>
+        <script src="js/tools/TagManager.js"></script>
+        <script src="js/tools/ArtistsCache.js"></script>
+        <script src="js/tools/SVGIcon.js"></script>
+        <script src="js/tools/Menu.js"></script>
+        <script src="js/tools/Slider.js"></script>
+        <script src="js/tools/RatioBar.js"></script>
+        <script src="js/tools/ButtonBox.js"></script>
+        <script src="js/tools/ToolBar.js"></script>
+        <script src="js/tools/DragDrop.js"></script>
+        <script src="js/tools/Artwork.js"></script>
+        <script src="js/tools/FileSelect.js"></script>
+        <script src="js/tools/Input.js"></script>
+        <script src="js/tools/ArtistInput.js"></script>
         <!-- scripts -->
-        <script src="js/uimod/tagmanager.js"></script>
-        <script src="js/uimod/mdb_buttons.js"></script>
-        <script src="js/uimod/mdb_songtile.js"></script>
-        <script src="js/uimod/albumtile.js"></script>
-        <script src="js/uimod/mdb_hud.js"></script> 
-        <script src="js/uimod/mdb_mpdcontrol.js"></script>  
-        <script src="js/uimod/queuecontrol.js"></script>  
-        <script src="js/uimod/albumtags.js"></script>  
-        <script src="js/uimod/songtags.js"></script>  
-        <script src="js/uimod/songproperties.js"></script>  
-        <script src="js/uimod/fullscreenbutton.js"></script>  
-        <script src="js/uimod/mdbstate.js"></script>  
-        <script src="js/uimod/mdbsearch.js"></script>  
-        <script src="js/uimod/taginput.js"></script>
-        <script src="js/uimod/lyrics.js"></script>  
-        <script src="js/uimod/songrelationship.js"></script>  
-        <script src="js/uimod/alphabetbar.js"></script>  
-        <script src="js/uimod/artistloader.js"></script>  
-        <script src="js/uimod/mdb_artistview.js"></script>  
-        <script src="js/uimod/mdb_albumview.js"></script>  
-        <script src="js/uimod/mdb_queueview.js"></script>  
+        <script src="js/uimod/MessageBar.js"></script>
+        <script src="js/uimod/TimeFrameSelection.js"></script>
+        <script src="js/uimod/ThumbnailSelection.js"></script>
+        <script src="js/uimod/TagList.js"></script>
+        <script src="js/uimod/TagEdit.js"></script>
+        <script src="js/uimod/FlagBar.js"></script>
+        <script src="js/uimod/SongSettings.js"></script>
+        <script src="js/uimod/QueueTime.js"></script>
+        <script src="js/uimod/musicproperties.js"></script>
+        <script src="js/uimod/musicmoods.js"></script>
+        <script src="js/uimod/Curtain.js"></script>
+        <script src="js/uimod/MusicDBStatus.js"></script>
+        <script src="js/uimod/LyricsEdit.js"></script>
+        <script src="js/uimod/MainViewHeadline.js"></script>
+        <script src="js/uimod/SettingsList.js"></script>
+        <script src="js/uimod/GenreListEditor.js"></script>
+        <script src="js/uimod/MoodsTable.js"></script>
+        <script src="js/uimod/UploadTable.js"></script>
+        <script src="js/uimod/VideoImportTable.js"></script>
+        <script src="js/uimod/ImportForm.js"></script>
+        <script src="js/uimod/ImportStateList.js"></script>
+        <script src="js/uimod/VideoImportForm.js"></script>
+        <!-- Tiles -->
+        <script src="js/tiles/Tile.js"></script>
+        <script src="js/tiles/QueueTile.js"></script>
+        <script src="js/tiles/SongTile.js"></script>
+        <script src="js/tiles/AlbumTile.js"></script>
+        <script src="js/tiles/VideoTile.js"></script>
+        <!-- Views -->
+        <script src="js/moderator/ViewManager.js"></script>
+        <script src="js/views/MainMenu.js"></script>
+        <script src="js/views/LeftView.js"></script>
+        <script src="js/views/MainView.js"></script>
+        <script src="js/views/MainSettingsView.js"></script>
 
-        <script src="config.js"></script>  
-        <script src="js/musicdb.js"></script>  
+        <script src="js/views/GenreSelectionView.js"></script>
+        <script src="js/views/MusicDBHUD.js"></script>
+        <script src="js/views/MusicDBControls.js"></script>
+        <script src="js/views/SearchInput.js"></script>
+        <script src="js/views/AlphabetBar.js"></script>
+        <script src="js/views/ArtistsView.js"></script>
+        <script src="js/views/SettingsMenu.js"></script>
+
+        <script src="js/views/AlbumView.js"></script>
+        <script src="js/views/LyricsView.js"></script>
+        <script src="js/views/VideoView.js"></script>
+        <script src="js/views/StreamView.js"></script>
+        <script src="js/views/AboutMusicDB.js"></script>
+        <script src="js/views/Welcome.js"></script>
+        <script src="js/views/SearchResults.js"></script>
+        <script src="js/views/SongRelationsView.js"></script>
+
+        <script src="js/views/WebUISettings.js"></script>
+        <script src="js/views/GenreSettings.js"></script>
+        <script src="js/views/MoodManager.js"></script>
+        <script src="js/views/HiddenAlbums.js"></script>
+        <script src="js/views/VideoImport.js"></script>
+
+        <script src="js/views/QueueView.js"></script>
+        <script src="js/views/QueueControlView.js"></script>
+        <script src="js/uimod/videostream.js"></script>
+
+
+        <script src="config.js"></script>
+        <script src="js/musicdb.js"></script>
+        
+        
         <!-- This needs to be the last one. It connects to the server and starts running the functionality. -->
-        <script src="js/moderator/moderator.js"></script>  
+        <script src="js/moderator/moderator.js"></script>
 
         <title>MusicDB</title>
+
         <!-- UNCOMMENT FOR DEBUGGING DIVS
         <style type="text/css">
         div
         {
-            border: 1px solid #f00;
+            outline: 1px solid #f00;
         }
         </style>
         -->
@@ -105,73 +219,76 @@
 
     <body class="bgcolor fgcolor">
 
-        <!-- Build up a 3x3 grid that gets filled with content by the scripts -->
-        <div class=flexbox>
+        <div class="screen">
+            <div class="panels" data-panels="1" id="Panels">
 
-            <!-- Top Row -->
-            <div id=FXTopRow      class=flexrow>
-                <div id=Artistloader class="flexcell flexcolumn_left">
+                <div class="panel" data-visible="false" id="VideoPanel">
+
+                        <!--
+                    <div id="detachable_trigger"></div>
+                    <div id="detachable_video" class="detachable fmcolor" data-detached="false">
+                        <video
+                            id="VideoStreamPlayer"
+                            class="detachable_content"
+                            data-detached="false"
+                            preload=none>
+                        </video>
+                    </div>
+                        -->
+
                 </div>
-                <div class="flexcell flexcolumn_middle hudcell vsplit frame fmcolor">
-                    <div id=HUD   class="primarycell"></div>
-                </div>
-                <div class="flexcell flexcolumn_right">
-                    <div class="statecell">
-                        <div class="stateelements frame hovpacity fmcolor">
-                            <div id=Controls></div>
-                            <div id=State   ></div>
+
+                <div class="panel" data-visible="true" id="moderatorpanel">
+                    <!-- Build up a 3x3 grid that gets filled with content by the scripts -->
+                    <div class=WebUI>
+
+                        <!-- Top Row -->
+                        <div id=FXTopRow class=flexrow>
+                            <div id=GenreBox    class="flexcell flexcolumn_left  "></div>
+                            <div id=HUDBox      class="flexcell flexcolumn_middle"></div>
+                            <div id=ControlBox  class="flexcell flexcolumn_right "></div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Middle Row -->
-            <div id=FXMiddleRow   class=flexrow>
-                <div class="flexcell flexcolumn_left hovpacity">
-                    <div id=Alphabetbar class="contentboxheader">
-                    </div>
-                    <div class="nano fmcolor frame frame_left contentbox">
-                        <div id=LeftContentBox      class="content nano-content"></div>
-                    </div>
-                </div>
-
-                <div class="flexcell flexcolumn_middle">
-                    <div class="contentboxheader">
-                    </div>
-                    <div class="maincell nano fmcolor frame frame_middle contentbox">
-                        <div id=MiddleContentBox    class="content nano-content">
-                            <!-- DEFAULTS -->
-                            <div style="margin-top:30px; margin-left:50px;">
-                                <div class="fgcolor"><b>MusicDB</b></div>
-                                <div class="hlcolor smallfont">by Ralf Stemmer</div>
+                        <!-- Middle Row -->
+                        <div id=FXMiddleRow class=flexrow>
+                            <div class="flexcolumn flexcolumn_left hovpacity">
+                                <div id=AlphabetBox    class="contentboxheader"></div>
+                                <div id=LeftContentBox class="contentbox flexcell frame frame_left"></div>
                             </div>
-                            <!-- -------- -->
+
+                            <div class="flexcolumn flexcolumn_middle">
+                                <div                     class="contentboxheader"></div>
+                                <div id=MiddleContentBox class="contentbox flexcell frame frame_middle">
+                                        <!-- DEFAULTS -->
+                                        <div style="margin-top:30px; margin-left:50px; width: 100%;">
+                                            <div class="fgcolor"><b>MusicDB</b></div>
+                                            <div class="hlcolor smallfont">by Ralf Stemmer</div>
+                                        </div>
+                                        <!-- -------- -->
+                                </div>
+                            </div>
+
+                            <div class="flexcolumn flexcolumn_right hovpacity">
+                                <div id=MDBQueueTimeBar class="contentboxheader"></div>
+                                <div id=RightContentBox class="contentbox flexcell frame frame_right"></div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Row -->
+                        <div id=FXBottomRow class=flexrow>
+                            <div id=SearchBox       class="flexcell flexcolumn_left"  ></div>
+                            <div                    class="flexcell flexcolumn_middle"></div>
+                            <div id=QueueControl    class="flexcell flexcolumn_right" ></div>
                         </div>
                     </div>
-                </div>
 
-                <div class="flexcell flexcolumn_right">
-                    <div class="contentboxheader">
-                    </div>
-                    <div class="nano fmcolor frame frame_right contentbox">
-                        <div id=RightContentBox     class="content nano-content"></div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Bottom Row -->
-            <div id=FXBottomRow   class=flexrow>
-                <div id=Search          class="flexcell flexcolumn_left"></div>
-                <div                    class="flexcell flexcolumn_middle"></div>
-                <div id=QueueControl    class="flexcell flexcolumn_right"></div>
-            </div>
-        </div>
+                </div> <!-- panel -->
+
+            </div> <!-- panels -->
+        </div> <!-- screen -->
+
     </body>
-
-    <!-- FIXME: This shall be done in the javascripts later -->
-    <script>
-        $(".nano").nanoScroller();
-    </script>
 </html>
 
 <!--

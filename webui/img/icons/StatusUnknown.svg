@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-225,-55)">
+        <g transform="matrix(1.10876,0,0,1.26098,-91.0415,-15.3672)">
+            <g id="Save">
+            </g>
+        </g>
+        <g id="StatusGood">
+        </g>
+        <g id="StatusBad">
+        </g>
+        <g id="StatusUnknown" transform="matrix(1,0,0,1,50,0)">
+            <path id="Circle" d="M185,55C190.519,55 195,59.481 195,65C195,70.519 190.519,75 185,75C179.481,75 175,70.519 175,65C175,59.481 179.481,55 185,55ZM185,57C189.415,57 193,60.585 193,65C193,69.415 189.415,73 185,73C180.585,73 177,69.415 177,65C177,60.585 180.585,57 185,57Z"/>
+            <g transform="matrix(19.3437,0,0,17.2942,180.725,70.7936)">
+                <path d="M0.155,-0.244C0.156,-0.229 0.166,-0.218 0.179,-0.218C0.196,-0.217 0.219,-0.217 0.236,-0.217C0.249,-0.217 0.26,-0.229 0.261,-0.244C0.269,-0.352 0.402,-0.398 0.402,-0.516C0.402,-0.625 0.327,-0.682 0.222,-0.682C0.158,-0.682 0.104,-0.656 0.062,-0.618C0.057,-0.612 0.053,-0.604 0.053,-0.596C0.053,-0.588 0.057,-0.58 0.063,-0.575C0.071,-0.567 0.082,-0.557 0.09,-0.55C0.099,-0.541 0.112,-0.541 0.121,-0.549C0.146,-0.572 0.174,-0.586 0.207,-0.586C0.258,-0.586 0.288,-0.554 0.288,-0.508C0.288,-0.425 0.155,-0.369 0.155,-0.244ZM0.209,0.012C0.252,0.012 0.285,-0.022 0.285,-0.067C0.285,-0.113 0.252,-0.147 0.209,-0.147C0.166,-0.147 0.134,-0.113 0.134,-0.067C0.134,-0.022 0.166,0.012 0.209,0.012Z" style="fill-rule:nonzero;"/>
+            </g>
+        </g>
+        <g transform="matrix(1.10876,0,0,1.26098,-66.3229,-15.3672)">
+            <g id="Load">
+            </g>
+        </g>
+        <g id="vThis">
+        </g>
+        <g id="vBegin">
+        </g>
+        <g id="vMin">
+        </g>
+        <g transform="matrix(1.1523,0,0,1.31051,-21.9614,-46.8621)">
+            <g id="vMax">
+            </g>
+        </g>
+        <g id="vEnd">
+        </g>
+        <g id="Menu">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Insert-Template" serif:id="Insert Template">
+        </g>
+        <g id="Play-Template" serif:id="Play Template">
+        </g>
+    </g>
+</svg>

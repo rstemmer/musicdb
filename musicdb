@@ -21,10 +21,15 @@ import importlib.util
 import os
 import sys
 import grp
+import logging
 from lib.filesystem     import Filesystem
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
 from lib.logging        import MusicDBLogger
+
+from maintain.configuration   import ConfigurationMaintainer
+from maintain.musicdatabase   import MusicDatabaseMaintainer
+from maintain.trackerdatabase import TrackerDatabaseMaintainer
 
 
 VERSION = None
@@ -60,25 +65,55 @@ def LoadAllModules():
         try:
             spec = importlib.util.spec_from_file_location(modulename, modulepath)
         except Exception as e:
-            print(str(e))
+            print("\033[1;33mWARNING: Loading spec for module \033[0;33m%s\033[1;33m failed with following error: \033[0;33m%s\033[1;30m (Module will not be loaded)\033[0m"%(modulename, str(e)))
             continue
 
         try:
             module = importlib.util.module_from_spec(spec)
         except Exception as e:
-            print(str(e))
+            print("\033[1;33mWARNING: Importing module \033[0;33m%s\033[1;33m failed with following error: \033[0;33m%s\033[1;30m (Module will not be loaded)\033[0m"%(modulename, str(e)))
             continue
 
         try:
             spec.loader.exec_module(module)
         except Exception as e:
-            print(str(e))
+            print("\033[1;33mWARNING: Initial execution of module \033[0;33m%s\033[1;33m failed with following error: \033[0;33m%s\033[1;30m (Module will not be loaded)\033[0m"%(modulename, str(e)))
             continue
 
         modules[modulename] = module
 
     # Return a list of loaded python modules
     return modules
+
+
+
+def CheckDatabases(musicdbpath, trackerdbpath, lycradbpath):
+    # 2nd argument is the expected version number
+    musicdbmaintainer   = MusicDatabaseMaintainer(  musicdbpath,   5)
+    trackerdbmaintainer = TrackerDatabaseMaintainer(trackerdbpath, 3)
+
+    logging.info("Checking \033[0;36m%s", musicdbpath)
+    if not musicdbmaintainer.CheckVersion():
+        logging.warning("%s is too old!\033[1;34m Upgrading …", musicdbpath)
+        musicdbmaintainer.Upgrade()
+
+    logging.info("Checking \033[0;36m%s", trackerdbpath)
+    if not trackerdbmaintainer.CheckVersion():
+        logging.warning("%s is too old!\033[1;34m Upgrading …", trackerdbpath)
+        trackerdbmaintainer.Upgrade()
+    return None
+
+
+def CheckConfiguration(configpath):
+    # 2nd argument is the expected version number
+    configuration = ConfigurationMaintainer(configpath, 5)
+
+    logging.info("Checking \033[0;36m%s", configpath)
+    if not configuration.CheckVersion():
+        logging.warning("%s is too old!\033[1;34m Upgrading …", configpath)
+        configuration.Upgrade()
+    return None
+
 
 
 if __name__ == "__main__":
@@ -137,6 +172,8 @@ if __name__ == "__main__":
         print("\033[1;31mFATAL ERROR: Config-file does not exist!\033[0m (" + args.config + ")")
         exit(1)
 
+    CheckConfiguration(args.config)
+
     try:
         config = MusicDBConfig(args.config)
     except Exception as e:
@@ -184,7 +221,6 @@ if __name__ == "__main__":
 
 
     # get, check and open the database from path
-    # In case the module is "upgrade", do not open MusicDatabase - it my be outdated
     databasepath = config.database.path
 
     if not fs.IsFile(databasepath):
@@ -196,12 +232,10 @@ if __name__ == "__main__":
                 + databasepath + " has an unexpected extension!\033[0m (.db expected)")
         exit(1)
 
+    CheckDatabases(databasepath, config.tracker.dbpath, config.lycra.dbpath)
+
     try:
-        fs.AssertFile(databasepath)
-        if modulename == "upgrade":
-            database = None
-        else:
-            database = MusicDatabase(databasepath)
+        database = MusicDatabase(databasepath)
     except Exception as e:
         print("\033[1;31mFATAL ERROR: Opening database failed!\033[0m (" + databasepath + ")")
         print(e)

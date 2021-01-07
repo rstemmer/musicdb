@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2018-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ A return value gets not handled.
 
 The following events exist:
 
-    QueueChanged:
+    SongQueueChanged:
         Gets triggered when the Song Queue changes
 
     SongChanged:
@@ -110,7 +110,7 @@ Callbacks = []                  # For events like QueueChanged or SongChanged
 class SongQueue(object):
     """
     This class implements a queue to manage songs to play.
-    Whenever the queue changes, it gets stored in the MusicDB State Directory
+    Whenever the queue changes, its data gets stored in the MusicDB State Directory
 
     When the constructor detects that there is no queue yet (not even an empty one),
     it tries to load the stored queue.
@@ -216,9 +216,9 @@ class SongQueue(object):
             except Exception as e:
                 logging.exception("A Song Queue event callback function crashed!")
 
-    def Event_QueueChanged(self):
+    def Event_SongQueueChanged(self):
         """
-        See :meth:`~TriggerEvent` with event name ``"QueueChanged"``.
+        See :meth:`~TriggerEvent` with event name ``"SongQueueChanged"``.
         More details in the module description at the top of this document.
 
         This method also tries to save the queue into the MusicDB State Directory.
@@ -227,7 +227,7 @@ class SongQueue(object):
             self.Save()
         except Exception as e:
             logging.warning("Saving the current song queue failed with error: %s. \033[1;30m(Continuing without saving)", str(e))
-        self.TriggerEvent("QueueChanged")
+        self.TriggerEvent("SongQueueChanged")
 
     def Event_SongChanged(self):
         """
@@ -303,12 +303,12 @@ class SongQueue(object):
 
         The method returns element 0 from the queue which is the current song that can be streamed or gets already streamed.
         The song shall remain in the queue until it got completely streamed.
-        Then it can be removed by calling :meth:`~mdbapi.songqueue.SongQueue.NetSong`.
+        Then it can be removed by calling :meth:`~mdbapi.songqueue.SongQueue.NextSong`.
 
         When the queue is empty, a new random song gets added.
         This is the exact same song that then will be returned by this method.
         If adding a new song fails, ``None`` gets returned.
-        This method triggers the ``QueueChanged`` event when the queue was empty and a new random song got added.
+        This method triggers the ``SongQueueChanged`` event when the queue was empty and a new random song got added.
 
         Returns:
             A dictionary as described in the module description
@@ -345,9 +345,9 @@ class SongQueue(object):
             # Empty Queue? Add a random song!
             if len(Queue) == 0:
                 self.AddRandomSong()
-                self.Event_QueueChanged()
+                self.Event_SongQueueChanged()
 
-            # Still empty (no random song found)? Then return (None, None). Nothing to do…
+            # Still empty (no random song found)? Then return None. Nothing to do…
             if len(Queue) == 0:
                 logging.critical("Queue run empty! \033[1;30m(Check constraints for random song selection and check if there are songs at all)")
                 return None
@@ -374,12 +374,12 @@ class SongQueue(object):
             In context of streaming, this method may not be the one you want to call.
             This Method drops the current song and sets the next song on top of the queue.
 
-            The stream will not notice this, so that it continues streaming the previous song. (See :doc:`/mdbapi/stream`).
-            If you want to stream the next song, call :meth:`mdbapi.stream.StreamManager.PlayNextSong`.
+            The stream will not notice this, so that it continues streaming the previous song. (See :doc:`/mdbapi/audiostream`).
+            If you want to stream the next song, call :meth:`mdbapi.audiostream.AudioStreamManager.PlayNextSong`.
 
-            The :meth:`mdbapi.stream.StreamManager.PlayNextSong` then makes the Streaming Thread calling this method.
+            The :meth:`mdbapi.audiostream.AudioStreamManager.PlayNextSong` then makes the Streaming Thread calling this method.
 
-        This method triggers the ``SongChanged`` and ``QueueChanged`` event when the queue was not empty.
+        This method triggers the ``SongChanged`` and ``SongQueueChanged`` event when the queue was not empty.
         The ``SongChanged`` event gets also triggered when there was no next song.
 
         When there is only one entry left in the queue - the current song - then a new one gets add via :meth:`AddRandomSong`
@@ -426,7 +426,7 @@ class SongQueue(object):
                 self.AddRandomSong()
 
         self.Event_SongChanged()
-        self.Event_QueueChanged()
+        self.Event_SongQueueChanged()
         return entry
 
 
@@ -439,7 +439,7 @@ class SongQueue(object):
         The content of the dictionary is described in the description of this module.
 
         Returns:
-            The current song queue. ``None`` if there is no queue yet.
+            The current song queue. ``[None]`` if there is no queue yet.
 
         Example:
 
@@ -468,22 +468,23 @@ class SongQueue(object):
 
             * ``"last"`` (default): Appends the song at the end of the queue
             * ``"next"``: Inserts the song right after the current playing song.
+            * *Integer*: Entry-ID after that the song shall be inserted.
 
-        On success, this method triggers the ``QueueChanged`` event.
+        On success, this method triggers the ``SongQueueChanged`` event.
 
         When the song shall be put at the beginning of the queue, then it gets set to index 1 not index 0.
         So the current playing song (index 0) remains!
 
         The new song gets added to the :mod:`~mdbapi.blacklist` via :meth:`mdbapi.blacklist.BlacklistInterface.AddSong`
-        The method also triggers the ``QueueChanged`` event.
+        The method also triggers the ``SongQueueChanged`` event.
 
         Args:
             songid (int): The ID of the song that shall be added to the queue
-            position (str): Defines the position where the song gets inserted
+            position (str/int): Defines the position where the song gets inserted
             israndom (bool): Defines whether the song is randomly selected or not
 
         Returns:
-            *Nothing*
+            The new Queue Entry ID as integer
 
         Raises:
             TypeError: When ``songid`` is not of type ``int``
@@ -493,28 +494,38 @@ class SongQueue(object):
 
         entryid = self.GenerateID()
 
-        entry = {}
-        entry["entryid"]  = entryid
-        entry["songid"]   = songid
-        entry["israndom"] = israndom
+        newentry = {}
+        newentry["entryid"]  = entryid
+        newentry["songid"]   = songid
+        newentry["israndom"] = israndom
 
         global Queue
         global QueueLock
 
         with QueueLock:
             if position == "next":
-                Queue.insert(1, entry)
+                Queue.insert(1, newentry)
+
             elif position == "last":
-                Queue.append(entry)
+                Queue.append(newentry)
+
+            elif type(position) == int:
+                for index, entry in enumerate(Queue):
+                    if entry["entryid"] == position:
+                        Queue.insert(index+1, newentry)
+                        break;
+                else:
+                    logging.warning("Queue Entry ID %s does not exist. \033[1;30m(Doing nothing)", str(position))
+
             else:
-                logging.warning("Position must have the value \"next\" or \"last\". Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
+                logging.warning("Position must have the value \"next\", \"last\" or an Queue Entry ID. Given was \"%s\". \033[1;30m(Doing nothing)", str(position))
                 return
 
         # add to blacklist
         self.blacklist.AddSong(songid)
 
-        self.Event_QueueChanged()
-        return
+        self.Event_SongQueueChanged()
+        return entryid
 
 
 
@@ -566,7 +577,7 @@ class SongQueue(object):
         Returns the song ID of the entry addressed by the entry ID
 
         Args:
-            entryid (int): ID of the entry that song ID shall be returnd
+            entryid (int): ID of the entry that song ID shall be returned
 
         Returns:
             The song ID of the entry, or ``None`` if the entry does not exists
@@ -575,7 +586,7 @@ class SongQueue(object):
             TypeError: When ``entryid`` is not of type ``int``
         """
         if type(entryid) != int:
-            raise TypeError("Song must be an integer!")
+            raise TypeError("Entry ID must be an integer!")
 
         global Queue
         global QueueLock
@@ -594,11 +605,11 @@ class SongQueue(object):
         """
         Removes the entry with the ID ``entryid`` from the queue.
         Removing the current song is not allowed!
-        Call :meth:`NextSong` instead.
+        Call :meth:`~NextSong` instead.
 
-        When there is only one entry left in the queue - the current song - then a new one gets add via :meth:`AddRandomSong`
+        When there is only one entry left in the queue - the current song - then a new one gets add via :meth:`~AddRandomSong`
 
-        On success, this method triggers the ``QueueChanged`` event.
+        On success, this method triggers the ``SongQueueChanged`` event.
 
         Args:
             entryid (int): Entry to remove
@@ -610,7 +621,7 @@ class SongQueue(object):
             TypeError: When ``entryid`` is not of type ``int``
         """
         if type(entryid) != int:
-            raise TypeError("Song must be an integer!")
+            raise TypeError("Entry ID must be an integer!")
 
         global Queue
         global QueueLock
@@ -630,7 +641,7 @@ class SongQueue(object):
             if len(Queue) < 2:
                 self.AddRandomSong()
 
-        self.Event_QueueChanged()
+        self.Event_SongQueueChanged()
         return True
 
 
@@ -641,7 +652,7 @@ class SongQueue(object):
         If both IDs are the same, the method returns immediately without doing anything.
         When ``entryid`` addresses the current song, the method returns with value ``False``
 
-        On success, the method triggers the ``QueueChanged`` event.
+        On success, the method triggers the ``SongQueueChanged`` event.
 
         Args:
             entryid (int):
@@ -690,7 +701,7 @@ class SongQueue(object):
             entry = Queue.pop(frompos)
             Queue.insert(topos, entry)
 
-        self.Event_QueueChanged()
+        self.Event_SongQueueChanged()
         return True
 
 

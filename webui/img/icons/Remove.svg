@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-100,-30)">
+        <g transform="matrix(1.10876,0,0,1.26098,-91.0415,-15.3672)">
+            <g id="Save">
+            </g>
+        </g>
+        <g id="StatusGood">
+        </g>
+        <g id="StatusBad">
+        </g>
+        <g id="StatusPaused">
+        </g>
+        <g id="StatusPlaying">
+        </g>
+        <g id="StatusUnknown">
+        </g>
+        <g transform="matrix(1.10876,0,0,1.26098,-66.3229,-15.3672)">
+            <g id="Load">
+            </g>
+        </g>
+        <g id="vThis">
+        </g>
+        <g id="vBegin">
+        </g>
+        <g id="vMin">
+        </g>
+        <g transform="matrix(1.1523,0,0,1.31051,-21.9614,-46.8621)">
+            <g id="vMax">
+            </g>
+        </g>
+        <g id="vEnd">
+        </g>
+        <g id="Reconnect">
+        </g>
+        <g id="Menu">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Remove">
+            <path d="M110,30C115.519,30 120,34.481 120,40C120,45.519 115.519,50 110,50C104.481,50 100,45.519 100,40C100,34.481 104.481,30 110,30ZM112.121,40L114.631,37.49C115.217,36.904 115.217,35.954 114.631,35.369C114.046,34.783 113.096,34.783 112.51,35.369L110,37.879L107.56,35.439C106.975,34.854 106.024,34.854 105.439,35.439C104.854,36.024 104.854,36.975 105.439,37.56L107.879,40L105.439,42.44C104.854,43.025 104.854,43.976 105.439,44.561C106.024,45.146 106.975,45.146 107.56,44.561L110,42.121L112.475,44.596C113.06,45.182 114.011,45.182 114.596,44.596C115.182,44.011 115.182,43.06 114.596,42.475L112.121,40Z"/>
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Insert-Template" serif:id="Insert Template">
+        </g>
+        <g id="Play-Template" serif:id="Play Template">
+        </g>
+    </g>
+</svg>

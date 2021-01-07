@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-150,-55)">
+        <g transform="matrix(1.10876,0,0,1.26098,-91.0415,-15.3672)">
+            <g id="Save">
+            </g>
+        </g>
+        <g id="StatusGood">
+        </g>
+        <g id="StatusBad">
+        </g>
+        <g id="StatusPaused">
+        </g>
+        <g id="StatusPlaying">
+        </g>
+        <g id="StatusUnknown">
+        </g>
+        <g transform="matrix(1.10876,0,0,1.26098,-66.3229,-15.3672)">
+            <g id="Load">
+            </g>
+        </g>
+        <g id="vThis">
+        </g>
+        <g id="vBegin">
+        </g>
+        <g id="vMin">
+        </g>
+        <g transform="matrix(1.1523,0,0,1.31051,-21.9614,-46.8621)">
+            <g id="vMax">
+            </g>
+        </g>
+        <g id="vEnd">
+        </g>
+        <g id="Reconnect">
+        </g>
+        <g id="Menu">
+        </g>
+        <g id="DropDown">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Approve">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Append1" serif:id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Disable">
+        </g>
+        <g id="Hate">
+        </g>
+        <g id="LiveRecording" transform="matrix(1.2,0,0,1.2,102.4,-65.9962)">
+            <g id="Member-Right1" serif:id="Member Right">
+            </g>
+            <g id="Member-Left1" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member1" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="LyricsVideo">
+        </g>
+        <g id="BadAudio">
+        </g>
+        <g id="Like">
+        </g>
+        <g id="Dislike">
+        </g>
+        <g id="Favorite">
+        </g>
+        <g id="Tags">
+        </g>
+        <g id="TimeFrame">
+        </g>
+        <g id="Artwork">
+        </g>
+        <g id="Link">
+        </g>
+        <g id="MusicDB">
+        </g>
+        <g id="Ralation">
+        </g>
+        <g id="ToMainView">
+        </g>
+        <g id="Search" transform="matrix(1,0,0,1,-50,-75)">
+            <path d="M207.5,130C211.639,130 215,133.361 215,137.5C215,141.639 211.639,145 207.5,145C203.361,145 200,141.639 200,137.5C200,133.361 203.361,130 207.5,130ZM207.5,132C210.536,132 213,134.464 213,137.5C213,140.536 210.536,143 207.5,143C204.464,143 202,140.536 202,137.5C202,134.464 204.464,132 207.5,132Z"/>
+            <path d="M219,149L212,142" style="fill:none;stroke:#000;stroke-width:2px;"/>
+        </g>
+    </g>
+</svg>

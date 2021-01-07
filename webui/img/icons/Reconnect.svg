@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-175,-80)">
+        <g transform="matrix(1.10876,0,0,1.26098,-91.0415,-15.3672)">
+            <g id="Save">
+            </g>
+        </g>
+        <g id="StatusGood">
+        </g>
+        <g id="StatusBad">
+        </g>
+        <g id="StatusPaused">
+        </g>
+        <g id="StatusPlaying">
+        </g>
+        <g id="StatusUnknown">
+        </g>
+        <g transform="matrix(1.10876,0,0,1.26098,-66.3229,-15.3672)">
+            <g id="Load">
+            </g>
+        </g>
+        <g id="vThis">
+        </g>
+        <g id="vBegin">
+        </g>
+        <g id="vMin">
+        </g>
+        <g transform="matrix(1.1523,0,0,1.31051,-21.9614,-46.8621)">
+            <g id="vMax">
+            </g>
+        </g>
+        <g id="vEnd">
+        </g>
+        <g id="Reconnect">
+            <path d="M190.811,91.5L190,91.5C189.631,91.5 189.292,91.297 189.118,90.972C188.944,90.647 188.963,90.252 189.168,89.945L191.168,86.945C191.353,86.667 191.666,86.5 192,86.5C192.334,86.5 192.647,86.667 192.832,86.945L194.832,89.945C195.037,90.252 195.056,90.647 194.882,90.972C194.708,91.297 194.369,91.5 194,91.5L192.859,91.5C192.156,95.199 188.903,98 185,98C182.998,98 181.166,97.263 179.762,96.045C179.576,95.876 179.47,95.637 179.471,95.385C179.472,95.134 179.578,94.895 179.765,94.727C179.814,94.668 179.87,94.617 179.926,94.567C180.267,94.261 180.783,94.259 181.126,94.564C182.165,95.463 183.52,96 185,96C187.794,96 190.144,94.087 190.811,91.5ZM177.252,88C178.142,84.551 181.275,82 185,82C187.002,82 188.834,82.737 190.238,83.955C190.424,84.124 190.53,84.363 190.529,84.615C190.528,84.866 190.422,85.105 190.235,85.273C190.186,85.332 190.13,85.383 190.074,85.433C189.733,85.739 189.217,85.741 188.874,85.436C187.835,84.537 186.48,84 185,84C182.39,84 180.166,85.671 179.342,88L180,88C180.369,88 180.708,88.203 180.882,88.528C181.056,88.853 181.037,89.248 180.832,89.555L178.832,92.555C178.647,92.833 178.334,93 178,93C177.666,93 177.353,92.833 177.168,92.555L175.168,89.555C174.963,89.248 174.944,88.853 175.118,88.528C175.292,88.203 175.631,88 176,88L177.252,88Z"/>
+        </g>
+        <g id="Menu">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Insert-Template" serif:id="Insert Template">
+        </g>
+        <g id="Play-Template" serif:id="Play Template">
+        </g>
+    </g>
+</svg>

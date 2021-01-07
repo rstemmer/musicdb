@@ -1,0 +1,89 @@
+/*
+ * MusicDB,  a music manager with web-bases UI that focus on music.
+ * Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.ToolBar
+{
+    border-radius:      var(--radius);
+    background:         rgba( 0, 0, 0, 0.2);
+    padding:            0.5rem;
+}
+.ToolBar + .ToolBar
+{
+    margin-top:         0.5rem;
+}
+
+
+.ToolBar .SVGIcon
+{
+    width:              1.5rem;
+    height:             1.5rem;
+}
+
+.ToolBar .spacer
+{
+    display:            flex;
+    width:              1.0rem;
+    height:             1.5rem;
+}
+
+
+
+.ToolGroup > div
+{
+    border:             var(--borderwidth) solid;
+    border-color:       var(--fmcolor);
+    box-sizing:         border-box;
+    padding:            0.5rem;
+}
+.ToolGroup > div+div
+{
+    border-left:        none;
+}
+.ToolGroup > div:first-child
+{
+    border-top-left-radius:     var(--radius);
+    border-bottom-left-radius:  var(--radius);
+}
+.ToolGroup > div:last-child
+{
+    border-top-right-radius:    var(--radius);
+    border-bottom-right-radius: var(--radius);
+}
+
+
+
+.ToolGroup > div[data-selected=true]
+{
+    background-color:   var(--hlcolor);
+}
+.ToolGroup > div[data-selected=true] > .SVGIcon
+{
+    background-color:   var(--bgcolor);
+}
+
+
+.ToolGroup > div[data-enabled=false] > .SVGIcon
+{
+    opacity:            0.5;
+    filter:             brightness(70%) saturate(70%);
+}
+
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

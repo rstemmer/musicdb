@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-225,-5)">
+        <g transform="matrix(1.10876,0,0,1.26098,-91.0415,-15.3672)">
+            <g id="Save">
+            </g>
+        </g>
+        <g id="StatusGood">
+        </g>
+        <g id="StatusBad">
+        </g>
+        <g id="StatusPaused">
+        </g>
+        <g id="StatusPlaying">
+        </g>
+        <g id="StatusUnknown">
+        </g>
+        <g transform="matrix(1.10876,0,0,1.26098,-66.3229,-15.3672)">
+            <g id="Load">
+            </g>
+        </g>
+        <g id="vThis">
+        </g>
+        <g id="vBegin">
+        </g>
+        <g id="vMin">
+        </g>
+        <g transform="matrix(1.1523,0,0,1.31051,-21.9614,-46.8621)">
+            <g id="vMax">
+            </g>
+        </g>
+        <g id="vEnd">
+        </g>
+        <g id="Reconnect">
+        </g>
+        <g id="Menu">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Disable">
+        </g>
+        <g id="Hate">
+        </g>
+        <g id="LiveRecording" transform="matrix(1.2,0,0,1.2,102.4,-65.9962)">
+            <g id="Member-Right1" serif:id="Member Right" transform="matrix(0.769231,0,0,0.769231,29.9872,9.16667)">
+                <g transform="matrix(1.08333,0,0,1.08333,-14.5,5.41667)">
+                    <path d="M110.769,61.074L110.769,60.385C110.769,59.536 111.459,58.846 112.308,58.846L112.72,58.846C113.252,59.766 114.247,60.385 115.385,60.385C116.523,60.385 117.517,59.766 118.049,58.846L118.462,58.846C119.311,58.846 120,59.536 120,60.385L120,63.462C120,64.311 119.311,65 118.462,65L114,65C114,63.055 112.609,61.433 110.769,61.074Z"/>
+                </g>
+                <circle cx="110.5" cy="67.5" r="2.5"/>
+            </g>
+            <g id="Member-Left1" serif:id="Member Left" transform="matrix(0.769231,0,0,0.769231,21.0128,9.16667)">
+                <g transform="matrix(1.08333,0,0,1.08333,-2.83333,5.41667)">
+                    <path d="M106,65L101.538,65C100.689,65 100,64.311 100,63.462L100,60.385C100,59.536 100.689,58.846 101.538,58.846L101.951,58.846C102.483,59.766 103.477,60.385 104.615,60.385C105.753,60.385 106.748,59.766 107.28,58.846L107.692,58.846C108.541,58.846 109.231,59.536 109.231,60.385L109.231,61.074C107.391,61.433 106,63.055 106,65Z"/>
+                </g>
+                <circle cx="110.5" cy="67.5" r="2.5"/>
+            </g>
+            <g id="Lead-Member1" serif:id="Lead Member">
+                <g transform="matrix(0.833333,0,0,0.833333,18.8333,13.3333)">
+                    <path d="M113.464,67L114,67C115.104,67 116,67.896 116,69L116,73C116,74.104 115.104,75 114,75L106,75C104.896,75 104,74.104 104,73L104,69C104,67.896 104.896,67 106,67L106.536,67C107.228,68.195 108.521,69 110,69C111.479,69 112.772,68.195 113.464,67Z"/>
+                </g>
+                <circle cx="110.5" cy="67.5" r="2.5"/>
+            </g>
+        </g>
+        <g id="LyricsVideo">
+        </g>
+        <g id="BadAudio">
+        </g>
+        <g id="Like">
+        </g>
+        <g id="Dislike">
+        </g>
+        <g id="Favorite">
+        </g>
+    </g>
+</svg>

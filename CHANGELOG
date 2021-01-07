@@ -7,6 +7,68 @@
 
 Run  git log --oneline  for more details
 
+┍━━━━┫ 202?-??-?? ┣━━━━┫ 7.0.0 ┣━━━━━━━━╍╍
+│
+│ ! All Music Video and Upload related features are not enabled by default
+│ ! The video support is in early alpha state and does not yet provide the experience I'm aiming for
+│
+┝━ MAJOR CHANGES
+│ + Support for music videos integrated (Still alpha, deactivated for 7.0.0)
+│ + Support for uploading new content via WebUI integrated (Still alpha, deactivated for 7.0.0)
+│ * Update process improved - just a simple script call (scripts/update.sh)
+│ * musicdb checks versions of configuration and database when executed. If something is outdated it becomes updated automatically
+│    + Automatic creation of the following configured directories: music, artwork, videoframes, uploads
+│ + License for images is now explicit creative commons (CC BY-SA 3.0)
+│ * Lots of bug-fixes due to rewriting some code fragments to integrate video management
+│ + Albums can be hidden in case they shall not appear in the WebUI, but removing would be too much.
+│ + Two new song/video properties: Live Audio and Bad Audio Quality
+│ + Removed command line modules: "tracker" and "upgrade" (have been, or became useless)
+│ + Added command line modules: "videoframes"
+│ + Web API:
+│    * notification "MusicDB:Queue" is now called "MusicDB:SongQueue"
+│    * notification "MusicDB:Stream" is now called "MusicDB:AudioStream"
+│    + notification "MusicDB:Upload" added
+│    * Function "GetQueue" is now called "GetSongQueue"
+│    * Function "GetStreamState" is now called "GetAudioStreamState"
+│    * Function "AddAlbumToQueue" now requires a position argument
+│    + New functions for videos (See documentation)
+│    + New functions for uploads (See documentation)
+│    + Further new functions: GetHiddenAlbums, HideAlbum, GetTagsStatistics, AddGenre, AddMoodFlag, DeleteTag, ModifyTag, SaveWebUIConfiguration, LoadWebUIConfiguration, FindNewContent
+│    * Some function now return more data than before (but never less!). See the documentation for details.
+│ + WebUI:
+│    ! Total rewrite - look and feel is the same
+│    * Layout also works on 4K screens
+│    - jQuery and other dependencies removed.
+│    + WebUI can now be configured via webui.ini
+│    + WebUI provides a settings and management interface (not yet a full replacement of the command line tools)
+│    * Lyrics integration improved for better UX. It can also be deactivated in the settings.
+│    * New icon set that is made for MusicDB's WebUI for better UX
+│    + Full Drag'n'Drop support. Drag any album or song into the queue at any position
+│    * Lang song and album names no longer destroy the layout
+│ + MusicDB Configuration:
+│    + Configurations for video frame management "[videoframes]" and uploads "[uploads]"
+│    + For debugging purposes, IceCast connection and video mode can be disabled
+│ + Documentation improved
+│ * Solved Issues: #30, #45, #45, #24, #26, #47, #43, #46, #44
+│
+┝━ MINOR CHANGES
+│ + Scripts now handle spaces inside the configuration correct
+│ + The WebSocket API key gets now generated during installation
+│ * Refactoring of StreamManager -> AudioStreamManager
+│ + [database] musicdb database add allows adding and managing videos to the music collection
+│ + [database] It is possible to information about the usage of tags from the database
+│ + [database] Recursive deleting of tags is now possible
+│ + [tracker] Tracks also videos
+│ + [videoframes] musicdb videoframes is a command line module for managing video frames and previews
+│ + [randy] maximum tries to find a song can be limited (Config: "[randy]->maxtries")
+│ + [fileprocessing] Different checksum algorithm possible
+│ + [filesystem] Supports handling of videos
+│ + [metatags] Supports handling of videos
+│ + [mod.add] Lists all new albums, not only of known artists
+│ + [mod.database] Allows adding videos (Removing is not yet supported!)
+└───────────────────────────────────────╌╌
+
+
 ┍━━━━┫ 2020-08-01 ┣━━━━┫ 6.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ - [MusicAI] Removed (The framework I used is no longer maintained and does not work with modern Tensorflow anymore)

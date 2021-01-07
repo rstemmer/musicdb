@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-100,-80)">
+        <g id="Menu">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+            <g transform="matrix(1.5,0,0,1.5,-5.89444,-33.4086)">
+                <path d="M79.669,84C79.3,84 79,84.3 79,84.669L79,88.611C79,88.763 79.105,88.895 79.253,88.93C79.401,88.965 79.553,88.894 79.621,88.758C80.12,87.759 80.768,86.465 80.95,86.1C80.983,86.035 81.035,85.983 81.1,85.95C81.463,85.768 82.75,85.125 83.747,84.627C83.884,84.558 83.956,84.404 83.921,84.255C83.885,84.105 83.752,84 83.599,84L79.669,84Z"/>
+            </g>
+            <path d="M105,89L105,94.38C105,94.722 105.278,95 105.62,95L111,95L111,97L104.542,97C103.691,97 103,96.309 103,95.458L103,89L105,89Z"/>
+            <path d="M109,83L115.458,83C116.309,83 117,83.691 117,84.542L117,91L115,91L115,85.62C115,85.278 114.722,85 114.38,85L109,85L109,83Z"/>
+            <g transform="matrix(-1.5,-1.83697e-16,1.83697e-16,-1.5,225.894,213.409)">
+                <path d="M79.669,84C79.3,84 79,84.3 79,84.669L79,88.611C79,88.763 79.105,88.895 79.253,88.93C79.401,88.965 79.553,88.894 79.621,88.758C80.12,87.759 80.768,86.465 80.95,86.1C80.983,86.035 81.035,85.983 81.1,85.95C81.463,85.768 82.75,85.125 83.747,84.627C83.884,84.558 83.956,84.404 83.921,84.255C83.885,84.105 83.752,84 83.599,84L79.669,84Z"/>
+            </g>
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Insert-Template" serif:id="Insert Template">
+        </g>
+        <g id="Play-Template" serif:id="Play Template">
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-75,-55)">
+        <g id="Menu">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+            <g transform="matrix(1,0,0,1,-1,-25)">
+                <path d="M86,80C91.519,80 96,84.481 96,90C96,95.519 91.519,100 86,100C80.481,100 76,95.519 76,90C76,84.481 80.481,80 86,80ZM86,82C90.415,82 94,85.585 94,90C94,94.415 90.415,98 86,98C81.585,98 78,94.415 78,90C78,85.585 81.585,82 86,82Z"/>
+            </g>
+            <g transform="matrix(1,0,0,1,-1,-25)">
+                <path d="M86,83C89.863,83 93,86.137 93,90C93,93.863 89.863,97 86,97C82.137,97 79,93.863 79,90C79,86.137 82.137,83 86,83ZM86,88C87.104,88 88,88.896 88,90C88,91.104 87.104,92 86,92C84.896,92 84,91.104 84,90C84,88.896 84.896,88 86,88Z"/>
+            </g>
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Insert-Template" serif:id="Insert Template">
+        </g>
+        <g id="Play-Template" serif:id="Play Template">
+        </g>
+    </g>
+</svg>

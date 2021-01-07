@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-150,-130)">
+        <g transform="matrix(1.10876,0,0,1.26098,-91.0415,-15.3672)">
+            <g id="Save">
+            </g>
+        </g>
+        <g id="StatusGood">
+        </g>
+        <g id="StatusBad">
+        </g>
+        <g id="StatusPaused">
+        </g>
+        <g id="StatusPlaying">
+        </g>
+        <g id="StatusUnknown">
+        </g>
+        <g transform="matrix(1.10876,0,0,1.26098,-66.3229,-15.3672)">
+            <g id="Load">
+            </g>
+        </g>
+        <g id="vThis">
+        </g>
+        <g id="vBegin">
+        </g>
+        <g id="vMin">
+        </g>
+        <g transform="matrix(1.1523,0,0,1.31051,-21.9614,-46.8621)">
+            <g id="vMax">
+            </g>
+        </g>
+        <g id="vEnd">
+        </g>
+        <g id="Reconnect">
+        </g>
+        <g id="Menu">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Disable">
+        </g>
+        <g id="Hate">
+        </g>
+        <g id="LiveRecording" transform="matrix(1.2,0,0,1.2,102.4,-65.9962)">
+            <g id="Member-Right1" serif:id="Member Right">
+            </g>
+            <g id="Member-Left1" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member1" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="LyricsVideo">
+        </g>
+        <g id="BadAudio">
+        </g>
+        <g id="Like">
+        </g>
+        <g id="Dislike">
+        </g>
+        <g id="Favorite">
+        </g>
+        <g id="Tags">
+        </g>
+        <g id="TimeFrame">
+        </g>
+        <g id="Artwork">
+            <g transform="matrix(6.12323e-17,-1,1,6.12323e-17,20,316)">
+                <path d="M181.846,136.45C181.334,135.906 181,135.011 181,134C181,132.344 181.896,131 183,131C184.104,131 185,132.344 185,134C185,135.011 184.666,135.906 184.154,136.45C184.363,136.692 184.474,137.005 184.465,137.327C184.362,140.638 184.002,149 183,149C181.997,149 181.638,140.638 181.535,137.327C181.526,137.005 181.637,136.692 181.846,136.45Z"/>
+            </g>
+            <g transform="matrix(6.12323e-17,1,-1,6.12323e-17,300,-46)">
+                <path d="M181.846,136.45C181.334,135.906 181,135.011 181,134C181,132.344 181.896,131 183,131C184.104,131 185,132.344 185,134C185,135.011 184.666,135.906 184.154,136.45C184.363,136.692 184.474,137.005 184.465,137.327C184.362,140.638 184.002,149 183,149C181.997,149 181.638,140.638 181.535,137.327C181.526,137.005 181.637,136.692 181.846,136.45Z"/>
+            </g>
+            <path d="M170,142.5C170,141.12 168.88,140 167.5,140L152.5,140C151.12,140 150,141.12 150,142.5L150,147.5C150,148.88 151.12,150 152.5,150L167.5,150C168.88,150 170,148.88 170,147.5L170,142.5ZM168,143.5C168,142.672 167.328,142 166.5,142L153.5,142C152.672,142 152,142.672 152,143.5L152,146.5C152,147.328 152.672,148 153.5,148L166.5,148C167.328,148 168,147.328 168,146.5L168,143.5Z"/>
+            <g transform="matrix(2,0,0,2,-155,-145)">
+                <circle cx="155" cy="145" r="1"/>
+            </g>
+            <g transform="matrix(2,0,0,2,-156,-145)">
+                <circle cx="158" cy="145" r="1"/>
+            </g>
+            <g transform="matrix(2,0,0,2,-157,-145)">
+                <circle cx="161" cy="145" r="1"/>
+            </g>
+        </g>
+    </g>
+</svg>

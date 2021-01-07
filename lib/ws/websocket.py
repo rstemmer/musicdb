@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,12 +42,6 @@ class MusicDBWebSocketFactory(WebSocketServerFactory):
 
         self.openHandshakeTimeout   = cfg.websocket.opentimeout
         self.closeHandshakeTimeout  = cfg.websocket.closetimeout
-        #logging.debug("openHandshakeTimeout = " + str(self.openHandshakeTimeout))
-        #logging.debug("closeHandshakeTimeout= " + str(self.closeHandshakeTimeout))
-        #logging.debug("autoPingTimeout      = " + str(self.autoPingTimeout))
-        #logging.debug("autoPingInterval     = " + str(self.autoPingInterval))
-        #logging.debug("server               = " + str(self.server))
-        #logging.debug("isSecure             = " + str(self.isSecure))
 
         self.clients    = []    # for broadcast
 
@@ -207,7 +201,7 @@ class WebSocket(WebSocketServerProtocol):
 
             .. code-block:: python
 
-                packet  = self.BeautifyValues(packet, "name", "∕", "/");
+                #packet  = self.BeautifyValues(packet, "name", "∕", "/");
                 rawdata = json.dumps(packet)        # Python Dict to JSON string
                 rawdata = rawdata.encode("utf-8")   # Encode as UTF-8
                 self.sendMessage(rawdata, False)    # isBinary = False
@@ -251,8 +245,8 @@ class WebSocket(WebSocketServerProtocol):
             logging.warning("Socket not conneced! \033[1;30m(message will be discard) %s", str(self))
             return False
 
-        packet  = self.BeautifyValues(packet, "name", "∕",   "/");
-        packet  = self.BeautifyValues(packet, "name", " - ", " – ");
+        #packet  = self.BeautifyValues(packet, "name", "∕",   "/");
+        #packet  = self.BeautifyValues(packet, "name", " - ", " – ");
         rawdata = json.dumps(packet)
         rawdata = rawdata.encode("utf-8")
         
@@ -293,7 +287,20 @@ class WebSocket(WebSocketServerProtocol):
             *Nothing*
         """
         self.factory.BroadcastPacket(packet)
+        return
 
+
+    def onConnect(self, request):
+        """
+        Just prints the IP address of the connecting client.
+        See  for details.
+        `ConnectionRequest in the Autobahn documentation <https://autobahn.readthedocs.io/en/latest/reference/autobahn.websocket.html?highlight=ConnectionRequest#autobahn.websocket.types.ConnectionRequest>`_ for details.
+
+        Returns:
+            *Nothing*
+        """
+        logging.debug("Client connecting fron: %s"%(str(request.peer)))
+        return
 
 
     def onOpen(self):
@@ -307,6 +314,7 @@ class WebSocket(WebSocketServerProtocol):
         self.connected = True
         self.factory.AddToBroadcast(self)
         self.onWSConnect()
+        return
 
 
     def onClose(self, wasClean, code, reason):
@@ -330,42 +338,18 @@ class WebSocket(WebSocketServerProtocol):
             logging.info("Websocket connection closed without an exit-code. \033[1;30m(Exitcode == None ; wasClean-Flag == True)")
         else:
             logging.warning("Websocket connection closed abnormaly! - \033[0;33m%s", self.wasNotCleanReason)
-            #logging.debug  ("\033[0;33mreason: %s", reason)
-            #logging.debug  ("\033[0;33mwasNotCleanReason: %s", self.wasNotCleanReason)
-            #logging.debug  ("\033[0;33mwasClean = %s" % wasClean)
-            #logging.debug  ("\033[0;33mcode     = \033[1;33m%s" % code)
-            #logging.debug  ("\033[0;33mclosedByMe  = %s" % self.closedByMe)
-            #logging.debug  ("\033[0;33mfailedByMe  = %s" % self.failedByMe)
-            #logging.debug  ("\033[0;33mdroppedByMe = %s" % self.droppedByMe)
-            #logging.debug  ("\033[0;33mwasClean          = %s" % self.wasClean)
-            #logging.debug  ("\033[1;33mlocalCloseCode    = %s" % self.localCloseCode)
-            #logging.debug  ("\033[1;33mlocalCloseReason  = %s" % self.localCloseReason)
-            #logging.debug  ("\033[1;33mremoteCloseCode   = %s" % self.remoteCloseCode)
-            #logging.debug  ("\033[1;33mremoteCloseReason = %s" % self.remoteCloseReason)
-
-
-        #CLOSE_CODE_NORMAL              = 1000 #Normal close of connection.
-        #CLOSE_CODE_GOING_AWAY          = 1001 #Going away.
-        #CLOSE_CODE_PROTOCOL_ERROR      = 1002 #Protocol error.
-        #CLOSE_CODE_UNSUPPORTED_DATA    = 1003 #Unsupported data.
-        #CLOSE_CODE_RESERVED1           = 1004 #RESERVED
-        #CLOSE_CODE_NULL                = 1005 #No status received.
-        #CLOSE_CODE_ABNORMAL_CLOSE      = 1006 #Abnormal close of connection.
-        #CLOSE_CODE_INVALID_PAYLOAD     = 1007 #Invalid frame payload data.
-        #CLOSE_CODE_POLICY_VIOLATION    = 1008 #Policy violation.
-        #CLOSE_CODE_MESSAGE_TOO_BIG     = 1009 #Message too big.
-        #CLOSE_CODE_MANDATORY_EXTENSION = 1010 #Mandatory extension.
-        #CLOSE_CODE_INTERNAL_ERROR      = 1011 #The peer encountered an unexpected condition or internal error.
-        #CLOSE_CODE_TLS_HANDSHAKE_FAILED= 1015 #TLS handshake failed, i.e. server certificate could not be verified.
+        return
 
 
     def onOpenHandshakeTimeout(self):
         logging.warning("Open-Handshake Timeout! \033[0;33m(Connection will be closed)")
         WebSocketServerProtocol.onOpenHandshakeTimeout(self)
+        return
 
     def onCloseHandshakeTimeout(self):
         logging.warning("Close-Handshake Timeout!")
         WebSocketServerProtocol.onCloseHandshakeTimeout(self)
+        return
 
 
     def onMessage(self, payload, isBinary):

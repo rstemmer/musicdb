@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-75,-105)">
+        <g id="vBegin">
+        </g>
+        <g id="vMin">
+        </g>
+        <g id="vMax">
+        </g>
+        <g id="vEnd" transform="matrix(1,0,0,1,25,0)">
+            <path d="M70,108.75C70,107.784 69.216,107 68.25,107L51.75,107C50.784,107 50,107.784 50,108.75L50,112.25C50,113.216 50.784,114 51.75,114L68.25,114C69.216,114 70,113.216 70,112.25L70,108.75ZM68,109.75C68,109.336 67.664,109 67.25,109L52.75,109C52.336,109 52,109.336 52,109.75L52,111.25C52,111.664 52.336,112 52.75,112L67.25,112C67.664,112 68,111.664 68,111.25L68,109.75Z"/>
+            <g transform="matrix(-1,0,0,1,112,1)">
+                <path d="M53,118L60,118C60.552,118 61,118.448 61,119C61,119.552 60.552,120 60,120L52,120C51.448,120 51,119.552 51,119L51,106C51,105.448 51.448,105 52,105C52.552,105 53,105.448 53,106L53,118Z"/>
+            </g>
+            <g transform="matrix(1,0,0,1,-2,1)">
+                <path d="M58.564,118.978L56.293,116.707C55.903,116.317 55.903,115.683 56.293,115.293C56.683,114.903 57.317,114.903 57.707,115.293L60.707,118.293C60.898,118.484 61.004,118.745 61,119.015C60.996,119.285 60.882,119.543 60.686,119.728L57.5,122.728C57.098,123.106 56.465,123.087 56.086,122.686C55.708,122.284 55.727,121.65 56.129,121.272L58.564,118.978Z"/>
+            </g>
+        </g>
+        <g id="Menu">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Insert-Template" serif:id="Insert Template">
+        </g>
+        <g id="Play-Template" serif:id="Play Template">
+        </g>
+    </g>
+</svg>

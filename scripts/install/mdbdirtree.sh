@@ -64,24 +64,6 @@ function CreateDirectoryTree {
         chmod g+w $DATADIR
     fi
 
-    # Create MusicDB State
-    if [ ! -d "$DATADIR/mdbstate" ] ; then
-        echo -e -n "\t\e[1;34mCreating \e[0;36m$DARADIR/mdbstate/* \e[1;31m"
-        mkdir $DATADIR/mdbstate
-        chown -R $MUSICUSER:$MDBGROUP $DATADIR/mdbstate
-        chmod -R g+w $DATADIR/mdbstate
-        echo -e "\e[1;32mdone"
-    fi
-
-    # Create Artwork Cache
-    if [ ! -d "$DATADIR/artwork" ] ; then
-        echo -e -n "\t\e[1;34mCreating \e[0;36m$DARADIR/artwork/* \e[1;31m"
-        mkdir $DATADIR/artwork
-        chown -R $MUSICUSER:$MDBGROUP $DATADIR/artwork
-        chmod -R g+w $DATADIR/artwork
-        echo -e "\e[1;32mdone"
-    fi
-
     # Update default artwork
     install -m 664 -g $MDBGROUP -o $MDBUSER $SOURCEDIR/share/default.jpg -D $DATADIR/artwork/.
 }

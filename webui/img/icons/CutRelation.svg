@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-175,-105)">
+        <g transform="matrix(1.10876,0,0,1.26098,-91.0415,-15.3672)">
+            <g id="Save">
+            </g>
+        </g>
+        <g id="StatusGood">
+        </g>
+        <g id="StatusBad">
+        </g>
+        <g id="StatusPaused">
+        </g>
+        <g id="StatusPlaying">
+        </g>
+        <g id="StatusUnknown">
+        </g>
+        <g transform="matrix(1.10876,0,0,1.26098,-66.3229,-15.3672)">
+            <g id="Load">
+            </g>
+        </g>
+        <g id="vThis">
+        </g>
+        <g id="vBegin">
+        </g>
+        <g id="vMin">
+        </g>
+        <g transform="matrix(1.1523,0,0,1.31051,-21.9614,-46.8621)">
+            <g id="vMax">
+            </g>
+        </g>
+        <g id="vEnd">
+        </g>
+        <g id="Reconnect">
+        </g>
+        <g id="Menu">
+        </g>
+        <g id="DropDown">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Approve">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Append1" serif:id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Disable">
+        </g>
+        <g id="Hate">
+        </g>
+        <g id="LiveRecording" transform="matrix(1.2,0,0,1.2,102.4,-65.9962)">
+            <g id="Member-Right1" serif:id="Member Right">
+            </g>
+            <g id="Member-Left1" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member1" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="LyricsVideo">
+        </g>
+        <g id="BadAudio">
+        </g>
+        <g id="Like">
+        </g>
+        <g id="Dislike">
+        </g>
+        <g id="Favorite">
+        </g>
+        <g id="Tags">
+        </g>
+        <g id="TimeFrame">
+        </g>
+        <g id="Artwork">
+        </g>
+        <g id="Link">
+        </g>
+        <g id="MusicDB">
+        </g>
+        <g id="Ralation">
+        </g>
+        <g id="ToMainView">
+        </g>
+        <g id="Search">
+        </g>
+        <g id="CutRelation">
+            <g transform="matrix(1.28571,0,0,1.28571,-50,-46.7143)">
+                <circle cx="178.5" cy="121.5" r="3.5"/>
+            </g>
+            <g transform="matrix(1.28571,0,0,1.28571,-39,-35.7143)">
+                <circle cx="178.5" cy="121.5" r="3.5"/>
+            </g>
+            <path d="M191.213,111.775C191.716,112.741 192,113.838 192,115C192,118.863 188.863,122 185,122C183.837,122 182.739,121.716 181.774,121.213L183.288,119.699C183.823,119.894 184.399,120 185,120C187.76,120 190,117.76 190,115C190,114.399 189.894,113.823 189.699,113.289L191.213,111.775ZM178.787,118.225C178.284,117.26 178,116.163 178,115C178,111.137 181.137,108 185,108C186.163,108 187.261,108.284 188.226,108.787L186.712,110.301C186.178,110.106 185.601,110 185,110C182.24,110 180,112.24 180,115C180,115.601 180.106,116.177 180.301,116.711L178.787,118.225Z"/>
+            <g transform="matrix(1,0,0,1,-49.9998,75.0002)">
+                <path d="M227.707,48.708L243.707,32.733C244.097,32.343 244.098,31.709 243.708,31.318C243.318,30.928 242.684,30.927 242.293,31.317L226.293,47.292C225.903,47.682 225.902,48.316 226.292,48.707C226.682,49.097 227.316,49.098 227.707,48.708Z"/>
+            </g>
+        </g>
+    </g>
+</svg>

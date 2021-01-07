@@ -1,0 +1,96 @@
+/*
+ * MusicDB,  a music manager with web-bases UI that focus on music.
+ * Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+
+.tabbox
+{
+    margin:         1em;
+}
+
+
+
+.tabbar
+{
+    padding-left:   1em;
+    padding-right:  1em;
+}
+
+
+
+.tabbutton
+{
+    border:         var(--borderwidth) solid;
+    border-color:   var(--fmcolor);
+    border-radius:  var(--radius) var(--radius) 0 0;
+    border-bottom:  none;
+
+    padding:        0.5em 2ch;
+    margin:         0     1ch;
+}
+.tabbutton > .SVGIcon
+{
+    width:          1.5em;
+    height:         1.5em;
+}
+
+.tabbutton[data-selected=true]
+{
+    background-color:   var(--hlcolor);
+}
+.tabbutton[data-selected=true] > .SVGIcon
+{
+    background-color:   var(--bgcolor);
+}
+.tabbutton[data-selected=true] > div
+{
+    color:              var(--bgcolor);
+}
+
+.tabbutton[data-selected=false]
+{
+}
+
+.tabbutton div + div
+{
+    margin-left: 1.5ch;
+}
+
+
+
+.tabcontent
+{
+    border:         var(--borderwidth) solid;
+    border-color:   var(--fmcolor);
+    border-radius:  var(--radius);
+
+    padding:        0.5em 1ch;
+}
+
+
+.tabcontent audio
+{
+    display:            block;
+    width:              100%;
+    border-radius:      var(--radius);
+    background-color:   var(--hlcolor);
+    opacity:            0.5;
+}
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */

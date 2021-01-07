@@ -209,14 +209,26 @@ The package has the following information:
 
    * **method:** notification
    * **pass:** ``null``
-   * Event triggered by :doc:`/mdbapi/stream`
-      * **fncname:** ``"MusicDB:Stream"``
+   * Event triggered by :doc:`/mdbapi/audiostream`
+      * **fncname:** ``"MusicDB:AudioStream"``
       * **fncsig:** ``"onStatusChanged"`` or ``"onTimeChanged"``
       * **argument:** The playtime of the current song in seconds, when the *fncsig* is ``"onTimeChanged"``
+   * Event triggered by :doc:`/mdbapi/videostream`
+      * **fncname:** ``"MusicDB:VideoStream"``
+      * **fncsig:** See related documentation
+      * **argument:** See related documentation
    * Event triggered by :doc:`/mdbapi/songqueue`
-      * **fncname:** ``"MusicDB:Queue"``
-      * **fncsig:** ``"onQueueChanged"`` or ``"onSongChanged"``
+      * **fncname:** ``"MusicDB:SongQueue"``
+      * **fncsig:** ``"onSongQueueChanged"`` or ``"onSongChanged"``
       * **argument:** ``None``
+   * Event triggered by :doc:`/mdbapi/videoqueue`
+      * **fncname:** ``"MusicDB:VideoQueue"``
+      * **fncsig:** ``"onVideoQueueChanged"`` or ``"onVideoChanged"``
+      * **argument:** ``None``
+   * Event triggered by :doc:`/mdbapi/uploadmanager`
+      * **fncname:** ``"MusicDB:Upload"``
+      * **fncsig:** ``"ChunkRequest"``, ``"StateUpdate"`` or ``"InternalError"``
+      * **argument:** See :meth:`.mdbapi.uploadmanager.UploadManager.NotifyClient`
 
 See the related documentation of the event sources for more details
 
@@ -261,5 +273,135 @@ Server side API
       AddSubgenre,
       UpdateSongStatistic,
       CutSongRelationship
+
+Artists
+^^^^^^^
+
+.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+   :members: GetArtists,
+      GetArtists,
+      GetArtistsWithAlbums,
+      GetArtistsWithVideos,
+      Find
+
+Albums
+^^^^^^
+
+.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+   :members:   GetAlbums,
+      GetHiddenAlbums,
+      GetSortedAlbumCDs,
+      GetAlbum,
+      HideAlbum,
+      SetAlbumColor,
+      AddAlbumToQueue,
+      Find
+
+Songs
+^^^^^
+
+.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+   :members:   GetSong,
+      AddSongToQueue,
+      AddRandomSongToQueue,
+      RemoveSongFromQueue,
+      MoveSongInQueue,
+      GetSongRelationship,
+      UpdateSongStatistic,
+      CutSongRelationship,
+      Find,
+      PlayNextSong
+
+Videos
+^^^^^^
+
+.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+   :members:   GetVideos,
+      GetVideo,
+      AddVideoToQueue,
+      AddRandomVideoToQueue,
+      RemoveVideoFromQueue,
+      MoveVideoInQueue,
+      UpdateVideoStatistic,
+      SetVideoColor,
+      SetVideoTimeFrame,
+      PlayNextVideo,
+      VideoEnded,
+      SetVideoThumbnail,
+      GetVideoRelationship,
+      CutVideoRelationship
+
+Queue
+^^^^^
+
+.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+   :members:   GetSongQueue,
+      GetVideoQueue,
+      AddSongToQueue,
+      AddRandomSongToQueue,
+      AddVideoToQueue,
+      AddAlbumToQueue,
+      RemoveSongFromQueue,
+      RemoveVideoFromQueue,
+      MoveSongInQueue,
+      MoveVideoInQueue
+
+Tag related
+^^^^^^^^^^^
+
+.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+   :members:   GetTags,
+      GetTagsStatistics,
+      GetSongTags,
+      GetAlbumTags,
+      GetVideoTags,
+      SetAlbumTag,
+      RemoveAlbumTag,
+      SetSongTag,
+      RemoveSongTag,
+      SetVideoTag,
+      RemoveVideoTag,
+      AddGenre,
+      AddSubgenre,
+      AddMoodFlag,
+      DeleteTag,
+      ModifyTag
+
+Lyrics
+^^^^^^
+
+.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+  :members:    GetSongLyrics,
+      GetLyricsCrawlerCache,
+      RunLyricsCrawler,
+      SetSongLyrics
+
+Uploading
+^^^^^^^^^
+
+.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+  :members:    InitiateUpload,
+      UploadChunk,
+      GetUploads,
+      AnnotateUpload,
+      IntegrateUpload,
+      RemoveUpload
+
+Other
+^^^^^
+
+.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+  :members:    GetAudioStreamState,
+      GetVideoStreamState,
+      SetAudioStreamState,
+      SetVideoStreamState,
+      PlayNextSong,
+      PlayNextVideo,
+      SetMDBState,
+      GetMDBState,
+      GetTables,
+      SaveWebUIConfiguration,
+      LoadWebUIConfiguration,
+      FindNewContent
 
 
