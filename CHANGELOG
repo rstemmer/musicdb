@@ -37,15 +37,19 @@ Run  git log --oneline  for more details
 │    * Some function now return more data than before (but never less!). See the documentation for details.
 │ + WebUI:
 │    ! Total rewrite - look and feel is the same
+│    * Layout also works on 4K screens
 │    - jQuery and other dependencies removed.
 │    + WebUI can now be configured via webui.ini
+│    + WebUI provides a settings and management interface (not yet a full replacement of the command line tools)
 │    * Lyrics integration improved for better UX. It can also be deactivated in the settings.
 │    * New icon set that is made for MusicDB's WebUI for better UX
 │    + Full Drag'n'Drop support. Drag any album or song into the queue at any position
+│    * Lang song and album names no longer destroy the layout
 │ + MusicDB Configuration:
 │    + Configurations for video frame management "[videoframes]" and uploads "[uploads]"
 │    + For debugging purposes, IceCast connection and video mode can be disabled
 │ + Documentation improved
+│ * Solved Issues: #30, #45, #45, #24, #26, #47, #43, #46, #44
 │
 ┝━ MINOR CHANGES
 │ + Scripts now handle spaces inside the configuration correct
