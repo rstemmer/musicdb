@@ -38,7 +38,7 @@ You can use your system package manager or pythons package manager ``pip`` (``pi
 
 Required system packages:
 
-   * python (3.5+)
+   * python (3.6+)
    * openssl
    * sqlite3
    * sed
@@ -49,6 +49,8 @@ Required system packages:
    * dialog
    * rsync
    * clang
+   * `id3edit <https://github.com/rstemmer/id3edit>`_
+   * A HTTPS server for the WebUI - apache recommend
 
 Required gstreamer packages:
 
@@ -73,7 +75,8 @@ Required Python modules:
    * tqdm
 
 Execute ``pip install -r requirements.txt`` to install a basic set of Python modules needed for MusicDB.
-I recommend to try to get the modules from the distributions package manager.
+I recommend to try to get the modules from the distributions package manager
+so that they are updated with each system update.
 
 Additional Steps for Ubuntu
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -81,7 +84,7 @@ Additional Steps for Ubuntu
 **Important for Ubuntu users (and maybe Debian) only**
 
 Usually I do not support Ubuntu for several technical reasons.
-But I had a clean virtual machine with the latest Ubuntu installed, so I tried test installation.
+But I had a clean virtual machine with the latest Ubuntu installed, so I tried test the installation process.
 The following *additional* steps are mandatory to get MusicDB to work on Ubuntu:
 
 Before installation:
@@ -91,7 +94,7 @@ Before installation:
    apt install python-is-python3    # when executing python, python3 gets called and not the dead python2
    apt install icecast2             # Do not use the configuration dialog, MusicDB provides a secure config
                                     # Ignore that check.sh does not find icecast after installation.
-                                    # This is because on Debian/Ubuntu the binary is calles "icecast2".
+                                    # This is because on Debian/Ubuntu the binary is called "icecast2".
                                     # Important scripts handle this situation of different naming.
 
    pip3 install -r requirements.txt # pip is called pip3 on Ubuntu
@@ -103,7 +106,7 @@ Executing the install.sh Script
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Now you can simply execute the ``install.sh`` script from the scripts directory in the source directory,
-after you have cloned the `git <https://github.com/rstemmer/musicdb>`_ repository from GitHub.
+after you have cloned the `MusicDB git repository <https://github.com/rstemmer/musicdb>`_ from GitHub.
 
 .. code-block:: bash
 
@@ -124,6 +127,7 @@ after you have cloned the `git <https://github.com/rstemmer/musicdb>`_ repositor
 
 After starting the ``install.sh`` script, the script tries to determine some variables.
 It also recognizes if this is a new installation or an update by checking for the symlink ``/etc/musicdb.ini``.
+(For updates, you should use the ``update.sh`` script).
 Then it opens a dialog where these variables can be confirmed or modified.
 
 The following settings must be configured for the installation (and will be recognized when MusicDB shall only be updated):
@@ -190,6 +194,7 @@ The web server must provide the following virtual directories:
    * ``/musicdb/artwork/`` pointing to the artwork directory (``$DATADIR/artwork``)
    * ``/musicdb/music/`` pointing to the music source directory (``*/music``)
    * ``/musicdb/docs/`` pointing to the documentation directory (``$SERVERDIR/docs``)
+   * ``/musicdb/videoframes/`` pointing to the video frames directory (``$SERVERDIR/videoframes``) if you want to use the video management feature
 
 An example `Apache <https://httpd.apache.org/>`_ configuration can look like this:
 
@@ -216,8 +221,8 @@ An example `Apache <https://httpd.apache.org/>`_ configuration can look like thi
        Require all granted
    </Directory>
 
-   Alias /musicdb/ "/opt/musicdb/server/"
-   <Directory "/opt/musicdb/server">
+   Alias /musicdb/ "/opt/musicdb/server/webui/"
+   <Directory "/opt/musicdb/server/webui">
       AllowOverride None
       Options +ExecCGI +FollowSymLinks
       Require all granted
