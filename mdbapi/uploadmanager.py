@@ -176,6 +176,10 @@ def UploadManagementThread():
             elif state == "startimport":
                 if contenttype == "video":
                     success = manager.ImportVideo(task)
+                else:
+                    logging.error("Invalid content type \"%s\". \033[1;30m(forcing state importfailed)", contenttype);
+                    success = False
+
 
                 if success:
                     task["state"] = "importartwork"
@@ -189,6 +193,9 @@ def UploadManagementThread():
             elif state == "importartwork":
                 if contenttype == "video":
                     success = manager.ImportVideoArtwork(task)
+                else:
+                    logging.error("Invalid content type \"%s\". \033[1;30m(forcing state importfailed)", contenttype);
+                    success = False
 
                 if success:
                     task["state"] = "importcomplete"
@@ -672,6 +679,7 @@ class UploadManager(object):
         Depending on the *contenttype* different post processing methods are called:
 
             * ``"video"``: :meth:`~PreProcessVideo`
+            * ``"artwork"``: No pre-processing required
 
         The task must be in ``"uploadcomplete"`` state, otherwise nothing happens but printing an error message.
         If post processing was successful, the task state gets updated to ``"preprocessed"``.
@@ -692,6 +700,8 @@ class UploadManager(object):
         success = False
         if task["contenttype"] == "video":
             success = self.PreProcessVideo(task)
+        elif task["contenttype"] == "artwork":
+            success = True  # no preprocessing required
         else:
             logging.warning("Unsupported content type of upload: \"%s\" \033[1;30m(Upload will be ignored)", str(task["contenttype"]))
             self.UpdateTaskState(task, "invalidcontent", "Unsupported content type")
