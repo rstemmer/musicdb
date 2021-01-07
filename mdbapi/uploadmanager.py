@@ -760,9 +760,8 @@ class UploadManager(object):
             logging.error("Internal error while requesting a new chunk of data: %s", str(e))
             return False
 
-        for key in ["name", "artistname", "artistid", "release", "origin"]:
-            if key in annotations:
-                task["annotations"][key] = annotations[key]
+        for key, item in annotations.items():
+            task["annotations"][key] = item
 
         self.SaveTask(task)
         self.NotifyClient("StateUpdate", task)

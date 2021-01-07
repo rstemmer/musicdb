@@ -3474,31 +3474,17 @@ class MusicDBWebSocketInterface(object):
         For example a video or album name can be annotated so that after the upload was complete,
         the file already has the correct name for importing.
 
-        Annotation is an object that can have the following keys:
-
-            * ``"name"``: Album or Video name
-            * ``"artistname"``: Name of an artist
-            * ``"artistid"``: ID of an existing artist in the database
-            * ``"release"``: Release year
-            * ``"origin"``: Origin of the file like "Internet" or "iTunes"
-
-        All keys are optional.
+        Annotation is an object that can have multiple keys.
 
         Args:
             uploadid (str): Unique ID to identify the upload task
-            annotations (dict): An object with some of the keys listed above
+            annotations (dict): A dictionary with elements to annotate to an upload
 
         Returns:
             *Nothing*
         """
-        infos = {}
-        # copy only valid items
-        for key in ["name", "artistname", "artistid", "release", "origin"]:
-            if key in annotations:
-                infos[key] = annotations[key]
-        
         # Annotate upload
-        self.uploadmanager.AnnotateUpload(uploadid, infos)
+        self.uploadmanager.AnnotateUpload(uploadid, annotations)
         return
 
 
