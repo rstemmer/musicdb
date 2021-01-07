@@ -134,3 +134,15 @@ Then press ``u`` to update the database entry with the new file.
 For further details see :doc:`/mod/repair`.
 
 
+Importing Videos to MusicDB
+---------------------------
+
+Use the ``musicdb database`` command: :doc:`/mod/database` to import videos.
+And the ``musicdb videoframes`` command: :doc:`/mod/videoframes` to generate the artwork used by the WebUI.
+
+.. code-block:: bash
+
+   # add an album (and all songs)
+   musicdb database add $MusicPath/$ArtistName/$Release\ -\ $VideoName.$Ext
+   musicdb videoframes --video $MusicPath/$ArtistName/$Release\ -\ $VideoName.$Ext -u
+
