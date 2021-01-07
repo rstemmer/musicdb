@@ -74,20 +74,20 @@ class UploadStatusText extends StatusText
     {
         switch(uploadstatus)
         {
-            case "waitforchunk"     : super("Uploading …",              "active");
-            case "uploadcomplete"   : super("Upload Succeeded",         "good");
-            case "uploadfailed"     : super("Upload Failed",            "bad");
-            case "notexisting"      : super("Internal Chaos",           "bad");
-            case "preprocessed"     : super("Upload Succeeded",         "good");
-            case "invalidcontent"   : super("Invalid Content",          "bad");
-            case "integrated"       : super("Integration Succeeded",    "good");
-            case "integrationfailed": super("Integration Failed",       "bad");
-            case "startimport"      : super("Importing …",              "active");
-            case "importfailed"     : super("Import Failed",            "bad");
-            case "importartwork"    : super("Importing …",              "active");
-            case "importcomplete"   : super("Import Succeeded",         "good");
-            case "remove"           : super("Removing Upload",          "active");
-            default                 : super("No upload processing",     "open");
+            case "waitforchunk"     : super("Uploading …",              "active"); break;
+            case "uploadcomplete"   : super("Upload Succeeded",         "good");   break;
+            case "uploadfailed"     : super("Upload Failed",            "bad");    break;
+            case "notexisting"      : super("Internal Chaos",           "bad");    break;
+            case "preprocessed"     : super("Upload Succeeded",         "good");   break;
+            case "invalidcontent"   : super("Invalid Content",          "bad");    break;
+            case "integrated"       : super("Integration Succeeded",    "good");   break;
+            case "integrationfailed": super("Integration Failed",       "bad");    break;
+            case "startimport"      : super("Importing …",              "active"); break;
+            case "importfailed"     : super("Import Failed",            "bad");    break;
+            case "importartwork"    : super("Importing …",              "active"); break;
+            case "importcomplete"   : super("Import Succeeded",         "good");   break;
+            case "remove"           : super("Removing Upload",          "active"); break;
+            default                 : super("No upload processing",     "open");   break;
         }
     }
 }
