@@ -24,12 +24,12 @@
 }
 
 
-#SettingsMenu > .menuentry[data-highlight=true]
+#SettingsMenu > .MenuEntry[data-highlight=true]
 {
     color:              var(--bgcolor);
     background-color:   var(--hlcolor);
 }
-#SettingsMenu > .menuentry[data-highlight=true] > .SVGIcon
+#SettingsMenu > .MenuEntry[data-highlight=true] > .SVGIcon
 {
     color:              var(--hlcolor);
     background-color:   var(--bgcolor);
