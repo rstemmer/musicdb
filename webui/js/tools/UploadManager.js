@@ -111,19 +111,35 @@ class UploadManager
 
 
 
-    onMusicDBNotification(fnc, sig, state)
+    onMusicDBNotification(fnc, sig, data)
     {
         if(fnc == "MusicDB:Upload")
         {
-            window.console && console.info(state);
+            window.console && console.info(data);
+            let uploadid    = data.uploadid;
+            let uploadtask  = data.uploadtask;
+            let state       = data.state;
+            let contenttype = uploadtask.contenttype;
+
             if(sig == "ChunkRequest")
             {
-                this.videouploadstable.TryUpdateRow(state.uploadtask);
-                this.UploadNextChunk(state)
+                this.videouploadstable.TryUpdateRow(uploadtask);
+                this.UploadNextChunk(data)
             }
             else // "StateUpdate", "InternalError"
             {
-                this.videouploadstable.Update(state.uploadslist.videos);
+                this.videouploadstable.Update(data.uploadslist.videos);
+            }
+
+            if(sig == "StateUpdate")
+            {
+                window.console && console.info(`Stateupdate for ${contenttype} to ${state}`);
+                // Artwork will be automatically imported
+                if(contenttype == "artwork")
+                {
+                    if(state == "preprocessed")
+                        MusicDB_Call("IntegrateUpload", {uploadid: uploadid, triggerimport: true});
+                }
             }
         }
     }
