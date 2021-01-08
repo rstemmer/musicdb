@@ -42,6 +42,13 @@ class ArtworkUploader extends Element
         this.element.appendChild(this.fileselect.GetHTMLElement());
         let  statustext = new UploadStatusText(uploadstatus);
         this.element.appendChild(statustext.GetHTMLElement());
+
+        if(uploadstatus == "importcomplete")
+        {
+            let messagebar = new MessageBarInfo(`Artwork successfully replaced. You may have to reload the WebUI to update the Browser\'s cache.`);
+            messagebar.Show();
+            this.element.appendChild(messagebar.GetHTMLElement());
+        }
     }
 
 
