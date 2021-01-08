@@ -45,6 +45,7 @@ Run  git log --oneline  for more details
 │    * New icon set that is made for MusicDB's WebUI for better UX
 │    + Full Drag'n'Drop support. Drag any album or song into the queue at any position
 │    * Lang song and album names no longer destroy the layout
+│    * Upload and replace album artwork
 │ + MusicDB Configuration:
 │    + Configurations for video frame management "[videoframes]" and uploads "[uploads]"
 │    + For debugging purposes, IceCast connection and video mode can be disabled
