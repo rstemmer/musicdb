@@ -43,6 +43,21 @@ class ArtworkUploader extends Element
         let  statustext = new UploadStatusText(uploadstatus);
         this.element.appendChild(statustext.GetHTMLElement());
     }
+
+
+
+    // upload: raw data from the notification
+    ShowErrorStatus(upload)
+    {
+        let state   = upload.state;
+        let message = upload.message;
+
+        let messagebar = new MessageBarError(`Replacing Artwork failed with error: ${message}.`);
+        messagebar.Show();
+
+        this.UpdateUploadStatus(state);
+        this.element.appendChild(messagebar.GetHTMLElement());
+    }
 }
 
 
