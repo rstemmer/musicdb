@@ -258,9 +258,9 @@ class MusicDBArtwork(object):
                 logging.error("Artwork \"%s\" does not exist but was expected to exist!", relpath)
                 return False
 
-            # Set permissions to -rw-rw-r--
+            # Try setting permissions to -rw-rw-r--
             try:
-                self.artworkroot.SetAttributes(relpath, self.cfg.music.owner, self.cfg.music.group, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH)
+                self.artworkroot.SetAttributes(relpath, None, None, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH)
             except Exception as e:
                 logging.warning("Setting artwork file attributes failed with error %s. \033[1;30m(Leaving them as they are)", str(e))
 
