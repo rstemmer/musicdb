@@ -230,7 +230,11 @@ class MusicDBArtwork(object):
 
             # Copy file
             logging.debug("Copying file from \"%s\" to \"%s\"", abssrcpath, absdstpath)
-            self.artworkroot.CopyFile(abssrcpath, absdstpath)
+            try:
+                self.artworkroot.CopyFile(abssrcpath, absdstpath)
+            except PermissionError as e:
+                logging.exception("Copying artwork into the artwork directory failed with error: %s", str(e))
+                return False
 
             # Set permissions to -rw-rw-r--
             try:
