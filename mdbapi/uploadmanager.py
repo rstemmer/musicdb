@@ -55,6 +55,7 @@ import time
 import logging
 import datetime
 import threading
+from PIL                import Image
 from lib.cfg.musicdb    import MusicDBConfig
 from lib.db.musicdb     import MusicDatabase
 from lib.filesystem     import Filesystem
@@ -685,7 +686,7 @@ class UploadManager(object):
         Depending on the *contenttype* different post processing methods are called:
 
             * ``"video"``: :meth:`~PreProcessVideo`
-            * ``"artwork"``: No pre-processing required
+            * ``"artwork"``: :meth:`~PreProcessArtwork`
 
         The task must be in ``"uploadcomplete"`` state, otherwise nothing happens but printing an error message.
         If post processing was successful, the task state gets updated to ``"preprocessed"``.
@@ -707,8 +708,7 @@ class UploadManager(object):
         if task["contenttype"] == "video":
             success = self.PreProcessVideo(task)
         elif task["contenttype"] == "artwork":
-            task["artworkfile"] = task["destinationpath"] # TODO: If not JPEG, transcode!
-            success = True  # no preprocessing required
+            success = self.PreProcessArtwork(task)
         else:
             logging.warning("Unsupported content type of upload: \"%s\" \033[1;30m(Upload will be ignored)", str(task["contenttype"]))
             self.UpdateTaskState(task, "invalidcontent", "Unsupported content type")
@@ -742,6 +742,26 @@ class UploadManager(object):
         # Maybe the only useful part is the Load-method to check if the file is supported by MusicDB
         #tags = meta.GetAllMetadata()
         #logging.debug(tags)
+        return True
+
+
+
+    def PreProcessArtwork(self, task):
+        """
+
+        Args:
+            task (dict): the task object of an upload-task
+        """
+        origfile = task["destinationpath"]
+        extension= self.uploadfs.GetFileExtension(origfile)
+        jpegfile = origfile[:-len(extension)] + "jpg"
+        if extension != "jpg":
+            logging.debug("Transcoding artwork file form %s (\"%s\") to JPEG (\"%s\")", extension, origfile, jpegfile);
+            im = Image.open(origfile)
+            im = im.convert("RGB")
+            im.save(jpegfile, "JPEG", optimize=True, progressive=True)
+
+        task["artworkfile"] = jpegfile
         return True
 
 
@@ -1043,6 +1063,12 @@ class UploadManager(object):
         logging.info("Removing uploaded \"%s\" file and task \"%s\" information.", task["sourcefilename"], task["id"])
         datapath = task["destinationpath"]
         taskpath = "tasks/" + task["id"] + ".json"
+
+        # if artwork, remove artworkfile as well
+        if task["contenttype"] == "artwork":
+            artworkfile = task["artworkfile"]
+            logging.debug("Removing %s", self.uploadfs.AbsolutePath(artworkfile))
+            self.uploadfs.RemoveFile(artworkfile)
 
         logging.debug("Removing %s", self.uploadfs.AbsolutePath(datapath))
         self.uploadfs.RemoveFile(datapath)
