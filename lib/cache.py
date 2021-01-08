@@ -55,6 +55,7 @@ class ArtworkCache(object):
 
         Returns:
             Relative path to the artwork in the specified resolution.
+            ``None`` on error.
 
         Raises:
             ValueError: When the source file does not exist
@@ -81,6 +82,46 @@ class ArtworkCache(object):
         if self.artworkroot.Exists(scaledfile):
             return scaledfile
 
+        success = self.RebuildArtwork(artworkname, resolution)
+        if not success:
+            return None
+
+        return scaledfile
+
+
+
+    def RebuildArtwork(self, artworkname, resolution):
+        """
+        This method rebuilds an artwork with the specified resolution.
+
+        If the artwork does not exist for this resolution it will be generated.
+        If the directory for that scale does not exist, it will be created.
+        Its permission will be ``musicdb:musicdb drwxrwxr-x``
+        In case an error occurs, an exception gets raised.
+
+        The resolution is given as string in the format ``{X}x{Y}`` (For example: ``100x100``).
+        *X* and *Y* must have the same value.
+        This method expects an aspect ratio of 1:1.
+
+        Beside scaling the JPEG, it will be made progressive.
+
+        Args:
+            artworkname (str): filename of the source artwork (Usually ``$Artist - $Album.jpg``)
+            resolution (str): resolution of the requested artwork
+
+        Returns:
+            ``True`` on success
+
+        Example:
+
+            .. code-block:: python
+
+                cache = ArtworkCache("/data/artwork")
+                if not cache.RebuildArtwork("example.jpg", "150x150"):
+                    print("creating a 150x150 thumbnail failed")
+        """
+        logging.debug("RebuildArtwork(%s, %s)", artworkname, resolution)
+
         # Check if the scale-directory already exist. If not, create one
         if not self.artworkroot.IsDirectory(resolution):
             logging.debug("Creating subdirectory: %s", resolution)
@@ -90,10 +131,11 @@ class ArtworkCache(object):
                 self.artworkroot.SetAttributes(resoultion, None, None, mode);
             except Exception as e:
                 logging.exception("Creating scaled artwork directory %s failed with error: %s.", resolution, str(e))
-                raise e
+                return False
 
         # Scale image
         logging.debug("Converting image to %s", resolution)
+        scaledfile = os.path.join(resolution, artworkname)
         abssrcpath = self.artworkroot.AbsolutePath(artworkname)
         absdstpath = self.artworkroot.AbsolutePath(scaledfile)
 
@@ -104,9 +146,7 @@ class ArtworkCache(object):
         im = Image.open(abssrcpath)
         im.thumbnail(size, Image.BICUBIC)
         im.save(absdstpath, "JPEG", optimize=True, progressive=True)
-
-        return scaledfile
-
+        return True
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
