@@ -50,7 +50,7 @@ Run  git log --oneline  for more details
 │    + Configurations for video frame management "[videoframes]" and uploads "[uploads]"
 │    + For debugging purposes, IceCast connection and video mode can be disabled
 │ + Documentation improved
-│ * Solved Issues: #30, #45, #45, #24, #26, #47, #43, #46, #44, #38
+│ * Solved Issues: #30, #45, #45, #24, #26, #47, #43, #46, #44, #38, #16, #17
 │
 ┝━ MINOR CHANGES
 │ + Scripts now handle spaces inside the configuration correct

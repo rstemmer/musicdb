@@ -2594,7 +2594,7 @@ class MusicDBWebSocketInterface(object):
         The returned dictionary contains the same song ID given as argument to this method,
         as well as the corresponding song, album and artist entry of that song.
         Additional the requested lyrics and the lyricsstate explicitly.
-
+        The specification how lyrics are formatted and which states are available can be found in the :mod:`~lib.db.musicdb` documentation.
 
         Args:
             songid (int): ID so a song
@@ -2684,6 +2684,18 @@ class MusicDBWebSocketInterface(object):
 
 
     def SetSongLyrics(self, songid, lyrics, state):
+        """
+        This method is a direct interface to :meth:`~lib.db.musicdb.MusicDatabase.SetLyrics`.
+        The specification how lyrics are formatted and which states are available can be found in the :mod:`~lib.db.musicdb` documentation.
+
+        Args:
+            songid (int): ID of the song the lyrics belong to
+            lyrics (str): The lyrics to store
+            lyricsstate (int): The new state of the lyrics
+
+        Returns:
+            ``None``
+        """
         try:
             self.database.SetLyrics(songid, lyrics, state)
         except ValueError as e:
