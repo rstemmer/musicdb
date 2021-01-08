@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@ class MusicDBHUD extends Element
     constructor()
     {
         super("div", ["MusicDBHUD", "frame", "flex-row"]);
-        this.artworkimg    = document.createElement("img");
         this.artworkbox    = document.createElement("div");
         this.musicinfobox  = document.createElement("div");
         this.albuminfobox  = document.createElement("div");
@@ -46,16 +45,12 @@ class MusicDBHUD extends Element
     {
 
         // Setting some defaults
-        this.artworkimg.id   = "MDBHUD_AlbumCover";
-
         this.musicinfobox.classList.add( "InformationBoxElement");
         this.albuminfobox.classList.add( "InformationBoxElement");
         this.artistinfobox.classList.add("InformationBoxElement");
 
         // Artwork box
         this.artworkbox.classList.add("ArtworkBox");
-        this.artworkbox.classList.add("Artwork");
-        this.artworkbox.appendChild(this.artworkimg);
 
         // Music information box
         let infobox     = document.createElement("div");
@@ -65,7 +60,7 @@ class MusicDBHUD extends Element
         infobox.appendChild(this.artistinfobox);
 
         // Genre boxes
-        let genrebox    = document.createElement("div");
+        let  genrebox    = document.createElement("div");
         this.maingenre   = document.createElement("div");
         this.subgenre    = document.createElement("div");
         genrebox.classList.add("GenreBox");
@@ -112,11 +107,9 @@ class MusicDBHUD extends Element
         let albumid = MDBAlbum.id;
 
         this.artworkbox.dataset.musictype = "audio";
-        this.artworkimg.src     = imgpath;
-        this.artworkimg.onclick = ()=>
-            {
-                MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: albumid});
-            }
+        this.artworkbox.innerHTML         = "";
+        let  artwork = new AlbumArtwork(MDBAlbum, "medium");
+        this.artworkbox.appendChild(artwork.GetHTMLElement());
         return;
     }
 
@@ -126,11 +119,9 @@ class MusicDBHUD extends Element
         let videoid = MDBVideo.id;
 
         this.artworkbox.dataset.musictype = "video";
-        this.artworkimg.src     = imgpath;
-        this.artworkimg.onclick = ()=>
-            {
-                MusicDB_Request("GetVideo", "ShowVideo", {videoid: videoid});
-            }
+        this.artworkbox.innerHTML         = "";
+        let  artwork = new VideoArtwork(MDBVideo, "medium");
+        this.artworkbox.appendChild(artwork.GetHTMLElement());
         return;
     }
 

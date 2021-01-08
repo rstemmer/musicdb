@@ -1,6 +1,6 @@
 /*
  * MusicDB,  a music manager with web-bases UI that focus on music.
- * Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,23 +49,24 @@ div.MusicDBHUD .ArtworkBox
     border-radius:  var(--radius);
     overflow:       hidden;
 }
-div.MusicDBHUD .ArtworkBox[data-musictype="unknown"]
+div.MusicDBHUD .ArtworkBox[data-musictype="unknown"] > .Artwork
 {
     width:          60px;
     height:         60px;
 }
-div.MusicDBHUD .ArtworkBox[data-musictype="audio"]
+div.MusicDBHUD .ArtworkBox[data-musictype="audio"] > .Artwork
 {
     width:          60px;
     height:         60px;
 }
-div.MusicDBHUD .ArtworkBox[data-musictype="video"]
+div.MusicDBHUD .ArtworkBox[data-musictype="video"] > .Artwork
 {
     width:          107px;  /* 16:9 */
     height:         60px;
 }
-.ArtworkBox > img
+.ArtworkBox img
 {
+    cursor:         pointer;    /*No DnD here*/
     width:          auto;
     height:         100%;
 }
