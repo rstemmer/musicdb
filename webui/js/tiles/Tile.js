@@ -78,6 +78,7 @@ class Tile extends Draggable
     CreateSongTitle(MDBSong)
     {
         let songname      = MDBSong.name.replace(" - ", " – ");
+            songname      = songname.replace(    " ∕ ", " / ");
         let title         = document.createElement("span");
         title.classList.add("Title");
         title.textContent = songname;
@@ -91,6 +92,7 @@ class Tile extends Draggable
     CreateVideoTitle(MDBVideo)
     {
         let videoname     = MDBVideo.name.replace(" - ", " – ");
+            videoname     = videoname.replace(    " ∕ ", " / ");
         let title         = document.createElement("span");
         title.classList.add("Title");
         title.textContent = videoname;
@@ -106,6 +108,7 @@ class Tile extends Draggable
     {
         let artistname = MDBArtist.name;
         let albumname  = MDBAlbum.name.replace(" - ", " – ");
+            albumname  = albumname.replace(    " ∕ ", " / ");
         let songinfos  = document.createElement("div");
         songinfos.classList.add("Subtitle");
         songinfos.classList.add("hlcolor");
