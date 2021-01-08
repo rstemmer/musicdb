@@ -63,6 +63,7 @@ Run  git log --oneline  for more details
 │ + [randy] maximum tries to find a song can be limited (Config: "[randy]->maxtries")
 │ + [fileprocessing] Different checksum algorithm possible
 │ + [filesystem] Supports handling of videos
+│ * [filesystem] CopyFile now works now as expected and does not copy permissions and ownership
 │ + [metatags] Supports handling of videos
 │ + [mod.add] Lists all new albums, not only of known artists
 │ + [mod.database] Allows adding videos (Removing is not yet supported!)

@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017, 2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -323,7 +323,7 @@ class Filesystem(object):
         if not self.IsFile(abssource):
             return False
 
-        shutil.copy2(abssource, absdest)
+        shutil.copyfile(abssource, absdest)
         return True
 
 
