@@ -64,6 +64,7 @@ Run  git log --oneline  for more details
 │ + [fileprocessing] Different checksum algorithm possible
 │ + [filesystem] Supports handling of videos
 │ * [filesystem] CopyFile now works now as expected and does not copy permissions and ownership
+│ * [artwork] Caches for scaled artworks now get the right permissions (g+w)
 │ + [metatags] Supports handling of videos
 │ + [mod.add] Lists all new albums, not only of known artists
 │ + [mod.database] Allows adding videos (Removing is not yet supported!)

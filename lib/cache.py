@@ -40,7 +40,8 @@ class ArtworkCache(object):
 
         If the artwork does not exist for this resolution it will be generated.
         If the directory for that scale does not exist, it will be created.
-        In case an error occcurs, an exception gets raised.
+        Its permission will be ``musicdb:musicdb drwxrwxr-x``
+        In case an error occurs, an exception gets raised.
 
         The resolution is given as string in the format ``{X}x{Y}`` (For example: ``100x100``).
         *X* and *Y* must have the same value.
@@ -83,7 +84,13 @@ class ArtworkCache(object):
         # Check if the scale-directory already exist. If not, create one
         if not self.artworkroot.IsDirectory(resolution):
             logging.debug("Creating subdirectory: %s", resolution)
-            self.artworkroot.CreateSubdirectory(resolution)
+            mode = stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH
+            try:
+                self.artworkroot.CreateSubdirectory(resolution)
+                self.artworkroot.SetAttributes(resoultion, None, None, mode);
+            except Exception as e:
+                logging.exception("Creating scaled artwork directory %s failed with error: %s.", resolution, str(e))
+                raise e
 
         # Scale image
         logging.debug("Converting image to %s", resolution)
