@@ -170,7 +170,9 @@ def UploadManagementThread():
             contenttype = task["contenttype"]
 
             if state == "uploadfailed" or state == "importfailed" or state == "importcomplete":
-                pass    # TODO: Clean up everything
+                if contenttype in ["artwork"]:
+                    task["state"] = "remove"
+                    manager.SaveTask(task)
 
             elif state == "uploadcomplete":
                 manager.PreProcessUploadedFile(task)
@@ -184,7 +186,6 @@ def UploadManagementThread():
                     logging.error("Invalid content type \"%s\". \033[1;30m(forcing state importfailed)", contenttype);
                     success = False
 
-
                 if success:
                     if contenttype in ["album", "video"]:
                         task["state"] = "importartwork"
@@ -193,9 +194,7 @@ def UploadManagementThread():
                     manager.SaveTask(task)
                     manager.NotifyClient("StateUpdate", task)
                 else:
-                    task["state"] = "importfailed"
-                    manager.SaveTask(task)
-                    manager.NotifyClient("StateUpdate", task)
+                    manager.UpdateState(task, "importfailed")
 
             elif state == "importartwork":
                 if contenttype == "video":
@@ -205,13 +204,9 @@ def UploadManagementThread():
                     success = False
 
                 if success:
-                    task["state"] = "importcomplete"
-                    manager.SaveTask(task)
-                    manager.NotifyClient("StateUpdate", task)
+                    manager.UpdateState(task, "importcompleted")
                 else:
-                    task["state"] = "importfailed"
-                    manager.SaveTask(task)
-                    manager.NotifyClient("StateUpdate", task)
+                    manager.UpdateState(task, "importfailed")
 
             elif state == "remove":
                 manager.RemoveTask(task)
