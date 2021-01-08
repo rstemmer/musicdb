@@ -16,10 +16,11 @@
 
 "use strict";
 
-class MusicDBHUD
+class MusicDBHUD extends Element
 {
     constructor()
     {
+        super("div", ["MusicDBHUD", "frame", "flex-row"]);
         this.artworkimg    = document.createElement("img");
         this.artworkbox    = document.createElement("div");
         this.musicinfobox  = document.createElement("div");
@@ -31,10 +32,7 @@ class MusicDBHUD
         this.albumicon     = new SVGIcon("Album");
         this.artisticon    = new SVGIcon("Artist");
 
-        this.element       = this._CreateElement();
-        this.element.classList.add("MusicDBHUD");
-        this.element.classList.add("frame");
-        this.element.classList.add("flex-row");
+        this._CreateElement();
 
         this.currentsongid = -1;
         this.currentvideoid= -1;
@@ -43,10 +41,6 @@ class MusicDBHUD
         this.tags          = null;
     }
 
-    GetHTMLElement()
-    {
-        return this.element;
-    }
 
     _CreateElement()
     {
@@ -87,14 +81,13 @@ class MusicDBHUD
         this.propbox.classList.add("hlcolor");
 
         // Compose final element
-        let container   = document.createElement("div");
-        container.appendChild(this.artworkbox);
-        container.appendChild(infobox);
-        container.appendChild(genrebox);
-        container.appendChild(this.moodbox);
-        container.appendChild(this.propbox);
+        this.element.appendChild(this.artworkbox);
+        this.element.appendChild(infobox);
+        this.element.appendChild(genrebox);
+        this.element.appendChild(this.moodbox);
+        this.element.appendChild(this.propbox);
 
-        return container;
+        return;
     }
 
 
