@@ -61,6 +61,7 @@ from lib.filesystem     import Filesystem
 from lib.fileprocessing import Fileprocessing
 from lib.metatags       import MetaTags
 from mdbapi.database    import MusicDBDatabase
+from mdbapi.artwork     import MusicDBArtwork
 from mdbapi.videoframes import VideoFrames
 
 Config      = None
@@ -176,13 +177,18 @@ def UploadManagementThread():
             elif state == "startimport":
                 if contenttype == "video":
                     success = manager.ImportVideo(task)
+                elif contenttype == "artwork":
+                    success = manager.ImportArtwork(task)
                 else:
                     logging.error("Invalid content type \"%s\". \033[1;30m(forcing state importfailed)", contenttype);
                     success = False
 
 
                 if success:
-                    task["state"] = "importartwork"
+                    if contenttype in ["album", "video"]:
+                        task["state"] = "importartwork"
+                    else:
+                        task["state"] = "importcomplete"
                     manager.SaveTask(task)
                     manager.NotifyClient("StateUpdate", task)
                 else:
@@ -701,6 +707,7 @@ class UploadManager(object):
         if task["contenttype"] == "video":
             success = self.PreProcessVideo(task)
         elif task["contenttype"] == "artwork":
+            task["artworkfile"] = task["destinationpath"] # TODO: If not JPEG, transcode!
             success = True  # no preprocessing required
         else:
             logging.warning("Unsupported content type of upload: \"%s\" \033[1;30m(Upload will be ignored)", str(task["contenttype"]))
@@ -803,6 +810,8 @@ class UploadManager(object):
         success = False
         if task["contenttype"] == "video":
             success = self.IntegrateVideo(task)
+        elif task["contenttype"] == "artwork":
+            success = True # Importing artwork does not require the file at any specific place
         else:
             logging.warning("Unsupported content type of upload: \"%s\" \033[1;30m(Upload will be ignored)", str(task["contenttype"]))
             self.UpdateTaskState(task, "integrationfailed", "Unsupported content type")
@@ -966,11 +975,63 @@ class UploadManager(object):
 
         retval = framemanager.UpdateVideoFrames(video)
         if retval == False:
-            logging.error("Generating video frames and preview failed for video \"%s\". \033[1;30m(Artwork import canceled)", str(videopath), str(e))
+            logging.error("Generating video frames and preview failed for video \"%s\". \033[1;30m(Artwork import canceled)", str(videopath))
             self.NotifyClient("InternalError", task, "Video artwork import failed")
             return False
 
         logging.info("Importing Video thumbnails and previews succeeded")
+        return True
+
+
+
+    def ImportArtwork(self, task):
+        """
+        Task state must be ``"startimport"`` and content type must be ``"artwork"``
+
+        Returns:
+            ``True`` on success.
+        """
+        # Check task state and type
+        if task["state"] != "startimport":
+            logging.warning("Cannot import an upload that is not in \"startimport\" state. Upload with ID \"%s\" was in \"%s\" state! \033[1;30m(Nothing will be done)", str(task["id"]), str(task["state"]))
+            return False
+
+        success = False
+        if task["contenttype"] != "artwork":
+            logging.warning("Album artwork expected. Actual type of upload: \"%s\" \033[1;30m(No artwork will be imported)", str(task["contenttype"]))
+            return False
+
+        # Get important information
+        try:
+            artistname = task["annotations"]["artistname"]
+            albumname  = task["annotations"]["albumname"]
+            albumid    = task["annotations"]["albumid"]
+            sourcepath = task["artworkfile"]
+        except KeyError as e:
+            logging.error("Collecting artwork information for importing failed with key-error for: %s \033[1;30m(Make sure the artist and album name is annotated as well as the album ID.)", str(e))
+            return False
+
+        # Import artwork
+        awmanager   = MusicDBArtwork(self.cfg, self.db)
+        artworkname = awmanager.CreateArtworkName(artistname, albumname)
+        success     = awmanager.SetArtwork(albumid, sourcepath, artworkname)
+
+        if not success:
+            logging.error("Importing artwork \"%s\" failed. \033[1;30m(Artwork upload canceled)", str(sourcepath))
+            self.NotifyClient("InternalError", task, "Importing artwork failed")
+            return False
+
+        # Add origin information to database if annotated
+        try:
+            origin = task["annotations"]["origin"]
+        except KeyError as e:
+            pass
+        else:
+            video = self.db.GetVideoByPath(videopath)
+            video["origin"] = origin
+            self.db.WriteVideo(video)
+
+        logging.info("Importing Artwork succeeded")
         return True
 
 
