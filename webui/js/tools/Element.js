@@ -40,6 +40,16 @@ class Element
 
 
 
+    AppendChild(child)
+    {
+        if(typeof child.GetHTMLElement === "function")
+            this.element.appendChild(child.GetHTMLElement());
+        else
+            this.element.appendChild(child);
+    }
+
+
+
     SetTooltip(tooltip)
     {
         this.element.title = tooltip;
