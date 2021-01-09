@@ -116,7 +116,7 @@ class MusicDBConfig(Config):
         # [server]
         self.server = SERVER()
         self.server.pidfile         = self.Get(str, "server",   "pidfile",      "/opt/musicdb/data/musicdb.pid")
-        self.server.statedir        = self.Get(str, "server",   "statedir",     "/opt/musicdb/data/mdbstate")
+        self.server.statedir        = self.GetDirectory("server","statedir",    "/opt/musicdb/data/mdbstate")
         self.server.fifofile        = self.Get(str, "server",   "fifofile",     "/opt/musicdb/data/musicdb.fifo")
         self.server.webuiconfig     = self.Get(str, "server",   "webuiconfig",  "/opt/musicdb/data/webui.ini")
 
