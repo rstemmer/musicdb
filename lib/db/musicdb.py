@@ -1146,9 +1146,9 @@ class MusicDatabase(Database):
 
     def GetAlbumsByArtistId(self, artistid):
         """
-        See :meth:`~lib.db.musicdb.MusicDatabase.GetAlbums` (``GetAlbums(artistid, withsongs=False, hidden="include")``)
+        See :meth:`~lib.db.musicdb.MusicDatabase.GetAlbums` (``GetAlbums(artistid, withsongs=False, hidden="no")``)
         """
-        return self.GetAlbums(artistid, hidden="include")
+        return self.GetAlbums(artistid, hidden="no")
 
     # returns a list with all artists. Each list element is a dictionary with all columns of the database
     def GetAlbums(self, artistid = None, withsongs = False, hidden = "no"):
