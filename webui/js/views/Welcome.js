@@ -20,9 +20,9 @@ class Welcome extends MainView2
 {
     constructor()
     {
-        let headline = new MainViewHeadline(null)
-        headline.UpdateRawInformation("MusicDB", "", "First Run", "");
+        let headline = new SettingsHeadline("MusicDB", "This view is shown because there is no song or video queue avaliable.");
         super("Welcome", headline, new MusicDBLogo);
+        this.element.classList.add("Welcome");
 
         let nosongswarning = new MessageBarWarning("There is no Music in the Queue");
         nosongswarning.Show();
@@ -32,10 +32,21 @@ class Welcome extends MainView2
         message += "<h1>Welcome to MusicDB</h1>";
         message += "<p>";
         message += "This information is shown because there is no music to play in the queue.";
+        message += " Usually the random song selection algorithm adds music to the queue if music is available.";
+        message += " This is usually not the case when you start MusicDB for the first time.";
         message += "</p>";
         message += "<p>";
-        message += "If you start MusicDB for the first time, this is OK. ";
-        message += "Just follow the instruction in the <a target=\"_blank\" href=\"https://rstemmer.github.io/musicdb/build/html/usage/music.html\">documentation</a> to add music to the database.";
+        message += "If you start MusicDB for the first time, this is OK.";
+        message += " <b>You have installed MusicDB sucessfully.</b>";
+        message += " Now you only have to add content to the database.";
+        message += " Just follow the instruction in the <a target=\"_blank\" href=\"https://rstemmer.github.io/musicdb/build/html/usage/music.html\">documentation</a> to add music to the database.";
+        message += " You can use the Settings (see the menu at the top right corner) to create genre and sub-genre tags.";
+        message += "</p>";
+        message += "<p>";
+        message += "In case you see this view with a previously fully set up installation, the may be something broken with your setup.";
+        message += " You can make the logs more verbose by setting the <tt>[log]->loglevel</tt> settings in the <tt>/etc/musicdb.ini</tt> file to <tt>DEBUG</tt>.";
+        message += " Then restart the MusicDB server.";
+        message += " In case of questions just create an <a target=\"_blank\" href=\"https://github.com/rstemmer/musicdb/issues\">Issue at GitHub.com</a>.";
         message += "</p>";
 
         let messagebox = document.createElement("div");
