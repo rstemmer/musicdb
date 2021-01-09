@@ -24,10 +24,11 @@
         this.element.dataset.musicid  = this.songid;
         this.element.dataset.droptask = "insert";
 */
-class Draggable
+class Draggable extends Element
 {
-    constructor()
+    constructor(type, classes=[], id=null)
     {
+        super(type, classes, id);
     }
 
 
