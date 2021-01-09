@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -80,8 +80,10 @@ class MoodsTableRow extends MoodsTableRowBase
 
         let editbutton   = new SVGButton("Edit",   ()=>{this.onEdit(MDBMood);});
         editbutton.SetTooltip("Edit this Mood-Flag entry");
-        let removebutton = new SVGButton("Remove", ()=>{this.onDelete(MDBMood);});
+
         let numdependencies = numsongs + numvideos;
+        this.confirmmessage = new MessageBarConfirmDelete(`Do you want to delete all ${numdependencies} associations to the "${MDBMood.name}" Flag?<br>Enter "${numdependencies}" and confirm with <i>Enter</i>`, `${numdependencies}`, ()=>{this.onDelete(MDBMood);});
+        let removebutton    = new SVGButton("Remove", ()=>{this.onDelete(MDBMood, numdependencies);});
         if(numdependencies > 0)
         {
             removebutton.SetColor("var(--color-red)");
@@ -174,13 +176,18 @@ class MoodsTableRow extends MoodsTableRowBase
             icon.SetColor(color);
         }
 
+        let controls = document.createElement("div");
+        controls.classList.add("flex-column");
+        controls.appendChild(buttonbox.GetHTMLElement());
+        controls.appendChild(this.confirmmessage.GetHTMLElement());
+
         this.SetContent(ICON_COLUMN    , icon.GetHTMLElement());
         this.SetContent(ICONTYPE_COLUMN, document.createTextNode(typename));
         this.SetContent(MOODNAME_COLUMN, document.createTextNode(name));
         this.SetContent(HASCOLOR_COLUMN, colorstateicon.GetHTMLElement());
         this.SetContent(COLOR_COLUMN   , colorelement);
         this.SetContent(USAGE_COLUMN   , usageelement);
-        this.SetContent(BUTTON_COLUMN  , buttonbox.GetHTMLElement());
+        this.SetContent(BUTTON_COLUMN  , controls);
     }
 
 
@@ -193,9 +200,18 @@ class MoodsTableRow extends MoodsTableRowBase
 
 
 
-    onDelete(MDBMood)
+    onDelete(MDBMood, numdependencies=0)
     {
+        // Ask for confirmation
+        if(numdependencies > 0)
+        {
+            this.confirmmessage.Show();
+            return;
+        }
+
+        // Delete
         MusicDB_Request("DeleteTag", "UpdateTags", {tagid: MDBMood.id}, {origin: "MoodSettings"});
+        return;
     }
 
     onEdit(MDBMood)
