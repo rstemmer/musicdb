@@ -86,7 +86,7 @@ class MoodsTableRow extends MoodsTableRowBase
         let removebutton    = new SVGButton("Remove", ()=>{this.onDelete(MDBMood, numdependencies);});
         if(numdependencies > 0)
         {
-            removebutton.SetColor("var(--color-red)");
+            removebutton.SetColor("var(--color-brightred)");
             removebutton.GetHTMLElement().classList.add("hovpacity");
             removebutton.SetTooltip("Delete Mood-Flag and remove Flag from all songs, albums and videos");
         }
