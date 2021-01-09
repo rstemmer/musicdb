@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ class VideoTile extends Draggable
     // flagbar is optional
     constructor(MDBVideo, onclick, flagbar)
     {
-        super();
+        super("div", ["VIdeoTile"]);
 
         let videoid      = MDBVideo.id;
         let videoname    = MDBVideo.name;
@@ -36,13 +36,11 @@ class VideoTile extends Draggable
 
         this.buttonbox                = new ButtonBox_AddVideoToQueue(videoid);
 
-        this.element                  = document.createElement("div");
-        this.element.classList.add("VideoTile");
-        this.element.appendChild(this.artwork.GetHTMLElement());
-        this.element.appendChild(this.buttonbox.GetHTMLElement());
-        this.element.appendChild(this.titleelement);
+        super.AppendChild(this.artwork);
+        super.AppendChild(this.buttonbox);
+        super.AppendChild(this.titleelement);
         if(flagbar !== undefined)
-            this.element.appendChild(flagbar.GetHTMLElement());
+            super.AppendChild(flagbar);
         this.element.onclick = onclick;
 
         if(MDBVideo.disabled)
@@ -69,12 +67,6 @@ class VideoTile extends Draggable
     SetDisabled()
     {
         this.element.dataset.enabled = false;
-    }
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 }
 

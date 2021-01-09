@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,13 +20,12 @@ class SongTile extends Tile
 {
     constructor(MDBSong, MDBAlbum, MDBArtist)
     {
-        super();
+        super(["SongTile"]);
         let buttonbox = new ButtonBox_AddSongToQueue(MDBSong.id);
         let artwork   = new AlbumArtwork(MDBAlbum, "small");
         let title     = super.CreateSongTitle(MDBSong);
         let subtitle  = super.CreateSongSubtitle(MDBAlbum, MDBArtist);
         super.MakeElement(artwork, title, new Array(buttonbox), subtitle, null);
-        this.element.classList.add("SongTile");
         super.ConfigDraggable("song", MDBSong.id, "insert", "SongTile_");
         super.BecomeDraggable();
     }
@@ -38,7 +37,7 @@ class TaggedSongTile extends Tile
 {
     constructor(MDBSong, MDBAlbum, MDBArtist, MDBTags, bottombuttons=null)
     {
-        super();
+        super(["SongTile"]);
         let buttonbox     = new ButtonBox_AddSongToQueue(MDBSong.id);
         let artwork       = new AlbumArtwork(MDBAlbum, "small");
         this.genreview    = new TagListView();
@@ -55,7 +54,6 @@ class TaggedSongTile extends Tile
             bottomcontrols = new Array(this.subgenreview);
 
         super.MakeElement(artwork, title, new Array(this.genreview, buttonbox), subtitle, bottomcontrols);
-        this.element.classList.add("SongTile");
         this.UpdateTags(MDBTags);
 
         super.ConfigDraggable("song", MDBSong.id, "insert", "SongTile_");
@@ -82,10 +80,9 @@ class SongEntryTile extends Draggable
 {
     constructor(MDBSong, MDBTags)
     {
-        super();
-        this.songid  = MDBSong.id;
-        this.element = document.createElement("div");
+        super("div", ["SongEntryTile", "hoverframe", "flex-row"]);
 
+        this.songid       = MDBSong.id;
         this.songnum      = this.CreateSongNumber(MDBSong);
         this.playingicon  = new SVGIcon("StatusPlaying");
         this.playingicon.GetHTMLElement().dataset.playing = false;
@@ -101,17 +98,14 @@ class SongEntryTile extends Draggable
         this.insertbutton.SetTooltip("Insert song into the queue after current playing song");
         this.lyricsbutton.GetHTMLElement().classList.add("hovpacity");
 
-        this.element.appendChild(this.songnum);
-        this.element.appendChild(this.playingicon.GetHTMLElement());
-        this.element.appendChild(this.songname);
-        this.element.appendChild(this.flagbar.GetHTMLElement());
+        super.AppendChild(this.songname);
+        super.AppendChild(this.playingicon);
+        super.AppendChild(this.songname);
+        super.AppendChild(this.flagbar);
         if(configuration.WebUI.lyrics == "enabled")
-            this.element.appendChild(this.lyricsbutton.GetHTMLElement());
-        this.element.appendChild(this.appendbutton.GetHTMLElement());
-        this.element.appendChild(this.insertbutton.GetHTMLElement());
-        this.element.classList.add("SongEntryTile");
-        this.element.classList.add("hoverframe");
-        this.element.classList.add("flex-row");
+            super.AppendChild(this.lyricsbutton);
+        super.AppendChild(this.appendbutton);
+        super.AppendChild(this.insertbutton);
         this.element.dataset.highlight = false;
 
         if(MDBSong.disabled)
@@ -125,13 +119,6 @@ class SongEntryTile extends Draggable
 
         this.ConfigDraggable("song", this.songid, "insert");
         this.BecomeDraggable();
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 

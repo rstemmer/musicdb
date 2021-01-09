@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ class BaseAlbumTile extends Draggable
      */
     constructor(MDBAlbum, onclick, size)
     {
-        super();
+        super("div", ["AlbumTile"]);
         let albumid      = MDBAlbum.id;
         let albumname    = OptimizeAlbumName(MDBAlbum.name);
         let albumrelease = MDBAlbum.release;
@@ -46,22 +46,13 @@ class BaseAlbumTile extends Draggable
             this.metadata.appendChild(this.releaseelement);
         }
 
-        this.element                  = document.createElement("div");
-        this.element.classList.add("AlbumTile");
-        this.element.appendChild(this.artwork.GetHTMLElement());
-        this.element.appendChild(this.metadata);
+        super.AppendChild(this.artwork);
+        super.AppendChild(this.metadata);
         this.element.onclick      = onclick;
         this.element.dataset.size = size;
 
         this.ConfigDraggable("album", albumid, "insert", size); // Use size as ID-Prefix
         this.BecomeDraggable();
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 }
 

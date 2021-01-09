@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,19 +19,15 @@
 
 class Tile extends Draggable
 {
-    constructor()
+    constructor(classes=[])
     {
-        super();
+        super("div", ["Tile", "flex-row", ...classes]);
     }
 
 
 
     MakeElement(artwork, title, topfeatureelements, subtitle, bottomfeatureelements)
     {
-        this.element    = document.createElement("div");
-        this.element.classList.add("flex-row");
-        this.element.classList.add("Tile");
-
         if(artwork != null)
             this.artwork = artwork;
         else
@@ -62,15 +58,8 @@ class Tile extends Draggable
         this.infobox.appendChild(this.toprow);
         this.infobox.appendChild(this.bottomrow);
 
-        this.element.appendChild(this.artwork.GetHTMLElement());
-        this.element.appendChild(this.infobox);
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
+        super.AppendChild(this.artwork);
+        super.AppendChild(this.infobox);
     }
 
 

@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,23 +20,14 @@
 class Artwork extends Draggable
 {
     // size: "small", "medium"
-    constructor(size)
+    constructor(size, classes=[])
     {
-        super();
-        this.element                  = document.createElement("div");
-        this.element.classList.add("Artwork");
+        super("div", ["Artwork", ...classes]);
         this.imageelement             = document.createElement("img");
         this.imageelement.draggable   = false;
-        this.element.appendChild(this.imageelement);
+        super.AppendChild(this.imageelement);
         this.element.onclick          = ()=>{this.onClick();};
         this.element.dataset.size     = size;
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
@@ -61,8 +52,7 @@ class MusicDBLogo extends Artwork
 {
     constructor()
     {
-        super("large");
-        this.element.classList.add("AlbumArtwork"); // For symmetry
+        super("large", ["AlbumArtwork"]);
         this.imageelement.src = "img/mdblogo-light.svg";
     }
 
@@ -78,9 +68,8 @@ class AlbumArtwork extends Artwork
 {
     constructor(MDBAlbum, size)
     {
-        super(size);
+        super(size, ["AlbumArtwork"]);
 
-        this.element.classList.add("AlbumArtwork");
         if(MDBAlbum != null)
         {
             this.albumid     = MDBAlbum.id;
@@ -123,9 +112,8 @@ class VideoArtwork extends Artwork
 {
     constructor(MDBVideo, size)
     {
-        super(size);
+        super(size, ["VideoArtwork"]);
         
-        this.element.classList.add("VideoArtwork");
         this.videoid = MDBVideo.id;
 
         if(size == "small" || size == "medium")
