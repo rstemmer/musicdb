@@ -352,12 +352,19 @@ System Preparation
 Install dependencies
 ^^^^^^^^^^^^^^^^^^^^
 
-Some: ``git``, ``gcc``, ``python``, ``pip``
+Some:
 
-.. attention::
-
-   On Debian the ``python`` command runs the ancient Python 2.
-   Whenever this documentation is talking about Python, Python 3 is meant!
+   * ``git``
+   * ``clang``
+   * ``python``
+   * ``pip``
+   * GStreamer with all plugins
+   * ``icecast``
+   * ``libshout``
+   * ``ffmpeg``
+   * ``openssl``
+   * ``sqlite3``
+   * ``rsync``
 
 Further more, everything ``check`` tells you is missing.
 The following list gives you some details about the listed modules.
@@ -367,6 +374,11 @@ The following list gives you some details about the listed modules.
    * ``icecast`` won't be detected on Debian because there it is called ``icecast2`` (This has no impact).
    * ``apachectl`` my be not found if it is only available for root user. Or you simply use another HTTP server.
    * ``jsdoc`` can be installed via ``npm install -g jsdoc``.
+
+.. attention::
+
+   On Debian the ``python`` command runs the ancient Python 2.
+   Whenever this documentation is talking about Python, Python 3 is meant!
 
 Basic packages
 ^^^^^^^^^^^^^^
