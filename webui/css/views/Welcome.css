@@ -30,16 +30,19 @@
 }
 
 
-
-
-.Welcome h1
+.Welcome h1,h2
 {
     margin:             1.0em;
     margin-top:         0;
     padding-top:        1.0em;
 
-    font-size:          2.0rem;
     letter-spacing:     0.05em;
+}
+
+
+.Welcome h1
+{
+    font-size:          2.0rem;
 }
 
 

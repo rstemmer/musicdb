@@ -112,6 +112,10 @@ class MainViewManager extends ViewManager
     {
         this.MountView(new Welcome());
     }
+    ShowWebSocketError()
+    {
+        this.MountView(new WebSocketError());
+    }
 
 
 

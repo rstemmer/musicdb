@@ -110,6 +110,7 @@ function onMusicDBConnectionError()
 {
     window.console && console.log("[MDB] Error");
     musicdbstatus.onMusicDBConnectionError();
+    mainviewmanager.ShowWebSocketError();
 }
 function onMusicDBWatchdogBarks()
 {
