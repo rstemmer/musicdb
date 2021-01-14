@@ -16,6 +16,16 @@
 
 "use strict";
 
+
+class Marker extends Element
+{
+    constructor(id)
+    {
+        super("div", ["marker"], id);
+    }
+}
+
+
 class ArtistsView extends LeftView
 {
     constructor()
@@ -33,11 +43,8 @@ class ArtistsView extends LeftView
         let  anchor     = " ";   // track first letter of the artistname to set jumpmarks
 
         this.tiles      = new Object();
-        this.element.innerHTML = "";
-        let firstanchor = document.createElement("div");
-        firstanchor.id  = "↑_mark";
-        firstanchor.classList.add("marker");
-        this.element.appendChild(firstanchor);
+        this.RemoveChilds();
+        this.AppendChild(new Marker("↑_mark"));
 
         for(let entry of MDBArtistList)
         {
@@ -59,21 +66,15 @@ class ArtistsView extends LeftView
             if(firstchar != anchor)
             {
                 anchor = firstchar;
-                let anchorelement = document.createElement("div");
-                anchorelement.id = anchor + "_mark";
-                anchorelement.classList.add("marker");
-                this.element.appendChild(anchorelement);
+                this.AppendChild(new Marker(anchor + "_mark"));
             }
 
             // Add artists music
             let artistelement = this._CreateArtistElement(artist, music)
-            this.element.appendChild(artistelement);
+            this.AppendChild(artistelement);
         }
 
-        let lastanchor = document.createElement("div");
-        lastanchor.id  = "↓_mark";
-        lastanchor.classList.add("marker");
-        this.element.appendChild(lastanchor);
+        this.AppendChild(new Marker("↓_mark"));
         return;
     }
 
