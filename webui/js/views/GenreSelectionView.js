@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,28 +16,15 @@
 
 "use strict";
 
-var RELOAD_INTERVAL = 1000; //ms
+const RELOAD_INTERVAL = 500; //ms
 
-class GenreSelectionView
+class GenreSelectionView extends Element
 {
     constructor()
     {
+        super("div", ["GenreSelectionView", "flex-row", "frame", "hlcolor", "smallfont", "hovpacity"]);
         this.reloadtimeouthandler = null;
         this.activegenres         = null;
-        this.element = document.createElement("div");
-        this.element.classList.add("flex-row");
-        this.element.classList.add("frame");
-        this.element.classList.add("hlcolor");
-        this.element.classList.add("smallfont");
-        this.element.classList.add("hovpacity");
-        this.element.classList.add("GenreSelectionView");
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
@@ -50,7 +37,7 @@ class GenreSelectionView
             this.activegenres = MDBState.albumfilter;
 
         // Create all buttons
-        this.element.innerHTML = "";
+        super.RemoveChilds();
         let genres = tagmanager.GetGenres();
         for(let genre of genres)
         {
@@ -72,7 +59,7 @@ class GenreSelectionView
             }
 
             // append button
-            this.element.appendChild(tagelement);
+            super.AppendChild(tagelement);
         }
 
         return;
