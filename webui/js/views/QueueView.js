@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,20 +16,12 @@
 
 "use strict";
 
-class QueueView
+class QueueView extends Element
 {
     constructor()
     {
-        this.element = document.createElement("div");
-        this.element.classList.add("QueueView");
+        super("div", ["QueueView"]);
         this.streamviewmount = document.createElement("div");
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
@@ -57,7 +49,7 @@ class QueueView
     Update(musictype, MDBQueue)
     {
         // Nothing in the queue? -> Nothing to do
-        // A fresh installes MusicDB may have no queue!
+        // A fresh installed MusicDB may have no queue!
         if(MDBQueue.length === 0)
             return;
 
@@ -72,11 +64,11 @@ class QueueView
         }
 
         // Reset QueueView
-        this.element.innerHTML = "";
+        super.RemoveChilds();
         if(MDBQueue[0].video !== undefined)
         {
             // In video mode, place the mount point for the StreamView
-            this.element.appendChild(this.streamviewmount);
+            super.AppendChild(this.streamviewmount);
         }
 
         let queueposition      = 0;
@@ -114,8 +106,8 @@ class QueueView
             if(queueposition > 0)
                 tile.BecomeDraggable();
 
-            this.element.appendChild(tile.GetHTMLElement());
-            this.element.appendChild(dropzone.GetHTMLElement());
+            super.AppendChild(tile);
+            super.AppendChild(dropzone);
             queueposition += 1;
         }
     }
@@ -153,13 +145,6 @@ class QueueDropZone extends DropTarget
         
         this.entryid    = entryid;
         this.BecomeDropTarget();
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
