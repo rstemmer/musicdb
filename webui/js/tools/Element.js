@@ -58,6 +58,13 @@ class Element
     {
         this.element.title = tooltip;
     }
+
+
+
+    SetInnerText(text)
+    {
+        this.element.innerText = text;
+    }
 }
 
 
