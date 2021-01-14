@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,19 +16,14 @@
 
 "use strict";
 
-class AudioPlayer
+class AudioPlayer extends Element
 {
     constructor(songpath)
     {
-        this.element          = document.createElement("audio");
+        super("audio");
         this.element.controls = "controls";
         this.element.preload  = "none";
-        this.element.src      = "/musicdb/music/" + songpath;
-    }
-
-    GetHTMLElement()
-    {
-        return this.element;
+        this.element.src      = EncodePath("/musicdb/music/" + songpath);
     }
 }
 
