@@ -21,7 +21,7 @@ class QueueView extends Element
     constructor()
     {
         super("div", ["QueueView"]);
-        this.streamviewmount = document.createElement("div");
+        this.streamviewmount = new Element("div");
     }
 
 
@@ -34,13 +34,13 @@ class QueueView extends Element
             });
         backbutton.SetTooltip("Show Stream in Main View");
 
-        this.streamviewmount.appendChild(streamview.GetHTMLElement());
-        this.streamviewmount.appendChild(backbutton.GetHTMLElement());
+        this.streamviewmount.AppendChild(streamview);
+        this.streamviewmount.AppendChild(backbutton);
         return;
     }
     UnmountStreamView()
     {
-        this.streamviewmount.innerHTML = "";
+        this.streamviewmount.RemoveChilds();
     }
 
 
