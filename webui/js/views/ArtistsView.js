@@ -81,12 +81,11 @@ class ArtistsView extends LeftView
 
     _CreateArtistElement(artist, music)
     {
-        let artistelement = document.createElement("div");
-        artistelement.classList.add("artistentry")
+        let artistelement = new Element("div", ["artistentry"]);
 
         // Add artist headline
         let headline = this._CreateArtistHeadline(artist)
-        artistelement.appendChild(headline);
+        artistelement.AppendChild(headline);
 
         for(let entry of music)
         {
@@ -112,7 +111,7 @@ class ArtistsView extends LeftView
             }
 
             this.tiles[musicid] = tile;
-            artistelement.appendChild(tile.GetHTMLElement());
+            artistelement.AppendChild(tile);
         }
 
         return artistelement;
@@ -123,10 +122,8 @@ class ArtistsView extends LeftView
     _CreateArtistHeadline(MDBArtist)
     {
         // Add artist headline
-        let headline = document.createElement("span");
-        headline.classList.add("fgcolor");
-        headline.innerText = MDBArtist.name;
-        headline.id        = "Artist_" + MDBArtist.id;
+        let headline = new Element("span", ["fgcolor"], "Artist_" + MDBArtist.id);
+        headline.SetInnerText(MDBArtist.name);
         return headline;
     }
 
