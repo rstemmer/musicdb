@@ -64,6 +64,24 @@ class SettingsEntry extends Element
 
         this.element.appendChild(this.control);
         this.element.appendChild(this.description);
+
+        this.Enable();
+    }
+
+
+
+    Disable()
+    {
+        this.element.dataset.enabled = false;
+        this.enabled                 = false;
+        return;
+    }
+
+    Enable()
+    {
+        this.element.dataset.enabled = true;
+        this.enabled                 = true;
+        return;
     }
 }
 
@@ -114,6 +132,9 @@ class SettingsCheckbox extends SettingsEntry
 
     onClick()
     {
+        if(this.enabled === false)
+            return;
+
         this.SetState(! this.GetState());
         if(typeof this.clickhandler === "function")
             this.clickhandler(this.GetState());
