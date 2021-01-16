@@ -50,29 +50,23 @@
     --color-brightyellow:   #ADAD3F;
 
     --artworkwidth-large:   20vw;
-    --artworkwidth-medium:  10rem;
+    --artworkwidth-medium:   8vw;
     --artworkwidth-small:    3rem;
     --artworkfilter:        none;
 }
 
-/* < Full HD*/
-@media only screen and (max-width: 1900px)
-{
-    :root
-    {
-        --artworkwidth-medium:  8vw; 
-    }
-}
 
 /* 4K */
-@media only screen and (min-width: 3000px)
+@media only screen and (min-width: 2500px)
 {
     :root
     {
+        --artworkwidth-medium:  4vw;
         --normalfontsize:       16pt;
         --smallfontsize:        12pt;
     }
 }
+
 
 .fgcolor
 {
