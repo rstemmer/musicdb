@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,17 +16,16 @@
 
 "use strict";
 
-class TabSelect
+class TabSelect extends Element
 {
     constructor()
     {
+        super("div", ["tabbox", "flex-column"]);
+
         this.tabs           = new Array();
         this.buttons        = new Array();
         this.showcallback   = new Array();  // Will be called when tag gets selected (after integrating into the DOM)
 
-        this.element        = document.createElement("div");
-        this.element.classList.add("flex-column");
-        this.element.classList.add("tabbox");
         this.tabbar         = document.createElement("div");
         this.tabbar.classList.add("flex-row");
         this.tabbar.classList.add("hovpacity");
@@ -34,26 +33,22 @@ class TabSelect
         this.tabcontent     = document.createElement("div");
         this.tabcontent.classList.add("tabcontent");
 
-        this.element.appendChild(this.tabbar);
-        this.element.appendChild(this.tabcontent);
+        super.AppendChild(this.tabbar);
+        super.AppendChild(this.tabcontent);
         return;
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
 
     // icon: SVGIcon
     // text: plain text
-    // content: HTML div element
+    // content: HTML div element or Element instance
     // select: optional boolean (when true, the it will be visible by default
     AddTab(icon, text, content, select)
     {
+        if(typeof content.GetHTMLElement === "function")
+            content = content.GetHTMLElement();
+
         let arraylength = this.tabs.push(content);
         let tabid       = arraylength - 1;
 
