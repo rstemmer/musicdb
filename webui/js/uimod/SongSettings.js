@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -31,22 +31,17 @@ class SongSettings extends TabSelect
 
         this.Update(MDBSong, MDBTags);
 
-        this.genrestab  = document.createElement("div");
-        this.moodstab   = document.createElement("div");
-        this.previewtab = document.createElement("div");
+        this.genrestab  = new Element("div", ["flex-grow"]);
+        this.moodstab   = new Element("div", ["flex-grow", "flex-row"]);
+        this.previewtab = new Element("div", ["flex-grow"]);
 
-        this.genrestab.classList.add("flex-grow");
-        this.moodstab.classList.add("flex-row");
-        this.moodstab.classList.add("flex-grow");
-        this.previewtab.classList.add("flex-grow");
+        this.moodstab.AppendChild(this.songmoods);
+        this.moodstab.AppendChild(this.songproperties);
 
-        this.moodstab.appendChild(this.songmoods.GetHTMLElement());
-        this.moodstab.appendChild(this.songproperties.GetHTMLElement());
+        this.genrestab.AppendChild(this.genreedit);
+        this.genrestab.AppendChild(this.subgenreedit);
 
-        this.genrestab.appendChild(this.genreedit.GetHTMLElement());
-        this.genrestab.appendChild(this.subgenreedit.GetHTMLElement());
-
-        this.previewtab.appendChild(this.audioplayer.GetHTMLElement());
+        this.previewtab.AppendChild(this.audioplayer);
 
         this.AddTab(new SVGIcon("Tags"), "Genre Tags",         this.genrestab, true);
         this.AddTab(new SVGIcon("Tags"), "Moods & Properties", this.moodstab);
