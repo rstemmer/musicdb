@@ -46,10 +46,18 @@ Run  git log --oneline  for more details
 │    + Full Drag'n'Drop support. Drag any album or song into the queue at any position
 │    * Lang song and album names no longer destroy the layout
 │    * Upload and replace album artwork
+│    * A quick way to mark songs as Instrumental added (via Song Settings)
+│    * Better scaling of album artwork in ArtistsView
+│    * A Help-View will be shown when Web Socket connection failes
+│    * Empty QueueView space is now a drop zone to append music
 │ + MusicDB Configuration:
 │    + Configurations for video frame management "[videoframes]" and uploads "[uploads]"
 │    + For debugging purposes, IceCast connection and video mode can be disabled
 │ + Documentation improved
+│ * Installation process improved
+│    * MusicDB Dependency list updated
+│    * Apache example configuration added
+│    * Create missing directories inside the MusicDB Data directory
 │ * Solved Issues: #30, #45, #45, #24, #26, #47, #43, #46, #44, #38, #16, #17
 │
 ┝━ MINOR CHANGES
