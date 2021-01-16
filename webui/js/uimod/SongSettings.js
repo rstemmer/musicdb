@@ -28,15 +28,19 @@ class SongSettings extends TabSelect
         this.genreedit      = new TagListEdit("genre");
         this.subgenreedit   = new TagListEdit("subgenre");
         this.audioplayer    = new AudioPlayer(MDBSong.path);
+        this.instrumental   = new SettingsCheckbox(
+            "Instrumental",
+            "You can use this checkbox to toggle the lyrics state between <i>Not Set</i> and <i>Instrumental</i>.<br> This option is only available if there is no other lyrics state set.");
 
         this.Update(MDBSong, MDBTags);
 
         this.genrestab  = new Element("div", ["flex-grow"]);
-        this.moodstab   = new Element("div", ["flex-grow", "flex-row"]);
+        this.moodstab   = new Element("div", ["flex-wrap", "flex-row"]);
         this.previewtab = new Element("div", ["flex-grow"]);
 
         this.moodstab.AppendChild(this.songmoods);
         this.moodstab.AppendChild(this.songproperties);
+        this.moodstab.AppendChild(this.instrumental);
 
         this.genrestab.AppendChild(this.genreedit);
         this.genrestab.AppendChild(this.subgenreedit);
@@ -56,6 +60,26 @@ class SongSettings extends TabSelect
         this.songproperties.UpdateButtons(MDBSong);
         this.genreedit.Update("audio", MDBSong.id, MDBTags);
         this.subgenreedit.Update("audio", MDBSong.id, MDBTags);
+
+        // Update lyrics state
+        let lyricsstate = MDBSong.lyricsstate;
+        this.instrumental.SetState(lyricsstate === 4);
+        if(lyricsstate === 0 || lyricsstate === 4)
+            this.instrumental.Enable();
+        else
+            this.instrumental.Disable();
+        this.instrumental.SetHandler((state)=>
+            {
+                // Will only be called when the checkbox is enabled
+                let lyricsstate;
+                if(state === true)
+                    lyricsstate = 4;    // instrumental
+                else
+                    lyricsstate = 0;    // lyrics state not configured
+                MusicDB_Broadcast("SetSongLyrics", "UpdateLyricsState", {songid: MDBSong.id, lyrics: null, lyricsstate: lyricsstate});
+            }
+        );
+
     }
 }
 
