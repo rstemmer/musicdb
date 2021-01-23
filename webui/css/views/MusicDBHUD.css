@@ -51,16 +51,17 @@ div.MusicDBHUD .ArtworkBox
 }
 div.MusicDBHUD .ArtworkBox[data-musictype="unknown"] > .Artwork
 {
-    width:          60px;
-    height:         60px;
+    width:          4em;
+    height:         4em;
 }
 div.MusicDBHUD .ArtworkBox[data-musictype="audio"] > .Artwork
 {
-    width:          60px;
-    height:         60px;
+    width:          4em;
+    height:         4em;
 }
 div.MusicDBHUD .ArtworkBox[data-musictype="video"] > .Artwork
 {
+    /* TODO */
     width:          107px;  /* 16:9 */
     height:         60px;
 }
