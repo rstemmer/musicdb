@@ -234,6 +234,9 @@ class LyricsEdit
         }
         else if(this.editbox.value != this.origlyrics)
         {
+            // FIXME: It can happen that origlyrics has invalid characters.
+            // Some of them will be removed by the edit box!
+            // So the lyrics may not have been edited, but are different anyway.
             this.msg_notsaved.Show();
         }
         else
