@@ -124,12 +124,14 @@ class DropTarget extends Element
         // If unsupported type, do nothing
         if(this.allowedtypes.indexOf(draggabletype) < 0)
         {
+            window.console && console.warn(`Draggable type ${draggabletype} is not allowed to be dropped here`);
             return;
         }
 
         let draggable     = document.getElementById(draggableid);
         if(draggable == null)
         {
+            window.console && console.warn(`Draggable ID ${draggableid} does not address an DOM element`);
             return;
         }
 
