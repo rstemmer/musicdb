@@ -17,10 +17,11 @@
 "use strict";
 
 
-class Tag
+class Tag extends Element
 {
     constructor(MDBTag)
     {
+        super("div", ["Tag", "frame", "smallfont", "flex-row"]);
         this.tagname        = MDBTag.name;
         this.tagid          = MDBTag.id;
         this.confidence     = MDBTag.confidence;
@@ -30,21 +31,13 @@ class Tag
         this.onapprove      = null;
         this.onremove       = null;
 
-        this.approvebutton  = new SVGButton("Approve", ()=>{this.onApprove()});
-        this.removebutton   = new SVGButton("Remove",  ()=>{this.onRemove()});
-        this.addbutton      = new SVGButton("Add",     ()=>{this.onClick()});
-        this.approvebutton.SetTooltip("Confirm this Tag");
-        this.removebutton.SetTooltip("Remove this Tag");
-        this.addbutton.SetTooltip("Add this Tag");
+        this.approvebutton  = new SVGButton("Approve", ()=>{this.onApprove()}, "Confirm this Tag");
+        this.removebutton   = new SVGButton("Remove",  ()=>{this.onRemove()} , "Remove this Tag" );
+        this.addbutton      = new SVGButton("Add",     ()=>{this.onClick()}  , "Add this Tag"    );
         this.nameelement    = document.createElement("div");
         this.nameelement.innerText = this.tagname;
 
-        this.element        = document.createElement("div");
-        this.element.classList.add("smallfont");
-        this.element.classList.add("frame");
-        this.element.classList.add("flex-row");
-        this.element.classList.add("tag");
-        this.element.appendChild(this.nameelement);
+        this.AppendChild(this.nameelement);
         this.element.onclick      = ()=>{this.onClick();};
         this.element.onmouseenter = ()=>{this.onMouseEnter();};
         this.element.onmouseleave = ()=>{this.onMouseLeave();};
@@ -56,7 +49,7 @@ class Tag
     {
         let percent  = Math.round(confidence * 100)
         let ratiobar = new RatioBar(percent, `Confidence: ${percent} %`); // U+202F (NARROW NO-BREAK SPACE)
-        this.element.appendChild(ratiobar.GetHTMLElement());
+        this.AppendChild(ratiobar);
     }
 
 
@@ -77,24 +70,17 @@ class Tag
     SetAddAction(onclick)
     {
         this.onclick = onclick;
-        this.element.appendChild(this.addbutton.GetHTMLElement());
+        this.AppendChild(this.addbutton);
     }
     SetRemoveAction(onremove)
     {
         this.onremove = onremove;
-        this.element.appendChild(this.removebutton.GetHTMLElement());
+        this.AppendChild(this.removebutton);
     }
     SetApproveAction(onapprove)
     {
         this.onapprove = onapprove;
-        this.element.appendChild(this.approvebutton.GetHTMLElement());
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
+        this.AppendChild(this.approvebutton);
     }
 
 
@@ -141,27 +127,16 @@ class Tag
 
 
 
-class TagListView
+class TagListView extends Element
 {
     // Optional allowremove - if true, remove button is always visible
     constructor(allowremove)
     {
+        super("div", ["TagView", "flex-row", "smallfont", "hlcolor"]);
         this.allowremove= allowremove;
         this.taglist    = new Array();
         this.musictype  = null;
         this.musicid    = null;
-        this.element    = document.createElement("div");
-        this.element.classList.add("tagview");
-        this.element.classList.add("flex-row");
-        this.element.classList.add("smallfont");
-        this.element.classList.add("hlcolor");
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
@@ -170,7 +145,7 @@ class TagListView
     {
         let tagelement = tag.GetHTMLElement();
         tagelement.classList.add("ghost");
-        this.element.appendChild(tagelement);
+        this.AppendChild(tagelement);
     }
 
 
@@ -181,7 +156,7 @@ class TagListView
         this.musicid            = musicid;
         this.musictype          = musictype;
         this.taglist            = new Array();
-        this.element.innerHTML  = "";
+        this.RemoveChilds();
 
         for(let MDBTag of MDBTagArray)
         {
@@ -207,7 +182,7 @@ class TagListView
             }
 
             this.taglist.push(tag);
-            this.element.appendChild(tag.GetHTMLElement());
+            this.AppendChild(tag);
         }
 
     }
