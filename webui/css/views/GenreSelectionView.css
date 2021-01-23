@@ -29,10 +29,10 @@
     overflow:           auto;
 }
 
-.GenreSelectionView > .tag[data-active=true]
+.GenreSelectionView > .Tag[data-active=true]
 {
 }
-.GenreSelectionView > .tag[data-active=false]
+.GenreSelectionView > .Tag[data-active=false]
 {
     opacity:            0.5;
 }
