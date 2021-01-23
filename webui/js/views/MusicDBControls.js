@@ -36,14 +36,14 @@ class MusicDBControls extends Element
 
     ShowAudioControls()
     {
-        this.element.innerHTML = "";
-        this.element.appendChild(this.controls["audio"].element);
+        this.RemoveChilds()
+        this.AppendChild(this.controls["audio"].element);
     }
 
     ShowVideoControls()
     {
-        this.element.innerHTML = "";
-        this.element.appendChild(this.controls["video"].element);
+        this.RemoveChilds()
+        this.AppendChild(this.controls["video"].element);
     }
 
 
