@@ -49,9 +49,6 @@ class AlbumView extends MainView2
         let artwork  = new AlbumArtwork(null, "large"); // album=null -> default artwork
         super("AlbumView", headline, artwork);
 
-        this.currentalbumid = -1;
-        this.currentsongid  = -1;
-
         // Create Settings
         this.settings_tags  = document.createElement("div");
         this.settings_color = document.createElement("div");
@@ -94,68 +91,58 @@ class AlbumView extends MainView2
 
 
 
-    GetHTMLElement()
-    {
-        return this.element;
-    }
-
-
-
     AddRandomSongToQueue(position)
     {
-        MusicDB_Call("AddRandomSongToQueue", {albumid: this.currentalbumid, position: position});
+        let currentalbumid = mdbmodemanager.GetCurrentAlbumID();
+        MusicDB_Call("AddRandomSongToQueue", {albumid: currentalbumid, position: position});
     }
 
 
 
     UpdateInformation(MDBAlbum, MDBArtist, MDBTags, MDBCDs)
     {
-        // For new albums, some persistent information need to be updated
-        //if(MDBAlbum.id != this.currentalbumid) // … for other also, for example when tags were removed
-        //{
-            this.currentalbumid = MDBAlbum.id;
+        let currentalbumid = mdbmodemanager.GetCurrentAlbumID();
 
-            // Update Headline
-            this.headline.UpdateInformation(MDBAlbum, MDBArtist)
-            this.headline.SetSubtitleClickAction(
-                ()=>{artistsview.ScrollToArtist(MDBArtist.id);},
-                null
-            );
+        // Update Headline
+        this.headline.UpdateInformation(MDBAlbum, MDBArtist)
+        this.headline.SetSubtitleClickAction(
+            ()=>{artistsview.ScrollToArtist(MDBArtist.id);},
+            null
+        );
 
-            // Update Album Artwork and make it draggable
-            let newartwork  = new AlbumArtwork(MDBAlbum, "large");
-            this.ReplaceArtwork(newartwork);
-            this.artwork.ConfigDraggable("album", MDBAlbum.id, "insert");
-            this.artwork.BecomeDraggable();
+        // Update Album Artwork and make it draggable
+        let newartwork  = new AlbumArtwork(MDBAlbum, "large");
+        this.ReplaceArtwork(newartwork);
+        this.artwork.ConfigDraggable("album", MDBAlbum.id, "insert");
+        this.artwork.BecomeDraggable();
 
-            // Update Settings
-            this.colorselect     = new ColorSchemeSelection("audio", this.currentalbumid);
-            this.artworkuploader = new ArtworkUploader(MDBArtist.name, MDBAlbum.name, MDBAlbum.id);
-            this.settings_color.innerHTML = "";
-            this.settings_color.appendChild(this.artworkuploader.GetHTMLElement());
-            this.settings_color.appendChild(this.colorselect.GetHTMLElement());
+        // Update Settings
+        this.colorselect     = new ColorSchemeSelection("audio", currentalbumid);
+        this.artworkuploader = new ArtworkUploader(MDBArtist.name, MDBAlbum.name, MDBAlbum.id);
+        this.settings_color.innerHTML = "";
+        this.settings_color.appendChild(this.artworkuploader.GetHTMLElement());
+        this.settings_color.appendChild(this.colorselect.GetHTMLElement());
 
-            this.settings_hide.SetState(MDBAlbum.hidden);
-            this.settings_hide.SetHandler((state)=>
-                {
-                    MusicDB_Broadcast("HideAlbum", "UpdateArtists", {albumid: MDBAlbum.id, hide: state});
-                }
-            );
+        this.settings_hide.SetState(MDBAlbum.hidden);
+        this.settings_hide.SetHandler((state)=>
+            {
+                MusicDB_Broadcast("HideAlbum", "UpdateArtists", {albumid: MDBAlbum.id, hide: state});
+            }
+        );
 
-            this.genreedit          = new TagListEdit("genre");
-            this.subgenreedit       = new TagListEdit("subgenre");
-            this.settings_tags.innerHTML = "";
-            this.settings_tags.appendChild(this.genreedit.GetHTMLElement());
-            this.settings_tags.appendChild(this.subgenreedit.GetHTMLElement());
+        this.genreedit          = new TagListEdit("genre");
+        this.subgenreedit       = new TagListEdit("subgenre");
+        this.settings_tags.innerHTML = "";
+        this.settings_tags.appendChild(this.genreedit.GetHTMLElement());
+        this.settings_tags.appendChild(this.subgenreedit.GetHTMLElement());
 
-            this.settings.SelectTab(this.tagstabid);
-            this.settings.Hide();
+        this.settings.SelectTab(this.tagstabid);
+        this.settings.Hide();
 
-            // Update/Initialize Album View
-            this.UpdateSongList(MDBCDs);
-            this.UpdateTagInformation(MDBTags);
-            this.ToggleSongPlayingState(true);
-        //}
+        // Update/Initialize Album View
+        this.UpdateSongList(MDBCDs);
+        this.UpdateTagInformation(MDBTags);
+        this.ToggleSongPlayingState();
 
         this.colorselect.SetColors(MDBAlbum.bgcolor, MDBAlbum.fgcolor, MDBAlbum.hlcolor);
 
@@ -227,12 +214,7 @@ class AlbumView extends MainView2
         this.songtiles[songid].settings.Update(MDBSong, MDBTags);
         this.songtiles[songid].tags = MDBTags;
 
-        /*
-         * This is the wrong place - an information update does not mean that the song is currently playing
-        this.ToggleSongPlayingState(false);
-        this.currentsongid = MDBSong.id;   // update current song id
-        this.ToggleSongPlayingState(true);
-        */
+        this.ToggleSongPlayingState();
         return
     }
 
@@ -240,12 +222,14 @@ class AlbumView extends MainView2
 
     UpdateTagInformation(MDBTags)
     {
-        // Update existing tags
-        this.genreedit.Update(   "album", this.currentalbumid, MDBTags);
-        this.subgenreedit.Update("album", this.currentalbumid, MDBTags);
+        let currentalbumid = mdbmodemanager.GetCurrentAlbumID();
 
-        this.genreview.Update(   "album", this.currentalbumid, MDBTags.genres);
-        this.subgenreview.Update("album", this.currentalbumid, MDBTags.subgenres);
+        // Update existing tags
+        this.genreedit.Update(   "album", currentalbumid, MDBTags);
+        this.subgenreedit.Update("album", currentalbumid, MDBTags);
+
+        this.genreview.Update(   "album", currentalbumid, MDBTags.genres);
+        this.subgenreview.Update("album", currentalbumid, MDBTags.subgenres);
 
         // Update Mouse-Over Action
         for(let tag of this.genreview.GetTagList())
@@ -293,19 +277,29 @@ class AlbumView extends MainView2
 
 
 
-    ToggleSongPlayingState(newstate = null)
+    ToggleSongPlayingState()
     {
         // Depending on the call order, some fundamental objects may not yet exist
         // This is OK because Song-State updates and Album-Updates are decoupled
-        if(typeof this.songtiles != "object")
-            return
-        if(typeof this.songtiles[this.currentsongid] != "object")
+        if(typeof this.songtiles !== "object")
             return
 
-        if(newstate == null)
-            newstate = ! this.songtiles[this.currentsongid].tile.GetPlayingState();
+        // Get current song ID and check if it is available in the shown album
+        let currentsongid = mdbmodemanager.GetCurrentSongID();
+        if(typeof this.songtiles[currentsongid] !== "object")
+            return;
 
-        this.songtiles[this.currentsongid].tile.SetPlayingState(newstate);
+        // Set all to false
+        for(let songid in this.songtiles)
+        {
+            let songtile = this.songtiles[songid];
+            if(typeof this.songtile !== "object")
+                continue
+            this.songtile.tile.SetPlayingState(false);
+        }
+
+        // Set actual tile to true
+        this.songtiles[currentsongid].tile.SetPlayingState(true);
         return;
     }
 
@@ -323,7 +317,7 @@ class AlbumView extends MainView2
             let annotations = task.annotations;
             let albumid     = annotations.albumid;
             let state       = rawdata.state;
-            if(albumid !== this.currentalbumid)
+            if(albumid !== mdbmodemanager.GetCurrentAlbumID())
                 return;
 
             if(sig == "StateUpdate")
@@ -337,48 +331,26 @@ class AlbumView extends MainView2
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(fnc == "GetAudioStreamState"/* && sig == "UpdateStreamState"*/)
-        {
-            // Check is there 
-            if(!args.hasqueue)
-            {
-                window.console && console.log("There is no queue and no current song!")
-                return;
-            }
+        let currentalbumid = mdbmodemanager.GetCurrentAlbumID();
 
-            // if the song changes, show the new album (or reload for update)
-            if(args.song.id != this.currentsongid)
-            {
-                this.ToggleSongPlayingState(false);
-                this.currentsongid = args.song.id;   // update current song id
-                this.ToggleSongPlayingState(true);
-
-                // FIXME: The ViewManager should decide if the album needs to be loaded
-                // The request and presentation may be two decisions
-                // If for example a different view is more important than the AlbumView
-                if(args.album.id != this.currentalbumid)
-                    MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: args.album.id});
-            }
-        }
-        else if(fnc == "GetAlbum" && sig == "ShowAlbum")
+        if(fnc == "GetAlbum" && sig == "ShowAlbum")
         {
             this.UpdateInformation(args.album, args.artist, args.tags, args.cds);
-            this.currentalbumid = args.album.id;
         }
         else if(fnc == "GetAlbum" && sig == "UpdateTags")
         {
-            if(args.album.id == this.currentalbumid)
+            if(args.album.id == currentalbumid)
                 this.UpdateTagInformation(args.tags);
         }
         else if(fnc == "GetTags" || fnc == "RemoveSongTag")
         {
             // In case there are changes with the tags, refresh the album view
             if(sig == "UpdateTags")
-                MusicDB_Request("GetAlbum", "UpdateTags", {albumid: this.currentalbumid});
+                MusicDB_Request("GetAlbum", "UpdateTags", {albumid: currentalbumid});
         }
         else if(fnc == "GetSong")
         {
-            if(args.album.id == this.currentalbumid)
+            if(args.album.id == currentalbumid)
             {
                 this.UpdateSongInformation(args.song, args.tags);
 

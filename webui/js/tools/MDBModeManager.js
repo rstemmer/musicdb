@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,6 +22,9 @@ class MDBModeManager
     {
         this.mode     = null;    // ! This variable should only be set as response to the server!
         this.entryid  = null;
+        this.currentsongid  = -1;
+        this.currentalbumid = -1;
+        this.currentvideoid = -1;
     }
 
 
@@ -29,6 +32,18 @@ class MDBModeManager
     GetCurrentMode()
     {
         return this.mode;
+    }
+    GetCurrentSongID()
+    {
+        return this.currentsongid;
+    }
+    GetCurrentAlbumID()
+    {
+        return this.currentalbumid;
+    }
+    GetCurrentVideoID()
+    {
+        return this.currentvideoid;
     }
 
 
@@ -69,7 +84,7 @@ class MDBModeManager
             MusicDB_Request("GetAudioStreamState",          "UpdateHUD")
             MusicDB_Request("GetSongQueue",                 "ShowSongQueue");
             MusicDB_Request("GetFilteredArtistsWithAlbums", "ShowArtists");
-            // A fresh installes MusicDB may have no queue!
+            // A fresh installed MusicDB may have no queue!
             if(MDBMusic !== null)
                 MusicDB_Request("GetAlbum",                 "ShowAlbum", {albumid: MDBMusic.albumid});
         }
@@ -85,7 +100,7 @@ class MDBModeManager
             MusicDB_Request("GetVideoStreamState",          "UpdateHUD");
             MusicDB_Request("GetVideoQueue",                "ShowVideoQueue");
             MusicDB_Request("GetFilteredArtistsWithVideos", "ShowArtists");
-            // A fresh installes MusicDB may have no queue!
+            // A fresh installed MusicDB may have no queue!
             if(MDBMusic !== null)
                 MusicDB_Request("GetVideo",                 "ShowVideo", {videoid: MDBMusic.id});
         }
@@ -114,6 +129,20 @@ class MDBModeManager
 
                 this._UpdateWebUI(MDBMusic);
             }
+        }
+        else if(fnc == "GetAudioStreamState")
+        {
+            this.currentsongid  = args.song.id;
+            if(args.album.id != this.currentalbumid)
+                MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: args.album.id});
+        }
+        else if(fnc == "GetVideoStreamState")
+        {
+            this.currentvideoid = args.video.id;
+        }
+        else if(fnc == "GetAlbum" && sig == "ShowAlbum")
+        {
+            this.currentalbumid = args.album.id;
         }
 
         return;
