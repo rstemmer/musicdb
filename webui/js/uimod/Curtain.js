@@ -18,12 +18,11 @@
 
 
 
-class Curtain
+class Curtain extends Element
 {
     constructor()
     {
-        this.element = document.createElement("div");
-        this.element.classList.add("Curtain");
+        super("div", ["Curtain"]);
         this.element.onclick     = ()=>{this.onClick();};
         this.element.ondragenter = ()=>{this.onDragEnter();};
         this.element.ondragleave = ()=>{this.onDragLeave();};
@@ -31,13 +30,6 @@ class Curtain
         this.clickhandler = new Array();
 
         this.Hide();
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
