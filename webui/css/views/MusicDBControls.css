@@ -43,8 +43,8 @@
 {
     content:            " ";
     display:            inline-block;
-    height:             1.0rem;
-    width:              1.0rem;
+    height:             1.0em;
+    width:              1.0em;
     background-color:   var(--hlcolor);
     margin-left:        1.5ch;
     margin-right:       1.0ch;
