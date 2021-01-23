@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ class QueueTile extends Tile
     MakeElement(queueentryid, musictype, musicid, artwork, title, subtitle, buttonbox)
     {
         super.MakeElement(artwork, title, new Array(buttonbox), subtitle, null);
-        super.ConfigDraggable(musictype, musicid, "move", "QueueTile_");
+        super.ConfigDraggable(musictype, musicid, "move", `QueueEntry${queueentryid}_`);
         this.element.dataset.entryid = queueentryid;
     }
 }
