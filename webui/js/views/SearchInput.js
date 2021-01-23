@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,15 +16,11 @@
 
 "use strict";
 
-class SearchInput
+class SearchInput extends Element
 {
     constructor(curtain=null)
     {
-        this.element = document.createElement("div");
-        this.element.classList.add("flex-row");
-        this.element.classList.add("hlcolor");
-        this.element.classList.add("hovpacity");
-        this.element.classList.add("SearchInput");
+        super("div", ["SearchInput", "flex-row", "hlcolor", "hovpacity"]);
         this._AddInputBoxElements();
 
         this.curtain = curtain;
@@ -34,7 +30,7 @@ class SearchInput
         this.timeoutinterval = 500;
         this.preview = new SearchResultsPopup(()=>{this.HidePreview();});
         this.preview.Hide();
-        this.element.appendChild(this.preview.GetHTMLElement());
+        this.AppendChild(this.preview);
     }
 
 
@@ -54,21 +50,14 @@ class SearchInput
         this.input.type        = "search";
         this.input.placeholder = "Search…";
 
-        this.element.appendChild(this.icon.GetHTMLElement());
-        this.element.appendChild(this.input);
-        this.element.appendChild(this.clearbutton.GetHTMLElement());
+        this.AppendChild(this.icon);
+        this.AppendChild(this.input);
+        this.AppendChild(this.clearbutton);
 
         this.showpreview = false;
         this.showresults = false;
         this.target      = "none";
         return;
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
