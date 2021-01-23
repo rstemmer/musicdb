@@ -40,6 +40,7 @@ class Tag
         this.nameelement.innerText = this.tagname;
 
         this.element        = document.createElement("div");
+        this.element.classList.add("smallfont");
         this.element.classList.add("frame");
         this.element.classList.add("flex-row");
         this.element.classList.add("tag");

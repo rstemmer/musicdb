@@ -22,7 +22,7 @@ class GenreSelectionView extends Element
 {
     constructor()
     {
-        super("div", ["GenreSelectionView", "flex-row", "frame", "hlcolor", "smallfont", "hovpacity"]);
+        super("div", ["GenreSelectionView", "flex-row", "frame", "hlcolor", "hovpacity"]);
         this.reloadtimeouthandler = null;
         this.activegenres         = null;
     }
