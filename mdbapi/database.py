@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -599,6 +599,7 @@ class MusicDBDatabase(object):
         album["release"] = fsmeta["release"]
         album["origin"]  = tagmeta["origin"]
         album["added"]   = moddate
+        album["hidden"]  = False
         
         if artistid == None:
             # the artistname IS the path, because thats how the fsmeta data came from
