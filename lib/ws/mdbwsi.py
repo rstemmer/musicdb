@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -764,7 +764,8 @@ class MusicDBWebSocketInterface(object):
         albums = self.database.GetAlbumsByArtistId(artistid)
 
         # sort albums for release year
-        albums = sorted(albums, key = lambda k: k["release"])
+        # In case of an invalid import, the release my become None. So assume a release date of 0 in case it is not a valid integer
+        albums = sorted(albums, key = lambda k: k["release"] if type(k["release"]) is int else 0)
 
         if applyfilter:
             filterset = set(self.mdbstate.GetFilterList())
