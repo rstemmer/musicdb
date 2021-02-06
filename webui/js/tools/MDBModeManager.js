@@ -133,8 +133,11 @@ class MDBModeManager
         else if(fnc == "GetAudioStreamState")
         {
             this.currentsongid  = args.song.id;
+            // New song playing. Update whole album if from different album. Otherwise update just the song.
             if(args.album.id != this.currentalbumid)
                 MusicDB_Request("GetAlbum", "ShowAlbum", {albumid: args.album.id});
+            else
+                MusicDB_Request("GetSong", "UpdateSong", {songid: args.song.id});
         }
         else if(fnc == "GetVideoStreamState")
         {

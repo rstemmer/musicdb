@@ -293,9 +293,9 @@ class AlbumView extends MainView2
         for(let songid in this.songtiles)
         {
             let songtile = this.songtiles[songid];
-            if(typeof this.songtile !== "object")
+            if(typeof songtile !== "object")
                 continue
-            this.songtile.tile.SetPlayingState(false);
+            songtile.tile.SetPlayingState(false);
         }
 
         // Set actual tile to true
