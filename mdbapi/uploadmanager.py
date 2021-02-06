@@ -168,6 +168,7 @@ def UploadManagementThread():
         for key, task in Tasks.items():
             state       = task["state"]
             contenttype = task["contenttype"]
+            logging.debug("Task with state \"%s\" found. (%s)", str(state), str(contenttype));
 
             if state == "uploadfailed" or state == "importfailed" or state == "importcomplete":
                 if contenttype in ["artwork"]:
