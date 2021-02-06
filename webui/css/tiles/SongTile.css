@@ -16,13 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.SongTile .tagview
+.SongTile .TagView
 {
     margin-right:   1rem;
     opacity:        0.5;
 }
 
-.SongTile .tag
+.SongTile .Tag
 {
     padding-top:    0;
     padding-bottom: 0;

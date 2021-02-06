@@ -59,16 +59,16 @@
     margin-left:        0.5em;
 }
 
-.TagSelect .tag
+.TagSelect .Tag
 {
     margin-top:         0.2em;
 }
-.TagSelect .tag[data-highlight=true]
+.TagSelect .Tag[data-highlight=true]
 {
     background-color:   var(--hlcolor);
     color:              var(--bgcolor);
 }
-.TagSelect .tag[data-highlight=true] > .SVGIcon
+.TagSelect .Tag[data-highlight=true] > .SVGIcon
 {
     background-color:   var(--bgcolor);
 }
