@@ -646,7 +646,10 @@ class MusicDBDatabase(object):
         album["numofsongs"] = len(songs)
         album["numofcds"]   = numofcds
 
-        self.db.WriteAlbum(album)
+        try:
+            self.db.WriteAlbum(album)
+        except Exception as e:
+            logging.exception("CRITICAL ERROR! Updating album information failed with error \"%s\". Use the musicdb database command to remove this album and see the log file for further details.", str(e))
         return None
 
 
