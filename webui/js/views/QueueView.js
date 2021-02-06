@@ -156,6 +156,7 @@ class QueueDropZone extends DropTarget
         let musictype = draggable.dataset.musictype;
         let musicid   = parseInt(draggable.dataset.musicid);
         let droptask  = draggable.dataset.droptask;
+        //window.console && console.log(`Droped ${musictype} with id ${musicid}, ${droptask} at ${this.entryid}`);
 
         switch(droptask)
         {

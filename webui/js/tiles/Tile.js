@@ -26,6 +26,17 @@ class Tile extends Draggable
 
 
 
+    onDragStart(event)
+    {
+        super.onDragStart(event);
+
+        // When dragged from a search preview, hide everything to clear the drop zones
+        curtain.Hide();
+        searchinput.HidePreview();
+    }
+
+
+
     MakeElement(artwork, title, topfeatureelements, subtitle, bottomfeatureelements)
     {
         if(artwork != null)
