@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS meta
     key         TEXT,
     value       TEXT DEFAULT ''
 );
-INSERT INTO meta (key, value) VALUES ("version", 4);
+INSERT INTO meta (key, value) VALUES ("version", 5);
 
 
 CREATE TABLE IF NOT EXISTS artists
@@ -29,7 +29,8 @@ CREATE TABLE IF NOT EXISTS albums
     bgcolor     TEXT DEFAULT '#101010',
     fgcolor     TEXT DEFAULT '#F0F0F0',
     hlcolor     TEXT DEFAULT '#909090',
-    added       INTEGER DEFAULT 0
+    added       INTEGER DEFAULT 0,
+    hidden      INTEGER DEFAULT 0
 );
 
 
@@ -50,8 +51,46 @@ CREATE TABLE IF NOT EXISTS songs
     favorite    INTEGER DEFAULT 0,
     lyricsstate INTEGER DEFAULT 0,
     checksum    TEXT    DEFAULT "",
-    lastplayed  INTEGER DEFAULT 0
+    lastplayed  INTEGER DEFAULT 0,
+    liverecording   INTEGER DEFAULT 0,
+    badaudio    INTEGER DEFAULT 0
 );
+
+
+CREATE TABLE IF NOT EXISTS videos
+(
+    videoid     INTEGER PRIMARY KEY AUTOINCREMENT,
+    songid      INTEGER DEFAULT NULL,
+    albumid     INTEGER DEFAULT NULL,
+    artistid    INTEGER,
+    name        TEXT,
+    path        TEXT,
+    disabled    INTEGER DEFAULT 0,
+    playtime    INTEGER,
+    origin      TEXT,
+    release     INTEGER,
+    added       INTEGER,
+    codec       TEXT,
+    xresolution INTEGER,
+    yresolution INTEGER,
+    framesdirectory TEXT,
+    thumbnailfile   TEXT,
+    previewfile     TEXT,
+    likes       INTEGER DEFAULT 0,
+    dislikes    INTEGER DEFAULT 0,
+    favorite    INTEGER DEFAULT 0,
+    liverecording   INTEGER DEFAULT 0,
+    badaudio    INTEGER DEFAULT 0,
+    checksum    TEXT    DEFAULT "",
+    lastplayed  INTEGER DEFAULT 0,
+    lyricsvideo INTEGER DEFAULT 0,
+    bgcolor     TEXT    DEFAULT '#101010',
+    fgcolor     TEXT    DEFAULT '#F0F0F0',
+    hlcolor     TEXT    DEFAULT '#909090',
+    vbegin      INTEGER,
+    vend        INTEGER
+);
+
 
 CREATE TABLE IF NOT EXISTS lyrics
 (
@@ -90,6 +129,15 @@ CREATE TABLE IF NOT EXISTS songtags
 (
     entryid     INTEGER PRIMARY KEY AUTOINCREMENT,
     songid      INTEGER,
+    tagid       INTEGER,
+    confidence  REAL    DEFAULT 1.0,
+    approval    INTEGER DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS videotags
+(
+    entryid     INTEGER PRIMARY KEY AUTOINCREMENT,
+    videoid     INTEGER,
     tagid       INTEGER,
     confidence  REAL    DEFAULT 1.0,
     approval    INTEGER DEFAULT 1

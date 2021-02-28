@@ -1,0 +1,102 @@
+/*
+ * MusicDB,  a music manager with web-bases UI that focus on music.
+ * Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+
+.videotimeframeselection
+{
+    margin:         1.0em;
+    padding:        1.0em;
+}
+
+
+.vtfs_controlbox, .vtfs_timeselection
+{
+    margin-bottom:  0.2em;
+}
+
+.vtfs_controlbox span
+{
+    margin-right: auto;
+}
+.vtfs_controlbox div + div
+{
+    margin-left:    1.0em;
+}
+.vtfs_controlbox > .SVGIcon
+{
+    width:          1.5em;
+    height:         1.5em;
+}
+
+
+
+.vtfs_timeselection
+{
+}
+
+
+
+.vtfs_messagebox
+{
+}
+
+.vtfs_errormessage
+{
+    width:          calc(50% - 2em);
+    margin:         0 1em;
+    padding:        0.2em 0.5em;
+    border-radius:  var(--radius);
+    background-color: var(--color-red);
+    color:          var(--color-white);
+}
+.vtfs_errormessage[data-visible=true]
+{
+    visibility:     visible;
+}
+.vtfs_errormessage[data-visible=false]
+{
+    visibility:     hidden;
+}
+
+
+
+.vtfs_savestate
+{
+    margin:         0 1em;
+    padding:        0.2em 0.5em;
+    border-radius:  var(--radius);
+    color:          var(--color-white);
+}
+.vtfs_savestate[data-state=notsaved]
+{
+    visibility:     visible;
+    background-color: var(--color-yellow);
+}
+.vtfs_savestate[data-state=saved]
+{
+    visibility:     visible;
+    background-color: var(--color-green);
+}
+.vtfs_savestate[data-state=unchanged]
+{
+    visibility:     hidden;
+}
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */

@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -57,6 +57,7 @@ Now, the new option is availabe in the configuration object created using this c
 import logging
 import grp
 import pwd
+import stat
 from lib.cfg.config import Config
 from lib.filesystem import Filesystem
 
@@ -75,6 +76,10 @@ class DATABASE:
 class MUSIC:
     pass
 class ARTWORK:
+    pass
+class VIDEOFRAMES:
+    pass
+class UPLOAD:
     pass
 class EXTERN:
     pass
@@ -111,8 +116,9 @@ class MusicDBConfig(Config):
         # [server]
         self.server = SERVER()
         self.server.pidfile         = self.Get(str, "server",   "pidfile",      "/opt/musicdb/data/musicdb.pid")
-        self.server.statedir        = self.Get(str, "server",   "statedir",     "/opt/musicdb/data/mdbstate")
+        self.server.statedir        = self.GetDirectory("server","statedir",    "/opt/musicdb/data/mdbstate")
         self.server.fifofile        = self.Get(str, "server",   "fifofile",     "/opt/musicdb/data/musicdb.fifo")
+        self.server.webuiconfig     = self.Get(str, "server",   "webuiconfig",  "/opt/musicdb/data/webui.ini")
 
 
         # [websocket]
@@ -178,6 +184,27 @@ class MusicDBConfig(Config):
         self.artwork.manifest       = self.Get(str, "artwork",  "manifest",     "/opt/musicdb/server/webui/manifest.appcache")
 
 
+        # [videoframes]
+        self.videoframes = VIDEOFRAMES()
+        self.videoframes.path           = self.GetDirectory("videoframes",  "path",     "/opt/musicdb/data/videoframes")
+        self.videoframes.frames         = self.Get(int, "videoframes",  "frames",       "5")
+        self.videoframes.previewlength  = self.Get(int, "videoframes",  "previewlength","3")
+        self.videoframes.scales         = self.Get(str, "videoframes",  "scales",       "50x27, 150x83", islist=True)
+        for s in ["150x83"]:
+            if not s in self.videoframes.scales:
+                logging.error("Missing scale in [videoframes]->scales: The web UI expects a scale of %s", s)
+        for scale in self.videoframes.scales:
+            try:
+                width, height   = map(int, scale.split("x"))
+            except Exception as e:
+                logging.error("Invalid video scale format in [videoframes]->scales: Expected format WxH, with W and H as integers. Actual format: %s.", scale)
+
+        # [uploads]
+        self.uploads = UPLOAD()
+        self.uploads.allow           = self.Get(bool,    "uploads", "allow",      False)
+        self.uploads.path            = self.GetDirectory("uploads", "path",       "/tmp")
+
+
         # [extern]
         self.extern = EXTERN()
         self.extern.configtemplate  = self.GetFile( "extern",   "configtemplate","/opt/musicdb/server/share/extconfig.ini")
@@ -214,7 +241,9 @@ class MusicDBConfig(Config):
         self.randy.songbllen        = self.Get(int,  "Randy",   "songbllen",    50)
         self.randy.albumbllen       = self.Get(int,  "Randy",   "albumbllen",   20)
         self.randy.artistbllen      = self.Get(int,  "Randy",   "artistbllen",  10)
+        self.randy.videobllen       = self.Get(int,  "Randy",   "videobllen",   10)
         self.randy.maxblage         = self.Get(int,  "Randy",   "maxblage",     24)
+        self.randy.maxtries         = self.Get(int,  "Randy",   "maxtries",     10)
 
 
         # [log]
@@ -235,30 +264,49 @@ class MusicDBConfig(Config):
         self.debug.disabletracker   = self.Get(int, "debug",    "disabletracker",   0)
         self.debug.disableai        = self.Get(int, "debug",    "disableai",        1)
         self.debug.disabletagging   = self.Get(int, "debug",    "disabletagging",   0)
+        self.debug.disableicecast   = self.Get(int, "debug",    "disableicecast",   0)
+        self.debug.disablevideos    = self.Get(int, "debug",    "disablevideos",    0)
 
         logging.info("\033[1;32mdone")
 
 
 
-    def GetDirectory(self, section, option, default, logger=logging.error):
+    def GetDirectory(self, section, option, default):
         """
         This method gets a string from the config file and checks if it is an existing directory.
-        If not it prints an error.
+        If not it prints a warning and creates the directory if possible.
+        If it fails with an permission-error an additional error gets printed.
         Except printing the error nothing is done.
-        The \"invalid\" will be returned anyway, because it may be OK that the directory does not exist yet.
+        The \"invalid\" path will be returned anyway, because it may be OK that the directory does not exist yet.
+
+        The permissions of the new created directory will be ``rwxrwxr-x``
         
         Args:
             section (str): Section of an ini-file
             option (str): Option inside the section of an ini-file
-            default (str): Default directory if option is not set in the file
-            logger: Logging-handler. Default is logging.error. logging.warning can be more appropriate in some situations.
+            default (str): Default directory path if option is not set in the file
 
         Returns:
             The value of the option set in the config-file or the default value.
         """
         path = self.Get(str, section, option, default)
-        if not self.fs.IsDirectory(path):
-            logger("Value of [%s]->%s does not address an existing directory.", section, option)
+        if self.fs.IsDirectory(path):
+            return path
+
+        # Create Directory
+        logging.warning("Value of [%s]->%s does not address an existing directory. \033[1;30m(Directory \"%s\" will be created)", section, option, path)
+        try:
+            self.fs.CreateSubdirectory(path)
+        except Exception as e:
+            logging.error("Creating directory %s failed with error: %s.", path, str(e))
+
+        # Set mode
+        mode = stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH
+        try:
+            self.fs.SetAttributes(path, None, None, mode);
+        except Exception as e:
+            logging.error("Creating directory %s failed with error: %s.", path, str(e))
+
         return path # return path anyway, it does not matter if correct or not. Maybe it will be created later on.
 
 

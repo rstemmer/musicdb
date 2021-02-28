@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.songqueue &mdash; MusicDB 6.0.0 documentation</title>
+  <title>mdbapi.songqueue &mdash; MusicDB 7.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 6.0.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 7.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                6.0
+                7.0
               </div>
             
           
@@ -109,6 +109,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#database">database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#music">music</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#uploads">uploads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#lycra">lycra</a></li>
@@ -116,6 +118,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../basics/logging.html">Handling log-files</a></li>
@@ -183,12 +193,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#available-methods">Available Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#albums">Albums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#videos">Videos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#queue">Queue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#tag-related">Tag related</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#uploading">Uploading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
@@ -211,12 +224,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../usage/docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/docker.html#prepare-environment">Prepare Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/docker.html#build-the-image">Build the Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/docker.html#using-the-image">Using the Image</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -229,8 +236,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#id1">Configuring MusicDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#update">Update</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#update-to-a-new-version">Update to a New Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-manually">Installation (Manually)</a><ul>
@@ -239,7 +245,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#libprinthex">libprinthex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id3">id3edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
@@ -250,6 +256,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#album-directory-name">Album Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#music-video-file-name">Music Video File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
@@ -259,6 +266,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#updating-songs">Updating Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-videos-to-musicdb">Importing Videos to MusicDB</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage/scripts.html">Scripts</a><ul>
@@ -322,9 +330,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#example-calls">Example calls</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/tracker.html">tracker - Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mod/tracker.html#module-mod.tracker">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mod/tracker.html#class-description">Class Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/videoframes.html#class">class</a></li>
 </ul>
 </li>
 </ul>
@@ -342,6 +349,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#algorithm">Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/blacklist.html">Blacklist</a><ul>
@@ -384,6 +399,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#randy-class">Randy Class</a></li>
@@ -396,14 +412,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/stream.html">Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
@@ -412,6 +420,35 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/uploadmanager.html">Upload Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#path-structure">Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#https-server">HTTPS Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 </ul>
@@ -436,6 +473,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.webui">WebUI Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
 </ul>
@@ -488,9 +526,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#validity-of-columns">Validity of columns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#songs">Songs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#videos">Videos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#video-relates-methods">Video Relates Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#albums">Albums</a><ul>
@@ -504,7 +547,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#tags">Tags</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#database-api">Database API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-related-methods">Tag Related Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
@@ -523,21 +566,6 @@
 </ul>
 <p class="caption"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#connection-process">Connection Process</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#watchdog">Watchdog</a></li>
@@ -636,7 +664,7 @@
             
   <h1>Source code for mdbapi.songqueue</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2018-2020  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1">#</span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -700,7 +728,7 @@
 
 <span class="sd">The following events exist:</span>
 
-<span class="sd">    QueueChanged:</span>
+<span class="sd">    SongQueueChanged:</span>
 <span class="sd">        Gets triggered when the Song Queue changes</span>
 
 <span class="sd">    SongChanged:</span>
@@ -747,7 +775,7 @@
 <div class="viewcode-block" id="SongQueue"><a class="viewcode-back" href="../../mdbapi/songqueue.html#mdbapi.songqueue.SongQueue">[docs]</a><span class="k">class</span> <span class="nc">SongQueue</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class implements a queue to manage songs to play.</span>
-<span class="sd">    Whenever the queue changes, it gets stored in the MusicDB State Directory</span>
+<span class="sd">    Whenever the queue changes, its data gets stored in the MusicDB State Directory</span>
 
 <span class="sd">    When the constructor detects that there is no queue yet (not even an empty one),</span>
 <span class="sd">    it tries to load the stored queue.</span>
@@ -853,9 +881,9 @@
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;A Song Queue event callback function crashed!&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SongQueue.Event_QueueChanged"><a class="viewcode-back" href="../../mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.Event_QueueChanged">[docs]</a>    <span class="k">def</span> <span class="nf">Event_QueueChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SongQueue.Event_SongQueueChanged"><a class="viewcode-back" href="../../mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.Event_SongQueueChanged">[docs]</a>    <span class="k">def</span> <span class="nf">Event_SongQueueChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`~TriggerEvent` with event name ``&quot;QueueChanged&quot;``.</span>
+<span class="sd">        See :meth:`~TriggerEvent` with event name ``&quot;SongQueueChanged&quot;``.</span>
 <span class="sd">        More details in the module description at the top of this document.</span>
 
 <span class="sd">        This method also tries to save the queue into the MusicDB State Directory.</span>
@@ -864,7 +892,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">Save</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Saving the current song queue failed with error: </span><span class="si">%s</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(Continuing without saving)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">&quot;QueueChanged&quot;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">&quot;SongQueueChanged&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SongQueue.Event_SongChanged"><a class="viewcode-back" href="../../mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.Event_SongChanged">[docs]</a>    <span class="k">def</span> <span class="nf">Event_SongChanged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -940,12 +968,12 @@
 
 <span class="sd">        The method returns element 0 from the queue which is the current song that can be streamed or gets already streamed.</span>
 <span class="sd">        The song shall remain in the queue until it got completely streamed.</span>
-<span class="sd">        Then it can be removed by calling :meth:`~mdbapi.songqueue.SongQueue.NetSong`.</span>
+<span class="sd">        Then it can be removed by calling :meth:`~mdbapi.songqueue.SongQueue.NextSong`.</span>
 
 <span class="sd">        When the queue is empty, a new random song gets added.</span>
 <span class="sd">        This is the exact same song that then will be returned by this method.</span>
 <span class="sd">        If adding a new song fails, ``None`` gets returned.</span>
-<span class="sd">        This method triggers the ``QueueChanged`` event when the queue was empty and a new random song got added.</span>
+<span class="sd">        This method triggers the ``SongQueueChanged`` event when the queue was empty and a new random song got added.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            A dictionary as described in the module description</span>
@@ -982,9 +1010,9 @@
             <span class="c1"># Empty Queue? Add a random song!</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">AddRandomSong</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">Event_QueueChanged</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Event_SongQueueChanged</span><span class="p">()</span>
 
-            <span class="c1"># Still empty (no random song found)? Then return (None, None). Nothing to do…</span>
+            <span class="c1"># Still empty (no random song found)? Then return None. Nothing to do…</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;Queue run empty! </span><span class="se">\033</span><span class="s2">[1;30m(Check constraints for random song selection and check if there are songs at all)&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">None</span>
@@ -1011,12 +1039,12 @@
 <span class="sd">            In context of streaming, this method may not be the one you want to call.</span>
 <span class="sd">            This Method drops the current song and sets the next song on top of the queue.</span>
 
-<span class="sd">            The stream will not notice this, so that it continues streaming the previous song. (See :doc:`/mdbapi/stream`).</span>
-<span class="sd">            If you want to stream the next song, call :meth:`mdbapi.stream.StreamManager.PlayNextSong`.</span>
+<span class="sd">            The stream will not notice this, so that it continues streaming the previous song. (See :doc:`/mdbapi/audiostream`).</span>
+<span class="sd">            If you want to stream the next song, call :meth:`mdbapi.audiostream.AudioStreamManager.PlayNextSong`.</span>
 
-<span class="sd">            The :meth:`mdbapi.stream.StreamManager.PlayNextSong` then makes the Streaming Thread calling this method.</span>
+<span class="sd">            The :meth:`mdbapi.audiostream.AudioStreamManager.PlayNextSong` then makes the Streaming Thread calling this method.</span>
 
-<span class="sd">        This method triggers the ``SongChanged`` and ``QueueChanged`` event when the queue was not empty.</span>
+<span class="sd">        This method triggers the ``SongChanged`` and ``SongQueueChanged`` event when the queue was not empty.</span>
 <span class="sd">        The ``SongChanged`` event gets also triggered when there was no next song.</span>
 
 <span class="sd">        When there is only one entry left in the queue - the current song - then a new one gets add via :meth:`AddRandomSong`</span>
@@ -1063,7 +1091,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">AddRandomSong</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">Event_SongChanged</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Event_QueueChanged</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Event_SongQueueChanged</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">entry</span></div>
 
 
@@ -1076,7 +1104,7 @@
 <span class="sd">        The content of the dictionary is described in the description of this module.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            The current song queue. ``None`` if there is no queue yet.</span>
+<span class="sd">            The current song queue. ``[None]`` if there is no queue yet.</span>
 
 <span class="sd">        Example:</span>
 
@@ -1105,22 +1133,23 @@
 
 <span class="sd">            * ``&quot;last&quot;`` (default): Appends the song at the end of the queue</span>
 <span class="sd">            * ``&quot;next&quot;``: Inserts the song right after the current playing song.</span>
+<span class="sd">            * *Integer*: Entry-ID after that the song shall be inserted.</span>
 
-<span class="sd">        On success, this method triggers the ``QueueChanged`` event.</span>
+<span class="sd">        On success, this method triggers the ``SongQueueChanged`` event.</span>
 
 <span class="sd">        When the song shall be put at the beginning of the queue, then it gets set to index 1 not index 0.</span>
 <span class="sd">        So the current playing song (index 0) remains!</span>
 
 <span class="sd">        The new song gets added to the :mod:`~mdbapi.blacklist` via :meth:`mdbapi.blacklist.BlacklistInterface.AddSong`</span>
-<span class="sd">        The method also triggers the ``QueueChanged`` event.</span>
+<span class="sd">        The method also triggers the ``SongQueueChanged`` event.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            songid (int): The ID of the song that shall be added to the queue</span>
-<span class="sd">            position (str): Defines the position where the song gets inserted</span>
+<span class="sd">            position (str/int): Defines the position where the song gets inserted</span>
 <span class="sd">            israndom (bool): Defines whether the song is randomly selected or not</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            *Nothing*</span>
+<span class="sd">            The new Queue Entry ID as integer</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            TypeError: When ``songid`` is not of type ``int``</span>
@@ -1130,28 +1159,38 @@
 
         <span class="n">entryid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GenerateID</span><span class="p">()</span>
 
-        <span class="n">entry</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">entryid</span>
-        <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">songid</span>
-        <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;israndom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">israndom</span>
+        <span class="n">newentry</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">newentry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">entryid</span>
+        <span class="n">newentry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">songid</span>
+        <span class="n">newentry</span><span class="p">[</span><span class="s2">&quot;israndom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">israndom</span>
 
         <span class="k">global</span> <span class="n">Queue</span>
         <span class="k">global</span> <span class="n">QueueLock</span>
 
         <span class="k">with</span> <span class="n">QueueLock</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">position</span> <span class="o">==</span> <span class="s2">&quot;next&quot;</span><span class="p">:</span>
-                <span class="n">Queue</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+                <span class="n">Queue</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">newentry</span><span class="p">)</span>
+
             <span class="k">elif</span> <span class="n">position</span> <span class="o">==</span> <span class="s2">&quot;last&quot;</span><span class="p">:</span>
-                <span class="n">Queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+                <span class="n">Queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newentry</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">position</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">entry</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Queue</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">position</span><span class="p">:</span>
+                        <span class="n">Queue</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">newentry</span><span class="p">)</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Queue Entry ID </span><span class="si">%s</span><span class="s2"> does not exist. </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">position</span><span class="p">))</span>
+
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Position must have the value </span><span class="se">\&quot;</span><span class="s2">next</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">last</span><span class="se">\&quot;</span><span class="s2">. Given was </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">position</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Position must have the value </span><span class="se">\&quot;</span><span class="s2">next</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">last</span><span class="se">\&quot;</span><span class="s2"> or an Queue Entry ID. Given was </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">. </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">position</span><span class="p">))</span>
                 <span class="k">return</span>
 
         <span class="c1"># add to blacklist</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">blacklist</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">Event_QueueChanged</span><span class="p">()</span>
-        <span class="k">return</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Event_SongQueueChanged</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">entryid</span></div>
 
 
 
@@ -1203,7 +1242,7 @@
 <span class="sd">        Returns the song ID of the entry addressed by the entry ID</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            entryid (int): ID of the entry that song ID shall be returnd</span>
+<span class="sd">            entryid (int): ID of the entry that song ID shall be returned</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            The song ID of the entry, or ``None`` if the entry does not exists</span>
@@ -1212,7 +1251,7 @@
 <span class="sd">            TypeError: When ``entryid`` is not of type ``int``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">entryid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Song must be an integer!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Entry ID must be an integer!&quot;</span><span class="p">)</span>
 
         <span class="k">global</span> <span class="n">Queue</span>
         <span class="k">global</span> <span class="n">QueueLock</span>
@@ -1231,11 +1270,11 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes the entry with the ID ``entryid`` from the queue.</span>
 <span class="sd">        Removing the current song is not allowed!</span>
-<span class="sd">        Call :meth:`NextSong` instead.</span>
+<span class="sd">        Call :meth:`~NextSong` instead.</span>
 
-<span class="sd">        When there is only one entry left in the queue - the current song - then a new one gets add via :meth:`AddRandomSong`</span>
+<span class="sd">        When there is only one entry left in the queue - the current song - then a new one gets add via :meth:`~AddRandomSong`</span>
 
-<span class="sd">        On success, this method triggers the ``QueueChanged`` event.</span>
+<span class="sd">        On success, this method triggers the ``SongQueueChanged`` event.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            entryid (int): Entry to remove</span>
@@ -1247,7 +1286,7 @@
 <span class="sd">            TypeError: When ``entryid`` is not of type ``int``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">entryid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Song must be an integer!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Entry ID must be an integer!&quot;</span><span class="p">)</span>
 
         <span class="k">global</span> <span class="n">Queue</span>
         <span class="k">global</span> <span class="n">QueueLock</span>
@@ -1267,7 +1306,7 @@
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">AddRandomSong</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">Event_QueueChanged</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Event_SongQueueChanged</span><span class="p">()</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
 
@@ -1278,7 +1317,7 @@
 <span class="sd">        If both IDs are the same, the method returns immediately without doing anything.</span>
 <span class="sd">        When ``entryid`` addresses the current song, the method returns with value ``False``</span>
 
-<span class="sd">        On success, the method triggers the ``QueueChanged`` event.</span>
+<span class="sd">        On success, the method triggers the ``SongQueueChanged`` event.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            entryid (int):</span>
@@ -1327,7 +1366,7 @@
             <span class="n">entry</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">frompos</span><span class="p">)</span>
             <span class="n">Queue</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">topos</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">Event_QueueChanged</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Event_SongQueueChanged</span><span class="p">()</span>
         <span class="k">return</span> <span class="kc">True</span></div></div>
 
 
@@ -1348,7 +1387,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020,2021 Ralf Stemmer.
 
     </p>
   </div>
@@ -1370,7 +1409,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'6.0.0',
+            VERSION:'7.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1381,7 +1420,6 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
 
   
 

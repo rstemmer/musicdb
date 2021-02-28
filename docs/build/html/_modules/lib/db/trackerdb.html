@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.db.trackerdb &mdash; MusicDB 6.0.0 documentation</title>
+  <title>lib.db.trackerdb &mdash; MusicDB 7.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 6.0.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 7.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                6.0
+                7.0
               </div>
             
           
@@ -109,6 +109,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#database">database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#music">music</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#uploads">uploads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#lycra">lycra</a></li>
@@ -116,6 +118,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/logging.html">Handling log-files</a></li>
@@ -183,12 +193,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#available-methods">Available Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#albums">Albums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#videos">Videos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#queue">Queue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#tag-related">Tag related</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#uploading">Uploading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
@@ -211,12 +224,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../usage/docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/docker.html#prepare-environment">Prepare Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/docker.html#build-the-image">Build the Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/docker.html#using-the-image">Using the Image</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -229,8 +236,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#id1">Configuring MusicDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#update">Update</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#update-to-a-new-version">Update to a New Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#installation-manually">Installation (Manually)</a><ul>
@@ -239,7 +245,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#libprinthex">libprinthex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#id3">id3edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
@@ -250,6 +256,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#album-directory-name">Album Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#music-video-file-name">Music Video File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
@@ -259,6 +266,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#updating-songs">Updating Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#importing-videos-to-musicdb">Importing Videos to MusicDB</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage/scripts.html">Scripts</a><ul>
@@ -322,9 +330,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/tags.html#example-calls">Example calls</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../mod/tracker.html">tracker - Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../mod/tracker.html#module-mod.tracker">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mod/tracker.html#class-description">Class Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/videoframes.html#class">class</a></li>
 </ul>
 </li>
 </ul>
@@ -342,6 +349,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#algorithm">Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/blacklist.html">Blacklist</a><ul>
@@ -384,6 +399,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#randy-class">Randy Class</a></li>
@@ -396,14 +412,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/stream.html">Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
@@ -412,6 +420,35 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/uploadmanager.html">Upload Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#path-structure">Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#https-server">HTTPS Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 </ul>
@@ -436,6 +473,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.webui">WebUI Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
 </ul>
@@ -488,9 +526,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#validity-of-columns">Validity of columns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#songs">Songs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#videos">Videos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#video-relates-methods">Video Relates Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#albums">Albums</a><ul>
@@ -504,7 +547,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#tags">Tags</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#database-api">Database API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-related-methods">Tag Related Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
@@ -523,21 +566,6 @@
 </ul>
 <p class="caption"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#connection-process">Connection Process</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#watchdog">Watchdog</a></li>
@@ -636,7 +664,7 @@
             
   <h1>Source code for lib.db.trackerdb</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2017 - 2020  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -653,16 +681,18 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This module is used to manage the Tracker Database.</span>
 
-<span class="sd">The database stores the relation between two songs.</span>
-<span class="sd">That means, whenever two songs were played after each other, the relation gets created,</span>
-<span class="sd">or its wehight incremented.</span>
+<span class="sd">The database stores the relation between two songs or videos.</span>
+<span class="sd">That means, whenever two songs or videos were played after each other, this relation gets created</span>
+<span class="sd">or its weight incremented.</span>
 
-<span class="sd">There are two tables, one for song relations and one for artists.</span>
-<span class="sd">The artist relation could be determined out of the song relations, so the artist relation table can be seen as cache.</span>
+<span class="sd">There are two tables, one for song relations and one for video relations.</span>
 
-<span class="sd">Because the two tables, their data and algorithms are similar, all methods are made to work on both tables.</span>
-<span class="sd">The parameter *target* is either ``&quot;song&quot;`` or ``&quot;artist&quot;`` and distinguish the tables.</span>
-<span class="sd">If the documentation mentions *targetid* it either is the term *songid* or *artistid* depending on the argument of the methond.</span>
+<span class="sd">Because the tables contain similar information, their data and algorithms are similar. </span>
+<span class="sd">All methods are made to work on all tables.</span>
+<span class="sd">The parameter *target* is either ``&quot;song&quot;`` or ``&quot;video&quot;`` and distinguish the tables.</span>
+<span class="sd">If the documentation mentions *targetid* it either is the term *songid* or *videoid* depending on the argument of the method.</span>
+
+<span class="sd">The tables layout is the following:</span>
 
 
 <span class="sd">    +----+-----------+-----------+--------+</span>
@@ -673,18 +703,15 @@
 <span class="sd">    ID of the row</span>
 
 <span class="sd">targetida / targetidb:</span>
-<span class="sd">    IDs of the songs or artists that were played together.</span>
-<span class="sd">    ID A is the smaller number of the two: ``xida &lt; xidb``.</span>
-<span class="sd">    There will not be the situation where xida and xidb have the same ID.</span>
+<span class="sd">    IDs of the songs or videos that were played together.</span>
+<span class="sd">    ID A is the smaller number of the two: ``targetida &lt; targetidb``.</span>
+<span class="sd">    There will not be the situation where targetida and targetidb have the same ID.</span>
 <span class="sd">    It is prevented by the method creating the relation.</span>
 
 <span class="sd">weight:</span>
-<span class="sd">    Gets incremented whenever the xida/xidb relation occures.</span>
+<span class="sd">    Gets incremented whenever the targetida/targetidb relation already occurred in the past.</span>
 
 <span class="sd">This classes uses a global lock (using Python ``threading.RLock``) to avoid that relations change during complex operation.</span>
-<span class="sd">For example, when removing a songs relation, the artists relation weight must be decreased.</span>
-<span class="sd">There are multiple database accesses necessary to do so.</span>
-<span class="sd">Meanwhile, nothing should be changed by other threads.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -693,7 +720,7 @@
 <span class="kn">from</span> <span class="nn">lib.db.database</span> <span class="kn">import</span> <span class="n">Database</span>
 <span class="kn">from</span> <span class="nn">lib.db.musicdb</span>  <span class="kn">import</span> <span class="n">MusicDatabase</span>
 
-<span class="n">TrackerDatabaseLock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span> <span class="c1"># RLock is mandatory for nested calles!</span>
+<span class="n">TrackerDatabaseLock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span> <span class="c1"># RLock is mandatory for nested calls!</span>
 
 <div class="viewcode-block" id="TrackerDatabase"><a class="viewcode-back" href="../../../mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase">[docs]</a><span class="k">class</span> <span class="nc">TrackerDatabase</span><span class="p">(</span><span class="n">Database</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -714,33 +741,33 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unable to read version number from Tracker Database&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unexpected version number of Tracker Database. Got </span><span class="si">%i</span><span class="s2">, expected </span><span class="si">%i</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unexpected version number of Tracker Database. Got </span><span class="si">%i</span><span class="s2">, expected </span><span class="si">%i</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         
 
 <div class="viewcode-block" id="TrackerDatabase.AddRelation"><a class="viewcode-back" href="../../../mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.AddRelation">[docs]</a>    <span class="k">def</span> <span class="nf">AddRelation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">ida</span><span class="p">,</span> <span class="n">idb</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method adds a relation between two targets.</span>
-<span class="sd">        A target can be a song or an artist.</span>
+<span class="sd">        A target can be a song or a video.</span>
 <span class="sd">        </span>
 <span class="sd">        It does not matter which one is greater, *ida* or *idb*.</span>
 <span class="sd">        This gets handled automatically.</span>
 <span class="sd">        If *ida* and *idb* are the same ID, they get ignored.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            target (str): ``song`` or ``artist``</span>
-<span class="sd">            ida (int): Song ID or Artist ID, depending on the target string</span>
-<span class="sd">            ida (int): Song ID or Artist ID, depending on the target string</span>
+<span class="sd">            target (str): ``&quot;song&quot;`` or ``&quot;video&quot;``</span>
+<span class="sd">            ida (int): Song ID or Video ID, depending on the target string</span>
+<span class="sd">            ida (int): Song ID or Video ID, depending on the target string</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ``None``</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If *target* not ``&quot;song&quot;`` or ``&quot;artist&quot;``</span>
+<span class="sd">            ValueError: If *target* not ``&quot;song&quot;`` or ``&quot;video&quot;``</span>
 <span class="sd">            TypeError: If *ida* or *idb* is not of type int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">target</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="s2">&quot;artist&quot;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown target </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">! Only </span><span class="se">\&quot;</span><span class="s2">song</span><span class="se">\&quot;</span><span class="s2"> and </span><span class="se">\&quot;</span><span class="s2">artist</span><span class="se">\&quot;</span><span class="s2"> allowed.&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">target</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="s2">&quot;video&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown target </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">! Only </span><span class="se">\&quot;</span><span class="s2">song</span><span class="se">\&quot;</span><span class="s2"> and </span><span class="se">\&quot;</span><span class="s2">video</span><span class="se">\&quot;</span><span class="s2"> allowed.&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ida</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">idb</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;IDs must be of type int!&quot;</span><span class="p">)</span>
@@ -759,7 +786,7 @@
             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="p">(</span><span class="n">ida</span><span class="p">,</span> <span class="n">idb</span><span class="p">))</span>
 
             <span class="c1"># Define new weight - new edges have weight 1</span>
-            <span class="c1"># if there is a result, increas the weight</span>
+            <span class="c1"># if there is a result, increase the weight</span>
             <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
                 <span class="n">relationid</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="c1"># [(id, weight)]</span>
                 <span class="n">weight</span>     <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="c1"># [(id, weight)]</span>
@@ -777,63 +804,27 @@
 <div class="viewcode-block" id="TrackerDatabase.RemoveRelation"><a class="viewcode-back" href="../../../mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveRelation">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveRelation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">ida</span><span class="p">,</span> <span class="n">idb</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method removes a relation between two targets.</span>
-<span class="sd">        A target can be a song or an artist.</span>
+<span class="sd">        A target can be a song, a video or a video.</span>
 <span class="sd">        </span>
 <span class="sd">        It does not matter which one is greater, *ida* or *idb*.</span>
 <span class="sd">        This gets handled automatically.</span>
 <span class="sd">        If *ida* and *idb* are the same ID, they get ignored.</span>
 
-<span class="sd">        .. warning::</span>
-
-<span class="sd">            Only the addressed edge gets removed!</span>
-
-<span class="sd">            Removing an artist for example, does not remove song relations to this artist.</span>
-<span class="sd">            You should use the following two higher level methods:</span>
-<span class="sd">            </span>
-<span class="sd">                * :meth:`~lib.db.trackerdb.TrackerDatabase.RemoveSongRelations`</span>
-<span class="sd">                * :meth:`~lib.db.trackerdb.TrackerDatabase.RemoveArtistRelations`</span>
-
-
 <span class="sd">        Args:</span>
-<span class="sd">            target (str): ``song`` or ``artist``</span>
-<span class="sd">            ida (int): Song ID or Artist ID, depending on the target string</span>
-<span class="sd">            ida (int): Song ID or Artist ID, depending on the target string</span>
+<span class="sd">            target (str): ``&quot;song&quot;``, ``&quot;video&quot;``</span>
+<span class="sd">            ida (int): Song ID or Video ID, depending on the target string</span>
+<span class="sd">            ida (int): Song ID or Video ID, depending on the target string</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ``None``</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If *target* not ``&quot;song&quot;`` or ``&quot;artist&quot;``</span>
+<span class="sd">            ValueError: If *target* not ``&quot;song&quot;`` or ``&quot;video&quot;``</span>
 <span class="sd">            TypeError: If *ida* or *idb* is not of type int</span>
 
-<span class="sd">        Examples:</span>
-
-<span class="sd">            Remove an artist connection and take care of removing its connection to songs.</span>
-<span class="sd">            This is only an example! User :meth:`~lib.db.trackerdb.TrackerDatabase.RemoveArtistRelations` instead of this example code!</span>
-
-<span class="sd">            .. code-block:: python</span>
-
-<span class="sd">                # Defining the environment</span>
-<span class="sd">                musicdb   = MusicDatabase(&quot;./music.db&quot;)</span>
-<span class="sd">                trackerdb = TrackerDatabase(&quot;./tracker.db&quot;)</span>
-<span class="sd">                artistida = 42</span>
-<span class="sd">                artistidb = 23</span>
-
-<span class="sd">                # Remove artist connection</span>
-<span class="sd">                trackerdb.RemoveRelation(&quot;artist&quot;, artistida, artistidb)</span>
-
-<span class="sd">                # Get all songs</span>
-<span class="sd">                songlista = musicdb.GetSongsByArtistId(artistida)</span>
-<span class="sd">                songlistb = musicdb.GetSongsByArtistId(artistidb)</span>
-
-<span class="sd">                # Try remove all possible song connections</span>
-<span class="sd">                for songa in songlista:</span>
-<span class="sd">                    for songb in songlistb:</span>
-<span class="sd">                        trackerdb.RemoveRelation(&quot;song&quot;, songa[&quot;id&quot;], songb[&quot;id&quot;])</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">target</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="s2">&quot;artist&quot;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown target </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">! Only </span><span class="se">\&quot;</span><span class="s2">song</span><span class="se">\&quot;</span><span class="s2"> and </span><span class="se">\&quot;</span><span class="s2">artist</span><span class="se">\&quot;</span><span class="s2"> allowed.&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">target</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="s2">&quot;video&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown target </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">! Only </span><span class="se">\&quot;</span><span class="s2">song</span><span class="se">\&quot;</span><span class="s2"> and </span><span class="se">\&quot;</span><span class="s2">video</span><span class="se">\&quot;</span><span class="s2"> allowed.&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ida</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">idb</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;IDs must be of type int!&quot;</span><span class="p">)</span>
@@ -855,99 +846,11 @@
 
 
 
-<div class="viewcode-block" id="TrackerDatabase.RemoveSongRelations"><a class="viewcode-back" href="../../../mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveSongRelations">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveSongRelations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">,</span> <span class="n">songida</span><span class="p">,</span> <span class="n">songidb</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method removes the relation of two songs.</span>
-<span class="sd">        It also updates the related artist relations by subtracting the weight of the song connection from the connection of those artists.</span>
-<span class="sd">        If the resulting artists-connection is zero, this relation gets also removed.</span>
-
-<span class="sd">        If the song relation does not exist, nothing will be done.</span>
-<span class="sd">        If the relation exist, there must be an artist relation.</span>
-<span class="sd">        If not, an AssertionError gets raised.</span>
-<span class="sd">        Only excepetion is the case where both songs are from the same artist.</span>
-
-<span class="sd">        To get information about the songs of the artist, an instance of the :class:`~lib.db.musicdb.MusicDatabase` is necessary.</span>
-<span class="sd">        This object must be given as argument.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            musicdb: An instance of the music database to collect more information of the songs.</span>
-<span class="sd">            songida (int): ID of one song</span>
-<span class="sd">            songidb (int): ID of the other one</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            ``None``</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            TypeError: Invalid *musicdb* argument</span>
-<span class="sd">            TypeError: Invalid song IDs</span>
-<span class="sd">            AssertionError: If the artist relation of the two songs (from different artists) does not exist.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">musicdb</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDatabase</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Invalid argument. musicdb not of type MusicDatabase&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">songida</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">songidb</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Song IDs must be of type int!&quot;</span><span class="p">)</span>
-
-        <span class="c1"># Get the weight for the song relation.</span>
-        <span class="c1"># That value must be subtracted from the artists relation.</span>
-        <span class="c1"># There is no method to get a specific weight.</span>
-        <span class="c1"># So we need to access the database using basic methods.</span>
-
-        <span class="c1"># be sure the order fulfills the constraint that ID A is smaller than ID B</span>
-        <span class="p">[</span><span class="n">songida</span><span class="p">,</span> <span class="n">songidb</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">songida</span><span class="p">,</span> <span class="n">songidb</span><span class="p">])</span>
-
-        <span class="k">with</span> <span class="n">TrackerDatabaseLock</span><span class="p">:</span>
-            <span class="c1"># Get weight</span>
-            <span class="n">sql</span>    <span class="o">=</span> <span class="s2">&quot;SELECT weight FROM songrelations WHERE songida = ? AND songidb = ?&quot;</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="p">(</span><span class="n">songida</span><span class="p">,</span> <span class="n">songidb</span><span class="p">))</span>
-            
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;The expected song connection between </span><span class="si">%d</span><span class="s2"> and </span><span class="si">%d</span><span class="s2"> does not exist. (Doing nothing)&quot;</span><span class="p">,</span>
-                        <span class="n">songida</span><span class="p">,</span> <span class="n">songidb</span><span class="p">)</span>
-                <span class="k">return</span> <span class="kc">None</span>
-            <span class="n">weight</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>   <span class="c1"># [(weight,)]</span>
-
-            <span class="c1"># Remove artist connection</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">RemoveRelation</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="n">songida</span><span class="p">,</span> <span class="n">songidb</span><span class="p">)</span>
-
-            <span class="c1"># Determin the artist IDs</span>
-            <span class="n">artistida</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songida</span><span class="p">)[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span>
-            <span class="n">artistidb</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songidb</span><span class="p">)[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span>
-
-            <span class="k">if</span> <span class="n">artistida</span> <span class="o">==</span> <span class="n">artistidb</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">None</span>
-
-            <span class="c1"># be sure the order fulfills the constraint that ID A is smaller than ID B</span>
-            <span class="p">[</span><span class="n">artistida</span><span class="p">,</span> <span class="n">artistidb</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">artistida</span><span class="p">,</span> <span class="n">artistidb</span><span class="p">])</span>
-
-            <span class="c1"># Get weight</span>
-            <span class="n">sql</span>    <span class="o">=</span> <span class="s2">&quot;SELECT id, weight FROM artistrelations WHERE artistida = ? AND artistidb = ?&quot;</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="p">(</span><span class="n">artistida</span><span class="p">,</span> <span class="n">artistidb</span><span class="p">))</span>
-
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
-                <span class="c1"># if there was a song connection, there must be an artist connection</span>
-                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;The expected artist connection does not exist!&quot;</span><span class="p">)</span>
-            <span class="n">edgeid</span>      <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>   <span class="c1"># [(id, weight)]</span>
-            <span class="n">edgeweight</span>  <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>   <span class="c1"># [(id, weight)]</span>
-
-            <span class="k">if</span> <span class="n">edgeweight</span> <span class="o">&gt;</span> <span class="n">weight</span><span class="p">:</span>
-                <span class="c1"># subtract the weight from the song connection from the artist connection</span>
-                <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;UPDATE artistrelations SET weight = ? WHERE id = ?&quot;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="p">(</span><span class="n">edgeweight</span> <span class="o">-</span> <span class="n">weight</span> <span class="p">,</span> <span class="n">edgeid</span><span class="p">))</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># Remove the artist connection</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">RemoveRelation</span><span class="p">(</span><span class="s2">&quot;artist&quot;</span><span class="p">,</span> <span class="n">artistida</span><span class="p">,</span> <span class="n">artistidb</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="kc">None</span></div>
-
-
 
 <div class="viewcode-block" id="TrackerDatabase.RemoveSong"><a class="viewcode-back" href="../../../mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveSong">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveSong</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method removes all relations to a song.</span>
 <span class="sd">        This is usefull in case a song gets removed from the database.</span>
-
-<span class="sd">        The method does *not* update the artist relations!</span>
 
 <span class="sd">        If the song relation does not exist, nothing will be done.</span>
 
@@ -971,73 +874,28 @@
 
 
 
-<div class="viewcode-block" id="TrackerDatabase.RemoveArtistRelations"><a class="viewcode-back" href="../../../mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveArtistRelations">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveArtistRelations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">,</span> <span class="n">artistida</span><span class="p">,</span> <span class="n">artistidb</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackerDatabase.RemoveVideo"><a class="viewcode-back" href="../../../mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveVideo">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveVideo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">videoid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method removes the relationship between two artists and all song relations of them.</span>
+<span class="sd">        This method removes all relations to a video.</span>
+<span class="sd">        This is useful in case a video gets removed from the database.</span>
 
-<span class="sd">        If the artist relation does not exist, nothing will be done.</span>
-
-<span class="sd">        To get information about the songs of the artist, an instance of the :class:`~lib.db.musicdb.MusicDatabase` is necessary.</span>
-<span class="sd">        This object must be given as argument.</span>
+<span class="sd">        If the video relation does not exist, nothing will be done.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            musicdb: An instance of the music database to collect more information of the songs.</span>
-<span class="sd">            artistida (int): ID of one artist</span>
-<span class="sd">            artistidb (int): ID of the other one</span>
+<span class="sd">            videoid (int): ID of the video</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ``None``</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            TypeError: Invalid *musicdb* argument</span>
-<span class="sd">            TypeError: Invalid artist IDs</span>
+<span class="sd">            TypeError: Invalid video ID type</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">musicdb</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDatabase</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Invalid argument. musicdb not of type MusicDatabase&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">artistida</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">artistidb</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Artist IDs must be of type int!&quot;</span><span class="p">)</span>
-
-        <span class="k">with</span> <span class="n">TrackerDatabaseLock</span><span class="p">:</span>
-            <span class="c1"># Remove artist connection</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">RemoveRelation</span><span class="p">(</span><span class="s2">&quot;artist&quot;</span><span class="p">,</span> <span class="n">artistida</span><span class="p">,</span> <span class="n">artistidb</span><span class="p">)</span>
-
-            <span class="c1"># Get all songs</span>
-            <span class="n">songlista</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongsByArtistId</span><span class="p">(</span><span class="n">artistida</span><span class="p">)</span>
-            <span class="n">songlistb</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongsByArtistId</span><span class="p">(</span><span class="n">artistidb</span><span class="p">)</span>
-
-            <span class="c1"># Try remove all possible song connections</span>
-            <span class="k">for</span> <span class="n">songa</span> <span class="ow">in</span> <span class="n">songlista</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">songb</span> <span class="ow">in</span> <span class="n">songlistb</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">RemoveRelation</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="n">songa</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">songb</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
-
-        <span class="k">return</span> <span class="kc">None</span></div>
-
-
-
-<div class="viewcode-block" id="TrackerDatabase.RemoveArtist"><a class="viewcode-back" href="../../../mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveArtist">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveArtist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artistid</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method removes all relations to an artist.</span>
-<span class="sd">        This is useful in case a artist gets removed from the database.</span>
-<span class="sd">        Its song relations must be removed separately by calling :meth:`~RemoveSong` for each song.</span>
-
-<span class="sd">        If the artist relation does not exist, nothing will be done.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            artistid (int): ID of the artist</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            ``None``</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            TypeError: Invalid artist ID type</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">artistid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">videoid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Song IDs must be of type int!&quot;</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="n">TrackerDatabaseLock</span><span class="p">:</span>
-            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;DELETE FROM artistrelations WHERE artistida = ? OR artistidb = ?&quot;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="p">(</span><span class="n">artistid</span><span class="p">,</span> <span class="n">artistid</span><span class="p">))</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;DELETE FROM videorelations WHERE videoida = ? OR videoidb = ?&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="p">(</span><span class="n">videoid</span><span class="p">,</span> <span class="n">videoid</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="kc">None</span></div>
 
@@ -1045,21 +903,21 @@
 
 <div class="viewcode-block" id="TrackerDatabase.GetRelations"><a class="viewcode-back" href="../../../mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.GetRelations">[docs]</a>    <span class="k">def</span> <span class="nf">GetRelations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">targetid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method returns the related songs or artists of a song or an artist, depending on the value of *target*. </span>
+<span class="sd">        This method returns the related songs or videos of a song or a video, depending on the value of *target*. </span>
 
 <span class="sd">        The method returns a list of dictionaries.</span>
-<span class="sd">        Each dictionary contains the ID of the related song or artist, and the weight of the relation.</span>
+<span class="sd">        Each dictionary contains the ID of the related song or video, and the weight of the relation.</span>
 
 
 <span class="sd">        Args:</span>
-<span class="sd">            target (str): ``song`` or ``artist``</span>
-<span class="sd">            targetid (int): Song ID or Artist ID, depending on the target string</span>
+<span class="sd">            target (str): ``song`` or ``video``</span>
+<span class="sd">            targetid (int): Song ID or Video ID, depending on the target string</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            List of relations. The list is empty if there are no relations</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If *target* not ``&quot;song&quot;`` or ``&quot;artist&quot;``</span>
+<span class="sd">            ValueError: If *target* not ``&quot;song&quot;`` or ``&quot;video&quot;``</span>
 <span class="sd">            TypeError: If *targetid* is not of type ``int``</span>
 
 <span class="sd">        Example:</span>
@@ -1070,8 +928,8 @@
 <span class="sd">                for r in relations:</span>
 <span class="sd">                    print(&quot;Related song ID: %d; Weight: %d&quot;%(r[&quot;id&quot;], r[&quot;weight&quot;]))</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">target</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="s2">&quot;artist&quot;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown target </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">! Only </span><span class="se">\&quot;</span><span class="s2">song</span><span class="se">\&quot;</span><span class="s2"> and </span><span class="se">\&quot;</span><span class="s2">artist</span><span class="se">\&quot;</span><span class="s2"> allowed.&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">target</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="s2">&quot;video&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown target </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">! Only </span><span class="se">\&quot;</span><span class="s2">song</span><span class="se">\&quot;</span><span class="s2"> and </span><span class="se">\&quot;</span><span class="s2">video</span><span class="se">\&quot;</span><span class="s2"> allowed.&quot;</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">targetid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;targetid must be of type int!&quot;</span><span class="p">)</span>
@@ -1119,7 +977,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020,2021 Ralf Stemmer.
 
     </p>
   </div>
@@ -1141,7 +999,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'6.0.0',
+            VERSION:'7.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1152,7 +1010,6 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
 
   
 

@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="2.0.0"
+SCRIPTVERSION="2.1.0"
 echo -e "\e[1;31mMusicDB-QuickUpdate [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 source ./install/core.sh
@@ -28,8 +28,9 @@ fi
 
 
 SERVERDIR="$(dirname "$(which musicdb)")"
-MDBGROUP="$(sed -nr '/\[music\]/,/\[/{/group/p}' /etc/musicdb.ini | cut -d "=" -f 2)"
+MDBGROUP="$(sed -nr '/\[music\]/,/\[/{/group/p}' /etc/musicdb.ini | cut -d "=" -f 2 | tr -d '[:space:]')"
 MDBUSER="musicdb"
+WSAPIKEY="$(sed -nr '/\[websocket\]/,/\[/{/apikey/p}' /etc/musicdb.ini | cut -d "=" -f 2 | tr -d '[:space:]')"
 
 SOURCEDIR="$(dirname "$(pwd)")"
 if [ ! -d "$SOURCEDIR/.git" ] ; then
@@ -39,10 +40,11 @@ if [ ! -d "$SOURCEDIR/.git" ] ; then
 fi
 
 
-echo -e "\t\e[1;34mSource directory: \e[0;36m$SOURCEDIR"
-echo -e "\t\e[1;34mServer directory: \e[0;36m$SERVERDIR"
-echo -e "\t\e[1;34mMusicDB group:    \e[0;36m$MDBGROUP"
-echo -e "\t\e[1;34mMusicDB user:     \e[0;36m$MDBUSER"
+echo -e "\t\e[1;34mSource directory:  \e[0;36m$SOURCEDIR"
+echo -e "\t\e[1;34mServer directory:  \e[0;36m$SERVERDIR"
+echo -e "\t\e[1;34mMusicDB group:     \e[0;36m$MDBGROUP"
+echo -e "\t\e[1;34mMusicDB user:      \e[0;36m$MDBUSER"
+echo -e "\t\e[1;34mWebSocket API Key: \e[0;36m$WSAPIKEY"
 
 if [ "$SERVERDIR" == "." ] ; then
     echo -e "\e[1;33mUnable to find the server directory! \e[1;30m(Server directory must be in \$PATH)"
@@ -51,12 +53,8 @@ fi
 
 
 
-InstallMusicDBFiles "$SOURCEDIR" "$SERVERDIR" "$MDBUSER" "$MDBGROUP"
+InstallMusicDBFiles "$SOURCEDIR" "$SERVERDIR" "$MDBUSER" "$MDBGROUP" "$WSAPIKEY"
 
-# Last step: upgrading internal files
-if [ "$1" == "--major" ] ; then
-    su -l -c "musicdb upgrade" $MDBUSER
-fi
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

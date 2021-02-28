@@ -44,14 +44,27 @@ This section contains some important information on how to update to a next majo
 Major releases have changes that are not compatible to the previous version of MusicDB.
 Furthermore those changes may break scripts you wrote around MusicDB.
 
-Lines starting with "**:wrench: Change:**" are steps you have to do *before* or *after* updating via `install.sh` script.
+Lines starting with "**:wrench: Change:**" are steps you have to do *before* or *after* updating via `update.sh` script.
 
-**01.08.2020: 5.x.x → 6.0.0+**
+**28.03.2021: 6.x.x → 7.0.0+**
+
+* Update mechanism improved, just call the `update.sh` script (remember to make a backup)
+* Full rebuild of the WebUI
+  * **:wrench: Change:** Reload WebUI *after* update
+* Changes in the configuration file and music database (See CHANGELOG for details)
+* Experimental support for Music Videos added (needs to be enabled explicitly)
+  * **:wrench: Change:** Provide `videoframes` directory access for HTTPS to see its content in the WebUI
+* Docker-Support removed
+
+<details>
+<summary>01.08.2020: 5.x.x → 6.0.0+ </summary>
 
 * Changes in the configuration file and music database (See CHANGELOG for details)
   * **:wrench: Change:** Remember to call `musicdb upgrade` *after* installation when using the `update.sh` script
   * **:wrench: Change:** Reload WebUI *after* update
 * MusicAI will no longer work. Everything related to MusicAI got removed. Reason: The used framework _tflearn_ is no longer under development and got not ported to TensorFlow 2.0.
+
+</details>
 
 <details>
 <summary> 20.01.2019: 4.x.x → 5.0.0+ </summary>
@@ -65,39 +78,19 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* or 
 
 </details>
 
-<details>
-<summary> 28.07.2018: 3.x.x → 4.0.0+ </summary>
-
-* Rebuild of the installation process.
-  * **:wrench: Change:** Make a backup of the MusicDB data directory!
-  * Do not use the update script to update to this version (4.0.0). Use the `install.sh` script!
-* More stable CSV files by adding a header. Now updating the old CSV files is possible
-  * **:wrench: Change:** Remove the old CSV-Files from the `mdbstate` directory. (You'll loose the current song queue and blacklist state)
-* WebSocket configuration for WebUI is now in separate `webui/config.js`
-  * **:wrench: Change:** You may want to backup the settings `from webui/js/musicdb.js`
-* The server now only accepts request from clients with a valid API Key
-* Databases now have a version number to allow easy updated.
-  * **:wrench: Change:** This is the last time you have to touch the databases by yourself. For each database:
-    * ``sqlite $DATABASE.db`` (With DATABASE = ``music``, ``lycra``, ``tracker``)
-    * ``CREATE TABLE IF NOT EXISTS meta (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT, VALUE TEXT DEFAULT '');``
-    * ``INSERT INTO meta (key, value) VALUES ("version", 2);``
-    * ``.quit``
-* **:wrench: Change:** Restore your configuration
-  * Update the icecast passwort (`musicdb.ini` ↔ `icecast/config.xml`)
-  * Update the WebSocket API Key (`musicdb.ini` ↔ `../server/webui/config.js`)
-
-</details>
 
 
 ## Social
 
-Providing and maintaining open source software comes with some downsides.
+Providing and maintaining open source software comes with some downsides and a lot of work.
 I'd like to know if anyone is using this software, and what you are doing with it. :smiley:
 
-So feel free to follow my project account [@MusicDBProject](https://twitter.com/MusicDBProject) on Twitter
+So feel free to use the new [GitHub Discussions](https://github.com/rstemmer/musicdb/discussions) feature to provide some feedback.
+
+You can also follow my project account [@MusicDBProject](https://twitter.com/MusicDBProject) on Twitter
 and share some screenshots :wink:
 
-In case you find any bugs, please create an Issue.
+In case you find any bugs, please [create an Issue](https://github.com/rstemmer/musicdb/issues).
 Feature requests are welcome as well.
 
 
@@ -107,21 +100,23 @@ This section describes how to install, update and use MusicDB.
 
 ## Requirements
 
-I only test with the latest version of the requirements I list below.
+I test MusicDB only with the latest version of the requirements listed below.
 If MusicDB breaks when updating dependencies, it's a bug in MusicDB.
+Then please create an issue including the name and version of the dependency that causes issues.
 In case MusicDB does not run on outdated operating systems, update your system :wink:
 
 * A Linux operating system. Tested with:
   * [Arch Linux](https://www.archlinux.org/) for x86-64 (primary test and development system)
   * [Debian](https://www.debian.org/distrib/) for x86-64 (not recommended because it comes with lots of ~~old~~ "stable" software)
-  * [Arch Linux ARM](https://archlinuxarm.org/) for AArch64 with [ODROID-C2](https://wiki.odroid.com/odroid-c2/odroid-c2)
-  * [Arch Linux ARM](https://archlinuxarm.org/) for ARMv7 with [Raspberry Pi 3](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
-* [Python3](https://www.python.org/) (At least Python 3.5. I test with Python 3.8)
+  * [Ubuntu Server 20.04.2 LTS](https://ubuntu.com/download/raspberry-pi) for AArch64 on a [Raspberry Pi 4](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
+* [Python3](https://www.python.org/) (At least Python 3.5. I test with Python 3.9)
 * [Icecast](https://icecast.org/) and [GStreamer](https://gstreamer.freedesktop.org/) for streaming
-* A modern web browser for accessing the WebUI:
-  * [Firefox](https://www.mozilla.org/en-US/) (recommended)
-  * [Chrome](https://www.google.com/chrome/index.html) 
-  * [Opera](https://www.opera.com/)
+* Support status for web browsers to access the WebUI:
+  * [Firefox](https://www.mozilla.org/en-US/) (**Recommended**)
+  * [Chrome](https://www.google.com/chrome/index.html) (**Not yet supported** as long as mandatory [CSS features](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) are missing)
+  * [Opera](https://www.opera.com/) (Not tested - see Chrome)
+  * [Edge](https://www.microsoft.com/edge/) (**Not supported** - No Linux version available)
+  * [Safari](https://www.apple.com/safari/) (Not tested)
 * An Unicode capable file system (Any *modern* file system should work)
 * A terminal that supports Unicode, with an Unicode capable font configured (I use KDE's [Konsole](https://www.kde.org/applications/system/konsole/) with [Hack](https://sourcefoundry.org/hack/))
 
@@ -142,13 +137,15 @@ I then will fix MusicDB as soon as possible.
 
 ## Installation and Update
 
+### Installation of MusicDB
+
 To install MusicDB, read [:notebook: How to Install MusicDB](https://rstemmer.github.io/musicdb/build/html/usage/install.html) in the documentation.
 
-For updating, you can do one of the following steps.
+### Update to a New Version
+
+For updating, you can do following steps.
 Read the *Important News* for manual steps to do before updating to a new major release.
 Only execute the scripts as root, that are followed by the comment "as root"!
-
-### Update to a New Minor Version
 
 ``` bash
 git checkout master # Only install from master branch!
@@ -156,25 +153,6 @@ git pull
 
 cd scripts
 ./update.sh # as root
-```
-
-### Update to a New Major Version
-
-For major upgrades there exists two strategies.
-Strategy 1 is recommended.
-
-``` bash
-git checkout master # Only install from master branch!
-git pull
-
-cd scripts
-
-# Statgey 1
-./update.sh --major # as root
-
-# Statrgy 2
-./install.sh        # as root
-musicdb upgrade
 ```
 
 
@@ -196,6 +174,8 @@ The documentation is made for developers, not only users. So there is much more 
 
 
 In general, the first steps are the following, after you have done the [:notebook: First Run](https://rstemmer.github.io/musicdb/build/html/usage/install.html#first-run):
+With the new WebUI, creating *Moods* and *Genres* can also be done within the web user interface.
+Open the Settings via the WebUI main menu (top right).
 
 1. [:notebook: Add Music](https://rstemmer.github.io/musicdb/build/html/usage/music.html#importing-albums-to-musicdb) to MusicDB
 2. [:notebook: Create Genres](https://rstemmer.github.io/musicdb/build/html/mod/genres.html) and sub-genres you want to use to categorize your Music.
@@ -206,6 +186,7 @@ In general, the first steps are the following, after you have done the [:noteboo
 Some helpful hints:
 
 * For security reasons, MusicDB only accepts connections from localhost by default. Change the [:notebook: WebSocket address configuration](https://rstemmer.github.io/musicdb/build/html/basics/config.html#websocket) to access your music from anywhere.
+* Make sure the web browser accepts your certificates in case they are self signed (including the WebSocket port)
 * Don't be to specific with the genre tags. Define only one tag per genre like *Metal*, *Pop*, *Classic*, …
 * Use sub-genre tags for a more detailed classification.
 * Tag albums beforehand and songs only when they are currently playing.
@@ -217,23 +198,6 @@ Some helpful hints:
 
 
 If there are any problems setting up MusicDB, create an issue.
-
-
-## Docker-Based Demo
-
-It is possible to run a *Demo* installation via Docker container.
-Just clone this repository and execute the scripts in the docker sub-directory.
-
-```sh
-git clone https://github.com/rstemmer/musicdb.git
-cd musicdb
-./docker/build.sh
-./docker/run.sh
-```
-
-**Important:** I do not longer support docker and will no longer update or test the files in the docker directory.
-I let the scripts untouched as they were for version 5.2.2.
-In case they do not work with later versions of MusicDB please create an Issue.
 
 
 # Development
@@ -256,10 +220,11 @@ Every help is welcome.
 
 ### What you can do
 
-* Create an Issue when you find a bug.
+* Give feedback via [GitHub Discussions](https://github.com/rstemmer/musicdb/discussions).
+* Create an [Issue](https://github.com/rstemmer/musicdb/issues) when you find a bug.
 * Improve the documentation.
-* Suggesting features via Issue.
-* See if there is an Issue you are able to fix, or to give hints on how to fix it.
+* Suggesting features via *Issue* or *Discussions*.
+* See if there is an *Issue* you are able to fix, or to give hints on how to fix it.
 * Fix bugs or add features.
 
 
@@ -277,14 +242,13 @@ Every help is welcome.
 Beside maintaining this software, I also think about improving it or adding new features if necessary.
 The following list contains all huge improvements I'm planning to add to MusicDB.
 
-* Integrate music videos into the MusicDB infrastructure. The UI should be switch to video-mode. Then, instead of showing artists and their albums, artists and their videos will be shown. The videos can then be put into a video-queue that get streamed.
-  * A first prototype exists in the *feature-video* branch.
+* [Alpha State] Integrate music videos into the MusicDB infrastructure. The UI should be switch to video-mode. Then, instead of showing artists and their albums, artists and their videos will be shown. The videos can then be put into a video-queue that get streamed.
+  * This feature is currently experimental and deactivated by default.
   * Development progress can be seen on the [corresponding GitHub Project page](https://github.com/rstemmer/musicdb/projects/1).
+* [Rough Idea] Next generation of *MusicAI*. I already miss the old one that was surprisingly helpful tagging songs. The next generation might base on TensorFlow 2.0 directly. I will have the same or similar architecture since it worked in the past.
+* [Planning State] Usage improvements by allowing installing MusicDB via `pip` and operating it via `systemd`.
+* [Planning State] More ideas can be found on the [Roadmap GitHub Project page](https://github.com/rstemmer/musicdb/projects/4)
 
-
-* Next generation of *MusicAI*. I already miss the old one that was surprisingly helpful tagging songs. The next generation might base on TensorFlow 2.0 directly. I will have the same or similar architecture since it worked in the past.
-
-* New Frontend. Early ideas are around WebAssembly based technology or a native client. Even with a native client the WebUI still needs to be updated. The code base is very ugly and the used coding strategy does not fit to the complexity of the application and abilities of JavaScript.
 
 The following subsections cover more information regarding releases and branches.
 

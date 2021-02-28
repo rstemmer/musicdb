@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-200,-30)">
+        <g transform="matrix(1.10876,0,0,1.26098,-91.0415,-15.3672)">
+            <g id="Save">
+            </g>
+        </g>
+        <g id="StatusGood">
+        </g>
+        <g id="StatusBad">
+        </g>
+        <g id="StatusPaused">
+        </g>
+        <g id="StatusPlaying">
+        </g>
+        <g id="StatusUnknown">
+        </g>
+        <g transform="matrix(1.10876,0,0,1.26098,-66.3229,-15.3672)">
+            <g id="Load">
+            </g>
+        </g>
+        <g id="vThis">
+        </g>
+        <g id="vBegin">
+        </g>
+        <g id="vMin">
+        </g>
+        <g transform="matrix(1.1523,0,0,1.31051,-21.9614,-46.8621)">
+            <g id="vMax">
+            </g>
+        </g>
+        <g id="vEnd">
+        </g>
+        <g id="Reconnect">
+        </g>
+        <g id="Menu">
+        </g>
+        <g id="EnterFullscreen">
+        </g>
+        <g id="LeaveFullscreen">
+        </g>
+        <g id="Switch2Video">
+        </g>
+        <g id="Switch2Audio">
+        </g>
+        <g id="Artist" transform="matrix(1.2,0,0,1.2,-22.6,-16)">
+            <g id="Member-Right" serif:id="Member Right">
+            </g>
+            <g id="Member-Left" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="Album">
+        </g>
+        <g id="Song">
+        </g>
+        <g id="Video">
+        </g>
+        <g id="Remove">
+        </g>
+        <g id="Insert">
+        </g>
+        <g id="Append">
+        </g>
+        <g id="Next">
+        </g>
+        <g id="Pause">
+        </g>
+        <g id="Play">
+        </g>
+        <g id="Disable">
+        </g>
+        <g id="Hate" transform="matrix(1,0,-2.46519e-32,1,25,-0.5)">
+            <g transform="matrix(1,0,2.46519e-32,1,-25,0.5)">
+                <path d="M203.378,34L202,34C201.724,34 201.5,33.776 201.5,33.5C201.5,33.224 201.724,33 202,33L205.78,33L206.519,30.413C206.581,30.198 206.777,30.05 207,30.05L213,30.05C213.223,30.05 213.419,30.198 213.481,30.413L214.22,33L218,33C218.276,33 218.5,33.224 218.5,33.5C218.5,33.776 218.276,34 218,34L216.622,34C216.861,34.357 217,34.786 217,35.247L217,47.753C217,48.993 215.993,50 214.753,50L205.247,50C204.007,50 203,48.993 203,47.753L203,35.247C203,34.786 203.139,34.357 203.378,34ZM215,35.913C215,35.409 214.591,35 214.087,35L205.913,35C205.409,35 205,35.409 205,35.913L205,47.087C205,47.591 205.409,48 205.913,48L214.087,48C214.591,48 215,47.591 215,47.087L215,35.913ZM213.18,33L212.623,31.05L207.377,31.05L206.82,33L213.18,33Z"/>
+            </g>
+            <g transform="matrix(1,0,2.46519e-32,1,-25,0.5)">
+                <path d="M206.5,37L206.5,46C206.5,46.276 206.724,46.5 207,46.5C207.276,46.5 207.5,46.276 207.5,46L207.5,37C207.5,36.724 207.276,36.5 207,36.5C206.724,36.5 206.5,36.724 206.5,37Z"/>
+            </g>
+            <g transform="matrix(1,0,2.46519e-32,1,-25,0.5)">
+                <path d="M212.5,37L212.5,46C212.5,46.276 212.724,46.5 213,46.5C213.276,46.5 213.5,46.276 213.5,46L213.5,37C213.5,36.724 213.276,36.5 213,36.5C212.724,36.5 212.5,36.724 212.5,37Z"/>
+            </g>
+            <g transform="matrix(1,0,2.46519e-32,1,-25,0.5)">
+                <path d="M209.5,37L209.5,46C209.5,46.276 209.724,46.5 210,46.5C210.276,46.5 210.5,46.276 210.5,46L210.5,37C210.5,36.724 210.276,36.5 210,36.5C209.724,36.5 209.5,36.724 209.5,37Z"/>
+            </g>
+        </g>
+        <g id="LiveRecording" transform="matrix(1.2,0,0,1.2,102.4,-65.9962)">
+            <g id="Member-Right1" serif:id="Member Right">
+            </g>
+            <g id="Member-Left1" serif:id="Member Left">
+            </g>
+            <g id="Lead-Member1" serif:id="Lead Member">
+            </g>
+        </g>
+        <g id="LyricsVideo">
+        </g>
+        <g id="BadAudio">
+        </g>
+        <g id="Like">
+        </g>
+        <g id="Dislike">
+        </g>
+        <g id="Favorite">
+        </g>
+    </g>
+</svg>

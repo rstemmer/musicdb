@@ -1,0 +1,197 @@
+/*
+ * MusicDB,  a music manager with web-bases UI that focus on music.
+ * Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+ * Blue:
+    background:         linear-gradient(-30deg, #203696, #7a90c8);
+ * Red:
+    background:         linear-gradient(-30deg, #962020, #c87a80);
+ * Green:
+    background:         linear-gradient(-30deg, #499620, #9cc87a);
+ */
+
+.AboutMusicDB
+{
+
+    background:         #0A0808;
+    background-image:   url(../../img/Noise10.png);
+    color:              var(--color-white);
+    height:             100%;
+    width:              100%;
+    overflow:           auto;
+    scrollbar-width:    none;
+}
+
+.AboutMusicDB > img
+{
+    display:            block;
+    float:              right;
+    margin:             2.0em;
+    width:              50%;
+    max-height:         50%;
+}
+
+
+
+.AboutMusicDB > h1
+{
+    margin:             1.0em;
+    margin-top:         0;
+    padding-top:        1.0em;
+
+    font-size:          3.0rem;
+    letter-spacing:     0.05em;
+}
+.AboutMusicDB > h1 > span
+{
+    background:         linear-gradient(-30deg, #499620, #9cc87a);
+    background-clip:    text;
+    color:              transparent;
+}
+
+.AboutMusicDB > h2
+{
+    margin:             2.0em;
+    margin-bottom:      1.0em;
+}
+.AboutMusicDB > h2 > span
+{
+    background:         linear-gradient(-30deg, #962020, #c87a80);
+    background-clip:    text;
+    color:              transparent;
+}
+
+
+
+.AboutMusicDB > table
+{
+    margin-left:        5.0em;
+}
+
+.AboutMusicDB td
+{
+    text-align:         left;
+}
+.AboutMusicDB td:first-child
+{
+    background:         linear-gradient(-30deg, #203696, #7a90c8);
+    background-clip:    text;
+    color:              transparent;
+}
+
+
+
+.AboutMusicDB button
+{
+    display:            block;
+
+    background:         linear-gradient(-30deg, #203696, #7a90c8);
+    color:              var(--color-white);
+    border-radius:      var(--radius);
+    filter:             drop-shadow(0.1rem 0.1rem 0.1rem #111);
+
+    padding:            1.0em;
+}
+.AboutMusicDB button:hover, .AboutMusicDB button:focus
+{
+    background:         linear-gradient(-30deg, #499620, #9cc87a);
+}
+
+
+
+.AboutMusicDB a
+{
+    display:            block;
+    color:              var(--color-white);
+    text-decoration:    none;
+}
+.AboutMusicDB a::before
+{
+    display:            inline-block;
+    content:            "";
+    vertical-align:     middle;
+    margin-right:       1ch;
+
+    mask:               url("../../img/icons/Link.svg");
+    background:         linear-gradient(-30deg, #962020, #c87a80);
+    color:              transparent;
+
+    width:              1.0em;
+    height:             1.0em;
+}
+.AboutMusicDB a:visited
+{
+    background:         linear-gradient(-30deg, #499620, #9cc87a);
+    background-clip:    text;
+    color:              transparent;
+}
+.AboutMusicDB a:hover, .AboutMusicDB a:focus
+{
+    background:         linear-gradient(-30deg, #499620, #9cc87a);
+    background-clip:    text;
+    color:              transparent;
+}
+
+
+
+.AboutMusicDB .latestversion::after
+{
+    content:            " ";
+    display:            inline-block;
+    height:             1.0rem;
+    width:              1.0rem;
+    vertical-align:     middle;
+    margin-left:        1.5ch;
+}
+.AboutMusicDB .latestversion[data-updaterequired=true]::after
+{
+    mask:               url("../../img/icons/StatusBad.svg");
+    background-color:   var(--color-red);
+}
+.AboutMusicDB .latestversion[data-updaterequired=false]::after
+{
+    mask:               url("../../img/icons/StatusGood.svg");
+    background-color:   var(--color-green);
+}
+
+.AboutMusicDB .versionmessage
+{
+    display:            block;
+
+    border-radius:      var(--radius);
+    background-clip:    text;
+    color:              transparent;
+}
+.AboutMusicDB .versionmessage[data-updaterequired=true]
+{
+    background:         linear-gradient(-30deg, #962020, #c87a80);
+    background-clip:    text;
+    color:              transparent;
+}
+.AboutMusicDB .versionmessage[data-updaterequired=false]
+{
+    background:         linear-gradient(-30deg, #499620, #9cc87a);
+    background-clip:    text;
+    color:              transparent;
+}
+
+
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

@@ -31,6 +31,12 @@
 		<ssl>0</ssl>
         <shoutcast-mount>/stream</shoutcast-mount>
 	</listen-socket>
+	<listen-socket>
+		<port>9999</port>
+		<ssl>0</ssl>
+        <bind-address>127.0.0.1</bind-address>
+        <shoutcast-mount>/vstream</shoutcast-mount>
+	</listen-socket>
 
 	<mount>
 		<mount-name>/stream</mount-name>
@@ -44,6 +50,21 @@
         <mp3-metadata-interval>3145728</mp3-metadata-interval> <!-- every 3MiB -->
 		<stream-name>MusicDB Stream</stream-name>
 		<stream-description>MusicDB managed music stream</stream-description> 
+		<genre>Various</genre>
+	</mount>
+
+	<mount>
+		<mount-name>/vstream</mount-name>
+		<max-listeners>10</max-listeners>
+        <charset>UTF8</charset>
+		<authentication type="htpasswd">
+			<option name="filename" value="DATADIR/icecast/users"/>
+			<option name="allow_duplicate_users" value="1"/>
+		</authentication>
+        <public>0</public>
+        <mp3-metadata-interval>3145728</mp3-metadata-interval> <!-- every 3MiB -->
+		<stream-name>MusicDB Video Stream</stream-name>
+		<stream-description>MusicDB managed video stream</stream-description> 
 		<genre>Various</genre>
 	</mount>
 

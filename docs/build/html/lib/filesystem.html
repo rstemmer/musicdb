@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Filesystem Interface &mdash; MusicDB 6.0.0 documentation</title>
+  <title>Filesystem Interface &mdash; MusicDB 7.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 6.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
         <link rel="next" title="GStreamer Interface" href="gstreamer.html"/>
         <link rel="prev" title="Fileprocessing Methods" href="fileprocessing.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                6.0
+                7.0
               </div>
             
           
@@ -110,6 +110,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#database">database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#music">music</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#uploads">uploads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
@@ -117,6 +119,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/logging.html">Handling log-files</a></li>
@@ -184,12 +194,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#available-methods">Available Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#videos">Videos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#queue">Queue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#tag-related">Tag related</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#uploading">Uploading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
@@ -212,12 +225,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -230,8 +237,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#id1">Configuring MusicDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-version">Update to a New Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-manually">Installation (Manually)</a><ul>
@@ -240,7 +246,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3">id3edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
@@ -251,6 +257,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#music-video-file-name">Music Video File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
@@ -260,6 +267,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-videos-to-musicdb">Importing Videos to MusicDB</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/scripts.html">Scripts</a><ul>
@@ -323,9 +331,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#example-calls">Example calls</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/tracker.html">tracker - Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#module-mod.tracker">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#class-description">Class Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/videoframes.html#class">class</a></li>
 </ul>
 </li>
 </ul>
@@ -343,6 +350,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#algorithm">Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/blacklist.html">Blacklist</a><ul>
@@ -385,6 +400,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randy-class">Randy Class</a></li>
@@ -397,14 +413,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/stream.html">Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
@@ -413,6 +421,35 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/uploadmanager.html">Upload Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#path-structure">Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#https-server">HTTPS Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 </ul>
@@ -437,6 +474,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.webui">WebUI Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
 </ul>
@@ -489,9 +527,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#validity-of-columns">Validity of columns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#adding-a-column">Adding a Column</a></li>
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#songs">Songs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#videos">Videos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#video-relates-methods">Video Relates Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#albums">Albums</a><ul>
@@ -505,7 +548,7 @@
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#tags">Tags</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-definition-table">Tag Definition Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="musicdb.html#database-api">Database API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-related-methods">Tag Related Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
@@ -524,21 +567,6 @@
 </ul>
 <p class="caption"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
@@ -720,7 +748,7 @@ If it does not follow the scheme of an album directory name, <code class="docuti
 <dd><p>This method analyses the name of a song file.
 If it does not follow the scheme, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned, otherwise all information encoded in the name as dictionary.</p>
 <p>The scheme is the following: <code class="docutils literal notranslate"><span class="pre">{songnumber}</span> <span class="pre">{songname}.{extension}</span></code> or <code class="docutils literal notranslate"><span class="pre">{cdnumber}-{songnumber}</span> <span class="pre">{songname}.{extension}</span></code></p>
-<p>The return value is a dictionay with the following keys:</p>
+<p>The return value is a dictionary with the following keys:</p>
 <dl class="simple">
 <dt>cdnumber:</dt><dd><p>CD number as integer or <code class="docutils literal notranslate"><span class="pre">1</span></code> if not given in the name</p>
 </dd>
@@ -733,19 +761,53 @@ If it does not follow the scheme, <code class="docutils literal notranslate"><sp
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>songfilename</strong> (<em>str</em>) – Filename of an song without any <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>.</p>
+<dd class="field-odd"><p><strong>songfilename</strong> (<em>str</em>) – File name of an song without any <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A dictionary on success, otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">infos</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">AnalyseSongDirectoryName</span><span class="p">(</span><span class="s2">&quot;05 This is a Song.mp3&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">infos</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">AnalyseSongFileName</span><span class="p">(</span><span class="s2">&quot;05 This is a Song.mp3&quot;</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">infos</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;cdnumber&quot;</span><span class="p">])</span>    <span class="c1"># 1</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">])</span>      <span class="c1"># 5</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>        <span class="c1"># This is a Song</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">])</span>   <span class="c1"># mp3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.filesystem.Filesystem.AnalyseVideoFileName">
+<code class="sig-name descname">AnalyseVideoFileName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">videofilename</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseVideoFileName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseVideoFileName" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method analyses the name of a video file.
+Only the file name is expected, not a whole path!
+If it does not follow the scheme, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned, otherwise all information encoded in the name as dictionary.</p>
+<p>The scheme is the following: <code class="docutils literal notranslate"><span class="pre">{release}</span> <span class="pre">-</span> <span class="pre">{videoname}.{extension}</span></code></p>
+<p>The return value is a dictionary with the following keys:</p>
+<dl class="simple">
+<dt>release:</dt><dd><p>Release year as integer</p>
+</dd>
+<dt>name:</dt><dd><p>A string with the video name</p>
+</dd>
+<dt>extension:</dt><dd><p>file extension as string</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>videofilename</strong> (<em>str</em>) – File name of an video without any <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary on success, otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">infos</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">AnalyseVideoFileName</span><span class="p">(</span><span class="s2">&quot;2000 - This is a Video.m4v&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">infos</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">])</span>     <span class="c1"># 2000</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>        <span class="c1"># &quot;This is a Video&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">])</span>   <span class="c1"># &quot;m4v&quot;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -809,7 +871,8 @@ So <em>xnewpath</em> can address the last directory of a path that will be creat
 <code class="sig-name descname">Execute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">commandline</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.Execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.Execute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Executes an external program.
 The command line is a list of arguments with the executable name as first element.
-So <code class="docutils literal notranslate"><span class="pre">commandline[0]</span></code> is the program name like <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code> and the next elements are a list of arguments to this program (like <code class="docutils literal notranslate"><span class="pre">&quot;-l&quot;,</span> <span class="pre">&quot;-h&quot;</span></code>).</p>
+So <code class="docutils literal notranslate"><span class="pre">commandline[0]</span></code> is the program name like <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code> and the next elements are a list of arguments to this program (like <code class="docutils literal notranslate"><span class="pre">&quot;-l&quot;,</span> <span class="pre">&quot;-h&quot;</span></code>).
+All entries in this list must be of type string.</p>
 <p>The I/O interfaces <em>stderr</em>, <em>stdout</em> and <em>stdin</em> are piped to <code class="docutils literal notranslate"><span class="pre">/dev/null</span></code></p>
 <p>After executing the command line, a <code class="docutils literal notranslate"><span class="pre">sync</span></code> command gets executed.
 In the past there were lots of problems because a second process wanted to process data preprocessed from the first one,
@@ -822,7 +885,10 @@ but those data were not completely written to the disk.</p>
 <dd class="field-even"><p><em>Nothing</em></p>
 </dd>
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>ChildProcessError</strong> – If the return value of the executed program is not 0</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – When one entry of the commandline list is not of type string</p></li>
+<li><p><strong>ChildProcessError</strong> – If the return value of the executed program is not 0</p></li>
+</ul>
 </dd>
 </dl>
 <p class="rubric">Example</p>
@@ -895,7 +961,7 @@ Otherwise only the extension without the leading <code class="docutils literal n
 <dt id="lib.filesystem.Filesystem.GetFileName">
 <code class="sig-name descname">GetFileName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFileName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFileName" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the file name of the file addressed by <em>xpath</em>.
-The file must <em>not</em> exist.
+It is not required and not checked that the file exist.
 The name of a file does not include the file extension.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -905,6 +971,11 @@ The name of a file does not include the file extension.</p>
 <dd class="field-even"><p>The name of the file.</p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">GetFileName</span><span class="p">(</span><span class="s2">&quot;this/is/a/test.txt&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="c1"># &quot;this/is/a/test&quot;</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -1006,6 +1077,24 @@ dir2/tmp/*
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the directory exists, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.filesystem.Filesystem.IsVideoPath">
+<code class="sig-name descname">IsVideoPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">isabsolute</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsVideoPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsVideoPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method checks if the given path is a possible path to a music video.
+It checks if the path follows the naming scheme and exists as file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – A path to a possible video file</p></li>
+<li><p><strong>isabsolute</strong> (<em>bool</em>) – Optional boolean in case the path is absolute. Then the root prefix gets removed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the path could be a video file, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1141,6 +1230,32 @@ The existence of the path gets not checked!</p>
 <code class="sig-name descname">SetAttributes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em>, <em class="sig-param"><span class="n">owner</span></em>, <em class="sig-param"><span class="n">group</span></em>, <em class="sig-param"><span class="n">mode</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.SetAttributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.SetAttributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets attributes for a file or directory.
 The <em>mode</em> is the access permissions as defined in the <em>stats</em> module.</p>
+<p>When <em>mode</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the permissions will not be changed.
+When <em>owner</em> <strong>or</strong> <em>group</em> are <code class="docutils literal notranslate"><span class="pre">None</span></code>, the ownership will not be changed.</p>
+<p>Mode-attributes can be an bitwise-OR combination of the following flags:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_ISUID</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_ISGID</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_ENFMT</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_ISVTX</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IREAD</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IWRITE</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IEXEC</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IRWXU</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IRUSR</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IWUSR</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IXUSR</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IRWXG</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IRGRP</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IWGRP</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IXGRP</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IRWXO</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IROTH</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IWOTH</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stat.S_IXOTH</span></code></p></li>
+</ul>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1160,8 +1275,11 @@ The <em>mode</em> is the access permissions as defined in the <em>stats</em> mod
 
 <span class="c1"># -rw-rw-r--</span>
 <span class="n">permissions</span> <span class="o">=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRUSR</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWUSR</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRGRP</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWGRP</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IROTH</span>
-
 <span class="n">fs</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span><span class="s2">&quot;test.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">permissions</span><span class="p">)</span>
+
+<span class="c1"># drwxrwxr-x</span>
+<span class="n">mode</span> <span class="o">=</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRWXU</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IRWXG</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IROTH</span> <span class="o">|</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IXOTH</span>
+<span class="n">fs</span><span class="o">.</span><span class="n">SetAttributes</span><span class="p">(</span><span class="s2">&quot;testdirectory&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span> <span class="c1"># make directory writeable for group members</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1184,7 +1302,7 @@ The <em>mode</em> is the access permissions as defined in the <em>stats</em> mod
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020,2021 Ralf Stemmer.
 
     </p>
   </div>
@@ -1206,7 +1324,7 @@ The <em>mode</em> is the access permissions as defined in the <em>stats</em> mod
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'6.0.0',
+            VERSION:'7.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1217,7 +1335,6 @@ The <em>mode</em> is the access permissions as defined in the <em>stats</em> mod
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

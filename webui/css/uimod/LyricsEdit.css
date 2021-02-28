@@ -1,0 +1,94 @@
+/*
+ * MusicDB,  a music manager with web-bases UI that focus on music.
+ * Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+.LyricsEdit
+{
+    overflow:       hidden;
+    height:         100%;
+}
+
+.LyricsEdit > div+div
+{
+    margin-top:     0.5rem;
+}
+
+
+.LyricsEdit[data-editable=false] .lyricstools
+{
+    display:        none;
+}
+.LyricsEdit[data-editable=true] .lyricstools
+{
+    display:        flex;
+    border-radius:  var(--radius);
+    background:     rgba( 0, 0, 0, 0.2);
+}
+
+
+.LyricsEdit textarea
+{
+    resize:         none;
+    margin-top:     0.5rem;
+
+    height:         100%;
+
+    /*
+    border:         var(--borderwidth) solid;
+    border-radius:  var(--radius);
+    */
+
+    background:     rgba( 0, 0, 0, 0.2);
+    color:          var(--fgcolor);
+}
+
+
+
+.LyricsEdit .lyricstext
+{
+    padding:        0.5rem;
+    min-height:     1em;
+
+    overflow-y:     auto;
+    display:        inline;
+    white-space:    pre-wrap;
+
+    letter-spacing: 0.05em;
+    line-height:    1.6;
+}
+
+.LyricsEdit .lyricstext .refrain
+{
+    color:          var(--fgcolor);
+    font-weight:    bold;
+    font-size:      1.1em;
+    padding-left:   1ch;
+}
+.LyricsEdit .lyricstext .background
+{
+    color:          var(--hlcolor);
+}
+.LyricsEdit .lyricstext .comment
+{
+    color:          var(--hlcolor);
+    opacity:        0.5;
+}
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

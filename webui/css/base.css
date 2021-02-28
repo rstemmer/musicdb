@@ -9,24 +9,13 @@ body
     margin:         0 auto;
     overflow:       hidden;
     font-family:    SourceSansPro, DejaVuSans;
-    font-size:      12pt;
+    font-size:      var(--normalfontsize);
     cursor:         default;
 
-    background-image: url(../pics/BGTexture05.png); /*root is css/ -> css/../pics/ */
-    image-rendering:  pixelated;
-}
-@media only screen and (min-width: 3000px)
-{
-    body
-    {
-        font-size:      16pt;
-    }
+    background-image: url(../img/Noise10.png);
+    background-repeat: repeat;
 }
 
-input
-{
-    font-family:    SourceSansPro, DejaVuSans;
-}
 
 [draggable] 
 {

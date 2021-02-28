@@ -1,44 +1,212 @@
+/*
+ * MusicDB,  a music manager with web-bases UI that focus on music.
+ * Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 /***********************/
-/* default color sytle */
+/* default color style */
 /***********************/
+
+:root
+{
+    --hlcolor:      #779;
+    --fgcolor:      #CCC;
+    --bgcolor:      #181819;
+    --fmcolor:      #779;
+    --radius:       0.3em;
+    --borderwidth:  0.1em;
+
+    --normalfontsize: 12pt;
+    --smallfontsize:   9pt;
+
+    --inputbgcolor:     rgba(0, 0, 0, 0.2);
+    --inputradius:      1rem;
+    --inputboxshadow:   0 var(--borderwidth) 0      rgba(255, 255, 255, 0.1),
+                        0 var(--borderwidth) 0.5rem rgba(  0,   0,   0, 0.4) inset;
+
+    --color-red:    #5E1F1F;
+    --color-yellow: #5E5E1F;
+    --color-green:  #1F5E29;
+    --color-blue:   #1F1F5E;
+    --color-white:  #F0F0F0;
+    --color-gold:   #A8A623;
+    --color-gray:   #323234;
+    --color-brightred:      #CF4545;
+    --color-brightgreen:    #2C832C;
+    --color-brightblue:     #4545CF;
+    --color-brightyellow:   #ADAD3F;
+
+    --artworkwidth-large:   20vw;
+    --artworkwidth-medium:   8vw;
+    --artworkwidth-small:    3rem;
+    --artworkfilter:        none;
+}
+
+
+/* 4K */
+@media only screen and (min-width: 2500px)
+{
+    :root
+    {
+        --artworkwidth-medium:  4vw;
+        --normalfontsize:       16pt;
+        --smallfontsize:        12pt;
+    }
+}
+
 
 .fgcolor
 {
-    color:          #CCC;
+    color:          var(--fgcolor);
 }
 .hlcolor
 {
-    color:          #779;
+    color:          var(--hlcolor);
 }
 .bgcolor
 {
-    background-color:     #181819;
+    background-color:     var(--bgcolor);
 }
 .fmcolor
 {
-    border-color:   #888;
+    border-color:   var(--fmcolor);
 }
+
+
+/***********************/
+/* default font  style */
+/***********************/
 
 .smallfont
 {
-    font-size:      9pt;
-}
-@media only screen and (min-width: 3000px)
-{
-    .smallfont
-    {
-        font-size:      12pt;
-    }
+    font-size:      var(--smallfontsize);
 }
 .tinyfont
 {
-    font-family:    Silkscreen;
+    font-family:    DejaVuSans;
     font-size:      6px;
 }
 .seriffont
 {
     font-family:    SourceSerifPro;
+}
+
+
+.unicodeicon
+{
+    color:              var(--hlcolor);
+    font-family:        "DejaVuSans";
+    width:              1.5em;
+    height:             1.5em;
+}
+.unicodeicon[data-selected=false]
+{
+    opacity:            0.5;
+}
+.unicodeicon[data-selected=true]
+{
+    opacity:            1.0;
+}
+
+/*************************/
+/* default element style */
+/*************************/
+
+div
+{
+    scrollbar-width:    none;
+}
+
+
+
+.inputbox
+{
+    font-size:          1rem;
+    box-shadow:         var(--inputboxshadow);
+    background-color:   var(--inputbgcolor);
+    border:             0px none;
+    border-radius:      calc( 0.5em + 0.1rem );                 /* (text size + padding) / 2 */
+    margin-left:        2ch;
+    margin-right:       2ch;
+}
+
+
+button
+{
+    border:             none;
+}
+
+.inputbox > button
+{
+    margin:             0.1rem 0.2rem;
+    padding:            0.1rem 0.2rem;
+}
+
+input
+{
+    padding:            0.2rem 1ch;
+    padding-bottom:     0;                                      /* because of the border-bottom */
+    font-family:        SourceSansPro, DejaVuSans;
+    font-size:          var(--normalfontsize);
+    color:              var(--fgcolor);
+    box-shadow:         var(--inputboxshadow);
+    background-color:   var(--inputbgcolor);
+    border:             0px none;
+    border-bottom:      0.2rem solid var(--hlcolor);
+    border-radius:      calc( 0.5em + 0.1rem );                 /* (text size + padding) / 2 */
+}
+
+input[type="number"]
+{
+    -webkit-appearance: textfield;
+    -moz-appearance:    textfield;
+    appearance:         textfield;
+    text-align:         right;
+}
+
+input[type="color"]
+{
+    border-bottom:      none;
+}
+
+input[data-valid="true"]:focus
+{
+    border-bottom:      0.2rem solid #105810;
+}
+input[data-valid="false"]
+{
+    border-bottom:      0.2rem solid #5d1410;
+}
+
+.inputbox > input
+{
+    background-color:   transparent;
+    border-radius:      0;
+    box-shadow:         none;
+}
+
+
+label
+{
+}
+
+.inputbox > label
+{
+    margin-left:        0.5ch;
+    margin-right:       0;
 }
 
 

@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,21 +15,45 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 This module manages the music database.
-Its main task is to add new albums or artist to the Music Database.
+Its main task is to add new albums, artists or music videos to the Music Database.
+This module can also be seen as the low level interface compared to :doc:`/mod/add`.
+
+.. attention::
+
+    The addressed paths must follow the naming scheme.
+    See :doc:`/usage/music` for details.
 
 This command line interface expects two positional arguments. 
-A subcommand and a path to the target (artist, album, song): ``musicdb database $SUBCOMMAND $PATH``.
+A subcommand and a path to the target (artist, album, song, video): ``musicdb database $SUBCOMMAND $PATH``.
 The target gets determined by its path.
 
 The following subcommands are provided:
 
     ``add``: 
-        Add new artist, album or song to the database.
+        Add new artist, album, song or video to the database.
         Direct interface to:
 
             * If the path addresses a song: :meth:`mdbapi.database.MusicDBDatabase.AddSong`
             * If the path addresses a album: :meth:`mdbapi.database.MusicDBDatabase.AddAlbum`
             * If the path addresses a artist: :meth:`mdbapi.database.MusicDBDatabase.AddArtist`
+            * If the path addresses a video: :meth:`mdbapi.database.MusicDBDatabase.AddVideo`
+
+    ``update``:
+        Allows updating the database when a song or video file got changed or exchanged.
+        This sub command is partially redundant to the :doc:`/mod/repair` module.
+        Compared to the repair module this method is more precise and can handle more uncommon situations.
+
+        It is assumed that the path of the file did not changed.
+        In case it is different to the path stored in the database you need to provide the old path via the optional parameter ``--oldpath`` 
+        and use the new path as positional ``path`` parameter. (See Example at the end of this section)
+        The *old path* is used to find the database entry.
+
+        It interfaces the following methods:
+
+            * For songs: :meth:`mdbapi.database.MusicDBDatabase.UpdateSong`
+            * For videos: :meth:`mdbapi.database.MusicDBDatabase.UpdateVideo`
+
+        After the update you may want to update the video artworks via :doc:`/mod/videoframes`.
 
     ``remove``:
         Removes an artist, album or song from the database.
@@ -61,6 +85,12 @@ Examples:
 
         musicdb database remove /data/music/Bad\ Artist
 
+        musicdb database add /data/music/Artist/2000\ -\ Video.m4v
+
+        # musicdb database update [-h] [--oldpath OLDPATH] path
+        musicdb database update /data/music/Artist/2000\ -\ Video.m4v
+        musicdb database update --newpath /data/music/Artist/2000\ -\ Video.m4v /data/music/Artist/2000\ -\ Video.webm
+
 
 """
 
@@ -84,8 +114,48 @@ class database(MDBModule, MusicDBDatabase):
             self.AddAlbum(path)
         elif target == "song":
             self.AddSong(path)
+        elif target == "video":
+            if not self.AddVideo(path):
+                print("\033[1;31mfailed")
+                return None
         else:
-            raise ValueError("Invalid target! Target must be \"artist\", \"album\" or \"song\".")
+            raise ValueError("Invalid target! Target must be \"artist\", \"album\", \"song\" or \"video\".")
+        print("\033[1;32mdone")
+
+        # propagate changes
+        print("\033[1;34mTrying to signal \033[1;36mMusicDB-Server\033[1;34m to update its cache … \033[1;31m", end="")
+        self.UpdateServerCache()
+        print("\033[1;32mdone")
+        return None
+
+
+
+    def CMD_Update(self, target, path, oldpath):
+
+        if oldpath == None:
+            oldpath = path
+
+        # 1. Get target ID
+        if target == "song":
+            song = self.db.GetSongByPath(oldpath)
+            if song == None:
+                raise ValueError("Song "+oldpath+" not found in database.")
+            targetid = song["id"]
+
+        elif target == "video":
+            video = self.db.GetVideoByPath(oldpath)
+            if video == None:
+                raise ValueError("Video "+oldpath+" not found in database.")
+            targetid = video["id"]
+
+        else:
+            raise ValueError("Invalid target! Target must be \"song\" or \"video\".")
+
+        print("\033[1;34mUpdating following \033[1;36m" + target + "\033[1;34m:\033[0;36m %s \033[1;34m… "%(path), end="")
+        if target == "song":
+            self.UpdateSong(targetid, path)
+        elif target == "video":
+            self.UpdateVideo(targetid, path)
         print("\033[1;32mdone")
 
         # propagate changes
@@ -158,7 +228,7 @@ class database(MDBModule, MusicDBDatabase):
 
 
     def GetTargetByPath(self, abspath):
-        # returns "album", "artist" or "song" or None if path is invalid
+        # returns "album", "artist", "song", "video" or None if path is invalid
 
         try:
             path = self.fs.RemoveRoot(abspath)
@@ -180,8 +250,12 @@ class database(MDBModule, MusicDBDatabase):
             print("\033[1;34mWorking on Song-path")
             return "song"
 
+        elif self.fs.IsVideoPath(path):
+            print("\033[1;34mWorking on Video-path")
+            return "video"
+
         else:
-            print("\033[1;31mERROR: Path does not address a Song, Album or Artist\033[0m")
+            print("\033[1;31mERROR: Path does not address a Song, Album, Artist or Video\033[0m")
             return None
 
 
@@ -192,10 +266,17 @@ class database(MDBModule, MusicDBDatabase):
         parser.set_defaults(module=modulename)
 
         subp   = parser.add_subparsers(title="Commands", metavar="command", help="database commands")
-        
+
         addparser = subp.add_parser("add", help="add target to database")
-        addparser.add_argument("path", help="path to an artist, album or song")
+        addparser.add_argument("path", help="path to an artist, album, song or video")
         addparser.set_defaults(command="Add")
+
+        updateparser = subp.add_parser("update", help="update target in database")
+        updateparser.add_argument("path", help="path to a song or video")
+        updateparser.set_defaults(command="Update")
+
+        updateparser.add_argument("--oldpath",   action="store", type=str, default=None,
+                help="The path of the old file in the database")
 
         addparser = subp.add_parser("remove", help="remove target from database")
         addparser.add_argument("path", help="path to an artist, album or song")
@@ -229,23 +310,34 @@ class database(MDBModule, MusicDBDatabase):
 
         # Determine target by path
         try:
-            target = self.GetTargetByPath(args.path)
+            target = self.GetTargetByPath(path)
         except Exception as e:
+            traceback.print_exc()
             print("\033[1;31mDetermine target by path failed with exception \"%s\"!\033[0m"%(str(e)))
             return 1
 
         if not target:
             return 1
 
-        # Check if path is valid for target (GetTargetByPath is too error tolerant)
-        if not self.TryAnalysePathFor(target, path):
-            print("\033[1;31mInvalid path or target! Path \"%s\" does not match %s-naming scheme!\033[0m" % (path, target))
-            return 1
+        # Check if path is valid for target (GetTargetByPath is too error tolerant for songs and albums)
+        if target in ["song", "album"]:
+            if not self.TryAnalysePathFor(target, path):
+                print("\033[1;31mInvalid path or target! Path \"%s\" does not match %s-naming scheme!\033[0m" % (path, target))
+                return 1
+
+        # Handle optional oldpath argument
+        if args.oldpath:
+            oldpath = os.path.abspath(args.oldpath)
+            oldpath = self.fs.RemoveRoot(oldpath) # remove the path to the music directory
+        else:
+            oldpath = None
 
         # Execute command
         try:
             if command == "Add":
                 exitcode = self.CMD_Add(target, path)
+            elif command == "Update":
+                exitcode = self.CMD_Update(target, path, oldpath)
             elif command == "Remove":
                 exitcode = self.CMD_Remove(target, path)
             elif command == "GetLyrics":

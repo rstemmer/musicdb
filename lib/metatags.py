@@ -47,11 +47,20 @@ class MetaTags(object):
 
     def Load(self, path):
         """
-        Supported file extensions:
+        Supported file extensions for audio files:
 
-            * For MPEG4: ``mp4``, ``aac``, ``m4a``
+            * For MPEG4: ``aac``, ``m4a``
             * For MPEG3: ``mp3``, ``MP3``
             * For FLAC: ``flac``
+
+        Supported file extensions for video files:
+
+            * For MPEG4: ``m4v`` (``mp4``)
+            * For WebM: ``webm``
+
+        The corner case of an ``mp4`` file gets not handled as video because it is not clear if it shall be handled as audio
+        or video file.
+        A warning gets written into the log and a ``ValueError`` exception raised.
 
         Args:
             path (str): path to the song file that shall be loaded
@@ -73,19 +82,26 @@ class MetaTags(object):
         if not self.fs.IsFile(self.path):
             raise ValueError("File \"%s\" does not exist"%(self.path))
         
-        # remenber the path for debugging
+        # remember the path for debugging
         self.extension = self.fs.GetFileExtension(self.path)
 
         # normalize the extension
-        if self.extension in ["mp4", "aac", "m4a"]:
+        if self.extension in ["mp4"]:
+            logging.warning("A file with extension \"mp4\" shall be loaded. It will be loaded as video.")
+            self.ftype = "m4v"
+        elif self.extension in ["webm"]:
+            self.ftype = "webm"
+        elif self.extension in ["aac", "m4a"]:
             self.ftype = "m4a"
+        elif self.extension in ["m4v"]:
+            self.ftype = "m4v"
         elif self.extension == "flac":
             self.ftype = "flac"
         elif self.extension in ["mp3", "MP3"]:
             self.ftype = "mp3"
         else:
             self.path = None
-            raise ValueError("Unsupported file-extension \"%s\" of \"%s\""%(self.extension, path))
+            raise ValueError("Unsupported file extension \"%s\" of \"%s\""%(self.extension, path))
 
         logging.debug("Loading file of type %s from \"%s\"", self.ftype, self.path)
 
@@ -96,6 +112,11 @@ class MetaTags(object):
             self.file = MP3(self.path)
         elif self.ftype == "m4a":
             self.file = MP4(self.path)
+        elif self.ftype == "m4v":
+            self.file = MP4(self.path)
+        elif self.ftype == "webm":
+            logging.warning("WebM only partially supported!")
+            self.file = None
         else:
             self.path = None
             raise ValueError("Unsupported file-type %s"%(self.ftype))
@@ -110,24 +131,40 @@ class MetaTags(object):
             * ``album``: :meth:`~lib.metatags.MetaTags.GetAlbumname`
             * ``artist``: :meth:`~lib.metatags.MetaTags.GetArtistname`
             * ``releaseyear``: :meth:`~lib.metatags.MetaTags.GetReleaseyear`
-            * ``cdnumber``: :meth:`~lib.metatags.MetaTags.GetCDNumber`
-            * ``songnumber``: :meth:`~lib.metatags.MetaTags.GetTracknumber`
             * ``origin``: :meth:`~lib.metatags.MetaTags.GetOrigin`
             * ``playtime``: :meth:`~lib.metatags.MetaTags.GetPlaytime`
-            * ``bitrate``: :meth:`~lib.metatags.MetaTags.GetBitrate`
+
+        Additional information for audio files
+            * ``cdnumber``: :meth:`~lib.metatags.MetaTags.GetCDNumber`
+            * ``songnumber``: :meth:`~lib.metatags.MetaTags.GetTracknumber`
             * ``lyrics``: :meth:`~lib.metatags.MetaTags.GetLyrics`
+            * ``bitrate``: :meth:`~lib.metatags.MetaTags.GetBitrate`
+
+        Additional information for video files
+            * ``codec``: :meth:`~lib.metatags.MetaTags.GetVideoCodec`
+            * ``xresolution``, ``yresolution``: :meth:`~lib.metatags.MetaTags.GetVideoResolution`
         """
         metadata = {}
+
         metadata["song"]        = self.GetSongname()
         metadata["album"]       = self.GetAlbumname()
         metadata["artist"]      = self.GetArtistname()
         metadata["releaseyear"] = self.GetReleaseyear()
-        metadata["cdnumber"]    = self.GetCDNumber()
-        metadata["songnumber"]  = self.GetTracknumber()
         metadata["origin"]      = self.GetOrigin()
         metadata["playtime"]    = self.GetPlaytime()
-        metadata["bitrate"]     = self.GetBitrate()
-        metadata["lyrics"]      = self.GetLyrics()
+
+        if self.ftype in ["flac", "mp3", "m4a"]:
+            metadata["cdnumber"]    = self.GetCDNumber()
+            metadata["songnumber"]  = self.GetTracknumber()
+            metadata["bitrate"]     = self.GetBitrate()
+            metadata["lyrics"]      = self.GetLyrics()
+
+        elif self.ftype in ["m4v", "webm"]:
+            metadata["codec"]      = self.GetVideoCodec()
+            x,y = self.GetVideoResolution()
+            metadata["xresolution"] = x
+            metadata["yresolution"] = y
+
         return metadata
 
 
@@ -186,7 +223,7 @@ class MetaTags(object):
             The song name as string, or ``None`` if entry does not exist
         """
         try:
-            if self.ftype == "m4a":
+            if self.ftype == "m4a" or self.ftype == "m4v":
                 return self.file[b"\xa9nam"][0]
 
             elif self.ftype == "mp3":
@@ -217,7 +254,7 @@ class MetaTags(object):
         Returns:
             The album name as string, or ``None`` if entry does not exist
         """
-        if self.ftype == "m4a":
+        if self.ftype == "m4a" or self.ftype == "m4v":
             if b"\xa9alb" in self.file:
                 return self.file[b"\xa9alb"][0]
             else:
@@ -256,7 +293,7 @@ class MetaTags(object):
             The artist name as string, or ``None`` if entry does not exist
         """
         try:
-            if self.ftype == "m4a":
+            if self.ftype == "m4a" or self.ftype == "m4v":
                 return self.file[b"\xa9ART"][0]
 
             elif self.ftype == "mp3":
@@ -287,7 +324,7 @@ class MetaTags(object):
         """
         date = 0
         try:
-            if self.ftype == "m4a":
+            if self.ftype == "m4a" or self.ftype == "m4v":
                 date = self.file[b"\xa9day"][0]
                 date = date.split("-")[0]   # get just the year
 
@@ -405,7 +442,7 @@ class MetaTags(object):
             Name of the origin as string
         """
         # check m4a
-        if self.ftype == "m4a":
+        if self.ftype == "m4a" or self.ftype == "m4v":
             if b"----:com.apple.iTunes:iTunNORM" in self.file:
                 return "iTunes"
             if b"----:com.apple.iTunes:iTunSMPB" in self.file:
@@ -504,7 +541,7 @@ class MetaTags(object):
         """
         time = 0
 
-        if self.ftype in ["m4a", "mp3", "flac"]:
+        if self.ftype in ["m4a", "m4v", "mp3", "flac", "webm"]:
             try:
                 analtime = round(self.AnalysePlaytime())
             except:
@@ -555,6 +592,98 @@ class MetaTags(object):
         logging.debug("Analysis returned duration of %fs", retval)
         return retval
 
+
+    def GetVideoCodec(self):
+        """
+        Tries to identify the video codec of a video file.
+
+        The corresponding command line is the following:
+
+            .. code-block:: bash
+
+                ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 $PATH
+
+        Returns:
+            A string with the identified codec like ``"h264"`` or ``None``
+        """
+        # via https://stackoverflow.com/questions/2869281/how-to-determine-video-codec-of-a-file-with-ffmpeg
+        process = [
+                "ffprobe",
+                "-v", "error",
+                "-select_streams", "v:0",
+                "-show_entries", "stream=codec_name",
+                "-of", "default=noprint_wrappers=1:nokey=1",
+                self.path
+                ]
+
+        logging.debug("Running codec analysis: %s", str(process))
+        try:
+            retval = subprocess.check_output(process)
+            logging.debug("Analysis returned %s", str(retval))
+            retval = retval.decode("utf-8")
+            retval = retval.strip()
+        except Exception as e:
+            logging.error("Error \"%s\" while executing: %s", str(e), str(process))
+            return None
+
+        logging.debug("Analysis returned the codec %s", retval)
+        return retval
+
+
+    def GetVideoResolution(self):
+        """
+        Tries to identify the video resolution of a video file.
+        There may be differences between the given resolution and the actual resolution of the video in the video player.
+        This is due to the Sample Aspect Ratio (SAR).
+        This method considers the SAR by returning the width multiplied by this ratio:
+
+        .. math::
+
+            width_{correct} = width_{meta} \cdot SAR
+
+        The height will not be changed.
+
+        The corresponding command line is the following:
+
+        .. code-block:: bash
+
+            ffprobe -v error -select_streams v:0 -show_entries stream=width,height,sample_aspect_ratio -of csv=s=x:p=0 $PATH
+
+        Returns:
+            A tuple ``(width,height)`` with the identified resolution like ``(1920, 1080)`` or ``None``
+        """
+        # via https://stackoverflow.com/questions/684015/how-can-i-get-the-resolution-width-and-height-for-a-video-file-from-a-linux-co
+        process = [
+                "ffprobe",
+                "-v", "error",
+                "-select_streams", "v:0",
+                "-show_entries", "stream=width,height,sample_aspect_ratio",
+                "-of", "csv=s=x:p=0",
+                self.path
+                ]
+
+        logging.debug("Running resolution analysis: %s", str(process))
+        try:
+            retval = subprocess.check_output(process)
+            logging.debug("Analysis returned %s", str(retval))
+            retval = retval.decode("utf-8");
+            x,y,sar = retval.split("x")
+            x = int(x)
+            y = int(y)
+            sar_x,sar_y = sar.split(":")
+            sar_x = float(sar_x)
+            sar_y = float(sar_y)
+        except Exception as e:
+            logging.error("Error \"%s\" while executing: %s", str(e), str(process))
+            return None
+
+        sar = sar_x / sar_y
+        w   = int(x * sar)
+        h   = int(y)
+
+
+        logging.debug("Analysis returned the resolution %i x %i", w, h)
+        return w, h
 
 
     def GetBitrate(self):

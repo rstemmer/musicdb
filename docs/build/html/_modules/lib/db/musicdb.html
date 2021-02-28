@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.db.musicdb &mdash; MusicDB 6.0.0 documentation</title>
+  <title>lib.db.musicdb &mdash; MusicDB 7.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 6.0.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 7.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                6.0
+                7.0
               </div>
             
           
@@ -109,6 +109,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#database">database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#music">music</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#uploads">uploads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#lycra">lycra</a></li>
@@ -116,6 +118,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/logging.html">Handling log-files</a></li>
@@ -183,12 +193,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#available-methods">Available Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#albums">Albums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#videos">Videos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#queue">Queue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#tag-related">Tag related</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#uploading">Uploading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
@@ -211,12 +224,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../usage/docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/docker.html#prepare-environment">Prepare Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/docker.html#build-the-image">Build the Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/docker.html#using-the-image">Using the Image</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -229,8 +236,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#id1">Configuring MusicDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#update">Update</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#update-to-a-new-version">Update to a New Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#installation-manually">Installation (Manually)</a><ul>
@@ -239,7 +245,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#libprinthex">libprinthex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#id3">id3edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
@@ -250,6 +256,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#album-directory-name">Album Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#music-video-file-name">Music Video File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
@@ -259,6 +266,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#updating-songs">Updating Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#importing-videos-to-musicdb">Importing Videos to MusicDB</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage/scripts.html">Scripts</a><ul>
@@ -322,9 +330,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/tags.html#example-calls">Example calls</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../mod/tracker.html">tracker - Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../mod/tracker.html#module-mod.tracker">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mod/tracker.html#class-description">Class Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/videoframes.html#class">class</a></li>
 </ul>
 </li>
 </ul>
@@ -342,6 +349,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#algorithm">Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/blacklist.html">Blacklist</a><ul>
@@ -384,6 +399,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#randy-class">Randy Class</a></li>
@@ -396,14 +412,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/stream.html">Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
@@ -412,6 +420,35 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/uploadmanager.html">Upload Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#path-structure">Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#https-server">HTTPS Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 </ul>
@@ -436,6 +473,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.webui">WebUI Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
 </ul>
@@ -488,9 +526,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#validity-of-columns">Validity of columns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#songs">Songs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#videos">Videos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#video-relates-methods">Video Relates Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#albums">Albums</a><ul>
@@ -504,7 +547,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#tags">Tags</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#database-api">Database API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-related-methods">Tag Related Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
@@ -523,21 +566,6 @@
 </ul>
 <p class="caption"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#connection-process">Connection Process</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#watchdog">Watchdog</a></li>
@@ -656,6 +684,7 @@
 <span class="sd">This database handles the following components:</span>
 
 <span class="sd">    * `Songs`_</span>
+<span class="sd">    * `Videos`_</span>
 <span class="sd">    * `Albums`_</span>
 <span class="sd">    * `Artists`_</span>
 <span class="sd">    * `Artworks`_</span>
@@ -672,7 +701,25 @@
 <span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.WriteArtist`</span>
 <span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.WriteAlbum`</span>
 <span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.WriteSong`</span>
+<span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.WriteVideo`</span>
 <span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.WriteTag`</span>
+
+<span class="sd">Validity of columns</span>
+<span class="sd">-------------------</span>
+
+<span class="sd">Some column values are generated when importing data.</span>
+<span class="sd">The way these values are well defined.</span>
+<span class="sd">After creating the values, they may be changed by the user or other tools.</span>
+<span class="sd">Affected are all the following columns:</span>
+
+<span class="sd">    * All name-columns</span>
+<span class="sd">    * artworkpath of albums</span>
+<span class="sd">    * thumbnailpath of videos</span>
+
+<span class="sd">For example, the artwork path is generated by the artist and album name.</span>
+<span class="sd">So when working with albums, instead of using the artwork path value, the path could be regenerated by the artist and album names.</span>
+<span class="sd">This is not recommended!</span>
+<span class="sd">In case an other tool changes the artwork path entry, this may lead to a path of a no longer existing artwork file.</span>
 
 <span class="sd">Adding a Column</span>
 <span class="sd">---------------</span>
@@ -708,9 +755,9 @@
 <span class="sd">    | likes | dislikes | favorite |</span>
 <span class="sd">    +-------+----------+----------+</span>
 
-<span class="sd">    +-------------+----------+------------+</span>
-<span class="sd">    | lyricsstate | checksum | lastplayed |</span>
-<span class="sd">    +-------------+----------+------------+</span>
+<span class="sd">    +-------------+----------+------------+---------------+----------+</span>
+<span class="sd">    | lyricsstate | checksum | lastplayed | liverecording | badaudio |</span>
+<span class="sd">    +-------------+----------+------------+---------------+----------+</span>
 
 
 <span class="sd">checksum (Text)</span>
@@ -736,7 +783,7 @@
 
 <span class="sd">lastplayed (Integer)</span>
 <span class="sd">    This value holds the information, when the song was played the last time.</span>
-<span class="sd">    The thime gets represented as an integer (unixtime).</span>
+<span class="sd">    The time gets represented as an integer (unixtime).</span>
 
 
 <span class="sd">Song Relates Methods</span>
@@ -758,6 +805,96 @@
 <span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.RemoveSong`</span>
 
 
+<span class="sd">Videos</span>
+<span class="sd">------</span>
+
+<span class="sd">The columns of the videos table are the following:</span>
+
+<span class="sd">    +---------+--------+---------+----------+------+------+</span>
+<span class="sd">    | videoid | songid | albumid | artistid | name | path |</span>
+<span class="sd">    +---------+--------+---------+----------+------+------+</span>
+
+<span class="sd">    +----------+----------+--------+---------+-------+</span>
+<span class="sd">    | disabled | playtime | origin | release | added |</span>
+<span class="sd">    +----------+----------+--------+---------+-------+</span>
+
+<span class="sd">    +-------+-------------+-------------+</span>
+<span class="sd">    | codec | xresolution | yresolution |</span>
+<span class="sd">    +-------+-------------+-------------+</span>
+
+<span class="sd">    +-----------------+---------------+-------------+</span>
+<span class="sd">    | framesdirectory | thumbnailfile | previewfile |</span>
+<span class="sd">    +-----------------+---------------+-------------+</span>
+
+<span class="sd">    +-------+----------+----------+---------------+----------+</span>
+<span class="sd">    | likes | dislikes | favorite | liverecording | badaudio |</span>
+<span class="sd">    +-------+----------+----------+---------------+----------+</span>
+
+<span class="sd">    +----------+------------+-------------+</span>
+<span class="sd">    | checksum | lastplayed | lyricsvideo |</span>
+<span class="sd">    +----------+------------+-------------+</span>
+
+<span class="sd">    +---------+---------+---------+--------+------+</span>
+<span class="sd">    | bgcolor | fgcolor | hlcolor | vbegin | vend |</span>
+<span class="sd">    +---------+---------+---------+--------+------+</span>
+
+<span class="sd">songid, albumid (Integer)</span>
+<span class="sd">    These are references to an album the videos was included in,</span>
+<span class="sd">    and/or the song the video belongs to.</span>
+<span class="sd">    In case the album and/or song is not included in the collection,</span>
+<span class="sd">    these values can be ``NULL``.</span>
+
+<span class="sd">added (Integer)</span>
+<span class="sd">    Unix-Time when the video was added to the database</span>
+
+<span class="sd">release (Integer)</span>
+<span class="sd">    Year when the video was released. This year may be different to the</span>
+<span class="sd">    release year of the album or song</span>
+
+<span class="sd">codec (Text)</span>
+<span class="sd">    Like ``&quot;h264&quot;``</span>
+
+
+<span class="sd">checksum (Text)</span>
+<span class="sd">    This is the *sha256* hash value of the file addressed by ``path``.</span>
+<span class="sd">    The checksum will be calculated like shown in the following example:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        videopath = video[&quot;path&quot;]</span>
+<span class="sd">        videofile = open(videopath, &quot;rb&quot;)</span>
+<span class="sd">        </span>
+<span class="sd">        with open(videopath, &quot;rb&quot;) as videofile:</span>
+<span class="sd">            checksum = hashlib.sha256(videofile.read()).hexdigest()</span>
+
+<span class="sd">        video[&quot;checksum&quot;] = checksum</span>
+
+<span class="sd">    The hash function will not be changed in future.</span>
+<span class="sd">    This is OK as long as the hash value will not be used for security related things!</span>
+
+<span class="sd">    It can happen, that the value is empty (``&quot;&quot;``).</span>
+<span class="sd">    This only means that the checksum of the song was not calculated yet.</span>
+<span class="sd">    In this case, just calculate it, and write it into the database.</span>
+
+<span class="sd">lastplayed (Integer)</span>
+<span class="sd">    This value holds the information, when the song was played the last time.</span>
+<span class="sd">    The time gets represented as an integer (unixtime).</span>
+
+
+<span class="sd">Video Relates Methods</span>
+<span class="sd">^^^^^^^^^^^^^^^^^^^^^</span>
+
+<span class="sd">The following methods exist to handle video entries in the database:</span>
+
+<span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.AddVideo`</span>
+<span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.AddFullVideo`</span>
+<span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.GetVideoByPath`</span>
+<span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.GetVideoById`</span>
+<span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.GetVideos`</span>
+<span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.GetVideosByArtistId`</span>
+<span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.UpdateVideoStatistic`</span>
+<span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.SetColorThemeByVideoId`</span>
+<span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.SetVideoTimeFrame`</span>
 
 
 <span class="sd">Albums</span>
@@ -769,12 +906,15 @@
 <span class="sd">    | albumid | artistid | name | path | numofsongs | numofcds | origin | release |</span>
 <span class="sd">    +---------+----------+------+------+------------+----------+--------+---------+</span>
 
-<span class="sd">    +-------------+---------+---------+---------+-------+</span>
-<span class="sd">    | artworkpath | bgcolor | fgcolor | hlcolor | added |</span>
-<span class="sd">    +-------------+---------+---------+---------+-------+</span>
+<span class="sd">    +-------------+---------+---------+---------+-------+--------+</span>
+<span class="sd">    | artworkpath | bgcolor | fgcolor | hlcolor | added | hidden |</span>
+<span class="sd">    +-------------+---------+---------+---------+-------+--------+</span>
 
 <span class="sd">added (Integer)</span>
 <span class="sd">    This is the time the album got added to the collection as unixtime rounded to an integer (full seconds)</span>
+
+<span class="sd">hidden (Integer)</span>
+<span class="sd">    When ``1``, the album will not be included in some SQL query results. See the documentation of the specific methods to identify if hidden albums are included or not.</span>
 
 <span class="sd">Album Related Methods</span>
 <span class="sd">^^^^^^^^^^^^^^^^^^^^^</span>
@@ -972,8 +1112,8 @@
 <span class="sd">   * ``2`` - Can be used for training. This Song/Album is a good representation for this tag. It can be used to train an AI.</span>
 
 
-<span class="sd">Database API</span>
-<span class="sd">^^^^^^^^^^^^^</span>
+<span class="sd">Tag Related Methods</span>
+<span class="sd">^^^^^^^^^^^^^^^^^^^</span>
 
 <span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.CreateTag`</span>
 <span class="sd">    * :meth:`~lib.db.musicdb.MusicDatabase.GetAllTags`</span>
@@ -991,7 +1131,7 @@
 <span class="sd">    * ``MusicDatabase.TAG_CLASS_SUBGENRE``: Subgenre like Dark Metal, New Wave, …</span>
 <span class="sd">    * ``MusicDatabase.TAG_CLASS_MOOD``: Moods like Lucky, Sad, …</span>
 
-<span class="sd">A target can be &quot;song&quot; or &quot;album&quot;.</span>
+<span class="sd">A target can be &quot;song&quot;, &quot;video&quot; or &quot;album&quot;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">random</span>
@@ -1035,6 +1175,7 @@
     <span class="n">ALBUM_FGCOLOR</span>    <span class="o">=</span> <span class="mi">10</span>
     <span class="n">ALBUM_HLCOLOR</span>    <span class="o">=</span> <span class="mi">11</span>
     <span class="n">ALBUM_ADDED</span>      <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">ALBUM_HIDDEN</span>     <span class="o">=</span> <span class="mi">13</span>
 
     <span class="n">SONG_ID</span>         <span class="o">=</span> <span class="mi">0</span>
     <span class="n">SONG_ALBUMID</span>    <span class="o">=</span> <span class="mi">1</span>
@@ -1052,6 +1193,39 @@
     <span class="n">SONG_LYRICSSTATE</span> <span class="o">=</span> <span class="mi">13</span>
     <span class="n">SONG_CHECKSUM</span>   <span class="o">=</span> <span class="mi">14</span>
     <span class="n">SONG_LASTPLAYED</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">SONG_LIVERECORDING</span> <span class="o">=</span> <span class="mi">16</span>
+    <span class="n">SONG_BADAUDIO</span>   <span class="o">=</span> <span class="mi">17</span>
+
+    <span class="n">VIDEO_ID</span>            <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">VIDEO_SONGID</span>        <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">VIDEO_ALBUMID</span>       <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">VIDEO_ARTISTID</span>      <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">VIDEO_NAME</span>          <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">VIDEO_PATH</span>          <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">VIDEO_DISABLED</span>      <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">VIDEO_PLAYTIME</span>      <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">VIDEO_ORIGIN</span>        <span class="o">=</span> <span class="mi">8</span> <span class="c1"># iTunes, YouTube, Amazon</span>
+    <span class="n">VIDEO_RELEASE</span>       <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">VIDEO_ADDED</span>         <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">VIDEO_CODEC</span>         <span class="o">=</span> <span class="mi">11</span>
+    <span class="n">VIDEO_XRESOLUTION</span>   <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">VIDEO_YRESOLUTION</span>   <span class="o">=</span> <span class="mi">13</span>
+    <span class="n">VIDEO_FRAMESDIRECTORY</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="n">VIDEO_THUMBNAILFILE</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">VIDEO_PREVIEWFILE</span>   <span class="o">=</span> <span class="mi">16</span>
+    <span class="n">VIDEO_LIKES</span>         <span class="o">=</span> <span class="mi">17</span>
+    <span class="n">VIDEO_DISLIKES</span>      <span class="o">=</span> <span class="mi">18</span>
+    <span class="n">VIDEO_FAVORITE</span>      <span class="o">=</span> <span class="mi">19</span>
+    <span class="n">VIDEO_LIVERECORDING</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">VIDEO_BADAUDIO</span>      <span class="o">=</span> <span class="mi">21</span>
+    <span class="n">VIDEO_CHECKSUM</span>      <span class="o">=</span> <span class="mi">22</span>
+    <span class="n">VIDEO_LASTPLAYED</span>    <span class="o">=</span> <span class="mi">23</span>
+    <span class="n">VIDEO_LYRICSVIDEO</span>   <span class="o">=</span> <span class="mi">24</span>
+    <span class="n">VIDEO_BGCOLOR</span>       <span class="o">=</span> <span class="mi">25</span>
+    <span class="n">VIDEO_FGCOLOR</span>       <span class="o">=</span> <span class="mi">26</span>
+    <span class="n">VIDEO_HLCOLOR</span>       <span class="o">=</span> <span class="mi">27</span>
+    <span class="n">VIDEO_VBEGIN</span>        <span class="o">=</span> <span class="mi">28</span>
+    <span class="n">VIDEO_VEND</span>          <span class="o">=</span> <span class="mi">29</span>
 
     <span class="n">TAG_ID</span>          <span class="o">=</span> <span class="mi">0</span>
     <span class="n">TAG_NAME</span>        <span class="o">=</span> <span class="mi">1</span>
@@ -1090,9 +1264,9 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unable to read version number from Music Database&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Unexpected version number of Music Database. Got </span><span class="si">%i</span><span class="s2">, expected </span><span class="si">%i</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unexpected version number of Music Database. Got </span><span class="si">%i</span><span class="s2">, expected </span><span class="si">%i</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Unexpected version number of Music Database. Got </span><span class="si">%i</span><span class="s2">, expected </span><span class="si">%i</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unexpected version number of Music Database. Got </span><span class="si">%i</span><span class="s2">, expected </span><span class="si">%i</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
         
 
     <span class="k">def</span> <span class="nf">__ArtistEntryToDict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
@@ -1117,6 +1291,7 @@
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;fgcolor&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ALBUM_FGCOLOR</span><span class="p">]</span>
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;hlcolor&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ALBUM_HLCOLOR</span><span class="p">]</span>
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;added&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ALBUM_ADDED</span><span class="p">]</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;hidden&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ALBUM_HIDDEN</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">album</span>
 
     <span class="k">def</span> <span class="nf">__SongEntryToDict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
@@ -1137,7 +1312,43 @@
         <span class="n">song</span><span class="p">[</span><span class="s2">&quot;lyricsstate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">SONG_LYRICSSTATE</span><span class="p">]</span>
         <span class="n">song</span><span class="p">[</span><span class="s2">&quot;checksum&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">SONG_CHECKSUM</span><span class="p">]</span>
         <span class="n">song</span><span class="p">[</span><span class="s2">&quot;lastplayed&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">SONG_LASTPLAYED</span><span class="p">]</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;liverecording&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">SONG_LIVERECORDING</span><span class="p">]</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;badaudio&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">SONG_BADAUDIO</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">song</span>
+
+    <span class="k">def</span> <span class="nf">__VideoEntryToDict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
+        <span class="n">video</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>            <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_ID</span>            <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_SONGID</span>        <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_ALBUMID</span>       <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_ARTISTID</span>      <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>          <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_NAME</span>          <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>          <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_PATH</span>          <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;disabled&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_DISABLED</span>      <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_PLAYTIME</span>      <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_ORIGIN</span>        <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_RELEASE</span>       <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;added&quot;</span><span class="p">]</span>         <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_ADDED</span>         <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;codec&quot;</span><span class="p">]</span>         <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_CODEC</span>         <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;xresolution&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_XRESOLUTION</span>   <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;yresolution&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_YRESOLUTION</span>   <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;framesdirectory&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_FRAMESDIRECTORY</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;thumbnailfile&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_THUMBNAILFILE</span> <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;previewfile&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_PREVIEWFILE</span>   <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;likes&quot;</span><span class="p">]</span>         <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_LIKES</span>         <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;dislikes&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_DISLIKES</span>      <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;favorite&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_FAVORITE</span>      <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;liverecording&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_LIVERECORDING</span> <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;badaudio&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_BADAUDIO</span>      <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;checksum&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_CHECKSUM</span>      <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;lastplayed&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_LASTPLAYED</span>    <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;lyricsvideo&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_LYRICSVIDEO</span>   <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;bgcolor&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_BGCOLOR</span>       <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;fgcolor&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_FGCOLOR</span>       <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;hlcolor&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_HLCOLOR</span>       <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;vbegin&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_VBEGIN</span>        <span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;vend&quot;</span><span class="p">]</span>          <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_VEND</span>          <span class="p">]</span>
+        <span class="k">return</span> <span class="n">video</span>
 
     <span class="k">def</span> <span class="nf">__TagEntryToDict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
         <span class="n">tag</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1206,7 +1417,8 @@
 <span class="s2">            bgcolor=:bgcolor,</span>
 <span class="s2">            fgcolor=:fgcolor,</span>
 <span class="s2">            hlcolor=:hlcolor,</span>
-<span class="s2">            added=:added</span>
+<span class="s2">            added=:added,</span>
+<span class="s2">            hidden=:hidden</span>
 <span class="s2">        WHERE</span>
 <span class="s2">            albumid=:id</span>
 <span class="s2">        &quot;&quot;&quot;</span>
@@ -1240,12 +1452,63 @@
 <span class="s2">            favorite=:favorite,</span>
 <span class="s2">            lyricsstate=:lyricsstate,</span>
 <span class="s2">            checksum=:checksum,</span>
-<span class="s2">            lastplayed=:lastplayed</span>
+<span class="s2">            lastplayed=:lastplayed,</span>
+<span class="s2">            liverecording=:liverecording,</span>
+<span class="s2">            badaudio=:badaudio</span>
 <span class="s2">        WHERE</span>
 <span class="s2">            songid=:id</span>
 <span class="s2">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">song</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="MusicDatabase.WriteVideo"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.WriteVideo">[docs]</a>    <span class="k">def</span> <span class="nf">WriteVideo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the whole row for a video.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            video: A dictionary representing a whole row in the videos table</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        UPDATE videos SET</span>
+<span class="s2">            videoid       = :id            ,</span>
+<span class="s2">            songid        = :songid        ,</span>
+<span class="s2">            albumid       = :albumid       ,</span>
+<span class="s2">            artistid      = :artistid      ,</span>
+<span class="s2">            name          = :name          ,</span>
+<span class="s2">            path          = :path          ,</span>
+<span class="s2">            disabled      = :disabled      ,</span>
+<span class="s2">            playtime      = :playtime      ,</span>
+<span class="s2">            origin        = :origin        ,</span>
+<span class="s2">            release       = :release       ,</span>
+<span class="s2">            added         = :added         ,</span>
+<span class="s2">            codec         = :codec         ,</span>
+<span class="s2">            xresolution   = :xresolution   ,</span>
+<span class="s2">            yresolution   = :yresolution   ,</span>
+<span class="s2">            framesdirectory = :framesdirectory ,</span>
+<span class="s2">            thumbnailfile = :thumbnailfile ,</span>
+<span class="s2">            previewfile   = :previewfile   ,</span>
+<span class="s2">            likes         = :likes         ,</span>
+<span class="s2">            dislikes      = :dislikes      ,</span>
+<span class="s2">            favorite      = :favorite      ,</span>
+<span class="s2">            liverecording = :liverecording ,</span>
+<span class="s2">            badaudio      = :badaudio      ,</span>
+<span class="s2">            checksum      = :checksum      ,</span>
+<span class="s2">            lastplayed    = :lastplayed    ,</span>
+<span class="s2">            lyricsvideo   = :lyricsvideo   ,</span>
+<span class="s2">            bgcolor       = :bgcolor       ,</span>
+<span class="s2">            fgcolor       = :fgcolor       ,</span>
+<span class="s2">            hlcolor       = :hlcolor       ,</span>
+<span class="s2">            vbegin        = :vbegin        ,</span>
+<span class="s2">            vend          = :vend</span>
+<span class="s2">        WHERE</span>
+<span class="s2">            videoid=:id</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">video</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="MusicDatabase.WriteTag"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.WriteTag">[docs]</a>    <span class="k">def</span> <span class="nf">WriteTag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
@@ -1473,13 +1736,14 @@
 
 <div class="viewcode-block" id="MusicDatabase.GetAlbumByPath"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetAlbumByPath">[docs]</a>    <span class="k">def</span> <span class="nf">GetAlbumByPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns an album entry if available</span>
+<span class="sd">        Returns an album entry if available.</span>
+<span class="sd">        It also returns the entry when the album is hidden!</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            path (str): relative path of an album</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            An album entry or ``None`` it the album does not exits</span>
+<span class="sd">            An album entry or ``None`` it the album does not exits.</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            TypeError: If *path* is not of type ``str``</span>
@@ -1507,7 +1771,8 @@
     <span class="c1"># Get album by its id otherwise None</span>
 <div class="viewcode-block" id="MusicDatabase.GetAlbumById"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetAlbumById">[docs]</a>    <span class="k">def</span> <span class="nf">GetAlbumById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns an album entry if available</span>
+<span class="sd">        Returns an album entry if available.</span>
+<span class="sd">        It also returns the entry, when the album is hidden!</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            albumid: entry ID of the album in the album table</span>
@@ -1540,22 +1805,30 @@
 
 <div class="viewcode-block" id="MusicDatabase.GetAllAlbums"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetAllAlbums">[docs]</a>    <span class="k">def</span> <span class="nf">GetAllAlbums</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`~lib.db.musicdb.MusicDatabase.GetAlbums` (``GetAlbums(artistid=None, withsongs=False``)</span>
+<span class="sd">        See :meth:`~lib.db.musicdb.MusicDatabase.GetAlbums` (``GetAlbums(artistid=None, withsongs=False, hidden=&quot;include&quot;)``)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetAlbums</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetAlbums</span><span class="p">(</span><span class="n">hidden</span><span class="o">=</span><span class="s2">&quot;include&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MusicDatabase.GetAlbumsByArtistId"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId">[docs]</a>    <span class="k">def</span> <span class="nf">GetAlbumsByArtistId</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artistid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        See :meth:`~lib.db.musicdb.MusicDatabase.GetAlbums` (``GetAlbums(artistid, withsongs=False``)</span>
+<span class="sd">        See :meth:`~lib.db.musicdb.MusicDatabase.GetAlbums` (``GetAlbums(artistid, withsongs=False, hidden=&quot;no&quot;)``)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetAlbums</span><span class="p">(</span><span class="n">artistid</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetAlbums</span><span class="p">(</span><span class="n">artistid</span><span class="p">,</span> <span class="n">hidden</span><span class="o">=</span><span class="s2">&quot;no&quot;</span><span class="p">)</span></div>
 
     <span class="c1"># returns a list with all artists. Each list element is a dictionary with all columns of the database</span>
-<div class="viewcode-block" id="MusicDatabase.GetAlbums"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetAlbums">[docs]</a>    <span class="k">def</span> <span class="nf">GetAlbums</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artistid</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">withsongs</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="MusicDatabase.GetAlbums"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetAlbums">[docs]</a>    <span class="k">def</span> <span class="nf">GetAlbums</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artistid</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">withsongs</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">hidden</span> <span class="o">=</span> <span class="s2">&quot;no&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method returns a list with all albums in the database, or all albums of an artist if *artistid* is not ``None``.</span>
 <span class="sd">        If the *withsongs* parameter is ``True``, for each album all songs will be included.</span>
 <span class="sd">        They are added as list into each album entry under the key ``songs``</span>
+
+<span class="sd">        The *hidden* parameter is a string that can have the following values to describe how hidden albums should be handled:</span>
+
+<span class="sd">            * ``&quot;no&quot;``: No hidden albums included</span>
+<span class="sd">            * ``&quot;include&quot;``: Hidden and not hidden albums returned</span>
+<span class="sd">            * ``&quot;only&quot;``: Only return hidden albums</span>
+
+<span class="sd">        Hidden albums are *not* included!</span>
 
 <span class="sd">        Example:</span>
 
@@ -1571,21 +1844,41 @@
 <span class="sd">        Args:</span>
 <span class="sd">            artistid: ID for an artist whose albums shall be returned. If ``None`` the albums get not filtered by *artistid*.</span>
 <span class="sd">            withsongs (bool): also return all songs of the album.</span>
+<span class="sd">            hidden (str): optional modify for handling hidden albums</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A list with all albums.</span>
+<span class="sd">            A list with all non-hidden albums.</span>
 
 <span class="sd">        Raises:</span>
 <span class="sd">            TypeError: If *withsongs* is not of type ``bool``</span>
+<span class="sd">            TypeError: If *hidden* is not a string</span>
+<span class="sd">            ValueError: When *hidden* has not one of the above listed values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">withsongs</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">bool</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;WithSongs must have a boolean value!&quot;</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">hidden</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;hidden must be a string!&quot;</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="n">hidden</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;no&quot;</span><span class="p">,</span> <span class="s2">&quot;include&quot;</span><span class="p">,</span> <span class="s2">&quot;only&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid value for the hidden-parameter: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">hidden</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="n">hidden</span> <span class="o">==</span> <span class="s2">&quot;no&quot;</span><span class="p">:</span>
+            <span class="n">hiddenmodifier</span> <span class="o">=</span> <span class="s2">&quot;hidden = 0&quot;</span>
+        <span class="k">elif</span> <span class="n">hidden</span> <span class="o">==</span> <span class="s2">&quot;include&quot;</span><span class="p">:</span>
+            <span class="n">hiddenmodifier</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">elif</span> <span class="n">hidden</span> <span class="o">==</span> <span class="s2">&quot;only&quot;</span><span class="p">:</span>
+            <span class="n">hiddenmodifier</span> <span class="o">=</span> <span class="s2">&quot;hidden = 1&quot;</span>
+
         <span class="k">if</span> <span class="n">artistid</span><span class="p">:</span>
-            <span class="n">sql</span>   <span class="o">=</span> <span class="s2">&quot;SELECT * FROM albums WHERE artistid = ?&quot;</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM albums WHERE artistid = ?&quot;</span>
+            <span class="k">if</span> <span class="n">hiddenmodifier</span><span class="p">:</span>
+                <span class="n">sql</span> <span class="o">+=</span> <span class="s2">&quot; AND &quot;</span> <span class="o">+</span> <span class="n">hiddenmodifier</span>
             <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">artistid</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">sql</span>   <span class="o">=</span> <span class="s2">&quot;SELECT * FROM albums&quot;</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM albums&quot;</span>
+            <span class="k">if</span> <span class="n">hiddenmodifier</span><span class="p">:</span>
+                <span class="n">sql</span> <span class="o">+=</span> <span class="s2">&quot; WHERE &quot;</span> <span class="o">+</span> <span class="n">hiddenmodifier</span>
             <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
@@ -1603,12 +1896,24 @@
         <span class="k">return</span> <span class="n">albums</span></div>
 
 
-<div class="viewcode-block" id="MusicDatabase.GetAllAlbumIds"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetAllAlbumIds">[docs]</a>    <span class="k">def</span> <span class="nf">GetAllAlbumIds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MusicDatabase.GetAllAlbumIds"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetAllAlbumIds">[docs]</a>    <span class="k">def</span> <span class="nf">GetAllAlbumIds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">includehidden</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a list of all album Ids.</span>
+<span class="sd">        </span>
+<span class="sd">        If the optional ``includehidden`` argument is not set to ``true``,</span>
+<span class="sd">        hidden albums are *not* included!</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            includehidden (bool): When true, hidden albums are also included</span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            Returns a list of all album IDs</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT albumid FROM albums&quot;</span>
+        <span class="k">if</span> <span class="n">includehidden</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT albumid FROM albums&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT albumid FROM albums WHERE hidden = 0&quot;</span>
+
         <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
             <span class="n">albumids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
         <span class="n">retval</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">albumids</span><span class="p">]</span> <span class="c1"># do not use tuples</span>
@@ -1714,6 +2019,35 @@
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">color</span>
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">albumid</span>
         <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;UPDATE albums SET &quot;</span> <span class="o">+</span> <span class="n">colorname</span> <span class="o">+</span> <span class="s2">&quot;=:color WHERE albumid=:albumid&quot;</span>
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDatabase.SetAlbumHiddenState"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.SetAlbumHiddenState">[docs]</a>    <span class="k">def</span> <span class="nf">SetAlbumHiddenState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">,</span> <span class="n">hiddenstate</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Hides or shows an album depending on the *hide* state.</span>
+<span class="sd">        When ``hidden == True`` the album gets hidden,</span>
+<span class="sd">        when ``hidden == False`` the hidden state gets reset to make the album visible again.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            albumid (int): ID of the album</span>
+<span class="sd">            hidden (bool): Hide or Show the album</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If *albumid* is not an integer and *hiddenstate* not a bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">hiddenstate</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Album ID must be an integer and hiddenstate a boolean!&quot;</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;hidden&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">hiddenstate</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">albumid</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;UPDATE albums SET hidden=:hidden WHERE albumid=:albumid&quot;</span>
         <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
@@ -2257,19 +2591,31 @@
 
 
 
+<div class="viewcode-block" id="MusicDatabase.UpdateVideoStatistic"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.UpdateVideoStatistic">[docs]</a>    <span class="k">def</span> <span class="nf">UpdateVideoStatistic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">videoid</span><span class="p">,</span> <span class="n">stat</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Alias to :meth:`~UpdateMusicProperty` with last parameter ``musictype = &quot;video&quot;``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">UpdateMusicProperty</span><span class="p">(</span><span class="n">videoid</span><span class="p">,</span> <span class="n">stat</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s2">&quot;video&quot;</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="MusicDatabase.UpdateSongStatistic"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.UpdateSongStatistic">[docs]</a>    <span class="k">def</span> <span class="nf">UpdateSongStatistic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">stat</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method updates the song statistics.</span>
+<span class="sd">        Alias to :meth:`~UpdateMusicProperty` with last parameter ``musictype = &quot;song&quot;``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">UpdateMusicProperty</span><span class="p">(</span><span class="n">songid</span><span class="p">,</span> <span class="n">stat</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="s2">&quot;song&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MusicDatabase.UpdateMusicProperty"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.UpdateMusicProperty">[docs]</a>    <span class="k">def</span> <span class="nf">UpdateMusicProperty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">musicid</span><span class="p">,</span> <span class="n">stat</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">musictype</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method updates a songs or videos property and statistic, depending on the value of ``musictype``.</span>
 
 <span class="sd">        Statistics are:</span>
 
-<span class="sd">            * ``&quot;likes&quot;``, ``&quot;dislikes&quot;``, ``&quot;favorite&quot;``, ``&quot;disabled&quot;``, ``&quot;lastplayed&quot;``</span>
+<span class="sd">            * Statistics: ``&quot;likes&quot;``, ``&quot;dislikes&quot;``, ``&quot;lastplayed&quot;``</span>
+<span class="sd">            * Properties: ``&quot;favorite&quot;``, ``&quot;disabled&quot;``, ``&quot;liverecording&quot;``, ``&quot;badaudio&quot;``, ``&quot;lyricsvideo&quot;`` (for videos only)</span>
 
-<span class="sd">        Deprecated statistics will be ignored.</span>
 
-<span class="sd">        Values are:</span>
+<span class="sd">        Possible values are:</span>
 <span class="sd">            </span>
-<span class="sd">            * ``&quot;inc&quot;``, ``&quot;love&quot;``, ``&quot;yes&quot;``: Increment value</span>
+<span class="sd">            * ``&quot;inc&quot;``, ``&quot;love&quot;``, ``&quot;yes&quot;``: Increment value or set to ``1`` for boolean properties</span>
 <span class="sd">            * ``&quot;dec&quot;``, ``&quot;hate&quot;``: Decrement value</span>
 <span class="sd">            * ``&quot;reset&quot;``, ``&quot;none&quot;``, ``&quot;no&quot;``: Set value to ``0``</span>
 
@@ -2278,13 +2624,16 @@
 <span class="sd">            * ``-1``: Hated song</span>
 <span class="sd">            * ``0``: Normal song</span>
 <span class="sd">            * ``1``: Loved song</span>
+<span class="sd">        </span>
+<span class="sd">        ``likes`` and ``dislikes`` can be incremented and decremented.</span>
 
 <span class="sd">        ``lastplayed`` expects the unix time as integer given as value.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            songid (int): ID of the song</span>
+<span class="sd">            musicid (int): ID of the song or video</span>
 <span class="sd">            stat (str): Name of the statistics to update</span>
 <span class="sd">            value (str/int): How to update</span>
+<span class="sd">            musictype (str): ``&quot;song&quot;`` or ``&quot;video&quot;``</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ``None``</span>
@@ -2294,13 +2643,21 @@
 <span class="sd">            ValueError: if stats or value have an invalid value. Deprecated statistics do not raise an exception.</span>
 <span class="sd">            TypeError: When ``stat == &quot;lastplayed&quot;`` but ``value`` is not an integer</span>
 <span class="sd">            ValueError: When an expected unix time is less than 0</span>
+<span class="sd">            ValueError: When ``musictype`` is not ``&quot;song&quot;`` or ``&quot;video&quot;``</span>
+<span class="sd">            ValueError: For an unknown property or statistic</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;songid must be a decimal number of type integer or string&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">musictype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="s2">&quot;video&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Music type must be </span><span class="se">\&quot;</span><span class="s2">song</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">video</span><span class="se">\&quot;</span><span class="s2">! (it was </span><span class="si">%s</span><span class="s2">)&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">musictype</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">musicid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">musicid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Music ID must be a decimal number of type integer or string&quot;</span><span class="p">)</span>
 
         <span class="c1"># Check if value and stat are valid</span>
-        <span class="k">if</span> <span class="n">stat</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;likes&quot;</span><span class="p">,</span> <span class="s2">&quot;dislikes&quot;</span><span class="p">,</span> <span class="s2">&quot;favorite&quot;</span><span class="p">,</span> <span class="s2">&quot;disable&quot;</span><span class="p">,</span> <span class="s2">&quot;lastplayed&quot;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;stat has an invalid value </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">stat</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">stat</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;likes&quot;</span><span class="p">,</span> <span class="s2">&quot;dislikes&quot;</span><span class="p">,</span> <span class="s2">&quot;favorite&quot;</span><span class="p">,</span> <span class="s2">&quot;disable&quot;</span><span class="p">,</span> <span class="s2">&quot;lastplayed&quot;</span><span class="p">,</span> <span class="s2">&quot;liverecording&quot;</span><span class="p">,</span> <span class="s2">&quot;badaudio&quot;</span><span class="p">,</span> <span class="s2">&quot;lyricsvideo&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;stat has an invalid value </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">stat</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;lyricsvideo&quot;</span> <span class="ow">and</span> <span class="n">musictype</span> <span class="o">!=</span> <span class="s2">&quot;video&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Property </span><span class="se">\&quot;</span><span class="s2">lyricsvideo</span><span class="se">\&quot;</span><span class="s2"> is only allowed for musictype </span><span class="se">\&quot;</span><span class="s2">video</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;lastplayed&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
@@ -2309,11 +2666,14 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unix time must be greater than 0!&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;inc&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">,</span> <span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="s2">&quot;love&quot;</span><span class="p">,</span> <span class="s2">&quot;hate&quot;</span><span class="p">,</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;no&quot;</span><span class="p">]:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;value has an invalid value </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;value has an invalid value </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
 
-        <span class="c1"># Get song entry</span>
+        <span class="c1"># Update music entry - lock between read and write to avoid loosing changes</span>
         <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
-            <span class="n">song</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songid</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">musictype</span> <span class="o">==</span> <span class="s2">&quot;song&quot;</span><span class="p">:</span>
+                <span class="n">music</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">musicid</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">musictype</span> <span class="o">==</span> <span class="s2">&quot;video&quot;</span><span class="p">:</span>
+                <span class="n">music</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetVideoById</span><span class="p">(</span><span class="n">musicid</span><span class="p">)</span>
 
             <span class="c1"># generate modifier</span>
             <span class="k">if</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;inc&quot;</span><span class="p">,</span> <span class="s2">&quot;love&quot;</span><span class="p">,</span> <span class="s2">&quot;yes&quot;</span><span class="p">]:</span>
@@ -2325,18 +2685,37 @@
 
             <span class="c1"># apply modifier</span>
             <span class="k">if</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;favorite&quot;</span><span class="p">:</span>
-                <span class="n">song</span><span class="p">[</span><span class="s2">&quot;favorite&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modifier</span>
-            <span class="k">elif</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;disable&quot;</span><span class="p">:</span>
-                <span class="n">song</span><span class="p">[</span><span class="s2">&quot;disabled&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modifier</span>
-            <span class="k">elif</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;lastplayed&quot;</span><span class="p">:</span>
-                <span class="n">song</span><span class="p">[</span><span class="s2">&quot;lastplayed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
-            <span class="k">elif</span> <span class="n">modifier</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">song</span><span class="p">[</span><span class="n">stat</span><span class="p">]</span>       <span class="o">=</span> <span class="mi">0</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">song</span><span class="p">[</span><span class="n">stat</span><span class="p">]</span>      <span class="o">+=</span> <span class="n">modifier</span>
+                <span class="n">music</span><span class="p">[</span><span class="s2">&quot;favorite&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modifier</span>
 
-            <span class="c1"># Write Song</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">WriteSong</span><span class="p">(</span><span class="n">song</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;disable&quot;</span><span class="p">:</span>
+                <span class="n">music</span><span class="p">[</span><span class="s2">&quot;disabled&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modifier</span>
+
+            <span class="k">elif</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;lastplayed&quot;</span><span class="p">:</span>
+                <span class="n">music</span><span class="p">[</span><span class="s2">&quot;lastplayed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+            <span class="k">elif</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;likes&quot;</span><span class="p">:</span>
+                <span class="n">music</span><span class="p">[</span><span class="s2">&quot;likes&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">modifier</span>
+
+            <span class="k">elif</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;dislikes&quot;</span><span class="p">:</span>
+                <span class="n">music</span><span class="p">[</span><span class="s2">&quot;dislikes&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">modifier</span>
+
+            <span class="k">elif</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;liverecording&quot;</span><span class="p">:</span>
+                <span class="n">music</span><span class="p">[</span><span class="s2">&quot;liverecording&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modifier</span>
+
+            <span class="k">elif</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;badaudio&quot;</span><span class="p">:</span>
+                <span class="n">music</span><span class="p">[</span><span class="s2">&quot;badaudio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modifier</span>
+
+            <span class="k">elif</span> <span class="n">stat</span> <span class="o">==</span> <span class="s2">&quot;lyricsvideo&quot;</span><span class="p">:</span>
+                <span class="n">music</span><span class="p">[</span><span class="s2">&quot;lyricsvideo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modifier</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown property or statistic!&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Write Song or video</span>
+            <span class="k">if</span> <span class="n">musictype</span> <span class="o">==</span> <span class="s2">&quot;song&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">WriteSong</span><span class="p">(</span><span class="n">music</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">musictype</span> <span class="o">==</span> <span class="s2">&quot;video&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">WriteVideo</span><span class="p">(</span><span class="n">music</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
@@ -2372,6 +2751,478 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">songid</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="kc">None</span></div>
+
+
+    <span class="c1">##########################################################################</span>
+    <span class="c1"># VIDEOS                                                                 #</span>
+    <span class="c1">##########################################################################</span>
+
+
+<div class="viewcode-block" id="MusicDatabase.AddVideo"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.AddVideo">[docs]</a>    <span class="k">def</span> <span class="nf">AddVideo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artistid</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method creates a new database entry for a video and sets the most important values (Artistid, name and path).</span>
+
+<span class="sd">        If a video with the same path is already in the database, its *artistid*, *path* and *name* gets compared to the arguments.</span>
+<span class="sd">        If they match, everything is fine and the method returns.</span>
+<span class="sd">        If they differ, an AssertionError gets raised.</span>
+<span class="sd">        Adding an existing video is a bug!</span>
+<span class="sd">        Even if this method allows it under some conditions, this should not be exploited!</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            artistid (int): ID of the artist of this video</span>
+<span class="sd">            name (string): Name of the video</span>
+<span class="sd">            path (string): Path of the video file relative to the music root directory</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If one of the arguments is ``None``</span>
+<span class="sd">            ValueError: If song is already in the database **and** does not match the other parameters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">artistid</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">name</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">path</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;All parameters must have a value!&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check if video already exists</span>
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="n">video</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetVideoByPath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">video</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">video</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">artistid</span> <span class="ow">or</span> <span class="n">video</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">path</span> <span class="ow">or</span> <span class="n">video</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">name</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;There is a video with the same path already exists in the database but with other attributes!&quot;</span><span class="p">)</span>
+
+                <span class="c1"># even if it works, adding an already existing song is a bug. Inform the programmer/user</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Video with path </span><span class="si">%s</span><span class="s2"> does already exist in database. </span><span class="se">\033</span><span class="s2">[1;30m(It matches the artist ID and album ID so everything is fine right now)&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO videos (artistid, name, path) VALUES (?, ?, ?)&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="p">(</span><span class="n">artistid</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="MusicDatabase.AddFullVideo"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.AddFullVideo">[docs]</a>    <span class="k">def</span> <span class="nf">AddFullVideo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">video</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method creates a new entry for a video and adds all its attributes into the database.</span>
+<span class="sd">        Creating the song is video by calling :meth:`~lib.db.musicdb.MusicDatabase.AddVideo`.</span>
+<span class="sd">        When the video was added a new song ID is generated by the database engine.</span>
+<span class="sd">        The new entry gets read from the database.</span>
+<span class="sd">        Then, the new ID is set as song ID to the dictionary given as argument.</span>
+<span class="sd">        After that, the whole song dictionary gets written to the database via :meth:`~lib.db.musicdb.MusicDatabase.WriteVideo`</span>
+
+<span class="sd">        In case adding the video fails on half the way, the new added entry gets deleted.</span>
+<span class="sd">        As long as nothing references the video entry, it is no problem to remove it.</span>
+<span class="sd">        So, when this method returns ``False`` Nothing changed in the database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            video: A **complete** dictionary with all keys of a MusicDB Song entry for the database</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` on success, otherwise ``False`` which indicates that nothing changed in the database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">AddVideo</span><span class="p">(</span><span class="n">video</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">],</span> <span class="n">video</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">video</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">entry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetVideoByPath</span><span class="p">(</span><span class="n">video</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+                <span class="n">video</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">WriteVideo</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;The following Exception occurred: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">. Trying to delete the half added video </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> from database as long as this is save.&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="n">video</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="p">)</span>
+            
+                <span class="c1"># At this point, it is better to only rely on the path</span>
+                <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;DELETE FROM videos WHERE path = ?&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">video</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="MusicDatabase.GetVideoByPath"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetVideoByPath">[docs]</a>    <span class="k">def</span> <span class="nf">GetVideoByPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a video from the database that matches the *path*</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path (str): A video path relative to the music root directory</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A MusicDB Video dictionary or ``None`` if there is no video with that path</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If *path* is ``None``</span>
+<span class="sd">            AssertionError: If there is more than one video with the same path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Path must have a value of type string!&quot;</span><span class="p">)</span>
+
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM videos WHERE path = ?&quot;</span>
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="p">(</span><span class="n">path</span><span class="p">))</span>
+
+        <span class="c1"># check result</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Multiple video entries for one path in the database! (&quot;</span> <span class="o">+</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
+
+        <span class="n">entry</span>  <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__VideoEntryToDict</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">retval</span></div>
+
+
+<div class="viewcode-block" id="MusicDatabase.GetVideoById"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetVideoById">[docs]</a>    <span class="k">def</span> <span class="nf">GetVideoById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">videoid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns an video entry if available</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            videoid: entry ID of the video in the video table</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An video entry or ``None`` it the video does not exits</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If ``videoid`` is not set</span>
+<span class="sd">            AssertionError: If there is more than one video with the given ID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">videoid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">videoid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;AlbumID must have a decimal value!&quot;</span><span class="p">)</span>
+
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM videos WHERE videoid = ?&quot;</span>
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">videoid</span><span class="p">)</span>
+
+        <span class="c1"># check result</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Multiple Videos entries for one ID in the database!&quot;</span><span class="p">)</span>
+
+        <span class="n">entry</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__VideoEntryToDict</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">retval</span></div>
+
+
+<div class="viewcode-block" id="MusicDatabase.GetVideos"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetVideos">[docs]</a>    <span class="k">def</span> <span class="nf">GetVideos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns an unsorted list with all videos.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            The following example prints all videos</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                albums = musicdb.GetVideos()</span>
+<span class="sd">                for video in videos:</span>
+<span class="sd">                    print(video[&quot;name&quot;])</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list with all videos in the database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sql</span>   <span class="o">=</span> <span class="s2">&quot;SELECT * FROM videos&quot;</span>
+
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+
+        <span class="n">videos</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">video</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__VideoEntryToDict</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+
+            <span class="n">videos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">videos</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDatabase.GetVideosByArtistId"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetVideosByArtistId">[docs]</a>    <span class="k">def</span> <span class="nf">GetVideosByArtistId</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">artistid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns an unsorted list with all videos of an artist.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            The following example prints all videos of the artist with the ID ``1000``</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                albums = musicdb.GetVideosByArtistId(artistid = 1000)</span>
+<span class="sd">                for video in videos:</span>
+<span class="sd">                    print(video[&quot;name&quot;])</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            artistid: ID for an artist whose videos shall be returned.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list with all videos of an artist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sql</span>   <span class="o">=</span> <span class="s2">&quot;SELECT * FROM videos WHERE artistid = ?&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">artistid</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+        <span class="n">videos</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">video</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__VideoEntryToDict</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+
+            <span class="n">videos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">videos</span></div>
+
+
+<div class="viewcode-block" id="MusicDatabase.GetRandomVideo"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetRandomVideo">[docs]</a>    <span class="k">def</span> <span class="nf">GetRandomVideo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filterlist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nodisabled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nohated</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">minlen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method returns a random video that fulfills several constraints.</span>
+
+<span class="sd">        The ``filterlist`` can be either a set of genre tag IDs or a set of genre names.</span>
+<span class="sd">        When ``filterlist`` is ``None`` no filter gets applied.</span>
+<span class="sd">        Otherwise only videos of the genres in the list will be considered.</span>
+
+
+<span class="sd">        Getting a random video is done by the following steps:</span>
+
+<span class="sd">            #. Get video IDs of all videos in the database</span>
+<span class="sd">            #. Translate *filterlist* into a list of tag IDs</span>
+<span class="sd">            #. For each video, get its tags and compare that with the set of tag IDs from the filter. (If there is no filter list set, all video IDs are selected)</span>
+<span class="sd">            #. Select a random video</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            filterlist: Optional, default value is ``[]``. A list of genre names or genre tag IDs that limits the search set. The tags have *OR* relations.</span>
+<span class="sd">            nodisabled (bool): If ``True`` no disables songs will be selected</span>
+<span class="sd">            nohated (bool): If ``True`` no hated songs will be selected</span>
+<span class="sd">            minlen (int): If set, no videos with less than *minlen* seconds will be selected</span>
+<span class="sd">            maxlen (int): If set, no videos with more than *maxlen* seconds will be selected</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A random MusicDB Video dictionary that fulfills the constraints,</span>
+<span class="sd">            or ``None`` when there is no song fulfilling the constraints</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: When *nodisabled* or *nohated* are not of type ``bool``</span>
+<span class="sd">            TypeError: When *minlen* or *maxlen* is not ``None`` and not of type integer</span>
+<span class="sd">            TypeError: When *filterlist* is not a list and not ``None``</span>
+<span class="sd">            ValueError: When minlen is less than ``0``</span>
+<span class="sd">            ValueError: When maxlen is less than ``0``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">nodisabled</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;nodisabled must be of type bool&quot;</span><span class="p">)</span>
+            
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">nohated</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;nohated must be of type bool&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">minlen</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">minlen</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;minlen must be None or of type integer&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">maxlen</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">maxlen</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;maxlen must be None or of type integer&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">filterlist</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filterlist</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">filterlist</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;filterlist must be of type list&quot;</span><span class="p">)</span>
+
+
+        <span class="c1"># Prepare sql command</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT videoid FROM videos WHERE 1 = 1&quot;</span>
+        <span class="k">if</span> <span class="n">nodisabled</span><span class="p">:</span>
+            <span class="n">sql</span> <span class="o">+=</span> <span class="s2">&quot; AND disabled != 1&quot;</span>
+        <span class="k">if</span> <span class="n">nohated</span><span class="p">:</span>
+            <span class="n">sql</span> <span class="o">+=</span> <span class="s2">&quot; AND favorite &gt;= 0&quot;</span>
+        <span class="k">if</span> <span class="n">minlen</span><span class="p">:</span>
+            <span class="c1"># make sure the argument does not mess up the query-string</span>
+            <span class="k">if</span> <span class="n">minlen</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;minlen must be &gt;= 0&quot;</span><span class="p">)</span>
+            <span class="n">sql</span> <span class="o">+=</span> <span class="s2">&quot; AND playtime &gt;= &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">minlen</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">maxlen</span><span class="p">:</span>
+            <span class="c1"># make sure the argument does not mess up the query-string</span>
+            <span class="k">if</span> <span class="n">maxlen</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;maxlen must be &gt;= 0&quot;</span><span class="p">)</span>
+            <span class="n">sql</span> <span class="o">+=</span> <span class="s2">&quot; AND playtime &lt;= &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">maxlen</span><span class="p">)</span>
+
+
+        <span class="c1"># Create a list of tagids that limits the set of videoss</span>
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="n">tagids</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filterlist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">filterentry</span> <span class="ow">in</span> <span class="n">filterlist</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">filterentry</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+                        <span class="n">tag</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTagByName</span><span class="p">(</span><span class="n">filterentry</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">)</span>
+                        <span class="n">tagid</span> <span class="o">=</span> <span class="n">tag</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">tagid</span> <span class="o">=</span> <span class="n">filterentry</span>
+
+                    <span class="n">tagids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tagid</span><span class="p">)</span>
+
+            <span class="c1"># create a set from the list to compare it with a set of video tags</span>
+            <span class="n">tagids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">tagids</span><span class="p">)</span>
+
+            <span class="c1"># Get IDs of all videos existing in the database</span>
+            <span class="n">retval</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">videoids</span> <span class="o">=</span> <span class="p">[</span><span class="n">entry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">VIDEO_ID</span><span class="p">]</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">retval</span><span class="p">]</span>
+
+            <span class="c1"># Only select videos that have a tag listed in the tagids list</span>
+            <span class="n">selectedvideoids</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tagids</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">videoid</span> <span class="ow">in</span> <span class="n">videoids</span><span class="p">:</span>
+                    <span class="c1"># Get tags of the video</span>
+                    <span class="n">videotags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetTargetTags</span><span class="p">(</span><span class="s2">&quot;video&quot;</span><span class="p">,</span> <span class="n">videoid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TAG_CLASS_GENRE</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">videotags</span><span class="p">:</span>
+                        <span class="k">continue</span>
+
+                    <span class="c1"># Check if one tag matches the filter</span>
+                    <span class="n">videotagids</span> <span class="o">=</span> <span class="p">{</span> <span class="n">videotag</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">videotag</span> <span class="ow">in</span> <span class="n">videotags</span> <span class="p">}</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">tagids</span> <span class="o">&amp;</span> <span class="n">videotagids</span><span class="p">:</span>
+                        <span class="k">continue</span>
+
+                    <span class="n">selectedvideoids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">videoid</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">selectedvideoids</span> <span class="o">=</span> <span class="n">videoids</span>
+
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">selectedvideoids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Choose a random one</span>
+        <span class="n">videoid</span>   <span class="o">=</span> <span class="n">selectedvideoids</span><span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">selectedvideoids</span><span class="p">))]</span>
+        <span class="n">video</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetVideoById</span><span class="p">(</span><span class="n">videoid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">video</span></div>
+
+
+<div class="viewcode-block" id="MusicDatabase.SetVideoFrames"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.SetVideoFrames">[docs]</a>    <span class="k">def</span> <span class="nf">SetVideoFrames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">videoid</span><span class="p">,</span> <span class="n">framesdirectory</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">thumbnailfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">previewfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method updates the frames directory, thumbnail file and preview file entry in the database</span>
+<span class="sd">        for a video with the ID ``videoid``.</span>
+
+<span class="sd">        The files and directory can be ``None``.</span>
+<span class="sd">        In this case the values will not be changed.</span>
+<span class="sd">        The video ID must be a valid ID of a video existing in the database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            videoid (int): ID of the video that database entry shall be updated</span>
+<span class="sd">            framesdirectory (str, NoneType): Path of the video specific sub directory containing all frames/preview files. Relative to the video frames root directory</span>
+<span class="sd">            thumbnailfile (str, NoneType): File name of the frame that shall be used as thumbnail, relative to ``framesdir``</span>
+<span class="sd">            previewfile (str, NoneType): File name of the preview animation, relative to ``framesdir``</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` on success, otherwise ``False``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: when the types of the arguments mismatch</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">videoid</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Video ID must be an integer&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">framesdirectory</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">str</span> <span class="ow">and</span> <span class="n">framesdirectory</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Frames Directory must be a string or None&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">thumbnailfile</span><span class="p">)</span>   <span class="ow">is</span> <span class="ow">not</span> <span class="nb">str</span> <span class="ow">and</span> <span class="n">thumbnailfile</span>   <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Thumbnail File must be a string or None&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">previewfile</span><span class="p">)</span>     <span class="ow">is</span> <span class="ow">not</span> <span class="nb">str</span> <span class="ow">and</span> <span class="n">previewfile</span>     <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Preview File must be a string or None&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check if there is anything to do</span>
+        <span class="k">if</span> <span class="n">framesdirectory</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">thumbnailfile</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">previewfile</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="c1"># Prepare data directory for database update</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;videoid&quot;</span><span class="p">]</span>         <span class="o">=</span> <span class="n">videoid</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;framesdirectory&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">framesdirectory</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;thumbnailfile&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">thumbnailfile</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;previewfile&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">previewfile</span>
+
+        <span class="c1"># Prepare sql instruction</span>
+        <span class="n">updates</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">framesdirectory</span><span class="p">:</span>
+            <span class="n">updates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;framesdirectory=:framesdirectory&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">thumbnailfile</span><span class="p">:</span>
+            <span class="n">updates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;thumbnailfile=:thumbnailfile&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">previewfile</span><span class="p">:</span>
+            <span class="n">updates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;previewfile=:previewfile&quot;</span><span class="p">)</span>
+
+        <span class="n">sql</span>  <span class="o">=</span> <span class="s2">&quot;UPDATE videos SET &quot;</span>
+        <span class="n">sql</span> <span class="o">+=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">updates</span><span class="p">)</span>
+        <span class="n">sql</span> <span class="o">+=</span> <span class="s2">&quot; where videoid=:videoid&quot;</span>
+
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDatabase.SetColorThemeByVideoId"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.SetColorThemeByVideoId">[docs]</a>    <span class="k">def</span> <span class="nf">SetColorThemeByVideoId</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">videoid</span><span class="p">,</span> <span class="n">colorname</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method is for setting a color for a video.</span>
+<span class="sd">        Valid color names are the following and must be given as string to the *colorname* parameter.</span>
+
+<span class="sd">            * ``&quot;bgcolor&quot;`` -  Background color</span>
+<span class="sd">            * ``&quot;fgcolor&quot;`` -  Primary foreground color</span>
+<span class="sd">            * ``&quot;hlcolor&quot;`` -  Secondary foreground color</span>
+
+<span class="sd">        The color itself must be in HTML-Format: ``#RRGGBB``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            videoid: The ID of the video that color shall be set</span>
+<span class="sd">            colorname (str): Name of the color that shall be set</span>
+<span class="sd">            color (str): Color in HTML format</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If one of the arguments is None</span>
+<span class="sd">            ValueError: If *colorname* not ``&quot;bgcolor&quot;``, ``&quot;fgcolor&quot;`` or ``&quot;hlcolor&quot;``</span>
+<span class="sd">            ValueError: If color length is not ``7`` and first character not ``&quot;#&quot;``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">videoid</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">color</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">colorname</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;All parameters must have a value!&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">colorname</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;bgcolor&quot;</span><span class="p">,</span> <span class="s2">&quot;fgcolor&quot;</span><span class="p">,</span> <span class="s2">&quot;hlcolor&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;colorname must be bgcolor, fgcolor or hlcolor&quot;</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;#&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;First char in color-code must be </span><span class="se">\&#39;</span><span class="s2">#</span><span class="se">\&#39;</span><span class="s2">: #RRGGBB !&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">color</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">7</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Color-code must have a length of 7 character: #RRGGBB !&quot;</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">color</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;videoid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">videoid</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;UPDATE videos SET &quot;</span> <span class="o">+</span> <span class="n">colorname</span> <span class="o">+</span> <span class="s2">&quot;=:color WHERE videoid=:videoid&quot;</span>
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="MusicDatabase.SetVideoTimeFrame"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.SetVideoTimeFrame">[docs]</a>    <span class="k">def</span> <span class="nf">SetVideoTimeFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">videoid</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the time frame for a video.</span>
+<span class="sd">        This time frame defines where the player should start playing the video</span>
+<span class="sd">        and where it should end.</span>
+<span class="sd">        The values are floating point numbers an represent the second inside the video file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            videoid (int): ID of the video</span>
+<span class="sd">            begin (int): Begin of the main content in seconds.</span>
+<span class="sd">            end (int): End of the main content in seconds.</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            ``True`` on success, otherwise false</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If begin or end if not int</span>
+<span class="sd">            ValueError: If begin &gt; end</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">begin</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">end</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;begin and end must be integer!&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">begin</span> <span class="o">&gt;</span> <span class="n">end</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;begin must not be larger than end&quot;</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;videoid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">videoid</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;vbegin&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">begin</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;vend&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">end</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;UPDATE videos SET vbegin=:vbegin, vend=:vend WHERE videoid=:videoid&quot;</span>
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
 
     <span class="c1">####################################</span>
     <span class="c1"># TAG HANDLING</span>
@@ -2409,6 +3260,37 @@
             <span class="n">retval</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">retval</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDatabase.GetTagStatistics"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetTagStatistics">[docs]</a>    <span class="k">def</span> <span class="nf">GetTagStatistics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tagid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns three integers telling how often the given tag is used for songs, albums and videos.</span>
+<span class="sd">        It is also checked how many other tags used the tagid as parent tag.</span>
+
+<span class="sd">        The level of confidence or if the tag was approved for the song/video/album is not considered.</span>
+<span class="sd">        All set tags are counted.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tagid(int): ID of the tag to count</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            songs(int), albums(int), videos(int), children(int)</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: When *tagid* is not an integer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">tagid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Tag ID must be of type int&quot;</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="n">songs</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="s2">&quot;SELECT COUNT(*) FROM songtags  WHERE tagid    = ?&quot;</span><span class="p">,</span> <span class="n">tagid</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">albums</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="s2">&quot;SELECT COUNT(*) FROM albumtags WHERE tagid    = ?&quot;</span><span class="p">,</span> <span class="n">tagid</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">videos</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="s2">&quot;SELECT COUNT(*) FROM videotags WHERE tagid    = ?&quot;</span><span class="p">,</span> <span class="n">tagid</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="s2">&quot;SELECT COUNT(*) FROM tags      WHERE parentid = ?&quot;</span><span class="p">,</span> <span class="n">tagid</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">songs</span><span class="p">,</span> <span class="n">albums</span><span class="p">,</span> <span class="n">videos</span><span class="p">,</span> <span class="n">children</span></div>
+
+
 
 
 
@@ -2453,6 +3335,13 @@
 
 <div class="viewcode-block" id="MusicDatabase.DeleteTag"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.DeleteTag">[docs]</a>    <span class="k">def</span> <span class="nf">DeleteTag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tagname</span><span class="p">,</span> <span class="n">tagclass</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See :meth:`~DeleteTagByName`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;DEPRECATED! Please call DeleteTagByName instead (same behavior)&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DeleteTag</span><span class="p">(</span><span class="n">tagname</span><span class="p">,</span> <span class="n">tagclass</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MusicDatabase.DeleteTagByName"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.DeleteTagByName">[docs]</a>    <span class="k">def</span> <span class="nf">DeleteTagByName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tagname</span><span class="p">,</span> <span class="n">tagclass</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deletes an entry from the tags-table with the name *tagname* and that belongs to *tagclass*.</span>
 
 <span class="sd">        .. warning::</span>
@@ -2484,6 +3373,38 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
+<div class="viewcode-block" id="MusicDatabase.DeleteTagById"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.DeleteTagById">[docs]</a>    <span class="k">def</span> <span class="nf">DeleteTagById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tagid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method deletes a tag addressed by its tag ID.</span>
+<span class="sd">        Before deleting the tag, this tag as well as its child-tags (sub-genre tag) will be removed from all</span>
+<span class="sd">        songs, albums and videos.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            This method has a very different behavior compared to :meth:`~DeleteTagByName`!</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tagid (int): ID of the tag to delete</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: When *tagid* is not an integer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">tagid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;TagID must be an integer!&quot;</span><span class="p">)</span>
+
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="s2">&quot;DELETE FROM tags      WHERE tagid    = ?&quot;</span><span class="p">,</span> <span class="n">tagid</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="s2">&quot;DELETE FROM tags      WHERE parentid = ?&quot;</span><span class="p">,</span> <span class="n">tagid</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="s2">&quot;DELETE FROM albumtags WHERE tagid    = ?&quot;</span><span class="p">,</span> <span class="n">tagid</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="s2">&quot;DELETE FROM songtags  WHERE tagid    = ?&quot;</span><span class="p">,</span> <span class="n">tagid</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="s2">&quot;DELETE FROM videotags WHERE tagid    = ?&quot;</span><span class="p">,</span> <span class="n">tagid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
 
 <div class="viewcode-block" id="MusicDatabase.ModifyTag"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.ModifyTag">[docs]</a>    <span class="k">def</span> <span class="nf">ModifyTag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tagname</span><span class="p">,</span> <span class="n">tagclass</span><span class="p">,</span> <span class="n">columnname</span><span class="p">,</span> <span class="n">newvalue</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -2492,6 +3413,8 @@
 <span class="sd">        *newvalue* is the new attribute set for the tag.</span>
 
 <span class="sd">        In case the icon gets modified, take care that the icon type is up to date. (update order does not matter).</span>
+
+<span class="sd">        For colors, ``None`` is a valid type to remove color</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            tagname (str): Name of the tag that shall be modified</span>
@@ -2504,6 +3427,7 @@
 
 <span class="sd">        Raises:</span>
 <span class="sd">            TypeError: if *tagname* is not a string or *parentid* does not have the value it should have regarding the specification</span>
+<span class="sd">            TypeError: When *color* is not a string and not ``None``</span>
 <span class="sd">            ValueError: When *tagclass* has an invalid value</span>
 <span class="sd">            ValueError: If columnname is not &quot;name&quot;, &quot;parentid&quot;, &quot;icontype&quot;, &quot;icon&quot;, &quot;color&quot;, &quot;posx&quot;, &quot;posy&quot;</span>
 <span class="sd">            ValueError: If columnname is &quot;color&quot; and *newvalue* is not a valid #RRGGBB-Formated string</span>
@@ -2518,10 +3442,15 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid column name </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="n">columnname</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">columnname</span> <span class="o">==</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">newvalue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;#&quot;</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;First char in color-code must be </span><span class="se">\&#39;</span><span class="s2">#</span><span class="se">\&#39;</span><span class="s2">: #RRGGBB !&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">newvalue</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">7</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Color-code must have a length of 7 character: #RRGGBB !&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">newvalue</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">newvalue</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="n">newvalue</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># remove color</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">newvalue</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Color must be a string or None&quot;</span><span class="p">);</span>
+                <span class="k">if</span> <span class="n">newvalue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;#&quot;</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;First char in color-code must be </span><span class="se">\&#39;</span><span class="s2">#</span><span class="se">\&#39;</span><span class="s2">: #RRGGBB !&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">newvalue</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">7</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Color-code must have a length of 7 character: #RRGGBB !&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">columnname</span> <span class="o">==</span> <span class="s2">&quot;icontype&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">newvalue</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">TAG_ICONTYPE_UNICODE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TAG_ICONTYPE_HTML</span><span class="p">]:</span>
@@ -2537,11 +3466,66 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
+<div class="viewcode-block" id="MusicDatabase.ModifyTagById"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.ModifyTagById">[docs]</a>    <span class="k">def</span> <span class="nf">ModifyTagById</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tagid</span><span class="p">,</span> <span class="n">columnname</span><span class="p">,</span> <span class="n">newvalue</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method allows to modify most of the attributes of a tag.</span>
+<span class="sd">        The *tagid* addresses the tag, *columnname* the attribute.</span>
+<span class="sd">        *newvalue* is the new attribute set for the tag.</span>
+
+<span class="sd">        In case the icon gets modified, take care that the icon type is up to date. (update order does not matter).</span>
+
+<span class="sd">        For colors, ``None`` is a valid type to remove color</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tagid (int): ID of the tag to modify</span>
+<span class="sd">            columnname (str): The name of the attribute that shall be modified</span>
+<span class="sd">            newvalue: The new value. Read the introduction at the top of the document to see what values are possible for a specific attribute</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: if *tagid* is not an integer</span>
+<span class="sd">            TypeError: When *color* is not a string and not ``None``</span>
+<span class="sd">            ValueError: If columnname is not &quot;name&quot;, &quot;parentid&quot;, &quot;icontype&quot;, &quot;icon&quot;, &quot;color&quot;, &quot;posx&quot;, &quot;posy&quot;</span>
+<span class="sd">            ValueError: If columnname is &quot;color&quot; and *newvalue* is not a valid #RRGGBB-Formated string</span>
+<span class="sd">            ValueError: If columnname is &quot;icontype&quot; and *newvalue* is not valid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">tagid</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Tag ID must be an integer!&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">columnname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;parentid&quot;</span><span class="p">,</span> <span class="s2">&quot;icontype&quot;</span><span class="p">,</span> <span class="s2">&quot;icon&quot;</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;posx&quot;</span><span class="p">,</span> <span class="s2">&quot;posy&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid column name </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="n">columnname</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">columnname</span> <span class="o">==</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">newvalue</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">newvalue</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="n">newvalue</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># remove color</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">newvalue</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Color must be a string or None&quot;</span><span class="p">);</span>
+                <span class="k">if</span> <span class="n">newvalue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;#&quot;</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;First char in color-code must be </span><span class="se">\&#39;</span><span class="s2">#</span><span class="se">\&#39;</span><span class="s2">: #RRGGBB !&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">newvalue</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">7</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Color-code must have a length of 7 character: #RRGGBB !&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">columnname</span> <span class="o">==</span> <span class="s2">&quot;icontype&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">newvalue</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">TAG_ICONTYPE_UNICODE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TAG_ICONTYPE_HTML</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid icontype&quot;</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">newvalue</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">tagid</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;UPDATE tags SET &quot;</span> <span class="o">+</span> <span class="n">columnname</span> <span class="o">+</span> <span class="s2">&quot;=:value WHERE tagid=:id&quot;</span>
+        <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
 
 <div class="viewcode-block" id="MusicDatabase.SetTargetTag"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.SetTargetTag">[docs]</a>    <span class="k">def</span> <span class="nf">SetTargetTag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">targetid</span><span class="p">,</span> <span class="n">tagid</span><span class="p">,</span> <span class="n">approval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method sets a tag for a target. </span>
-<span class="sd">        A target can be a song (``target = &quot;song&quot;``) or an album (``target = &quot;album&quot;``).</span>
+<span class="sd">        A target can be a song (``target = &quot;song&quot;``), a video (``target = &quot;video&quot;``) or an album (``target = &quot;album&quot;``).</span>
 
 <span class="sd">        The defaults for this method assume that the tag got set by a user.</span>
 
@@ -2552,8 +3536,8 @@
 <span class="sd">        But only if the new approval level is greater or equal to the already set one.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            target (str):   Target that shall be tagged (``&quot;song&quot;`` for a song, ``&quot;album&quot;`` for an album)</span>
-<span class="sd">            songid (int):   ID of the target that shall be tagged. (a song ID or an album ID)</span>
+<span class="sd">            target (str):   Target that shall be tagged (``&quot;song&quot;`` for a song, ``&quot;video&quot;`` for a video, ``&quot;album&quot;`` for an album)</span>
+<span class="sd">            targetid (int): ID of the target that shall be tagged. (a song ID, videoid or an album ID)</span>
 <span class="sd">            tagid (int):    ID of the tag that shall be associated with the target</span>
 <span class="sd">            approval (int): Approval of the association. Default is ``1`` - &quot;Set by User&quot;</span>
 <span class="sd">            confidence (float): Confidence of the association in case *approval* is ``0`` - &quot;Set by AI&quot;</span>
@@ -2562,14 +3546,15 @@
 <span class="sd">            ``None``</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            TypeError: If *target* not in *{&quot;song&quot;, &quot;album&quot;}*</span>
+<span class="sd">            ValueError: If ``target`` not in ``{&quot;song&quot;, &quot;album&quot;, &quot;video&quot;}``</span>
 <span class="sd">            TypeError: If ``approval == 0 and confidence == None``</span>
-<span class="sd">            ValueError: If *approval* not in *{0,1,2}*</span>
-<span class="sd">            ValueError: If ``songid == None or tagid == None``</span>
+<span class="sd">            ValueError: If ``approval`` not in ``{0,1,2}``</span>
+<span class="sd">            ValueError: If ``targetid == None or tagid == None``</span>
 <span class="sd">            AssertionError: If there already exists more than one entry</span>
+<span class="sd">            ValueError: When there is no tag existing with the given tagid</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">targetid</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">tagid</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;SongID and TagID must have a value!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Target ID and Tag ID must have a value!&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">approval</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">approval</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">confidence</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -2583,15 +3568,24 @@
         <span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;song&quot;</span><span class="p">:</span>
             <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;songtags&quot;</span>
             <span class="n">idname</span>    <span class="o">=</span> <span class="s2">&quot;songid&quot;</span>
+        <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;video&quot;</span><span class="p">:</span>
+            <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;videotags&quot;</span>
+            <span class="n">idname</span>    <span class="o">=</span> <span class="s2">&quot;videoid&quot;</span>
         <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;album&quot;</span><span class="p">:</span>
             <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;albumtags&quot;</span>
             <span class="n">idname</span>    <span class="o">=</span> <span class="s2">&quot;albumid&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;target must be </span><span class="se">\&quot;</span><span class="s2">song</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">album</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;target must be </span><span class="se">\&quot;</span><span class="s2">song</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">video</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">album</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">)</span>
 
-        <span class="c1"># check if already tagged</span>
-        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM &quot;</span> <span class="o">+</span> <span class="n">tablename</span> <span class="o">+</span> <span class="s2">&quot; WHERE &quot;</span> <span class="o">+</span> <span class="n">idname</span> <span class="o">+</span> <span class="s2">&quot; = ? AND tagid = ?&quot;</span>
         <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
+            <span class="c1"># check if tag exists</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM tags WHERE tagid = ?&quot;</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">tagid</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid tag ID </span><span class="si">%s</span><span class="s2">! There is no tag with this ID.&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">tagid</span><span class="p">)))</span>
+
+            <span class="c1"># check if already tagged</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM &quot;</span> <span class="o">+</span> <span class="n">tablename</span> <span class="o">+</span> <span class="s2">&quot; WHERE &quot;</span> <span class="o">+</span> <span class="n">idname</span> <span class="o">+</span> <span class="s2">&quot; = ? AND tagid = ?&quot;</span>
             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="p">(</span><span class="n">targetid</span><span class="p">,</span> <span class="n">tagid</span><span class="p">))</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;More that one tag entry found!&quot;</span><span class="p">)</span>
@@ -2623,18 +3617,19 @@
 
 <div class="viewcode-block" id="MusicDatabase.RemoveTargetTag"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.RemoveTargetTag">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveTargetTag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">targetid</span><span class="p">,</span> <span class="n">tagid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Removes an association between a target and a tag in the tag map - Or short: Removes a tag from a song or an album.</span>
+<span class="sd">        Removes an association between a target and a tag in the tag map.</span>
+<span class="sd">        In short: Removes a tag from a song, a video or an album.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            target (str):   Target that shall be tagged (``&quot;song&quot;`` for a song, ``&quot;album&quot;`` for an album)</span>
-<span class="sd">            targetid (int): ID of the target that shall be tagged. (a song ID or an album ID)</span>
+<span class="sd">            target (str):   Target that shall be tagged (``&quot;song&quot;`` for a song, ``&quot;video&quot;`` for a video, ``&quot;album&quot;`` for an album)</span>
+<span class="sd">            targetid (int): ID of the target that shall be tagged. (a song ID, video ID or an album ID)</span>
 <span class="sd">            tagid (int):    ID of the tag that shall be associated with the target</span>
 
 <span class="sd">        Return:</span>
 <span class="sd">            ``None``</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If *target* not in *{&quot;song&quot;, &quot;album&quot;}*</span>
+<span class="sd">            ValueError: If ``target`` not in ``{&quot;song&quot;, &quot;video&quot;, &quot;album&quot;}``</span>
 <span class="sd">            TypeError: If ``songid == None or tagid == None``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">targetid</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">tagid</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
@@ -2644,11 +3639,14 @@
         <span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;song&quot;</span><span class="p">:</span>
             <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;songtags&quot;</span>
             <span class="n">idname</span>    <span class="o">=</span> <span class="s2">&quot;songid&quot;</span>
+        <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;video&quot;</span><span class="p">:</span>
+            <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;videotags&quot;</span>
+            <span class="n">idname</span>    <span class="o">=</span> <span class="s2">&quot;videoid&quot;</span>
         <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;album&quot;</span><span class="p">:</span>
             <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;albumtags&quot;</span>
             <span class="n">idname</span>    <span class="o">=</span> <span class="s2">&quot;albumid&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;target must be </span><span class="se">\&quot;</span><span class="s2">song</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">album</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;target must be </span><span class="se">\&quot;</span><span class="s2">song</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">video</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">album</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">)</span>
 
         <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;DELETE FROM &quot;</span> <span class="o">+</span> <span class="n">tablename</span> <span class="o">+</span> <span class="s2">&quot; WHERE &quot;</span> <span class="o">+</span> <span class="n">idname</span> <span class="o">+</span> <span class="s2">&quot; = ? AND tagid = ?&quot;</span>
         <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
@@ -2660,7 +3658,7 @@
 <div class="viewcode-block" id="MusicDatabase.GetTargetTags"><a class="viewcode-back" href="../../../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetTargetTags">[docs]</a>    <span class="k">def</span> <span class="nf">GetTargetTags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">targetid</span><span class="p">,</span> <span class="n">tagclass</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of all tags of a target.</span>
-<span class="sd">        A target can be a song (``target = &quot;song&quot;``) or an album (``target = &quot;album&quot;``).</span>
+<span class="sd">        A target can be a song (``target = &quot;song&quot;``) an album (``target = &quot;album&quot;``) or a video (``target = &quot;video&quot;``).</span>
 <span class="sd">        This list contains all classes of tags if *tagclass* is ``None``, otherwise only of type *tagclass*.</span>
 
 <span class="sd">        The returned list is the target-tag-mapping augmented with the tag-entry.</span>
@@ -2669,17 +3667,17 @@
 <span class="sd">        The ID of the ID of the entry in the mapping-table is ``entryid``.</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            target (str):   Target that shall be tagged (``&quot;song&quot;`` for a song, ``&quot;album&quot;`` for an album)</span>
-<span class="sd">            targetid (int): ID of the target that tags shall be returned (song ID or album ID)</span>
+<span class="sd">            target (str):   Target that shall be tagged (``&quot;song&quot;``, ``&quot;album&quot;`` or ``&quot;video&quot;``)</span>
+<span class="sd">            targetid (int): ID of the target that tags shall be returned (song, album or video ID)</span>
 <span class="sd">            tagclass (int): If not ``None`` only tags of a specific class will be returned</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            A list of tags or ``None`` if there are no tags</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            TypeError: If *songid* is ``None``</span>
+<span class="sd">            TypeError: If *targetid* is ``None``</span>
 <span class="sd">            ValueError: If *tagclass* is set to an invalid value (``None`` is valid)</span>
-<span class="sd">            ValueError: If *target* not in *{&quot;song&quot;, &quot;album&quot;}*</span>
+<span class="sd">            ValueError: If *target* not in *{&quot;song&quot;, &quot;album&quot;, &quot;video&quot;}*</span>
 
 <span class="sd">        Example:</span>
 
@@ -2702,11 +3700,14 @@
         <span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;song&quot;</span><span class="p">:</span>
             <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;songtags&quot;</span>
             <span class="n">idname</span>    <span class="o">=</span> <span class="s2">&quot;songid&quot;</span>
+        <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;video&quot;</span><span class="p">:</span>
+            <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;videotags&quot;</span>
+            <span class="n">idname</span>    <span class="o">=</span> <span class="s2">&quot;videoid&quot;</span>
         <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="s2">&quot;album&quot;</span><span class="p">:</span>
             <span class="n">tablename</span> <span class="o">=</span> <span class="s2">&quot;albumtags&quot;</span>
             <span class="n">idname</span>    <span class="o">=</span> <span class="s2">&quot;albumid&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;target must be </span><span class="se">\&quot;</span><span class="s2">song</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">album</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;target must be </span><span class="se">\&quot;</span><span class="s2">song</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">video</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">album</span><span class="se">\&quot;</span><span class="s2">!&quot;</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="n">MusicDatabaseLock</span><span class="p">:</span>
             <span class="c1"># get all tagids assigned to the target</span>
@@ -2727,7 +3728,7 @@
                 <span class="n">sql</span>      <span class="o">=</span> <span class="s2">&quot;SELECT * FROM tags WHERE tagid = ?&quot;</span>
                 <span class="n">tagentry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFromDatabase</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;tagid&quot;</span><span class="p">])</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tagentry</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33mUnknown tag ID &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;tagid&quot;</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; for &quot;</span> <span class="o">+</span> <span class="n">target</span> <span class="o">+</span> <span class="s2">&quot; ID &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">songid</span><span class="p">))</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33mUnknown tag ID &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="s2">&quot;tagid&quot;</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; for &quot;</span> <span class="o">+</span> <span class="n">target</span> <span class="o">+</span> <span class="s2">&quot; ID &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">targetid</span><span class="p">))</span>
                     <span class="k">continue</span>
 
                 <span class="n">tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__TagEntryToDict</span><span class="p">(</span><span class="n">tagentry</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -2843,7 +3844,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020,2021 Ralf Stemmer.
 
     </p>
   </div>
@@ -2865,7 +3866,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'6.0.0',
+            VERSION:'7.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -2876,7 +3877,6 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
 
   
 

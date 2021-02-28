@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,12 +47,30 @@ class MDBState(Config, object):
         +========================+=========================+=========================+
         | songqueue.csv          | :meth:`~LoadSongQueue`  | :meth:`~SaveSongQueue`  |
         +------------------------+-------------------------+-------------------------+
+        | videoqueue.csv         | :meth:`~LoadVideoQueue` | :meth:`~SaveVideoQueue` |
+        +------------------------+-------------------------+-------------------------+
         | artistblacklist.csv    | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |
         +------------------------+-------------------------+-------------------------+
         | albumblacklist.csv     | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |
         +------------------------+-------------------------+-------------------------+
         | songblacklist.csv      | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |
         +------------------------+-------------------------+-------------------------+
+        | videoblacklist.csv     | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |
+        +------------------------+-------------------------+-------------------------+
+
+    Additional this class allows to access the file ``state.ini`` in the MusicDB State Directory.
+    The file can be accessed via :meth:`~lib.cfg.config.Config.Set` and :meth:`~lib.cfg.config.Config.Get`.
+    The section ``meta`` is reserved for this ``MDBState`` class.
+
+    Another section is ``MusicDB`` that represents the state of the MusicDB WebUI (and possibly backend in future).
+    One key is ``uimode`` that can be set via :meth:`~SetUIMode` and read via :meth:`~GetUIMode`.
+    The value for this key is a string and can be ``"audio"`` or ``"video"``.
+    The value represents if the user interface is in audio-mode to manage an audio stream or video-mode to present music videos.
+
+    The method :meth:`~GetFilterList` accesses a section ``albumfiler``.
+    Each key in this section represents a main genre (all characters lower case) tag and can have the value ``True`` or ``False``.
+    If a genre is not listed in this section, it is assumed to have the value ``False``.
+    As soon as the genre gets activated via the WebUIs genre selection interface, it appears in the albumfiler-list.
 
     Args:
         path: Absolute path to the MusicDB state directory
@@ -70,6 +88,10 @@ class MDBState(Config, object):
         if self.meta.version < 2:
             logging.info("Updating mdbstate/state.ini to version 2")
             self.Set("meta", "version", 2)
+        if self.meta.version < 3:
+            logging.info("Updating mdbstate/state.ini to version 3")
+            self.Set("meta", "version", 3)
+            self.Set("MusicDB", "uimode", "audio")
 
 
     def ReadList(self, listname):
@@ -99,16 +121,19 @@ class MDBState(Config, object):
         return rows
 
 
-    def WriteList(self, listname, rows):
+    def WriteList(self, listname, rows, header=None):
         """
         This method write a list of rows into the related file.
         The ``listname`` argument defines which file gets written: ``config.server.statedir/listname.csv``.
+
+        When there is no header given (list of column names), the keys of the rows-dictionaries are used.
 
         This method should only be used by class internal methods.
 
         Args:
             listname (str): Name of the list to read without trailing .csv
             rows(list): The list that shall be stored
+            header (list): Optional list with column names as string.
 
         Returns:
             ``True`` on success, otherwise ``False``
@@ -121,9 +146,10 @@ class MDBState(Config, object):
 
         try:
             csv  = CSVFile(path)
-            csv.Write(rows)
+            csv.Write(rows, header)
         except Exception as e:
             logging.warning("Accessing file \"%s\" failed with error %s", str(path), str(e))
+            logging.debug("Header: %s", str(header))
             logging.debug("Data: %s", str(rows))
             return False
         return True
@@ -148,7 +174,7 @@ class MDBState(Config, object):
                 entry = {}
                 entry["entryid"]  = int( row["EntryID"])
                 entry["songid"]   = int( row["SongID"])
-                entry["israndom"] = bool(row["IsRandom"])
+                entry["israndom"] = (row["IsRandom"] == "True")
 
                 queue.append(entry)
             except Exception as e:
@@ -183,13 +209,67 @@ class MDBState(Config, object):
         return
 
 
+    def LoadVideoQueue(self):
+        """
+        This method reads the video queue from the state directory.
+
+        The method returns the queue as needed inside :meth:`mdbapi.videoqueue.VideoQueue`:
+        A list of dictionaries, each containing the ``entryid`` and ``videoid`` as integers and ``israndom`` as boolean.
+
+        The UUIDs of the queue entries remain.
+
+        Returns:
+            A stored video queue
+        """
+        rows  = self.ReadList("videoqueue")
+        queue = []
+        for row in rows:
+            try:
+                entry = {}
+                entry["entryid"]  = int( row["EntryID"])
+                entry["videoid"]  = int( row["VideoID"])
+                entry["israndom"] = (row["IsRandom"] == "True")
+
+                queue.append(entry)
+            except Exception as e:
+                logging.warning("Invalid entry in stored Video Queue: \"%s\"! \033[1;30m(Entry will be ignored)", str(row))
+
+        return queue
+
+
+    def SaveVideoQueue(self, queue):
+        """
+        This method saves a video queue.
+        The data structure of the queue must be exact as the one expected when the queue shall be loaded.
+
+        Args:
+            queue (dictionary): The video queue to save.
+
+        Returns:
+            *Nothing*
+        """
+        # transform data to a structure that can be handled by the csv module
+        # save entry ID as string, csv cannot handle 128bit integer
+        rows = []
+        for entry in queue:
+            row = {}
+            row["EntryID"]  = str(entry["entryid"])
+            row["VideoID"]   = int(entry["videoid"])
+            row["IsRandom"] = str(entry["israndom"])
+
+            rows.append(row)
+
+        self.WriteList("videoqueue", rows)
+        return
+
+
     def __LoadBlacklist(self, filename, idname, length):
         # filename: artistblacklist
         # idname:   ArtistID
-        if filename not in ["artistblacklist","albumblacklist","songblacklist"]:
-            raise ValueError("filename must be \"artistblacklist\", \"albumblacklist\" or \"songblacklist\"")
-        if idname not in ["ArtistID","AlbumID","SongID"]:
-            raise ValueError("idname must be \"ArtistID\", \"AlbumID\" or \"SongID\"")
+        if filename not in ["artistblacklist","albumblacklist","songblacklist","videoblacklist"]:
+            raise ValueError("filename must be \"artistblacklist\", \"albumblacklist\" or \"songblacklist\", \"videoblacklist\"")
+        if idname not in ["ArtistID","AlbumID","SongID","VideoID"]:
+            raise ValueError("idname must be \"ArtistID\", \"AlbumID\" or \"SongID\". \"VideoID\"")
 
         rows      = self.ReadList(filename)
         rows      = rows[:length]   # Do not process more entries than necessary
@@ -223,15 +303,17 @@ class MDBState(Config, object):
     
         return blacklist
 
-    def LoadBlacklists(self, songbllen, albumbllen, artistbllen):
+    def LoadBlacklists(self, songbllen, albumbllen, artistbllen, videobllen):
         """
-        This method returns a dictionary with the blacklist managed by :class:`mdbapi.randy.Randy`.
+        This method returns a dictionary with the blacklist used by :class:`mdbapi.randy.Randy`.
+        The blacklists are managed by the :class:`~mdbapi.blacklist.BlacklistInterface` class.
         This method also handles the blacklist length by adding empty entries or cutting off exceeding ones.
 
         Args:
             songbllen (int): Number of entries the blacklist shall have
             albumbllen (int): Number of entries the blacklist shall have
             artistbllen (int): Number of entries the blacklist shall have
+            videobllen (int): Number of entries the blacklist shall have
 
         Returns:
             A dictionary with the blacklists as expected by :class:`mdbapi.randy.Randy`
@@ -241,15 +323,16 @@ class MDBState(Config, object):
         blacklists["artists"] = self.__LoadBlacklist("artistblacklist", "ArtistID", artistbllen)
         blacklists["albums"]  = self.__LoadBlacklist("albumblacklist",  "AlbumID",  albumbllen)
         blacklists["songs"]   = self.__LoadBlacklist("songblacklist",   "SongID",   songbllen)
+        blacklists["videos"]  = self.__LoadBlacklist("videoblacklist",  "VideoID",  videobllen)
         return blacklists
 
 
 
     def __SaveBlacklist(self, blacklist, filename, idname):
-        if filename not in ["artistblacklist","albumblacklist","songblacklist"]:
-            raise ValueError("filename must be \"artistblacklist\", \"albumblacklist\" or \"songblacklist\"")
-        if idname not in ["ArtistID","AlbumID","SongID"]:
-            raise ValueError("idname must be \"ArtistID\", \"AlbumID\" or \"SongID\"")
+        if filename not in ["artistblacklist","albumblacklist","songblacklist","videoblacklist"]:
+            raise ValueError("filename must be \"artistblacklist\", \"albumblacklist\" or \"songblacklist\", \"videoblacklist\"")
+        if idname not in ["ArtistID","AlbumID","SongID","VideoID"]:
+            raise ValueError("idname must be \"ArtistID\", \"AlbumID\" or \"SongID\", \"VideoID\"")
 
         rows = []
         for entry in blacklist:
@@ -261,13 +344,13 @@ class MDBState(Config, object):
 
             rows.append(row)
 
-        self.WriteList(filename, rows)
+        self.WriteList(filename, rows, [idname, "TimeStamp"])
         return
 
     def SaveBlacklists(self, blacklists):
         """
         This method stores the blacklist in the related CSV files.
-        The data structure of the dictionary is expected to be the same, :class:`mdbapi.randy.Randy` uses.
+        The data structure of the dictionary is expected to be the same, :class:`mdbapi.blacklist.BlacklistInterface` uses.
 
         Args:
             blacklist (dict): A dictionary of blacklists.
@@ -278,6 +361,7 @@ class MDBState(Config, object):
         self.__SaveBlacklist(blacklists["songs"],   "songblacklist",   "SongID")
         self.__SaveBlacklist(blacklists["albums"],  "albumblacklist",  "AlbumID")
         self.__SaveBlacklist(blacklists["artists"], "artistblacklist", "ArtistID")
+        self.__SaveBlacklist(blacklists["videos"],  "videoblacklist",  "VideoID")
         return
 
 
@@ -315,6 +399,46 @@ class MDBState(Config, object):
                 filterlist.append(tag["name"])
 
         return filterlist
+
+
+    def GetUIMode(self):
+        """
+        This method simply returns the content of ``[MusicDB]->uimode`` in the state.ini file.
+        In case the value is invalid or not set, ``"audio"`` gets returned.
+
+        Valid strings are ``"audio"`` or ``"video"``
+
+        Returns:
+            A string ``"audio"`` or ``"video"``
+        """
+        mode = self.Get(str, "MusicDB", "uimode", "audio")
+        if mode not in ["audio", "video"]:
+            mode = "audio"
+        return mode
+
+    def SetUIMode(self, mode):
+        """
+        Sets the UI mode in the state.ini file.
+        Before writing the data ``mode`` gets checked if it contains a valid value.
+        If mode is an invalid argument, an exception gets raised.
+
+        Args:
+            mode (str): ``"audio"`` or ``"video"`` mode
+
+        Returns:
+            ``None``
+
+        Raises:
+            TypeError: When mode is not of type string
+            ValueError: When mode contains an invalid string
+        """
+        if type(mode) is not str:
+            raise TypeError("Mode must be a string")
+        if not mode in ["audio", "video"]:
+            raise ValueError("Mode must be \"audio\" or \"video\"")
+
+        self.Set("MusicDB", "uimode", mode) 
+        return None
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 

@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017,2018  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ class MusicDBDatabase(object):
             * :meth:`~AnalysePath`: Extract song information from its file path
             * :meth:`~TyrAnalysePathFor`: Check if the given path is valid for an artist, album or song
         * Database management
-            * :meth:`~AddArtist`, :meth:`~AddAlbum`, :meth:`~AddSong`: Adds a new artist, album or song to the database
+            * :meth:`~AddArtist`, :meth:`~AddAlbum`, :meth:`~AddSong`, :meth:`~AddVideo`: Adds a new artist, album, song video to the database
             * :meth:`~UpdateArtist`, :meth:`~UpdateAlbum`, :meth:`~UpdateSong`: Updates a artist, album or song path in the database
             * :meth:`~RemoveArtist`, :meth:`~RemoveAlbum`, :meth:`~RemoveSong`: Removes a artist, album or song from the database
         * Add information into the database
@@ -121,64 +121,83 @@ class MusicDBDatabase(object):
 
     def FindNewPaths(self):
         """
-        This method searches inside the music directory for valid artist, album and song paths.
+        This method searches inside the music directory for valid artist, album song and video paths.
         If those paths are not in the database, they will be returned.
-        So this method returns three lists: ``artistpaths, albumpaths, songpaths``.
-        Each representing an artist, album or song that is not known by the database yet.
+        So this method returns four lists: artist-, album-, song-, and video- paths.
+        Each representing an artist, album, song or video that is not known by the database yet.
         Files and directories in the configured ignore-list will be ignored.
 
-        If a new directory was found, the subdirectories will not be added!
-        So for a new album, the new songs are implicite and not listed in the new-songs-list.
+        If a new directory was found, the subdirectories will also be added!
+        So for a new album, the new songs are explicit added as well.
 
         This method is very optimistic. It will also list empty directories.
         The user may want to check if the results of this method are valid for him.
 
-        Further more this method is error tolerant. This means, if in the database is an invalid entry,
-        this does not lead to errors. For example, if an album path gets renamed, this path will be returned.
+        Furthermore this method is error tolerant. This means, if in the database has an invalid entry,
+        it does not lead to errors. For example, if an album path gets renamed, this path will be returned.
         It does not lead to an error that the old path is still in the database.
 
         Returns:
-            A three lists of paths that are valid but unknown by the database. Empty lists if there is no invalid entrie.
+            A dictionary with 4 entries: ``"artists"``, ``"albums"``, ``"songs"`` and ``"videos"``.
+            Each a list of paths that are valid but unknown by the database. Empty lists if there is no valid entry.
         """
-        newartists = []
-        newalbums  = []
-        newsongs   = []
+        newpaths = {}
+        newpaths["artists"] = []
+        newpaths["albums"]  = []
+        newpaths["songs"]   = []
+        newpaths["videos"]  = []
+
+        artistpaths = self.fs.GetSubdirectories(None, self.ignoreartists)
+        artistpaths = [self.fs.RemoveRoot(path) for path in artistpaths]
 
         # Check Artists
         artists          = self.db.GetAllArtists()
         knownartistpaths = [artist["path"] for artist in artists if self.fs.IsDirectory(artist["path"])]
-        artistpaths      = self.fs.GetSubdirectories(None, self.ignoreartists)
 
         for path in artistpaths:
-            path = self.fs.RemoveRoot(path)
             if path not in knownartistpaths:
-                newartists.append(path)
+                newpaths["artists"].append(path)
 
         # Check Albums
         albums          = self.db.GetAllAlbums()
         knownalbumpaths = [album["path"] for album in albums if self.fs.IsDirectory(album["path"])]
-        albumpaths      = self.fs.GetSubdirectories(knownartistpaths, self.ignorealbums)
+        albumpaths      = self.fs.GetSubdirectories(artistpaths, self.ignorealbums)
         
         for path in albumpaths:
             if path not in knownalbumpaths:
-                newalbums.append(path)
+                newpaths["albums"].append(path)
 
         # Check Songs
         songs           = self.db.GetAllSongs()
         knownsongpaths  = [song["path"] for song in songs if self.fs.IsFile(song["path"])]
-        songpaths       = self.fs.GetFiles(knownalbumpaths, self.ignoresongs)
+        songpaths       = self.fs.GetFiles(albumpaths, self.ignoresongs)
 
         for path in songpaths:
 
             # check if this is really an audio file
             extension = self.fs.GetFileExtension(path)
-            if extension not in ["mp4", "aac", "m4a", "mp3", "flac", "MP3"]:
+            if extension not in ["aac", "m4a", "mp3", "flac", "MP3"]:
                 continue
 
             if path not in knownsongpaths:
-                newsongs.append(path)
+                newpaths["songs"].append(path)
 
-        return newartists, newalbums, newsongs
+        # Check Videos
+        videos          = self.db.GetVideos()
+        knownvideopaths = [video["path"] for video in videos if self.fs.IsFile(video["path"])]
+        videopaths      = self.fs.GetFiles(artistpaths)
+
+        for path in videopaths:
+
+            # check if this is really an audio file
+            extension = self.fs.GetFileExtension(path)
+            if extension not in ["mp4", "m4v", "webm"]:
+                continue
+
+            if path not in knownvideopaths:
+                newpaths["videos"].append(path)
+
+        return newpaths
 
 
 
@@ -216,75 +235,118 @@ class MusicDBDatabase(object):
 
     def AnalysePath(self, path):
         """
-        This method analyses a path to a song and extracts all the information encoded in the path.
+        This method analyses a path to a song or video and extracts all the information encoded in the path.
         The path must consist of three parts: The artist directory, the album directory and the song file.
+        For videos only two parts are expected: The artist directory and the video file
 
         A valid path has one the following structures: 
         
             * ``{artistname}/{albumrelease} - {albumname}/{songnumber} {songname}.{extension}``
             * ``{artistname}/{albumrelease} - {albumname}/{cdnumber}-{songnumber} {songname}.{extension}``
+            * ``{artistname}/{videorelease} - {videoname}.{extension}``
 
-        The returned dictionary holds all the extracted information.
-        In case there is no *cdnumber*, this entry is ``1``.
+        The returned dictionary holds all the extracted information from the scheme listed above.
+        The following entries exists but may be ``None`` depending if the path addresses a video or song.
+
+            * artist
+            * release
+            * album
+            * song
+            * video
+            * songnumber
+            * cdnumber
+            * extension
+
+        In case there is no *cdnumber* specified for a song, this entry is ``1``.
         The names can have all printable Unicode characters and of cause spaces.
 
         If an error occurs because the path does not follow the scheme, ``None`` gets returned.
         This method does not check if the path exists!
 
         Args:
-            path (str): A path of a song including artist and album directory.
+            path (str): A path of a song including artist and album directory or a video including the artists directory.
 
         Returns:
-            On success, a dictionary with information about the artist, album and song.
+            On success, a dictionary with information about the artist, album and song or video is returned.
             Otherwise ``None`` gets returned.
         """
+        # Define all possibly used variables to a avoid undefined behavior
         result = {}
+        result["artist"]    = None
+        result["album"]     = None
+        result["song"]      = None
+        result["video"]     = None
+        result["release"]   = None
+        result["songnumber"]= None
+        result["cdnumber"]  = None
+        result["extension"] = None
+        artist = None
+        album  = None
+        song   = None
+        video  = None
 
-        # separate the artist album and song name stored in the filesystem
-        try:
+        # separate parts of the path
+        parts = path.count("/")
+        if parts == 1:  # This my be a video
+            [artist, video] = path.split("/")[-2:]
+        elif parts == 2: # This may be a song
             [artist, album, song] = path.split("/")[-3:]
-        except:
+        else:
             logging.warning("Analysing \"%s\" failed!", path)
-            logging.warning("path cannot be split into three parts: {artist}/{album}/{song}")
+            logging.warning("Path cannot be split into three parts {artist}/{album}/{song} or two parts {artist}/{video}")
             return None
 
-        # analyse the artist-infos
+        # analyze the artist information
         result["artist"] = artist
 
-        # analyse the album-infos
-        albuminfos = self.fs.AnalyseAlbumDirectoryName(album)
-        if albuminfos == None:
-            logging.warning("Analysing \"%s\" failed!", path)
-            logging.warning("Unexpected album directory name. Expecting \"{year} - {name}\"")
-            return None
+        # analyze the album information
+        if album:
+            albuminfos = self.fs.AnalyseAlbumDirectoryName(album)
+            if albuminfos == None:
+                logging.warning("Analysing \"%s\" failed!", path)
+                logging.warning("Unexpected album directory name. Expecting \"{year} - {name}\"")
+                return None
 
-        result["release"] = albuminfos["release"]
-        result["album"]   = albuminfos["name"]
+            result["release"] = albuminfos["release"]
+            result["album"]   = albuminfos["name"]
 
-        # analyse the song-infos
-        try:
-            songname   = song.split(" ")[1:]
-            songnumber = song.split(" ")[0]
-
+        # analyze the song information
+        if song:
             try:
-                [cdnumber, songnumber] = songnumber.split("-")
+                songname   = song.split(" ")[1:]
+                songnumber = song.split(" ")[0]
+
+                try:
+                    [cdnumber, songnumber] = songnumber.split("-")
+                except:
+                    cdnumber = 1
+
+                songnumber = int(songnumber)
+                cdnumber   = int(cdnumber)
+                songname   = " ".join(songname)
+                extension  = os.path.splitext(songname)[1][1:]  # get extension without leading "."
+                songname   = os.path.splitext(songname)[0]      # remove extension
             except:
-                cdnumber = 1
+                logging.warning("Analysing \"%s\" failed!", path)
+                logging.warning("Unexpected song file name. Expected \"[{cdnumber}-]{songnumber} {songname}.{ending}\".")
+                return None
 
-            songnumber = int(songnumber)
-            cdnumber   = int(cdnumber)
-            songname   = " ".join(songname)
-            extension  = os.path.splitext(songname)[1][1:]  # get extension without leading "."
-            songname   = os.path.splitext(songname)[0]      # remove extension
-        except:
-            logging.warning("Analysing \"%s\" failed!", path)
-            logging.warning("Unexpected song file name. Expected \"[{cdnumber}-]{songnumber} {songname}.{ending}\".")
-            return None
+            result["song"]       = songname
+            result["songnumber"] = songnumber
+            result["cdnumber"]   = cdnumber
+            result["extension"]  = extension
 
-        result["song"]       = songname
-        result["songnumber"] = songnumber
-        result["cdnumber"]   = cdnumber
-        result["extension"]  = extension
+        # analyze the video information
+        if video:
+            videoinfos = self.fs.AnalyseVideoFileName(video)
+            if videoinfos == None:
+                logging.warning("Analyzing \"%s\" failed!", path)
+                logging.warning("Unexpected video file name. Expecting \"{year} - {name}.{extension}\"")
+                return None
+
+            result["release"]   = videoinfos["release"]
+            result["video"]     = videoinfos["name"]
+            result["extension"] = videoinfos["extension"]
 
         return result
 
@@ -537,6 +599,7 @@ class MusicDBDatabase(object):
         album["release"] = fsmeta["release"]
         album["origin"]  = tagmeta["origin"]
         album["added"]   = moddate
+        album["hidden"]  = False
         
         if artistid == None:
             # the artistname IS the path, because thats how the fsmeta data came from
@@ -583,7 +646,10 @@ class MusicDBDatabase(object):
         album["numofsongs"] = len(songs)
         album["numofcds"]   = numofcds
 
-        self.db.WriteAlbum(album)
+        try:
+            self.db.WriteAlbum(album)
+        except Exception as e:
+            logging.exception("CRITICAL ERROR! Updating album information failed with error \"%s\". Use the musicdb database command to remove this album and see the log file for further details.", str(e))
         return None
 
 
@@ -735,6 +801,8 @@ class MusicDBDatabase(object):
         song["lyricsstate"] = SONG_LYRICSSTATE_EMPTY
         song["checksum"]    = self.fs.Checksum(songpath)
         song["lastplayed"]  = 0
+        song["liverecording"]=0
+        song["badaudio"]    = 0
 
         # FIX: THE FILESYSTEM IS _ALWAYS_ RIGHT! - WHAT THE FUCK!
         song["name"] = fsmeta["song"] 
@@ -874,6 +942,192 @@ class MusicDBDatabase(object):
         album["numofsongs"] = len(songs)
         album["numofcds"]   = numofcds
         self.db.WriteAlbum(album)
+        return None
+
+
+
+    def AddVideo(self, videopath, artistid=None):
+        """
+        This method adds a video to the MusicDB database.
+        To do so, the following steps were done:
+
+            #. Check if the video already exists in the database
+            #. Load the metadata from the video using :meth:`lib.metatags.MetaTags.GetAllMetadata`
+            #. Analyze the path of one of the video using :meth:`~mdbapi.database.MusicDBDatabase.AnalysePath`
+            #. If *artistid* is not given as parameter, it gets read from the database identifying the artist by its path.
+            #. Set file attributes and ownership using :meth:`~mdbapi.database.MusicDBDatabase.FixAttributes`
+            #. Add video to database
+
+        This method assumes that the artist the video belongs to exists in the database.
+        If not, an ``AssertionError`` exception gets raised.
+
+        Args:
+            videopath (str): Absolute path, or path relative to the music root directory, to the video that shall be added to the database.
+            artistid (int): Optional, default value is ``None``. The ID of the artist this video belongs to.
+
+        Returns:
+            ``True`` on success, otherwise ``False`` (or it raises an exception)
+
+        Raises:
+            ValueError: If video already exists in the database
+            AssertionError: If analyzing the path fails
+            AssertionError: If artist does not exists in the database
+            AssertionError: If adding the video to the database fails
+        """
+        # do some checks
+        # remove the root-path to the music directory
+        try:
+            videopath = self.fs.RemoveRoot(videopath) # remove the path to the music directory
+        except:
+            pass
+
+        # Check if the video already exists in the database
+        video = self.db.GetVideoByPath(videopath)
+        if video != None:
+            raise ValueError("Video \"" + video["name"] + "\" does already exist in the database.")
+
+        # Get all information from the video path and its meta data
+        try:
+            self.meta.Load(videopath)
+        except Exception as e:
+            logging.error("Meta data of file %s cannot be loaded (Error: %s). Assuming this is not a video file!", str(videopath), str(e))
+            # Ignore this file, it is not a valid song file
+            return False
+
+        tagmeta = self.meta.GetAllMetadata()
+        fsmeta  = self.AnalysePath(videopath)
+        if fsmeta == None:
+            raise AssertionError("Invalid path-format: " + videopath)
+
+        moddate = self.fs.GetModificationDate(videopath)
+
+        # artistid may be not given by the arguments of this method.
+        # In this case, it must be searched in the database
+        if artistid == None:
+            artist = self.db.GetArtistByPath(fsmeta["artist"])
+            if artist == None:
+                raise AssertionError("Artist for the video \"" + videopath + "\" is not available in the database.")
+            artistid = artist["id"]
+
+        # Collect all data needed for the song-entry (except the song ID)
+        # Remember! The file system is always right!
+        video = {}
+        video["id"]          = None     # Not yet known. Will be inserted by AddFullVideo
+        video["songid"]      = None
+        video["albumid"]     = None
+        video["artistid"]    = artistid
+        video["name"]        = fsmeta["video"]
+        video["path"]        = videopath
+        video["disabled"]    = 0
+        video["playtime"]    = tagmeta["playtime"]
+        video["origin"]      = tagmeta["origin"]
+        video["release"]     = fsmeta["release"]
+        video["added"]       = moddate
+        video["codec"]       = tagmeta["codec"]
+        video["xresolution"] = tagmeta["xresolution"]
+        video["yresolution"] = tagmeta["yresolution"]
+        video["framesdirectory"] = ""
+        video["thumbnailfile"]   = ""
+        video["previewfile"] = ""
+        video["likes"]       = 0
+        video["dislikes"]    = 0
+        video["favorite"]    = 0
+        video["liverecording"]=0
+        video["badaudio"]    = 0
+        video["checksum"]    = self.fs.Checksum(videopath)
+        video["lastplayed"]  = 0
+        video["lyricsvideo"] = 0
+        video["bgcolor"]     = "#101010"
+        video["fgcolor"]     = "#F0F0F0"
+        video["hlcolor"]     = "#909090"
+        video["vbegin"]      = 0
+        video["vend"]        = video["playtime"]
+
+        # Fix attributes to fit in MusicDB environment before adding it to the database
+        try:
+            self.FixAttributes(videopath)
+        except Exception as e:
+            logging.warning("Fixing file attributes failed with error: %s \033[1;30m(leaving permissions as they are)",
+                    str(e))
+
+        # add to database
+        retval = self.db.AddFullVideo(video)
+        if retval == False:
+            raise AssertionError("Adding video %s failed!", video["path"])
+
+        return True
+
+
+
+    def UpdateVideo(self, videoid, newpath):
+        """
+        This method updates a video entry in the database.
+        The following steps will be done to do this:
+
+            #. Update the *path* entry of the video to the new path (in case the file name is different)
+            #. Reading the video files meta data
+            #. Analyse the path to collect further information from the file system
+            #. Update database entry with the new collected information
+
+        Updates information are:
+
+            * path
+            * name
+            * playtime
+            * origin
+            * release
+            * date the file was added
+            * codec
+            * x/y resolution
+            * video begin/end
+            * checksum
+
+        Args:
+            videoid (int): ID of the video entry that shall be updated
+            newpath (str): Relative path to the new album
+
+        Returns:
+            ``None``
+
+        Raises:
+            AssertionError: When the new path is invalid
+            Exception: When loading the meta data failes
+        """
+        try:
+            newpath = self.fs.RemoveRoot(newpath) # remove the path to the music directory
+        except:
+            pass
+        video     = self.db.GetVideoById(videoid)
+        videopath = newpath
+
+        # Get all information from the video path and its meta data
+        try:
+            self.meta.Load(videopath)
+        except Exception as e:
+            logging.excpetion("Meta data of file %s cannot be load. Error: %s", str(videopath), str(e))
+            raise e
+
+        tagmeta = self.meta.GetAllMetadata()
+        moddate = self.fs.GetModificationDate(videopath)
+        fsmeta  = self.AnalysePath(videopath)
+        if fsmeta == None:
+            raise AssertionError("Invalid path-format: " + videopath)
+
+        # Remember! The file system is always right
+        video["name"]        = fsmeta["video"]
+        video["path"]        = videopath
+        video["playtime"]    = tagmeta["playtime"]
+        video["origin"]      = tagmeta["origin"]
+        video["release"]     = fsmeta["release"]
+        video["added"]       = moddate
+        video["codec"]       = tagmeta["codec"]
+        video["xresolution"] = tagmeta["xresolution"]
+        video["yresolution"] = tagmeta["yresolution"]
+        video["checksum"]    = self.fs.Checksum(videopath)
+        video["vbegin"]      = 0
+        video["vend"]        = video["playtime"]
+
+        self.db.WriteVideo(video)
         return None
 
 

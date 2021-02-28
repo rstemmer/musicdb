@@ -44,7 +44,10 @@ function CheckPythonModuleExistence
 echo -e "\e[1;34mChecking programs …"
 CheckBinaryExistence "python"
 CheckBinaryExistence "icecast"
-CheckBinaryExistence "gst-inspect-1.0"
+echo -e "\e[1;37m [!] \033[0;33mPlease check if the latest \e[0;36mlibshout\e[0;33m is installed.\e[0m"
+CheckBinaryExistence "gst-inspect-1.0" opt
+echo -e "\e[1;37m [!] \033[0;33mPlease check if all latest \e[0;36mGStreamer Plugins\e[0;33m are installed.\e[0m"
+echo -e "\e[1;37m [!] \033[0;33mPlease check if the latest \e[0;36mpython-gst\e[0;33m module is installed.\e[0m"
 CheckBinaryExistence "id3edit"   inc
 CheckBinaryExistence "clang"        # To compile id3edit
 CheckBinaryExistence "ffmpeg"

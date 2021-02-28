@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; MusicDB 6.0.0 documentation</title>
+  <title>Index &mdash; MusicDB 7.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="MusicDB 6.0.0 documentation" href="index.html"/> 
+    <link rel="top" title="MusicDB 7.0.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                6.0
+                7.0
               </div>
             
           
@@ -108,6 +108,8 @@
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#database">database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#music">music</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/config.html#uploads">uploads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#lycra">lycra</a></li>
@@ -115,6 +117,14 @@
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basics/logging.html">Handling log-files</a></li>
@@ -182,12 +192,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basics/webapi.html#available-methods">Available Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/webapi.html#albums">Albums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/webapi.html#videos">Videos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/webapi.html#queue">Queue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/webapi.html#tag-related">Tag related</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/webapi.html#uploading">Uploading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
@@ -210,12 +223,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="usage/docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="usage/docker.html#prepare-environment">Prepare Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="usage/docker.html#build-the-image">Build the Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="usage/docker.html#using-the-image">Using the Image</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -228,8 +235,7 @@
 <li class="toctree-l2"><a class="reference internal" href="usage/install.html#id1">Configuring MusicDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage/install.html#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="usage/install.html#update">Update</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/install.html#update-to-a-new-version">Update to a New Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage/install.html#installation-manually">Installation (Manually)</a><ul>
@@ -238,7 +244,7 @@
 <li class="toctree-l3"><a class="reference internal" href="usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/install.html#libprinthex">libprinthex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/install.html#id3">id3edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
@@ -249,6 +255,7 @@
 <li class="toctree-l3"><a class="reference internal" href="usage/music.html#artist-directory-name">Artist Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/music.html#album-directory-name">Album Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/music.html#music-video-file-name">Music Video File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
@@ -258,6 +265,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage/music.html#updating-songs">Updating Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage/music.html#importing-videos-to-musicdb">Importing Videos to MusicDB</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage/scripts.html">Scripts</a><ul>
@@ -321,9 +329,8 @@
 <li class="toctree-l2"><a class="reference internal" href="mod/tags.html#example-calls">Example calls</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mod/tracker.html">tracker - Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mod/tracker.html#module-mod.tracker">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mod/tracker.html#class-description">Class Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mod/videoframes.html">videoframes - Video Frames and Preview Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mod/videoframes.html#class">class</a></li>
 </ul>
 </li>
 </ul>
@@ -341,6 +348,14 @@
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/artwork.html#algorithm">Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdbapi/audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/audiostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/audiostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/audiostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/audiostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/audiostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mdbapi/blacklist.html">Blacklist</a><ul>
@@ -383,6 +398,7 @@
 <li class="toctree-l4"><a class="reference internal" href="mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="mdbapi/randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/randy.html#randy-class">Randy Class</a></li>
@@ -395,14 +411,6 @@
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mdbapi/stream.html">Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mdbapi/stream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mdbapi/stream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mdbapi/stream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
@@ -411,6 +419,35 @@
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdbapi/uploadmanager.html">Upload Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videoframes.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videoframes.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videoframes.html#path-structure">Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videoframes.html#https-server">HTTPS Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videoframes.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videoframes.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videoframes.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videoqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videoqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mdbapi/videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mdbapi/videostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 </ul>
@@ -435,6 +472,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lib/config.html#module-lib.cfg.webui">WebUI Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
 </ul>
@@ -487,9 +525,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lib/musicdb.html#validity-of-columns">Validity of columns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/musicdb.html#adding-a-column">Adding a Column</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lib/musicdb.html#songs">Songs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lib/musicdb.html#videos">Videos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lib/musicdb.html#video-relates-methods">Video Relates Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="lib/musicdb.html#albums">Albums</a><ul>
@@ -503,7 +546,7 @@
 <li class="toctree-l2"><a class="reference internal" href="lib/musicdb.html#tags">Tags</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="lib/musicdb.html#database-api">Database API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lib/musicdb.html#tag-related-methods">Tag Related Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
@@ -522,21 +565,6 @@
 </ul>
 <p class="caption"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="webui/websockets.html#connection-process">Connection Process</a></li>
 <li class="toctree-l2"><a class="reference internal" href="webui/websockets.html#watchdog">Watchdog</a></li>
@@ -670,7 +698,7 @@
         <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddAlbum">(mdbapi.database.MusicDBDatabase method)</a>
 </li>
       </ul></li>
-      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue">AddAlbumToQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+      <li><a href="basics/webapi.html#id4">AddAlbumToQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>, <a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue">[1]</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.AddArtist">AddArtist() (lib.db.musicdb.MusicDatabase method)</a>
 
@@ -682,15 +710,25 @@
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.AddFullSong">AddFullSong() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.AddFullVideo">AddFullVideo() (lib.db.musicdb.MusicDatabase method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddGenre">AddGenre() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
       <li><a href="lib/clui.html#lib.clui.dialog.Dialog.AddInput">AddInput() (lib.clui.dialog.Dialog method)</a>
 </li>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddLyricsFromFile">AddLyricsFromFile() (mdbapi.database.MusicDBDatabase method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddMoodFlag">AddMoodFlag() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.tabgroup.TabGroup.AddPane">AddPane() (lib.clui.tabgroup.TabGroup method)</a>
 </li>
       <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.AddRandomSong">AddRandomSong() (mdbapi.songqueue.SongQueue method)</a>
 </li>
-      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue">AddRandomSongToQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+      <li><a href="basics/webapi.html#id5">AddRandomSongToQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>, <a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue">[1]</a>
+</li>
+      <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.AddRandomVideo">AddRandomVideo() (mdbapi.videoqueue.VideoQueue method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomVideoToQueue">AddRandomVideoToQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.AddRelation">AddRelation() (lib.db.trackerdb.TrackerDatabase method)</a>
 </li>
@@ -703,16 +741,26 @@
 </li>
         <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.AddSong">(mdbapi.songqueue.SongQueue method)</a>
 </li>
-        <li><a href="mdbapi/tracker.html#mdbapi.tracker.Tracker.AddSong">(mdbapi.tracker.Tracker method)</a>
-</li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue">AddSongToQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+      <li><a href="basics/webapi.html#id6">AddSongToQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>, <a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue">[1]</a>
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSubgenre">AddSubgenre() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="lib/websockets.html#lib.ws.websocket.MusicDBWebSocketFactory.AddToBroadcast">AddToBroadcast() (lib.ws.websocket.MusicDBWebSocketFactory method)</a>
+</li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.AddVideo">AddVideo() (lib.db.musicdb.MusicDatabase method)</a>
+
+      <ul>
+        <li><a href="mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface.AddVideo">(mdbapi.blacklist.BlacklistInterface method)</a>
+</li>
+        <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddVideo">(mdbapi.database.MusicDBDatabase method)</a>
+</li>
+        <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.AddVideo">(mdbapi.videoqueue.VideoQueue method)</a>
+</li>
+      </ul></li>
+      <li><a href="basics/webapi.html#id7">AddVideoToQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>, <a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddVideoToQueue">[1]</a>
 </li>
       <li><a href="lib/config.html#lib.cfg.config.Config.AllowNoneValue">AllowNoneValue() (lib.cfg.config.Config method)</a>
 </li>
@@ -724,10 +772,18 @@
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.AnalyseSongFileName">AnalyseSongFileName() (lib.filesystem.Filesystem method)</a>
 </li>
+      <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.AnalyseVideoFileName">AnalyseVideoFileName() (lib.filesystem.Filesystem method)</a>
+</li>
       <li><a href="lib/mp3file.html#lib.stream.mp3file.MP3File.AnalyzeHeader">AnalyzeHeader() (lib.stream.mp3file.MP3File method)</a>
 
       <ul>
         <li><a href="lib/mp3stream.html#lib.stream.mp3stream.MP3Stream.AnalyzeHeader">(lib.stream.mp3stream.MP3Stream method)</a>
+</li>
+      </ul></li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AnnotateUpload">AnnotateUpload() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+
+      <ul>
+        <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.AnnotateUpload">(mdbapi.uploadmanager.UploadManager method)</a>
 </li>
       </ul></li>
       <li><a href="mod/artwork.html#mod.artwork.artwork">artwork (class in mod.artwork)</a>
@@ -737,6 +793,10 @@
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.AssertDirectory">AssertDirectory() (lib.filesystem.Filesystem method)</a>
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.AssertFile">AssertFile() (lib.filesystem.Filesystem method)</a>
+</li>
+      <li><a href="mdbapi/audiostream.html#mdbapi.audiostream.AudioStreamingThread">AudioStreamingThread() (in module mdbapi.audiostream)</a>
+</li>
+      <li><a href="mdbapi/audiostream.html#mdbapi.audiostream.AudioStreamManager">AudioStreamManager (class in mdbapi.audiostream)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -772,7 +832,11 @@
         <li><a href="lib/mp3transcoder.html#lib.stream.mp3transcoder.MP3Transcoder.Cancel">(lib.stream.mp3transcoder.MP3Transcoder method)</a>
 </li>
       </ul></li>
-      <li><a href="mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface.CheckAllLists">CheckAllLists() (mdbapi.blacklist.BlacklistInterface method)</a>
+      <li><a href="mdbapi/videoframes.html#mdbapi.videoframes.VideoFrames.ChangeThumbnail">ChangeThumbnail() (mdbapi.videoframes.VideoFrames method)</a>
+</li>
+      <li><a href="mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface.CheckAllListsForSong">CheckAllListsForSong() (mdbapi.blacklist.BlacklistInterface method)</a>
+</li>
+      <li><a href="mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface.CheckAllListsForVideo">CheckAllListsForVideo() (mdbapi.blacklist.BlacklistInterface method)</a>
 </li>
       <li><a href="lib/pidfile.html#lib.pidfile.CheckPIDFile">CheckPIDFile() (in module lib.pidfile)</a>
 </li>
@@ -796,19 +860,25 @@
 </li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.CopyNewSongs">CopyNewSongs() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.CopySong">CopySong() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
       <li><a href="mdbapi/lycra.html#lib.crawlerapi.LycraCrawler.Crawl">Crawl() (lib.crawlerapi.LycraCrawler method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/lycra.html#mdbapi.lycra.Lycra.CrawlForLyrics">CrawlForLyrics() (mdbapi.lycra.Lycra method)</a>
 </li>
       <li><a href="lib/namedpipe.html#lib.namedpipe.NamedPipe.Create">Create() (lib.namedpipe.NamedPipe method)</a>
 </li>
+      <li><a href="mdbapi/videoframes.html#mdbapi.videoframes.VideoFrames.CreateAnimation">CreateAnimation() (mdbapi.videoframes.VideoFrames method)</a>
+</li>
       <li><a href="mdbapi/artwork.html#mdbapi.artwork.MusicDBArtwork.CreateArtworkName">CreateArtworkName() (mdbapi.artwork.MusicDBArtwork static method)</a>
 </li>
       <li><a href="lib/gstreamer.html#lib.stream.gstreamer.GStreamerInterface.CreateElement">CreateElement() (lib.stream.gstreamer.GStreamerInterface method)</a>
+</li>
+      <li><a href="mdbapi/videoframes.html#mdbapi.videoframes.VideoFrames.CreateFramesDirectory">CreateFramesDirectory() (mdbapi.videoframes.VideoFrames method)</a>
+</li>
+      <li><a href="mdbapi/videoframes.html#mdbapi.videoframes.VideoFrames.CreateFramesDirectoryName">CreateFramesDirectoryName() (mdbapi.videoframes.VideoFrames method)</a>
 </li>
       <li><a href="mdbapi/tags.html#mdbapi.tags.MusicDBTags.CreateGenre">CreateGenre() (mdbapi.tags.MusicDBTags method)</a>
 </li>
@@ -826,7 +896,11 @@
 </li>
       <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.CurrentSong">CurrentSong() (mdbapi.songqueue.SongQueue method)</a>
 </li>
+      <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.CurrentVideo">CurrentVideo() (mdbapi.videoqueue.VideoQueue method)</a>
+</li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship">CutSongRelationship() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.CutVideoRelationship">CutVideoRelationship() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -849,11 +923,19 @@
       <li><a href="mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeleteSubgenre">DeleteSubgenre() (mdbapi.tags.MusicDBTags method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.DeleteTag">DeleteTag() (lib.db.musicdb.MusicDatabase method)</a>
+
+      <ul>
+        <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.DeleteTag">(lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
-      <li><a href="mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeriveAlbumTags">DeriveAlbumTags() (mdbapi.tags.MusicDBTags method)</a>
+      </ul></li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.DeleteTagById">DeleteTagById() (lib.db.musicdb.MusicDatabase method)</a>
+</li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.DeleteTagByName">DeleteTagByName() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mdbapi/tags.html#mdbapi.tags.MusicDBTags.DeriveAlbumTags">DeriveAlbumTags() (mdbapi.tags.MusicDBTags method)</a>
+</li>
       <li><a href="lib/clui.html#lib.clui.dialog.Dialog">Dialog (class in lib.clui.dialog)</a>
 </li>
       <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface.Disconnect">Disconnect() (lib.stream.icecast.IcecastInterface method)</a>
@@ -882,9 +964,13 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.Event_QueueChanged">Event_QueueChanged() (mdbapi.songqueue.SongQueue method)</a>
-</li>
       <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.Event_SongChanged">Event_SongChanged() (mdbapi.songqueue.SongQueue method)</a>
+</li>
+      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.Event_SongQueueChanged">Event_SongQueueChanged() (mdbapi.songqueue.SongQueue method)</a>
+</li>
+      <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.Event_VideoChanged">Event_VideoChanged() (mdbapi.videoqueue.VideoQueue method)</a>
+</li>
+      <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.Event_VideoQueueChanged">Event_VideoQueueChanged() (mdbapi.videoqueue.VideoQueue method)</a>
 </li>
       <li><a href="lib/database.html#lib.db.database.Database.Execute">Execute() (lib.db.database.Database method)</a>
 
@@ -926,10 +1012,12 @@
       </ul></li>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.FindLostPaths">FindLostPaths() (mdbapi.database.MusicDBDatabase method)</a>
 </li>
-      <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.FindNewPaths">FindNewPaths() (mdbapi.database.MusicDBDatabase method)</a>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.FindNewContent">FindNewContent() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.FindNewPaths">FindNewPaths() (mdbapi.database.MusicDBDatabase method)</a>
+</li>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.FixAttributes">FixAttributes() (mdbapi.database.MusicDBDatabase method)</a>
 </li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.FixPath">FixPath() (mdbapi.extern.MusicDBExtern method)</a>
@@ -952,9 +1040,15 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/artwork.html#mdbapi.artwork.MusicDBArtwork.GenerateAppCacheManifest">GenerateAppCacheManifest() (mdbapi.artwork.MusicDBArtwork method)</a>
 </li>
-      <li><a href="mod/tracker.html#mod.tracker.tracker.GenerateDotFile">GenerateDotFile() (mod.tracker.tracker method)</a>
+      <li><a href="mdbapi/videoframes.html#mdbapi.videoframes.VideoFrames.GenerateFrames">GenerateFrames() (mdbapi.videoframes.VideoFrames method)</a>
 </li>
       <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.GenerateID">GenerateID() (mdbapi.songqueue.SongQueue method)</a>
+
+      <ul>
+        <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.GenerateID">(mdbapi.videoqueue.VideoQueue method)</a>
+</li>
+      </ul></li>
+      <li><a href="mdbapi/videoframes.html#mdbapi.videoframes.VideoFrames.GeneratePreviews">GeneratePreviews() (mdbapi.videoframes.VideoFrames method)</a>
 </li>
       <li><a href="lib/config.html#lib.cfg.config.Config.Get">Get() (lib.cfg.config.Config method)</a>
 </li>
@@ -1008,6 +1102,8 @@
 </li>
       <li><a href="mdbapi/artwork.html#mdbapi.artwork.MusicDBArtwork.GetArtworkFromFile">GetArtworkFromFile() (mdbapi.artwork.MusicDBArtwork method)</a>
 </li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAudioStreamState">GetAudioStreamState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetBitrate">GetBitrate() (lib.metatags.MetaTags method)</a>
 </li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetCDNumber">GetCDNumber() (lib.metatags.MetaTags method)</a>
@@ -1036,14 +1132,16 @@
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.GetFiles">GetFiles() (lib.filesystem.Filesystem method)</a>
 </li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetFilteredArtistsWithVideos">GetFilteredArtistsWithVideos() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
       <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.GetFilterList">GetFilterList() (lib.cfg.mdbstate.MDBState method)</a>
 </li>
       <li><a href="lib/database.html#lib.db.database.Database.GetFromDatabase">GetFromDatabase() (lib.db.database.Database method)</a>
 </li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetHiddenAlbums">GetHiddenAlbums() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
       <li><a href="mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist">GetIDsFromBlacklist() (mdbapi.blacklist.BlacklistInterface method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/clui.html#lib.clui.text.Text.GetKey">GetKey() (lib.clui.text.Text method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetLyrics">GetLyrics() (lib.db.musicdb.MusicDatabase method)</a>
@@ -1064,15 +1162,19 @@
 </li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetOrigin">GetOrigin() (lib.metatags.MetaTags method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetPlaytime">GetPlaytime() (lib.metatags.MetaTags method)</a>
 </li>
-      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetQueue">GetQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.GetQueue">GetQueue() (mdbapi.songqueue.SongQueue method)</a>
 
       <ul>
-        <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.GetQueue">(mdbapi.songqueue.SongQueue method)</a>
+        <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.GetQueue">(mdbapi.videoqueue.VideoQueue method)</a>
 </li>
       </ul></li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetRandomSong">GetRandomSong() (lib.db.musicdb.MusicDatabase method)</a>
+</li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetRandomVideo">GetRandomVideo() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.text.Text.GetRawKey">GetRawKey() (lib.clui.text.Text method)</a>
 </li>
@@ -1104,7 +1206,11 @@
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds">GetSongIdsByAlbumIds() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongLyrics">GetSongLyrics() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetSongname">GetSongname() (lib.metatags.MetaTags method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongQueue">GetSongQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship">GetSongRelationship() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
@@ -1120,23 +1226,69 @@
 </li>
       <li><a href="lib/gstreamer.html#lib.stream.gstreamer.GStreamerInterface.GetState">GetState() (lib.stream.gstreamer.GStreamerInterface method)</a>
 </li>
-      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetStreamState">GetStreamState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+      <li><a href="mdbapi/audiostream.html#mdbapi.audiostream.AudioStreamManager.GetStreamState">GetStreamState() (mdbapi.audiostream.AudioStreamManager method)</a>
 
       <ul>
-        <li><a href="mdbapi/stream.html#mdbapi.stream.StreamManager.GetStreamState">(mdbapi.stream.StreamManager method)</a>
+        <li><a href="mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager.GetStreamState">(mdbapi.videostream.VideoStreamManager method)</a>
 </li>
       </ul></li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.GetSubdirectories">GetSubdirectories() (lib.filesystem.Filesystem method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTables">GetTables() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetTagByName">GetTagByName() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags">GetTags() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTagsStatistics">GetTagsStatistics() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetTagStatistics">GetTagStatistics() (lib.db.musicdb.MusicDatabase method)</a>
+</li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetTargetTags">GetTargetTags() (lib.db.musicdb.MusicDatabase method)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.GetTaskByID">GetTaskByID() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.GetTasks">GetTasks() (mdbapi.uploadmanager.UploadManager method)</a>
 </li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetTracknumber">GetTracknumber() (lib.metatags.MetaTags method)</a>
 </li>
+      <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.GetUIMode">GetUIMode() (lib.cfg.mdbstate.MDBState method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads">GetUploads() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
       <li><a href="mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface.GetValidIDsFromBlacklists">GetValidIDsFromBlacklists() (mdbapi.blacklist.BlacklistInterface method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideo">GetVideo() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+
+      <ul>
+        <li><a href="mdbapi/randy.html#mdbapi.randy.Randy.GetVideo">(mdbapi.randy.Randy method)</a>
+</li>
+        <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.GetVideo">(mdbapi.videoqueue.VideoQueue method)</a>
+</li>
+      </ul></li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetVideoById">GetVideoById() (lib.db.musicdb.MusicDatabase method)</a>
+</li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetVideoByPath">GetVideoByPath() (lib.db.musicdb.MusicDatabase method)</a>
+</li>
+      <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetVideoCodec">GetVideoCodec() (lib.metatags.MetaTags method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoQueue">GetVideoQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoRelationship">GetVideoRelationship() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="lib/metatags.html#lib.metatags.MetaTags.GetVideoResolution">GetVideoResolution() (lib.metatags.MetaTags method)</a>
+</li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetVideos">GetVideos() (lib.db.musicdb.MusicDatabase method)</a>
+
+      <ul>
+        <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideos">(lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      </ul></li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetVideosByArtistId">GetVideosByArtistId() (lib.db.musicdb.MusicDatabase method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoStreamState">GetVideoStreamState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoTags">GetVideoTags() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="lib/gstreamer.html#lib.stream.gstreamer.GStreamerInterface">GStreamerInterface (class in lib.stream.gstreamer)</a>
 </li>
@@ -1163,6 +1315,10 @@
 </li>
       </ul></li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.HideAlbum">HideAlbum() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="I">I</h2>
@@ -1170,12 +1326,30 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface">IcecastInterface (class in lib.stream.icecast)</a>
 </li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.ImportArtwork">ImportArtwork() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.ImportVideo">ImportVideo() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.ImportVideoArtwork">ImportVideoArtwork() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
       <li><a href="mdbapi/server.html#mdbapi.server.Initialize">Initialize() (in module mdbapi.server)</a>
 </li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.InitializeStorage">InitializeStorage() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateUpload">InitiateUpload() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+
+      <ul>
+        <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.InitiateUpload">(mdbapi.uploadmanager.UploadManager method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.IntegrateUpload">IntegrateUpload() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.IntegrateUploadedFile">IntegrateUploadedFile() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.IntegrateVideo">IntegrateVideo() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
       <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface.IsConnected">IsConnected() (lib.stream.icecast.IcecastInterface method)</a>
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.IsDirectory">IsDirectory() (lib.filesystem.Filesystem method)</a>
@@ -1183,6 +1357,8 @@
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.IsFile">IsFile() (lib.filesystem.Filesystem method)</a>
 </li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.IsStorageInitialized">IsStorageInitialized() (mdbapi.extern.MusicDBExtern method)</a>
+</li>
+      <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.IsVideoPath">IsVideoPath() (lib.filesystem.Filesystem method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1230,6 +1406,13 @@
 
       <ul>
         <li><a href="lib/config.html#module-lib.cfg.musicdb">module</a>
+</li>
+      </ul></li>
+      <li>
+    lib.cfg.webui
+
+      <ul>
+        <li><a href="lib/config.html#module-lib.cfg.webui">module</a>
 </li>
       </ul></li>
       <li>
@@ -1323,8 +1506,6 @@
         <li><a href="mdbapi/tracker.html#module-lib.db.trackerdb">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     lib.fileprocessing
 
@@ -1332,6 +1513,8 @@
         <li><a href="lib/fileprocessing.html#module-lib.fileprocessing">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     lib.filesystem
 
@@ -1429,12 +1612,22 @@
 </li>
         <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.Load">(mdbapi.songqueue.SongQueue method)</a>
 </li>
+        <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.Load">(mdbapi.videoqueue.VideoQueue method)</a>
+</li>
       </ul></li>
       <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.LoadBlacklists">LoadBlacklists() (lib.cfg.mdbstate.MDBState method)</a>
+</li>
+      <li><a href="lib/config.html#lib.cfg.webui.WebUIConfig.LoadConfig">LoadConfig() (lib.cfg.webui.WebUIConfig method)</a>
 </li>
       <li><a href="mdbapi/lycra.html#mdbapi.lycra.Lycra.LoadCrawlers">LoadCrawlers() (mdbapi.lycra.Lycra method)</a>
 </li>
       <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.LoadSongQueue">LoadSongQueue() (lib.cfg.mdbstate.MDBState method)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.LoadTasks">LoadTasks() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
+      <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.LoadVideoQueue">LoadVideoQueue() (lib.cfg.mdbstate.MDBState method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.LoadWebUIConfiguration">LoadWebUIConfiguration() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="mdbapi/lycra.html#mdbapi.lycra.Lycra">Lycra (class in mdbapi.lycra)</a>
 </li>
@@ -1453,6 +1646,13 @@
 
       <ul>
         <li><a href="mdbapi/artwork.html#module-mdbapi.artwork">module</a>
+</li>
+      </ul></li>
+      <li>
+    mdbapi.audiostream
+
+      <ul>
+        <li><a href="mdbapi/audiostream.html#module-mdbapi.audiostream">module</a>
 </li>
       </ul></li>
       <li>
@@ -1512,13 +1712,6 @@
 </li>
       </ul></li>
       <li>
-    mdbapi.stream
-
-      <ul>
-        <li><a href="mdbapi/stream.html#module-mdbapi.stream">module</a>
-</li>
-      </ul></li>
-      <li>
     mdbapi.tags
 
       <ul>
@@ -1530,6 +1723,34 @@
 
       <ul>
         <li><a href="mdbapi/tracker.html#module-mdbapi.tracker">module</a>
+</li>
+      </ul></li>
+      <li>
+    mdbapi.uploadmanager
+
+      <ul>
+        <li><a href="mdbapi/uploadmanager.html#module-mdbapi.uploadmanager">module</a>
+</li>
+      </ul></li>
+      <li>
+    mdbapi.videoframes
+
+      <ul>
+        <li><a href="mdbapi/videoframes.html#module-mdbapi.videoframes">module</a>
+</li>
+      </ul></li>
+      <li>
+    mdbapi.videoqueue
+
+      <ul>
+        <li><a href="mdbapi/videoqueue.html#module-mdbapi.videoqueue">module</a>
+</li>
+      </ul></li>
+      <li>
+    mdbapi.videostream
+
+      <ul>
+        <li><a href="mdbapi/videostream.html#module-mdbapi.videostream">module</a>
 </li>
       </ul></li>
       <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState">MDBState (class in lib.cfg.mdbstate)</a>
@@ -1623,10 +1844,10 @@
 </li>
       </ul></li>
       <li>
-    mod.tracker
+    mod.videoframes
 
       <ul>
-        <li><a href="mod/tracker.html#module-mod.tracker">module</a>
+        <li><a href="mod/videoframes.html#module-mod.videoframes">module</a>
 </li>
       </ul></li>
       <li><a href="mdbapi/tags.html#mdbapi.tags.MusicDBTags.ModifyGenre">ModifyGenre() (mdbapi.tags.MusicDBTags method)</a>
@@ -1638,9 +1859,13 @@
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.ModifyTag">ModifyTag() (lib.db.musicdb.MusicDatabase method)</a>
 
       <ul>
+        <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.ModifyTag">(lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
         <li><a href="mdbapi/tags.html#mdbapi.tags.MusicDBTags.ModifyTag">(mdbapi.tags.MusicDBTags method)</a>
 </li>
       </ul></li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.ModifyTagById">ModifyTagById() (lib.db.musicdb.MusicDatabase method)</a>
+</li>
       <li>
     module
 
@@ -1656,6 +1881,8 @@
         <li><a href="lib/config.html#module-lib.cfg.mdbstate">lib.cfg.mdbstate</a>
 </li>
         <li><a href="lib/config.html#module-lib.cfg.musicdb">lib.cfg.musicdb</a>
+</li>
+        <li><a href="lib/config.html#module-lib.cfg.webui">lib.cfg.webui</a>
 </li>
         <li><a href="lib/clui.html#module-lib.clui.boolinput">lib.clui.boolinput</a>
 </li>
@@ -1711,6 +1938,8 @@
 </li>
         <li><a href="mdbapi/artwork.html#module-mdbapi.artwork">mdbapi.artwork</a>
 </li>
+        <li><a href="mdbapi/audiostream.html#module-mdbapi.audiostream">mdbapi.audiostream</a>
+</li>
         <li><a href="mdbapi/blacklist.html#module-mdbapi.blacklist">mdbapi.blacklist</a>
 </li>
         <li><a href="mdbapi/database.html#module-mdbapi.database">mdbapi.database</a>
@@ -1727,11 +1956,17 @@
 </li>
         <li><a href="mdbapi/songqueue.html#module-mdbapi.songqueue">mdbapi.songqueue</a>
 </li>
-        <li><a href="mdbapi/stream.html#module-mdbapi.stream">mdbapi.stream</a>
-</li>
         <li><a href="mdbapi/tags.html#module-mdbapi.tags">mdbapi.tags</a>
 </li>
         <li><a href="mdbapi/tracker.html#module-mdbapi.tracker">mdbapi.tracker</a>
+</li>
+        <li><a href="mdbapi/uploadmanager.html#module-mdbapi.uploadmanager">mdbapi.uploadmanager</a>
+</li>
+        <li><a href="mdbapi/videoframes.html#module-mdbapi.videoframes">mdbapi.videoframes</a>
+</li>
+        <li><a href="mdbapi/videoqueue.html#module-mdbapi.videoqueue">mdbapi.videoqueue</a>
+</li>
+        <li><a href="mdbapi/videostream.html#module-mdbapi.videostream">mdbapi.videostream</a>
 </li>
         <li><a href="mod/add.html#module-mod.add">mod.add</a>
 </li>
@@ -1757,7 +1992,7 @@
 </li>
         <li><a href="mod/tags.html#module-mod.tags">mod.tags</a>
 </li>
-        <li><a href="mod/tracker.html#module-mod.tracker">mod.tracker</a>
+        <li><a href="mod/videoframes.html#module-mod.videoframes">mod.videoframes</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1768,7 +2003,11 @@
 </li>
       <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.MoveSong">MoveSong() (mdbapi.songqueue.SongQueue method)</a>
 </li>
-      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue">MoveSongInQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+      <li><a href="basics/webapi.html#id8">MoveSongInQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>, <a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveSongInQueue">[1]</a>
+</li>
+      <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.MoveVideo">MoveVideo() (mdbapi.videoqueue.VideoQueue method)</a>
+</li>
+      <li><a href="basics/webapi.html#id9">MoveVideoInQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>, <a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveVideoInQueue">[1]</a>
 </li>
       <li><a href="lib/mp3file.html#lib.stream.mp3file.MP3File">MP3File (class in lib.stream.mp3file)</a>
 </li>
@@ -1792,7 +2031,7 @@
 </li>
       <li><a href="lib/websockets.html#lib.ws.websocket.MusicDBWebSocketFactory">MusicDBWebSocketFactory (class in lib.ws.websocket)</a>
 </li>
-      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface">MusicDBWebSocketInterface (class in lib.ws.mdbwsi)</a>
+      <li><a href="basics/webapi.html#id0">MusicDBWebSocketInterface (class in lib.ws.mdbwsi)</a>, <a href="basics/webapi.html#id1">[1]</a>, <a href="basics/webapi.html#id12">[2]</a>, <a href="basics/webapi.html#id13">[3]</a>, <a href="basics/webapi.html#id14">[4]</a>, <a href="basics/webapi.html#id15">[5]</a>, <a href="basics/webapi.html#id2">[6]</a>, <a href="basics/webapi.html#id3">[7]</a>, <a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface">[8]</a>
 </li>
       <li><a href="lib/websockets.html#lib.ws.server.MusicDBWebSocketProtocol">MusicDBWebSocketProtocol (class in lib.ws.server)</a>
 </li>
@@ -1808,13 +2047,19 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/namedpipe.html#lib.namedpipe.NamedPipe">NamedPipe (class in lib.namedpipe)</a>
 </li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.NewChunk">NewChunk() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
       <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.NextSong">NextSong() (mdbapi.songqueue.SongQueue method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.NextVideo">NextVideo() (mdbapi.videoqueue.VideoQueue method)</a>
+</li>
       <li><a href="mdbapi/mise.html#mdbapi.mise.MusicDBMicroSearchEngine.NormalizeString">NormalizeString() (mdbapi.mise.MusicDBMicroSearchEngine method)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.textinput.NoTextInput">NoTextInput (class in lib.clui.textinput)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.NotifyClient">NotifyClient() (mdbapi.uploadmanager.UploadManager method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1831,6 +2076,8 @@
       <li><a href="lib/websockets.html#lib.ws.websocket.WebSocket.onClose">onClose() (lib.ws.websocket.WebSocket method)</a>
 </li>
       <li><a href="lib/websockets.html#lib.ws.websocket.WebSocket.onCloseHandshakeTimeout">onCloseHandshakeTimeout() (lib.ws.websocket.WebSocket method)</a>
+</li>
+      <li><a href="lib/websockets.html#lib.ws.websocket.WebSocket.onConnect">onConnect() (lib.ws.websocket.WebSocket method)</a>
 </li>
       <li><a href="lib/mp3transcoder.html#lib.stream.mp3transcoder.MP3Transcoder.onDecoderPadAdded">onDecoderPadAdded() (lib.stream.mp3transcoder.MP3Transcoder method)</a>
 </li>
@@ -1862,24 +2109,44 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/clui.html#lib.clui.pane.Pane">Pane (class in lib.clui.pane)</a>
 </li>
-      <li><a href="mdbapi/stream.html#mdbapi.stream.StreamManager.Play">Play() (mdbapi.stream.StreamManager method)</a>
-</li>
-      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong">PlayNextSong() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+      <li><a href="mdbapi/audiostream.html#mdbapi.audiostream.AudioStreamManager.Play">Play() (mdbapi.audiostream.AudioStreamManager method)</a>
 
       <ul>
-        <li><a href="mdbapi/stream.html#mdbapi.stream.StreamManager.PlayNextSong">(mdbapi.stream.StreamManager method)</a>
+        <li><a href="mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager.Play">(mdbapi.videostream.VideoStreamManager method)</a>
+</li>
+      </ul></li>
+      <li><a href="basics/webapi.html#id16">PlayNextSong() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>, <a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong">[1]</a>
+
+      <ul>
+        <li><a href="mdbapi/audiostream.html#mdbapi.audiostream.AudioStreamManager.PlayNextSong">(mdbapi.audiostream.AudioStreamManager method)</a>
+</li>
+      </ul></li>
+      <li><a href="basics/webapi.html#id17">PlayNextVideo() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>, <a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextVideo">[1]</a>
+
+      <ul>
+        <li><a href="mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager.PlayNextVideo">(mdbapi.videostream.VideoStreamManager method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.PreProcessArtwork">PreProcessArtwork() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.PreProcessUploadedFile">PreProcessUploadedFile() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.PreProcessVideo">PreProcessVideo() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
       <li><a href="mod/mise.html#mod.mise.mise.PrintResults_ID">PrintResults_ID() (mod.mise.mise method)</a>
 </li>
       <li><a href="mod/mise.html#mod.mise.mise.PrintResults_Short">PrintResults_Short() (mod.mise.mise method)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.text.Text.PrintText">PrintText() (lib.clui.text.Text method)</a>
 </li>
-      <li><a href="mdbapi/stream.html#mdbapi.stream.StreamManager.PushCommand">PushCommand() (mdbapi.stream.StreamManager method)</a>
+      <li><a href="mdbapi/audiostream.html#mdbapi.audiostream.AudioStreamManager.PushCommand">PushCommand() (mdbapi.audiostream.AudioStreamManager method)</a>
+
+      <ul>
+        <li><a href="mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager.PushCommand">(mdbapi.videostream.VideoStreamManager method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -1896,12 +2163,20 @@
 </li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.ReadSongmap">ReadSongmap() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
+      <li><a href="mdbapi/artwork.html#lib.cache.ArtworkCache.RebuildArtwork">RebuildArtwork() (lib.cache.ArtworkCache method)</a>
+</li>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.ReducePathLength">ReducePathLength() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
-      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.RegisterCallback">RegisterCallback() (mdbapi.songqueue.SongQueue method)</a>
+      <li><a href="mdbapi/audiostream.html#mdbapi.audiostream.AudioStreamManager.RegisterCallback">RegisterCallback() (mdbapi.audiostream.AudioStreamManager method)</a>
 
       <ul>
-        <li><a href="mdbapi/stream.html#mdbapi.stream.StreamManager.RegisterCallback">(mdbapi.stream.StreamManager method)</a>
+        <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.RegisterCallback">(mdbapi.songqueue.SongQueue method)</a>
+</li>
+        <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.RegisterCallback">(mdbapi.uploadmanager.UploadManager method)</a>
+</li>
+        <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.RegisterCallback">(mdbapi.videoqueue.VideoQueue method)</a>
+</li>
+        <li><a href="mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager.RegisterCallback">(mdbapi.videostream.VideoStreamManager method)</a>
 </li>
       </ul></li>
       <li><a href="lib/config.html#lib.cfg.config.Config.Reload">Reload() (lib.cfg.config.Config method)</a>
@@ -1917,19 +2192,21 @@
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.RemoveArtist">RemoveArtist() (lib.db.musicdb.MusicDatabase method)</a>
 
       <ul>
-        <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveArtist">(lib.db.trackerdb.TrackerDatabase method)</a>
-</li>
         <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.RemoveArtist">(mdbapi.database.MusicDBDatabase method)</a>
 </li>
       </ul></li>
-      <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveArtistRelations">RemoveArtistRelations() (lib.db.trackerdb.TrackerDatabase method)</a>
-</li>
       <li><a href="lib/clui.html#lib.clui.buttonview.ButtonView.RemoveButton">RemoveButton() (lib.clui.buttonview.ButtonView method)</a>
 </li>
-      <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.RemoveCallback">RemoveCallback() (mdbapi.songqueue.SongQueue method)</a>
+      <li><a href="mdbapi/audiostream.html#mdbapi.audiostream.AudioStreamManager.RemoveCallback">RemoveCallback() (mdbapi.audiostream.AudioStreamManager method)</a>
 
       <ul>
-        <li><a href="mdbapi/stream.html#mdbapi.stream.StreamManager.RemoveCallback">(mdbapi.stream.StreamManager method)</a>
+        <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.RemoveCallback">(mdbapi.songqueue.SongQueue method)</a>
+</li>
+        <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.RemoveCallback">(mdbapi.uploadmanager.UploadManager method)</a>
+</li>
+        <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.RemoveCallback">(mdbapi.videoqueue.VideoQueue method)</a>
+</li>
+        <li><a href="mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager.RemoveCallback">(mdbapi.videostream.VideoStreamManager method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1956,13 +2233,27 @@
         <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.RemoveSong">(mdbapi.songqueue.SongQueue method)</a>
 </li>
       </ul></li>
-      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue">RemoveSongFromQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
-</li>
-      <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveSongRelations">RemoveSongRelations() (lib.db.trackerdb.TrackerDatabase method)</a>
+      <li><a href="basics/webapi.html#id10">RemoveSongFromQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>, <a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongFromQueue">[1]</a>
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveSongTag">RemoveSongTag() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.RemoveTargetTag">RemoveTargetTag() (lib.db.musicdb.MusicDatabase method)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.RemoveTask">RemoveTask() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveUpload">RemoveUpload() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase.RemoveVideo">RemoveVideo() (lib.db.trackerdb.TrackerDatabase method)</a>
+
+      <ul>
+        <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.RemoveVideo">(mdbapi.videoqueue.VideoQueue method)</a>
+</li>
+      </ul></li>
+      <li><a href="basics/webapi.html#id11">RemoveVideoFromQueue() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>, <a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveVideoFromQueue">[1]</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveVideoTag">RemoveVideoTag() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.RequestRemoveUpload">RequestRemoveUpload() (mdbapi.uploadmanager.UploadManager method)</a>
 </li>
       <li><a href="mdbapi/server.html#mdbapi.server.Run">Run() (in module mdbapi.server)</a>
 </li>
@@ -1981,16 +2272,32 @@
       <ul>
         <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.Save">(mdbapi.songqueue.SongQueue method)</a>
 </li>
+        <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.Save">(mdbapi.videoqueue.VideoQueue method)</a>
+</li>
       </ul></li>
       <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.SaveBlacklists">SaveBlacklists() (lib.cfg.mdbstate.MDBState method)</a>
 </li>
+      <li><a href="lib/config.html#lib.cfg.webui.WebUIConfig.SaveConfig">SaveConfig() (lib.cfg.webui.WebUIConfig method)</a>
+</li>
       <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.SaveSongQueue">SaveSongQueue() (lib.cfg.mdbstate.MDBState method)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.SaveTask">SaveTask() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
+      <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.SaveVideoQueue">SaveVideoQueue() (lib.cfg.mdbstate.MDBState method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SaveWebUIConfiguration">SaveWebUIConfiguration() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="mdbapi/videoframes.html#mdbapi.videoframes.VideoFrames.ScaleFrame">ScaleFrame() (mdbapi.videoframes.VideoFrames method)</a>
+</li>
+      <li><a href="mdbapi/videoframes.html#mdbapi.videoframes.VideoFrames.ScaleThumbnail">ScaleThumbnail() (mdbapi.videoframes.VideoFrames method)</a>
 </li>
       <li><a href="lib/websockets.html#lib.ws.websocket.WebSocket.SendPacket">SendPacket() (lib.ws.websocket.WebSocket method)</a>
 </li>
       <li><a href="lib/config.html#lib.cfg.config.Config.Set">Set() (lib.cfg.config.Config method)</a>
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor">SetAlbumColor() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.SetAlbumHiddenState">SetAlbumHiddenState() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumTag">SetAlbumTag() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
@@ -2004,9 +2311,13 @@
 </li>
       <li><a href="lib/filesystem.html#lib.filesystem.Filesystem.SetAttributes">SetAttributes() (lib.filesystem.Filesystem method)</a>
 </li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAudioStreamState">SetAudioStreamState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
       <li><a href="lib/clui.html#lib.clui.text.Text.SetBGColor">SetBGColor() (lib.clui.text.Text method)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.text.Text.SetColor">SetColor() (lib.clui.text.Text method)</a>
+</li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.SetColorThemeByVideoId">SetColorThemeByVideoId() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.text.Text.SetCursor">SetCursor() (lib.clui.text.Text method)</a>
 </li>
@@ -2028,10 +2339,10 @@
 </li>
       <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState">SetMDBState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
-      <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.SetMountpoint">SetMountpoint() (mdbapi.extern.MusicDBExtern method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.SetMountpoint">SetMountpoint() (mdbapi.extern.MusicDBExtern method)</a>
+</li>
       <li><a href="lib/clui.html#lib.clui.boolinput.BoolInput.SetRepresentation">SetRepresentation() (lib.clui.boolinput.BoolInput method)</a>
 </li>
       <li><a href="lib/clui.html#lib.clui.dialog.Dialog.SetSelectedData">SetSelectedData() (lib.clui.dialog.Dialog method)</a>
@@ -2040,17 +2351,37 @@
         <li><a href="lib/clui.html#lib.clui.listview.ListView.SetSelectedData">(lib.clui.listview.ListView method)</a>
 </li>
       </ul></li>
-      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag">SetSongTag() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongLyrics">SetSongLyrics() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
-      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetStreamState">SetStreamState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag">SetSongTag() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.SetTargetTag">SetTargetTag() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
+      <li><a href="lib/config.html#lib.cfg.mdbstate.MDBState.SetUIMode">SetUIMode() (lib.cfg.mdbstate.MDBState method)</a>
+</li>
       <li><a href="lib/websockets.html#lib.ws.server.MusicDBWebSocketServer.Setup">Setup() (lib.ws.server.MusicDBWebSocketServer method)</a>
 </li>
-      <li><a href="lib/clui.html#lib.clui.text.Text.ShowCursor">ShowCursor() (lib.clui.text.Text method)</a>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetVideoColor">SetVideoColor() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
-      <li><a href="mod/tracker.html#mod.tracker.tracker.ShowRelations">ShowRelations() (mod.tracker.tracker method)</a>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.SetVideoFrames">SetVideoFrames() (lib.db.musicdb.MusicDatabase method)</a>
+
+      <ul>
+        <li><a href="mdbapi/videoframes.html#mdbapi.videoframes.VideoFrames.SetVideoFrames">(mdbapi.videoframes.VideoFrames method)</a>
+</li>
+      </ul></li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetVideoStreamState">SetVideoStreamState() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetVideoTag">SetVideoTag() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetVideoThumbnail">SetVideoThumbnail() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.SetVideoTimeFrame">SetVideoTimeFrame() (lib.db.musicdb.MusicDatabase method)</a>
+
+      <ul>
+        <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetVideoTimeFrame">(lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      </ul></li>
+      <li><a href="lib/clui.html#lib.clui.text.Text.ShowCursor">ShowCursor() (lib.clui.text.Text method)</a>
 </li>
       <li><a href="mdbapi/server.html#mdbapi.server.Shutdown">Shutdown() (in module mdbapi.server)</a>
 </li>
@@ -2064,23 +2395,23 @@
 </li>
       <li><a href="lib/websockets.html#lib.ws.server.MusicDBWebSocketServer.Start">Start() (lib.ws.server.MusicDBWebSocketServer method)</a>
 </li>
-      <li><a href="mdbapi/stream.html#mdbapi.stream.StartStreamingThread">StartStreamingThread() (in module mdbapi.stream)</a>
+      <li><a href="mdbapi/audiostream.html#mdbapi.audiostream.StartAudioStreamingThread">StartAudioStreamingThread() (in module mdbapi.audiostream)</a>
+</li>
+      <li><a href="mdbapi/videostream.html#mdbapi.videostream.StartVideoStreamingThread">StartVideoStreamingThread() (in module mdbapi.videostream)</a>
 </li>
       <li><a href="mdbapi/server.html#mdbapi.server.StartWebSocketServer">StartWebSocketServer() (in module mdbapi.server)</a>
 </li>
       <li><a href="lib/websockets.html#lib.ws.server.MusicDBWebSocketServer.Stop">Stop() (lib.ws.server.MusicDBWebSocketServer method)</a>
 </li>
-      <li><a href="mdbapi/stream.html#mdbapi.stream.StopStreamingThread">StopStreamingThread() (in module mdbapi.stream)</a>
+      <li><a href="mdbapi/audiostream.html#mdbapi.audiostream.StopAudioStreamingThread">StopAudioStreamingThread() (in module mdbapi.audiostream)</a>
+</li>
+      <li><a href="mdbapi/videostream.html#mdbapi.videostream.StopVideoStreamingThread">StopVideoStreamingThread() (in module mdbapi.videostream)</a>
 </li>
       <li><a href="lib/metatags.html#lib.metatags.MetaTags.StoreArtwork">StoreArtwork() (lib.metatags.MetaTags method)</a>
 </li>
       <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface.StreamChunk">StreamChunk() (lib.stream.icecast.IcecastInterface method)</a>
 </li>
       <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface.StreamFile">StreamFile() (lib.stream.icecast.IcecastInterface method)</a>
-</li>
-      <li><a href="mdbapi/stream.html#mdbapi.stream.StreamingThread">StreamingThread() (in module mdbapi.stream)</a>
-</li>
-      <li><a href="mdbapi/stream.html#mdbapi.stream.StreamManager">StreamManager (class in mdbapi.stream)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -2094,18 +2425,22 @@
 </li>
       <li><a href="lib/clui.html#lib.clui.textinput.TextInput">TextInput (class in lib.clui.textinput)</a>
 </li>
+      <li><a href="mdbapi/tracker.html#mdbapi.tracker.Tracker.Track">Track() (mdbapi.tracker.Tracker method)</a>
+</li>
       <li><a href="mdbapi/tracker.html#mdbapi.tracker.Tracker">Tracker (class in mdbapi.tracker)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mod/tracker.html#mod.tracker.tracker">tracker (class in mod.tracker)</a>
-</li>
       <li><a href="mdbapi/tracker.html#lib.db.trackerdb.TrackerDatabase">TrackerDatabase (class in lib.db.trackerdb)</a>
 </li>
       <li><a href="lib/mp3transcoder.html#lib.stream.mp3transcoder.MP3Transcoder.Transcode">Transcode() (lib.stream.mp3transcoder.MP3Transcoder method)</a>
 </li>
       <li><a href="mdbapi/songqueue.html#mdbapi.songqueue.SongQueue.TriggerEvent">TriggerEvent() (mdbapi.songqueue.SongQueue method)</a>
+
+      <ul>
+        <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue.TriggerEvent">(mdbapi.videoqueue.VideoQueue method)</a>
 </li>
+      </ul></li>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.TryAnalysePathFor">TryAnalysePathFor() (mdbapi.database.MusicDBDatabase method)</a>
 </li>
   </ul></td>
@@ -2132,9 +2467,9 @@
 </li>
       <li><a href="mdbapi/server.html#mdbapi.server.UpdateCaches">UpdateCaches() (in module mdbapi.server)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateChecksum">UpdateChecksum() (mdbapi.database.MusicDBDatabase method)</a>
+</li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.UpdateMusicProperty">UpdateMusicProperty() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
       <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateServerCache">UpdateServerCache() (mdbapi.database.MusicDBDatabase method)</a>
 </li>
@@ -2148,9 +2483,35 @@
         <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic">(lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/extern.html#mdbapi.extern.MusicDBExtern.UpdateStorage">UpdateStorage() (mdbapi.extern.MusicDBExtern method)</a>
 </li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.UpdateTaskState">UpdateTaskState() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
       <li><a href="lib/icecast.html#lib.stream.icecast.IcecastInterface.UpdateTitle">UpdateTitle() (lib.stream.icecast.IcecastInterface method)</a>
+</li>
+      <li><a href="mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateVideo">UpdateVideo() (mdbapi.database.MusicDBDatabase method)</a>
+
+      <ul>
+        <li><a href="mod/videoframes.html#mod.videoframes.videoframes.UpdateVideo">(mod.videoframes.videoframes method)</a>
+</li>
+      </ul></li>
+      <li><a href="mdbapi/videoframes.html#mdbapi.videoframes.VideoFrames.UpdateVideoFrames">UpdateVideoFrames() (mdbapi.videoframes.VideoFrames method)</a>
+</li>
+      <li><a href="mod/videoframes.html#mod.videoframes.videoframes.UpdateVideos">UpdateVideos() (mod.videoframes.videoframes method)</a>
+</li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.UpdateVideoStatistic">UpdateVideoStatistic() (lib.db.musicdb.MusicDatabase method)</a>
+
+      <ul>
+        <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateVideoStatistic">(lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      </ul></li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.UploadChunk">UploadChunk() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager.UploadCompleted">UploadCompleted() (mdbapi.uploadmanager.UploadManager method)</a>
+</li>
+      <li><a href="mdbapi/uploadmanager.html#mdbapi.uploadmanager.UploadManager">UploadManager (class in mdbapi.uploadmanager)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -2160,6 +2521,24 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface.ValidateBlacklist">ValidateBlacklist() (mdbapi.blacklist.BlacklistInterface method)</a>
 </li>
+      <li><a href="basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.VideoEnded">VideoEnded() (lib.ws.mdbwsi.MusicDBWebSocketInterface method)</a>
+
+      <ul>
+        <li><a href="mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager.VideoEnded">(mdbapi.videostream.VideoStreamManager method)</a>
+</li>
+      </ul></li>
+      <li><a href="mdbapi/videoframes.html#mdbapi.videoframes.VideoFrames">VideoFrames (class in mdbapi.videoframes)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mod/videoframes.html#mod.videoframes.videoframes">videoframes (class in mod.videoframes)</a>
+</li>
+      <li><a href="mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue">VideoQueue (class in mdbapi.videoqueue)</a>
+</li>
+      <li><a href="mdbapi/videostream.html#mdbapi.videostream.VideoStreamingThread">VideoStreamingThread() (in module mdbapi.videostream)</a>
+</li>
+      <li><a href="mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager">VideoStreamManager (class in mdbapi.videostream)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -2167,6 +2546,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="lib/websockets.html#lib.ws.websocket.WebSocket">WebSocket (class in lib.ws.websocket)</a>
+</li>
+      <li><a href="lib/config.html#lib.cfg.webui.WebUIConfig">WebUIConfig (class in lib.cfg.webui)</a>
 </li>
       <li><a href="lib/config.html#lib.cfg.csv.CSVFile.Write">Write() (lib.cfg.csv.CSVFile method)</a>
 </li>
@@ -2188,6 +2569,8 @@
 </li>
       <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.WriteTag">WriteTag() (lib.db.musicdb.MusicDatabase method)</a>
 </li>
+      <li><a href="lib/musicdb.html#lib.db.musicdb.MusicDatabase.WriteVideo">WriteVideo() (lib.db.musicdb.MusicDatabase method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -2205,7 +2588,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020,2021 Ralf Stemmer.
 
     </p>
   </div>
@@ -2227,7 +2610,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'6.0.0',
+            VERSION:'7.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -2238,7 +2621,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/language_data.js"></script>
 
   
 

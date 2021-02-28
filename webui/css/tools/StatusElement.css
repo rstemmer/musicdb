@@ -1,0 +1,113 @@
+/*
+ * MusicDB,  a music manager with web-bases UI that focus on music.
+ * Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+ul.StatusList
+{
+    list-style:         none;
+    padding:            0;
+    margin:             1rem;
+}
+
+
+
+.StatusElement
+{
+    align-items:        center;
+}
+.StatusElement::before
+{
+    content:            " ";
+    display:            inline-block;
+    height:             1.0rem;
+    width:              1.0rem;
+    margin-right:       1.5ch;
+}
+
+
+li.StatusElement
+{
+    margin:             0.5rem;
+}
+
+
+.StatusElement[data-state=good]::before
+{
+    mask:               url("../../img/icons/StatusGood.svg");
+    background-color:   var(--color-brightgreen);
+}
+.StatusElement[data-state=bad]::before
+{
+    mask:               url("../../img/icons/StatusBad.svg");
+    background-color:   var(--color-brightred);
+}
+.StatusElement[data-state=unknown]::before
+{
+    mask:               url("../../img/icons/StatusUnknown.svg");
+    background-color:   var(--color-brightyellow);
+}
+.StatusElement[data-state=info]::before
+{
+    mask:               url("../../img/icons/StatusInfo.svg");
+    background-color:   var(--color-brightblue);
+}
+.StatusElement[data-state=open]::before
+{
+    mask:               url("../../img/icons/StatusOpen.svg");
+    background-color:   var(--hlcolor);
+    opacity:            0.5;
+}
+.StatusElement[data-state=active]::before
+{
+    mask:               url("../../img/icons/StatusActive.svg");
+    background-color:   var(--hlcolor);
+
+    animation-name:             spin;
+    animation-duration:         4s;
+    animation-iteration-count:  infinite;
+    animation-timing-function:  linear;
+}
+.StatusElement[data-state=playing]::before
+{
+    mask:               url("../../img/icons/StatusPlaying.svg");
+    background-color:   var(--color-brightgreen);
+}
+.StatusElement[data-state=paused]::before
+{
+    mask:               url("../../img/icons/StatusPaused.svg");
+    background-color:   var(--color-brightred);
+}
+
+
+@keyframes spin
+{
+    from
+    {
+        transform: rotate(0deg);
+    }
+
+    to
+    {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+/* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
+ */
+

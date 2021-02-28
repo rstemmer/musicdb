@@ -230,7 +230,11 @@ class MusicDBArtwork(object):
 
             # Copy file
             logging.debug("Copying file from \"%s\" to \"%s\"", abssrcpath, absdstpath)
-            self.artworkroot.CopyFile(abssrcpath, absdstpath)
+            try:
+                self.artworkroot.CopyFile(abssrcpath, absdstpath)
+            except PermissionError as e:
+                logging.exception("Copying artwork into the artwork directory failed with error: %s", str(e))
+                return False
 
             # Set permissions to -rw-rw-r--
             try:
@@ -248,15 +252,17 @@ class MusicDBArtwork(object):
         resolutions = [ str(s)+"x"+str(s) for s in self.cfg.artwork.scales ]
 
         for resolution in resolutions:
-            relpath = self.awcache.GetArtwork(artworkname, resolution)
+            success = self.awcache.RebuildArtwork(artworkname, resolution)
 
-            if not self.artworkroot.Exists(relpath):
+            if not success:
                 logging.error("Artwork \"%s\" does not exist but was expected to exist!", relpath)
                 return False
 
-            # Set permissions to -rw-rw-r--
+            relpath = self.awcache.GetArtwork(artworkname, resolution)
+
+            # Try setting permissions to -rw-rw-r--
             try:
-                self.artworkroot.SetAttributes(relpath, self.cfg.music.owner, self.cfg.music.group, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH)
+                self.artworkroot.SetAttributes(relpath, None, None, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH)
             except Exception as e:
                 logging.warning("Setting artwork file attributes failed with error %s. \033[1;30m(Leaving them as they are)", str(e))
 
