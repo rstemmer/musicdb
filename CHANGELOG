@@ -9,8 +9,8 @@ Run  git log --oneline  for more details
 
 ┍━━━━┫ 2021-02-28 ┣━━━━┫ 7.0.0 ┣━━━━━━━━╍╍
 │
-│ ! All Music Video and Upload related features are not enabled by default
-│ ! The video support is in early alpha state and does not yet provide the experience I'm aiming for
+│ ! All Music Video related features are not enabled by default
+│ ! The video support is in early beta state and does not yet provide the experience I'm aiming for
 │
 ┝━ MAJOR CHANGES
 │ + Support for music videos integrated (Still alpha, deactivated for 7.0.0)
