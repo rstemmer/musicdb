@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Meta Tags &mdash; MusicDB 6.0.0 documentation</title>
+  <title>Meta Tags &mdash; MusicDB 7.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 6.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
         <link rel="next" title="MP3 File Interface" href="mp3file.html"/>
         <link rel="prev" title="Icecast Interface" href="icecast.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                6.0
+                7.0
               </div>
             
           
@@ -110,6 +110,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#database">database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#music">music</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#uploads">uploads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
@@ -117,6 +119,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/logging.html">Handling log-files</a></li>
@@ -184,12 +194,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#available-methods">Available Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#videos">Videos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#queue">Queue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#tag-related">Tag related</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#uploading">Uploading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
@@ -212,12 +225,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -230,8 +237,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#id1">Configuring MusicDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-version">Update to a New Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-manually">Installation (Manually)</a><ul>
@@ -240,7 +246,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3">id3edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
@@ -251,6 +257,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#music-video-file-name">Music Video File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
@@ -260,6 +267,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-videos-to-musicdb">Importing Videos to MusicDB</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/scripts.html">Scripts</a><ul>
@@ -323,9 +331,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#example-calls">Example calls</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/tracker.html">tracker - Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#module-mod.tracker">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#class-description">Class Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/videoframes.html#class">class</a></li>
 </ul>
 </li>
 </ul>
@@ -343,6 +350,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#algorithm">Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/blacklist.html">Blacklist</a><ul>
@@ -385,6 +400,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randy-class">Randy Class</a></li>
@@ -397,14 +413,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/stream.html">Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
@@ -413,6 +421,35 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/uploadmanager.html">Upload Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#path-structure">Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#https-server">HTTPS Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 </ul>
@@ -437,6 +474,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.webui">WebUI Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
 </ul>
@@ -489,9 +527,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#validity-of-columns">Validity of columns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#adding-a-column">Adding a Column</a></li>
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#songs">Songs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="musicdb.html#videos">Videos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#video-relates-methods">Video Relates Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#albums">Albums</a><ul>
@@ -505,7 +548,7 @@
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#tags">Tags</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-definition-table">Tag Definition Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="musicdb.html#database-api">Database API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="musicdb.html#tag-related-methods">Tag Related Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
@@ -524,21 +567,6 @@
 </ul>
 <p class="caption"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
@@ -694,14 +722,24 @@ The information gets stored in a dictionary.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">album</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetAlbumname" title="lib.metatags.MetaTags.GetAlbumname"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbumname()</span></code></a></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">artist</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetArtistname" title="lib.metatags.MetaTags.GetArtistname"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetArtistname()</span></code></a></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">releaseyear</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetReleaseyear" title="lib.metatags.MetaTags.GetReleaseyear"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetReleaseyear()</span></code></a></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cdnumber</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetCDNumber" title="lib.metatags.MetaTags.GetCDNumber"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetCDNumber()</span></code></a></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">songnumber</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetTracknumber" title="lib.metatags.MetaTags.GetTracknumber"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetTracknumber()</span></code></a></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">origin</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetOrigin" title="lib.metatags.MetaTags.GetOrigin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetOrigin()</span></code></a></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">playtime</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetPlaytime" title="lib.metatags.MetaTags.GetPlaytime"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetPlaytime()</span></code></a></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">bitrate</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetBitrate" title="lib.metatags.MetaTags.GetBitrate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetBitrate()</span></code></a></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">lyrics</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetLyrics" title="lib.metatags.MetaTags.GetLyrics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetLyrics()</span></code></a></p></li>
 </ul>
 </div></blockquote>
+<dl class="simple">
+<dt>Additional information for audio files</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cdnumber</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetCDNumber" title="lib.metatags.MetaTags.GetCDNumber"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetCDNumber()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">songnumber</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetTracknumber" title="lib.metatags.MetaTags.GetTracknumber"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetTracknumber()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lyrics</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetLyrics" title="lib.metatags.MetaTags.GetLyrics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetLyrics()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bitrate</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetBitrate" title="lib.metatags.MetaTags.GetBitrate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetBitrate()</span></code></a></p></li>
+</ul>
+</dd>
+<dt>Additional information for video files</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">codec</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetVideoCodec" title="lib.metatags.MetaTags.GetVideoCodec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetVideoCodec()</span></code></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xresolution</span></code>, <code class="docutils literal notranslate"><span class="pre">yresolution</span></code>: <a class="reference internal" href="#lib.metatags.MetaTags.GetVideoResolution" title="lib.metatags.MetaTags.GetVideoResolution"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetVideoResolution()</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -822,16 +860,64 @@ Only if this method fails, the playtime gets read from the meta data.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="lib.metatags.MetaTags.GetVideoCodec">
+<code class="sig-name descname">GetVideoCodec</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetVideoCodec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetVideoCodec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tries to identify the video codec of a video file.</p>
+<p>The corresponding command line is the following:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ffprobe -v error -select_streams v:0 -show_entries <span class="nv">stream</span><span class="o">=</span>codec_name -of <span class="nv">default</span><span class="o">=</span><span class="nv">noprint_wrappers</span><span class="o">=</span><span class="m">1</span>:nokey<span class="o">=</span><span class="m">1</span> <span class="nv">$PATH</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A string with the identified codec like <code class="docutils literal notranslate"><span class="pre">&quot;h264&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.metatags.MetaTags.GetVideoResolution">
+<code class="sig-name descname">GetVideoResolution</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetVideoResolution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetVideoResolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tries to identify the video resolution of a video file.
+There may be differences between the given resolution and the actual resolution of the video in the video player.
+This is due to the Sample Aspect Ratio (SAR).
+This method considers the SAR by returning the width multiplied by this ratio:</p>
+<div class="math">
+<p><img src="../_images/math/4f051d0832918fe0ac3910cc9fd7cb6d3be22d90.png" alt="width_{correct} = width_{meta} \cdot SAR"/></p>
+</div><p>The height will not be changed.</p>
+<p>The corresponding command line is the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ffprobe -v error -select_streams v:0 -show_entries <span class="nv">stream</span><span class="o">=</span>width,height,sample_aspect_ratio -of <span class="nv">csv</span><span class="o">=</span><span class="nv">s</span><span class="o">=</span>x:p<span class="o">=</span><span class="m">0</span> <span class="nv">$PATH</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A tuple <code class="docutils literal notranslate"><span class="pre">(width,height)</span></code> with the identified resolution like <code class="docutils literal notranslate"><span class="pre">(1920,</span> <span class="pre">1080)</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="lib.metatags.MetaTags.Load">
 <code class="sig-name descname">Load</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.Load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.Load" title="Permalink to this definition">¶</a></dt>
-<dd><p>Supported file extensions:</p>
+<dd><p>Supported file extensions for audio files:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>For MPEG4: <code class="docutils literal notranslate"><span class="pre">mp4</span></code>, <code class="docutils literal notranslate"><span class="pre">aac</span></code>, <code class="docutils literal notranslate"><span class="pre">m4a</span></code></p></li>
+<li><p>For MPEG4: <code class="docutils literal notranslate"><span class="pre">aac</span></code>, <code class="docutils literal notranslate"><span class="pre">m4a</span></code></p></li>
 <li><p>For MPEG3: <code class="docutils literal notranslate"><span class="pre">mp3</span></code>, <code class="docutils literal notranslate"><span class="pre">MP3</span></code></p></li>
 <li><p>For FLAC: <code class="docutils literal notranslate"><span class="pre">flac</span></code></p></li>
 </ul>
 </div></blockquote>
+<p>Supported file extensions for video files:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>For MPEG4: <code class="docutils literal notranslate"><span class="pre">m4v</span></code> (<code class="docutils literal notranslate"><span class="pre">mp4</span></code>)</p></li>
+<li><p>For WebM: <code class="docutils literal notranslate"><span class="pre">webm</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>The corner case of an <code class="docutils literal notranslate"><span class="pre">mp4</span></code> file gets not handled as video because it is not clear if it shall be handled as audio
+or video file.
+A warning gets written into the log and a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> exception raised.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – path to the song file that shall be loaded</p>
@@ -883,7 +969,7 @@ If there is no artwork in the metadata, <code class="docutils literal notranslat
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020,2021 Ralf Stemmer.
 
     </p>
   </div>
@@ -905,7 +991,7 @@ If there is no artwork in the metadata, <code class="docutils literal notranslat
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'6.0.0',
+            VERSION:'7.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -916,7 +1002,6 @@ If there is no artwork in the metadata, <code class="docutils literal notranslat
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

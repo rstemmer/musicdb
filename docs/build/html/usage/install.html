@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &amp; Update &mdash; MusicDB 6.0.0 documentation</title>
+  <title>Installation &amp; Update &mdash; MusicDB 7.0.0 documentation</title>
   
 
   
@@ -37,9 +37,9 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 6.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
         <link rel="next" title="Music" href="music.html"/>
-        <link rel="prev" title="Docker" href="docker.html"/> 
+        <link rel="prev" title="Workflow for development" href="../basics/workflow.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                6.0
+                7.0
               </div>
             
           
@@ -110,6 +110,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#database">database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#music">music</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#uploads">uploads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
@@ -117,6 +119,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/logging.html">Handling log-files</a></li>
@@ -184,12 +194,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#available-methods">Available Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#videos">Videos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#queue">Queue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#tag-related">Tag related</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#uploading">Uploading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
@@ -212,12 +225,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="docker.html#prepare-environment">Prepare Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="docker.html#build-the-image">Build the Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="docker.html#using-the-image">Using the Image</a></li>
-</ul>
-</li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#install-dependencies">Install Dependencies</a></li>
@@ -230,8 +237,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#id1">Configuring MusicDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#update">Update</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#update-to-a-new-major-version">Update to a New Major Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-to-a-new-version">Update to a New Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#installation-manually">Installation (Manually)</a><ul>
@@ -240,7 +246,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#libprinthex">libprinthex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">id3edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#musicdb">musicdb</a></li>
 </ul>
 </li>
@@ -251,6 +257,7 @@
 <li class="toctree-l3"><a class="reference internal" href="music.html#artist-directory-name">Artist Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="music.html#album-directory-name">Album Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="music.html#music-video-file-name">Music Video File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
@@ -260,6 +267,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="music.html#updating-songs">Updating Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="music.html#importing-videos-to-musicdb">Importing Videos to MusicDB</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="scripts.html">Scripts</a><ul>
@@ -323,9 +331,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#example-calls">Example calls</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/tracker.html">tracker - Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#module-mod.tracker">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#class-description">Class Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/videoframes.html#class">class</a></li>
 </ul>
 </li>
 </ul>
@@ -343,6 +350,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#algorithm">Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/blacklist.html">Blacklist</a><ul>
@@ -385,6 +400,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randy-class">Randy Class</a></li>
@@ -397,14 +413,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/stream.html">Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
@@ -413,6 +421,35 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/uploadmanager.html">Upload Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#path-structure">Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#https-server">HTTPS Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 </ul>
@@ -437,6 +474,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.webui">WebUI Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
 </ul>
@@ -489,9 +527,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#validity-of-columns">Validity of columns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#videos">Videos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#video-relates-methods">Video Relates Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#albums">Albums</a><ul>
@@ -505,7 +548,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#tags">Tags</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#database-api">Database API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#tag-related-methods">Tag Related Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
@@ -524,21 +567,6 @@
 </ul>
 <p class="caption"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
@@ -670,7 +698,7 @@ You can use your system package manager or pythons package manager <code class="
 <p>Required system packages:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>python (3.5+)</p></li>
+<li><p>python (3.6+)</p></li>
 <li><p>openssl</p></li>
 <li><p>sqlite3</p></li>
 <li><p>sed</p></li>
@@ -681,6 +709,8 @@ You can use your system package manager or pythons package manager <code class="
 <li><p>dialog</p></li>
 <li><p>rsync</p></li>
 <li><p>clang</p></li>
+<li><p><a class="reference external" href="https://github.com/rstemmer/id3edit">id3edit</a></p></li>
+<li><p>A HTTPS server for the WebUI - apache recommend</p></li>
 </ul>
 </div></blockquote>
 <p>Required gstreamer packages:</p>
@@ -710,19 +740,20 @@ You can use your system package manager or pythons package manager <code class="
 </ul>
 </div></blockquote>
 <p>Execute <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code> to install a basic set of Python modules needed for MusicDB.
-I recommend to try to get the modules from the distributions package manager.</p>
+I recommend to try to get the modules from the distributions package manager
+so that they are updated with each system update.</p>
 </div>
 <div class="section" id="additional-steps-for-ubuntu">
 <h3>Additional Steps for Ubuntu<a class="headerlink" href="#additional-steps-for-ubuntu" title="Permalink to this headline">¶</a></h3>
 <p><strong>Important for Ubuntu users (and maybe Debian) only</strong></p>
 <p>Usually I do not support Ubuntu for several technical reasons.
-But I had a clean virtual machine with the latest Ubuntu installed, so I tried test installation.
+But I had a clean virtual machine with the latest Ubuntu installed, so I tried test the installation process.
 The following <em>additional</em> steps are mandatory to get MusicDB to work on Ubuntu:</p>
 <p>Before installation:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install python-is-python3    <span class="c1"># when executing python, python3 gets called and not the dead python2</span>
 apt install icecast2             <span class="c1"># Do not use the configuration dialog, MusicDB provides a secure config</span>
                                  <span class="c1"># Ignore that check.sh does not find icecast after installation.</span>
-                                 <span class="c1"># This is because on Debian/Ubuntu the binary is calles &quot;icecast2&quot;.</span>
+                                 <span class="c1"># This is because on Debian/Ubuntu the binary is called &quot;icecast2&quot;.</span>
                                  <span class="c1"># Important scripts handle this situation of different naming.</span>
 
 pip3 install -r requirements.txt <span class="c1"># pip is called pip3 on Ubuntu</span>
@@ -732,7 +763,7 @@ pip3 install -r requirements.txt <span class="c1"># pip is called pip3 on Ubuntu
 <div class="section" id="executing-the-install-sh-script">
 <h3>Executing the install.sh Script<a class="headerlink" href="#executing-the-install-sh-script" title="Permalink to this headline">¶</a></h3>
 <p>Now you can simply execute the <code class="docutils literal notranslate"><span class="pre">install.sh</span></code> script from the scripts directory in the source directory,
-after you have cloned the <a class="reference external" href="https://github.com/rstemmer/musicdb">git</a> repository from GitHub.</p>
+after you have cloned the <a class="reference external" href="https://github.com/rstemmer/musicdb">MusicDB git repository</a> from GitHub.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># cd to a place where the source repository shall be downloaded</span>
 <span class="nb">cd</span> /src
 
@@ -751,6 +782,7 @@ su    <span class="c1"># you need to be root</span>
 </div>
 <p>After starting the <code class="docutils literal notranslate"><span class="pre">install.sh</span></code> script, the script tries to determine some variables.
 It also recognizes if this is a new installation or an update by checking for the symlink <code class="docutils literal notranslate"><span class="pre">/etc/musicdb.ini</span></code>.
+(For updates, you should use the <code class="docutils literal notranslate"><span class="pre">update.sh</span></code> script).
 Then it opens a dialog where these variables can be confirmed or modified.</p>
 <p>The following settings must be configured for the installation (and will be recognized when MusicDB shall only be updated):</p>
 <blockquote>
@@ -805,6 +837,7 @@ The update process saves the lines with the configuration and restores them afte
 <li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/artwork/</span></code> pointing to the artwork directory (<code class="docutils literal notranslate"><span class="pre">$DATADIR/artwork</span></code>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/music/</span></code> pointing to the music source directory (<code class="docutils literal notranslate"><span class="pre">*/music</span></code>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/docs/</span></code> pointing to the documentation directory (<code class="docutils literal notranslate"><span class="pre">$SERVERDIR/docs</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/musicdb/videoframes/</span></code> pointing to the video frames directory (<code class="docutils literal notranslate"><span class="pre">$SERVERDIR/videoframes</span></code>) if you want to use the video management feature</p></li>
 </ul>
 </div></blockquote>
 <p>An example <a class="reference external" href="https://httpd.apache.org/">Apache</a> configuration can look like this:</p>
@@ -829,8 +862,8 @@ The update process saves the lines with the configuration and restores them afte
     <span class="nb">Require</span> <span class="k">all</span> granted
 <span class="nt">&lt;/Directory&gt;</span>
 
-<span class="nb">Alias</span> <span class="sx">/musicdb/</span> <span class="s2">&quot;/opt/musicdb/server/&quot;</span>
-<span class="nt">&lt;Directory</span> <span class="s">&quot;/opt/musicdb/server&quot;</span><span class="nt">&gt;</span>
+<span class="nb">Alias</span> <span class="sx">/musicdb/</span> <span class="s2">&quot;/opt/musicdb/server/webui/&quot;</span>
+<span class="nt">&lt;Directory</span> <span class="s">&quot;/opt/musicdb/server/webui&quot;</span><span class="nt">&gt;</span>
    <span class="nb">AllowOverride</span> <span class="k">None</span>
    <span class="nb">Options</span> +ExecCGI +FollowSymLinks
    <span class="nb">Require</span> <span class="k">all</span> granted
@@ -865,34 +898,16 @@ So if your WebSocket address is <code class="docutils literal notranslate"><span
 </div>
 <div class="section" id="update">
 <h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
-<p>For updating, you can do one of the following steps.
+<p>For updating, you can do following steps.
 Read the <em>Important News</em> of the README.md file for manual steps to do before updating to a new major release.
 Only execute the scripts as root, that are followed by the comment “as root”!</p>
-<div class="section" id="update-to-a-new-minor-version">
-<h3>Update to a New Minor Version<a class="headerlink" href="#update-to-a-new-minor-version" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="update-to-a-new-version">
+<h3>Update to a New Version<a class="headerlink" href="#update-to-a-new-version" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git checkout master <span class="c1"># Only install from master branch!</span>
 git pull
 
 <span class="nb">cd</span> scripts
 ./update.sh <span class="c1"># as root</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="update-to-a-new-major-version">
-<h3>Update to a New Major Version<a class="headerlink" href="#update-to-a-new-major-version" title="Permalink to this headline">¶</a></h3>
-<p>For major upgrades there exists two strategies.
-Strategy 1 is recommended.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git checkout master <span class="c1"># Only install from master branch!</span>
-git pull
-
-<span class="nb">cd</span> scripts
-
-<span class="c1"># Statgey 1</span>
-./update.sh --major <span class="c1"># as root</span>
-
-<span class="c1"># Statrgy 2</span>
-./install.sh        <span class="c1"># as root</span>
-musicdb upgrade
 </pre></div>
 </div>
 </div>
@@ -1041,12 +1056,22 @@ mkdir /data/music   <span class="o">&amp;&amp;</span> chown -R user:musicdb    /
 </div>
 <div class="section" id="id2">
 <h3>Install dependencies<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>Some: <code class="docutils literal notranslate"><span class="pre">git</span></code>, <code class="docutils literal notranslate"><span class="pre">gcc</span></code>, <code class="docutils literal notranslate"><span class="pre">python</span></code>, <code class="docutils literal notranslate"><span class="pre">pip</span></code></p>
-<div class="admonition attention">
-<p class="admonition-title">Attention</p>
-<p>On Debian the <code class="docutils literal notranslate"><span class="pre">python</span></code> command runs the ancient Python 2.
-Whenever this documentation is talking about Python, Python 3 is meant!</p>
-</div>
+<p>Some:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">clang</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pip</span></code></p></li>
+<li><p>GStreamer with all plugins</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">icecast</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">libshout</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ffmpeg</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">openssl</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sqlite3</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rsync</span></code></p></li>
+</ul>
+</div></blockquote>
 <p>Further more, everything <code class="docutils literal notranslate"><span class="pre">check</span></code> tells you is missing.
 The following list gives you some details about the listed modules.</p>
 <blockquote>
@@ -1058,6 +1083,11 @@ The following list gives you some details about the listed modules.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">jsdoc</span></code> can be installed via <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">-g</span> <span class="pre">jsdoc</span></code>.</p></li>
 </ul>
 </div></blockquote>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>On Debian the <code class="docutils literal notranslate"><span class="pre">python</span></code> command runs the ancient Python 2.
+Whenever this documentation is talking about Python, Python 3 is meant!</p>
+</div>
 </div>
 <div class="section" id="basic-packages">
 <h3>Basic packages<a class="headerlink" href="#basic-packages" title="Permalink to this headline">¶</a></h3>
@@ -1084,8 +1114,8 @@ git clone https://github.com/rstemmer/musicdb.git
 </pre></div>
 </div>
 </div>
-<div class="section" id="id3edit">
-<h3>id3edit<a class="headerlink" href="#id3edit" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>id3edit<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> id3edit
 ./build.sh
 ./install.sh
@@ -1146,7 +1176,7 @@ cp ~/projects/musicdb/share/logrotate.conf /etc/logrotate.d/musicdb
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020,2021 Ralf Stemmer.
 
     </p>
   </div>
@@ -1168,7 +1198,7 @@ cp ~/projects/musicdb/share/logrotate.conf /etc/logrotate.d/musicdb
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'6.0.0',
+            VERSION:'7.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1179,7 +1209,6 @@ cp ~/projects/musicdb/share/logrotate.conf /etc/logrotate.d/musicdb
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

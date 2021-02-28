@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.database &mdash; MusicDB 6.0.0 documentation</title>
+  <title>mdbapi.database &mdash; MusicDB 7.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 6.0.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 7.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                6.0
+                7.0
               </div>
             
           
@@ -109,6 +109,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#database">database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#music">music</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#uploads">uploads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#lycra">lycra</a></li>
@@ -116,6 +118,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../basics/logging.html">Handling log-files</a></li>
@@ -183,12 +193,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#available-methods">Available Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#albums">Albums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#videos">Videos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#queue">Queue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#tag-related">Tag related</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#uploading">Uploading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
@@ -211,12 +224,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../usage/docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/docker.html#prepare-environment">Prepare Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/docker.html#build-the-image">Build the Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/docker.html#using-the-image">Using the Image</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -229,8 +236,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#id1">Configuring MusicDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#update">Update</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#update-to-a-new-version">Update to a New Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-manually">Installation (Manually)</a><ul>
@@ -239,7 +245,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#libprinthex">libprinthex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id3">id3edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
@@ -250,6 +256,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#album-directory-name">Album Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#music-video-file-name">Music Video File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
@@ -259,6 +266,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#updating-songs">Updating Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-videos-to-musicdb">Importing Videos to MusicDB</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage/scripts.html">Scripts</a><ul>
@@ -322,9 +330,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#example-calls">Example calls</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/tracker.html">tracker - Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mod/tracker.html#module-mod.tracker">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mod/tracker.html#class-description">Class Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/videoframes.html#class">class</a></li>
 </ul>
 </li>
 </ul>
@@ -342,6 +349,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#algorithm">Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/blacklist.html">Blacklist</a><ul>
@@ -384,6 +399,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#randy-class">Randy Class</a></li>
@@ -396,14 +412,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/stream.html">Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
@@ -412,6 +420,35 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/uploadmanager.html">Upload Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#path-structure">Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#https-server">HTTPS Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 </ul>
@@ -436,6 +473,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.webui">WebUI Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
 </ul>
@@ -488,9 +526,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#validity-of-columns">Validity of columns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#songs">Songs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#videos">Videos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#video-relates-methods">Video Relates Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#albums">Albums</a><ul>
@@ -504,7 +547,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#tags">Tags</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#database-api">Database API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-related-methods">Tag Related Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
@@ -523,21 +566,6 @@
 </ul>
 <p class="caption"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#connection-process">Connection Process</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#watchdog">Watchdog</a></li>
@@ -636,7 +664,7 @@
             
   <h1>Source code for mdbapi.database</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017,2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2017-2021  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -678,7 +706,7 @@
 <span class="sd">            * :meth:`~AnalysePath`: Extract song information from its file path</span>
 <span class="sd">            * :meth:`~TyrAnalysePathFor`: Check if the given path is valid for an artist, album or song</span>
 <span class="sd">        * Database management</span>
-<span class="sd">            * :meth:`~AddArtist`, :meth:`~AddAlbum`, :meth:`~AddSong`: Adds a new artist, album or song to the database</span>
+<span class="sd">            * :meth:`~AddArtist`, :meth:`~AddAlbum`, :meth:`~AddSong`, :meth:`~AddVideo`: Adds a new artist, album, song video to the database</span>
 <span class="sd">            * :meth:`~UpdateArtist`, :meth:`~UpdateAlbum`, :meth:`~UpdateSong`: Updates a artist, album or song path in the database</span>
 <span class="sd">            * :meth:`~RemoveArtist`, :meth:`~RemoveAlbum`, :meth:`~RemoveSong`: Removes a artist, album or song from the database</span>
 <span class="sd">        * Add information into the database</span>
@@ -758,64 +786,83 @@
 
 <div class="viewcode-block" id="MusicDBDatabase.FindNewPaths"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.FindNewPaths">[docs]</a>    <span class="k">def</span> <span class="nf">FindNewPaths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method searches inside the music directory for valid artist, album and song paths.</span>
+<span class="sd">        This method searches inside the music directory for valid artist, album song and video paths.</span>
 <span class="sd">        If those paths are not in the database, they will be returned.</span>
-<span class="sd">        So this method returns three lists: ``artistpaths, albumpaths, songpaths``.</span>
-<span class="sd">        Each representing an artist, album or song that is not known by the database yet.</span>
+<span class="sd">        So this method returns four lists: artist-, album-, song-, and video- paths.</span>
+<span class="sd">        Each representing an artist, album, song or video that is not known by the database yet.</span>
 <span class="sd">        Files and directories in the configured ignore-list will be ignored.</span>
 
-<span class="sd">        If a new directory was found, the subdirectories will not be added!</span>
-<span class="sd">        So for a new album, the new songs are implicite and not listed in the new-songs-list.</span>
+<span class="sd">        If a new directory was found, the subdirectories will also be added!</span>
+<span class="sd">        So for a new album, the new songs are explicit added as well.</span>
 
 <span class="sd">        This method is very optimistic. It will also list empty directories.</span>
 <span class="sd">        The user may want to check if the results of this method are valid for him.</span>
 
-<span class="sd">        Further more this method is error tolerant. This means, if in the database is an invalid entry,</span>
-<span class="sd">        this does not lead to errors. For example, if an album path gets renamed, this path will be returned.</span>
+<span class="sd">        Furthermore this method is error tolerant. This means, if in the database has an invalid entry,</span>
+<span class="sd">        it does not lead to errors. For example, if an album path gets renamed, this path will be returned.</span>
 <span class="sd">        It does not lead to an error that the old path is still in the database.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A three lists of paths that are valid but unknown by the database. Empty lists if there is no invalid entrie.</span>
+<span class="sd">            A dictionary with 4 entries: ``&quot;artists&quot;``, ``&quot;albums&quot;``, ``&quot;songs&quot;`` and ``&quot;videos&quot;``.</span>
+<span class="sd">            Each a list of paths that are valid but unknown by the database. Empty lists if there is no valid entry.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">newartists</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">newalbums</span>  <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">newsongs</span>   <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">newpaths</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">newpaths</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">newpaths</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">newpaths</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">newpaths</span><span class="p">[</span><span class="s2">&quot;videos&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">artistpaths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetSubdirectories</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignoreartists</span><span class="p">)</span>
+        <span class="n">artistpaths</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">artistpaths</span><span class="p">]</span>
 
         <span class="c1"># Check Artists</span>
         <span class="n">artists</span>          <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAllArtists</span><span class="p">()</span>
         <span class="n">knownartistpaths</span> <span class="o">=</span> <span class="p">[</span><span class="n">artist</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">artist</span> <span class="ow">in</span> <span class="n">artists</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">artist</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])]</span>
-        <span class="n">artistpaths</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetSubdirectories</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignoreartists</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">artistpaths</span><span class="p">:</span>
-            <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">knownartistpaths</span><span class="p">:</span>
-                <span class="n">newartists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="n">newpaths</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
         <span class="c1"># Check Albums</span>
         <span class="n">albums</span>          <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAllAlbums</span><span class="p">()</span>
         <span class="n">knownalbumpaths</span> <span class="o">=</span> <span class="p">[</span><span class="n">album</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">album</span> <span class="ow">in</span> <span class="n">albums</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsDirectory</span><span class="p">(</span><span class="n">album</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])]</span>
-        <span class="n">albumpaths</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetSubdirectories</span><span class="p">(</span><span class="n">knownartistpaths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignorealbums</span><span class="p">)</span>
+        <span class="n">albumpaths</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetSubdirectories</span><span class="p">(</span><span class="n">artistpaths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignorealbums</span><span class="p">)</span>
         
         <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">albumpaths</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">knownalbumpaths</span><span class="p">:</span>
-                <span class="n">newalbums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="n">newpaths</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
         <span class="c1"># Check Songs</span>
         <span class="n">songs</span>           <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetAllSongs</span><span class="p">()</span>
         <span class="n">knownsongpaths</span>  <span class="o">=</span> <span class="p">[</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">song</span> <span class="ow">in</span> <span class="n">songs</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsFile</span><span class="p">(</span><span class="n">song</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])]</span>
-        <span class="n">songpaths</span>       <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetFiles</span><span class="p">(</span><span class="n">knownalbumpaths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignoresongs</span><span class="p">)</span>
+        <span class="n">songpaths</span>       <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetFiles</span><span class="p">(</span><span class="n">albumpaths</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignoresongs</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">songpaths</span><span class="p">:</span>
 
             <span class="c1"># check if this is really an audio file</span>
             <span class="n">extension</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetFileExtension</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">extension</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;mp4&quot;</span><span class="p">,</span> <span class="s2">&quot;aac&quot;</span><span class="p">,</span> <span class="s2">&quot;m4a&quot;</span><span class="p">,</span> <span class="s2">&quot;mp3&quot;</span><span class="p">,</span> <span class="s2">&quot;flac&quot;</span><span class="p">,</span> <span class="s2">&quot;MP3&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">extension</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;aac&quot;</span><span class="p">,</span> <span class="s2">&quot;m4a&quot;</span><span class="p">,</span> <span class="s2">&quot;mp3&quot;</span><span class="p">,</span> <span class="s2">&quot;flac&quot;</span><span class="p">,</span> <span class="s2">&quot;MP3&quot;</span><span class="p">]:</span>
                 <span class="k">continue</span>
 
             <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">knownsongpaths</span><span class="p">:</span>
-                <span class="n">newsongs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="n">newpaths</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">newartists</span><span class="p">,</span> <span class="n">newalbums</span><span class="p">,</span> <span class="n">newsongs</span></div>
+        <span class="c1"># Check Videos</span>
+        <span class="n">videos</span>          <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetVideos</span><span class="p">()</span>
+        <span class="n">knownvideopaths</span> <span class="o">=</span> <span class="p">[</span><span class="n">video</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">video</span> <span class="ow">in</span> <span class="n">videos</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">IsFile</span><span class="p">(</span><span class="n">video</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])]</span>
+        <span class="n">videopaths</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetFiles</span><span class="p">(</span><span class="n">artistpaths</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">videopaths</span><span class="p">:</span>
+
+            <span class="c1"># check if this is really an audio file</span>
+            <span class="n">extension</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetFileExtension</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">extension</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;mp4&quot;</span><span class="p">,</span> <span class="s2">&quot;m4v&quot;</span><span class="p">,</span> <span class="s2">&quot;webm&quot;</span><span class="p">]:</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">knownvideopaths</span><span class="p">:</span>
+                <span class="n">newpaths</span><span class="p">[</span><span class="s2">&quot;videos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">newpaths</span></div>
 
 
 
@@ -853,75 +900,118 @@
 
 <div class="viewcode-block" id="MusicDBDatabase.AnalysePath"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AnalysePath">[docs]</a>    <span class="k">def</span> <span class="nf">AnalysePath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method analyses a path to a song and extracts all the information encoded in the path.</span>
+<span class="sd">        This method analyses a path to a song or video and extracts all the information encoded in the path.</span>
 <span class="sd">        The path must consist of three parts: The artist directory, the album directory and the song file.</span>
+<span class="sd">        For videos only two parts are expected: The artist directory and the video file</span>
 
 <span class="sd">        A valid path has one the following structures: </span>
 <span class="sd">        </span>
 <span class="sd">            * ``{artistname}/{albumrelease} - {albumname}/{songnumber} {songname}.{extension}``</span>
 <span class="sd">            * ``{artistname}/{albumrelease} - {albumname}/{cdnumber}-{songnumber} {songname}.{extension}``</span>
+<span class="sd">            * ``{artistname}/{videorelease} - {videoname}.{extension}``</span>
 
-<span class="sd">        The returned dictionary holds all the extracted information.</span>
-<span class="sd">        In case there is no *cdnumber*, this entry is ``1``.</span>
+<span class="sd">        The returned dictionary holds all the extracted information from the scheme listed above.</span>
+<span class="sd">        The following entries exists but may be ``None`` depending if the path addresses a video or song.</span>
+
+<span class="sd">            * artist</span>
+<span class="sd">            * release</span>
+<span class="sd">            * album</span>
+<span class="sd">            * song</span>
+<span class="sd">            * video</span>
+<span class="sd">            * songnumber</span>
+<span class="sd">            * cdnumber</span>
+<span class="sd">            * extension</span>
+
+<span class="sd">        In case there is no *cdnumber* specified for a song, this entry is ``1``.</span>
 <span class="sd">        The names can have all printable Unicode characters and of cause spaces.</span>
 
 <span class="sd">        If an error occurs because the path does not follow the scheme, ``None`` gets returned.</span>
 <span class="sd">        This method does not check if the path exists!</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            path (str): A path of a song including artist and album directory.</span>
+<span class="sd">            path (str): A path of a song including artist and album directory or a video including the artists directory.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            On success, a dictionary with information about the artist, album and song.</span>
+<span class="sd">            On success, a dictionary with information about the artist, album and song or video is returned.</span>
 <span class="sd">            Otherwise ``None`` gets returned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Define all possibly used variables to a avoid undefined behavior</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;video&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;songnumber&quot;</span><span class="p">]</span><span class="o">=</span> <span class="kc">None</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;cdnumber&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">artist</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">album</span>  <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">song</span>   <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">video</span>  <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="c1"># separate the artist album and song name stored in the filesystem</span>
-        <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># separate parts of the path</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">parts</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># This my be a video</span>
+            <span class="p">[</span><span class="n">artist</span><span class="p">,</span> <span class="n">video</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="k">elif</span> <span class="n">parts</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span> <span class="c1"># This may be a song</span>
             <span class="p">[</span><span class="n">artist</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">song</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span>
-        <span class="k">except</span><span class="p">:</span>
+        <span class="k">else</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Analysing </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed!&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;path cannot be split into three parts: </span><span class="si">{artist}</span><span class="s2">/</span><span class="si">{album}</span><span class="s2">/</span><span class="si">{song}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Path cannot be split into three parts </span><span class="si">{artist}</span><span class="s2">/</span><span class="si">{album}</span><span class="s2">/</span><span class="si">{song}</span><span class="s2"> or two parts </span><span class="si">{artist}</span><span class="s2">/</span><span class="si">{video}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="c1"># analyse the artist-infos</span>
+        <span class="c1"># analyze the artist information</span>
         <span class="n">result</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">artist</span>
 
-        <span class="c1"># analyse the album-infos</span>
-        <span class="n">albuminfos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">AnalyseAlbumDirectoryName</span><span class="p">(</span><span class="n">album</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">albuminfos</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Analysing </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed!&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unexpected album directory name. Expecting </span><span class="se">\&quot;</span><span class="si">{year}</span><span class="s2"> - </span><span class="si">{name}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span>
+        <span class="c1"># analyze the album information</span>
+        <span class="k">if</span> <span class="n">album</span><span class="p">:</span>
+            <span class="n">albuminfos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">AnalyseAlbumDirectoryName</span><span class="p">(</span><span class="n">album</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">albuminfos</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Analysing </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed!&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unexpected album directory name. Expecting </span><span class="se">\&quot;</span><span class="si">{year}</span><span class="s2"> - </span><span class="si">{name}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">albuminfos</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>
-        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">albuminfos</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">albuminfos</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;album&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">albuminfos</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
 
-        <span class="c1"># analyse the song-infos</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">songname</span>   <span class="o">=</span> <span class="n">song</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
-            <span class="n">songnumber</span> <span class="o">=</span> <span class="n">song</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-
+        <span class="c1"># analyze the song information</span>
+        <span class="k">if</span> <span class="n">song</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="p">[</span><span class="n">cdnumber</span><span class="p">,</span> <span class="n">songnumber</span><span class="p">]</span> <span class="o">=</span> <span class="n">songnumber</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+                <span class="n">songname</span>   <span class="o">=</span> <span class="n">song</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+                <span class="n">songnumber</span> <span class="o">=</span> <span class="n">song</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="p">[</span><span class="n">cdnumber</span><span class="p">,</span> <span class="n">songnumber</span><span class="p">]</span> <span class="o">=</span> <span class="n">songnumber</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">cdnumber</span> <span class="o">=</span> <span class="mi">1</span>
+
+                <span class="n">songnumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">songnumber</span><span class="p">)</span>
+                <span class="n">cdnumber</span>   <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cdnumber</span><span class="p">)</span>
+                <span class="n">songname</span>   <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">songname</span><span class="p">)</span>
+                <span class="n">extension</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">songname</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># get extension without leading &quot;.&quot;</span>
+                <span class="n">songname</span>   <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">songname</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>      <span class="c1"># remove extension</span>
             <span class="k">except</span><span class="p">:</span>
-                <span class="n">cdnumber</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Analysing </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed!&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unexpected song file name. Expected </span><span class="se">\&quot;</span><span class="s2">[</span><span class="si">{cdnumber}</span><span class="s2">-]</span><span class="si">{songnumber}</span><span class="s2"> </span><span class="si">{songname}</span><span class="s2">.</span><span class="si">{ending}</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
 
-            <span class="n">songnumber</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">songnumber</span><span class="p">)</span>
-            <span class="n">cdnumber</span>   <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cdnumber</span><span class="p">)</span>
-            <span class="n">songname</span>   <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">songname</span><span class="p">)</span>
-            <span class="n">extension</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">songname</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># get extension without leading &quot;.&quot;</span>
-            <span class="n">songname</span>   <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">songname</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>      <span class="c1"># remove extension</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Analysing </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed!&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unexpected song file name. Expected </span><span class="se">\&quot;</span><span class="s2">[</span><span class="si">{cdnumber}</span><span class="s2">-]</span><span class="si">{songnumber}</span><span class="s2"> </span><span class="si">{songname}</span><span class="s2">.</span><span class="si">{ending}</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">songname</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;songnumber&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">songnumber</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;cdnumber&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">cdnumber</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">extension</span>
 
-        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">songname</span>
-        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;songnumber&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">songnumber</span>
-        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;cdnumber&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">cdnumber</span>
-        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">extension</span>
+        <span class="c1"># analyze the video information</span>
+        <span class="k">if</span> <span class="n">video</span><span class="p">:</span>
+            <span class="n">videoinfos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">AnalyseVideoFileName</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">videoinfos</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Analyzing </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed!&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unexpected video file name. Expecting </span><span class="se">\&quot;</span><span class="si">{year}</span><span class="s2"> - </span><span class="si">{name}</span><span class="s2">.</span><span class="si">{extension}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">videoinfos</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;video&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">videoinfos</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">videoinfos</span><span class="p">[</span><span class="s2">&quot;extension&quot;</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="n">result</span></div>
 
@@ -1174,6 +1264,7 @@
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;added&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">moddate</span>
+        <span class="n">album</span><span class="p">[</span><span class="s2">&quot;hidden&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="kc">False</span>
         
         <span class="k">if</span> <span class="n">artistid</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># the artistname IS the path, because thats how the fsmeta data came from</span>
@@ -1220,7 +1311,10 @@
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;numofsongs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">songs</span><span class="p">)</span>
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;numofcds&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">numofcds</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">WriteAlbum</span><span class="p">(</span><span class="n">album</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">WriteAlbum</span><span class="p">(</span><span class="n">album</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;CRITICAL ERROR! Updating album information failed with error </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">. Use the musicdb database command to remove this album and see the log file for further details.&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
@@ -1372,6 +1466,8 @@
         <span class="n">song</span><span class="p">[</span><span class="s2">&quot;lyricsstate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SONG_LYRICSSTATE_EMPTY</span>
         <span class="n">song</span><span class="p">[</span><span class="s2">&quot;checksum&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Checksum</span><span class="p">(</span><span class="n">songpath</span><span class="p">)</span>
         <span class="n">song</span><span class="p">[</span><span class="s2">&quot;lastplayed&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;liverecording&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">song</span><span class="p">[</span><span class="s2">&quot;badaudio&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">0</span>
 
         <span class="c1"># FIX: THE FILESYSTEM IS _ALWAYS_ RIGHT! - WHAT THE FUCK!</span>
         <span class="n">song</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span> 
@@ -1511,6 +1607,192 @@
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;numofsongs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">songs</span><span class="p">)</span>
         <span class="n">album</span><span class="p">[</span><span class="s2">&quot;numofcds&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">numofcds</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">WriteAlbum</span><span class="p">(</span><span class="n">album</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.AddVideo"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.AddVideo">[docs]</a>    <span class="k">def</span> <span class="nf">AddVideo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">videopath</span><span class="p">,</span> <span class="n">artistid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method adds a video to the MusicDB database.</span>
+<span class="sd">        To do so, the following steps were done:</span>
+
+<span class="sd">            #. Check if the video already exists in the database</span>
+<span class="sd">            #. Load the metadata from the video using :meth:`lib.metatags.MetaTags.GetAllMetadata`</span>
+<span class="sd">            #. Analyze the path of one of the video using :meth:`~mdbapi.database.MusicDBDatabase.AnalysePath`</span>
+<span class="sd">            #. If *artistid* is not given as parameter, it gets read from the database identifying the artist by its path.</span>
+<span class="sd">            #. Set file attributes and ownership using :meth:`~mdbapi.database.MusicDBDatabase.FixAttributes`</span>
+<span class="sd">            #. Add video to database</span>
+
+<span class="sd">        This method assumes that the artist the video belongs to exists in the database.</span>
+<span class="sd">        If not, an ``AssertionError`` exception gets raised.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            videopath (str): Absolute path, or path relative to the music root directory, to the video that shall be added to the database.</span>
+<span class="sd">            artistid (int): Optional, default value is ``None``. The ID of the artist this video belongs to.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` on success, otherwise ``False`` (or it raises an exception)</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If video already exists in the database</span>
+<span class="sd">            AssertionError: If analyzing the path fails</span>
+<span class="sd">            AssertionError: If artist does not exists in the database</span>
+<span class="sd">            AssertionError: If adding the video to the database fails</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># do some checks</span>
+        <span class="c1"># remove the root-path to the music directory</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">videopath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">videopath</span><span class="p">)</span> <span class="c1"># remove the path to the music directory</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="c1"># Check if the video already exists in the database</span>
+        <span class="n">video</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetVideoByPath</span><span class="p">(</span><span class="n">videopath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">video</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Video </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">video</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> does already exist in the database.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Get all information from the video path and its meta data</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">Load</span><span class="p">(</span><span class="n">videopath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Meta data of file </span><span class="si">%s</span><span class="s2"> cannot be loaded (Error: </span><span class="si">%s</span><span class="s2">). Assuming this is not a video file!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">videopath</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="c1"># Ignore this file, it is not a valid song file</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">tagmeta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">GetAllMetadata</span><span class="p">()</span>
+        <span class="n">fsmeta</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AnalysePath</span><span class="p">(</span><span class="n">videopath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fsmeta</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Invalid path-format: &quot;</span> <span class="o">+</span> <span class="n">videopath</span><span class="p">)</span>
+
+        <span class="n">moddate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetModificationDate</span><span class="p">(</span><span class="n">videopath</span><span class="p">)</span>
+
+        <span class="c1"># artistid may be not given by the arguments of this method.</span>
+        <span class="c1"># In this case, it must be searched in the database</span>
+        <span class="k">if</span> <span class="n">artistid</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">artist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetArtistByPath</span><span class="p">(</span><span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;artist&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">artist</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Artist for the video </span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">videopath</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> is not available in the database.&quot;</span><span class="p">)</span>
+            <span class="n">artistid</span> <span class="o">=</span> <span class="n">artist</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Collect all data needed for the song-entry (except the song ID)</span>
+        <span class="c1"># Remember! The file system is always right!</span>
+        <span class="n">video</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>          <span class="o">=</span> <span class="kc">None</span>     <span class="c1"># Not yet known. Will be inserted by AddFullVideo</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;artistid&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">artistid</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;video&quot;</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">videopath</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;disabled&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;added&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">moddate</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;codec&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;codec&quot;</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;xresolution&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;xresolution&quot;</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;yresolution&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;yresolution&quot;</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;framesdirectory&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;thumbnailfile&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;previewfile&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;likes&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;dislikes&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;favorite&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;liverecording&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;badaudio&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;checksum&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Checksum</span><span class="p">(</span><span class="n">videopath</span><span class="p">)</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;lastplayed&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;lyricsvideo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;bgcolor&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="s2">&quot;#101010&quot;</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;fgcolor&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="s2">&quot;#F0F0F0&quot;</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;hlcolor&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="s2">&quot;#909090&quot;</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;vbegin&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;vend&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">video</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Fix attributes to fit in MusicDB environment before adding it to the database</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">FixAttributes</span><span class="p">(</span><span class="n">videopath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Fixing file attributes failed with error: </span><span class="si">%s</span><span class="s2"> </span><span class="se">\033</span><span class="s2">[1;30m(leaving permissions as they are)&quot;</span><span class="p">,</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="c1"># add to database</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">AddFullVideo</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">retval</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Adding video </span><span class="si">%s</span><span class="s2"> failed!&quot;</span><span class="p">,</span> <span class="n">video</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="MusicDBDatabase.UpdateVideo"><a class="viewcode-back" href="../../mdbapi/database.html#mdbapi.database.MusicDBDatabase.UpdateVideo">[docs]</a>    <span class="k">def</span> <span class="nf">UpdateVideo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">videoid</span><span class="p">,</span> <span class="n">newpath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method updates a video entry in the database.</span>
+<span class="sd">        The following steps will be done to do this:</span>
+
+<span class="sd">            #. Update the *path* entry of the video to the new path (in case the file name is different)</span>
+<span class="sd">            #. Reading the video files meta data</span>
+<span class="sd">            #. Analyse the path to collect further information from the file system</span>
+<span class="sd">            #. Update database entry with the new collected information</span>
+
+<span class="sd">        Updates information are:</span>
+
+<span class="sd">            * path</span>
+<span class="sd">            * name</span>
+<span class="sd">            * playtime</span>
+<span class="sd">            * origin</span>
+<span class="sd">            * release</span>
+<span class="sd">            * date the file was added</span>
+<span class="sd">            * codec</span>
+<span class="sd">            * x/y resolution</span>
+<span class="sd">            * video begin/end</span>
+<span class="sd">            * checksum</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            videoid (int): ID of the video entry that shall be updated</span>
+<span class="sd">            newpath (str): Relative path to the new album</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: When the new path is invalid</span>
+<span class="sd">            Exception: When loading the meta data failes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">newpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">RemoveRoot</span><span class="p">(</span><span class="n">newpath</span><span class="p">)</span> <span class="c1"># remove the path to the music directory</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="n">video</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">GetVideoById</span><span class="p">(</span><span class="n">videoid</span><span class="p">)</span>
+        <span class="n">videopath</span> <span class="o">=</span> <span class="n">newpath</span>
+
+        <span class="c1"># Get all information from the video path and its meta data</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">Load</span><span class="p">(</span><span class="n">videopath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">excpetion</span><span class="p">(</span><span class="s2">&quot;Meta data of file </span><span class="si">%s</span><span class="s2"> cannot be load. Error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">videopath</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">e</span>
+
+        <span class="n">tagmeta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">GetAllMetadata</span><span class="p">()</span>
+        <span class="n">moddate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">GetModificationDate</span><span class="p">(</span><span class="n">videopath</span><span class="p">)</span>
+        <span class="n">fsmeta</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AnalysePath</span><span class="p">(</span><span class="n">videopath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fsmeta</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Invalid path-format: &quot;</span> <span class="o">+</span> <span class="n">videopath</span><span class="p">)</span>
+
+        <span class="c1"># Remember! The file system is always right</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;video&quot;</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">videopath</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;origin&quot;</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">fsmeta</span><span class="p">[</span><span class="s2">&quot;release&quot;</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;added&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">moddate</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;codec&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;codec&quot;</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;xresolution&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;xresolution&quot;</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;yresolution&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tagmeta</span><span class="p">[</span><span class="s2">&quot;yresolution&quot;</span><span class="p">]</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;checksum&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">Checksum</span><span class="p">(</span><span class="n">videopath</span><span class="p">)</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;vbegin&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">video</span><span class="p">[</span><span class="s2">&quot;vend&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">video</span><span class="p">[</span><span class="s2">&quot;playtime&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">WriteVideo</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
@@ -1727,7 +2009,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020,2021 Ralf Stemmer.
 
     </p>
   </div>
@@ -1749,7 +2031,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'6.0.0',
+            VERSION:'7.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1760,7 +2042,6 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
 
   
 

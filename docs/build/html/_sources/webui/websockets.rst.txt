@@ -87,20 +87,20 @@ Watchdog
 
 The existence of a watchdog timer in this code has historical reasons.
 There was a bug in the server that caused a loss of the connection to all clients.
-To fullfill the "The show must go on" requirement I implemented this code.
+To fulfill the "The show must go on" requirement I implemented this code.
 It is still in use because it does not hurt.
 
 Watchdog gets started with the first received message and with each message reset.
-When the connection gets closed or an error occured, the watchdog timer gets stop.
-Only when there are no more messages comming without any reason, the watchdog closes the current connection and establishes a new one.
+When the connection gets closed or an error occurred, the watchdog timer gets stop.
+Only when there are no more messages coming without any reason, the watchdog closes the current connection and establishes a new one.
 When the watchdog timer runs to 0, a callback function ``onMusicDBWatchdogBarks`` gets called.
 
 The watchdog does an automatic reconnect to the server when there are no packages coming from the server.
-The MusicDB Server send in a period of several seconds (max 3) the state of the :mod:`mdbapi.stream.StreamingThread` to all clients.
+The MusicDB Server send in a period of several seconds (max 3) the state of the :mod:`mdbapi.audiostream.AudioStreamingThread` to all clients.
 On Windows systems, packages can be stuck inside Windows internal buffers for a long time (several seconds).
 Keep this in mind when configuring the Watchdog.
 
-To configure the watchdog set the following variables in the *musicdb.js* file:
+To configure the watchdog set the following variables in the *config.js* file:
 
 WATCHDOG_RUN (boolean):
    If ``true`` the watchdog function checks if there is still a connection the server.
@@ -110,7 +110,7 @@ WATCHDOG_INTERVAL (integer):
 
 The following functions implement the Watchdog.
 They are used internal by the socket object as shown in the figure above.
-Usualy they need not to be called from the user of the *musicdb.js* file.
+Usually they need not to be called from the user of the *musicdb.js* file.
 
 .. js:autofunction:: MDB_WebsocketWatchdog
 
@@ -122,12 +122,23 @@ Usualy they need not to be called from the user of the *musicdb.js* file.
 Communication with the server
 -----------------------------
 
-The address of the server can be set in the following variable in *musicdb.js*:
+The address of the server can be set in the following variable in *config.js*:
 
 WEBSOCKET_URL (string):
    The URL to the websocket server. For example: ``"wss://testserver.org:9000"``.
-   By default, the domain of the website with port ``9001`` will be used.
+   By default, the domain of the website with port ``9000`` will be used.
+   It is required to use a secured websocket communication ``"wss"``.
 
+.. attention::
+
+   In case you use a self signed certificate, access URL including the port number via ``"https"`` to tell the browser that you trust that certificate.
+   So with the example configuration, access ``"https://testserver.org:9000"`` and confirm the certificate.
+   Then, a version note of the  *Autobahn* websocket framework is shown when everything is set up correct.
+
+WEBSOCKET_APIKEY (string):
+   To be able to communicate with the MusicDB WebSocket server, the correct API key must be set here.
+   This is the same key as in the MusicDB configuration (musicdb.ini) under ``[websocket]->apikey``.
+   This key gets generated during the first installation of MusicDB with a random key and can be changed if wanted.
 
 Sending Data
 ^^^^^^^^^^^^

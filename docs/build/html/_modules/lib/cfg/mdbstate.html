@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.cfg.mdbstate &mdash; MusicDB 6.0.0 documentation</title>
+  <title>lib.cfg.mdbstate &mdash; MusicDB 7.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 6.0.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 7.0.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                6.0
+                7.0
               </div>
             
           
@@ -109,6 +109,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#database">database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#music">music</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#uploads">uploads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#lycra">lycra</a></li>
@@ -116,6 +118,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/logging.html">Handling log-files</a></li>
@@ -183,12 +193,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#available-methods">Available Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#albums">Albums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#videos">Videos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#queue">Queue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#tag-related">Tag related</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#uploading">Uploading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
@@ -211,12 +224,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../usage/docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/docker.html#prepare-environment">Prepare Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/docker.html#build-the-image">Build the Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../usage/docker.html#using-the-image">Using the Image</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -229,8 +236,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#id1">Configuring MusicDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#update">Update</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#update-to-a-new-version">Update to a New Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#installation-manually">Installation (Manually)</a><ul>
@@ -239,7 +245,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#libprinthex">libprinthex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#id3">id3edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
@@ -250,6 +256,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#album-directory-name">Album Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../usage/music.html#music-video-file-name">Music Video File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
@@ -259,6 +266,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#updating-songs">Updating Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../usage/music.html#importing-videos-to-musicdb">Importing Videos to MusicDB</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage/scripts.html">Scripts</a><ul>
@@ -322,9 +330,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/tags.html#example-calls">Example calls</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../mod/tracker.html">tracker - Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../mod/tracker.html#module-mod.tracker">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mod/tracker.html#class-description">Class Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mod/videoframes.html#class">class</a></li>
 </ul>
 </li>
 </ul>
@@ -342,6 +349,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#algorithm">Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/audiostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/blacklist.html">Blacklist</a><ul>
@@ -384,6 +399,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../../mdbapi/randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/randy.html#randy-class">Randy Class</a></li>
@@ -396,14 +412,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/stream.html">Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
@@ -412,6 +420,35 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/uploadmanager.html">Upload Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#path-structure">Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#https-server">HTTPS Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/videostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 </ul>
@@ -436,6 +473,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.webui">WebUI Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
 </ul>
@@ -488,9 +526,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#validity-of-columns">Validity of columns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#songs">Songs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#videos">Videos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#video-relates-methods">Video Relates Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#albums">Albums</a><ul>
@@ -504,7 +547,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#tags">Tags</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#database-api">Database API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../lib/musicdb.html#tag-related-methods">Tag Related Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
@@ -523,21 +566,6 @@
 </ul>
 <p class="caption"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#connection-process">Connection Process</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#watchdog">Watchdog</a></li>
@@ -636,7 +664,7 @@
             
   <h1>Source code for lib.cfg.mdbstate</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017,2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2017-2020  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -684,12 +712,30 @@
 <span class="sd">        +========================+=========================+=========================+</span>
 <span class="sd">        | songqueue.csv          | :meth:`~LoadSongQueue`  | :meth:`~SaveSongQueue`  |</span>
 <span class="sd">        +------------------------+-------------------------+-------------------------+</span>
+<span class="sd">        | videoqueue.csv         | :meth:`~LoadVideoQueue` | :meth:`~SaveVideoQueue` |</span>
+<span class="sd">        +------------------------+-------------------------+-------------------------+</span>
 <span class="sd">        | artistblacklist.csv    | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |</span>
 <span class="sd">        +------------------------+-------------------------+-------------------------+</span>
 <span class="sd">        | albumblacklist.csv     | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |</span>
 <span class="sd">        +------------------------+-------------------------+-------------------------+</span>
 <span class="sd">        | songblacklist.csv      | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |</span>
 <span class="sd">        +------------------------+-------------------------+-------------------------+</span>
+<span class="sd">        | videoblacklist.csv     | :meth:`~LoadBlacklists` | :meth:`~SaveBlacklists` |</span>
+<span class="sd">        +------------------------+-------------------------+-------------------------+</span>
+
+<span class="sd">    Additional this class allows to access the file ``state.ini`` in the MusicDB State Directory.</span>
+<span class="sd">    The file can be accessed via :meth:`~lib.cfg.config.Config.Set` and :meth:`~lib.cfg.config.Config.Get`.</span>
+<span class="sd">    The section ``meta`` is reserved for this ``MDBState`` class.</span>
+
+<span class="sd">    Another section is ``MusicDB`` that represents the state of the MusicDB WebUI (and possibly backend in future).</span>
+<span class="sd">    One key is ``uimode`` that can be set via :meth:`~SetUIMode` and read via :meth:`~GetUIMode`.</span>
+<span class="sd">    The value for this key is a string and can be ``&quot;audio&quot;`` or ``&quot;video&quot;``.</span>
+<span class="sd">    The value represents if the user interface is in audio-mode to manage an audio stream or video-mode to present music videos.</span>
+
+<span class="sd">    The method :meth:`~GetFilterList` accesses a section ``albumfiler``.</span>
+<span class="sd">    Each key in this section represents a main genre (all characters lower case) tag and can have the value ``True`` or ``False``.</span>
+<span class="sd">    If a genre is not listed in this section, it is assumed to have the value ``False``.</span>
+<span class="sd">    As soon as the genre gets activated via the WebUIs genre selection interface, it appears in the albumfiler-list.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path: Absolute path to the MusicDB state directory</span>
@@ -707,6 +753,10 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">version</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Updating mdbstate/state.ini to version 2&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s2">&quot;meta&quot;</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">version</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Updating mdbstate/state.ini to version 3&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s2">&quot;meta&quot;</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s2">&quot;MusicDB&quot;</span><span class="p">,</span> <span class="s2">&quot;uimode&quot;</span><span class="p">,</span> <span class="s2">&quot;audio&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="MDBState.ReadList"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.ReadList">[docs]</a>    <span class="k">def</span> <span class="nf">ReadList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listname</span><span class="p">):</span>
@@ -736,16 +786,19 @@
         <span class="k">return</span> <span class="n">rows</span></div>
 
 
-<div class="viewcode-block" id="MDBState.WriteList"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.WriteList">[docs]</a>    <span class="k">def</span> <span class="nf">WriteList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listname</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+<div class="viewcode-block" id="MDBState.WriteList"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.WriteList">[docs]</a>    <span class="k">def</span> <span class="nf">WriteList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listname</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method write a list of rows into the related file.</span>
 <span class="sd">        The ``listname`` argument defines which file gets written: ``config.server.statedir/listname.csv``.</span>
+
+<span class="sd">        When there is no header given (list of column names), the keys of the rows-dictionaries are used.</span>
 
 <span class="sd">        This method should only be used by class internal methods.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            listname (str): Name of the list to read without trailing .csv</span>
 <span class="sd">            rows(list): The list that shall be stored</span>
+<span class="sd">            header (list): Optional list with column names as string.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ``True`` on success, otherwise ``False``</span>
@@ -758,9 +811,10 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">csv</span>  <span class="o">=</span> <span class="n">CSVFile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="n">csv</span><span class="o">.</span><span class="n">Write</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+            <span class="n">csv</span><span class="o">.</span><span class="n">Write</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">header</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Accessing file </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> failed with error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Header: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">header</span><span class="p">))</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Data: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">rows</span><span class="p">))</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="kc">True</span></div>
@@ -785,7 +839,7 @@
                 <span class="n">entry</span> <span class="o">=</span> <span class="p">{}</span>
                 <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;EntryID&quot;</span><span class="p">])</span>
                 <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;SongID&quot;</span><span class="p">])</span>
-                <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;israndom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;IsRandom&quot;</span><span class="p">])</span>
+                <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;israndom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;IsRandom&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span><span class="p">)</span>
 
                 <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -820,13 +874,67 @@
         <span class="k">return</span></div>
 
 
+<div class="viewcode-block" id="MDBState.LoadVideoQueue"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.LoadVideoQueue">[docs]</a>    <span class="k">def</span> <span class="nf">LoadVideoQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method reads the video queue from the state directory.</span>
+
+<span class="sd">        The method returns the queue as needed inside :meth:`mdbapi.videoqueue.VideoQueue`:</span>
+<span class="sd">        A list of dictionaries, each containing the ``entryid`` and ``videoid`` as integers and ``israndom`` as boolean.</span>
+
+<span class="sd">        The UUIDs of the queue entries remain.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A stored video queue</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rows</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReadList</span><span class="p">(</span><span class="s2">&quot;videoqueue&quot;</span><span class="p">)</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">entry</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;EntryID&quot;</span><span class="p">])</span>
+                <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;videoid&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;VideoID&quot;</span><span class="p">])</span>
+                <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;israndom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;IsRandom&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;True&quot;</span><span class="p">)</span>
+
+                <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Invalid entry in stored Video Queue: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">! </span><span class="se">\033</span><span class="s2">[1;30m(Entry will be ignored)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">queue</span></div>
+
+
+<div class="viewcode-block" id="MDBState.SaveVideoQueue"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.SaveVideoQueue">[docs]</a>    <span class="k">def</span> <span class="nf">SaveVideoQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method saves a video queue.</span>
+<span class="sd">        The data structure of the queue must be exact as the one expected when the queue shall be loaded.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            queue (dictionary): The video queue to save.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            *Nothing*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># transform data to a structure that can be handled by the csv module</span>
+        <span class="c1"># save entry ID as string, csv cannot handle 128bit integer</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">queue</span><span class="p">:</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">row</span><span class="p">[</span><span class="s2">&quot;EntryID&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">])</span>
+            <span class="n">row</span><span class="p">[</span><span class="s2">&quot;VideoID&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s2">&quot;videoid&quot;</span><span class="p">])</span>
+            <span class="n">row</span><span class="p">[</span><span class="s2">&quot;IsRandom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s2">&quot;israndom&quot;</span><span class="p">])</span>
+
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">WriteList</span><span class="p">(</span><span class="s2">&quot;videoqueue&quot;</span><span class="p">,</span> <span class="n">rows</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+
     <span class="k">def</span> <span class="nf">__LoadBlacklist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">idname</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
         <span class="c1"># filename: artistblacklist</span>
         <span class="c1"># idname:   ArtistID</span>
-        <span class="k">if</span> <span class="n">filename</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;artistblacklist&quot;</span><span class="p">,</span><span class="s2">&quot;albumblacklist&quot;</span><span class="p">,</span><span class="s2">&quot;songblacklist&quot;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;filename must be </span><span class="se">\&quot;</span><span class="s2">artistblacklist</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">albumblacklist</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">songblacklist</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">idname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ArtistID&quot;</span><span class="p">,</span><span class="s2">&quot;AlbumID&quot;</span><span class="p">,</span><span class="s2">&quot;SongID&quot;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;idname must be </span><span class="se">\&quot;</span><span class="s2">ArtistID</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">AlbumID</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">SongID</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;artistblacklist&quot;</span><span class="p">,</span><span class="s2">&quot;albumblacklist&quot;</span><span class="p">,</span><span class="s2">&quot;songblacklist&quot;</span><span class="p">,</span><span class="s2">&quot;videoblacklist&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;filename must be </span><span class="se">\&quot;</span><span class="s2">artistblacklist</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">albumblacklist</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">songblacklist</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">videoblacklist</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">idname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ArtistID&quot;</span><span class="p">,</span><span class="s2">&quot;AlbumID&quot;</span><span class="p">,</span><span class="s2">&quot;SongID&quot;</span><span class="p">,</span><span class="s2">&quot;VideoID&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;idname must be </span><span class="se">\&quot;</span><span class="s2">ArtistID</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">AlbumID</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">SongID</span><span class="se">\&quot;</span><span class="s2">. </span><span class="se">\&quot;</span><span class="s2">VideoID</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">rows</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ReadList</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">rows</span>      <span class="o">=</span> <span class="n">rows</span><span class="p">[:</span><span class="n">length</span><span class="p">]</span>   <span class="c1"># Do not process more entries than necessary</span>
@@ -860,15 +968,17 @@
     
         <span class="k">return</span> <span class="n">blacklist</span>
 
-<div class="viewcode-block" id="MDBState.LoadBlacklists"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.LoadBlacklists">[docs]</a>    <span class="k">def</span> <span class="nf">LoadBlacklists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songbllen</span><span class="p">,</span> <span class="n">albumbllen</span><span class="p">,</span> <span class="n">artistbllen</span><span class="p">):</span>
+<div class="viewcode-block" id="MDBState.LoadBlacklists"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.LoadBlacklists">[docs]</a>    <span class="k">def</span> <span class="nf">LoadBlacklists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songbllen</span><span class="p">,</span> <span class="n">albumbllen</span><span class="p">,</span> <span class="n">artistbllen</span><span class="p">,</span> <span class="n">videobllen</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method returns a dictionary with the blacklist managed by :class:`mdbapi.randy.Randy`.</span>
+<span class="sd">        This method returns a dictionary with the blacklist used by :class:`mdbapi.randy.Randy`.</span>
+<span class="sd">        The blacklists are managed by the :class:`~mdbapi.blacklist.BlacklistInterface` class.</span>
 <span class="sd">        This method also handles the blacklist length by adding empty entries or cutting off exceeding ones.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            songbllen (int): Number of entries the blacklist shall have</span>
 <span class="sd">            albumbllen (int): Number of entries the blacklist shall have</span>
 <span class="sd">            artistbllen (int): Number of entries the blacklist shall have</span>
+<span class="sd">            videobllen (int): Number of entries the blacklist shall have</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            A dictionary with the blacklists as expected by :class:`mdbapi.randy.Randy`</span>
@@ -878,15 +988,16 @@
         <span class="n">blacklists</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__LoadBlacklist</span><span class="p">(</span><span class="s2">&quot;artistblacklist&quot;</span><span class="p">,</span> <span class="s2">&quot;ArtistID&quot;</span><span class="p">,</span> <span class="n">artistbllen</span><span class="p">)</span>
         <span class="n">blacklists</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__LoadBlacklist</span><span class="p">(</span><span class="s2">&quot;albumblacklist&quot;</span><span class="p">,</span>  <span class="s2">&quot;AlbumID&quot;</span><span class="p">,</span>  <span class="n">albumbllen</span><span class="p">)</span>
         <span class="n">blacklists</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__LoadBlacklist</span><span class="p">(</span><span class="s2">&quot;songblacklist&quot;</span><span class="p">,</span>   <span class="s2">&quot;SongID&quot;</span><span class="p">,</span>   <span class="n">songbllen</span><span class="p">)</span>
+        <span class="n">blacklists</span><span class="p">[</span><span class="s2">&quot;videos&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__LoadBlacklist</span><span class="p">(</span><span class="s2">&quot;videoblacklist&quot;</span><span class="p">,</span>  <span class="s2">&quot;VideoID&quot;</span><span class="p">,</span>  <span class="n">videobllen</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">blacklists</span></div>
 
 
 
     <span class="k">def</span> <span class="nf">__SaveBlacklist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blacklist</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">idname</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">filename</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;artistblacklist&quot;</span><span class="p">,</span><span class="s2">&quot;albumblacklist&quot;</span><span class="p">,</span><span class="s2">&quot;songblacklist&quot;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;filename must be </span><span class="se">\&quot;</span><span class="s2">artistblacklist</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">albumblacklist</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">songblacklist</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">idname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ArtistID&quot;</span><span class="p">,</span><span class="s2">&quot;AlbumID&quot;</span><span class="p">,</span><span class="s2">&quot;SongID&quot;</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;idname must be </span><span class="se">\&quot;</span><span class="s2">ArtistID</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">AlbumID</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">SongID</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;artistblacklist&quot;</span><span class="p">,</span><span class="s2">&quot;albumblacklist&quot;</span><span class="p">,</span><span class="s2">&quot;songblacklist&quot;</span><span class="p">,</span><span class="s2">&quot;videoblacklist&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;filename must be </span><span class="se">\&quot;</span><span class="s2">artistblacklist</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">albumblacklist</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">songblacklist</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">videoblacklist</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">idname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ArtistID&quot;</span><span class="p">,</span><span class="s2">&quot;AlbumID&quot;</span><span class="p">,</span><span class="s2">&quot;SongID&quot;</span><span class="p">,</span><span class="s2">&quot;VideoID&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;idname must be </span><span class="se">\&quot;</span><span class="s2">ArtistID</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">AlbumID</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">SongID</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">VideoID</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">blacklist</span><span class="p">:</span>
@@ -898,13 +1009,13 @@
 
             <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">WriteList</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">rows</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WriteList</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="p">[</span><span class="n">idname</span><span class="p">,</span> <span class="s2">&quot;TimeStamp&quot;</span><span class="p">])</span>
         <span class="k">return</span>
 
 <div class="viewcode-block" id="MDBState.SaveBlacklists"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.SaveBlacklists">[docs]</a>    <span class="k">def</span> <span class="nf">SaveBlacklists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blacklists</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method stores the blacklist in the related CSV files.</span>
-<span class="sd">        The data structure of the dictionary is expected to be the same, :class:`mdbapi.randy.Randy` uses.</span>
+<span class="sd">        The data structure of the dictionary is expected to be the same, :class:`mdbapi.blacklist.BlacklistInterface` uses.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            blacklist (dict): A dictionary of blacklists.</span>
@@ -915,6 +1026,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__SaveBlacklist</span><span class="p">(</span><span class="n">blacklists</span><span class="p">[</span><span class="s2">&quot;songs&quot;</span><span class="p">],</span>   <span class="s2">&quot;songblacklist&quot;</span><span class="p">,</span>   <span class="s2">&quot;SongID&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__SaveBlacklist</span><span class="p">(</span><span class="n">blacklists</span><span class="p">[</span><span class="s2">&quot;albums&quot;</span><span class="p">],</span>  <span class="s2">&quot;albumblacklist&quot;</span><span class="p">,</span>  <span class="s2">&quot;AlbumID&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__SaveBlacklist</span><span class="p">(</span><span class="n">blacklists</span><span class="p">[</span><span class="s2">&quot;artists&quot;</span><span class="p">],</span> <span class="s2">&quot;artistblacklist&quot;</span><span class="p">,</span> <span class="s2">&quot;ArtistID&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__SaveBlacklist</span><span class="p">(</span><span class="n">blacklists</span><span class="p">[</span><span class="s2">&quot;videos&quot;</span><span class="p">],</span>  <span class="s2">&quot;videoblacklist&quot;</span><span class="p">,</span>  <span class="s2">&quot;VideoID&quot;</span><span class="p">)</span>
         <span class="k">return</span></div>
 
 
@@ -951,7 +1063,47 @@
             <span class="k">if</span> <span class="n">state</span><span class="p">:</span>
                 <span class="n">filterlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
 
-        <span class="k">return</span> <span class="n">filterlist</span></div></div>
+        <span class="k">return</span> <span class="n">filterlist</span></div>
+
+
+<div class="viewcode-block" id="MDBState.GetUIMode"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.GetUIMode">[docs]</a>    <span class="k">def</span> <span class="nf">GetUIMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method simply returns the content of ``[MusicDB]-&gt;uimode`` in the state.ini file.</span>
+<span class="sd">        In case the value is invalid or not set, ``&quot;audio&quot;`` gets returned.</span>
+
+<span class="sd">        Valid strings are ``&quot;audio&quot;`` or ``&quot;video&quot;``</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A string ``&quot;audio&quot;`` or ``&quot;video&quot;``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;MusicDB&quot;</span><span class="p">,</span> <span class="s2">&quot;uimode&quot;</span><span class="p">,</span> <span class="s2">&quot;audio&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">,</span> <span class="s2">&quot;video&quot;</span><span class="p">]:</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;audio&quot;</span>
+        <span class="k">return</span> <span class="n">mode</span></div>
+
+<div class="viewcode-block" id="MDBState.SetUIMode"><a class="viewcode-back" href="../../../lib/config.html#lib.cfg.mdbstate.MDBState.SetUIMode">[docs]</a>    <span class="k">def</span> <span class="nf">SetUIMode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the UI mode in the state.ini file.</span>
+<span class="sd">        Before writing the data ``mode`` gets checked if it contains a valid value.</span>
+<span class="sd">        If mode is an invalid argument, an exception gets raised.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mode (str): ``&quot;audio&quot;`` or ``&quot;video&quot;`` mode</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``None``</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: When mode is not of type string</span>
+<span class="sd">            ValueError: When mode contains an invalid string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Mode must be a string&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">,</span> <span class="s2">&quot;video&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Mode must be </span><span class="se">\&quot;</span><span class="s2">audio</span><span class="se">\&quot;</span><span class="s2"> or </span><span class="se">\&quot;</span><span class="s2">video</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s2">&quot;MusicDB&quot;</span><span class="p">,</span> <span class="s2">&quot;uimode&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span> 
+        <span class="k">return</span> <span class="kc">None</span></div></div>
 
 <span class="c1"># vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4</span>
 
@@ -969,7 +1121,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020,2021 Ralf Stemmer.
 
     </p>
   </div>
@@ -991,7 +1143,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'6.0.0',
+            VERSION:'7.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1002,7 +1154,6 @@
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../../_static/language_data.js"></script>
 
   
 

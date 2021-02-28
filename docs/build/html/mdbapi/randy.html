@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Randomizer &mdash; MusicDB 6.0.0 documentation</title>
+  <title>Randomizer &mdash; MusicDB 7.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 6.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDB Websocket Server" href="server.html"/>
         <link rel="prev" title="Micro Search Engine" href="mise.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                6.0
+                7.0
               </div>
             
           
@@ -110,6 +110,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#database">database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#music">music</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#uploads">uploads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
@@ -117,6 +119,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/logging.html">Handling log-files</a></li>
@@ -184,12 +194,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#available-methods">Available Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#videos">Videos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#queue">Queue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#tag-related">Tag related</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#uploading">Uploading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
@@ -212,12 +225,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -230,8 +237,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#id1">Configuring MusicDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-version">Update to a New Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-manually">Installation (Manually)</a><ul>
@@ -240,7 +246,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3">id3edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
@@ -251,6 +257,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#music-video-file-name">Music Video File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
@@ -260,6 +267,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-videos-to-musicdb">Importing Videos to MusicDB</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/scripts.html">Scripts</a><ul>
@@ -323,9 +331,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#example-calls">Example calls</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/tracker.html">tracker - Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#module-mod.tracker">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#class-description">Class Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/videoframes.html#class">class</a></li>
 </ul>
 </li>
 </ul>
@@ -343,6 +350,14 @@
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#algorithm">Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="audiostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="audiostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="audiostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="audiostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="audiostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="blacklist.html">Blacklist</a><ul>
@@ -385,6 +400,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#blacklist-stage">Blacklist Stage</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#video-selection-algorithm">Video Selection Algorithm</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#randy-class">Randy Class</a></li>
@@ -397,14 +413,6 @@
 <li class="toctree-l2"><a class="reference internal" href="songqueue.html#song-queue-class">Song Queue Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="stream.html">Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="stream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stream.html#stream-manager-class">Stream Manager Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
@@ -413,6 +421,35 @@
 <li class="toctree-l2"><a class="reference internal" href="tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uploadmanager.html">Upload Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#path-structure">Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#https-server">HTTPS Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="videoqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="videostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 </ul>
@@ -437,6 +474,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.webui">WebUI Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
 </ul>
@@ -489,9 +527,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#validity-of-columns">Validity of columns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#videos">Videos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#video-relates-methods">Video Relates Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#albums">Albums</a><ul>
@@ -505,7 +548,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#tags">Tags</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#database-api">Database API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#tag-related-methods">Tag Related Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
@@ -524,21 +567,6 @@
 </ul>
 <p class="caption"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
@@ -651,8 +679,8 @@ Humans would neither expect, nor want such behavior of a randomizer.
 This is why MusicDB uses a less random randomizer that feels more random.</p>
 <div class="section" id="module-mdbapi.randy">
 <span id="randy-module"></span><h2>Randy Module<a class="headerlink" href="#module-mdbapi.randy" title="Permalink to this headline">¶</a></h2>
-<p>The <em>randy</em> module provides a way to select random songs that can be put into the Song Queue.
-The selection of random songs follows certain constraints.</p>
+<p>The <em>randy</em> module provides a way to select random songs or videos that can be put into the Song/Video Queue.
+The selection of random music follows certain constraints.</p>
 <div class="section" id="song-selection-algorithm">
 <h3>Song Selection Algorithm<a class="headerlink" href="#song-selection-algorithm" title="Permalink to this headline">¶</a></h3>
 <p>Selecting a random song is done in two stages, the <a class="reference internal" href="#database-stage">Database Stage</a> and the <a class="reference internal" href="#blacklist-stage">Blacklist Stage</a>
@@ -691,7 +719,7 @@ Song genres that are automatically set by an algorithm (and not confirmed by the
 <div class="section" id="blacklist-stage">
 <h4>Blacklist Stage<a class="headerlink" href="#blacklist-stage" title="Permalink to this headline">¶</a></h4>
 <p>The selected song from the first stage now gets compared to the blacklists via
-<a class="reference internal" href="blacklist.html#mdbapi.blacklist.BlacklistInterface.CheckAllLists" title="mdbapi.blacklist.BlacklistInterface.CheckAllLists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.blacklist.BlacklistInterface.CheckAllLists()</span></code></a> or
+<a class="reference internal" href="blacklist.html#mdbapi.blacklist.BlacklistInterface.CheckAllListsForSong" title="mdbapi.blacklist.BlacklistInterface.CheckAllListsForSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.blacklist.BlacklistInterface.CheckAllListsForSong()</span></code></a> or
 <a class="reference internal" href="blacklist.html#mdbapi.blacklist.BlacklistInterface.CheckSongList" title="mdbapi.blacklist.BlacklistInterface.CheckSongList"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.blacklist.BlacklistInterface.CheckSongList()</span></code></a>.
 If the song, or its album or artist, is listed in one of blacklist,
 then the song, a song from the same album or from the same artist was played recently.
@@ -699,13 +727,18 @@ So, the chosen song gets dropped and the finding-process starts again.</p>
 <p>Is the blacklist length set to 0, the specific blacklist is disabled</p>
 </div>
 </div>
+<div class="section" id="video-selection-algorithm">
+<h3>Video Selection Algorithm<a class="headerlink" href="#video-selection-algorithm" title="Permalink to this headline">¶</a></h3>
+<p>The selection of a video is a slightly simplified way as done for Songs.
+For the blacklist stage it does not considers any Artist and Album associations and therefore the corresponding blacklists.</p>
+</div>
 </div>
 <div class="section" id="randy-class">
 <h2>Randy Class<a class="headerlink" href="#randy-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="mdbapi.randy.Randy">
 <em class="property">class </em><code class="sig-prename descclassname">mdbapi.randy.</code><code class="sig-name descname">Randy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em>, <em class="sig-param"><span class="n">database</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class provides methods to get a random song under certain constraints.</p>
+<dd><p>This class provides methods to get a random song or video under certain constraints.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -721,6 +754,12 @@ So, the chosen song gets dropped and the finding-process starts again.</p>
 <dt id="mdbapi.randy.Randy.GetSong">
 <code class="sig-name descname">GetSong</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method chooses a random song in a two-stage process as described in the module description.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Due to too hard constraints, it may be possible that it becomes impossible to find a new song.
+If this is the case, the method returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+The amount of tries can be configured in the MusicDB Configuration</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>A song from the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> or <code class="docutils literal notranslate"><span class="pre">None</span></code> if an error occurred.</p>
@@ -742,8 +781,9 @@ The user wants to have a song from the given album, so it gets one.</p>
 <p>This is a dangerous method.
 An album only has a very limited set of songs.</p>
 <p>If all the songs are listed in the blacklist, the method would get caught in an infinite loop.
-To avoid this, there are only 10 tries to find a random song.
-If after the tenth try, the method leaves returning <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+To avoid this, there are only a limited amount of tries to find a random song.
+If the limit is reached, the method returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+The amount of tries can be configured in the MusicDB Configuration</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -751,6 +791,24 @@ If after the tenth try, the method leaves returning <code class="docutils litera
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A song from the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> or <code class="docutils literal notranslate"><span class="pre">None</span></code> if an error occurred.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mdbapi.randy.Randy.GetVideo">
+<code class="sig-name descname">GetVideo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetVideo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetVideo" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method chooses a random video in a simplified two-stage process as described in the module description.
+This method will be refined in future to fully behave like the <a class="reference internal" href="#mdbapi.randy.Randy.GetSong" title="mdbapi.randy.Randy.GetSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSong()</span></code></a> method.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Due to too hard constraints, it may be possible that it becomes impossible to find a new song.
+If this is the case, the method returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+The amount of tries can be configured in the MusicDB Configuration</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A video from the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> or <code class="docutils literal notranslate"><span class="pre">None</span></code> if an error occurred.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -773,7 +831,7 @@ If after the tenth try, the method leaves returning <code class="docutils litera
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020,2021 Ralf Stemmer.
 
     </p>
   </div>
@@ -795,7 +853,7 @@ If after the tenth try, the method leaves returning <code class="docutils litera
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'6.0.0',
+            VERSION:'7.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -806,7 +864,6 @@ If after the tenth try, the method leaves returning <code class="docutils litera
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

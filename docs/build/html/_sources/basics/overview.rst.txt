@@ -78,7 +78,7 @@ MusicDB Server
 While the other modules are simple tools that get executed, do their job, and exit, 
 the MusicDB Server module runs permanent to serve information to the WebUI via :doc:`/basics/webapi`,
 and to provide an audio stream.
-Details of how the server works can be found in the :doc:`/mdbapi/server` and :doc:`/mdbapi/stream` documentation.
+Details of how the server works can be found in the :doc:`/mdbapi/server` and :doc:`/mdbapi/audiostream` documentation.
 
 
 External Servers (Black)

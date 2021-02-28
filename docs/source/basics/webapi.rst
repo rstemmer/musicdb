@@ -238,51 +238,14 @@ Server side API
 
 .. automodule:: lib.ws.mdbwsi
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
-   :members: GetArtists,
-      GetArtistsWithAlbums, 
-      GetSortedAlbumCDs, 
-      GetAlbum, 
-      GetAlbums,
-      GetSong, 
-      GetTags, 
-      GetSongTags, 
-      GetAlbumTags, 
-      GetStreamState, 
-      SetStreamState, 
-      GetQueue, 
-      Find, 
-      PlayNextSong, 
-      AddSongToQueue, 
-      AddRandomSongToQueue, 
-      AddAlbumToQueue, 
-      RemoveSongFromQueue, 
-      MoveSongInQueue, 
-      GetMDBState, 
-      SetMDBState,
-      SetAlbumTag,
-      SetSongTag,
-      RemoveAlbumTag,
-      RemoveSongTag,
-      GetSongRelationship,
-      GetSongLyrics,
-      GetLyricsCrawlerCache,
-      RunLyricsCrawler,
-      SetSongLyrics,
-      SetAlbumColor,
-      AddSubgenre,
-      UpdateSongStatistic,
-      CutSongRelationship
 
 Artists
 ^^^^^^^
 
 .. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members: GetArtists,
-      GetArtists,
       GetArtistsWithAlbums,
-      GetArtistsWithVideos,
-      Find
+      GetFilteredArtistsWithVideos
 
 Albums
 ^^^^^^
@@ -294,8 +257,7 @@ Albums
       GetAlbum,
       HideAlbum,
       SetAlbumColor,
-      AddAlbumToQueue,
-      Find
+      AddAlbumToQueue
 
 Songs
 ^^^^^
@@ -309,7 +271,6 @@ Songs
       GetSongRelationship,
       UpdateSongStatistic,
       CutSongRelationship,
-      Find,
       PlayNextSong
 
 Videos
@@ -391,7 +352,8 @@ Other
 ^^^^^
 
 .. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
-  :members:    GetAudioStreamState,
+  :members:    Find,
+      GetAudioStreamState,
       GetVideoStreamState,
       SetAudioStreamState,
       SetVideoStreamState,

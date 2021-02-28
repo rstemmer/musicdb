@@ -16,15 +16,17 @@
 """
 Overview of all WebAPI Methods sorted by category (some methods appear multiple times).
 
+Available Methods
+^^^^^^^^^^^^^^^^^
+
 Artists
-^^^^^^^
+
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists`
-* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums`
-* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithVideos`
-* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.Find`
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums` (Alternative: GetFIlteredArtistsWithAlbums)
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetFilteredArtistsWithVideos`
 
 Albums
-^^^^^^
+
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAlbums`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetHiddenAlbums`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSortedAlbumCDs`
@@ -32,10 +34,9 @@ Albums
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.HideAlbum`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAlbumColor`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue`
-* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.Find`
 
 Songs
-^^^^^
+
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSong`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddRandomSongToQueue`
@@ -44,11 +45,10 @@ Songs
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongRelationship`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.UpdateSongStatistic`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.CutSongRelationship`
-* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.Find`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.PlayNextSong`
 
 Videos
-^^^^^^
+
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideos`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideo`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddVideoToQueue`
@@ -65,7 +65,7 @@ Videos
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.CutVideoRelationship`
 
 Queue
-^^^^^
+
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoQueue`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.AddSongToQueue`
@@ -78,7 +78,7 @@ Queue
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.MoveVideoInQueue`
 
 Tag related
-^^^^^^^^^^^
+
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTags`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTagsStatistics`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongTags`
@@ -97,14 +97,14 @@ Tag related
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.ModifyTag`
 
 Lyrics
-^^^^^^
+
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongLyrics`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetLyricsCrawlerCache`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RunLyricsCrawler`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongLyrics`
 
 Uploading
-^^^^^^^^^
+
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateUpload`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.UploadChunk`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads`
@@ -113,7 +113,8 @@ Uploading
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveUpload`
 
 Other
-^^^^^
+
+* :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.Find`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetAudioStreamState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.GetVideoStreamState`
 * :meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.SetAudioStreamState`

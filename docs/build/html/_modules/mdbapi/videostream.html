@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mdbapi.stream &mdash; MusicDB 6.0.0 documentation</title>
+  <title>mdbapi.videostream &mdash; MusicDB 7.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="MusicDB 6.0.0 documentation" href="../../index.html"/>
+    <link rel="top" title="MusicDB 7.0.0 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                6.0
+                7.0
               </div>
             
           
@@ -109,6 +109,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#database">database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#music">music</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#uploads">uploads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#lycra">lycra</a></li>
@@ -116,6 +118,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../basics/logging.html">Handling log-files</a></li>
@@ -183,12 +193,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#available-methods">Available Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#albums">Albums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#videos">Videos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#queue">Queue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#tag-related">Tag related</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#uploading">Uploading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
@@ -211,12 +224,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../usage/docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/docker.html#prepare-environment">Prepare Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/docker.html#build-the-image">Build the Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../usage/docker.html#using-the-image">Using the Image</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -229,8 +236,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#id1">Configuring MusicDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#update">Update</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#update-to-a-new-version">Update to a New Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/install.html#installation-manually">Installation (Manually)</a><ul>
@@ -239,7 +245,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#libprinthex">libprinthex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#id3">id3edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
@@ -250,6 +256,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#album-directory-name">Album Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../usage/music.html#music-video-file-name">Music Video File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
@@ -259,6 +266,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#updating-songs">Updating Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage/music.html#importing-videos-to-musicdb">Importing Videos to MusicDB</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage/scripts.html">Scripts</a><ul>
@@ -322,9 +330,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mod/tags.html#example-calls">Example calls</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mod/tracker.html">tracker - Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mod/tracker.html#module-mod.tracker">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mod/tracker.html#class-description">Class Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mod/videoframes.html#class">class</a></li>
 </ul>
 </li>
 </ul>
@@ -342,6 +349,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#algorithm">Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/audiostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/blacklist.html">Blacklist</a><ul>
@@ -384,6 +399,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../mdbapi/randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/randy.html#randy-class">Randy Class</a></li>
@@ -396,14 +412,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/stream.html">Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
@@ -412,6 +420,35 @@
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/uploadmanager.html">Upload Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#path-structure">Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#https-server">HTTPS Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mdbapi/videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../mdbapi/videostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 </ul>
@@ -436,6 +473,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.webui">WebUI Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
 </ul>
@@ -488,9 +526,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#validity-of-columns">Validity of columns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#songs">Songs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#videos">Videos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#video-relates-methods">Video Relates Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#albums">Albums</a><ul>
@@ -504,7 +547,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#tags">Tags</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#database-api">Database API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lib/musicdb.html#tag-related-methods">Tag Related Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
@@ -523,21 +566,6 @@
 </ul>
 <p class="caption"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#connection-process">Connection Process</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../webui/websockets.html#watchdog">Watchdog</a></li>
@@ -619,7 +647,7 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-      <li>mdbapi.stream</li>
+      <li>mdbapi.videostream</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -634,9 +662,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for mdbapi.stream</h1><div class="highlight"><pre>
+  <h1>Source code for mdbapi.videostream</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2018  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2020  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -651,16 +679,15 @@
 <span class="c1"># You should have received a copy of the GNU General Public License</span>
 <span class="c1"># along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This module implements the stream that streams the music.</span>
-<span class="sd">This module provides a thread that takes the songs from a :class:`mdbapi.songqueue.SongQueue` to stream them via Icecast.</span>
-<span class="sd">It manages the connection to the Icecast server using the :mod:`lib.stream.icecast` module.</span>
-<span class="sd">Further more this module provides some callback interfaces to inform the rest of MusicDB about the state of the stream.</span>
+<span class="sd">This module implements the video stream that streams the music videos.</span>
+<span class="sd">This module provides a thread that takes the videos from a :class:`mdbapi.videoqueue.VideoQueue` to stream them.</span>
+
 
 <span class="sd">So this module consist of the following parts:</span>
 
-<span class="sd">    * The `Streaming Thread`_ that manages the Song Stream.</span>
+<span class="sd">    * The `Streaming Thread`_ that manages the Video Stream.</span>
 <span class="sd">    * An `Event Management`_ that provides a callback interface to get updated about what&#39;s going on in the Streaming Thread.</span>
-<span class="sd">    * The :class:`~StreamManager` that does management behind streaming.</span>
+<span class="sd">    * The :class:`~VideoStreamManager` that does management behind streaming.</span>
 
 
 <span class="sd">Interface</span>
@@ -673,31 +700,29 @@
 
 <span class="sd">    .. code-block:: python</span>
 
-<span class="sd">        from mdbapi.stream import StartStreamingThread, StopStreamingThread, StreamManager</span>
+<span class="sd">        from mdbapi.videostream import StartVideoStreamingThread, StopVideoStreamingThread, VideoStreamManager</span>
 
 
-<span class="sd">    * :meth:`~StartStreamingThread` starts the Streaming Thread that manages the streaming. It also establishes a connection to the Icecast server.</span>
-<span class="sd">    * :meth:`~StopStreamingThread` disconnects MusicDB from Icecast and stops the Streaming Thread</span>
-<span class="sd">    * :class:`~StreamManager` is the class to manage the Stream.</span>
+<span class="sd">    * :meth:`~StartVideoStreamingThread` starts the Streaming Thread that manages the streaming.</span>
+<span class="sd">    * :meth:`~StopVideoStreamingThread` stops the Streaming Thread</span>
+<span class="sd">    * :class:`~VideoStreamManager` is the class to manage the Stream.</span>
 
 
 <span class="sd">Streaming Thread</span>
 <span class="sd">----------------</span>
 
-<span class="sd">The Streaming Thread mainly manages sending mp3-file chunks to the Icecast server.</span>
-<span class="sd">This thread is the point where the music managed by MusicDB gets handed over to Icecast so the user can listen to it.</span>
+<span class="sd">The Streaming Thread mainly manages updating the queue based on played videos by the stream player (WebUI).</span>
+<span class="sd">This thread is the point where the music managed by MusicDB gets handed over to the users web browser</span>
+<span class="sd">so that the user can watch the video stream.</span>
 
-<span class="sd">The :class:`~StreamManager` communicates with the :meth:`~StreamingThread` with a `Command Queue`_.</span>
-
-<span class="sd">More details are in the :meth:`~StreamingThread` description.</span>
+<span class="sd">The :class:`~VideoStreamManager` communicates with the :meth:`~VideoStreamingThread` with a `Command Queue`_.</span>
 
 <span class="sd">The thread maintains a global dictionary that holds the state of the thread - The **Stream State**.</span>
-<span class="sd">It can be accessed via :meth:`mdbapi.stream.StreamManager.GetStreamState`.</span>
-<span class="sd">This will only be updated by the StreamingThread.</span>
+<span class="sd">It can be accessed via :meth:`mdbapi.videostream.VideoStreamManager.GetStreamState`.</span>
+<span class="sd">This will only be updated by the VideoStreamingThread.</span>
 <span class="sd">It contains the following information:</span>
 
-<span class="sd">    * ``isconnected`` (bool): ``True`` when connected to Icecast, otherwise ``False``</span>
-<span class="sd">    * ``isplaying`` (bool): ``True`` when streaming, otherwise ``False``</span>
+<span class="sd">More details are in the :meth:`~VideoStreamingThread` description.</span>
 
 
 <span class="sd">Command Queue</span>
@@ -707,29 +732,21 @@
 <span class="sd">Each tuple has a command name and an optional argument.</span>
 <span class="sd">For the whole Module, there is only one global Command Queue.</span>
 
-<span class="sd">Each instance of the :class:`~StreamManager` class writes into the same queue following the *First Come First Serve* (FCFS) protocol.</span>
-<span class="sd">The :meth:`~StreamingThread` reads the command from that queue and processes them.</span>
+<span class="sd">Each instance of the :class:`~VideoStreamManager` class writes into the same queue following the *First Come First Serve* (FCFS) protocol.</span>
+<span class="sd">The :meth:`~VideoStreamingThread` reads the command from that queue and processes them.</span>
 
-<span class="sd">The following commands are available:</span>
-
-<span class="sd">    ``Play`` (:meth:`StreamManager.Play`):</span>
-<span class="sd">        If state is ``True`` the current song from the Song Queue gets streamed to Icecast.</span>
-<span class="sd">        If state is ``False`` the audio stream gets paused.</span>
-
-<span class="sd">    ``PlayNextSong`` (:meth:`StreamManager.PlayNextSong`):</span>
-<span class="sd">        Stops streaming the current song, and starts with the next song.</span>
-<span class="sd">        If streaming is paused, only the next song gets selected as new current song.</span>
+<span class="sd">More details are in the :meth:`~VideoStreamingThread` description.</span>
 
 
 <span class="sd">Event Management</span>
 <span class="sd">----------------</span>
 
-<span class="sd">This module provided a callback interface to react on events triggered by Streaming Thread or by actions done by the :class:`~StreamManager` class.</span>
+<span class="sd">This module provided a callback interface to react on events triggered by Streaming Thread or by actions done by the :class:`~VideoStreamManager` class.</span>
 
 <span class="sd">The following two functions can be used to register or remove a callback function:</span>
 
-<span class="sd">    * :meth:`~StreamManager.RegisterCallback`</span>
-<span class="sd">    * :meth:`~StreamManager.RemoveCallback`</span>
+<span class="sd">    * :meth:`~VideoStreamManager.RegisterCallback`</span>
+<span class="sd">    * :meth:`~VideoStreamManager.RemoveCallback`</span>
 
 <span class="sd">Functions that get called must provide two parameters.</span>
 <span class="sd">The first is a string that provides the name of the event as described below.</span>
@@ -740,11 +757,15 @@
 <span class="sd">The following events exist:</span>
 
 <span class="sd">    StatusChanged:</span>
-<span class="sd">        Gets triggered when the connection status to Icecast or the play status changed.</span>
+<span class="sd">        Gets triggered when the status of the streaming thread changes.</span>
+<span class="sd">        Internal states are excluded.</span>
 
-<span class="sd">    TimeChanged:</span>
-<span class="sd">        The time of the current playing position of a song changed.</span>
-<span class="sd">        Argument is the current playtime of the song in seconds.</span>
+<span class="sd">    StreamNextVideo:</span>
+<span class="sd">        Informs the stream player to play the next video in the queue.</span>
+<span class="sd">        The video to play is provided by the event as well.</span>
+
+<span class="sd">More details are in the :meth:`~VideoStreamingThread` description.</span>
+
 
 <span class="sd">Example:</span>
 
@@ -755,12 +776,12 @@
 <span class="sd">        def callback(name, arg):</span>
 <span class="sd">            print(&quot;Event \&quot;%s\&quot; occurred with argument \&quot;%s\&quot;.&quot; % (name, str(arg)))</span>
 
-<span class="sd">        sq = StreamManager(mdbconfig, musicdatabase)</span>
-<span class="sd">        sq.RegisterCallback(callback)</span>
+<span class="sd">        videostream = VideoStreamManager(mdbconfig, musicdatabase)</span>
+<span class="sd">        videostream.RegisterCallback(callback)</span>
 
 <span class="sd">        # …</span>
 
-<span class="sd">        sq.RemoveCallback(callback)</span>
+<span class="sd">        videostream.RemoveCallback(callback)</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -768,11 +789,9 @@
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">from</span> <span class="nn">lib.filesystem</span>     <span class="kn">import</span> <span class="n">Filesystem</span>
 <span class="kn">from</span> <span class="nn">lib.cfg.musicdb</span>    <span class="kn">import</span> <span class="n">MusicDBConfig</span>
 <span class="kn">from</span> <span class="nn">lib.db.musicdb</span>     <span class="kn">import</span> <span class="n">MusicDatabase</span>
-<span class="kn">from</span> <span class="nn">mdbapi.songqueue</span>      <span class="kn">import</span> <span class="n">SongQueue</span>
-<span class="kn">from</span> <span class="nn">mdbapi.randy</span>       <span class="kn">import</span> <span class="n">Randy</span>
+<span class="kn">from</span> <span class="nn">mdbapi.videoqueue</span>  <span class="kn">import</span> <span class="n">VideoQueue</span>
 
 
 <span class="n">Config</span>          <span class="o">=</span> <span class="kc">None</span>
@@ -789,9 +808,9 @@
 <span class="c1">#####################################################################</span>
 
 
-<div class="viewcode-block" id="StartStreamingThread"><a class="viewcode-back" href="../../mdbapi/stream.html#mdbapi.stream.StartStreamingThread">[docs]</a><span class="k">def</span> <span class="nf">StartStreamingThread</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">):</span>
+<div class="viewcode-block" id="StartVideoStreamingThread"><a class="viewcode-back" href="../../mdbapi/videostream.html#mdbapi.videostream.StartVideoStreamingThread">[docs]</a><span class="k">def</span> <span class="nf">StartVideoStreamingThread</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This function starts the Streaming Thread :mod:`~StreamingThread`.</span>
+<span class="sd">    This function starts the Streaming Thread :mod:`~VideoStreamingThread`.</span>
 <span class="sd">    You should use this function instead of calling the Streaming Thread function directly.</span>
 
 <span class="sd">    By calling this function, the global state of this module gets reset.</span>
@@ -815,30 +834,30 @@
     <span class="k">global</span> <span class="n">State</span>
 
     <span class="k">if</span> <span class="n">Thread</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Streaming Thread already running&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Video Streaming Thread already running&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDBConfig</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">MusicDBConfig</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;config argument not of type MusicDBConfig&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">musicdb</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDatabase</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">musicdb</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">MusicDatabase</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;database argument not of type MusicDatabase&quot;</span><span class="p">)</span>
 
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Initialize Streaming environment&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Initialize Video Streaming environment&quot;</span><span class="p">)</span>
     <span class="n">Config</span>       <span class="o">=</span> <span class="n">config</span>
     <span class="n">Callbacks</span>    <span class="o">=</span> <span class="p">[]</span>
     <span class="n">CommandQueue</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">State</span>        <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;isconnected&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;isplaying&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+    <span class="n">State</span>        <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;isstreaming&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;isplaying&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;currententry&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
 
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Starting Streaming Thread&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Starting Video Streaming Thread&quot;</span><span class="p">)</span>
     <span class="n">RunThread</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">Thread</span>    <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">StreamingThread</span><span class="p">)</span>
+    <span class="n">Thread</span>    <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">VideoStreamingThread</span><span class="p">)</span>
     <span class="n">Thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="kc">True</span></div>
 
 
 
-<div class="viewcode-block" id="StopStreamingThread"><a class="viewcode-back" href="../../mdbapi/stream.html#mdbapi.stream.StopStreamingThread">[docs]</a><span class="k">def</span> <span class="nf">StopStreamingThread</span><span class="p">():</span>
+<div class="viewcode-block" id="StopVideoStreamingThread"><a class="viewcode-back" href="../../mdbapi/videostream.html#mdbapi.videostream.StopVideoStreamingThread">[docs]</a><span class="k">def</span> <span class="nf">StopVideoStreamingThread</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function stops the Streaming Thread.</span>
 <span class="sd">    The function is blocking and waits until the thread is closed.</span>
@@ -850,38 +869,52 @@
     <span class="k">global</span> <span class="n">Thread</span>
 
     <span class="k">if</span> <span class="n">Thread</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;There is no Streaming Thread running!&quot;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;There is no Video Streaming Thread running!&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Waiting for Streaming Thread to stop…&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Waiting for Video Streaming Thread to stop…&quot;</span><span class="p">)</span>
 
     <span class="n">RunThread</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">Thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
     <span class="n">Thread</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Streaming Thread shut down.&quot;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Video Streaming Thread shut down.&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="kc">True</span></div>
 
 
 
-<div class="viewcode-block" id="StreamingThread"><a class="viewcode-back" href="../../mdbapi/stream.html#mdbapi.stream.StreamingThread">[docs]</a><span class="k">def</span> <span class="nf">StreamingThread</span><span class="p">():</span>
+<div class="viewcode-block" id="VideoStreamingThread"><a class="viewcode-back" href="../../mdbapi/videostream.html#mdbapi.videostream.VideoStreamingThread">[docs]</a><span class="k">def</span> <span class="nf">VideoStreamingThread</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This thread manages the streaming of the songs from the Song Queue to the Icecast server.</span>
+<span class="sd">    This thread manages the streaming of the videos from the Video Queue.</span>
 
-<span class="sd">    The thread tracks the played song using the :doc:`/mdbapi/tracker` module.</span>
-<span class="sd">    It also tracks randomly added songs assuming the user skips or removes songs that don&#39;t fit.</span>
-<span class="sd">    Only completely played songs will be considered.</span>
-<span class="sd">    Skipped songs will be ignored.</span>
+<span class="sd">    The thread tracks the played video using the :doc:`/mdbapi/tracker` module.</span>
+<span class="sd">    It does not track randomly added videos.</span>
+<span class="sd">    Only completely played videos will be considered.</span>
+<span class="sd">    Skipped videos will be ignored.</span>
+<span class="sd">    It also maintains the ``lastplayed`` statistic.</span>
 
 <span class="sd">    The thread triggers the following events:</span>
 
-<span class="sd">        * ``StatusChanged``: When the play-state</span>
-<span class="sd">        * ``TimeChanged``: To update the current streaming progress of a song</span>
+<span class="sd">        * ``StatusChanged``: When the stream state changed</span>
+<span class="sd">        * ``StreamNextVideo``: When the player shall stream the next video. MDBVideo, streamstate and queue entry is included as rawdata argument.</span>
 
-<span class="sd">    The ``TimeChanged`` event gets triggered approximately every second.</span>
+<span class="sd">    States</span>
+
+<span class="sd">        * ``isstreaming``: This thread manages the queue and provides new videos when a video is considered being watched.</span>
+<span class="sd">        * ``isplaying``: Stream is in a state where clients could play the current video. This is an assumption of the clients possible state. This does not represent the true clients state, and it is not meant to be used by the clients in any way.</span>
+<span class="sd">        * ``currententry``: The queue entry ID of the current playing video.</span>
+
+<span class="sd">    Commands:</span>
+
+<span class="sd">        * ``VideoEnded``: When a client send the VideoEnded information to the server (:meth:`~lib.ws.mdbwsi.MusicDBWebSocketInterface.VideoEnded` this thread manages the call. In case the provided entry ID is the same as the ``currententy`` ID the next video gets popped from the video queue. Otherwise the command gets ignored.</span>
+<span class="sd">        * ``PlayNextVideo``: Skip the current video and start playing the next.</span>
+<span class="sd">        * ``SetStreamState``: Sets the stream state to streaming or not streaming.</span>
+
+<span class="sd">    When streaming gets deactivated, or activated, it also generates an event (``StatusChanged``).</span>
+<span class="sd">    It is expected that all clients stop playing the current video if ``isstreaming`` is set to ``Flase``.</span>
+<span class="sd">    In case it is set to ``True``, all clients that were used to play the videos continue playing the current video.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">lib.stream.icecast</span> <span class="kn">import</span> <span class="n">IcecastInterface</span>
-    <span class="kn">from</span> <span class="nn">mdbapi.tracker</span>     <span class="kn">import</span> <span class="n">Tracker</span>
+    <span class="kn">from</span> <span class="nn">mdbapi.tracker</span> <span class="kn">import</span> <span class="n">VideoTracker</span>
 
     <span class="k">global</span> <span class="n">Config</span>
     <span class="k">global</span> <span class="n">RunThread</span>
@@ -889,104 +922,106 @@
     <span class="k">global</span> <span class="n">State</span>
 
     <span class="c1"># Create all interfaces that are needed by this Thread</span>
-    <span class="n">musicdb</span>    <span class="o">=</span> <span class="n">MusicDatabase</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-    <span class="n">tracker</span>    <span class="o">=</span> <span class="n">Tracker</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
-    <span class="n">filesystem</span> <span class="o">=</span> <span class="n">Filesystem</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-    <span class="n">queue</span>      <span class="o">=</span> <span class="n">SongQueue</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
-    <span class="n">randy</span>      <span class="o">=</span> <span class="n">Randy</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
-    <span class="n">icecast</span>    <span class="o">=</span> <span class="n">IcecastInterface</span><span class="p">(</span>
-            <span class="n">port</span>      <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">icecast</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
-            <span class="n">user</span>      <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">icecast</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
-            <span class="n">password</span>  <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">icecast</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
-            <span class="n">mountname</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">icecast</span><span class="o">.</span><span class="n">mountname</span>
-            <span class="p">)</span>
-    <span class="n">icecast</span><span class="o">.</span><span class="n">Mute</span><span class="p">()</span>
+    <span class="n">musicdb</span> <span class="o">=</span> <span class="n">MusicDatabase</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">tracker</span> <span class="o">=</span> <span class="n">VideoTracker</span><span class="p">(</span><span class="n">Config</span><span class="p">)</span>
+    <span class="n">queue</span>   <span class="o">=</span> <span class="n">VideoQueue</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="n">musicdb</span><span class="p">)</span>
+
+    <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isstreaming&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">queueentry</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentVideo</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">queueentry</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Video Queue is empty, waiting for new video.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">State</span><span class="p">[</span><span class="s2">&quot;currententry&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span>
+
+
+    <span class="c1"># Do nothing if video streaming is disabled</span>
+    <span class="k">if</span> <span class="n">Config</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">disablevideos</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Video streaming disabled!&quot;</span><span class="p">)</span>
+
+        <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isstreaming&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">Event_StatusChanged</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="n">RunThread</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span>
+
 
     <span class="k">while</span> <span class="n">RunThread</span><span class="p">:</span>
-        <span class="c1"># Sleep a bit to reduce the load on the CPU. If disconnected, sleep a bit longer</span>
-        <span class="k">if</span> <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isconnected&quot;</span><span class="p">]:</span>
+        <span class="c1"># Sleep a bit to reduce the load on the CPU. If not in streaming , sleep a bit longer</span>
+        <span class="k">if</span> <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isstreaming&quot;</span><span class="p">]:</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
-        <span class="c1"># Check connection to Icecast, and connect if disconnected.</span>
-        <span class="n">isconnected</span> <span class="o">=</span> <span class="n">icecast</span><span class="o">.</span><span class="n">IsConnected</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isconnected&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">isconnected</span><span class="p">:</span>
-            <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isconnected&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">isconnected</span>
-            <span class="n">Event_StatusChanged</span><span class="p">()</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">isconnected</span><span class="p">:</span>
-            <span class="c1"># Try to connect, and check if connection succeeded in the next turn of the main loop</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Trying to reconnect to Icecast…&quot;</span><span class="p">)</span>
-            <span class="n">icecast</span><span class="o">.</span><span class="n">Connect</span><span class="p">()</span>
+        <span class="c1"># Check command</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">CommandQueue</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">continue</span>
+        <span class="n">command</span><span class="p">,</span> <span class="n">argument</span> <span class="o">=</span> <span class="n">CommandQueue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;PlayNextVideo&quot;</span><span class="p">:</span>      <span class="c1"># Player pressed &quot;Next&quot; Button</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;User forced next video&quot;</span><span class="p">)</span>
+            <span class="n">queue</span><span class="o">.</span><span class="n">NextVideo</span><span class="p">()</span>
+            <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="c1"># Get current song that shall be streamed.</span>
-        <span class="n">queueentry</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentSong</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">queueentry</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Waiting for 5s to try to get a new song to play.&quot;</span><span class="p">)</span>
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-            <span class="k">continue</span>
-
-        <span class="n">mdbsong</span>  <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">])</span>
-        <span class="n">songpath</span> <span class="o">=</span> <span class="n">filesystem</span><span class="o">.</span><span class="n">AbsolutePath</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
-
-
-        <span class="c1"># Stream song</span>
-        <span class="n">icecast</span><span class="o">.</span><span class="n">UpdateTitle</span><span class="p">(</span><span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Start streaming </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">songpath</span><span class="p">)</span>
-        <span class="n">timeplayed</span>    <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">lasttimestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">frameinfo</span> <span class="ow">in</span> <span class="n">icecast</span><span class="o">.</span><span class="n">StreamFile</span><span class="p">(</span><span class="n">songpath</span><span class="p">):</span>
-            <span class="c1"># Send every second the estimated time position of the song.</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">frameinfo</span><span class="p">[</span><span class="s2">&quot;muted&quot;</span><span class="p">]:</span>
-                <span class="n">timeplayed</span> <span class="o">+=</span> <span class="n">frameinfo</span><span class="p">[</span><span class="s2">&quot;header&quot;</span><span class="p">][</span><span class="s2">&quot;frametime&quot;</span><span class="p">]</span>
-            <span class="n">timestamp</span>   <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-            <span class="n">timediff</span>    <span class="o">=</span> <span class="n">timestamp</span> <span class="o">-</span> <span class="n">lasttimestamp</span><span class="p">;</span>
-            <span class="k">if</span> <span class="n">timediff</span> <span class="o">&gt;=</span> <span class="mf">1.0</span><span class="p">:</span>
-                <span class="n">Event_TimeChanged</span><span class="p">(</span><span class="n">timeplayed</span><span class="o">/</span><span class="mi">1000</span><span class="p">)</span>
-                <span class="n">lasttimestamp</span> <span class="o">=</span> <span class="n">timestamp</span>
-
-            <span class="c1"># Check if the thread shall be exit</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">RunThread</span><span class="p">:</span>
-                <span class="k">break</span>
-
-            <span class="c1"># read and handle queue commands if there is one</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">CommandQueue</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;VideoEnded&quot;</span><span class="p">:</span>    <span class="c1"># Video was played to the end</span>
+            <span class="c1"># If the currently streaming entry is different from the finished video</span>
+            <span class="c1"># a different client may have already finished streaming the video and</span>
+            <span class="c1"># requested the next video.</span>
+            <span class="c1"># So nothing to do here anymore</span>
+            <span class="k">if</span> <span class="n">State</span><span class="p">[</span><span class="s2">&quot;currententry&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">argument</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Ignoring VideoEnded command for </span><span class="si">%s</span><span class="s2">. Current video is </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">argument</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">State</span><span class="p">[</span><span class="s2">&quot;currententry&quot;</span><span class="p">]))</span>
                 <span class="k">continue</span>
 
-            <span class="n">command</span><span class="p">,</span> <span class="n">argument</span> <span class="o">=</span> <span class="n">CommandQueue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;PlayNextSong&quot;</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Playing next song&quot;</span><span class="p">)</span>
-                <span class="k">break</span>   <span class="c1"># Stop streaming current song, and start the next one</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Finished streaming video with queue entry id </span><span class="si">%i</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span>
 
-            <span class="k">elif</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;Play&quot;</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting Play-State to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">argument</span><span class="p">))</span>
-                <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">argument</span>
-                <span class="n">icecast</span><span class="o">.</span><span class="n">Mute</span><span class="p">(</span><span class="ow">not</span> <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">])</span>    <span class="c1"># Mute stream, when not playing</span>
-                <span class="n">Event_StatusChanged</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># when the for loop streaming the current song gets not left via break,</span>
-            <span class="c1"># then the whole song was streamed. So add that song to the trackers list</span>
-            <span class="c1"># Also update the last time played information.</span>
-            <span class="c1"># In case the loop ended because Icecast failed, update the Status</span>
-            <span class="k">if</span> <span class="n">icecast</span><span class="o">.</span><span class="n">IsConnected</span><span class="p">():</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;israndom&quot;</span><span class="p">]:</span>  <span class="c1"># do not track random songs</span>
-                    <span class="n">tracker</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">])</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">Config</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">disablestats</span><span class="p">:</span>
-                    <span class="n">musicdb</span><span class="o">.</span><span class="n">UpdateSongStatistic</span><span class="p">(</span><span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">],</span> <span class="s2">&quot;lastplayed&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+            <span class="c1"># Track video</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;israndom&quot;</span><span class="p">]:</span>  <span class="c1"># do not track random videos</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">tracker</span><span class="o">.</span><span class="n">TrackVideo</span><span class="p">(</span><span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;videoid&quot;</span><span class="p">]);</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Trying to track video with ID </span><span class="si">%i</span><span class="s2"> failed with error </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="p">,</span>
+                            <span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;videoid&quot;</span><span class="p">],</span>
+                                <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">icecast</span><span class="o">.</span><span class="n">Mute</span><span class="p">()</span>
-                <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span>   <span class="o">=</span> <span class="kc">False</span>
-                <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isconnected&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-                <span class="n">Event_StatusChanged</span><span class="p">()</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;The played video was added by Randy. So it will not be tracked.&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Current song completely streamed. Get next one.</span>
-        <span class="c1"># When the song was stopped to shutdown the server, do not skip to the next one</span>
-        <span class="c1"># In case the loop stopped because of an Icecast error, stay at the last song.</span>
-        <span class="k">if</span> <span class="n">RunThread</span> <span class="ow">and</span> <span class="n">icecast</span><span class="o">.</span><span class="n">IsConnected</span><span class="p">():</span>
-            <span class="n">queue</span><span class="o">.</span><span class="n">NextSong</span><span class="p">()</span></div>
+            <span class="c1"># Play next video</span>
+            <span class="n">queue</span><span class="o">.</span><span class="n">NextVideo</span><span class="p">()</span>
+            <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">Config</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">disablestats</span><span class="p">:</span>
+                <span class="n">musicdb</span><span class="o">.</span><span class="n">UpdateVideoStatistic</span><span class="p">(</span><span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;videoid&quot;</span><span class="p">],</span> <span class="s2">&quot;lastplayed&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+
+        <span class="k">elif</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;SetStreamState&quot;</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting Video Stream-State to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">argument</span><span class="p">))</span>
+            <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isstreaming&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">argument</span>
+            <span class="n">Event_StatusChanged</span><span class="p">()</span>
+
+
+        <span class="c1"># Stream next video, if clients finished streaming a video</span>
+        <span class="k">if</span> <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isstreaming&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]:</span>
+            <span class="c1"># Get current video that shall be streamed.</span>
+            <span class="n">queueentry</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">CurrentVideo</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">queueentry</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Video Queue is empty, waiting for new video.&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="n">State</span><span class="p">[</span><span class="s2">&quot;isplaying&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">State</span><span class="p">[</span><span class="s2">&quot;currententry&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span>
+
+            <span class="n">mdbvideo</span>  <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetVideoById</span><span class="p">(</span><span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;videoid&quot;</span><span class="p">])</span>
+            <span class="n">videoinfo</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">videoinfo</span><span class="p">[</span><span class="s2">&quot;video&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">mdbvideo</span>
+            <span class="n">videoinfo</span><span class="p">[</span><span class="s2">&quot;queue&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">queueentry</span><span class="p">)</span> <span class="c1"># will be manipulated, so better make a copy</span>
+            <span class="n">videoinfo</span><span class="p">[</span><span class="s2">&quot;queue&quot;</span><span class="p">][</span><span class="s2">&quot;entryid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">videoinfo</span><span class="p">[</span><span class="s2">&quot;queue&quot;</span><span class="p">][</span><span class="s2">&quot;entryid&quot;</span><span class="p">])</span> <span class="c1"># JavaScript cannot handle big integers</span>
+            <span class="n">videoinfo</span><span class="p">[</span><span class="s2">&quot;streamstate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">State</span><span class="p">)</span>
+            <span class="n">videoinfo</span><span class="p">[</span><span class="s2">&quot;streamstate&quot;</span><span class="p">][</span><span class="s2">&quot;currententry&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">videoinfo</span><span class="p">[</span><span class="s2">&quot;streamstate&quot;</span><span class="p">][</span><span class="s2">&quot;currententry&quot;</span><span class="p">])</span>
+            <span class="n">Event_StreamNextVideo</span><span class="p">(</span><span class="n">videoinfo</span><span class="p">)</span>
+
+    <span class="k">return</span></div>
+
 
 
 
@@ -1001,14 +1036,18 @@
 <span class="sd">    See :meth:`~TriggerEvent` with event name ``&quot;StatusChanged&quot;``</span>
 <span class="sd">    More details in the module description at the top of this document.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">&quot;StatusChanged&quot;</span><span class="p">)</span>
+    <span class="k">global</span> <span class="n">State</span>
+    <span class="n">streamstate</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">State</span><span class="p">)</span>
+    <span class="n">streamstate</span><span class="p">[</span><span class="s2">&quot;currententry&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">streamstate</span><span class="p">[</span><span class="s2">&quot;currententry&quot;</span><span class="p">])</span> <span class="c1"># JavaScript cannot handle big integers</span>
 
-<span class="k">def</span> <span class="nf">Event_TimeChanged</span><span class="p">(</span><span class="n">playtime</span><span class="p">):</span>
+    <span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">&quot;StatusChanged&quot;</span><span class="p">,</span> <span class="n">streamstate</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">Event_StreamNextVideo</span><span class="p">(</span><span class="n">videoinfo</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    See :meth:`~TriggerEvent` with event name ``&quot;TimeChanged&quot;`` and playtime of the song as argument</span>
+<span class="sd">    See :meth:`~TriggerEvent` with event name ``&quot;StreamNextVideo&quot;`` and a path to the video as argument</span>
 <span class="sd">    More details in the module description at the top of this document.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">&quot;TimeChanged&quot;</span><span class="p">,</span> <span class="n">playtime</span><span class="p">)</span>
+    <span class="n">TriggerEvent</span><span class="p">(</span><span class="s2">&quot;StreamNextVideo&quot;</span><span class="p">,</span> <span class="n">videoinfo</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">TriggerEvent</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">arg</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1042,12 +1081,12 @@
 
 
 
-<div class="viewcode-block" id="StreamManager"><a class="viewcode-back" href="../../mdbapi/stream.html#mdbapi.stream.StreamManager">[docs]</a><span class="k">class</span> <span class="nc">StreamManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="VideoStreamManager"><a class="viewcode-back" href="../../mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager">[docs]</a><span class="k">class</span> <span class="nc">VideoStreamManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This class provides an interface to the Streaming Thread (:meth:`~StreamingThread`) and the Song Queue that will be streamed.</span>
+<span class="sd">    This class provides an interface to the Streaming Thread (:meth:`~VideoStreamingThread`) and the Video Queue that will be streamed.</span>
 
 <span class="sd">    The communication is implemented with a command queue.</span>
-<span class="sd">    More details about those commands can be found in the :meth:`StreamingThread` description.</span>
+<span class="sd">    More details about those commands can be found in the :meth:`VideoStreamingThread` description.</span>
 <span class="sd">    Anyway, the details of the command queue are not important to know.</span>
 <span class="sd">    They get hide by this class.</span>
 <span class="sd">    Only important thing to know is, that when multiple instances of this class are used, the actions follow the *First Come First Server* protocol.</span>
@@ -1056,9 +1095,9 @@
 
 <span class="sd">        **Important for developer:**</span>
 
-<span class="sd">        Never call the :meth:`mdbapi.songqueue.SongQueue.NextSong` method directly from this class!</span>
-<span class="sd">        Send the ``&quot;PlayNextSong&quot;`` command to the :meth:`StreamingThread` instead.</span>
-<span class="sd">        The thread handles the skip to the next song and starts streaming the new file.</span>
+<span class="sd">        Never call the :meth:`mdbapi.videoqueue.VideoQueue.NextVideo` method directly from this class!</span>
+<span class="sd">        Send the ``&quot;PlayNextVideo&quot;`` command to the :meth:`VideoStreamingThread` instead.</span>
+<span class="sd">        The thread handles the skip to the next video and starts streaming the new file.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        config: :class:`~lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration</span>
@@ -1069,24 +1108,24 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">database</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDBConfig</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">MusicDBConfig</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;config argument not of type MusicDBConfig&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">database</span><span class="p">)</span> <span class="o">!=</span> <span class="n">MusicDatabase</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">database</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">MusicDatabase</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;database argument not of type MusicDatabase&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">db</span>         <span class="o">=</span> <span class="n">database</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span>        <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span>  <span class="o">=</span> <span class="n">database</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cfg</span> <span class="o">=</span> <span class="n">config</span>
 
 
 
-<div class="viewcode-block" id="StreamManager.PushCommand"><a class="viewcode-back" href="../../mdbapi/stream.html#mdbapi.stream.StreamManager.PushCommand">[docs]</a>    <span class="k">def</span> <span class="nf">PushCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">argument</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="VideoStreamManager.PushCommand"><a class="viewcode-back" href="../../mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager.PushCommand">[docs]</a>    <span class="k">def</span> <span class="nf">PushCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">argument</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Class internal interface to the `Command Queue`_ used to communicate with the :meth:`StreamingThread`.</span>
+<span class="sd">        Class internal interface to the `Command Queue`_ used to communicate with the :meth:`VideoStreamingThread`.</span>
 <span class="sd">        You should not access the queue directly, because the Streaming Thread expects valid data inside the queue.</span>
 <span class="sd">        This is guaranteed by the methods that use this method.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            command (str): A command to the Streaming Thread. Valid commands are listed in the :meth:`StreamingThread` section of the documentation.</span>
+<span class="sd">            command (str): A command to the Streaming Thread. Valid commands are listed in the :meth:`VideoStreamingThread` section of the documentation.</span>
 <span class="sd">            argument: An argument to the command.</span>
 
 <span class="sd">        Returns:</span>
@@ -1107,7 +1146,7 @@
 
 
 
-<div class="viewcode-block" id="StreamManager.GetStreamState"><a class="viewcode-back" href="../../mdbapi/stream.html#mdbapi.stream.StreamManager.GetStreamState">[docs]</a>    <span class="k">def</span> <span class="nf">GetStreamState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="VideoStreamManager.GetStreamState"><a class="viewcode-back" href="../../mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager.GetStreamState">[docs]</a>    <span class="k">def</span> <span class="nf">GetStreamState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This method returns the current state of the Streaming Thread as a dictionary.</span>
 
@@ -1126,7 +1165,7 @@
 
 
 
-<div class="viewcode-block" id="StreamManager.RegisterCallback"><a class="viewcode-back" href="../../mdbapi/stream.html#mdbapi.stream.StreamManager.RegisterCallback">[docs]</a>    <span class="k">def</span> <span class="nf">RegisterCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
+<div class="viewcode-block" id="VideoStreamManager.RegisterCallback"><a class="viewcode-back" href="../../mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager.RegisterCallback">[docs]</a>    <span class="k">def</span> <span class="nf">RegisterCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register a callback function that reacts on Streaming related events.</span>
 <span class="sd">        For more details see the module description at the top of this document.</span>
@@ -1142,7 +1181,7 @@
 
 
 
-<div class="viewcode-block" id="StreamManager.RemoveCallback"><a class="viewcode-back" href="../../mdbapi/stream.html#mdbapi.stream.StreamManager.RemoveCallback">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
+<div class="viewcode-block" id="VideoStreamManager.RemoveCallback"><a class="viewcode-back" href="../../mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager.RemoveCallback">[docs]</a>    <span class="k">def</span> <span class="nf">RemoveCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes a function from the list of callback functions.</span>
 
@@ -1169,17 +1208,17 @@
 
 
 
-<div class="viewcode-block" id="StreamManager.Play"><a class="viewcode-back" href="../../mdbapi/stream.html#mdbapi.stream.StreamManager.Play">[docs]</a>    <span class="k">def</span> <span class="nf">Play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">play</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="VideoStreamManager.Play"><a class="viewcode-back" href="../../mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager.Play">[docs]</a>    <span class="k">def</span> <span class="nf">Play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">play</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the play-state.</span>
 
-<span class="sd">            * If ``play`` is ``True`` (default value), the Streaming Thread streams audio file data to Icecast.</span>
-<span class="sd">            * If ``play`` is ``False``, the stream gets paused.</span>
+<span class="sd">            * If ``play`` is ``True`` (default value), the Streaming Thread streams data.</span>
+<span class="sd">            * If ``play`` is ``False``, the audio stream gets paused.</span>
 
 <span class="sd">        This function is forcing the state. It does not care about the current playing state.</span>
 
 <span class="sd">        When the command got successful executed, </span>
-<span class="sd">        the :meth:`~mdbapi.stream.StreamingThread` will trigger the ``StatusChanged`` event.</span>
+<span class="sd">        the :meth:`~mdbapi.videostream.VideoStreamingThread` will trigger the ``StatusChanged`` event.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            play (bool): Playstate the Streaming Thread shall get</span>
@@ -1187,22 +1226,40 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            ``True`` on success. When ``play`` is not a Boolean, ``False`` gets returned.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">play</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">play</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unexpected datatype </span><span class="si">%s</span><span class="s2"> of play-argument (expecting bool)! </span><span class="se">\033</span><span class="s2">[1;30m(Command will be ignored)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">play</span><span class="p">)))</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">PushCommand</span><span class="p">(</span><span class="s2">&quot;Play&quot;</span><span class="p">,</span> <span class="n">play</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">PushCommand</span><span class="p">(</span><span class="s2">&quot;SetStreamState&quot;</span><span class="p">,</span> <span class="n">play</span><span class="p">)</span></div>
 
 
 
-<div class="viewcode-block" id="StreamManager.PlayNextSong"><a class="viewcode-back" href="../../mdbapi/stream.html#mdbapi.stream.StreamManager.PlayNextSong">[docs]</a>    <span class="k">def</span> <span class="nf">PlayNextSong</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="VideoStreamManager.PlayNextVideo"><a class="viewcode-back" href="../../mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager.PlayNextVideo">[docs]</a>    <span class="k">def</span> <span class="nf">PlayNextVideo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This function triggers the Streaming Thread to play the next song in the queue.</span>
+<span class="sd">        This function triggers the Streaming Thread to play the next video in the queue.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ``True`` on success, otherwise ``False``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">PushCommand</span><span class="p">(</span><span class="s2">&quot;PlayNextSong&quot;</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">PushCommand</span><span class="p">(</span><span class="s2">&quot;PlayNextVideo&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="VideoStreamManager.VideoEnded"><a class="viewcode-back" href="../../mdbapi/videostream.html#mdbapi.videostream.VideoStreamManager.VideoEnded">[docs]</a>    <span class="k">def</span> <span class="nf">VideoEnded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queueentryid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method informs the Streaming Thread the video was completely streams.</span>
+<span class="sd">        It sets the ``lastplayed`` statistics of the video and</span>
+<span class="sd">        triggers the Streaming Thread to play the next video in the queue.</span>
+
+<span class="sd">        This method can be called multiple times for the same queue entry.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            queueentryid (int): The ID of the queue entry that got finished streaming</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` on success, otherwise ``False``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">PushCommand</span><span class="p">(</span><span class="s2">&quot;VideoEnded&quot;</span><span class="p">,</span> <span class="n">queueentryid</span><span class="p">)</span></div></div>
 
 
 
@@ -1222,7 +1279,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020,2021 Ralf Stemmer.
 
     </p>
   </div>
@@ -1244,7 +1301,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'6.0.0',
+            VERSION:'7.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1255,7 +1312,6 @@
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
-      <script type="text/javascript" src="../../_static/language_data.js"></script>
 
   
 

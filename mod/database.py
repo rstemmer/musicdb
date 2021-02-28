@@ -53,7 +53,7 @@ The following subcommands are provided:
             * For songs: :meth:`mdbapi.database.MusicDBDatabase.UpdateSong`
             * For videos: :meth:`mdbapi.database.MusicDBDatabase.UpdateVideo`
 
-        After the update you may want to update the video artworks via :doc:`mod/videoframes`.
+        After the update you may want to update the video artworks via :doc:`/mod/videoframes`.
 
     ``remove``:
         Removes an artist, album or song from the database.

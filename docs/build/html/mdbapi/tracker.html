@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Song Tracker &mdash; MusicDB 6.0.0 documentation</title>
+  <title>Song Tracker &mdash; MusicDB 7.0.0 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 6.0.0 documentation" href="../index.html"/>
-        <link rel="next" title="Command Line User Interface" href="../lib/clui.html"/>
+    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+        <link rel="next" title="Upload Management" href="uploadmanager.html"/>
         <link rel="prev" title="MusicDBTags" href="tags.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                6.0
+                7.0
               </div>
             
           
@@ -110,6 +110,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#database">database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#music">music</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#uploads">uploads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
@@ -117,6 +119,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/logging.html">Handling log-files</a></li>
@@ -184,12 +194,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#available-methods">Available Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#videos">Videos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#queue">Queue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#tag-related">Tag related</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#uploading">Uploading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
@@ -212,33 +225,31 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#additional-steps-for-ubuntu">Additional Steps for Ubuntu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#executing-the-install-sh-script">Executing the install.sh Script</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-all-dependencies">Install all Dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#configureing-musicdb">Configureing MusicDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#configuring-musicdb">Configuring MusicDB</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#configuring-musicdb-webui">Configuring MusicDB WebUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#id1">Configuring MusicDB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-version">Update to a New Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-manually">Installation (Manually)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#system-preparation">System Preparation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id1">Install dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id2">Install dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3">id3edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#configureing-musicdb-webui">Configureing MusicDB WebUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/music.html">Music</a><ul>
@@ -246,6 +257,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#music-video-file-name">Music Video File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
@@ -255,6 +267,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-videos-to-musicdb">Importing Videos to MusicDB</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/scripts.html">Scripts</a><ul>
@@ -318,9 +331,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#example-calls">Example calls</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/tracker.html">tracker - Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#module-mod.tracker">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#class-description">Class Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/videoframes.html#class">class</a></li>
 </ul>
 </li>
 </ul>
@@ -338,6 +350,14 @@
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#algorithm">Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="audiostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="audiostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="audiostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="audiostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="audiostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="blacklist.html">Blacklist</a><ul>
@@ -380,6 +400,7 @@
 <li class="toctree-l4"><a class="reference internal" href="randy.html#blacklist-stage">Blacklist Stage</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="randy.html#randy-class">Randy Class</a></li>
@@ -392,14 +413,6 @@
 <li class="toctree-l2"><a class="reference internal" href="songqueue.html#song-queue-class">Song Queue Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="stream.html">Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="stream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="stream.html#stream-manager-class">Stream Manager Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
@@ -408,6 +421,35 @@
 <li class="toctree-l2"><a class="reference internal" href="#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uploadmanager.html">Upload Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#path-structure">Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#https-server">HTTPS Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="videoqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="videostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="videostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 </ul>
@@ -432,6 +474,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.webui">WebUI Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
 </ul>
@@ -484,9 +527,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../lib/musicdb.html">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#validity-of-columns">Validity of columns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#adding-a-column">Adding a Column</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#songs">Songs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#videos">Videos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#video-relates-methods">Video Relates Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#albums">Albums</a><ul>
@@ -500,7 +548,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#tags">Tags</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#tag-definition-table">Tag Definition Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#tag-mapping-table">Tag Mapping Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#database-api">Database API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lib/musicdb.html#tag-related-methods">Tag Related Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../lib/musicdb.html#musicdatabase-class">MusicDatabase Class</a></li>
@@ -519,21 +567,6 @@
 </ul>
 <p class="caption"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
@@ -634,16 +667,15 @@
             
   <div class="section" id="module-mdbapi.tracker">
 <span id="song-tracker"></span><h1>Song Tracker<a class="headerlink" href="#module-mdbapi.tracker" title="Permalink to this headline">¶</a></h1>
-<p>This module provides a tracker to track songs that were streamed.
-The goal of the tracker is to collect information which songs can be played in series.
-So the relation between two songs gets stored in a database - the Tracker Database.
-The user can then get the information which song were played after (or before) a specific song.
-Beside the songs, also the artist relations are tracked.</p>
-<p>The Tracker consists of two parts:</p>
+<p>This module provides a tracker to track songs and videos that were streamed.
+The goal of the tracker is to collect information which songs and videos can be played in series.
+So the relation between two songs or videos gets stored in a database - the Tracker Database.
+The user can then get the information which song/video were played after (or before) a specific song/video.</p>
+<p>The Tracker consists of the following parts:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>The <strong>Tracker</strong> class (<a class="reference internal" href="#mdbapi.tracker.Tracker" title="mdbapi.tracker.Tracker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tracker</span></code></a>) tracking songs with an internal queue that holds the last played songs.</p></li>
-<li><p>The <strong>Tracker Database</strong> (<a class="reference internal" href="#lib.db.trackerdb.TrackerDatabase" title="lib.db.trackerdb.TrackerDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackerDatabase</span></code></a>) that stores the tracked song relations.</p></li>
+<li><p>The <strong>Tracker</strong> class (<a class="reference internal" href="#mdbapi.tracker.Tracker" title="mdbapi.tracker.Tracker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tracker</span></code></a>) tracking music with an internal queue that holds the last played song or and video.</p></li>
+<li><p>The <strong>Tracker Database</strong> (<a class="reference internal" href="#lib.db.trackerdb.TrackerDatabase" title="lib.db.trackerdb.TrackerDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackerDatabase</span></code></a>) that stores the tracked music relations.</p></li>
 </ul>
 </div></blockquote>
 <p class="rubric">Example</p>
@@ -651,7 +683,7 @@ Beside the songs, also the artist relations are tracked.</p>
 <span class="n">cfg</span> <span class="o">=</span> <span class="n">MusicDBConfig</span><span class="p">(</span><span class="s2">&quot;./musicdb.ini&quot;</span><span class="p">)</span>
 
 <span class="c1"># Create a new tracker</span>
-<span class="n">tracker</span> <span class="o">=</span> <span class="n">Tracker</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+<span class="n">tracker</span> <span class="o">=</span> <span class="n">SongTracker</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
 <span class="n">tracker</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="s2">&quot;Unicorn/2000 - Honey Horn/13 Rainbow Song.mp3&quot;</span><span class="p">)</span>
 <span class="n">tracker</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="s2">&quot;Truther/2013 - Real Album/23 Illuminati.mp3&quot;</span><span class="p">)</span>
 </pre></div>
@@ -660,48 +692,52 @@ Beside the songs, also the artist relations are tracked.</p>
 <h2>Tracker Class<a class="headerlink" href="#tracker-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="mdbapi.tracker.Tracker">
-<em class="property">class </em><code class="sig-prename descclassname">mdbapi.tracker.</code><code class="sig-name descname">Tracker</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em>, <em class="sig-param"><span class="n">musicdb</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#Tracker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.Tracker" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class tracks songs that were played after each other.
-So it gets tracked what songs the user put together into the queue because their style fit to each other.
-It should also track randomly added songs assuming the user skips or removes songs that don’t fit.
-Only completely played songs should considered.
-Skipped songs should be ignored.
-Beside the songs, also the artist relations get tracked.
-The artist relation gets derived from the song relations.</p>
+<em class="property">class </em><code class="sig-prename descclassname">mdbapi.tracker.</code><code class="sig-name descname">Tracker</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em>, <em class="sig-param"><span class="n">target</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#Tracker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.Tracker" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class tracks music (songs and videos) that were played after each other.
+So it gets tracked what songs or videos the user put together into the queue because their style fit to each other.</p>
+<p>Only completely played music should considered.
+Skipped music should be ignored.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>It tracks the played songs using a local state.
+<p>It tracks the played songs and videos using a local state.
 Creating a new instance of this class also creates a further independent tracker.
 This could mess up the database with relations that were counted twice!</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For better readability it is recommended to use the derived classes <code class="xref py py-class docutils literal notranslate"><span class="pre">SongTracker</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">VideoTracker</span></code>.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>config</strong> – <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> object holding the MusicDB Configuration</p></li>
-<li><p><strong>musicdb</strong> – Optional a <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> instance. When <code class="docutils literal notranslate"><span class="pre">None</span></code> a new instance will be created</p></li>
+<li><p><strong>target</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code> depending what kind of music will be tracked</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>TypeError</strong> – When the arguments are not of the correct type.</p>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – When the arguments are not of the correct type.</p></li>
+<li><p><strong>ValueError</strong> – When <code class="docutils literal notranslate"><span class="pre">target</span></code> is not <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code></p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mdbapi.tracker.Tracker.AddSong">
-<code class="sig-name descname">AddSong</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#Tracker.AddSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.Tracker.AddSong" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method tracks the relation to the given song with the last added song.
-This new song should be a song that was recently and completely played.</p>
-<p>If the time between this song, and the previous one exceeds <em>N</em> minutes, it gets ignored and the internal state gets reset.
-So the chain of songs get cut if the time between playing them is too long.
-The chain of songs gets also cut, if <em>songid</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code> or invalid.
+<dt id="mdbapi.tracker.Tracker.Track">
+<code class="sig-name descname">Track</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">targetid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#Tracker.Track"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.Tracker.Track" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method tracks the relation to the given target with the last added target.
+A target can be a song or a video.
+This new target should be a target that was recently and completely played.</p>
+<p>If the time between this target, and the previous one exceeds <em>N</em> minutes, it gets ignored and the internal state gets reset.
+So the chain of targets get cut if the time between playing them is too long.
+The chain of targets gets also cut, if <code class="docutils literal notranslate"><span class="pre">targetid</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> or invalid.
 The amount of time until this cut takes place can be configured: <a class="reference internal" href="../basics/config.html"><span class="doc">MusicDB Configuration</span></a></p>
-<p>If the given song is the same as the last song, then it gets ignored.</p>
-<p>After adding a song, the method checks for a new relation between two songs.
-This is the case when there was previously a song added.</p>
-<p>If there is a relation to track then the songs get loaded from the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase</span></code></a> to get the artist IDs.
-The relation gets added to the tracker database by calling <a class="reference internal" href="#lib.db.trackerdb.TrackerDatabase.AddRelation" title="lib.db.trackerdb.TrackerDatabase.AddRelation"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.trackerdb.TrackerDatabase.AddRelation()</span></code></a></p>
+<p>If the given target is the same as the last target, then it gets ignored.</p>
+<p>After adding a target, the method checks for a new relation between two targets.
+This is the case when there was previously a target added.</p>
+<p>The relation gets added to the tracker database by calling <a class="reference internal" href="#lib.db.trackerdb.TrackerDatabase.AddRelation" title="lib.db.trackerdb.TrackerDatabase.AddRelation"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.trackerdb.TrackerDatabase.AddRelation()</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>songid</strong> – song ID of the song that gets currently played, <code class="docutils literal notranslate"><span class="pre">None</span></code> to cut the chain of consecutive songs.</p>
+<dd class="field-odd"><p><strong>targetid</strong> – ID of the song or video that gets currently played, <code class="docutils literal notranslate"><span class="pre">None</span></code> to cut the chain of consecutive targets.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success. <code class="docutils literal notranslate"><span class="pre">False</span></code> in case an error occurred.</p>
@@ -715,14 +751,15 @@ The relation gets added to the tracker database by calling <a class="reference i
 <div class="section" id="module-lib.db.trackerdb">
 <span id="tracker-database"></span><h2>Tracker Database<a class="headerlink" href="#module-lib.db.trackerdb" title="Permalink to this headline">¶</a></h2>
 <p>This module is used to manage the Tracker Database.</p>
-<p>The database stores the relation between two songs.
-That means, whenever two songs were played after each other, the relation gets created,
-or its wehight incremented.</p>
-<p>There are two tables, one for song relations and one for artists.
-The artist relation could be determined out of the song relations, so the artist relation table can be seen as cache.</p>
-<p>Because the two tables, their data and algorithms are similar, all methods are made to work on both tables.
-The parameter <em>target</em> is either <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;artist&quot;</span></code> and distinguish the tables.
-If the documentation mentions <em>targetid</em> it either is the term <em>songid</em> or <em>artistid</em> depending on the argument of the methond.</p>
+<p>The database stores the relation between two songs or videos.
+That means, whenever two songs or videos were played after each other, this relation gets created
+or its weight incremented.</p>
+<p>There are two tables, one for song relations and one for video relations.</p>
+<p>Because the tables contain similar information, their data and algorithms are similar.
+All methods are made to work on all tables.
+The parameter <em>target</em> is either <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code> and distinguish the tables.
+If the documentation mentions <em>targetid</em> it either is the term <em>songid</em> or <em>videoid</em> depending on the argument of the method.</p>
+<p>The tables layout is the following:</p>
 <blockquote>
 <div><table class="docutils align-default">
 <colgroup>
@@ -743,18 +780,15 @@ If the documentation mentions <em>targetid</em> it either is the term <em>songid
 <dl class="simple">
 <dt>id:</dt><dd><p>ID of the row</p>
 </dd>
-<dt>targetida / targetidb:</dt><dd><p>IDs of the songs or artists that were played together.
-ID A is the smaller number of the two: <code class="docutils literal notranslate"><span class="pre">xida</span> <span class="pre">&lt;</span> <span class="pre">xidb</span></code>.
-There will not be the situation where xida and xidb have the same ID.
+<dt>targetida / targetidb:</dt><dd><p>IDs of the songs or videos that were played together.
+ID A is the smaller number of the two: <code class="docutils literal notranslate"><span class="pre">targetida</span> <span class="pre">&lt;</span> <span class="pre">targetidb</span></code>.
+There will not be the situation where targetida and targetidb have the same ID.
 It is prevented by the method creating the relation.</p>
 </dd>
-<dt>weight:</dt><dd><p>Gets incremented whenever the xida/xidb relation occures.</p>
+<dt>weight:</dt><dd><p>Gets incremented whenever the targetida/targetidb relation already occurred in the past.</p>
 </dd>
 </dl>
-<p>This classes uses a global lock (using Python <code class="docutils literal notranslate"><span class="pre">threading.RLock</span></code>) to avoid that relations change during complex operation.
-For example, when removing a songs relation, the artists relation weight must be decreased.
-There are multiple database accesses necessary to do so.
-Meanwhile, nothing should be changed by other threads.</p>
+<p>This classes uses a global lock (using Python <code class="docutils literal notranslate"><span class="pre">threading.RLock</span></code>) to avoid that relations change during complex operation.</p>
 </div>
 <div class="section" id="trackerdatabase-class">
 <h2>TrackerDatabase Class<a class="headerlink" href="#trackerdatabase-class" title="Permalink to this headline">¶</a></h2>
@@ -774,16 +808,16 @@ Meanwhile, nothing should be changed by other threads.</p>
 <dt id="lib.db.trackerdb.TrackerDatabase.AddRelation">
 <code class="sig-name descname">AddRelation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">ida</span></em>, <em class="sig-param"><span class="n">idb</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.AddRelation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.AddRelation" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds a relation between two targets.
-A target can be a song or an artist.</p>
+A target can be a song or a video.</p>
 <p>It does not matter which one is greater, <em>ida</em> or <em>idb</em>.
 This gets handled automatically.
 If <em>ida</em> and <em>idb</em> are the same ID, they get ignored.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>target</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">song</span></code> or <code class="docutils literal notranslate"><span class="pre">artist</span></code></p></li>
-<li><p><strong>ida</strong> (<em>int</em>) – Song ID or Artist ID, depending on the target string</p></li>
-<li><p><strong>ida</strong> – Song ID or Artist ID, depending on the target string</p></li>
+<li><p><strong>target</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code></p></li>
+<li><p><strong>ida</strong> (<em>int</em>) – Song ID or Video ID, depending on the target string</p></li>
+<li><p><strong>ida</strong> – Song ID or Video ID, depending on the target string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -791,7 +825,7 @@ If <em>ida</em> and <em>idb</em> are the same ID, they get ignored.</p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ValueError</strong> – If <em>target</em> not <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;artist&quot;</span></code></p></li>
+<li><p><strong>ValueError</strong> – If <em>target</em> not <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code></p></li>
 <li><p><strong>TypeError</strong> – If <em>ida</em> or <em>idb</em> is not of type int</p></li>
 </ul>
 </dd>
@@ -801,14 +835,14 @@ If <em>ida</em> and <em>idb</em> are the same ID, they get ignored.</p>
 <dl class="py method">
 <dt id="lib.db.trackerdb.TrackerDatabase.GetRelations">
 <code class="sig-name descname">GetRelations</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">targetid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.GetRelations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.GetRelations" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method returns the related songs or artists of a song or an artist, depending on the value of <em>target</em>.</p>
+<dd><p>This method returns the related songs or videos of a song or a video, depending on the value of <em>target</em>.</p>
 <p>The method returns a list of dictionaries.
-Each dictionary contains the ID of the related song or artist, and the weight of the relation.</p>
+Each dictionary contains the ID of the related song or video, and the weight of the relation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>target</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">song</span></code> or <code class="docutils literal notranslate"><span class="pre">artist</span></code></p></li>
-<li><p><strong>targetid</strong> (<em>int</em>) – Song ID or Artist ID, depending on the target string</p></li>
+<li><p><strong>target</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">song</span></code> or <code class="docutils literal notranslate"><span class="pre">video</span></code></p></li>
+<li><p><strong>targetid</strong> (<em>int</em>) – Song ID or Video ID, depending on the target string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -816,7 +850,7 @@ Each dictionary contains the ID of the related song or artist, and the weight of
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ValueError</strong> – If <em>target</em> not <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;artist&quot;</span></code></p></li>
+<li><p><strong>ValueError</strong> – If <em>target</em> not <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code></p></li>
 <li><p><strong>TypeError</strong> – If <em>targetid</em> is not of type <code class="docutils literal notranslate"><span class="pre">int</span></code></p></li>
 </ul>
 </dd>
@@ -830,78 +864,19 @@ Each dictionary contains the ID of the related song or artist, and the weight of
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.db.trackerdb.TrackerDatabase.RemoveArtist">
-<code class="sig-name descname">RemoveArtist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveArtist" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method removes all relations to an artist.
-This is useful in case a artist gets removed from the database.
-Its song relations must be removed separately by calling <a class="reference internal" href="#lib.db.trackerdb.TrackerDatabase.RemoveSong" title="lib.db.trackerdb.TrackerDatabase.RemoveSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSong()</span></code></a> for each song.</p>
-<p>If the artist relation does not exist, nothing will be done.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>artistid</strong> (<em>int</em>) – ID of the artist</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>TypeError</strong> – Invalid artist ID type</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="lib.db.trackerdb.TrackerDatabase.RemoveArtistRelations">
-<code class="sig-name descname">RemoveArtistRelations</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">musicdb</span></em>, <em class="sig-param"><span class="n">artistida</span></em>, <em class="sig-param"><span class="n">artistidb</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveArtistRelations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveArtistRelations" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method removes the relationship between two artists and all song relations of them.</p>
-<p>If the artist relation does not exist, nothing will be done.</p>
-<p>To get information about the songs of the artist, an instance of the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> is necessary.
-This object must be given as argument.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>musicdb</strong> – An instance of the music database to collect more information of the songs.</p></li>
-<li><p><strong>artistida</strong> (<em>int</em>) – ID of one artist</p></li>
-<li><p><strong>artistidb</strong> (<em>int</em>) – ID of the other one</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>TypeError</strong> – Invalid <em>musicdb</em> argument</p></li>
-<li><p><strong>TypeError</strong> – Invalid artist IDs</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt id="lib.db.trackerdb.TrackerDatabase.RemoveRelation">
 <code class="sig-name descname">RemoveRelation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">ida</span></em>, <em class="sig-param"><span class="n">idb</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveRelation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveRelation" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes a relation between two targets.
-A target can be a song or an artist.</p>
+A target can be a song, a video or a video.</p>
 <p>It does not matter which one is greater, <em>ida</em> or <em>idb</em>.
 This gets handled automatically.
 If <em>ida</em> and <em>idb</em> are the same ID, they get ignored.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Only the addressed edge gets removed!</p>
-<p>Removing an artist for example, does not remove song relations to this artist.
-You should use the following two higher level methods:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><a class="reference internal" href="#lib.db.trackerdb.TrackerDatabase.RemoveSongRelations" title="lib.db.trackerdb.TrackerDatabase.RemoveSongRelations"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSongRelations()</span></code></a></p></li>
-<li><p><a class="reference internal" href="#lib.db.trackerdb.TrackerDatabase.RemoveArtistRelations" title="lib.db.trackerdb.TrackerDatabase.RemoveArtistRelations"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveArtistRelations()</span></code></a></p></li>
-</ul>
-</div></blockquote>
-</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>target</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">song</span></code> or <code class="docutils literal notranslate"><span class="pre">artist</span></code></p></li>
-<li><p><strong>ida</strong> (<em>int</em>) – Song ID or Artist ID, depending on the target string</p></li>
-<li><p><strong>ida</strong> – Song ID or Artist ID, depending on the target string</p></li>
+<li><p><strong>target</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code></p></li>
+<li><p><strong>ida</strong> (<em>int</em>) – Song ID or Video ID, depending on the target string</p></li>
+<li><p><strong>ida</strong> – Song ID or Video ID, depending on the target string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -909,33 +884,11 @@ You should use the following two higher level methods:</p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ValueError</strong> – If <em>target</em> not <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;artist&quot;</span></code></p></li>
+<li><p><strong>ValueError</strong> – If <em>target</em> not <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code></p></li>
 <li><p><strong>TypeError</strong> – If <em>ida</em> or <em>idb</em> is not of type int</p></li>
 </ul>
 </dd>
 </dl>
-<p class="rubric">Examples</p>
-<p>Remove an artist connection and take care of removing its connection to songs.
-This is only an example! User <a class="reference internal" href="#lib.db.trackerdb.TrackerDatabase.RemoveArtistRelations" title="lib.db.trackerdb.TrackerDatabase.RemoveArtistRelations"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveArtistRelations()</span></code></a> instead of this example code!</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the environment</span>
-<span class="n">musicdb</span>   <span class="o">=</span> <span class="n">MusicDatabase</span><span class="p">(</span><span class="s2">&quot;./music.db&quot;</span><span class="p">)</span>
-<span class="n">trackerdb</span> <span class="o">=</span> <span class="n">TrackerDatabase</span><span class="p">(</span><span class="s2">&quot;./tracker.db&quot;</span><span class="p">)</span>
-<span class="n">artistida</span> <span class="o">=</span> <span class="mi">42</span>
-<span class="n">artistidb</span> <span class="o">=</span> <span class="mi">23</span>
-
-<span class="c1"># Remove artist connection</span>
-<span class="n">trackerdb</span><span class="o">.</span><span class="n">RemoveRelation</span><span class="p">(</span><span class="s2">&quot;artist&quot;</span><span class="p">,</span> <span class="n">artistida</span><span class="p">,</span> <span class="n">artistidb</span><span class="p">)</span>
-
-<span class="c1"># Get all songs</span>
-<span class="n">songlista</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongsByArtistId</span><span class="p">(</span><span class="n">artistida</span><span class="p">)</span>
-<span class="n">songlistb</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetSongsByArtistId</span><span class="p">(</span><span class="n">artistidb</span><span class="p">)</span>
-
-<span class="c1"># Try remove all possible song connections</span>
-<span class="k">for</span> <span class="n">songa</span> <span class="ow">in</span> <span class="n">songlista</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">songb</span> <span class="ow">in</span> <span class="n">songlistb</span><span class="p">:</span>
-        <span class="n">trackerdb</span><span class="o">.</span><span class="n">RemoveRelation</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="n">songa</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">songb</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
-</pre></div>
-</div>
 </dd></dl>
 
 <dl class="py method">
@@ -943,7 +896,6 @@ This is only an example! User <a class="reference internal" href="#lib.db.tracke
 <code class="sig-name descname">RemoveSong</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes all relations to a song.
 This is usefull in case a song gets removed from the database.</p>
-<p>The method does <em>not</em> update the artist relations!</p>
 <p>If the song relation does not exist, nothing will be done.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -959,34 +911,20 @@ This is usefull in case a song gets removed from the database.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.db.trackerdb.TrackerDatabase.RemoveSongRelations">
-<code class="sig-name descname">RemoveSongRelations</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">musicdb</span></em>, <em class="sig-param"><span class="n">songida</span></em>, <em class="sig-param"><span class="n">songidb</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveSongRelations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveSongRelations" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method removes the relation of two songs.
-It also updates the related artist relations by subtracting the weight of the song connection from the connection of those artists.
-If the resulting artists-connection is zero, this relation gets also removed.</p>
-<p>If the song relation does not exist, nothing will be done.
-If the relation exist, there must be an artist relation.
-If not, an AssertionError gets raised.
-Only excepetion is the case where both songs are from the same artist.</p>
-<p>To get information about the songs of the artist, an instance of the <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase" title="lib.db.musicdb.MusicDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDatabase</span></code></a> is necessary.
-This object must be given as argument.</p>
+<dt id="lib.db.trackerdb.TrackerDatabase.RemoveVideo">
+<code class="sig-name descname">RemoveVideo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">videoid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveVideo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveVideo" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method removes all relations to a video.
+This is useful in case a video gets removed from the database.</p>
+<p>If the video relation does not exist, nothing will be done.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>musicdb</strong> – An instance of the music database to collect more information of the songs.</p></li>
-<li><p><strong>songida</strong> (<em>int</em>) – ID of one song</p></li>
-<li><p><strong>songidb</strong> (<em>int</em>) – ID of the other one</p></li>
-</ul>
+<dd class="field-odd"><p><strong>videoid</strong> (<em>int</em>) – ID of the video</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>TypeError</strong> – Invalid <em>musicdb</em> argument</p></li>
-<li><p><strong>TypeError</strong> – Invalid song IDs</p></li>
-<li><p><strong>AssertionError</strong> – If the artist relation of the two songs (from different artists) does not exist.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>TypeError</strong> – Invalid video ID type</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1009,7 +947,7 @@ This object must be given as argument.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020,2021 Ralf Stemmer.
 
     </p>
   </div>
@@ -1031,7 +969,7 @@ This object must be given as argument.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'6.0.0',
+            VERSION:'7.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -1042,7 +980,6 @@ This object must be given as argument.</p>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

@@ -58,6 +58,15 @@ Detail of the MusicDB Configuration can be found under :doc:`/basics/config`.
    :members:
 
 
+WebUI Configuration
+-------------------
+
+.. automodule:: lib.cfg.webui
+
+.. autoclass:: lib.cfg.webui.WebUIConfig
+   :members:
+
+
 External Storage Configuration
 -------------------------------
 

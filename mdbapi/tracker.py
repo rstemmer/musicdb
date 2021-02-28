@@ -59,7 +59,7 @@ class Tracker(object):
         Creating a new instance of this class also creates a further independent tracker.
         This could mess up the database with relations that were counted twice!
 
-    .. information::
+    .. note::
 
         For better readability it is recommended to use the derived classes :class:`~mdbapi.tracker.SongTracker` and :class:`~mdbapi.tracker.VideoTracker`.
 

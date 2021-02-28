@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDatabase &mdash; MusicDB 6.0.0 documentation</title>
+  <title>MusicDatabase &mdash; MusicDB 7.0.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 6.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
         <link rel="next" title="NamedPipe" href="namedpipe.html"/>
         <link rel="prev" title="MP3 Transcoder" href="mp3transcoder.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                6.0
+                7.0
               </div>
             
           
@@ -110,6 +110,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#database">database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#music">music</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#artwork">artwork</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#videoframes">videoframes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/config.html#uploads">uploads</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#extern">extern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#tracker">tracker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#lycra">lycra</a></li>
@@ -117,6 +119,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#randy">Randy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#log">log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/config.html#debug">debug</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/definitions.html">Definitions in Context of MusicDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#music-songs-and-videos">Music, Songs and Videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#artwork-thumbnail-frame-and-preview">Artwork, Thumbnail, Frame and Preview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#flags-vs-tags">Flags vs. Tags</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#music-properties-statistics">Music Properties &amp; Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/definitions.html#mdbstate-vs-streamstate">MDBState vs. StreamState</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basics/logging.html">Handling log-files</a></li>
@@ -184,12 +194,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#events">Events</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../basics/webapi.html#module-lib.ws.mdbwsi">Server side API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#available-methods">Available Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#artists">Artists</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#albums">Albums</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#songs">Songs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#videos">Videos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#queue">Queue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#tag-related">Tag related</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#lyrics">Lyrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#uploading">Uploading</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../basics/webapi.html#other">Other</a></li>
 </ul>
 </li>
@@ -212,12 +225,6 @@
 </ul>
 <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../usage/docker.html">Docker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#prepare-environment">Prepare Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#build-the-image">Build the Image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../usage/docker.html#using-the-image">Using the Image</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#install-dependencies">Install Dependencies</a></li>
@@ -230,8 +237,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#id1">Configuring MusicDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#first-run">First Run</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#update">Update</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-minor-version">Update to a New Minor Version</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-major-version">Update to a New Major Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#update-to-a-new-version">Update to a New Version</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-manually">Installation (Manually)</a><ul>
@@ -240,7 +246,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#basic-packages">Basic packages</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#download-musicdb">Download MusicDB</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#libprinthex">libprinthex</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3edit">id3edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/install.html#id3">id3edit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/install.html#musicdb">musicdb</a></li>
 </ul>
 </li>
@@ -251,6 +257,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#artist-directory-name">Artist Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#album-directory-name">Album Directory Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/music.html#song-file-name">Song File Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/music.html#music-video-file-name">Music Video File Name</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-albums-to-musicdb">Importing Albums to MusicDB</a><ul>
@@ -260,6 +267,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../usage/music.html#updating-songs">Updating Songs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../usage/music.html#importing-videos-to-musicdb">Importing Videos to MusicDB</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../usage/scripts.html">Scripts</a><ul>
@@ -323,9 +331,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../mod/tags.html#example-calls">Example calls</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mod/tracker.html">tracker - Song Tracker</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#module-mod.tracker">Module Description</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mod/tracker.html#class-description">Class Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mod/videoframes.html">videoframes - Video Frames and Preview Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mod/videoframes.html#class">class</a></li>
 </ul>
 </li>
 </ul>
@@ -343,6 +350,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#algorithm">Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#musicdbartwork-class">MusicDBArtwork Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#module-lib.cache">ArtworkCache Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/audiostream.html">Audio Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/audiostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/blacklist.html">Blacklist</a><ul>
@@ -385,6 +400,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../mdbapi/randy.html#blacklist-stage">Blacklist Stage</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../mdbapi/randy.html#video-selection-algorithm">Video Selection Algorithm</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/randy.html#randy-class">Randy Class</a></li>
@@ -397,14 +413,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/songqueue.html#song-queue-class">Song Queue Class</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../mdbapi/stream.html">Streaming Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#interface">Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#streaming-thread">Streaming Thread</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#command-queue">Command Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#event-management">Event Management</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../mdbapi/stream.html#stream-manager-class">Stream Manager Class</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/tags.html">MusicDBTags</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tags.html#musicdbtags-class">MusicDBTags Class</a></li>
 </ul>
@@ -413,6 +421,35 @@
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#tracker-class">Tracker Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#module-lib.db.trackerdb">Tracker Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/tracker.html#trackerdatabase-class">TrackerDatabase Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/uploadmanager.html">Upload Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/uploadmanager.html#uploadmanager-class">UploadManager Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/videoframes.html">Video Frames and Preview Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#path-structure">Path structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#https-server">HTTPS Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#algorithm">Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoframes.html#videoframes-class">VideoFrames Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/videoqueue.html">MusicDB video Queue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#queue-management">Queue Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videoqueue.html#video-queue-class">Video Queue Class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mdbapi/videostream.html">Video Streaming Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#streaming-thread">Streaming Thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#command-queue">Command Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#event-management">Event Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mdbapi/videostream.html#stream-manager-class">Stream Manager Class</a></li>
 </ul>
 </li>
 </ul>
@@ -437,6 +474,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#musicdb-configuration">MusicDB Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.webui">WebUI Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.extern">External Storage Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="config.html#module-lib.cfg.mdbstate">MusicDB State</a></li>
 </ul>
@@ -489,9 +527,14 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">MusicDatabase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#validity-of-columns">Validity of columns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#adding-a-column">Adding a Column</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#songs">Songs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#song-relates-methods">Song Relates Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#videos">Videos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#video-relates-methods">Video Relates Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#albums">Albums</a><ul>
@@ -505,7 +548,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#tags">Tags</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#tag-definition-table">Tag Definition Table</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#tag-mapping-table">Tag Mapping Table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#database-api">Database API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tag-related-methods">Tag Related Methods</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#musicdatabase-class">MusicDatabase Class</a></li>
@@ -524,21 +567,6 @@
 </ul>
 <p class="caption"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../webui/taginput.html">Tag Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#taginput-js">taginput.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#musicdb-interface">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../webui/taginput.html#tagmanager-js">tagmanager.js</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id1">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id2">MusicDB Interface</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../webui/taginput.html#id3">Functions</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#watchdog">Watchdog</a></li>
@@ -645,6 +673,7 @@ This database handles the following components:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><a class="reference internal" href="#songs">Songs</a></p></li>
+<li><p><a class="reference internal" href="#videos">Videos</a></p></li>
 <li><p><a class="reference internal" href="#albums">Albums</a></p></li>
 <li><p><a class="reference internal" href="#artists">Artists</a></p></li>
 <li><p><a class="reference internal" href="#artworks">Artworks</a></p></li>
@@ -662,9 +691,28 @@ The preferred way to change any data is using the related method described in th
 <li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.WriteArtist" title="lib.db.musicdb.MusicDatabase.WriteArtist"><code class="xref py py-meth docutils literal notranslate"><span class="pre">WriteArtist()</span></code></a></p></li>
 <li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.WriteAlbum" title="lib.db.musicdb.MusicDatabase.WriteAlbum"><code class="xref py py-meth docutils literal notranslate"><span class="pre">WriteAlbum()</span></code></a></p></li>
 <li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.WriteSong" title="lib.db.musicdb.MusicDatabase.WriteSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">WriteSong()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.WriteVideo" title="lib.db.musicdb.MusicDatabase.WriteVideo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">WriteVideo()</span></code></a></p></li>
 <li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.WriteTag" title="lib.db.musicdb.MusicDatabase.WriteTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">WriteTag()</span></code></a></p></li>
 </ul>
 </div></blockquote>
+<div class="section" id="validity-of-columns">
+<h2>Validity of columns<a class="headerlink" href="#validity-of-columns" title="Permalink to this headline">¶</a></h2>
+<p>Some column values are generated when importing data.
+The way these values are well defined.
+After creating the values, they may be changed by the user or other tools.
+Affected are all the following columns:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>All name-columns</p></li>
+<li><p>artworkpath of albums</p></li>
+<li><p>thumbnailpath of videos</p></li>
+</ul>
+</div></blockquote>
+<p>For example, the artwork path is generated by the artist and album name.
+So when working with albums, instead of using the artwork path value, the path could be regenerated by the artist and album names.
+This is not recommended!
+In case an other tool changes the artwork path entry, this may lead to a path of a no longer existing artwork file.</p>
+</div>
 <div class="section" id="adding-a-column">
 <h2>Adding a Column<a class="headerlink" href="#adding-a-column" title="Permalink to this headline">¶</a></h2>
 <p>When a new column shall be added, the following steps are necessary.</p>
@@ -741,14 +789,18 @@ For example, methods creating a new entry in the modified table may be adopted.<
 </table>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 37%" />
-<col style="width: 29%" />
-<col style="width: 34%" />
+<col style="width: 22%" />
+<col style="width: 17%" />
+<col style="width: 20%" />
+<col style="width: 25%" />
+<col style="width: 17%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>lyricsstate</p></td>
 <td><p>checksum</p></td>
 <td><p>lastplayed</p></td>
+<td><p>liverecording</p></td>
+<td><p>badaudio</p></td>
 </tr>
 </tbody>
 </table>
@@ -772,7 +824,7 @@ This only means that the checksum of the song was not calculated yet.
 In this case, just calculate it, and write it into the database.</p>
 </dd>
 <dt>lastplayed (Integer)</dt><dd><p>This value holds the information, when the song was played the last time.
-The thime gets represented as an integer (unixtime).</p>
+The time gets represented as an integer (unixtime).</p>
 </dd>
 </dl>
 <div class="section" id="song-relates-methods">
@@ -792,6 +844,172 @@ The thime gets represented as an integer (unixtime).</p>
 <li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds" title="lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongIdsByAlbumIds()</span></code></a></p></li>
 <li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.UpdateSongStatistic" title="lib.db.musicdb.MusicDatabase.UpdateSongStatistic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateSongStatistic()</span></code></a></p></li>
 <li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.RemoveSong" title="lib.db.musicdb.MusicDatabase.RemoveSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RemoveSong()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="videos">
+<h2>Videos<a class="headerlink" href="#videos" title="Permalink to this headline">¶</a></h2>
+<p>The columns of the videos table are the following:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 17%" />
+<col style="width: 19%" />
+<col style="width: 21%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>videoid</p></td>
+<td><p>songid</p></td>
+<td><p>albumid</p></td>
+<td><p>artistid</p></td>
+<td><p>name</p></td>
+<td><p>path</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 23%" />
+<col style="width: 18%" />
+<col style="width: 20%" />
+<col style="width: 16%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>disabled</p></td>
+<td><p>playtime</p></td>
+<td><p>origin</p></td>
+<td><p>release</p></td>
+<td><p>added</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 39%" />
+<col style="width: 39%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>codec</p></td>
+<td><p>xresolution</p></td>
+<td><p>yresolution</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 33%" />
+<col style="width: 29%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>framesdirectory</p></td>
+<td><p>thumbnailfile</p></td>
+<td><p>previewfile</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 29%" />
+<col style="width: 19%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>likes</p></td>
+<td><p>dislikes</p></td>
+<td><p>favorite</p></td>
+<td><p>liverecording</p></td>
+<td><p>badaudio</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 34%" />
+<col style="width: 37%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>checksum</p></td>
+<td><p>lastplayed</p></td>
+<td><p>lyricsvideo</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 20%" />
+<col style="width: 15%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>bgcolor</p></td>
+<td><p>fgcolor</p></td>
+<td><p>hlcolor</p></td>
+<td><p>vbegin</p></td>
+<td><p>vend</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl>
+<dt>songid, albumid (Integer)</dt><dd><p>These are references to an album the videos was included in,
+and/or the song the video belongs to.
+In case the album and/or song is not included in the collection,
+these values can be <code class="docutils literal notranslate"><span class="pre">NULL</span></code>.</p>
+</dd>
+<dt>added (Integer)</dt><dd><p>Unix-Time when the video was added to the database</p>
+</dd>
+<dt>release (Integer)</dt><dd><p>Year when the video was released. This year may be different to the
+release year of the album or song</p>
+</dd>
+<dt>codec (Text)</dt><dd><p>Like <code class="docutils literal notranslate"><span class="pre">&quot;h264&quot;</span></code></p>
+</dd>
+<dt>checksum (Text)</dt><dd><p>This is the <em>sha256</em> hash value of the file addressed by <code class="docutils literal notranslate"><span class="pre">path</span></code>.
+The checksum will be calculated like shown in the following example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">videopath</span> <span class="o">=</span> <span class="n">video</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>
+<span class="n">videofile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">videopath</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">videopath</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">videofile</span><span class="p">:</span>
+    <span class="n">checksum</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">videofile</span><span class="o">.</span><span class="n">read</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+<span class="n">video</span><span class="p">[</span><span class="s2">&quot;checksum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">checksum</span>
+</pre></div>
+</div>
+<p>The hash function will not be changed in future.
+This is OK as long as the hash value will not be used for security related things!</p>
+<p>It can happen, that the value is empty (<code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>).
+This only means that the checksum of the song was not calculated yet.
+In this case, just calculate it, and write it into the database.</p>
+</dd>
+<dt>lastplayed (Integer)</dt><dd><p>This value holds the information, when the song was played the last time.
+The time gets represented as an integer (unixtime).</p>
+</dd>
+</dl>
+<div class="section" id="video-relates-methods">
+<h3>Video Relates Methods<a class="headerlink" href="#video-relates-methods" title="Permalink to this headline">¶</a></h3>
+<p>The following methods exist to handle video entries in the database:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.AddVideo" title="lib.db.musicdb.MusicDatabase.AddVideo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddVideo()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.AddFullVideo" title="lib.db.musicdb.MusicDatabase.AddFullVideo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddFullVideo()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetVideoByPath" title="lib.db.musicdb.MusicDatabase.GetVideoByPath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetVideoByPath()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetVideoById" title="lib.db.musicdb.MusicDatabase.GetVideoById"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetVideoById()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetVideos" title="lib.db.musicdb.MusicDatabase.GetVideos"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetVideos()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetVideosByArtistId" title="lib.db.musicdb.MusicDatabase.GetVideosByArtistId"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetVideosByArtistId()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.UpdateVideoStatistic" title="lib.db.musicdb.MusicDatabase.UpdateVideoStatistic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateVideoStatistic()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.SetColorThemeByVideoId" title="lib.db.musicdb.MusicDatabase.SetColorThemeByVideoId"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetColorThemeByVideoId()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.SetVideoTimeFrame" title="lib.db.musicdb.MusicDatabase.SetVideoTimeFrame"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetVideoTimeFrame()</span></code></a></p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -825,10 +1043,11 @@ The thime gets represented as an integer (unixtime).</p>
 </table>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 28%" />
-<col style="width: 19%" />
-<col style="width: 19%" />
-<col style="width: 19%" />
+<col style="width: 24%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 13%" />
 <col style="width: 15%" />
 </colgroup>
 <tbody>
@@ -837,12 +1056,15 @@ The thime gets represented as an integer (unixtime).</p>
 <td><p>fgcolor</p></td>
 <td><p>hlcolor</p></td>
 <td><p>added</p></td>
+<td><p>hidden</p></td>
 </tr>
 </tbody>
 </table>
 </div></blockquote>
 <dl class="simple">
 <dt>added (Integer)</dt><dd><p>This is the time the album got added to the collection as unixtime rounded to an integer (full seconds)</p>
+</dd>
+<dt>hidden (Integer)</dt><dd><p>When <code class="docutils literal notranslate"><span class="pre">1</span></code>, the album will not be included in some SQL query results. See the documentation of the specific methods to identify if hidden albums are included or not.</p>
 </dd>
 </dl>
 <div class="section" id="album-related-methods">
@@ -1121,8 +1343,8 @@ Otherwise this column can be ignored. - Ignoring means setting it to <code class
 </dd>
 </dl>
 </div>
-<div class="section" id="database-api">
-<h3>Database API<a class="headerlink" href="#database-api" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="tag-related-methods">
+<h3>Tag Related Methods<a class="headerlink" href="#tag-related-methods" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li><p><a class="reference internal" href="#lib.db.musicdb.MusicDatabase.CreateTag" title="lib.db.musicdb.MusicDatabase.CreateTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CreateTag()</span></code></a></p></li>
@@ -1144,7 +1366,7 @@ Otherwise this column can be ignored. - Ignoring means setting it to <code class
 <li><p><code class="docutils literal notranslate"><span class="pre">MusicDatabase.TAG_CLASS_MOOD</span></code>: Moods like Lucky, Sad, …</p></li>
 </ul>
 </div></blockquote>
-<p>A target can be “song” or “album”.</p>
+<p>A target can be “song”, “video” or “album”.</p>
 </div>
 </div>
 <div class="section" id="musicdatabase-class">
@@ -1229,6 +1451,28 @@ So, when this method returns <code class="docutils literal notranslate"><span cl
 </dd></dl>
 
 <dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.AddFullVideo">
+<code class="sig-name descname">AddFullVideo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">video</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddFullVideo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddFullVideo" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a new entry for a video and adds all its attributes into the database.
+Creating the song is video by calling <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.AddVideo" title="lib.db.musicdb.MusicDatabase.AddVideo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddVideo()</span></code></a>.
+When the video was added a new song ID is generated by the database engine.
+The new entry gets read from the database.
+Then, the new ID is set as song ID to the dictionary given as argument.
+After that, the whole song dictionary gets written to the database via <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.WriteVideo" title="lib.db.musicdb.MusicDatabase.WriteVideo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">WriteVideo()</span></code></a></p>
+<p>In case adding the video fails on half the way, the new added entry gets deleted.
+As long as nothing references the video entry, it is no problem to remove it.
+So, when this method returns <code class="docutils literal notranslate"><span class="pre">False</span></code> Nothing changed in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>video</strong> – A <strong>complete</strong> dictionary with all keys of a MusicDB Song entry for the database</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code> which indicates that nothing changed in the database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.AddSong">
 <code class="sig-name descname">AddSong</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span></em>, <em class="sig-param"><span class="n">albumid</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a new database entry for a song and sets the most important values.</p>
@@ -1244,6 +1488,35 @@ Even if this method allows it under some conditions, this should not be exploite
 <li><p><strong>albumid</strong> (<em>int</em>) – ID of the album of this song</p></li>
 <li><p><strong>name</strong> (<em>string</em>) – Name of the song</p></li>
 <li><p><strong>path</strong> (<em>string</em>) – Path of the song file relative to the music root directory</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – If one of the arguments is <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>ValueError</strong> – If song is already in the database <strong>and</strong> does not match the other parameters</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.AddVideo">
+<code class="sig-name descname">AddVideo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddVideo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddVideo" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method creates a new database entry for a video and sets the most important values (Artistid, name and path).</p>
+<p>If a video with the same path is already in the database, its <em>artistid</em>, <em>path</em> and <em>name</em> gets compared to the arguments.
+If they match, everything is fine and the method returns.
+If they differ, an AssertionError gets raised.
+Adding an existing video is a bug!
+Even if this method allows it under some conditions, this should not be exploited!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>artistid</strong> (<em>int</em>) – ID of the artist of this video</p></li>
+<li><p><strong>name</strong> (<em>string</em>) – Name of the video</p></li>
+<li><p><strong>path</strong> (<em>string</em>) – Path of the video file relative to the music root directory</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1286,6 +1559,35 @@ Even if this method allows it under some conditions, this should not be exploite
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.DeleteTag">
 <code class="sig-name descname">DeleteTag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagname</span></em>, <em class="sig-param"><span class="n">tagclass</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.DeleteTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.DeleteTag" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.DeleteTagByName" title="lib.db.musicdb.MusicDatabase.DeleteTagByName"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DeleteTagByName()</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.DeleteTagById">
+<code class="sig-name descname">DeleteTagById</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.DeleteTagById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.DeleteTagById" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method deletes a tag addressed by its tag ID.
+Before deleting the tag, this tag as well as its child-tags (sub-genre tag) will be removed from all
+songs, albums and videos.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method has a very different behavior compared to <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.DeleteTagByName" title="lib.db.musicdb.MusicDatabase.DeleteTagByName"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DeleteTagByName()</span></code></a>!</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tagid</strong> (<em>int</em>) – ID of the tag to delete</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – When <em>tagid</em> is not an integer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.DeleteTagByName">
+<code class="sig-name descname">DeleteTagByName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagname</span></em>, <em class="sig-param"><span class="n">tagclass</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.DeleteTagByName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.DeleteTagByName" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes an entry from the tags-table with the name <em>tagname</em> and that belongs to <em>tagclass</em>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1314,7 +1616,8 @@ You should only delete new created tags that are not used!</p>
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAlbumById">
 <code class="sig-name descname">GetAlbumById</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbumById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbumById" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns an album entry if available</p>
+<dd><p>Returns an album entry if available.
+It also returns the entry, when the album is hidden!</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>albumid</strong> – entry ID of the album in the album table</p>
@@ -1334,13 +1637,14 @@ You should only delete new created tags that are not used!</p>
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAlbumByPath">
 <code class="sig-name descname">GetAlbumByPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbumByPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbumByPath" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns an album entry if available</p>
+<dd><p>Returns an album entry if available.
+It also returns the entry when the album is hidden!</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – relative path of an album</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>An album entry or <code class="docutils literal notranslate"><span class="pre">None</span></code> it the album does not exits</p>
+<dd class="field-even"><p>An album entry or <code class="docutils literal notranslate"><span class="pre">None</span></code> it the album does not exits.</p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1353,10 +1657,19 @@ You should only delete new created tags that are not used!</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAlbums">
-<code class="sig-name descname">GetAlbums</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">withsongs</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">GetAlbums</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">withsongs</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">hidden</span><span class="o">=</span><span class="default_value">'no'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list with all albums in the database, or all albums of an artist if <em>artistid</em> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>.
 If the <em>withsongs</em> parameter is <code class="docutils literal notranslate"><span class="pre">True</span></code>, for each album all songs will be included.
 They are added as list into each album entry under the key <code class="docutils literal notranslate"><span class="pre">songs</span></code></p>
+<p>The <em>hidden</em> parameter is a string that can have the following values to describe how hidden albums should be handled:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;no&quot;</span></code>: No hidden albums included</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;include&quot;</span></code>: Hidden and not hidden albums returned</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;only&quot;</span></code>: Only return hidden albums</p></li>
+</ul>
+</div></blockquote>
+<p>Hidden albums are <em>not</em> included!</p>
 <p class="rubric">Example</p>
 <p>The following example prints all songs of the artist with the ID <code class="docutils literal notranslate"><span class="pre">1000</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">albums</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetAlbums</span><span class="p">(</span><span class="n">artistid</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">withsongs</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
@@ -1370,13 +1683,18 @@ They are added as list into each album entry under the key <code class="docutils
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>artistid</strong> – ID for an artist whose albums shall be returned. If <code class="docutils literal notranslate"><span class="pre">None</span></code> the albums get not filtered by <em>artistid</em>.</p></li>
 <li><p><strong>withsongs</strong> (<em>bool</em>) – also return all songs of the album.</p></li>
+<li><p><strong>hidden</strong> (<em>str</em>) – optional modify for handling hidden albums</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A list with all albums.</p>
+<dd class="field-even"><p>A list with all non-hidden albums.</p>
 </dd>
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>TypeError</strong> – If <em>withsongs</em> is not of type <code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – If <em>withsongs</em> is not of type <code class="docutils literal notranslate"><span class="pre">bool</span></code></p></li>
+<li><p><strong>TypeError</strong> – If <em>hidden</em> is not a string</p></li>
+<li><p><strong>ValueError</strong> – When <em>hidden</em> has not one of the above listed values</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -1384,15 +1702,21 @@ They are added as list into each album entry under the key <code class="docutils
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId">
 <code class="sig-name descname">GetAlbumsByArtistId</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbumsByArtistId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId" title="Permalink to this definition">¶</a></dt>
-<dd><p>See <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="lib.db.musicdb.MusicDatabase.GetAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbums()</span></code></a> (<code class="docutils literal notranslate"><span class="pre">GetAlbums(artistid,</span> <span class="pre">withsongs=False</span></code>)</p>
+<dd><p>See <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="lib.db.musicdb.MusicDatabase.GetAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbums()</span></code></a> (<code class="docutils literal notranslate"><span class="pre">GetAlbums(artistid,</span> <span class="pre">withsongs=False,</span> <span class="pre">hidden=&quot;no&quot;)</span></code>)</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAllAlbumIds">
-<code class="sig-name descname">GetAllAlbumIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllAlbumIds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllAlbumIds" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Returns a list of all album IDs</p>
+<code class="sig-name descname">GetAllAlbumIds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">includehidden</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllAlbumIds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllAlbumIds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all album Ids.</p>
+<p>If the optional <code class="docutils literal notranslate"><span class="pre">includehidden</span></code> argument is not set to <code class="docutils literal notranslate"><span class="pre">true</span></code>,
+hidden albums are <em>not</em> included!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>includehidden</strong> (<em>bool</em>) – When true, hidden albums are also included</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns a list of all album IDs</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1400,7 +1724,7 @@ They are added as list into each album entry under the key <code class="docutils
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAllAlbums">
 <code class="sig-name descname">GetAllAlbums</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllAlbums" title="Permalink to this definition">¶</a></dt>
-<dd><p>See <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="lib.db.musicdb.MusicDatabase.GetAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbums()</span></code></a> (<code class="docutils literal notranslate"><span class="pre">GetAlbums(artistid=None,</span> <span class="pre">withsongs=False</span></code>)</p>
+<dd><p>See <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="lib.db.musicdb.MusicDatabase.GetAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbums()</span></code></a> (<code class="docutils literal notranslate"><span class="pre">GetAlbums(artistid=None,</span> <span class="pre">withsongs=False,</span> <span class="pre">hidden=&quot;include&quot;)</span></code>)</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1575,6 +1899,48 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 </dd></dl>
 
 <dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.GetRandomVideo">
+<code class="sig-name descname">GetRandomVideo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filterlist</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">nodisabled</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">nohated</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">minlen</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxlen</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetRandomVideo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetRandomVideo" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns a random video that fulfills several constraints.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">filterlist</span></code> can be either a set of genre tag IDs or a set of genre names.
+When <code class="docutils literal notranslate"><span class="pre">filterlist</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> no filter gets applied.
+Otherwise only videos of the genres in the list will be considered.</p>
+<p>Getting a random video is done by the following steps:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Get video IDs of all videos in the database</p></li>
+<li><p>Translate <em>filterlist</em> into a list of tag IDs</p></li>
+<li><p>For each video, get its tags and compare that with the set of tag IDs from the filter. (If there is no filter list set, all video IDs are selected)</p></li>
+<li><p>Select a random video</p></li>
+</ol>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filterlist</strong> – Optional, default value is <code class="docutils literal notranslate"><span class="pre">[]</span></code>. A list of genre names or genre tag IDs that limits the search set. The tags have <em>OR</em> relations.</p></li>
+<li><p><strong>nodisabled</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> no disables songs will be selected</p></li>
+<li><p><strong>nohated</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> no hated songs will be selected</p></li>
+<li><p><strong>minlen</strong> (<em>int</em>) – If set, no videos with less than <em>minlen</em> seconds will be selected</p></li>
+<li><p><strong>maxlen</strong> (<em>int</em>) – If set, no videos with more than <em>maxlen</em> seconds will be selected</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A random MusicDB Video dictionary that fulfills the constraints,
+or <code class="docutils literal notranslate"><span class="pre">None</span></code> when there is no song fulfilling the constraints</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – When <em>nodisabled</em> or <em>nohated</em> are not of type <code class="docutils literal notranslate"><span class="pre">bool</span></code></p></li>
+<li><p><strong>TypeError</strong> – When <em>minlen</em> or <em>maxlen</em> is not <code class="docutils literal notranslate"><span class="pre">None</span></code> and not of type integer</p></li>
+<li><p><strong>TypeError</strong> – When <em>filterlist</em> is not a list and not <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>ValueError</strong> – When minlen is less than <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
+<li><p><strong>ValueError</strong> – When maxlen is less than <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetSongById">
 <code class="sig-name descname">GetSongById</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongById" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a song from the database that matches the <em>songid</em></p>
@@ -1706,10 +2072,30 @@ The songs of the returned IDs also fulfill the constraints given by the other pa
 </dd></dl>
 
 <dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.GetTagStatistics">
+<code class="sig-name descname">GetTagStatistics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetTagStatistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetTagStatistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns three integers telling how often the given tag is used for songs, albums and videos.
+It is also checked how many other tags used the tagid as parent tag.</p>
+<p>The level of confidence or if the tag was approved for the song/video/album is not considered.
+All set tags are counted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tagid</strong> (<em>int</em>) – ID of the tag to count</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>songs(int), albums(int), videos(int), children(int)</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – When <em>tagid</em> is not an integer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetTargetTags">
 <code class="sig-name descname">GetTargetTags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">targetid</span></em>, <em class="sig-param"><span class="n">tagclass</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetTargetTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetTargetTags" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of all tags of a target.
-A target can be a song (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;song&quot;</span></code>) or an album (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;album&quot;</span></code>).
+A target can be a song (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;song&quot;</span></code>) an album (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;album&quot;</span></code>) or a video (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;video&quot;</span></code>).
 This list contains all classes of tags if <em>tagclass</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, otherwise only of type <em>tagclass</em>.</p>
 <p>The returned list is the target-tag-mapping augmented with the tag-entry.
 So, each element in the list is a merged dictionary of the table row of the mapping and the tag itself.
@@ -1718,8 +2104,8 @@ The ID of the ID of the entry in the mapping-table is <code class="docutils lite
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>target</strong> (<em>str</em>) – Target that shall be tagged (<code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> for a song, <code class="docutils literal notranslate"><span class="pre">&quot;album&quot;</span></code> for an album)</p></li>
-<li><p><strong>targetid</strong> (<em>int</em>) – ID of the target that tags shall be returned (song ID or album ID)</p></li>
+<li><p><strong>target</strong> (<em>str</em>) – Target that shall be tagged (<code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;album&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code>)</p></li>
+<li><p><strong>targetid</strong> (<em>int</em>) – ID of the target that tags shall be returned (song, album or video ID)</p></li>
 <li><p><strong>tagclass</strong> (<em>int</em>) – If not <code class="docutils literal notranslate"><span class="pre">None</span></code> only tags of a specific class will be returned</p></li>
 </ul>
 </dd>
@@ -1728,9 +2114,9 @@ The ID of the ID of the entry in the mapping-table is <code class="docutils lite
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>TypeError</strong> – If <em>songid</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>TypeError</strong> – If <em>targetid</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
 <li><p><strong>ValueError</strong> – If <em>tagclass</em> is set to an invalid value (<code class="docutils literal notranslate"><span class="pre">None</span></code> is valid)</p></li>
-<li><p><strong>ValueError</strong> – If <em>target</em> not in <em>{“song”, “album”}</em></p></li>
+<li><p><strong>ValueError</strong> – If <em>target</em> not in <em>{“song”, “album”, “video”}</em></p></li>
 </ul>
 </dd>
 </dl>
@@ -1745,12 +2131,92 @@ The ID of the ID of the entry in the mapping-table is <code class="docutils lite
 </dd></dl>
 
 <dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.GetVideoById">
+<code class="sig-name descname">GetVideoById</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">videoid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetVideoById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetVideoById" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an video entry if available</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>videoid</strong> – entry ID of the video in the video table</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An video entry or <code class="docutils literal notranslate"><span class="pre">None</span></code> it the video does not exits</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – If <code class="docutils literal notranslate"><span class="pre">videoid</span></code> is not set</p></li>
+<li><p><strong>AssertionError</strong> – If there is more than one video with the given ID</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.GetVideoByPath">
+<code class="sig-name descname">GetVideoByPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetVideoByPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetVideoByPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a video from the database that matches the <em>path</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – A video path relative to the music root directory</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A MusicDB Video dictionary or <code class="docutils literal notranslate"><span class="pre">None</span></code> if there is no video with that path</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – If <em>path</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
+<li><p><strong>AssertionError</strong> – If there is more than one video with the same path</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.GetVideos">
+<code class="sig-name descname">GetVideos</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetVideos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetVideos" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns an unsorted list with all videos.</p>
+<p class="rubric">Example</p>
+<p>The following example prints all videos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">albums</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetVideos</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">video</span> <span class="ow">in</span> <span class="n">videos</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">video</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A list with all videos in the database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.GetVideosByArtistId">
+<code class="sig-name descname">GetVideosByArtistId</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetVideosByArtistId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetVideosByArtistId" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns an unsorted list with all videos of an artist.</p>
+<p class="rubric">Example</p>
+<p>The following example prints all videos of the artist with the ID <code class="docutils literal notranslate"><span class="pre">1000</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">albums</span> <span class="o">=</span> <span class="n">musicdb</span><span class="o">.</span><span class="n">GetVideosByArtistId</span><span class="p">(</span><span class="n">artistid</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">video</span> <span class="ow">in</span> <span class="n">videos</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">video</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>artistid</strong> – ID for an artist whose videos shall be returned.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list with all videos of an artist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.ModifyTag">
 <code class="sig-name descname">ModifyTag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagname</span></em>, <em class="sig-param"><span class="n">tagclass</span></em>, <em class="sig-param"><span class="n">columnname</span></em>, <em class="sig-param"><span class="n">newvalue</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.ModifyTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.ModifyTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method allows to modify most of the attributes of a tag.
 The <em>tagname</em> and <em>tagclass</em> addresses the tag, <em>columnname</em> the attribute.
 <em>newvalue</em> is the new attribute set for the tag.</p>
 <p>In case the icon gets modified, take care that the icon type is up to date. (update order does not matter).</p>
+<p>For colors, <code class="docutils literal notranslate"><span class="pre">None</span></code> is a valid type to remove color</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1766,7 +2232,39 @@ The <em>tagname</em> and <em>tagclass</em> addresses the tag, <em>columnname</em
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>TypeError</strong> – if <em>tagname</em> is not a string or <em>parentid</em> does not have the value it should have regarding the specification</p></li>
+<li><p><strong>TypeError</strong> – When <em>color</em> is not a string and not <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
 <li><p><strong>ValueError</strong> – When <em>tagclass</em> has an invalid value</p></li>
+<li><p><strong>ValueError</strong> – If columnname is not “name”, “parentid”, “icontype”, “icon”, “color”, “posx”, “posy”</p></li>
+<li><p><strong>ValueError</strong> – If columnname is “color” and <em>newvalue</em> is not a valid #RRGGBB-Formated string</p></li>
+<li><p><strong>ValueError</strong> – If columnname is “icontype” and <em>newvalue</em> is not valid</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.ModifyTagById">
+<code class="sig-name descname">ModifyTagById</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagid</span></em>, <em class="sig-param"><span class="n">columnname</span></em>, <em class="sig-param"><span class="n">newvalue</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.ModifyTagById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.ModifyTagById" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method allows to modify most of the attributes of a tag.
+The <em>tagid</em> addresses the tag, <em>columnname</em> the attribute.
+<em>newvalue</em> is the new attribute set for the tag.</p>
+<p>In case the icon gets modified, take care that the icon type is up to date. (update order does not matter).</p>
+<p>For colors, <code class="docutils literal notranslate"><span class="pre">None</span></code> is a valid type to remove color</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tagid</strong> (<em>int</em>) – ID of the tag to modify</p></li>
+<li><p><strong>columnname</strong> (<em>str</em>) – The name of the attribute that shall be modified</p></li>
+<li><p><strong>newvalue</strong> – The new value. Read the introduction at the top of the document to see what values are possible for a specific attribute</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – if <em>tagid</em> is not an integer</p></li>
+<li><p><strong>TypeError</strong> – When <em>color</em> is not a string and not <code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
 <li><p><strong>ValueError</strong> – If columnname is not “name”, “parentid”, “icontype”, “icon”, “color”, “posx”, “posy”</p></li>
 <li><p><strong>ValueError</strong> – If columnname is “color” and <em>newvalue</em> is not a valid #RRGGBB-Formated string</p></li>
 <li><p><strong>ValueError</strong> – If columnname is “icontype” and <em>newvalue</em> is not valid</p></li>
@@ -1851,12 +2349,13 @@ The <em>tagname</em> and <em>tagclass</em> addresses the tag, <em>columnname</em
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.RemoveTargetTag">
 <code class="sig-name descname">RemoveTargetTag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">targetid</span></em>, <em class="sig-param"><span class="n">tagid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.RemoveTargetTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.RemoveTargetTag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes an association between a target and a tag in the tag map - Or short: Removes a tag from a song or an album.</p>
+<dd><p>Removes an association between a target and a tag in the tag map.
+In short: Removes a tag from a song, a video or an album.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>target</strong> (<em>str</em>) – Target that shall be tagged (<code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> for a song, <code class="docutils literal notranslate"><span class="pre">&quot;album&quot;</span></code> for an album)</p></li>
-<li><p><strong>targetid</strong> (<em>int</em>) – ID of the target that shall be tagged. (a song ID or an album ID)</p></li>
+<li><p><strong>target</strong> (<em>str</em>) – Target that shall be tagged (<code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> for a song, <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code> for a video, <code class="docutils literal notranslate"><span class="pre">&quot;album&quot;</span></code> for an album)</p></li>
+<li><p><strong>targetid</strong> (<em>int</em>) – ID of the target that shall be tagged. (a song ID, video ID or an album ID)</p></li>
 <li><p><strong>tagid</strong> (<em>int</em>) – ID of the tag that shall be associated with the target</p></li>
 </ul>
 </dd>
@@ -1865,9 +2364,31 @@ The <em>tagname</em> and <em>tagclass</em> addresses the tag, <em>columnname</em
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ValueError</strong> – If <em>target</em> not in <em>{“song”, “album”}</em></p></li>
+<li><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">target</span></code> not in <code class="docutils literal notranslate"><span class="pre">{&quot;song&quot;,</span> <span class="pre">&quot;video&quot;,</span> <span class="pre">&quot;album&quot;}</span></code></p></li>
 <li><p><strong>TypeError</strong> – If <code class="docutils literal notranslate"><span class="pre">songid</span> <span class="pre">==</span> <span class="pre">None</span> <span class="pre">or</span> <span class="pre">tagid</span> <span class="pre">==</span> <span class="pre">None</span></code></p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.SetAlbumHiddenState">
+<code class="sig-name descname">SetAlbumHiddenState</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em>, <em class="sig-param"><span class="n">hiddenstate</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetAlbumHiddenState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetAlbumHiddenState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hides or shows an album depending on the <em>hide</em> state.
+When <code class="docutils literal notranslate"><span class="pre">hidden</span> <span class="pre">==</span> <span class="pre">True</span></code> the album gets hidden,
+when <code class="docutils literal notranslate"><span class="pre">hidden</span> <span class="pre">==</span> <span class="pre">False</span></code> the hidden state gets reset to make the album visible again.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>albumid</strong> (<em>int</em>) – ID of the album</p></li>
+<li><p><strong>hidden</strong> (<em>bool</em>) – Hide or Show the album</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – If <em>albumid</em> is not an integer and <em>hiddenstate</em> not a bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1930,6 +2451,40 @@ Valid color names are the following and must be given as string to the <em>color
 </dd></dl>
 
 <dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.SetColorThemeByVideoId">
+<code class="sig-name descname">SetColorThemeByVideoId</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">videoid</span></em>, <em class="sig-param"><span class="n">colorname</span></em>, <em class="sig-param"><span class="n">color</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetColorThemeByVideoId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetColorThemeByVideoId" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is for setting a color for a video.
+Valid color names are the following and must be given as string to the <em>colorname</em> parameter.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;bgcolor&quot;</span></code> -  Background color</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;fgcolor&quot;</span></code> -  Primary foreground color</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;hlcolor&quot;</span></code> -  Secondary foreground color</p></li>
+</ul>
+</div></blockquote>
+<p>The color itself must be in HTML-Format: <code class="docutils literal notranslate"><span class="pre">#RRGGBB</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>videoid</strong> – The ID of the video that color shall be set</p></li>
+<li><p><strong>colorname</strong> (<em>str</em>) – Name of the color that shall be set</p></li>
+<li><p><strong>color</strong> (<em>str</em>) – Color in HTML format</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – If one of the arguments is None</p></li>
+<li><p><strong>ValueError</strong> – If <em>colorname</em> not <code class="docutils literal notranslate"><span class="pre">&quot;bgcolor&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;fgcolor&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;hlcolor&quot;</span></code></p></li>
+<li><p><strong>ValueError</strong> – If color length is not <code class="docutils literal notranslate"><span class="pre">7</span></code> and first character not <code class="docutils literal notranslate"><span class="pre">&quot;#&quot;</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.SetLyrics">
 <code class="sig-name descname">SetLyrics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em>, <em class="sig-param"><span class="n">lyrics</span></em>, <em class="sig-param"><span class="n">lyricsstate</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetLyrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetLyrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to store or to update lyrics of a song.
@@ -1963,7 +2518,7 @@ For example, instrumental songs or intros.</p>
 <dt id="lib.db.musicdb.MusicDatabase.SetTargetTag">
 <code class="sig-name descname">SetTargetTag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">targetid</span></em>, <em class="sig-param"><span class="n">tagid</span></em>, <em class="sig-param"><span class="n">approval</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">confidence</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetTargetTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetTargetTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets a tag for a target.
-A target can be a song (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;song&quot;</span></code>) or an album (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;album&quot;</span></code>).</p>
+A target can be a song (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;song&quot;</span></code>), a video (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;video&quot;</span></code>) or an album (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;album&quot;</span></code>).</p>
 <p>The defaults for this method assume that the tag got set by a user.</p>
 <blockquote>
 <div><ul class="simple">
@@ -1976,8 +2531,8 @@ But only if the new approval level is greater or equal to the already set one.</
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>target</strong> (<em>str</em>) – Target that shall be tagged (<code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> for a song, <code class="docutils literal notranslate"><span class="pre">&quot;album&quot;</span></code> for an album)</p></li>
-<li><p><strong>songid</strong> (<em>int</em>) – ID of the target that shall be tagged. (a song ID or an album ID)</p></li>
+<li><p><strong>target</strong> (<em>str</em>) – Target that shall be tagged (<code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> for a song, <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code> for a video, <code class="docutils literal notranslate"><span class="pre">&quot;album&quot;</span></code> for an album)</p></li>
+<li><p><strong>targetid</strong> (<em>int</em>) – ID of the target that shall be tagged. (a song ID, videoid or an album ID)</p></li>
 <li><p><strong>tagid</strong> (<em>int</em>) – ID of the tag that shall be associated with the target</p></li>
 <li><p><strong>approval</strong> (<em>int</em>) – Approval of the association. Default is <code class="docutils literal notranslate"><span class="pre">1</span></code> - “Set by User”</p></li>
 <li><p><strong>confidence</strong> (<em>float</em>) – Confidence of the association in case <em>approval</em> is <code class="docutils literal notranslate"><span class="pre">0</span></code> - “Set by AI”</p></li>
@@ -1988,11 +2543,65 @@ But only if the new approval level is greater or equal to the already set one.</
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>TypeError</strong> – If <em>target</em> not in <em>{“song”, “album”}</em></p></li>
+<li><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">target</span></code> not in <code class="docutils literal notranslate"><span class="pre">{&quot;song&quot;,</span> <span class="pre">&quot;album&quot;,</span> <span class="pre">&quot;video&quot;}</span></code></p></li>
 <li><p><strong>TypeError</strong> – If <code class="docutils literal notranslate"><span class="pre">approval</span> <span class="pre">==</span> <span class="pre">0</span> <span class="pre">and</span> <span class="pre">confidence</span> <span class="pre">==</span> <span class="pre">None</span></code></p></li>
-<li><p><strong>ValueError</strong> – If <em>approval</em> not in <em>{0,1,2}</em></p></li>
-<li><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">songid</span> <span class="pre">==</span> <span class="pre">None</span> <span class="pre">or</span> <span class="pre">tagid</span> <span class="pre">==</span> <span class="pre">None</span></code></p></li>
+<li><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">approval</span></code> not in <code class="docutils literal notranslate"><span class="pre">{0,1,2}</span></code></p></li>
+<li><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">targetid</span> <span class="pre">==</span> <span class="pre">None</span> <span class="pre">or</span> <span class="pre">tagid</span> <span class="pre">==</span> <span class="pre">None</span></code></p></li>
 <li><p><strong>AssertionError</strong> – If there already exists more than one entry</p></li>
+<li><p><strong>ValueError</strong> – When there is no tag existing with the given tagid</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.SetVideoFrames">
+<code class="sig-name descname">SetVideoFrames</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">videoid</span></em>, <em class="sig-param"><span class="n">framesdirectory</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">thumbnailfile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">previewfile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetVideoFrames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetVideoFrames" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method updates the frames directory, thumbnail file and preview file entry in the database
+for a video with the ID <code class="docutils literal notranslate"><span class="pre">videoid</span></code>.</p>
+<p>The files and directory can be <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+In this case the values will not be changed.
+The video ID must be a valid ID of a video existing in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>videoid</strong> (<em>int</em>) – ID of the video that database entry shall be updated</p></li>
+<li><p><strong>framesdirectory</strong> (<em>str</em><em>, </em><em>NoneType</em>) – Path of the video specific sub directory containing all frames/preview files. Relative to the video frames root directory</p></li>
+<li><p><strong>thumbnailfile</strong> (<em>str</em><em>, </em><em>NoneType</em>) – File name of the frame that shall be used as thumbnail, relative to <code class="docutils literal notranslate"><span class="pre">framesdir</span></code></p></li>
+<li><p><strong>previewfile</strong> (<em>str</em><em>, </em><em>NoneType</em>) – File name of the preview animation, relative to <code class="docutils literal notranslate"><span class="pre">framesdir</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>TypeError</strong> – when the types of the arguments mismatch</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.SetVideoTimeFrame">
+<code class="sig-name descname">SetVideoTimeFrame</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">videoid</span></em>, <em class="sig-param"><span class="n">begin</span></em>, <em class="sig-param"><span class="n">end</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetVideoTimeFrame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetVideoTimeFrame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the time frame for a video.
+This time frame defines where the player should start playing the video
+and where it should end.
+The values are floating point numbers an represent the second inside the video file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>videoid</strong> (<em>int</em>) – ID of the video</p></li>
+<li><p><strong>begin</strong> (<em>int</em>) – Begin of the main content in seconds.</p></li>
+<li><p><strong>end</strong> (<em>int</em>) – End of the main content in seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success, otherwise false</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – If begin or end if not int</p></li>
+<li><p><strong>ValueError</strong> – If begin &gt; end</p></li>
 </ul>
 </dd>
 </dl>
@@ -2027,20 +2636,20 @@ But only if the new approval level is greater or equal to the already set one.</
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.db.musicdb.MusicDatabase.UpdateSongStatistic">
-<code class="sig-name descname">UpdateSongStatistic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em>, <em class="sig-param"><span class="n">stat</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.UpdateSongStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.UpdateSongStatistic" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method updates the song statistics.</p>
+<dt id="lib.db.musicdb.MusicDatabase.UpdateMusicProperty">
+<code class="sig-name descname">UpdateMusicProperty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">musicid</span></em>, <em class="sig-param"><span class="n">stat</span></em>, <em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">musictype</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.UpdateMusicProperty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.UpdateMusicProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method updates a songs or videos property and statistic, depending on the value of <code class="docutils literal notranslate"><span class="pre">musictype</span></code>.</p>
 <p>Statistics are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;likes&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;dislikes&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;favorite&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;disabled&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;lastplayed&quot;</span></code></p></li>
+<li><p>Statistics: <code class="docutils literal notranslate"><span class="pre">&quot;likes&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;dislikes&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;lastplayed&quot;</span></code></p></li>
+<li><p>Properties: <code class="docutils literal notranslate"><span class="pre">&quot;favorite&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;disabled&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;liverecording&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;badaudio&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;lyricsvideo&quot;</span></code> (for videos only)</p></li>
 </ul>
 </div></blockquote>
-<p>Deprecated statistics will be ignored.</p>
-<p>Values are:</p>
+<p>Possible values are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;inc&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;love&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;yes&quot;</span></code>: Increment value</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;inc&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;love&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;yes&quot;</span></code>: Increment value or set to <code class="docutils literal notranslate"><span class="pre">1</span></code> for boolean properties</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;dec&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hate&quot;</span></code>: Decrement value</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;reset&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;none&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;no&quot;</span></code>: Set value to <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
 </ul>
@@ -2053,13 +2662,15 @@ But only if the new approval level is greater or equal to the already set one.</
 <li><p><code class="docutils literal notranslate"><span class="pre">1</span></code>: Loved song</p></li>
 </ul>
 </div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">likes</span></code> and <code class="docutils literal notranslate"><span class="pre">dislikes</span></code> can be incremented and decremented.</p>
 <p><code class="docutils literal notranslate"><span class="pre">lastplayed</span></code> expects the unix time as integer given as value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>songid</strong> (<em>int</em>) – ID of the song</p></li>
+<li><p><strong>musicid</strong> (<em>int</em>) – ID of the song or video</p></li>
 <li><p><strong>stat</strong> (<em>str</em>) – Name of the statistics to update</p></li>
 <li><p><strong>value</strong> (<em>str/int</em>) – How to update</p></li>
+<li><p><strong>musictype</strong> (<em>str</em>) – <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -2071,9 +2682,23 @@ But only if the new approval level is greater or equal to the already set one.</
 <li><p><strong>ValueError</strong> – if stats or value have an invalid value. Deprecated statistics do not raise an exception.</p></li>
 <li><p><strong>TypeError</strong> – When <code class="docutils literal notranslate"><span class="pre">stat</span> <span class="pre">==</span> <span class="pre">&quot;lastplayed&quot;</span></code> but <code class="docutils literal notranslate"><span class="pre">value</span></code> is not an integer</p></li>
 <li><p><strong>ValueError</strong> – When an expected unix time is less than 0</p></li>
+<li><p><strong>ValueError</strong> – When <code class="docutils literal notranslate"><span class="pre">musictype</span></code> is not <code class="docutils literal notranslate"><span class="pre">&quot;song&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code></p></li>
+<li><p><strong>ValueError</strong> – For an unknown property or statistic</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.UpdateSongStatistic">
+<code class="sig-name descname">UpdateSongStatistic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em>, <em class="sig-param"><span class="n">stat</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.UpdateSongStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.UpdateSongStatistic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias to <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.UpdateMusicProperty" title="lib.db.musicdb.MusicDatabase.UpdateMusicProperty"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateMusicProperty()</span></code></a> with last parameter <code class="docutils literal notranslate"><span class="pre">musictype</span> <span class="pre">=</span> <span class="pre">&quot;song&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.UpdateVideoStatistic">
+<code class="sig-name descname">UpdateVideoStatistic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">videoid</span></em>, <em class="sig-param"><span class="n">stat</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.UpdateVideoStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.UpdateVideoStatistic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias to <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.UpdateMusicProperty" title="lib.db.musicdb.MusicDatabase.UpdateMusicProperty"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateMusicProperty()</span></code></a> with last parameter <code class="docutils literal notranslate"><span class="pre">musictype</span> <span class="pre">=</span> <span class="pre">&quot;video&quot;</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2108,6 +2733,20 @@ But only if the new approval level is greater or equal to the already set one.</
 <dd><p>Updates the whole row for a tag.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt id="lib.db.musicdb.MusicDatabase.WriteVideo">
+<code class="sig-name descname">WriteVideo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">video</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteVideo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteVideo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the whole row for a video.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>video</strong> – A dictionary representing a whole row in the videos table</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -2126,7 +2765,7 @@ But only if the new approval level is greater or equal to the already set one.</
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018,2019,2020 Ralf Stemmer.
+        &copy; Copyright 2018,2019,2020,2021 Ralf Stemmer.
 
     </p>
   </div>
@@ -2148,7 +2787,7 @@ But only if the new approval level is greater or equal to the already set one.</
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'6.0.0',
+            VERSION:'7.0.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -2159,7 +2798,6 @@ But only if the new approval level is greater or equal to the already set one.</
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 
