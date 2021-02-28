@@ -31,6 +31,10 @@ fifofile (path to file):
    This file will be used to communicate with the WebSocket servers internals.
    Read :doc:`/mod/server` for details.
 
+webuiconfig (path to file):
+   Configuration file for the WebUI.
+   Here, settings done inside the WebUI are stored.
+
 websocket
 ---------
 
@@ -114,6 +118,37 @@ manifesttemplate (path to file):
 
 manifest (path to file):
    Name where the manifest file to tell the browser to cache the artwork will be generated at
+
+videoframes
+-----------
+
+path (path to directory):
+   Path to the video frames root directory where all artworks are stored at
+
+frames (numbers ∈ ℕ):
+   Amount of frames used for a preview animation
+
+scales (list of numbers ∈ ℕ):
+   A list of scales that will be used to create thumbnails. 
+   At least ``"50, 150, 500"`` should appear in the list because those are used by the MusicDB WebUI
+
+previewlength (seconds ∈ ℕ):
+   Length of the preview in seconds.
+
+uploads
+-------
+
+allow (boolean):
+   If ``True`` users are allowed to upload artworks.
+
+   .. warning::
+
+      The WebUI does not know about this settings an assumes that uploads are possible.
+      So when setting this to ``False``, the WebUI still provided the UI elements.
+      The server just rejects all attempts to upload files.
+
+path (path to directory):
+   Path to the directory for temporary uploads and meta data
 
 extern
 ------
@@ -203,6 +238,10 @@ videobllen (number ∈ ℕ):
 maxblage (time in hours as integer):
    The highest age an entry in one of the three blacklist can have until it gets automatically removed.
 
+maxtries (number ∈ ℕ):
+   Maximum amount of tries to find a valid random songs.
+   This prevents spending infinite amount of time getting a song even if the data base does not provide enough songs.
+
 
 log
 ---
@@ -241,4 +280,11 @@ disableai (number ∈ {0,1}):
 disabletagging (number ∈ {0,1}):
    Do not set or remove any tags for songs or albums
 
+disableicecast (number ∈ {0,1}):
+   Do not try to connect to an IceCast server
+
+disablevideos (number ∈ {0,1}):
+   Disable the support for music videos.
+   This is ``1`` (disabled) by default.
+   Currently, the Music Video feature is in beta state.
 
