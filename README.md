@@ -108,15 +108,15 @@ In case MusicDB does not run on outdated operating systems, update your system :
 * A Linux operating system. Tested with:
   * [Arch Linux](https://www.archlinux.org/) for x86-64 (primary test and development system)
   * [Debian](https://www.debian.org/distrib/) for x86-64 (not recommended because it comes with lots of ~~old~~ "stable" software)
-  * [Arch Linux ARM](https://archlinuxarm.org/) for AArch64 with [ODROID-C2](https://wiki.odroid.com/odroid-c2/odroid-c2)
-  * [Arch Linux ARM](https://archlinuxarm.org/) for ARMv7 with [Raspberry Pi 3](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
-* [Python3](https://www.python.org/) (At least Python 3.5. I test with Python 3.8)
+  * [Ubuntu Server 20.04.2 LTS](https://ubuntu.com/download/raspberry-pi) for AArch64 on a [Raspberry Pi 4](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
+* [Python3](https://www.python.org/) (At least Python 3.5. I test with Python 3.9)
 * [Icecast](https://icecast.org/) and [GStreamer](https://gstreamer.freedesktop.org/) for streaming
 * Support status for web browsers to access the WebUI:
   * [Firefox](https://www.mozilla.org/en-US/) (**Recommended**)
-  * [Chrome](https://www.google.com/chrome/index.html) (**Not supported** as long as some CSS features are missing)
+  * [Chrome](https://www.google.com/chrome/index.html) (**Not yet supported** as long as mandatory [CSS features](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) are missing)
   * [Opera](https://www.opera.com/) (Not tested - see Chrome)
   * [Edge](https://www.microsoft.com/edge/) (**Not supported** - No Linux version available)
+  * [Safari](https://www.apple.com/safari/) (Not tested)
 * An Unicode capable file system (Any *modern* file system should work)
 * A terminal that supports Unicode, with an Unicode capable font configured (I use KDE's [Konsole](https://www.kde.org/applications/system/konsole/) with [Hack](https://sourcefoundry.org/hack/))
 
