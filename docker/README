@@ -1,5 +1,0 @@
-1.  Make sure your user in the docker-group
-2.  Make sure the docker daemon is running
-3.  Run ./build.sh
-4.  Run ./run.sh and follow the instructions
-

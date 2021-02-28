@@ -7,7 +7,7 @@
 
 Run  git log --oneline  for more details
 
-┍━━━━┫ 202?-??-?? ┣━━━━┫ 7.0.0 ┣━━━━━━━━╍╍
+┍━━━━┫ 2021-02-28 ┣━━━━┫ 7.0.0 ┣━━━━━━━━╍╍
 │
 │ ! All Music Video and Upload related features are not enabled by default
 │ ! The video support is in early alpha state and does not yet provide the experience I'm aiming for
@@ -64,6 +64,7 @@ Run  git log --oneline  for more details
 │ + Scripts now handle spaces inside the configuration correct
 │ + The WebSocket API key gets now generated during installation
 │ * Refactoring of StreamManager -> AudioStreamManager
+│ - Docker support removed
 │ + [database] musicdb database add allows adding and managing videos to the music collection
 │ + [database] It is possible to information about the usage of tags from the database
 │ + [database] Recursive deleting of tags is now possible

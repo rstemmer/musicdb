@@ -46,7 +46,7 @@ Furthermore those changes may break scripts you wrote around MusicDB.
 
 Lines starting with "**:wrench: Change:**" are steps you have to do *before* or *after* updating via `update.sh` script.
 
-**01.08.2020: 6.x.x → 7.0.0+**
+**28.03.2021: 6.x.x → 7.0.0+**
 
 * Update mechanism improved, just call the `update.sh` script (remember to make a backup)
 * Full rebuild of the WebUI
@@ -54,6 +54,7 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* or 
 * Changes in the configuration file and music database (See CHANGELOG for details)
 * Experimental support for Music Videos added (needs to be enabled explicitly)
   * **:wrench: Change:** Provide `videoframes` directory access for HTTPS to see its content in the WebUI
+* Docker-Support removed
 
 <details>
 <summary>01.08.2020: 5.x.x → 6.0.0+ </summary>
@@ -197,24 +198,6 @@ Some helpful hints:
 
 
 If there are any problems setting up MusicDB, create an issue.
-
-
-## Docker-Based Demo
-
-**Important:** I do not longer support docker and will no longer update or test the files in the docker directory.
-I let the scripts untouched as they were for version 5.2.2.
-In case they do not work with later versions of MusicDB please create an Issue.
-(I will not solve Docker-Specific issues, but maybe someone else who likes to use Docker)
-
-To run a *Demo* installation via Docker container,
-just clone this repository and execute the scripts in the docker sub-directory.
-
-```sh
-git clone https://github.com/rstemmer/musicdb.git
-cd musicdb
-./docker/build.sh
-./docker/run.sh
-```
 
 
 # Development
