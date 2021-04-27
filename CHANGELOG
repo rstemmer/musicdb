@@ -7,13 +7,14 @@
 
 Run  git log --oneline  for more details
 
-┍━━━━┫ 2021-02-28 ┣━━━━┫ 7.0.0 ┣━━━━━━━━╍╍
+┍━━━━┫ 2021-05-02 ┣━━━━┫ 7.1.0 ┣━━━━━━━━╍╍
 │
 │
 ┝━ MAJOR CHANGES
 │
 ┝━ MINOR CHANGES
 │ + [WebUI] When showing song settings, set keyboard focus to the genre input element
+│ + [WebUI] Beside the origin, the date an album got added will also be shown in the headlines tooltip
 └───────────────────────────────────────╌╌
 
 

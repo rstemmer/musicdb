@@ -128,12 +128,24 @@ class MainViewHeadline extends Element
      *  · MDBMusic.name
      *  · MDBMusic.release
      *  · MDBMusic.origin
+     *  · MDBMusic.added (optional)
      *
      *  This is usually provided by MDBArtist and MDBAlbum
      */
     UpdateInformation(MDBMusic, MDBArtist)
     {
-        this.UpdateRawInformation(MDBMusic.name, MDBArtist.name, MDBMusic.release, MDBMusic.origin);
+        let tooltip = "";
+        tooltip += `Origin: ${MDBMusic.origin}`;
+
+        if("added" in MDBMusic)
+        {
+            let dateoptions = {year: "numeric", month: "long", day: "numeric"};
+            let dateobject  = new Date(MDBMusic.added * 1000);
+            let datestring  = dateobject.toLocaleDateString(undefined, dateoptions); // Undefined locale string: browsers locale
+            tooltip += `\nAdded: ${datestring}`;
+        }
+
+        this.UpdateRawInformation(MDBMusic.name, MDBArtist.name, MDBMusic.release, tooltip);
         return;
     }
 
