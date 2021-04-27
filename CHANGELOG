@@ -9,6 +9,17 @@ Run  git log --oneline  for more details
 
 ┍━━━━┫ 2021-02-28 ┣━━━━┫ 7.0.0 ┣━━━━━━━━╍╍
 │
+│
+┝━ MAJOR CHANGES
+│
+┝━ MINOR CHANGES
+│ + [WebUI] When showing song settings, set keyboard focus to the genre input element
+└───────────────────────────────────────╌╌
+
+
+
+┍━━━━┫ 2021-02-28 ┣━━━━┫ 7.0.0 ┣━━━━━━━━╍╍
+│
 │ ! All Music Video related features are not enabled by default
 │ ! The video support is in early beta state and does not yet provide the experience I'm aiming for
 │
