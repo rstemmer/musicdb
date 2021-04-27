@@ -104,6 +104,13 @@ class TagListEdit extends Element
             this.tagselect.Show();
         }
     }
+
+
+
+    SetFocus()
+    {
+        this.taginput.focus();
+    }
 }
 
 
