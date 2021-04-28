@@ -11,6 +11,7 @@ Run  git log --oneline  for more details
 │
 │
 ┝━ MAJOR CHANGES
+│ + [extern] id3edit is now an optional dependency. It is only used for the music export feature (musicdb extern) of MusicDB
 │
 ┝━ MINOR CHANGES
 │ + [WebUI] When showing song settings, set keyboard focus to the genre input element

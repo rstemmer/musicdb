@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo -e "\e[1;31mMusicDB-Check [\e[1;34m2.1.0\e[1;31m]\e[0m"
+echo -e "\e[1;31mMusicDB-Check [\e[1;34m2.2.0\e[1;31m]\e[0m"
 
 if [ $EUID -eq 0 ]; then
     echo -e "\e[1;33mYou shoud NOT have root permissions. MusicDB will not have them, too"
@@ -48,8 +48,8 @@ echo -e "\e[1;37m [!] \033[0;33mPlease check if the latest \e[0;36mlibshout\e[0;
 CheckBinaryExistence "gst-inspect-1.0" opt
 echo -e "\e[1;37m [!] \033[0;33mPlease check if all latest \e[0;36mGStreamer Plugins\e[0;33m are installed.\e[0m"
 echo -e "\e[1;37m [!] \033[0;33mPlease check if the latest \e[0;36mpython-gst\e[0;33m module is installed.\e[0m"
-CheckBinaryExistence "id3edit"   inc
-CheckBinaryExistence "clang"        # To compile id3edit
+CheckBinaryExistence "id3edit"   opt
+CheckBinaryExistence "clang"     opt    # To compile id3edit
 CheckBinaryExistence "ffmpeg"
 CheckBinaryExistence "apachectl" opt    # other servers are also possible
 CheckBinaryExistence "openssl"

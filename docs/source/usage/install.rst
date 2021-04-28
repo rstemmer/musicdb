@@ -389,6 +389,9 @@ You can use the ``check.sh`` script to see what packages are missing.
 
 The missing ``id3edit`` tool is part of MusicDB.
 It's installation is described in this documentation later on.
+Since MusicDB 7.1.0 id3edit is optional. It is only required by the :doc:`/mod/extern` module
+which is used to export the music collection onto an external storage device like an SD card
+or a Smartphone.
 
 Download MusicDB
 ^^^^^^^^^^^^^^^^
@@ -396,14 +399,18 @@ Download MusicDB
 .. code-block:: bash
 
    # as user in ~/projects
+   git clone https://github.com/rstemmer/musicdb.git
+
+   # optional for MusicDB exterb module
    git clone https://github.com/rstemmer/libprinthex.git
    git clone https://github.com/rstemmer/id3edit.git
-   git clone https://github.com/rstemmer/musicdb.git
 
 
 
 libprinthex
 ^^^^^^^^^^^
+
+Since MusicDB 7.1.0 id3edit is optional. It is only required by the :doc:`/mod/extern` module.
 
 .. code-block:: bash
 
@@ -414,6 +421,8 @@ libprinthex
 
 id3edit
 ^^^^^^^
+
+Since MusicDB 7.1.0 id3edit is optional. It is only required by the :doc:`/mod/extern` module.
 
 .. code-block:: bash
 

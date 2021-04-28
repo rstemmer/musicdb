@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -139,6 +139,7 @@ The following methods will be applied if activated in the config:
 import os
 import re
 import shutil
+import sys
 import csv
 from lib.cfg.extern     import ExternConfig
 from lib.cfg.musicdb    import MusicDBConfig
@@ -173,6 +174,33 @@ class MusicDBExtern(object):
         self.fileprocessor = Fileprocessing("/")
         self.artworkcache  = ArtworkCache(self.cfg.artwork.path)
         self.SetMountpoint("/mnt")    # initialize self.mp with the default mount point /mnt
+
+
+
+    def CheckForDependencies(self) -> bool:
+        """
+        Checks for dependencies required by this module.
+        Those dependencies are ``ffmpeg`` and `id3edit <https://github.com/rstemmer/id3edit>_`.
+
+        If a module is missing, the error message will be printed into the log file
+        and also onto the screen (stderr)
+
+        Returns:
+            ``True`` if all dependencies exist, otherwise ``False``.
+        """
+        nonemissing = True # no dependency is missing, as long as no check returns false
+
+        if not self.fileprocessor.ExistsProgram("ffmpeg"):
+            logging.error("Required dependency \"ffmpeg\" missing!")
+            print("\033[1;31mRequired dependency \"ffmpeg\" missing!", file=sys.stderr)
+            nonemissing = False
+
+        if not self.fileprocessor.ExistsProgram("id3edit"):
+            logging.error("Required dependency \"id3edit\" missing!")
+            print("\033[1;31mRequired dependency \"id3edit\" missing!", file=sys.stderr)
+            nonemissing = False
+
+        return nonemissing
 
 
 
