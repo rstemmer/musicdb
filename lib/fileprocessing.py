@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -57,6 +57,29 @@ class Fileprocessing(Filesystem):
     def __init__(self, root="/"):
         Filesystem.__init__(self, root)
 
+
+
+    def ExistsProgram(self, programname: str) -> bool:
+        """
+        This method checks if a program exists.
+
+        Example:
+
+            .. code-block:: python
+
+                if fp.ExistsProgram("ffmpeg") == False:
+                    print("ffmpeg is not installed!");
+
+        Args:
+            programname (str): Name of the program to check for
+
+        Returns:
+            ``True`` if the program exists, otherwise ``False``
+        """
+        path = shutil.which(programname)
+        if path == None:
+            return False
+        return True
 
 
     def Checksum(self, path, algorithm="sha256"):
@@ -138,6 +161,10 @@ class Fileprocessing(Filesystem):
             logging.error("Source (%s) and Destination (%s) address the same file!", abssrcpath, absdstpath)
             raise ValueError("Source and Destination path address the same file!")
 
+        if not self.ExistsProgram("ffmpeg"):
+            logging.warning("Optional dependency \"ffmpeg\" missing. Cannot convert %s to %s!", abssrcpath, absdstpath)
+            return False
+
         logging.debug("Converting %s to %s …", abssrcpath, absdstpath)
         process =[
             "ffmpeg",
@@ -213,6 +240,10 @@ class Fileprocessing(Filesystem):
         if self.GetFileExtension(absdstpath) != "mp3":
             logging.error("%s is not a mp3-file. Output of id3edit is an mp3-file!", str(absdstpath))
             raise ValueError("dstpath is not a mp3-file")
+
+        if not self.ExistsProgram("id3edit"):
+            logging.warning("Optional dependency \"id3edit\" missing. Cannot convert %s to %s!", abssrcpath, absdstpath)
+            return False
 
         # Create tags
         songname    = mdbsong["name"]
@@ -319,6 +350,10 @@ class Fileprocessing(Filesystem):
             return False
         if abssrcpath == absdstpath:
             logging.error("source and destination paths are the same. This is not supported by this function.")
+            return False
+
+        if not self.ExistsProgram("ffmpeg"):
+            logging.warning("Optional dependency \"ffmpeg\" missing. Cannot convert %s to %s!", abssrcpath, absdstpath)
             return False
 
         # Create tags
