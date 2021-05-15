@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Filesystem Interface &mdash; MusicDB 7.0.0 documentation</title>
+  <title>Filesystem Interface &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="GStreamer Interface" href="gstreamer.html"/>
         <link rel="prev" title="Fileprocessing Methods" href="fileprocessing.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -671,7 +671,7 @@
 <h2>Filesystem Class<a class="headerlink" href="#filesystem-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="lib.filesystem.Filesystem">
-<em class="property">class </em><code class="sig-prename descclassname">lib.filesystem.</code><code class="sig-name descname">Filesystem</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root</span><span class="o">=</span><span class="default_value">'/'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.filesystem.</span></code><code class="sig-name descname"><span class="pre">Filesystem</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides an interface to the filesystem.
 The whole class assumes that it is used with an Unicode capable unix-style filesystem.</p>
 <p>Whenever I write about <em>root director</em> the path set in this class as root is meant.
@@ -694,7 +694,7 @@ Otherwise I would call it <em>system root directory</em>.</p>
 </dl>
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.AbsolutePath">
-<code class="sig-name descname">AbsolutePath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AbsolutePath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AbsolutePath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AbsolutePath</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AbsolutePath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AbsolutePath" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns an absolute path by adding the root directory to the path.
 If the path is already absolute (starts with <code class="docutils literal notranslate"><span class="pre">&quot;/&quot;</span></code>) it gets returned as it is.</p>
 <p>If the path starts with <code class="docutils literal notranslate"><span class="pre">&quot;./&quot;</span></code> the root path gets prepended.</p>
@@ -714,7 +714,7 @@ If the path is already absolute (starts with <code class="docutils literal notra
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.AnalyseAlbumDirectoryName">
-<code class="sig-name descname">AnalyseAlbumDirectoryName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumdirname</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseAlbumDirectoryName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseAlbumDirectoryName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AnalyseAlbumDirectoryName</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumdirname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseAlbumDirectoryName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseAlbumDirectoryName" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method analyses the name of an album directory.
 If it does not follow the scheme of an album directory name, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned, otherwise the albumname and release year.</p>
 <p>The scheme is the following: <code class="docutils literal notranslate"><span class="pre">{releaseyear}</span> <span class="pre">-</span> <span class="pre">{albumname}</span></code>.</p>
@@ -744,7 +744,7 @@ If it does not follow the scheme of an album directory name, <code class="docuti
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.AnalyseSongFileName">
-<code class="sig-name descname">AnalyseSongFileName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songfilename</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseSongFileName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseSongFileName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AnalyseSongFileName</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songfilename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseSongFileName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseSongFileName" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method analyses the name of a song file.
 If it does not follow the scheme, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned, otherwise all information encoded in the name as dictionary.</p>
 <p>The scheme is the following: <code class="docutils literal notranslate"><span class="pre">{songnumber}</span> <span class="pre">{songname}.{extension}</span></code> or <code class="docutils literal notranslate"><span class="pre">{cdnumber}-{songnumber}</span> <span class="pre">{songname}.{extension}</span></code></p>
@@ -780,7 +780,7 @@ If it does not follow the scheme, <code class="docutils literal notranslate"><sp
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.AnalyseVideoFileName">
-<code class="sig-name descname">AnalyseVideoFileName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">videofilename</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseVideoFileName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseVideoFileName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AnalyseVideoFileName</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videofilename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AnalyseVideoFileName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AnalyseVideoFileName" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method analyses the name of a video file.
 Only the file name is expected, not a whole path!
 If it does not follow the scheme, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned, otherwise all information encoded in the name as dictionary.</p>
@@ -814,19 +814,19 @@ If it does not follow the scheme, <code class="docutils literal notranslate"><sp
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.AssertDirectory">
-<code class="sig-name descname">AssertDirectory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AssertDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AssertDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AssertDirectory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AssertDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AssertDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raises an AssertionError if <a class="reference internal" href="#lib.filesystem.Filesystem.IsDirectory" title="lib.filesystem.Filesystem.IsDirectory"><code class="xref py py-meth docutils literal notranslate"><span class="pre">IsDirectory()</span></code></a> fails.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.AssertFile">
-<code class="sig-name descname">AssertFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AssertFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AssertFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AssertFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.AssertFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.AssertFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raises an AssertionError if <a class="reference internal" href="#lib.filesystem.Filesystem.IsFile" title="lib.filesystem.Filesystem.IsFile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">IsFile()</span></code></a> fails.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.CopyFile">
-<code class="sig-name descname">CopyFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xsrcpath</span></em>, <em class="sig-param"><span class="n">xdstpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.CopyFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.CopyFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">CopyFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xsrcpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xdstpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.CopyFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.CopyFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method copies a file.
 <strong>Handle with care!</strong></p>
 <p>If the source file does not exist, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.
@@ -852,7 +852,7 @@ The UNIX shell alternative would be like the following line:</p>
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.CreateSubdirectory">
-<code class="sig-name descname">CreateSubdirectory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xnewpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.CreateSubdirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.CreateSubdirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">CreateSubdirectory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xnewpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.CreateSubdirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.CreateSubdirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a subdirectory.
 The directories are made recursively.
 So <em>xnewpath</em> can address the last directory of a path that will be created.</p>
@@ -868,7 +868,7 @@ So <em>xnewpath</em> can address the last directory of a path that will be creat
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.Execute">
-<code class="sig-name descname">Execute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">commandline</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.Execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.Execute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Execute</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commandline</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.Execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.Execute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Executes an external program.
 The command line is a list of arguments with the executable name as first element.
 So <code class="docutils literal notranslate"><span class="pre">commandline[0]</span></code> is the program name like <code class="docutils literal notranslate"><span class="pre">&quot;ls&quot;</span></code> and the next elements are a list of arguments to this program (like <code class="docutils literal notranslate"><span class="pre">&quot;-l&quot;,</span> <span class="pre">&quot;-h&quot;</span></code>).
@@ -907,7 +907,7 @@ sync
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.Exists">
-<code class="sig-name descname">Exists</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.Exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.Exists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Exists</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.Exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.Exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a path exist. It can be a file or a directory</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -921,7 +921,7 @@ sync
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.GetDirectory">
-<code class="sig-name descname">GetDirectory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetDirectory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the directory a file or folder is stored in.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -935,7 +935,7 @@ sync
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.GetFileExtension">
-<code class="sig-name descname">GetFileExtension</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFileExtension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFileExtension" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetFileExtension</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFileExtension"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFileExtension" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the file extension of the file addressed by <em>xpath</em>.
 The file must <em>not</em> exist.</p>
 <p>If xpath does not address a file or the file does not have an extension, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.
@@ -959,7 +959,7 @@ Otherwise only the extension without the leading <code class="docutils literal n
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.GetFileName">
-<code class="sig-name descname">GetFileName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFileName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFileName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetFileName</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFileName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFileName" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the file name of the file addressed by <em>xpath</em>.
 It is not required and not checked that the file exist.
 The name of a file does not include the file extension.</p>
@@ -980,7 +980,7 @@ The name of a file does not include the file extension.</p>
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.GetFiles">
-<code class="sig-name descname">GetFiles</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xparents</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ignore</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFiles" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetFiles</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xparents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetFiles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetFiles" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a filtered list with files for one or more parent directories.
 If <em>xparents</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the root directory will be used.
 If a parent path does not exist, an exception gets raised.</p>
@@ -1001,7 +1001,7 @@ If a parent path does not exist, an exception gets raised.</p>
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.GetModificationDate">
-<code class="sig-name descname">GetModificationDate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetModificationDate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetModificationDate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetModificationDate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetModificationDate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetModificationDate" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the date when a file or directory was modified the last time.
 (See <a class="reference external" href="https://docs.python.org/3/library/os.path.html#os.path.getmtime">os.path.getmtime</a>)</p>
 <dl class="field-list simple">
@@ -1022,7 +1022,7 @@ If a parent path does not exist, an exception gets raised.</p>
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.GetSubdirectories">
-<code class="sig-name descname">GetSubdirectories</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xparents</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ignore</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetSubdirectories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetSubdirectories" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetSubdirectories</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xparents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.GetSubdirectories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.GetSubdirectories" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a filtered list with subdirectories for one or more parent directories.
 If <em>xparents</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the root directory will be used.
 Using the root directory leads to returning absolute paths!</p>
@@ -1055,7 +1055,7 @@ dir2/tmp/*
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.IsDirectory">
-<code class="sig-name descname">IsDirectory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">IsDirectory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a directory exists.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1069,7 +1069,7 @@ dir2/tmp/*
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.IsFile">
-<code class="sig-name descname">IsFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">IsFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a file exists.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1083,7 +1083,7 @@ dir2/tmp/*
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.IsVideoPath">
-<code class="sig-name descname">IsVideoPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">isabsolute</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsVideoPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsVideoPath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">IsVideoPath</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isabsolute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.IsVideoPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.IsVideoPath" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if the given path is a possible path to a music video.
 It checks if the path follows the naming scheme and exists as file.</p>
 <dl class="field-list simple">
@@ -1101,7 +1101,7 @@ It checks if the path follows the naming scheme and exists as file.</p>
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.ListDirectory">
-<code class="sig-name descname">ListDirectory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.ListDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.ListDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">ListDirectory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.ListDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.ListDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of entries in the directory addressed by <em>xpath</em>.
 The list can contain files and directories.
 If <em>xpath</em> is not a directory, an empty list will be returned.
@@ -1120,7 +1120,7 @@ The special directories <code class="docutils literal notranslate"><span class="
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.MoveDirectory">
-<code class="sig-name descname">MoveDirectory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xsrcpath</span></em>, <em class="sig-param"><span class="n">xdstpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.MoveDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.MoveDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">MoveDirectory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xsrcpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xdstpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.MoveDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.MoveDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method moves a directory in the file system.
 <strong>Handle with care!</strong></p>
 <p>If the source directory does not exist, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.
@@ -1140,7 +1140,7 @@ To move files, see <a class="reference internal" href="#lib.filesystem.Filesyste
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.MoveFile">
-<code class="sig-name descname">MoveFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xsrcpath</span></em>, <em class="sig-param"><span class="n">xdstpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.MoveFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.MoveFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">MoveFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xsrcpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xdstpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.MoveFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.MoveFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method moves a file in the filesystem.
 <strong>Handle with care!</strong></p>
 <p>If the source file does not exist, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.
@@ -1160,7 +1160,7 @@ To move directories, see <a class="reference internal" href="#lib.filesystem.Fil
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.RemoveDirectory">
-<code class="sig-name descname">RemoveDirectory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveDirectory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">RemoveDirectory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes a directory tree from the filesystem.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1179,7 +1179,7 @@ To move directories, see <a class="reference internal" href="#lib.filesystem.Fil
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.RemoveFile">
-<code class="sig-name descname">RemoveFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">RemoveFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes a file from the filesystem.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1198,7 +1198,7 @@ To move directories, see <a class="reference internal" href="#lib.filesystem.Fil
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.RemoveRoot">
-<code class="sig-name descname">RemoveRoot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">abspath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveRoot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">RemoveRoot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">abspath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.RemoveRoot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.RemoveRoot" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method makes a path relative to the root path.
 The existence of the path gets not checked!</p>
 <dl class="field-list simple">
@@ -1227,7 +1227,7 @@ The existence of the path gets not checked!</p>
 
 <dl class="py method">
 <dt id="lib.filesystem.Filesystem.SetAttributes">
-<code class="sig-name descname">SetAttributes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xpath</span></em>, <em class="sig-param"><span class="n">owner</span></em>, <em class="sig-param"><span class="n">group</span></em>, <em class="sig-param"><span class="n">mode</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.SetAttributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.filesystem.Filesystem.SetAttributes" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SetAttributes</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">owner</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/filesystem.html#Filesystem.SetAttributes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.filesystem.Filesystem.SetAttributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets attributes for a file or directory.
 The <em>mode</em> is the access permissions as defined in the <em>stats</em> module.</p>
 <p>When <em>mode</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the permissions will not be changed.
@@ -1324,7 +1324,7 @@ When <em>owner</em> <strong>or</strong> <em>group</em> are <code class="docutils
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PID File Handling &mdash; MusicDB 7.0.0 documentation</title>
+  <title>PID File Handling &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDB Websocket Protocol" href="websockets.html"/>
         <link rel="prev" title="NamedPipe" href="namedpipe.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -669,7 +669,7 @@
 <span id="pid-file-handling"></span><h1>PID File Handling<a class="headerlink" href="#module-lib.pidfile" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="lib.pidfile.CheckPIDFile">
-<code class="sig-prename descclassname">lib.pidfile.</code><code class="sig-name descname">CheckPIDFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pidfile</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/pidfile.html#CheckPIDFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.pidfile.CheckPIDFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">lib.pidfile.</span></code><code class="sig-name descname"><span class="pre">CheckPIDFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pidfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/pidfile.html#CheckPIDFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.pidfile.CheckPIDFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function checks whether a PID file exists or not.
 If the file <em>pidfile</em> does exist its content, a process ID, gets read and returned.
 If the file does not exist, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</p>
@@ -694,7 +694,7 @@ The PID is of type int.</p>
 
 <dl class="py function">
 <dt id="lib.pidfile.CreatePIDFile">
-<code class="sig-prename descclassname">lib.pidfile.</code><code class="sig-name descname">CreatePIDFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pidfile</span></em>, <em class="sig-param"><span class="n">pid</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/pidfile.html#CreatePIDFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.pidfile.CreatePIDFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">lib.pidfile.</span></code><code class="sig-name descname"><span class="pre">CreatePIDFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pidfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/pidfile.html#CreatePIDFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.pidfile.CreatePIDFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function creates a PID file.
 If the process ID is not given via <em>pid</em>-argument, the current PID will be determined.</p>
 <p>The PID gets written into the file addressed by the <em>pidfile</em> parameter.
@@ -720,7 +720,7 @@ The path shall be absolute!</p>
 
 <dl class="py function">
 <dt id="lib.pidfile.DeletePIDFile">
-<code class="sig-prename descclassname">lib.pidfile.</code><code class="sig-name descname">DeletePIDFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pidfile</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/pidfile.html#DeletePIDFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.pidfile.DeletePIDFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">lib.pidfile.</span></code><code class="sig-name descname"><span class="pre">DeletePIDFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pidfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/pidfile.html#DeletePIDFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.pidfile.DeletePIDFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function removes the PID file (or any other file) addressed by an absolute path in <em>pidfile</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -769,7 +769,7 @@ The path shall be absolute!</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

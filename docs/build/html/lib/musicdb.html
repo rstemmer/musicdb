@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDatabase &mdash; MusicDB 7.0.0 documentation</title>
+  <title>MusicDatabase &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="NamedPipe" href="namedpipe.html"/>
         <link rel="prev" title="MP3 Transcoder" href="mp3transcoder.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -1373,7 +1373,7 @@ Otherwise this column can be ignored. - Ignoring means setting it to <code class
 <h2>MusicDatabase Class<a class="headerlink" href="#musicdatabase-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="lib.db.musicdb.MusicDatabase">
-<em class="property">class </em><code class="sig-prename descclassname">lib.db.musicdb.</code><code class="sig-name descname">MusicDatabase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.db.musicdb.</span></code><code class="sig-name descname"><span class="pre">MusicDatabase</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is the interface to the Music Database.
 It is derived from <a class="reference internal" href="database.html#lib.db.database.Database" title="lib.db.database.Database"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.db.database.Database</span></code></a>.</p>
 <dl class="field-list simple">
@@ -1386,7 +1386,7 @@ It is derived from <a class="reference internal" href="database.html#lib.db.data
 </dl>
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.AddAlbum">
-<code class="sig-name descname">AddAlbum</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddAlbum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AddAlbum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddAlbum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a new entry for an album.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1410,7 +1410,7 @@ It is derived from <a class="reference internal" href="database.html#lib.db.data
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.AddArtist">
-<code class="sig-name descname">AddArtist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddArtist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AddArtist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddArtist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddArtist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a new artist into the artists table</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1430,7 +1430,7 @@ It is derived from <a class="reference internal" href="database.html#lib.db.data
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.AddFullSong">
-<code class="sig-name descname">AddFullSong</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">song</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddFullSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddFullSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AddFullSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">song</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddFullSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddFullSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a new entry for a song and adds all its attributes into the database.
 Creating the song is done by calling <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.AddSong" title="lib.db.musicdb.MusicDatabase.AddSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddSong()</span></code></a>.
 When the song was added a new song ID is generated by the database engine.
@@ -1452,7 +1452,7 @@ So, when this method returns <code class="docutils literal notranslate"><span cl
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.AddFullVideo">
-<code class="sig-name descname">AddFullVideo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">video</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddFullVideo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddFullVideo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AddFullVideo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddFullVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddFullVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a new entry for a video and adds all its attributes into the database.
 Creating the song is video by calling <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.AddVideo" title="lib.db.musicdb.MusicDatabase.AddVideo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AddVideo()</span></code></a>.
 When the video was added a new song ID is generated by the database engine.
@@ -1474,7 +1474,7 @@ So, when this method returns <code class="docutils literal notranslate"><span cl
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.AddSong">
-<code class="sig-name descname">AddSong</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span></em>, <em class="sig-param"><span class="n">albumid</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AddSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a new database entry for a song and sets the most important values.</p>
 <p>If a song with the same path is already in the database, its <em>artistid</em>, <em>albumid</em> and <em>name</em> gets compared to the arguments.
 If they match, everything is fine and the method returns.
@@ -1504,7 +1504,7 @@ Even if this method allows it under some conditions, this should not be exploite
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.AddVideo">
-<code class="sig-name descname">AddVideo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddVideo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddVideo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AddVideo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.AddVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.AddVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a new database entry for a video and sets the most important values (Artistid, name and path).</p>
 <p>If a video with the same path is already in the database, its <em>artistid</em>, <em>path</em> and <em>name</em> gets compared to the arguments.
 If they match, everything is fine and the method returns.
@@ -1533,7 +1533,7 @@ Even if this method allows it under some conditions, this should not be exploite
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.CreateTag">
-<code class="sig-name descname">CreateTag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagname</span></em>, <em class="sig-param"><span class="n">tagclass</span></em>, <em class="sig-param"><span class="n">parentid</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.CreateTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.CreateTag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">CreateTag</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tagclass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parentid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.CreateTag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.CreateTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a new tag in the tags-table.</p>
 <p>If the tag already exists in its class, it will not be created.</p>
 <dl class="field-list simple">
@@ -1558,13 +1558,13 @@ Even if this method allows it under some conditions, this should not be exploite
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.DeleteTag">
-<code class="sig-name descname">DeleteTag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagname</span></em>, <em class="sig-param"><span class="n">tagclass</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.DeleteTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.DeleteTag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">DeleteTag</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tagclass</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.DeleteTag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.DeleteTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.DeleteTagByName" title="lib.db.musicdb.MusicDatabase.DeleteTagByName"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DeleteTagByName()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.DeleteTagById">
-<code class="sig-name descname">DeleteTagById</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.DeleteTagById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.DeleteTagById" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">DeleteTagById</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.DeleteTagById"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.DeleteTagById" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method deletes a tag addressed by its tag ID.
 Before deleting the tag, this tag as well as its child-tags (sub-genre tag) will be removed from all
 songs, albums and videos.</p>
@@ -1587,7 +1587,7 @@ songs, albums and videos.</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.DeleteTagByName">
-<code class="sig-name descname">DeleteTagByName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagname</span></em>, <em class="sig-param"><span class="n">tagclass</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.DeleteTagByName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.DeleteTagByName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">DeleteTagByName</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tagclass</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.DeleteTagByName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.DeleteTagByName" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes an entry from the tags-table with the name <em>tagname</em> and that belongs to <em>tagclass</em>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1615,7 +1615,7 @@ You should only delete new created tags that are not used!</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAlbumById">
-<code class="sig-name descname">GetAlbumById</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbumById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbumById" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetAlbumById</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbumById"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbumById" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an album entry if available.
 It also returns the entry, when the album is hidden!</p>
 <dl class="field-list simple">
@@ -1636,7 +1636,7 @@ It also returns the entry, when the album is hidden!</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAlbumByPath">
-<code class="sig-name descname">GetAlbumByPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbumByPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbumByPath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetAlbumByPath</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbumByPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbumByPath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an album entry if available.
 It also returns the entry when the album is hidden!</p>
 <dl class="field-list simple">
@@ -1657,7 +1657,7 @@ It also returns the entry when the album is hidden!</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAlbums">
-<code class="sig-name descname">GetAlbums</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">withsongs</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">hidden</span><span class="o">=</span><span class="default_value">'no'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetAlbums</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">withsongs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'no'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbums"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list with all albums in the database, or all albums of an artist if <em>artistid</em> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>.
 If the <em>withsongs</em> parameter is <code class="docutils literal notranslate"><span class="pre">True</span></code>, for each album all songs will be included.
 They are added as list into each album entry under the key <code class="docutils literal notranslate"><span class="pre">songs</span></code></p>
@@ -1701,13 +1701,13 @@ They are added as list into each album entry under the key <code class="docutils
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId">
-<code class="sig-name descname">GetAlbumsByArtistId</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbumsByArtistId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetAlbumsByArtistId</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAlbumsByArtistId"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAlbumsByArtistId" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="lib.db.musicdb.MusicDatabase.GetAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbums()</span></code></a> (<code class="docutils literal notranslate"><span class="pre">GetAlbums(artistid,</span> <span class="pre">withsongs=False,</span> <span class="pre">hidden=&quot;no&quot;)</span></code>)</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAllAlbumIds">
-<code class="sig-name descname">GetAllAlbumIds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">includehidden</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllAlbumIds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllAlbumIds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetAllAlbumIds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">includehidden</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllAlbumIds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllAlbumIds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of all album Ids.</p>
 <p>If the optional <code class="docutils literal notranslate"><span class="pre">includehidden</span></code> argument is not set to <code class="docutils literal notranslate"><span class="pre">true</span></code>,
 hidden albums are <em>not</em> included!</p>
@@ -1723,13 +1723,13 @@ hidden albums are <em>not</em> included!</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAllAlbums">
-<code class="sig-name descname">GetAllAlbums</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllAlbums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllAlbums" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetAllAlbums</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllAlbums"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllAlbums" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetAlbums" title="lib.db.musicdb.MusicDatabase.GetAlbums"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetAlbums()</span></code></a> (<code class="docutils literal notranslate"><span class="pre">GetAlbums(artistid=None,</span> <span class="pre">withsongs=False,</span> <span class="pre">hidden=&quot;include&quot;)</span></code>)</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAllArtists">
-<code class="sig-name descname">GetAllArtists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllArtists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllArtists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetAllArtists</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllArtists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllArtists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of all artists in the artists table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -1740,13 +1740,13 @@ hidden albums are <em>not</em> included!</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAllSongs">
-<code class="sig-name descname">GetAllSongs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllSongs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllSongs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetAllSongs</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllSongs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllSongs" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetSongs" title="lib.db.musicdb.MusicDatabase.GetSongs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongs()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetAllTags">
-<code class="sig-name descname">GetAllTags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagclass</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllTags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetAllTags</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagclass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetAllTags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetAllTags" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of tags from the tags table.
 If <em>tagclass</em> is set, only tags of the specified class gets returned.
 Otherwise all tags.</p>
@@ -1765,7 +1765,7 @@ Otherwise all tags.</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetArtistById">
-<code class="sig-name descname">GetArtistById</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetArtistById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetArtistById" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetArtistById</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetArtistById"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetArtistById" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the artist by its ID</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1786,7 +1786,7 @@ Otherwise all tags.</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetArtistByPath">
-<code class="sig-name descname">GetArtistByPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetArtistByPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetArtistByPath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetArtistByPath</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetArtistByPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetArtistByPath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the artist by the relative path of the music directory.
 This is usually only a directroy name.</p>
 <dl class="field-list simple">
@@ -1807,7 +1807,7 @@ This is usually only a directroy name.</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetLyrics">
-<code class="sig-name descname">GetLyrics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetLyrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetLyrics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetLyrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetLyrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetLyrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the lyrics of a song.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1827,7 +1827,7 @@ This is usually only a directroy name.</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetRandomSong">
-<code class="sig-name descname">GetRandomSong</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filterlist</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">nodisabled</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">nohated</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">minlen</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxlen</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">albumid</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetRandomSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetRandomSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetRandomSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filterlist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodisabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nohated</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minlen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxlen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetRandomSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetRandomSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a random song that fulfills several constraints.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">filterlist</span></code> can be either a set of genre tag IDs or a set of genre names.
 When <code class="docutils literal notranslate"><span class="pre">filterlist</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> no filter gets applied.
@@ -1900,7 +1900,7 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetRandomVideo">
-<code class="sig-name descname">GetRandomVideo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filterlist</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">nodisabled</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">nohated</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">minlen</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxlen</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetRandomVideo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetRandomVideo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetRandomVideo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filterlist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodisabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nohated</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minlen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxlen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetRandomVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetRandomVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a random video that fulfills several constraints.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">filterlist</span></code> can be either a set of genre tag IDs or a set of genre names.
 When <code class="docutils literal notranslate"><span class="pre">filterlist</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> no filter gets applied.
@@ -1942,7 +1942,7 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetSongById">
-<code class="sig-name descname">GetSongById</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongById" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetSongById</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongById"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongById" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a song from the database that matches the <em>songid</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1962,7 +1962,7 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetSongByPath">
-<code class="sig-name descname">GetSongByPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongByPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongByPath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetSongByPath</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongByPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongByPath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a song from the database that matches the <em>path</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1982,7 +1982,7 @@ or <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds">
-<code class="sig-name descname">GetSongIdsByAlbumIds</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumids</span></em>, <em class="sig-param"><span class="n">nodisabled</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">nohated</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">minlen</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxlen</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongIdsByAlbumIds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetSongIdsByAlbumIds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodisabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nohated</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minlen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxlen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongIdsByAlbumIds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongIdsByAlbumIds" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of songs that belong to the albums addressed by their IDs in the <em>albumids</em> list.
 The songs of the returned IDs also fulfill the constraints given by the other parameters.</p>
 <dl class="field-list simple">
@@ -2012,7 +2012,7 @@ The songs of the returned IDs also fulfill the constraints given by the other pa
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetSongs">
-<code class="sig-name descname">GetSongs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetSongs</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongs" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns all songs in the database if <em>albumid</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, or all songs of an album if <em>albumid</em> is set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2026,13 +2026,13 @@ The songs of the returned IDs also fulfill the constraints given by the other pa
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetSongsByAlbumId">
-<code class="sig-name descname">GetSongsByAlbumId</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongsByAlbumId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongsByAlbumId" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetSongsByAlbumId</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongsByAlbumId"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongsByAlbumId" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.GetSongs" title="lib.db.musicdb.MusicDatabase.GetSongs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSongs()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetSongsByArtistId">
-<code class="sig-name descname">GetSongsByArtistId</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongsByArtistId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongsByArtistId" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetSongsByArtistId</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetSongsByArtistId"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetSongsByArtistId" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns all song entries of an Artist.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2049,7 +2049,7 @@ The songs of the returned IDs also fulfill the constraints given by the other pa
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetTagByName">
-<code class="sig-name descname">GetTagByName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagname</span></em>, <em class="sig-param"><span class="n">tagclass</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetTagByName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetTagByName" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetTagByName</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tagclass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetTagByName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetTagByName" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a tag entry addressed by the tagname and tagclass.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2073,7 +2073,7 @@ The songs of the returned IDs also fulfill the constraints given by the other pa
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetTagStatistics">
-<code class="sig-name descname">GetTagStatistics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetTagStatistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetTagStatistics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetTagStatistics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetTagStatistics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetTagStatistics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns three integers telling how often the given tag is used for songs, albums and videos.
 It is also checked how many other tags used the tagid as parent tag.</p>
 <p>The level of confidence or if the tag was approved for the song/video/album is not considered.
@@ -2093,7 +2093,7 @@ All set tags are counted.</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetTargetTags">
-<code class="sig-name descname">GetTargetTags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">targetid</span></em>, <em class="sig-param"><span class="n">tagclass</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetTargetTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetTargetTags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetTargetTags</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tagclass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetTargetTags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetTargetTags" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of all tags of a target.
 A target can be a song (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;song&quot;</span></code>) an album (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;album&quot;</span></code>) or a video (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;video&quot;</span></code>).
 This list contains all classes of tags if <em>tagclass</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, otherwise only of type <em>tagclass</em>.</p>
@@ -2132,7 +2132,7 @@ The ID of the ID of the entry in the mapping-table is <code class="docutils lite
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetVideoById">
-<code class="sig-name descname">GetVideoById</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">videoid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetVideoById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetVideoById" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetVideoById</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videoid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetVideoById"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetVideoById" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an video entry if available</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2152,7 +2152,7 @@ The ID of the ID of the entry in the mapping-table is <code class="docutils lite
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetVideoByPath">
-<code class="sig-name descname">GetVideoByPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetVideoByPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetVideoByPath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetVideoByPath</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetVideoByPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetVideoByPath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a video from the database that matches the <em>path</em></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2172,7 +2172,7 @@ The ID of the ID of the entry in the mapping-table is <code class="docutils lite
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetVideos">
-<code class="sig-name descname">GetVideos</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetVideos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetVideos" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetVideos</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetVideos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetVideos" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns an unsorted list with all videos.</p>
 <p class="rubric">Example</p>
 <p>The following example prints all videos</p>
@@ -2190,7 +2190,7 @@ The ID of the ID of the entry in the mapping-table is <code class="docutils lite
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.GetVideosByArtistId">
-<code class="sig-name descname">GetVideosByArtistId</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetVideosByArtistId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetVideosByArtistId" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetVideosByArtistId</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.GetVideosByArtistId"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.GetVideosByArtistId" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns an unsorted list with all videos of an artist.</p>
 <p class="rubric">Example</p>
 <p>The following example prints all videos of the artist with the ID <code class="docutils literal notranslate"><span class="pre">1000</span></code></p>
@@ -2211,7 +2211,7 @@ The ID of the ID of the entry in the mapping-table is <code class="docutils lite
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.ModifyTag">
-<code class="sig-name descname">ModifyTag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagname</span></em>, <em class="sig-param"><span class="n">tagclass</span></em>, <em class="sig-param"><span class="n">columnname</span></em>, <em class="sig-param"><span class="n">newvalue</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.ModifyTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.ModifyTag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">ModifyTag</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tagclass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columnname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newvalue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.ModifyTag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.ModifyTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method allows to modify most of the attributes of a tag.
 The <em>tagname</em> and <em>tagclass</em> addresses the tag, <em>columnname</em> the attribute.
 <em>newvalue</em> is the new attribute set for the tag.</p>
@@ -2244,7 +2244,7 @@ The <em>tagname</em> and <em>tagclass</em> addresses the tag, <em>columnname</em
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.ModifyTagById">
-<code class="sig-name descname">ModifyTagById</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tagid</span></em>, <em class="sig-param"><span class="n">columnname</span></em>, <em class="sig-param"><span class="n">newvalue</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.ModifyTagById"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.ModifyTagById" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">ModifyTagById</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columnname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newvalue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.ModifyTagById"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.ModifyTagById" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method allows to modify most of the attributes of a tag.
 The <em>tagid</em> addresses the tag, <em>columnname</em> the attribute.
 <em>newvalue</em> is the new attribute set for the tag.</p>
@@ -2275,7 +2275,7 @@ The <em>tagid</em> addresses the tag, <em>columnname</em> the attribute.
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.RemoveAlbum">
-<code class="sig-name descname">RemoveAlbum</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.RemoveAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.RemoveAlbum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">RemoveAlbum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.RemoveAlbum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.RemoveAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes an album entry and all related data from all tables.</p>
 <p>The removed data are:</p>
 <blockquote>
@@ -2299,7 +2299,7 @@ The <em>tagid</em> addresses the tag, <em>columnname</em> the attribute.
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.RemoveArtist">
-<code class="sig-name descname">RemoveArtist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.RemoveArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.RemoveArtist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">RemoveArtist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.RemoveArtist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.RemoveArtist" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes an artist entry and all related data from all tables.</p>
 <p>The removed data are:</p>
 <blockquote>
@@ -2322,7 +2322,7 @@ The <em>tagid</em> addresses the tag, <em>columnname</em> the attribute.
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.RemoveSong">
-<code class="sig-name descname">RemoveSong</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.RemoveSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.RemoveSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">RemoveSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.RemoveSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.RemoveSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes a song entry and all related data from all tables.</p>
 <p>The removed data are:</p>
 <blockquote>
@@ -2348,7 +2348,7 @@ The <em>tagid</em> addresses the tag, <em>columnname</em> the attribute.
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.RemoveTargetTag">
-<code class="sig-name descname">RemoveTargetTag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">targetid</span></em>, <em class="sig-param"><span class="n">tagid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.RemoveTargetTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.RemoveTargetTag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">RemoveTargetTag</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tagid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.RemoveTargetTag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.RemoveTargetTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes an association between a target and a tag in the tag map.
 In short: Removes a tag from a song, a video or an album.</p>
 <dl class="field-list simple">
@@ -2373,7 +2373,7 @@ In short: Removes a tag from a song, a video or an album.</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.SetAlbumHiddenState">
-<code class="sig-name descname">SetAlbumHiddenState</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em>, <em class="sig-param"><span class="n">hiddenstate</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetAlbumHiddenState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetAlbumHiddenState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SetAlbumHiddenState</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hiddenstate</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetAlbumHiddenState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetAlbumHiddenState" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hides or shows an album depending on the <em>hide</em> state.
 When <code class="docutils literal notranslate"><span class="pre">hidden</span> <span class="pre">==</span> <span class="pre">True</span></code> the album gets hidden,
 when <code class="docutils literal notranslate"><span class="pre">hidden</span> <span class="pre">==</span> <span class="pre">False</span></code> the hidden state gets reset to make the album visible again.</p>
@@ -2395,7 +2395,7 @@ when <code class="docutils literal notranslate"><span class="pre">hidden</span> 
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.SetArtwork">
-<code class="sig-name descname">SetArtwork</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em>, <em class="sig-param"><span class="n">artworkpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetArtwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetArtwork" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SetArtwork</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artworkpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetArtwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetArtwork" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates the <em>artworkpath</em> entry of the MusicDB Database for an album.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2418,7 +2418,7 @@ when <code class="docutils literal notranslate"><span class="pre">hidden</span> 
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.SetArtworkColorByAlbumId">
-<code class="sig-name descname">SetArtworkColorByAlbumId</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em>, <em class="sig-param"><span class="n">colorname</span></em>, <em class="sig-param"><span class="n">color</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetArtworkColorByAlbumId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetArtworkColorByAlbumId" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SetArtworkColorByAlbumId</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetArtworkColorByAlbumId"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetArtworkColorByAlbumId" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is for setting a color for an album.
 Valid color names are the following and must be given as string to the <em>colorname</em> parameter.</p>
 <blockquote>
@@ -2452,7 +2452,7 @@ Valid color names are the following and must be given as string to the <em>color
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.SetColorThemeByVideoId">
-<code class="sig-name descname">SetColorThemeByVideoId</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">videoid</span></em>, <em class="sig-param"><span class="n">colorname</span></em>, <em class="sig-param"><span class="n">color</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetColorThemeByVideoId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetColorThemeByVideoId" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SetColorThemeByVideoId</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videoid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetColorThemeByVideoId"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetColorThemeByVideoId" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is for setting a color for a video.
 Valid color names are the following and must be given as string to the <em>colorname</em> parameter.</p>
 <blockquote>
@@ -2486,7 +2486,7 @@ Valid color names are the following and must be given as string to the <em>color
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.SetLyrics">
-<code class="sig-name descname">SetLyrics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em>, <em class="sig-param"><span class="n">lyrics</span></em>, <em class="sig-param"><span class="n">lyricsstate</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetLyrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetLyrics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SetLyrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lyrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lyricsstate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetLyrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetLyrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to store or to update lyrics of a song.
 It stores the lyrics in the lyrics table and updates the lyrics state in the songs table for a given song.</p>
 <p>If there are no lyrics for the song, or lyrics shall be removed, the lyrics argument must be <code class="docutils literal notranslate"><span class="pre">None</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>.
@@ -2516,7 +2516,7 @@ For example, instrumental songs or intros.</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.SetTargetTag">
-<code class="sig-name descname">SetTargetTag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">targetid</span></em>, <em class="sig-param"><span class="n">tagid</span></em>, <em class="sig-param"><span class="n">approval</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">confidence</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetTargetTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetTargetTag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SetTargetTag</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tagid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">approval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetTargetTag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetTargetTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets a tag for a target.
 A target can be a song (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;song&quot;</span></code>), a video (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;video&quot;</span></code>) or an album (<code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">=</span> <span class="pre">&quot;album&quot;</span></code>).</p>
 <p>The defaults for this method assume that the tag got set by a user.</p>
@@ -2556,7 +2556,7 @@ But only if the new approval level is greater or equal to the already set one.</
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.SetVideoFrames">
-<code class="sig-name descname">SetVideoFrames</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">videoid</span></em>, <em class="sig-param"><span class="n">framesdirectory</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">thumbnailfile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">previewfile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetVideoFrames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetVideoFrames" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SetVideoFrames</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videoid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">framesdirectory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thumbnailfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">previewfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetVideoFrames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetVideoFrames" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates the frames directory, thumbnail file and preview file entry in the database
 for a video with the ID <code class="docutils literal notranslate"><span class="pre">videoid</span></code>.</p>
 <p>The files and directory can be <code class="docutils literal notranslate"><span class="pre">None</span></code>.
@@ -2582,7 +2582,7 @@ The video ID must be a valid ID of a video existing in the database.</p>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.SetVideoTimeFrame">
-<code class="sig-name descname">SetVideoTimeFrame</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">videoid</span></em>, <em class="sig-param"><span class="n">begin</span></em>, <em class="sig-param"><span class="n">end</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetVideoTimeFrame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetVideoTimeFrame" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SetVideoTimeFrame</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videoid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">begin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SetVideoTimeFrame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SetVideoTimeFrame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the time frame for a video.
 This time frame defines where the player should start playing the video
 and where it should end.
@@ -2609,7 +2609,7 @@ The values are floating point numbers an represent the second inside the video f
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.SplitTagsByClass">
-<code class="sig-name descname">SplitTagsByClass</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tags</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SplitTagsByClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SplitTagsByClass" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SplitTagsByClass</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tags</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.SplitTagsByClass"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.SplitTagsByClass" title="Permalink to this definition">¶</a></dt>
 <dd><p>Splits a list of tags into several lists, each of a specific class.</p>
 <p>If the <em>tags</em> parameter is <code class="docutils literal notranslate"><span class="pre">None</span></code>, this method returns <code class="docutils literal notranslate"><span class="pre">[]</span></code> for each class.</p>
 <dl class="field-list simple">
@@ -2637,7 +2637,7 @@ The values are floating point numbers an represent the second inside the video f
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.UpdateMusicProperty">
-<code class="sig-name descname">UpdateMusicProperty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">musicid</span></em>, <em class="sig-param"><span class="n">stat</span></em>, <em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">musictype</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.UpdateMusicProperty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.UpdateMusicProperty" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">UpdateMusicProperty</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">musicid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">musictype</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.UpdateMusicProperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.UpdateMusicProperty" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates a songs or videos property and statistic, depending on the value of <code class="docutils literal notranslate"><span class="pre">musictype</span></code>.</p>
 <p>Statistics are:</p>
 <blockquote>
@@ -2691,31 +2691,31 @@ The values are floating point numbers an represent the second inside the video f
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.UpdateSongStatistic">
-<code class="sig-name descname">UpdateSongStatistic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em>, <em class="sig-param"><span class="n">stat</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.UpdateSongStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.UpdateSongStatistic" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">UpdateSongStatistic</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.UpdateSongStatistic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.UpdateSongStatistic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias to <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.UpdateMusicProperty" title="lib.db.musicdb.MusicDatabase.UpdateMusicProperty"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateMusicProperty()</span></code></a> with last parameter <code class="docutils literal notranslate"><span class="pre">musictype</span> <span class="pre">=</span> <span class="pre">&quot;song&quot;</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.UpdateVideoStatistic">
-<code class="sig-name descname">UpdateVideoStatistic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">videoid</span></em>, <em class="sig-param"><span class="n">stat</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.UpdateVideoStatistic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.UpdateVideoStatistic" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">UpdateVideoStatistic</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videoid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.UpdateVideoStatistic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.UpdateVideoStatistic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias to <a class="reference internal" href="#lib.db.musicdb.MusicDatabase.UpdateMusicProperty" title="lib.db.musicdb.MusicDatabase.UpdateMusicProperty"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateMusicProperty()</span></code></a> with last parameter <code class="docutils literal notranslate"><span class="pre">musictype</span> <span class="pre">=</span> <span class="pre">&quot;video&quot;</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.WriteAlbum">
-<code class="sig-name descname">WriteAlbum</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">album</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteAlbum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">WriteAlbum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">album</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteAlbum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the whole row for an album.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.WriteArtist">
-<code class="sig-name descname">WriteArtist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artist</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteArtist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteArtist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">WriteArtist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteArtist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteArtist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the whole row for an artist.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.WriteSong">
-<code class="sig-name descname">WriteSong</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">song</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">WriteSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">song</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the whole row for a song.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2729,13 +2729,13 @@ The values are floating point numbers an represent the second inside the video f
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.WriteTag">
-<code class="sig-name descname">WriteTag</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tag</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteTag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteTag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">WriteTag</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteTag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the whole row for a tag.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="lib.db.musicdb.MusicDatabase.WriteVideo">
-<code class="sig-name descname">WriteVideo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">video</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteVideo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteVideo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">WriteVideo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/musicdb.html#MusicDatabase.WriteVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.musicdb.MusicDatabase.WriteVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the whole row for a video.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2787,7 +2787,7 @@ The values are floating point numbers an represent the second inside the video f
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -664,7 +664,7 @@
             
   <h1>Source code for mdbapi.extern</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2021  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -804,6 +804,7 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">csv</span>
 <span class="kn">from</span> <span class="nn">lib.cfg.extern</span>     <span class="kn">import</span> <span class="n">ExternConfig</span>
 <span class="kn">from</span> <span class="nn">lib.cfg.musicdb</span>    <span class="kn">import</span> <span class="n">MusicDBConfig</span>
@@ -838,6 +839,33 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fileprocessor</span> <span class="o">=</span> <span class="n">Fileprocessing</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">artworkcache</span>  <span class="o">=</span> <span class="n">ArtworkCache</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cfg</span><span class="o">.</span><span class="n">artwork</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">SetMountpoint</span><span class="p">(</span><span class="s2">&quot;/mnt&quot;</span><span class="p">)</span>    <span class="c1"># initialize self.mp with the default mount point /mnt</span>
+
+
+
+<div class="viewcode-block" id="MusicDBExtern.CheckForDependencies"><a class="viewcode-back" href="../../mdbapi/extern.html#mdbapi.extern.MusicDBExtern.CheckForDependencies">[docs]</a>    <span class="k">def</span> <span class="nf">CheckForDependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks for dependencies required by this module.</span>
+<span class="sd">        Those dependencies are ``ffmpeg`` and `id3edit &lt;https://github.com/rstemmer/id3edit&gt;_`.</span>
+
+<span class="sd">        If a module is missing, the error message will be printed into the log file</span>
+<span class="sd">        and also onto the screen (stderr)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` if all dependencies exist, otherwise ``False``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nonemissing</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1"># no dependency is missing, as long as no check returns false</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileprocessor</span><span class="o">.</span><span class="n">ExistsProgram</span><span class="p">(</span><span class="s2">&quot;ffmpeg&quot;</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Required dependency </span><span class="se">\&quot;</span><span class="s2">ffmpeg</span><span class="se">\&quot;</span><span class="s2"> missing!&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31mRequired dependency </span><span class="se">\&quot;</span><span class="s2">ffmpeg</span><span class="se">\&quot;</span><span class="s2"> missing!&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="n">nonemissing</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fileprocessor</span><span class="o">.</span><span class="n">ExistsProgram</span><span class="p">(</span><span class="s2">&quot;id3edit&quot;</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Required dependency </span><span class="se">\&quot;</span><span class="s2">id3edit</span><span class="se">\&quot;</span><span class="s2"> missing!&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31mRequired dependency </span><span class="se">\&quot;</span><span class="s2">id3edit</span><span class="se">\&quot;</span><span class="s2"> missing!&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="n">nonemissing</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="n">nonemissing</span></div>
 
 
 

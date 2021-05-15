@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MP3 Transcoder &mdash; MusicDB 7.0.0 documentation</title>
+  <title>MP3 Transcoder &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDatabase" href="musicdb.html"/>
         <link rel="prev" title="MP3 Stream Interface" href="mp3stream.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -733,7 +733,7 @@ To safely work with the <a class="reference internal" href="#lib.stream.mp3trans
 <h2>MP3Transcoder Class<a class="headerlink" href="#mp3transcoder-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="lib.stream.mp3transcoder.MP3Transcoder">
-<em class="property">class </em><code class="sig-prename descclassname">lib.stream.mp3transcoder.</code><code class="sig-name descname">MP3Transcoder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.stream.mp3transcoder.</span></code><code class="sig-name descname"><span class="pre">MP3Transcoder</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – The absolute path of the audio file that shall be transcoded</p>
@@ -752,7 +752,7 @@ To safely work with the <a class="reference internal" href="#lib.stream.mp3trans
 </div>
 <dl class="py method">
 <dt id="lib.stream.mp3transcoder.MP3Transcoder.Cancel">
-<code class="sig-name descname">Cancel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.Cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.Cancel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Cancel</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.Cancel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.Cancel" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method cancels a currently running transcoding process.
 If there is no transcoding going on, nothing happens.</p>
 <p>The GStreamer object gets set into CANCEL state.
@@ -761,7 +761,7 @@ The connection to GStreamer stays established!</p>
 
 <dl class="py method">
 <dt id="lib.stream.mp3transcoder.MP3Transcoder.GetChunk">
-<code class="sig-name descname">GetChunk</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">size</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.GetChunk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.GetChunk" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetChunk</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.GetChunk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.GetChunk" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads a chunk of data that gets provided by the GStreamer <code class="docutils literal notranslate"><span class="pre">fdsink</span></code> element from the GStreamer Pipeline.
 This element writes into a UNIX Pipe.
 It tries to read <code class="docutils literal notranslate"><span class="pre">size</span></code> bytes of data.</p>
@@ -833,7 +833,7 @@ When there were less than <code class="docutils literal notranslate"><span class
 
 <dl class="py method">
 <dt id="lib.stream.mp3transcoder.MP3Transcoder.Transcode">
-<code class="sig-name descname">Transcode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.Transcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.Transcode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Transcode</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.Transcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.Transcode" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method starts the transcoding process of a file as thread.
 After setting the <code class="docutils literal notranslate"><span class="pre">path</span></code> as source for the audio data,
 a thread gets started that runs the GStreamer Pipeline.
@@ -857,7 +857,7 @@ If an error occurs <code class="docutils literal notranslate"><span class="pre">
 
 <dl class="py method">
 <dt id="lib.stream.mp3transcoder.MP3Transcoder.onDecoderPadAdded">
-<code class="sig-name descname">onDecoderPadAdded</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dbin</span></em>, <em class="sig-param"><span class="n">pad</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.onDecoderPadAdded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.onDecoderPadAdded" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">onDecoderPadAdded</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dbin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.onDecoderPadAdded"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.onDecoderPadAdded" title="Permalink to this definition">¶</a></dt>
 <dd><p>Args:</p>
 <p>Returns:</p>
 <p class="rubric">Example</p>
@@ -906,7 +906,7 @@ If an error occurs <code class="docutils literal notranslate"><span class="pre">
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

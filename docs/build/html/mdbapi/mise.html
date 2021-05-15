@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Micro Search Engine &mdash; MusicDB 7.0.0 documentation</title>
+  <title>Micro Search Engine &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Randomizer" href="randy.html"/>
         <link rel="prev" title="LyCra - Lyrics Crawler" href="lycra.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -692,7 +692,7 @@ Without this module, you better not use this module only if time does matter.</p
 <h2>MusicDBMicroSearchEngine Class<a class="headerlink" href="#musicdbmicrosearchengine-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="mdbapi.mise.MusicDBMicroSearchEngine">
-<em class="property">class </em><code class="sig-prename descclassname">mdbapi.mise.</code><code class="sig-name descname">MusicDBMicroSearchEngine</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">database</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/mise.html#MusicDBMicroSearchEngine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.mise.MusicDBMicroSearchEngine" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.mise.</span></code><code class="sig-name descname"><span class="pre">MusicDBMicroSearchEngine</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/mise.html#MusicDBMicroSearchEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.mise.MusicDBMicroSearchEngine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Before an object can be used, the <a class="reference internal" href="#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateCache()</span></code></a>
 method must be called to generate the cache.</p>
 <dl class="field-list simple">
@@ -705,7 +705,7 @@ method must be called to generate the cache.</p>
 </dl>
 <dl class="py method">
 <dt id="mdbapi.mise.MusicDBMicroSearchEngine.Find">
-<code class="sig-name descname">Find</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">userinput</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/mise.html#MusicDBMicroSearchEngine.Find"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.mise.MusicDBMicroSearchEngine.Find" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Find</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">userinput</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/mise.html#MusicDBMicroSearchEngine.Find"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.mise.MusicDBMicroSearchEngine.Find" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method searches through the caches of song, album and artist names.
 A fuzzy search gets applied and so the results matches only with a certain probability.</p>
 <dl class="field-list simple">
@@ -728,7 +728,7 @@ Each list entry is a tuple of an <em>ID</em> and the <em>Confidence</em></p>
 
 <dl class="py method">
 <dt id="mdbapi.mise.MusicDBMicroSearchEngine.NormalizeString">
-<code class="sig-name descname">NormalizeString</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">string</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/mise.html#MusicDBMicroSearchEngine.NormalizeString"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.mise.MusicDBMicroSearchEngine.NormalizeString" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">NormalizeString</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/mise.html#MusicDBMicroSearchEngine.NormalizeString"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.mise.MusicDBMicroSearchEngine.NormalizeString" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method normalizes a string so that it is easier to find.
 The normalization is done in the following steps:</p>
 <blockquote>
@@ -751,7 +751,7 @@ The normalization is done in the following steps:</p>
 
 <dl class="py method">
 <dt id="mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache">
-<code class="sig-name descname">UpdateCache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/mise.html#MusicDBMicroSearchEngine.UpdateCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">UpdateCache</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/mise.html#MusicDBMicroSearchEngine.UpdateCache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the internal cache used for searching.</p>
 <p>This is the only place in this class where the music database gets accessed.</p>
 <div class="admonition warning">
@@ -805,7 +805,7 @@ The normalization is done in the following steps:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

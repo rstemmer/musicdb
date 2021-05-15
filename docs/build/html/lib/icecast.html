@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Icecast Interface &mdash; MusicDB 7.0.0 documentation</title>
+  <title>Icecast Interface &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Meta Tags" href="metatags.html"/>
         <link rel="prev" title="GStreamer Interface" href="gstreamer.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -735,7 +735,7 @@ Further more it must be equal to the name definded in the detailed mount specifi
 <h2>Icecast Class<a class="headerlink" href="#icecast-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="lib.stream.icecast.IcecastInterface">
-<em class="property">class </em><code class="sig-prename descclassname">lib.stream.icecast.</code><code class="sig-name descname">IcecastInterface</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">port</span></em>, <em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">mountname</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.stream.icecast.</span></code><code class="sig-name descname"><span class="pre">IcecastInterface</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mountname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface" title="Permalink to this definition">¶</a></dt>
 <dd><p>This Icecast interface manages the connection to the Icecast server.</p>
 <p>The following values for setting up the connection via libshout are hard coded.
 They can easily be changed in the Icecast configuration in the <code class="docutils literal notranslate"><span class="pre">icecast/mount</span></code> section.</p>
@@ -832,7 +832,7 @@ that the stream can be muted via <a class="reference internal" href="#lib.stream
 </div>
 <dl class="py method">
 <dt id="lib.stream.icecast.IcecastInterface.Connect">
-<code class="sig-name descname">Connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Connect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Connect</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tries to connect to Icecast.</p>
 <p>If already connected, only <code class="docutils literal notranslate"><span class="pre">True</span></code> gets returned with out opening again.</p>
 <dl class="field-list simple">
@@ -844,7 +844,7 @@ that the stream can be muted via <a class="reference internal" href="#lib.stream
 
 <dl class="py method">
 <dt id="lib.stream.icecast.IcecastInterface.Disconnect">
-<code class="sig-name descname">Disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Disconnect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Disconnect</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Disconnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tries to close the Icecast connection.</p>
 <p>If already disconnected, only <code class="docutils literal notranslate"><span class="pre">True</span></code> gets returned with out disconnecting again.</p>
 <dl class="field-list simple">
@@ -856,7 +856,7 @@ that the stream can be muted via <a class="reference internal" href="#lib.stream
 
 <dl class="py method">
 <dt id="lib.stream.icecast.IcecastInterface.IsConnected">
-<code class="sig-name descname">IsConnected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.IsConnected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.IsConnected" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">IsConnected</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.IsConnected"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.IsConnected" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if connected to Icecase. <code class="docutils literal notranslate"><span class="pre">False</span></code> of not connected.</p>
@@ -866,7 +866,7 @@ that the stream can be muted via <a class="reference internal" href="#lib.stream
 
 <dl class="py method">
 <dt id="lib.stream.icecast.IcecastInterface.Mute">
-<code class="sig-name descname">Mute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">state</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Mute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Mute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Mute</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.Mute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.Mute" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets the Icecast Interface into a mute state (when <code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">==</span> <span class="pre">True</span></code>).
 Then, the method <a class="reference internal" href="#lib.stream.icecast.IcecastInterface.StreamFile" title="lib.stream.icecast.IcecastInterface.StreamFile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StreamFile()</span></code></a> streams silence instead of the file content.
 After leaving the mute state, the file streaming continues at the position it got muted (=paused)</p>
@@ -882,7 +882,7 @@ After leaving the mute state, the file streaming continues at the position it go
 
 <dl class="py method">
 <dt id="lib.stream.icecast.IcecastInterface.StreamChunk">
-<code class="sig-name descname">StreamChunk</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chunk</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.StreamChunk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.StreamChunk" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">StreamChunk</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chunk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.StreamChunk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.StreamChunk" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method send a chunk of a file to the Icecast server.
 The method synchronizes with Icecast before sending the data.
 This is a blocking process!</p>
@@ -917,7 +917,7 @@ the method disconnects from the Server.</p>
 
 <dl class="py method">
 <dt id="lib.stream.icecast.IcecastInterface.StreamFile">
-<code class="sig-name descname">StreamFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.StreamFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.StreamFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">StreamFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.StreamFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.StreamFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a generator that sends a mp3 file to the Icecast server.
 The mp3 file gets split into its frames, and sent frame wise.</p>
 <p>After sending one chunk, the generator returns a dictionary with exact the keys and values
@@ -992,7 +992,7 @@ ffmpeg -i monosilence.mp3 -ab 320k -ac <span class="m">2</span> stereosilence.mp
 
 <dl class="py method">
 <dt id="lib.stream.icecast.IcecastInterface.UpdateTitle">
-<code class="sig-name descname">UpdateTitle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.UpdateTitle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.UpdateTitle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">UpdateTitle</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/icecast.html#IcecastInterface.UpdateTitle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.icecast.IcecastInterface.UpdateTitle" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates the stream title.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1047,7 +1047,7 @@ ffmpeg -i monosilence.mp3 -ab 320k -ac <span class="m">2</span> stereosilence.mp
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Artwork Management &mdash; MusicDB 7.0.0 documentation</title>
+  <title>Artwork Management &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Audio Streaming Server" href="audiostream.html"/>
         <link rel="prev" title="videoframes - Video Frames and Preview Manager" href="../mod/videoframes.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -775,7 +775,7 @@ The manifest gets generated in <code class="xref py py-meth docutils literal not
 <h2>MusicDBArtwork Class<a class="headerlink" href="#musicdbartwork-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="mdbapi.artwork.MusicDBArtwork">
-<em class="property">class </em><code class="sig-prename descclassname">mdbapi.artwork.</code><code class="sig-name descname">MusicDBArtwork</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em>, <em class="sig-param"><span class="n">database</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/artwork.html#MusicDBArtwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.artwork.MusicDBArtwork" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.artwork.</span></code><code class="sig-name descname"><span class="pre">MusicDBArtwork</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/artwork.html#MusicDBArtwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.artwork.MusicDBArtwork" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -792,7 +792,7 @@ The manifest gets generated in <code class="xref py py-meth docutils literal not
 </dl>
 <dl class="py method">
 <dt id="mdbapi.artwork.MusicDBArtwork.CreateArtworkName">
-<em class="property">static </em><code class="sig-name descname">CreateArtworkName</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistname</span></em>, <em class="sig-param"><span class="n">albumname</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/artwork.html#MusicDBArtwork.CreateArtworkName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.artwork.MusicDBArtwork.CreateArtworkName" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">CreateArtworkName</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/artwork.html#MusicDBArtwork.CreateArtworkName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.artwork.MusicDBArtwork.CreateArtworkName" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates the name for an artwork regarding the following schema:
 <code class="docutils literal notranslate"><span class="pre">$Artistname</span> <span class="pre">-</span> <span class="pre">$Albumname.jpg</span></code>.
 If there is a <code class="docutils literal notranslate"><span class="pre">/</span></code> in the name, it gets replaced by <code class="docutils literal notranslate"><span class="pre">∕</span></code> (U+2215, DIVISION SLASH)</p>
@@ -811,7 +811,7 @@ If there is a <code class="docutils literal notranslate"><span class="pre">/</sp
 
 <dl class="py method">
 <dt id="mdbapi.artwork.MusicDBArtwork.GenerateAppCacheManifest">
-<code class="sig-name descname">GenerateAppCacheManifest</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/artwork.html#MusicDBArtwork.GenerateAppCacheManifest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.artwork.MusicDBArtwork.GenerateAppCacheManifest" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GenerateAppCacheManifest</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/artwork.html#MusicDBArtwork.GenerateAppCacheManifest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.artwork.MusicDBArtwork.GenerateAppCacheManifest" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a manifest file for web browsers.
 Creating is done in two steps.
 First the template given in the configuration gets copied.
@@ -829,7 +829,7 @@ Also, those of the scaled versions (as given in the config file).</p>
 
 <dl class="py method">
 <dt id="mdbapi.artwork.MusicDBArtwork.GetArtworkFromFile">
-<code class="sig-name descname">GetArtworkFromFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">album</span></em>, <em class="sig-param"><span class="n">tmpawfile</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/artwork.html#MusicDBArtwork.GetArtworkFromFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.artwork.MusicDBArtwork.GetArtworkFromFile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetArtworkFromFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">album</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmpawfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/artwork.html#MusicDBArtwork.GetArtworkFromFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.artwork.MusicDBArtwork.GetArtworkFromFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method tries to get an artwork from the metadata of the first song of an album.
 With the first song, the first one in the database related to the album is meant.
 The metadata gets loaded and the artwork stored to a temporary file using the method
@@ -849,7 +849,7 @@ The metadata gets loaded and the artwork stored to a temporary file using the me
 
 <dl class="py method">
 <dt id="mdbapi.artwork.MusicDBArtwork.SetArtwork">
-<code class="sig-name descname">SetArtwork</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em>, <em class="sig-param"><span class="n">artworkpath</span></em>, <em class="sig-param"><span class="n">artworkname</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/artwork.html#MusicDBArtwork.SetArtwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.artwork.MusicDBArtwork.SetArtwork" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SetArtwork</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artworkpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artworkname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/artwork.html#MusicDBArtwork.SetArtwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.artwork.MusicDBArtwork.SetArtwork" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets a new artwork for an album.
 It does the following things:</p>
 <blockquote>
@@ -887,7 +887,7 @@ It does the following things:</p>
 
 <dl class="py method">
 <dt id="mdbapi.artwork.MusicDBArtwork.UpdateAlbumArtwork">
-<code class="sig-name descname">UpdateAlbumArtwork</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">album</span></em>, <em class="sig-param"><span class="n">artworkpath</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/artwork.html#MusicDBArtwork.UpdateAlbumArtwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.artwork.MusicDBArtwork.UpdateAlbumArtwork" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">UpdateAlbumArtwork</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">album</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artworkpath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/artwork.html#MusicDBArtwork.UpdateAlbumArtwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.artwork.MusicDBArtwork.UpdateAlbumArtwork" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates the artwork path entry of an album and the artwork files in the artwork directory.
 If a specific artwork shall be forced to use, <em>artworkpath</em> can be set to this artwork file.
 Following the concept <em>The Filesystem Is Always Right</em> and <em>Do Not Trust Metadata</em>, the user specified artwork path has higher priority.
@@ -921,7 +921,7 @@ Metadata will only be processed if <em>artworkpath</em> is <code class="docutils
 <span id="artworkcache-class"></span><h2>ArtworkCache Class<a class="headerlink" href="#module-lib.cache" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="lib.cache.ArtworkCache">
-<em class="property">class </em><code class="sig-prename descclassname">lib.cache.</code><code class="sig-name descname">ArtworkCache</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artworkdir</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cache.html#ArtworkCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cache.ArtworkCache" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.cache.</span></code><code class="sig-name descname"><span class="pre">ArtworkCache</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artworkdir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cache.html#ArtworkCache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cache.ArtworkCache" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class handles the artwork cache.
 Its main job is to scale an image if a special resolution is requested.</p>
 <dl class="field-list simple">
@@ -931,7 +931,7 @@ Its main job is to scale an image if a special resolution is requested.</p>
 </dl>
 <dl class="py method">
 <dt id="lib.cache.ArtworkCache.GetArtwork">
-<code class="sig-name descname">GetArtwork</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artworkname</span></em>, <em class="sig-param"><span class="n">resolution</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cache.html#ArtworkCache.GetArtwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cache.ArtworkCache.GetArtwork" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetArtwork</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artworkname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cache.html#ArtworkCache.GetArtwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cache.ArtworkCache.GetArtwork" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a valid path to an artwork with the specified resolution.</p>
 <p>The final path will consist of the <em>artworkdir</em> given as class parameter, the <em>resolution</em> as subdirectory and the <em>artworkname</em> as filename. (<code class="docutils literal notranslate"><span class="pre">{artworkdir}/{resolution}/{artworkname}</span></code>)</p>
 <p>If the artwork does not exist for this resolution it will be generated.
@@ -968,7 +968,7 @@ This method expects an aspect ratio of 1:1.</p>
 
 <dl class="py method">
 <dt id="lib.cache.ArtworkCache.RebuildArtwork">
-<code class="sig-name descname">RebuildArtwork</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artworkname</span></em>, <em class="sig-param"><span class="n">resolution</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cache.html#ArtworkCache.RebuildArtwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cache.ArtworkCache.RebuildArtwork" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">RebuildArtwork</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artworkname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cache.html#ArtworkCache.RebuildArtwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cache.ArtworkCache.RebuildArtwork" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method rebuilds an artwork with the specified resolution.</p>
 <p>If the artwork does not exist for this resolution it will be generated.
 If the directory for that scale does not exist, it will be created.
@@ -1037,7 +1037,7 @@ This method expects an aspect ratio of 1:1.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

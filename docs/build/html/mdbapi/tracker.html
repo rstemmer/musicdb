@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Song Tracker &mdash; MusicDB 7.0.0 documentation</title>
+  <title>Song Tracker &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Upload Management" href="uploadmanager.html"/>
         <link rel="prev" title="MusicDBTags" href="tags.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -692,7 +692,7 @@ The user can then get the information which song/video were played after (or bef
 <h2>Tracker Class<a class="headerlink" href="#tracker-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="mdbapi.tracker.Tracker">
-<em class="property">class </em><code class="sig-prename descclassname">mdbapi.tracker.</code><code class="sig-name descname">Tracker</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em>, <em class="sig-param"><span class="n">target</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#Tracker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.Tracker" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.tracker.</span></code><code class="sig-name descname"><span class="pre">Tracker</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#Tracker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tracker.Tracker" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class tracks music (songs and videos) that were played after each other.
 So it gets tracked what songs or videos the user put together into the queue because their style fit to each other.</p>
 <p>Only completely played music should considered.
@@ -723,7 +723,7 @@ This could mess up the database with relations that were counted twice!</p>
 </dl>
 <dl class="py method">
 <dt id="mdbapi.tracker.Tracker.Track">
-<code class="sig-name descname">Track</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">targetid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#Tracker.Track"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.tracker.Tracker.Track" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Track</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">targetid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#Tracker.Track"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tracker.Tracker.Track" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method tracks the relation to the given target with the last added target.
 A target can be a song or a video.
 This new target should be a target that was recently and completely played.</p>
@@ -794,7 +794,7 @@ It is prevented by the method creating the relation.</p>
 <h2>TrackerDatabase Class<a class="headerlink" href="#trackerdatabase-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="lib.db.trackerdb.TrackerDatabase">
-<em class="property">class </em><code class="sig-prename descclassname">lib.db.trackerdb.</code><code class="sig-name descname">TrackerDatabase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.db.trackerdb.</span></code><code class="sig-name descname"><span class="pre">TrackerDatabase</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derived from <a class="reference internal" href="../lib/database.html#lib.db.database.Database" title="lib.db.database.Database"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.db.database.Database</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -806,7 +806,7 @@ It is prevented by the method creating the relation.</p>
 </dl>
 <dl class="py method">
 <dt id="lib.db.trackerdb.TrackerDatabase.AddRelation">
-<code class="sig-name descname">AddRelation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">ida</span></em>, <em class="sig-param"><span class="n">idb</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.AddRelation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.AddRelation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AddRelation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ida</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.AddRelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.AddRelation" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds a relation between two targets.
 A target can be a song or a video.</p>
 <p>It does not matter which one is greater, <em>ida</em> or <em>idb</em>.
@@ -834,7 +834,7 @@ If <em>ida</em> and <em>idb</em> are the same ID, they get ignored.</p>
 
 <dl class="py method">
 <dt id="lib.db.trackerdb.TrackerDatabase.GetRelations">
-<code class="sig-name descname">GetRelations</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">targetid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.GetRelations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.GetRelations" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetRelations</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.GetRelations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.GetRelations" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the related songs or videos of a song or a video, depending on the value of <em>target</em>.</p>
 <p>The method returns a list of dictionaries.
 Each dictionary contains the ID of the related song or video, and the weight of the relation.</p>
@@ -865,7 +865,7 @@ Each dictionary contains the ID of the related song or video, and the weight of 
 
 <dl class="py method">
 <dt id="lib.db.trackerdb.TrackerDatabase.RemoveRelation">
-<code class="sig-name descname">RemoveRelation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">ida</span></em>, <em class="sig-param"><span class="n">idb</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveRelation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveRelation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">RemoveRelation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ida</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveRelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveRelation" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes a relation between two targets.
 A target can be a song, a video or a video.</p>
 <p>It does not matter which one is greater, <em>ida</em> or <em>idb</em>.
@@ -893,7 +893,7 @@ If <em>ida</em> and <em>idb</em> are the same ID, they get ignored.</p>
 
 <dl class="py method">
 <dt id="lib.db.trackerdb.TrackerDatabase.RemoveSong">
-<code class="sig-name descname">RemoveSong</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">RemoveSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes all relations to a song.
 This is usefull in case a song gets removed from the database.</p>
 <p>If the song relation does not exist, nothing will be done.</p>
@@ -912,7 +912,7 @@ This is usefull in case a song gets removed from the database.</p>
 
 <dl class="py method">
 <dt id="lib.db.trackerdb.TrackerDatabase.RemoveVideo">
-<code class="sig-name descname">RemoveVideo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">videoid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveVideo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveVideo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">RemoveVideo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videoid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes all relations to a video.
 This is useful in case a video gets removed from the database.</p>
 <p>If the video relation does not exist, nothing will be done.</p>
@@ -969,7 +969,7 @@ This is useful in case a video gets removed from the database.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

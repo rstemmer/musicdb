@@ -664,7 +664,7 @@
             
   <h1>Source code for lib.fileprocessing</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MusicDB,  a music manager with web-bases UI that focus on music.</span>
-<span class="c1"># Copyright (C) 2017  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
+<span class="c1"># Copyright (C) 2021  Ralf Stemmer &lt;ralf.stemmer@gmx.net&gt;</span>
 <span class="c1"># </span>
 <span class="c1"># This program is free software: you can redistribute it and/or modify</span>
 <span class="c1"># it under the terms of the GNU General Public License as published by</span>
@@ -722,6 +722,29 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
         <span class="n">Filesystem</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
 
+
+
+<div class="viewcode-block" id="Fileprocessing.ExistsProgram"><a class="viewcode-back" href="../../lib/fileprocessing.html#lib.fileprocessing.Fileprocessing.ExistsProgram">[docs]</a>    <span class="k">def</span> <span class="nf">ExistsProgram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">programname</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method checks if a program exists.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                if fp.ExistsProgram(&quot;ffmpeg&quot;) == False:</span>
+<span class="sd">                    print(&quot;ffmpeg is not installed!&quot;);</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            programname (str): Name of the program to check for</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` if the program exists, otherwise ``False``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="n">programname</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
 
 
 <div class="viewcode-block" id="Fileprocessing.Checksum"><a class="viewcode-back" href="../../lib/fileprocessing.html#lib.fileprocessing.Fileprocessing.Checksum">[docs]</a>    <span class="k">def</span> <span class="nf">Checksum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;sha256&quot;</span><span class="p">):</span>
@@ -803,6 +826,10 @@
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Source (</span><span class="si">%s</span><span class="s2">) and Destination (</span><span class="si">%s</span><span class="s2">) address the same file!&quot;</span><span class="p">,</span> <span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Source and Destination path address the same file!&quot;</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ExistsProgram</span><span class="p">(</span><span class="s2">&quot;ffmpeg&quot;</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Optional dependency </span><span class="se">\&quot;</span><span class="s2">ffmpeg</span><span class="se">\&quot;</span><span class="s2"> missing. Cannot convert </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Converting </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2"> …&quot;</span><span class="p">,</span> <span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
         <span class="n">process</span> <span class="o">=</span><span class="p">[</span>
             <span class="s2">&quot;ffmpeg&quot;</span><span class="p">,</span>
@@ -878,6 +905,10 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetFileExtension</span><span class="p">(</span><span class="n">absdstpath</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;mp3&quot;</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is not a mp3-file. Output of id3edit is an mp3-file!&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">absdstpath</span><span class="p">))</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dstpath is not a mp3-file&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ExistsProgram</span><span class="p">(</span><span class="s2">&quot;id3edit&quot;</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Optional dependency </span><span class="se">\&quot;</span><span class="s2">id3edit</span><span class="se">\&quot;</span><span class="s2"> missing. Cannot convert </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
 
         <span class="c1"># Create tags</span>
         <span class="n">songname</span>    <span class="o">=</span> <span class="n">mdbsong</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
@@ -984,6 +1015,10 @@
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="n">abssrcpath</span> <span class="o">==</span> <span class="n">absdstpath</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;source and destination paths are the same. This is not supported by this function.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ExistsProgram</span><span class="p">(</span><span class="s2">&quot;ffmpeg&quot;</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Optional dependency </span><span class="se">\&quot;</span><span class="s2">ffmpeg</span><span class="se">\&quot;</span><span class="s2"> missing. Cannot convert </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">!&quot;</span><span class="p">,</span> <span class="n">abssrcpath</span><span class="p">,</span> <span class="n">absdstpath</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
         <span class="c1"># Create tags</span>

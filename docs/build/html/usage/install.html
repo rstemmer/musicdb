@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &amp; Update &mdash; MusicDB 7.0.0 documentation</title>
+  <title>Installation &amp; Update &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Music" href="music.html"/>
         <link rel="prev" title="Workflow for development" href="../basics/workflow.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -702,15 +702,20 @@ You can use your system package manager or pythons package manager <code class="
 <li><p>openssl</p></li>
 <li><p>sqlite3</p></li>
 <li><p>sed</p></li>
-<li><p>git</p></li>
 <li><p>icecast (2)</p></li>
 <li><p>gstreamer (python module, good and bad plugins)</p></li>
 <li><p>ffmpeg</p></li>
 <li><p>dialog</p></li>
 <li><p>rsync</p></li>
+<li><p>A HTTPS server for the WebUI - apache recommend</p></li>
+</ul>
+</div></blockquote>
+<p>Optional for <a class="reference internal" href="../mod/extern.html"><span class="doc">extern - Music File Uploader</span></a>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>git</p></li>
 <li><p>clang</p></li>
 <li><p><a class="reference external" href="https://github.com/rstemmer/id3edit">id3edit</a></p></li>
-<li><p>A HTTPS server for the WebUI - apache recommend</p></li>
 </ul>
 </div></blockquote>
 <p>Required gstreamer packages:</p>
@@ -1094,20 +1099,25 @@ Whenever this documentation is talking about Python, Python 3 is meant!</p>
 <p>There are some external tools necessary.
 Furthermore there are lots of python packages needed.
 You can use the <code class="docutils literal notranslate"><span class="pre">check.sh</span></code> script to see what packages are missing.</p>
-<p>The missing <code class="docutils literal notranslate"><span class="pre">id3edit</span></code> tool is part of MusicDB.
-It’s installation is described in this documentation later on.</p>
+<p>The missing <code class="docutils literal notranslate"><span class="pre">id3edit</span></code> tool is optional since MusicDB 7.1.0.
+It is only required by the <a class="reference internal" href="../mod/extern.html"><span class="doc">extern - Music File Uploader</span></a> module
+which is used to export the music collection onto an external storage device like an SD card
+or a Smartphone.</p>
 </div>
 <div class="section" id="download-musicdb">
 <h3>Download MusicDB<a class="headerlink" href="#download-musicdb" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># as user in ~/projects</span>
+git clone https://github.com/rstemmer/musicdb.git
+
+<span class="c1"># optional for MusicDB extern module</span>
 git clone https://github.com/rstemmer/libprinthex.git
 git clone https://github.com/rstemmer/id3edit.git
-git clone https://github.com/rstemmer/musicdb.git
 </pre></div>
 </div>
 </div>
 <div class="section" id="libprinthex">
 <h3>libprinthex<a class="headerlink" href="#libprinthex" title="Permalink to this headline">¶</a></h3>
+<p>Since MusicDB 7.1.0 id3edit is optional. It is only required by the <a class="reference internal" href="../mod/extern.html"><span class="doc">extern - Music File Uploader</span></a> module.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> libprinthex
 ./build.sh
 ./install.sh
@@ -1116,6 +1126,7 @@ git clone https://github.com/rstemmer/musicdb.git
 </div>
 <div class="section" id="id3">
 <h3>id3edit<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Since MusicDB 7.1.0 id3edit is optional. It is only required by the <a class="reference internal" href="../mod/extern.html"><span class="doc">extern - Music File Uploader</span></a> module.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> id3edit
 ./build.sh
 ./install.sh
@@ -1198,7 +1209,7 @@ cp ~/projects/musicdb/share/logrotate.conf /etc/logrotate.d/musicdb
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

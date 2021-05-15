@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDB Websocket Protocol &mdash; MusicDB 7.0.0 documentation</title>
+  <title>MusicDB Websocket Protocol &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Websocket Connection" href="../webui/websockets.html"/>
         <link rel="prev" title="PID File Handling" href="pidfile.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -783,7 +783,7 @@ Otherwise the mechanics behind won’t work.</p>
 <p>This module provides the server infrastructure of the server.</p>
 <dl class="py class">
 <dt id="lib.ws.server.MusicDBWebSocketProtocol">
-<em class="property">class </em><code class="sig-prename descclassname">lib.ws.server.</code><code class="sig-name descname">MusicDBWebSocketProtocol</code><a class="reference internal" href="../_modules/lib/ws/server.html#MusicDBWebSocketProtocol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.server.MusicDBWebSocketProtocol" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.ws.server.</span></code><code class="sig-name descname"><span class="pre">MusicDBWebSocketProtocol</span></code><a class="reference internal" href="../_modules/lib/ws/server.html#MusicDBWebSocketProtocol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.server.MusicDBWebSocketProtocol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derived from <a class="reference internal" href="#lib.ws.websocket.WebSocket" title="lib.ws.websocket.WebSocket"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.ws.websocket.WebSocket</span></code></a> and <a class="reference internal" href="../basics/webapi.html#id15" title="lib.ws.mdbwsi.MusicDBWebSocketInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.ws.mdbwsi.MusicDBWebSocketInterface</span></code></a>.
 Connecting low level implementation with the high level implementation of MusicDBs WebSocket Interface.</p>
 <p>This object gets always instatiated when a new client connects to the server.
@@ -797,12 +797,12 @@ The server should create a new connection but will not call the <code class="doc
 
 <dl class="py class">
 <dt id="lib.ws.server.MusicDBWebSocketServer">
-<em class="property">class </em><code class="sig-prename descclassname">lib.ws.server.</code><code class="sig-name descname">MusicDBWebSocketServer</code><a class="reference internal" href="../_modules/lib/ws/server.html#MusicDBWebSocketServer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.server.MusicDBWebSocketServer" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.ws.server.</span></code><code class="sig-name descname"><span class="pre">MusicDBWebSocketServer</span></code><a class="reference internal" href="../_modules/lib/ws/server.html#MusicDBWebSocketServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.server.MusicDBWebSocketServer" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class implements the whole server infrastructure.
 Outside of the MusicDB WebSocket Interface abstraction this is the only class to use.</p>
 <dl class="py method">
 <dt id="lib.ws.server.MusicDBWebSocketServer.HandleEvents">
-<code class="sig-name descname">HandleEvents</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/server.html#MusicDBWebSocketServer.HandleEvents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.server.MusicDBWebSocketServer.HandleEvents" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">HandleEvents</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/server.html#MusicDBWebSocketServer.HandleEvents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.server.MusicDBWebSocketServer.HandleEvents" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method handles the events inside the <em>Autobahn</em> internal event loop.
 It should be called in a loop as long as the server shall work.</p>
 <dl class="field-list simple">
@@ -825,7 +825,7 @@ It should be called in a loop as long as the server shall work.</p>
 
 <dl class="py method">
 <dt id="lib.ws.server.MusicDBWebSocketServer.Setup">
-<code class="sig-name descname">Setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">address</span></em>, <em class="sig-param"><span class="n">port</span></em>, <em class="sig-param"><span class="n">cert</span></em>, <em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/server.html#MusicDBWebSocketServer.Setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.server.MusicDBWebSocketServer.Setup" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Setup</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cert</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/server.html#MusicDBWebSocketServer.Setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.server.MusicDBWebSocketServer.Setup" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method does the server setup.</p>
 <p>It configures a TLS encrypted connection and creates the event loop.</p>
 <dl class="field-list simple">
@@ -845,7 +845,7 @@ It should be called in a loop as long as the server shall work.</p>
 
 <dl class="py method">
 <dt id="lib.ws.server.MusicDBWebSocketServer.Start">
-<code class="sig-name descname">Start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/server.html#MusicDBWebSocketServer.Start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.server.MusicDBWebSocketServer.Start" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Start</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/server.html#MusicDBWebSocketServer.Start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.server.MusicDBWebSocketServer.Start" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method starts the server.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -870,7 +870,7 @@ It should be called in a loop as long as the server shall work.</p>
 
 <dl class="py method">
 <dt id="lib.ws.server.MusicDBWebSocketServer.Stop">
-<code class="sig-name descname">Stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/server.html#MusicDBWebSocketServer.Stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.server.MusicDBWebSocketServer.Stop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Stop</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/server.html#MusicDBWebSocketServer.Stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.server.MusicDBWebSocketServer.Stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>This methos halts the server.
 It closes the connection and the event loop.</p>
 <dl class="field-list simple">
@@ -896,12 +896,12 @@ It closes the connection and the event loop.</p>
 </div></blockquote>
 <dl class="py class">
 <dt id="lib.ws.websocket.MusicDBWebSocketFactory">
-<em class="property">class </em><code class="sig-prename descclassname">lib.ws.websocket.</code><code class="sig-name descname">MusicDBWebSocketFactory</code><a class="reference internal" href="../_modules/lib/ws/websocket.html#MusicDBWebSocketFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.MusicDBWebSocketFactory" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.ws.websocket.</span></code><code class="sig-name descname"><span class="pre">MusicDBWebSocketFactory</span></code><a class="reference internal" href="../_modules/lib/ws/websocket.html#MusicDBWebSocketFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.MusicDBWebSocketFactory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derived from <code class="docutils literal notranslate"><span class="pre">WebSocketServerFactory</span></code>.
 Implements some basic configuration and a broadcasting infrastructure to send packets to all connected clients.</p>
 <dl class="py method">
 <dt id="lib.ws.websocket.MusicDBWebSocketFactory.AddToBroadcast">
-<code class="sig-name descname">AddToBroadcast</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#MusicDBWebSocketFactory.AddToBroadcast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.MusicDBWebSocketFactory.AddToBroadcast" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AddToBroadcast</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#MusicDBWebSocketFactory.AddToBroadcast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.MusicDBWebSocketFactory.AddToBroadcast" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method registers a new client.
 The client must be of the low level class <a class="reference internal" href="#lib.ws.websocket.WebSocket" title="lib.ws.websocket.WebSocket"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.ws.websocket.WebSocket</span></code></a> or a derived class.</p>
 <dl class="field-list simple">
@@ -916,7 +916,7 @@ The client must be of the low level class <a class="reference internal" href="#l
 
 <dl class="py method">
 <dt id="lib.ws.websocket.MusicDBWebSocketFactory.BroadcastPacket">
-<code class="sig-name descname">BroadcastPacket</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">packet</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#MusicDBWebSocketFactory.BroadcastPacket"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.MusicDBWebSocketFactory.BroadcastPacket" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">BroadcastPacket</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packet</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#MusicDBWebSocketFactory.BroadcastPacket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.MusicDBWebSocketFactory.BroadcastPacket" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method broadcasts a packet to all connected clients.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">method</span></code> value in the packet gets forced to <code class="docutils literal notranslate"><span class="pre">&quot;broadcast&quot;</span></code>.</p>
 <dl class="field-list simple">
@@ -931,7 +931,7 @@ The client must be of the low level class <a class="reference internal" href="#l
 
 <dl class="py method">
 <dt id="lib.ws.websocket.MusicDBWebSocketFactory.CloseConnections">
-<code class="sig-name descname">CloseConnections</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#MusicDBWebSocketFactory.CloseConnections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.MusicDBWebSocketFactory.CloseConnections" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">CloseConnections</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#MusicDBWebSocketFactory.CloseConnections"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.MusicDBWebSocketFactory.CloseConnections" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method initiates a closing handshake to all connections with error code <code class="docutils literal notranslate"><span class="pre">1000</span></code> and reason <code class="docutils literal notranslate"><span class="pre">&quot;Server</span> <span class="pre">shutdown&quot;</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -942,7 +942,7 @@ The client must be of the low level class <a class="reference internal" href="#l
 
 <dl class="py method">
 <dt id="lib.ws.websocket.MusicDBWebSocketFactory.RemoveFromBroadcast">
-<code class="sig-name descname">RemoveFromBroadcast</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#MusicDBWebSocketFactory.RemoveFromBroadcast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.MusicDBWebSocketFactory.RemoveFromBroadcast" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">RemoveFromBroadcast</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#MusicDBWebSocketFactory.RemoveFromBroadcast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.MusicDBWebSocketFactory.RemoveFromBroadcast" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a client connection handler from the broadcast-list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -958,13 +958,13 @@ The client must be of the low level class <a class="reference internal" href="#l
 
 <dl class="py class">
 <dt id="lib.ws.websocket.WebSocket">
-<em class="property">class </em><code class="sig-prename descclassname">lib.ws.websocket.</code><code class="sig-name descname">WebSocket</code><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.ws.websocket.</span></code><code class="sig-name descname"><span class="pre">WebSocket</span></code><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derived from <code class="docutils literal notranslate"><span class="pre">WebSocketServerProtocol</span></code>.
 This class provides the low level WebSocket interface for MusicDBs WebSocket Interface.
 It manages the packet handling and handles callback routines.</p>
 <dl class="py method">
 <dt id="lib.ws.websocket.WebSocket.BeautifyValues">
-<code class="sig-name descname">BeautifyValues</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">packet</span></em>, <em class="sig-param"><span class="n">affectkey</span></em>, <em class="sig-param"><span class="n">old</span></em>, <em class="sig-param"><span class="n">new</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.BeautifyValues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.BeautifyValues" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">BeautifyValues</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">affectkey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.BeautifyValues"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.BeautifyValues" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to beautify values inside nested dictionaries.
 Use-cases are replacing Division Slashes by normal slashes or hyphens by n-dashes in song names.</p>
 <p>It recursively scans through nested dictionaries and lists (<code class="docutils literal notranslate"><span class="pre">packet</span></code>)
@@ -1000,7 +1000,7 @@ Keep in mind that the content of <cite>packet</cite> will be changed even if the
 
 <dl class="py method">
 <dt id="lib.ws.websocket.WebSocket.BroadcastPacket">
-<code class="sig-name descname">BroadcastPacket</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">packet</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.BroadcastPacket"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.BroadcastPacket" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">BroadcastPacket</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packet</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.BroadcastPacket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.BroadcastPacket" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method works line <a class="reference internal" href="#lib.ws.websocket.WebSocket.SendPacket" title="lib.ws.websocket.WebSocket.SendPacket"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SendPacket()</span></code></a> only that the packet gets send to all clients.
 It uses the broadcasting method from <a class="reference internal" href="#lib.ws.websocket.MusicDBWebSocketFactory.BroadcastPacket" title="lib.ws.websocket.MusicDBWebSocketFactory.BroadcastPacket"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.ws.websocket.MusicDBWebSocketFactory.BroadcastPacket()</span></code></a>
 This method should be used with care because it can cause high traffic.</p>
@@ -1016,7 +1016,7 @@ This method should be used with care because it can cause high traffic.</p>
 
 <dl class="py method">
 <dt id="lib.ws.websocket.WebSocket.SendPacket">
-<code class="sig-name descname">SendPacket</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">packet</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.SendPacket"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.SendPacket" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SendPacket</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packet</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.SendPacket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.SendPacket" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sends a packet via to the connected client.
 The format of the packet is described in the <a class="reference internal" href="../basics/webapi.html"><span class="doc">MusicDB Websocket API</span></a> documentation.</p>
 <p>The abstract process of sending the packet is shown in the following code:</p>
@@ -1063,7 +1063,7 @@ It is assumed that those values are used to display information to the user.</p>
 
 <dl class="py method">
 <dt id="lib.ws.websocket.WebSocket.onClose">
-<code class="sig-name descname">onClose</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">wasClean</span></em>, <em class="sig-param"><span class="n">code</span></em>, <em class="sig-param"><span class="n">reason</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.onClose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.onClose" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">onClose</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wasClean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reason</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.onClose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.onClose" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets called by <code class="docutils literal notranslate"><span class="pre">WebSocketServerProtocol</span></code> implementation.
 It removes this connection to the broadcasting infrastructure of <a class="reference internal" href="#lib.ws.websocket.MusicDBWebSocketFactory" title="lib.ws.websocket.MusicDBWebSocketFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.ws.websocket.MusicDBWebSocketFactory</span></code></a>.</p>
 <p>This method calls an <code class="docutils literal notranslate"><span class="pre">onWSDisconnect(wasClean:bool,</span> <span class="pre">closecode:int,</span> <span class="pre">closereason:str)</span></code> Method that must be implemented by the programmer who uses this class.
@@ -1072,7 +1072,7 @@ The <code class="docutils literal notranslate"><span class="pre">onWSDisconnect<
 
 <dl class="py method">
 <dt id="lib.ws.websocket.WebSocket.onCloseHandshakeTimeout">
-<code class="sig-name descname">onCloseHandshakeTimeout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.onCloseHandshakeTimeout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.onCloseHandshakeTimeout" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">onCloseHandshakeTimeout</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.onCloseHandshakeTimeout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.onCloseHandshakeTimeout" title="Permalink to this definition">¶</a></dt>
 <dd><p>We expected the peer to respond to us initiating a close handshake. It didn’t
 respond (in time self.closeHandshakeTimeout) with a close response frame though.
 So we drop the connection, but set self.wasClean = False.</p>
@@ -1080,7 +1080,7 @@ So we drop the connection, but set self.wasClean = False.</p>
 
 <dl class="py method">
 <dt id="lib.ws.websocket.WebSocket.onConnect">
-<code class="sig-name descname">onConnect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">request</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.onConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.onConnect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">onConnect</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.onConnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.onConnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Just prints the IP address of the connecting client.
 See  for details.
 <a class="reference external" href="https://autobahn.readthedocs.io/en/latest/reference/autobahn.websocket.html?highlight=ConnectionRequest#autobahn.websocket.types.ConnectionRequest">ConnectionRequest in the Autobahn documentation</a> for details.</p>
@@ -1093,7 +1093,7 @@ See  for details.
 
 <dl class="py method">
 <dt id="lib.ws.websocket.WebSocket.onMessage">
-<code class="sig-name descname">onMessage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">payload</span></em>, <em class="sig-param"><span class="n">isBinary</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.onMessage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.onMessage" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">onMessage</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isBinary</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.onMessage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.onMessage" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets called by <code class="docutils literal notranslate"><span class="pre">WebSocketServerProtocol</span></code> implementation.
 It handles the decoding of a received packet and provides the packet format as described in the <a class="reference internal" href="../basics/webapi.html"><span class="doc">MusicDB Websocket API</span></a> documentation.</p>
 <p>The decoding process can be abstracted as listed in the following code:</p>
@@ -1126,7 +1126,7 @@ It handles the decoding of a received packet and provides the packet format as d
 
 <dl class="py method">
 <dt id="lib.ws.websocket.WebSocket.onOpen">
-<code class="sig-name descname">onOpen</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.onOpen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.onOpen" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">onOpen</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.onOpen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.onOpen" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets called by <code class="docutils literal notranslate"><span class="pre">WebSocketServerProtocol</span></code> implementation.
 It registers this connection to the broadcasting infrastructure of <a class="reference internal" href="#lib.ws.websocket.MusicDBWebSocketFactory" title="lib.ws.websocket.MusicDBWebSocketFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.ws.websocket.MusicDBWebSocketFactory</span></code></a>.</p>
 <p>This method calls an <code class="docutils literal notranslate"><span class="pre">onWSConnect()</span></code> Method that must be implemented by the programmer who uses this class.</p>
@@ -1134,7 +1134,7 @@ It registers this connection to the broadcasting infrastructure of <a class="ref
 
 <dl class="py method">
 <dt id="lib.ws.websocket.WebSocket.onOpenHandshakeTimeout">
-<code class="sig-name descname">onOpenHandshakeTimeout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.onOpenHandshakeTimeout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.onOpenHandshakeTimeout" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">onOpenHandshakeTimeout</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/ws/websocket.html#WebSocket.onOpenHandshakeTimeout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.ws.websocket.WebSocket.onOpenHandshakeTimeout" title="Permalink to this definition">¶</a></dt>
 <dd><p>We expected the peer to complete the opening handshake with to us.
 It didn’t do so (in time self.openHandshakeTimeout).
 So we drop the connection, but set self.wasClean = False.</p>
@@ -1180,7 +1180,7 @@ So we drop the connection, but set self.wasClean = False.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
