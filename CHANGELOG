@@ -7,6 +7,18 @@
 
 Run  git log --oneline  for more details
 
+┍━━━━┫ 2021-05-15 ┣━━━━┫ 7.1.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ + [extern] id3edit is now an optional dependency. It is only used for the music export feature (musicdb extern) of MusicDB
+│
+┝━ MINOR CHANGES
+│ + [WebUI] When showing song settings, set keyboard focus to the genre input element
+│ + [WebUI] Beside the origin, the date an album got added will also be shown in the headlines tooltip
+│ + [WebUI] Review and minor improvements of moderator.html
+└───────────────────────────────────────╌╌
+
+
+
 ┍━━━━┫ 2021-02-28 ┣━━━━┫ 7.0.0 ┣━━━━━━━━╍╍
 │
 │ ! All Music Video related features are not enabled by default

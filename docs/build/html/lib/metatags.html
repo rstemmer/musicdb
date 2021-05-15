@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Meta Tags &mdash; MusicDB 7.0.0 documentation</title>
+  <title>Meta Tags &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="MP3 File Interface" href="mp3file.html"/>
         <link rel="prev" title="Icecast Interface" href="icecast.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -676,7 +676,7 @@
 <h2>MetaTags Class<a class="headerlink" href="#metatags-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="lib.metatags.MetaTags">
-<em class="property">class </em><code class="sig-prename descclassname">lib.metatags.</code><code class="sig-name descname">MetaTags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root</span><span class="o">=</span><span class="default_value">'/'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.metatags.</span></code><code class="sig-name descname"><span class="pre">MetaTags</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class can be used to access the metadata of the music files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -685,7 +685,7 @@
 </dl>
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.AnalysePlaytime">
-<code class="sig-name descname">AnalysePlaytime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.AnalysePlaytime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.AnalysePlaytime" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AnalysePlaytime</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.AnalysePlaytime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.AnalysePlaytime" title="Permalink to this definition">¶</a></dt>
 <dd><p>Analyses the playtime of a file using <code class="docutils literal notranslate"><span class="pre">ffprobe</span></code>.</p>
 <p>The corresponding command line is the following:</p>
 <blockquote>
@@ -702,7 +702,7 @@
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.GetAlbumname">
-<code class="sig-name descname">GetAlbumname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetAlbumname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetAlbumname" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetAlbumname</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetAlbumname"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetAlbumname" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the name of the album</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -713,7 +713,7 @@
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.GetAllMetadata">
-<code class="sig-name descname">GetAllMetadata</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetAllMetadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetAllMetadata" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetAllMetadata</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetAllMetadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetAllMetadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method collects as much information as possible from a file.
 The information gets stored in a dictionary.</p>
 <blockquote>
@@ -744,7 +744,7 @@ The information gets stored in a dictionary.</p>
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.GetArtistname">
-<code class="sig-name descname">GetArtistname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetArtistname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetArtistname" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetArtistname</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetArtistname"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetArtistname" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the name of the artist</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -755,7 +755,7 @@ The information gets stored in a dictionary.</p>
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.GetBitrate">
-<code class="sig-name descname">GetBitrate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetBitrate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetBitrate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetBitrate</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetBitrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetBitrate" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the bitrate of the file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -766,7 +766,7 @@ The information gets stored in a dictionary.</p>
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.GetCDNumber">
-<code class="sig-name descname">GetCDNumber</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetCDNumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetCDNumber" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetCDNumber</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetCDNumber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetCDNumber" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the CD Number.
 The CD number is only read from MP4 and MP3 metadata.
 For all other formats, this method always returns <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
@@ -779,7 +779,7 @@ For all other formats, this method always returns <code class="docutils literal 
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.GetLyrics">
-<code class="sig-name descname">GetLyrics</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetLyrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetLyrics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetLyrics</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetLyrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetLyrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method tries to get lyrics from the metadata.
 If on lyrics were found, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</p>
 <dl class="field-list simple">
@@ -791,7 +791,7 @@ If on lyrics were found, <code class="docutils literal notranslate"><span class=
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.GetOrigin">
-<code class="sig-name descname">GetOrigin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetOrigin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetOrigin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetOrigin</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetOrigin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetOrigin" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method tries to determine where the file come from.
 The following origins can be detected:</p>
 <blockquote>
@@ -814,7 +814,7 @@ The following origins can be detected:</p>
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.GetPlaytime">
-<code class="sig-name descname">GetPlaytime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetPlaytime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetPlaytime" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetPlaytime</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetPlaytime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetPlaytime" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method tries to determine the playtime of a song.
 It first calls <a class="reference internal" href="#lib.metatags.MetaTags.AnalysePlaytime" title="lib.metatags.MetaTags.AnalysePlaytime"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AnalysePlaytime()</span></code></a> which gets the playtime direct form file
 using <code class="docutils literal notranslate"><span class="pre">ffprobe</span></code>.
@@ -828,7 +828,7 @@ Only if this method fails, the playtime gets read from the meta data.</p>
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.GetReleaseyear">
-<code class="sig-name descname">GetReleaseyear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetReleaseyear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetReleaseyear" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetReleaseyear</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetReleaseyear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetReleaseyear" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the release year</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -839,7 +839,7 @@ Only if this method fails, the playtime gets read from the meta data.</p>
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.GetSongname">
-<code class="sig-name descname">GetSongname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetSongname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetSongname" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetSongname</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetSongname"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetSongname" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the name of a song</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -850,7 +850,7 @@ Only if this method fails, the playtime gets read from the meta data.</p>
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.GetTracknumber">
-<code class="sig-name descname">GetTracknumber</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetTracknumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetTracknumber" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetTracknumber</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetTracknumber"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetTracknumber" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the track number.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -861,7 +861,7 @@ Only if this method fails, the playtime gets read from the meta data.</p>
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.GetVideoCodec">
-<code class="sig-name descname">GetVideoCodec</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetVideoCodec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetVideoCodec" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetVideoCodec</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetVideoCodec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetVideoCodec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tries to identify the video codec of a video file.</p>
 <p>The corresponding command line is the following:</p>
 <blockquote>
@@ -878,7 +878,7 @@ Only if this method fails, the playtime gets read from the meta data.</p>
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.GetVideoResolution">
-<code class="sig-name descname">GetVideoResolution</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetVideoResolution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetVideoResolution" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetVideoResolution</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.GetVideoResolution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.GetVideoResolution" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tries to identify the video resolution of a video file.
 There may be differences between the given resolution and the actual resolution of the video in the video player.
 This is due to the Sample Aspect Ratio (SAR).
@@ -899,7 +899,7 @@ This method considers the SAR by returning the width multiplied by this ratio:</
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.Load">
-<code class="sig-name descname">Load</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.Load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.Load" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Load</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.Load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.Load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Supported file extensions for audio files:</p>
 <blockquote>
 <div><ul class="simple">
@@ -937,7 +937,7 @@ A warning gets written into the log and a <code class="docutils literal notransl
 
 <dl class="py method">
 <dt id="lib.metatags.MetaTags.StoreArtwork">
-<code class="sig-name descname">StoreArtwork</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">imgfilename</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.StoreArtwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.metatags.MetaTags.StoreArtwork" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">StoreArtwork</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imgfilename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/metatags.html#MetaTags.StoreArtwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.metatags.MetaTags.StoreArtwork" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method stores an artwork from the metadata into a file.
 If there is no artwork in the metadata, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.</p>
 <p>If the file already exists, it gets overwritten.</p>
@@ -991,7 +991,7 @@ If there is no artwork in the metadata, <code class="docutils literal notranslat
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

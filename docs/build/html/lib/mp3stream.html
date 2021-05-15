@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MP3 Stream Interface &mdash; MusicDB 7.0.0 documentation</title>
+  <title>MP3 Stream Interface &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="MP3 Transcoder" href="mp3transcoder.html"/>
         <link rel="prev" title="MP3 File Interface" href="mp3file.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -673,7 +673,7 @@ Transcoding is done by the <a class="reference internal" href="mp3transcoder.htm
 <h2>MP3Stream Class<a class="headerlink" href="#mp3stream-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="lib.stream.mp3stream.MP3Stream">
-<em class="property">class </em><code class="sig-prename descclassname">lib.stream.mp3stream.</code><code class="sig-name descname">MP3Stream</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3stream.html#MP3Stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3stream.MP3Stream" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.stream.mp3stream.</span></code><code class="sig-name descname"><span class="pre">MP3Stream</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3stream.html#MP3Stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3stream.MP3Stream" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class allows frame wise access to mp3 frames generated from an valid audio file by transcoding it.
 See <a class="reference internal" href="mp3transcoder.html"><span class="doc">MP3 Transcoder</span></a> for more details about the transcoding process.
 The frame wise access can be done by the <a class="reference internal" href="#lib.stream.mp3stream.MP3Stream.Frames" title="lib.stream.mp3stream.MP3Stream.Frames"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Frames()</span></code></a> generator.
@@ -693,7 +693,7 @@ Beside the mp3 frames the generator returns lots of information extracted from t
 </div>
 <dl class="py method">
 <dt id="lib.stream.mp3stream.MP3Stream.AnalyzeHeader">
-<code class="sig-name descname">AnalyzeHeader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">header</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3stream.html#MP3Stream.AnalyzeHeader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3stream.MP3Stream.AnalyzeHeader" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">AnalyzeHeader</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">header</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3stream.html#MP3Stream.AnalyzeHeader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3stream.MP3Stream.AnalyzeHeader" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method analyzes a MP3 Frame Header and returns all information that are implicit included in these 4 bytes.
 It is build for the internal use inside this class.</p>
 <p>Primary source for analyzing the header is <a class="reference external" href="http://mpgedit.org/mpgedit/mpeg_format/MP3Format.html">mpgedit.org (no HTTPS)</a>
@@ -765,7 +765,7 @@ The returned dictionary contains the following keys:</p>
 
 <dl class="py method">
 <dt id="lib.stream.mp3stream.MP3Stream.Frames">
-<code class="sig-name descname">Frames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3stream.html#MP3Stream.Frames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.mp3stream.MP3Stream.Frames" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Frames</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3stream.html#MP3Stream.Frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3stream.MP3Stream.Frames" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a generator that returns a mp3 frame each iteration.
 There will be no ID3 Tag or any other meta data.</p>
 <p>The returned dictionary contains the following information:</p>
@@ -856,7 +856,7 @@ This warning will only be printed once for each file.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

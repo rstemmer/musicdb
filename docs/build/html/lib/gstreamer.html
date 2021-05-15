@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>GStreamer Interface &mdash; MusicDB 7.0.0 documentation</title>
+  <title>GStreamer Interface &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Icecast Interface" href="icecast.html"/>
         <link rel="prev" title="Filesystem Interface" href="filesystem.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -688,7 +688,7 @@
 <h2>GStreamerInterface Class<a class="headerlink" href="#gstreamerinterface-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="lib.stream.gstreamer.GStreamerInterface">
-<em class="property">class </em><code class="sig-prename descclassname">lib.stream.gstreamer.</code><code class="sig-name descname">GStreamerInterface</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pipelinename</span><span class="o">=</span><span class="default_value">'pipeline'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.stream.gstreamer.</span></code><code class="sig-name descname"><span class="pre">GStreamerInterface</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipelinename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pipeline'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides a simple abstraction to the GStreamer Python module.
 The class is made to manage one pipeline that can be executed in a thread.
 Therefore a state machine is implemented providing the following states.
@@ -736,7 +736,7 @@ This state will never be left!</p>
 </dl>
 <dl class="py method">
 <dt id="lib.stream.gstreamer.GStreamerInterface.Cancel">
-<code class="sig-name descname">Cancel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.Cancel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.Cancel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Cancel</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.Cancel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.Cancel" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method cancels the current running execution of the GStreamer Pipeline.
 It sets the state to CANCEL only when the current state is RUNNING.
 Otherwise nothing will be changed.</p>
@@ -744,7 +744,7 @@ Otherwise nothing will be changed.</p>
 
 <dl class="py method">
 <dt id="lib.stream.gstreamer.GStreamerInterface.CreateElement">
-<code class="sig-name descname">CreateElement</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">elementname</span></em>, <em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.CreateElement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.CreateElement" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">CreateElement</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elementname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.CreateElement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.CreateElement" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds a GStreamer Element to the GStreamer Pipeline.
 When the element exists and gets added successfully, its instance gets returned.
 Otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code> will be returned.</p>
@@ -781,7 +781,7 @@ gst-inspect-1.0 decodebin
 
 <dl class="py method">
 <dt id="lib.stream.gstreamer.GStreamerInterface.Execute">
-<code class="sig-name descname">Execute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.Execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.Execute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Execute</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.Execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.Execute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Only call this method when the pipeline execution is in IDLE state!</p>
 <p>Args:</p>
 <p>Returns:</p>
@@ -810,7 +810,7 @@ gst-inspect-1.0 decodebin
 
 <dl class="py method">
 <dt id="lib.stream.gstreamer.GStreamerInterface.GetState">
-<code class="sig-name descname">GetState</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.GetState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.GetState" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetState</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/gstreamer.html#GStreamerInterface.GetState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.gstreamer.GStreamerInterface.GetState" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The current state of the GStreamer Pipeline execution as string</p>
@@ -858,7 +858,7 @@ gst-inspect-1.0 decodebin
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Randomizer &mdash; MusicDB 7.0.0 documentation</title>
+  <title>Randomizer &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="MusicDB Websocket Server" href="server.html"/>
         <link rel="prev" title="Micro Search Engine" href="mise.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -737,7 +737,7 @@ For the blacklist stage it does not considers any Artist and Album associations 
 <h2>Randy Class<a class="headerlink" href="#randy-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="mdbapi.randy.Randy">
-<em class="property">class </em><code class="sig-prename descclassname">mdbapi.randy.</code><code class="sig-name descname">Randy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em>, <em class="sig-param"><span class="n">database</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.randy.</span></code><code class="sig-name descname"><span class="pre">Randy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.randy.Randy" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides methods to get a random song or video under certain constraints.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -752,7 +752,7 @@ For the blacklist stage it does not considers any Artist and Album associations 
 </dl>
 <dl class="py method">
 <dt id="mdbapi.randy.Randy.GetSong">
-<code class="sig-name descname">GetSong</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetSong</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method chooses a random song in a two-stage process as described in the module description.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -769,7 +769,7 @@ The amount of tries can be configured in the MusicDB Configuration</p>
 
 <dl class="py method">
 <dt id="mdbapi.randy.Randy.GetSongFromAlbum">
-<code class="sig-name descname">GetSongFromAlbum</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">albumid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSongFromAlbum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSongFromAlbum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetSongFromAlbum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSongFromAlbum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSongFromAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a random song from a specific album.</p>
 <p>If the selected song is listed in the blacklist for songs, a new one will be selected.
 Entries in the album and artist blacklist will be ignored because the artist and album is forced by the user.
@@ -797,7 +797,7 @@ The amount of tries can be configured in the MusicDB Configuration</p>
 
 <dl class="py method">
 <dt id="mdbapi.randy.Randy.GetVideo">
-<code class="sig-name descname">GetVideo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetVideo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetVideo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetVideo</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method chooses a random video in a simplified two-stage process as described in the module description.
 This method will be refined in future to fully behave like the <a class="reference internal" href="#mdbapi.randy.Randy.GetSong" title="mdbapi.randy.Randy.GetSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSong()</span></code></a> method.</p>
 <div class="admonition warning">
@@ -853,7 +853,7 @@ The amount of tries can be configured in the MusicDB Configuration</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

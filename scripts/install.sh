@@ -2,7 +2,7 @@
 
 set -e
 
-SCRIPTVERSION="2.2.0"
+SCRIPTVERSION="2.3.0"
 echo -e "\e[1;31mMusicDB-Install [\e[1;34m$SCRIPTVERSION\e[1;31m]\e[0m"
 
 
@@ -164,7 +164,7 @@ InstallMusicDBDatabases "$SOURCEDIR" "$DATADIR" "$MDBUSER" "$MDBGROUP"
 SetupIcecastEnvironment "$SOURCEDIR" "$DATADIR" "$MDBGROUP" "$SSLCRT"
 InstallLogrotateConfiguration "$SOURCEDIR" "$DATADIR" "$MDBUSER" "$MDBGROUP"
 InstallShellProfile "$SOURCEDIR" "$SERVERDIR" 
-InstallID3Edit
+#InstallID3Edit
 InstallMusicDBFiles "$SOURCEDIR" "$SERVERDIR" "$MDBUSER" "$MDBGROUP" "$WSAPIKEY"
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

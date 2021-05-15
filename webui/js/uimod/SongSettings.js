@@ -47,9 +47,12 @@ class SongSettings extends TabSelect
 
         this.previewtab.AppendChild(this.audioplayer);
 
-        this.AddTab(new SVGIcon("Tags"), "Genre Tags",         this.genrestab, true);
-        this.AddTab(new SVGIcon("Tags"), "Moods & Properties", this.moodstab);
-        this.AddTab(new SVGIcon("Play"), "Preview",            this.previewtab);
+        let genretabid   = this.AddTab(new SVGIcon("Tags"), "Genre Tags",         this.genrestab, true);
+        let moodstabid   = this.AddTab(new SVGIcon("Tags"), "Moods & Properties", this.moodstab);
+        let previewtabid = this.AddTab(new SVGIcon("Play"), "Preview",            this.previewtab);
+
+        // When the genre tab gets selected, set focus on the main genre input element
+        this.SetOnShowCallback(genretabid, ()=>{this.genreedit.SetFocus();});
     }
 
 

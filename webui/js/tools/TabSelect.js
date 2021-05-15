@@ -25,6 +25,7 @@ class TabSelect extends Element
         this.tabs           = new Array();
         this.buttons        = new Array();
         this.showcallback   = new Array();  // Will be called when tag gets selected (after integrating into the DOM)
+        this.selectedtabid  = 0;
 
         this.tabbar         = document.createElement("div");
         this.tabbar.classList.add("flex-row");
@@ -70,7 +71,10 @@ class TabSelect extends Element
         this.tabbar.appendChild(tabbutton);
 
         if(select === true)
+        {
             this.SelectTab(tabid);
+            this.selectedtabid = tabid;
+        }
         return tabid;
     }
 
@@ -91,6 +95,7 @@ class TabSelect extends Element
             button.dataset.selected = false;
         }
         this.buttons[tabid].dataset.selected = true;
+        this.selectedtabid                   = tabid;
 
         if(typeof this.showcallback[tabid] === "function")
             this.showcallback[tabid]();
@@ -109,6 +114,7 @@ class TabSelect extends Element
     Show()
     {
         this.element.style.display = "flex";
+        this.SelectTab(this.selectedtabid); // To force the OnShowCallback
     }
     Hide()
     {

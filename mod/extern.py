@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,6 +36,10 @@ Be sure to have write permission for the related directories.
 .. warning::
 
     If ``-i`` is set, the device gets initialized, even if it already is!
+
+Before anything is done, the module checks for dependencies that are optional for MusicDB
+but required for this particular module using the :meth:`~mdbapi.extern.MusicDBExtern.CheckForDependencies`.
+They are ``ffmpeg`` and `id3edit <https://github.com/rstemmer/id3edit>_`.
 
 
 Examples:
@@ -88,6 +92,10 @@ class extern(MDBModule, MusicDBExtern):
 
     # return exit-code
     def MDBM_Main(self, args):
+
+        retval = self.CheckForDependencies()
+        if retval == False:
+            return 1
 
         args.mountpoint = os.path.abspath(args.mountpoint)
 

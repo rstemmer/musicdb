@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>NamedPipe &mdash; MusicDB 7.0.0 documentation</title>
+  <title>NamedPipe &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="PID File Handling" href="pidfile.html"/>
         <link rel="prev" title="MusicDatabase" href="musicdb.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -671,7 +671,7 @@
 <h2>NamedPipe Class<a class="headerlink" href="#namedpipe-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="lib.namedpipe.NamedPipe">
-<em class="property">class </em><code class="sig-prename descclassname">lib.namedpipe.</code><code class="sig-name descname">NamedPipe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.namedpipe.</span></code><code class="sig-name descname"><span class="pre">NamedPipe</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe" title="Permalink to this definition">¶</a></dt>
 <dd><p>This module provides a class for getting command from a named pipe (FIFO).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -683,7 +683,7 @@
 </dl>
 <dl class="py method">
 <dt id="lib.namedpipe.NamedPipe.Create">
-<code class="sig-name descname">Create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Create</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the FIFO file if if does not exist.</p>
 <p>The access permissions are Read/Write for all (<code class="docutils literal notranslate"><span class="pre">0666</span></code>)</p>
 <dl class="field-list simple">
@@ -698,7 +698,7 @@
 
 <dl class="py method">
 <dt id="lib.namedpipe.NamedPipe.Delete">
-<code class="sig-name descname">Delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Delete" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Delete</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function removes the named FIFO.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -712,7 +712,7 @@
 
 <dl class="py method">
 <dt id="lib.namedpipe.NamedPipe.Exists">
-<code class="sig-name descname">Exists</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Exists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Exists</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.Exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.Exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if the FIFO file for the named pipe exists.
 It not only checks the existence of the file but also if the file is a FIFO.</p>
 <dl class="field-list simple">
@@ -724,7 +724,7 @@ It not only checks the existence of the file but also if the file is a FIFO.</p>
 
 <dl class="py method">
 <dt id="lib.namedpipe.NamedPipe.ReadLine">
-<code class="sig-name descname">ReadLine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.ReadLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.ReadLine" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">ReadLine</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.ReadLine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.ReadLine" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads a line from the FIFO, if there is a line.
 If nothing got written to the FIFO, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.
 The line does not have a trailing <code class="docutils literal notranslate"><span class="pre">\n</span></code>.</p>
@@ -750,7 +750,7 @@ The line does not have a trailing <code class="docutils literal notranslate"><sp
 
 <dl class="py method">
 <dt id="lib.namedpipe.NamedPipe.WriteLine">
-<code class="sig-name descname">WriteLine</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">line</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.WriteLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.WriteLine" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">WriteLine</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/namedpipe.html#NamedPipe.WriteLine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.namedpipe.NamedPipe.WriteLine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write a line into the named pipe.
 This method checks if the FIFO exists and rejects the line if not.
 If line is <code class="docutils literal notranslate"><span class="pre">None</span></code> or an empty string, nothing will be done.</p>
@@ -810,7 +810,7 @@ If line is <code class="docutils literal notranslate"><span class="pre">None</sp
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>LyCra - Lyrics Crawler &mdash; MusicDB 7.0.0 documentation</title>
+  <title>LyCra - Lyrics Crawler &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Micro Search Engine" href="mise.html"/>
         <link rel="prev" title="MusicDBExtern" href="extern.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -705,7 +705,7 @@ The constructor must have one parameter for a <code class="xref py py-class docu
 <span id="lycra-api-class"></span><h2>Lycra API Class<a class="headerlink" href="#module-mdbapi.lycra" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="mdbapi.lycra.Lycra">
-<em class="property">class </em><code class="sig-prename descclassname">mdbapi.lycra.</code><code class="sig-name descname">Lycra</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.lycra.</span></code><code class="sig-name descname"><span class="pre">Lycra</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.lycra.Lycra" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class does the main lyrics management.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -717,7 +717,7 @@ The constructor must have one parameter for a <code class="xref py py-class docu
 </dl>
 <dl class="py method">
 <dt id="mdbapi.lycra.Lycra.CrawlForLyrics">
-<code class="sig-name descname">CrawlForLyrics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistname</span></em>, <em class="sig-param"><span class="n">albumname</span></em>, <em class="sig-param"><span class="n">songname</span></em>, <em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.CrawlForLyrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.CrawlForLyrics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">CrawlForLyrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">songname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">songid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.CrawlForLyrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.CrawlForLyrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads all crawler from the crawler directory via <a class="reference internal" href="#mdbapi.lycra.Lycra.LoadCrawlers" title="mdbapi.lycra.Lycra.LoadCrawlers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoadCrawlers()</span></code></a>
 and runs them via <a class="reference internal" href="#mdbapi.lycra.Lycra.RunCrawler" title="mdbapi.lycra.Lycra.RunCrawler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RunCrawler()</span></code></a>.</p>
 <dl class="field-list simple">
@@ -737,14 +737,14 @@ and runs them via <a class="reference internal" href="#mdbapi.lycra.Lycra.RunCra
 
 <dl class="py method">
 <dt id="mdbapi.lycra.Lycra.GetLyrics">
-<code class="sig-name descname">GetLyrics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.GetLyrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.GetLyrics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetLyrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.GetLyrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.GetLyrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the lyrics of a song.
 See <a class="reference internal" href="#lib.db.lycradb.LycraDatabase.GetLyricsFromCache" title="lib.db.lycradb.LycraDatabase.GetLyricsFromCache"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.lycradb.LycraDatabase.GetLyricsFromCache()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="mdbapi.lycra.Lycra.LoadCrawlers">
-<code class="sig-name descname">LoadCrawlers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.LoadCrawlers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.LoadCrawlers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">LoadCrawlers</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.LoadCrawlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.LoadCrawlers" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method loads all crawlers inside the crawler directory.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -761,7 +761,7 @@ Already loaded crawler are stuck at Pythons module cache.</p>
 
 <dl class="py method">
 <dt id="mdbapi.lycra.Lycra.RunCrawler">
-<code class="sig-name descname">RunCrawler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">crawler</span></em>, <em class="sig-param"><span class="n">artistname</span></em>, <em class="sig-param"><span class="n">albumname</span></em>, <em class="sig-param"><span class="n">songname</span></em>, <em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.RunCrawler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.RunCrawler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">RunCrawler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crawler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artistname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">songname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">songid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/lycra.html#Lycra.RunCrawler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.lycra.Lycra.RunCrawler" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method runs a specific crawler.
 This crawler gets all information available to search for a specific songs lyric.</p>
 <p>This method is for class internal use.
@@ -791,7 +791,7 @@ Before calling this method, <a class="reference internal" href="#mdbapi.lycra.Ly
 <h2>Crawler Base Class<a class="headerlink" href="#crawler-base-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="lib.crawlerapi.LycraCrawler">
-<em class="property">class </em><code class="sig-prename descclassname">lib.crawlerapi.</code><code class="sig-name descname">LycraCrawler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">db</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">version</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/crawlerapi.html#LycraCrawler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.crawlerapi.LycraCrawler" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.crawlerapi.</span></code><code class="sig-name descname"><span class="pre">LycraCrawler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/crawlerapi.html#LycraCrawler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.crawlerapi.LycraCrawler" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the base class for all crawler.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -810,7 +810,7 @@ Before calling this method, <a class="reference internal" href="#mdbapi.lycra.Ly
 </dl>
 <dl class="py method">
 <dt id="lib.crawlerapi.LycraCrawler.Crawl">
-<code class="sig-name descname">Crawl</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistname</span></em>, <em class="sig-param"><span class="n">albumname</span></em>, <em class="sig-param"><span class="n">songname</span></em>, <em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/crawlerapi.html#LycraCrawler.Crawl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.crawlerapi.LycraCrawler.Crawl" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Crawl</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">songname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">songid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/crawlerapi.html#LycraCrawler.Crawl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.crawlerapi.LycraCrawler.Crawl" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets called by the lyrics manager <a class="reference internal" href="#mdbapi.lycra.Lycra" title="mdbapi.lycra.Lycra"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.lycra.Lycra</span></code></a>.
 It provides a small environment to fit the crawler into MusicDBs infrastructure.
 It catches exceptions and measures the time the crawler needs to run.</p>
@@ -831,7 +831,7 @@ It catches exceptions and measures the time the crawler needs to run.</p>
 
 <dl class="py method">
 <dt id="lib.crawlerapi.LycraCrawler.DoCrawl">
-<code class="sig-name descname">DoCrawl</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">artistname</span></em>, <em class="sig-param"><span class="n">albumname</span></em>, <em class="sig-param"><span class="n">songname</span></em>, <em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/crawlerapi.html#LycraCrawler.DoCrawl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.crawlerapi.LycraCrawler.DoCrawl" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">DoCrawl</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">songname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">songid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/crawlerapi.html#LycraCrawler.DoCrawl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.crawlerapi.LycraCrawler.DoCrawl" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the prototype the derived class has to implement for crawling.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -888,7 +888,7 @@ This entry will be compressed using the <a class="reference internal" href="../l
 </div></blockquote>
 <dl class="py class">
 <dt id="lib.db.lycradb.LycraDatabase">
-<em class="property">class </em><code class="sig-prename descclassname">lib.db.lycradb.</code><code class="sig-name descname">LycraDatabase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/lycradb.html#LycraDatabase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.lycradb.LycraDatabase" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.db.lycradb.</span></code><code class="sig-name descname"><span class="pre">LycraDatabase</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/lycradb.html#LycraDatabase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.lycradb.LycraDatabase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derived from <a class="reference internal" href="../lib/database.html#lib.db.database.Database" title="lib.db.database.Database"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.db.database.Database</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -900,7 +900,7 @@ This entry will be compressed using the <a class="reference internal" href="../l
 </dl>
 <dl class="py method">
 <dt id="lib.db.lycradb.LycraDatabase.GetLyricsFromCache">
-<code class="sig-name descname">GetLyricsFromCache</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songid</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/lycradb.html#LycraDatabase.GetLyricsFromCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.lycradb.LycraDatabase.GetLyricsFromCache" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">GetLyricsFromCache</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/lycradb.html#LycraDatabase.GetLyricsFromCache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.lycradb.LycraDatabase.GetLyricsFromCache" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of all entries from the cache, that matches the <em>songid</em>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -914,7 +914,7 @@ This entry will be compressed using the <a class="reference internal" href="../l
 
 <dl class="py method">
 <dt id="lib.db.lycradb.LycraDatabase.WriteLyricsToCache">
-<code class="sig-name descname">WriteLyricsToCache</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">crawler</span></em>, <em class="sig-param"><span class="n">songid</span></em>, <em class="sig-param"><span class="n">lyrics</span></em>, <em class="sig-param"><span class="n">url</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/lycradb.html#LycraDatabase.WriteLyricsToCache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.db.lycradb.LycraDatabase.WriteLyricsToCache" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">WriteLyricsToCache</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crawler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">songid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lyrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/lycradb.html#LycraDatabase.WriteLyricsToCache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.lycradb.LycraDatabase.WriteLyricsToCache" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method writes the lyrics a crawler found into the database.
 If there is already an entry for the combination of <em>songid</em> and <em>crawler</em>, this entry gets updated.</p>
 <p>The lyrics will be compressed.</p>
@@ -973,7 +973,7 @@ If there is already an entry for the combination of <em>songid</em> and <em>craw
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

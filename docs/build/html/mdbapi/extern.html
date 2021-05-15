@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MusicDBExtern &mdash; MusicDB 7.0.0 documentation</title>
+  <title>MusicDBExtern &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="LyCra - Lyrics Crawler" href="lycra.html"/>
         <link rel="prev" title="MusicDBDatabase" href="database.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -821,7 +821,7 @@ This is a <a class="reference external" href="https://trac.ffmpeg.org/ticket/279
 <h2>MusicDBExtern Class<a class="headerlink" href="#musicdbextern-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="mdbapi.extern.MusicDBExtern">
-<em class="property">class </em><code class="sig-prename descclassname">mdbapi.extern.</code><code class="sig-name descname">MusicDBExtern</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em>, <em class="sig-param"><span class="n">database</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.extern.</span></code><code class="sig-name descname"><span class="pre">MusicDBExtern</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -834,8 +834,22 @@ This is a <a class="reference external" href="https://trac.ffmpeg.org/ticket/279
 </dd>
 </dl>
 <dl class="py method">
+<dt id="mdbapi.extern.MusicDBExtern.CheckForDependencies">
+<code class="sig-name descname"><span class="pre">CheckForDependencies</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.CheckForDependencies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.CheckForDependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks for dependencies required by this module.
+Those dependencies are <code class="docutils literal notranslate"><span class="pre">ffmpeg</span></code> and <cite>id3edit &lt;https://github.com/rstemmer/id3edit&gt;_</cite>.</p>
+<p>If a module is missing, the error message will be printed into the log file
+and also onto the screen (stderr)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if all dependencies exist, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="mdbapi.extern.MusicDBExtern.CopyNewSongs">
-<code class="sig-name descname">CopyNewSongs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songmap</span></em>, <em class="sig-param"><span class="n">extconfig</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.CopyNewSongs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.CopyNewSongs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">CopyNewSongs</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songmap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extconfig</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.CopyNewSongs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.CopyNewSongs" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method handles the songs that are new to the collection and not yet copied to the external storage.
 The process is split into two tasks:</p>
 <blockquote>
@@ -858,7 +872,7 @@ In future, the <code class="docutils literal notranslate"><span class="pre">Copy
 
 <dl class="py method">
 <dt id="mdbapi.extern.MusicDBExtern.CopySong">
-<code class="sig-name descname">CopySong</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">relsrcpath</span></em>, <em class="sig-param"><span class="n">reldstpath</span></em>, <em class="sig-param"><span class="n">extconfig</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.CopySong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.CopySong" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">CopySong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relsrcpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reldstpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extconfig</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.CopySong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.CopySong" title="Permalink to this definition">¶</a></dt>
 <dd><p>In this method, the copy process is done. This method is the core of this class.
 The copy process is done in several steps:</p>
 <blockquote>
@@ -886,7 +900,7 @@ If a song file already exists, the copy-process gets skipped.</p>
 
 <dl class="py method">
 <dt id="mdbapi.extern.MusicDBExtern.FixPath">
-<code class="sig-name descname">FixPath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">string</span></em>, <em class="sig-param"><span class="n">charset</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.FixPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.FixPath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">FixPath</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.FixPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.FixPath" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method places characters that are invalid for <em>charset</em> by a valid one.</p>
 <blockquote>
 <div><ol class="arabic simple">
@@ -918,7 +932,7 @@ If a song file already exists, the copy-process gets skipped.</p>
 
 <dl class="py method">
 <dt id="mdbapi.extern.MusicDBExtern.InitializeStorage">
-<code class="sig-name descname">InitializeStorage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.InitializeStorage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.InitializeStorage" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">InitializeStorage</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.InitializeStorage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.InitializeStorage" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates the state-directory inside the mountpoint.
 Then a template of the storage configuration gets copied inside the new creates state-directory</p>
 <dl class="field-list simple">
@@ -930,7 +944,7 @@ Then a template of the storage configuration gets copied inside the new creates 
 
 <dl class="py method">
 <dt id="mdbapi.extern.MusicDBExtern.IsStorageInitialized">
-<code class="sig-name descname">IsStorageInitialized</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.IsStorageInitialized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.IsStorageInitialized" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">IsStorageInitialized</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.IsStorageInitialized"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.IsStorageInitialized" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks for the state-directory and the storage configuration file inside the state directory.
 If both exists, the storage is considered as initialized and <code class="docutils literal notranslate"><span class="pre">True</span></code> gets returned.</p>
 <dl class="field-list simple">
@@ -942,7 +956,7 @@ If both exists, the storage is considered as initialized and <code class="docuti
 
 <dl class="py method">
 <dt id="mdbapi.extern.MusicDBExtern.ReadSongmap">
-<code class="sig-name descname">ReadSongmap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mappath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.ReadSongmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.ReadSongmap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">ReadSongmap</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mappath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.ReadSongmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.ReadSongmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads the song map that maps relative song paths from the collection to relative paths on the external storage.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -956,7 +970,7 @@ If both exists, the storage is considered as initialized and <code class="docuti
 
 <dl class="py method">
 <dt id="mdbapi.extern.MusicDBExtern.ReducePathLength">
-<code class="sig-name descname">ReducePathLength</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.ReducePathLength"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.ReducePathLength" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">ReducePathLength</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.ReducePathLength"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.ReducePathLength" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reduces a path length to hopefully fit into a path-length-limit.
 The reduction is done by removing the song name from the path.
 Everything left is the directory the song is stored in, the song number and the file extension.</p>
@@ -979,7 +993,7 @@ Everything left is the directory the song is stored in, the song number and the 
 
 <dl class="py method">
 <dt id="mdbapi.extern.MusicDBExtern.RemoveOldSongs">
-<code class="sig-name descname">RemoveOldSongs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songmap</span></em>, <em class="sig-param"><span class="n">extconfig</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.RemoveOldSongs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.RemoveOldSongs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">RemoveOldSongs</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songmap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extconfig</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.RemoveOldSongs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.RemoveOldSongs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove all songs that have a destination-entry but no source-entry in the songmap.
 This constellation means that there is a file on the storage that does not exist in the music collection.</p>
 <dl class="field-list simple">
@@ -997,7 +1011,7 @@ This constellation means that there is a file on the storage that does not exist
 
 <dl class="py method">
 <dt id="mdbapi.extern.MusicDBExtern.SetMountpoint">
-<code class="sig-name descname">SetMountpoint</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mountpoint</span><span class="o">=</span><span class="default_value">'/mnt'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.SetMountpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.SetMountpoint" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">SetMountpoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mountpoint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/mnt'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.SetMountpoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.SetMountpoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the mountpoint MusicDBExtern shall work on.
 If the mountpoint does not exists, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.
 The existence of a mountpoint does not guarantee that the device is mounted.
@@ -1014,7 +1028,7 @@ Furthermore the method does not check if the mounted device is initialized - thi
 
 <dl class="py method">
 <dt id="mdbapi.extern.MusicDBExtern.UpdateSongmap">
-<code class="sig-name descname">UpdateSongmap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songmap</span></em>, <em class="sig-param"><span class="n">mdbpathlist</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.UpdateSongmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.UpdateSongmap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">UpdateSongmap</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songmap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdbpathlist</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.UpdateSongmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.UpdateSongmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates the songmap read with <a class="reference internal" href="#mdbapi.extern.MusicDBExtern.ReadSongmap" title="mdbapi.extern.MusicDBExtern.ReadSongmap"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ReadSongmap()</span></code></a>.
 Therefore, new source-paths will be added, and old one will be removed.
 The new ones will be tuple of <code class="docutils literal notranslate"><span class="pre">(srcpath,</span> <span class="pre">None)</span></code> added to the list.
@@ -1042,7 +1056,7 @@ This leads to a list of tuple, with each tuple representing one of the following
 
 <dl class="py method">
 <dt id="mdbapi.extern.MusicDBExtern.UpdateStorage">
-<code class="sig-name descname">UpdateStorage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.UpdateStorage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.UpdateStorage" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">UpdateStorage</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.UpdateStorage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.UpdateStorage" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method does the whole update process. It consists of the following steps:</p>
 <ol class="arabic simple">
 <li><p>Prepare envrionment like determin configfiles and opening them.</p></li>
@@ -1062,7 +1076,7 @@ This leads to a list of tuple, with each tuple representing one of the following
 
 <dl class="py method">
 <dt id="mdbapi.extern.MusicDBExtern.WriteSongmap">
-<code class="sig-name descname">WriteSongmap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">songmap</span></em>, <em class="sig-param"><span class="n">mappath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.WriteSongmap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.WriteSongmap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">WriteSongmap</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songmap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mappath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/extern.html#MusicDBExtern.WriteSongmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.extern.MusicDBExtern.WriteSongmap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes all valid entries of <em>songmap</em> into the state-file.
 This method generates the new state of the external storage.</p>
 <p>A valid entry has a source and a destination path.</p>
@@ -1119,7 +1133,7 @@ This method generates the new state of the external storage.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

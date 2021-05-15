@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Fileprocessing Methods &mdash; MusicDB 7.0.0 documentation</title>
+  <title>Fileprocessing Methods &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -37,7 +37,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../index.html"/>
         <link rel="next" title="Filesystem Interface" href="filesystem.html"/>
         <link rel="prev" title="Database" href="database.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -671,7 +671,7 @@
 <h2>Fileprocessing Class<a class="headerlink" href="#fileprocessing-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="lib.fileprocessing.Fileprocessing">
-<em class="property">class </em><code class="sig-prename descclassname">lib.fileprocessing.</code><code class="sig-name descname">Fileprocessing</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root</span><span class="o">=</span><span class="default_value">'/'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.fileprocessing.</span></code><code class="sig-name descname"><span class="pre">Fileprocessing</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class extends the interface to the <a class="reference internal" href="filesystem.html#lib.filesystem.Filesystem" title="lib.filesystem.Filesystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.filesystem.Filesystem</span></code></a> class.
 It provides file processing methods.
 These methods may execute other linux shell commands.</p>
@@ -702,7 +702,7 @@ The paths of methods from <a class="reference internal" href="filesystem.html#li
 </dl>
 <dl class="py method">
 <dt id="lib.fileprocessing.Fileprocessing.Checksum">
-<code class="sig-name descname">Checksum</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'sha256'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.Checksum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.Checksum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">Checksum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sha256'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.Checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.Checksum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method calculates the checksum of a file and returns it hexadecimal encoded as a string.
 If the file does not exists, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</p>
 <p>The default algorithm is SHA-256</p>
@@ -729,7 +729,7 @@ If the file does not exists, <code class="docutils literal notranslate"><span cl
 
 <dl class="py method">
 <dt id="lib.fileprocessing.Fileprocessing.ConvertToMP3">
-<code class="sig-name descname">ConvertToMP3</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">srcpath</span></em>, <em class="sig-param"><span class="n">dstpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.ConvertToMP3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.ConvertToMP3" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">ConvertToMP3</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">srcpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dstpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.ConvertToMP3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.ConvertToMP3" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method converts any audio file format to an mp3 file using <code class="docutils literal notranslate"><span class="pre">ffmpeg</span></code>.</p>
 <p>The encoder is <em>libmp3lame</em> and the bitrate is esoteric 320kbit/s.
 If the destination file exists, it will be overwritten.</p>
@@ -760,8 +760,27 @@ In the past, there were lots of trouble with “incomplete” files.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="lib.fileprocessing.Fileprocessing.ExistsProgram">
+<code class="sig-name descname"><span class="pre">ExistsProgram</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">programname</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.ExistsProgram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.ExistsProgram" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method checks if a program exists.</p>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">fp</span><span class="o">.</span><span class="n">ExistsProgram</span><span class="p">(</span><span class="s2">&quot;ffmpeg&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ffmpeg is not installed!&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>programname</strong> (<em>str</em>) – Name of the program to check for</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the program exists, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="lib.fileprocessing.Fileprocessing.OptimizeM4ATags">
-<code class="sig-name descname">OptimizeM4ATags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mdbsong</span></em>, <em class="sig-param"><span class="n">mdbalbum</span></em>, <em class="sig-param"><span class="n">mdbartist</span></em>, <em class="sig-param"><span class="n">srcpath</span></em>, <em class="sig-param"><span class="n">dstpath</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.OptimizeM4ATags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.OptimizeM4ATags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">OptimizeM4ATags</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mdbsong</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdbalbum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdbartist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">srcpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dstpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.OptimizeM4ATags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.OptimizeM4ATags" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method fixes the Tags of an m4a file.
 The data for the Tags come from the MusicDBDatabase.
 For writing the new tags, <code class="docutils literal notranslate"><span class="pre">ffmpeg</span></code> is used.</p>
@@ -812,7 +831,7 @@ The source file must have the file extension <code class="docutils literal notra
 
 <dl class="py method">
 <dt id="lib.fileprocessing.Fileprocessing.OptimizeMP3Tags">
-<code class="sig-name descname">OptimizeMP3Tags</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mdbsong</span></em>, <em class="sig-param"><span class="n">mdbalbum</span></em>, <em class="sig-param"><span class="n">mdbartist</span></em>, <em class="sig-param"><span class="n">srcpath</span></em>, <em class="sig-param"><span class="n">dstpath</span></em>, <em class="sig-param"><span class="n">absartworkpath</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">forceID3v230</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.OptimizeMP3Tags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.OptimizeMP3Tags" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">OptimizeMP3Tags</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mdbsong</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdbalbum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdbartist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">srcpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dstpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absartworkpath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forceID3v230</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.OptimizeMP3Tags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.OptimizeMP3Tags" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method fixed the ID3 tags of an mp3 file.
 For writing the new ID3 tags, <code class="docutils literal notranslate"><span class="pre">id3edit</span></code> is used.</p>
 <p>Source and destination path can be the same.
@@ -901,7 +920,7 @@ The <code class="docutils literal notranslate"><span class="pre">id3edit</span><
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

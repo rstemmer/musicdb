@@ -42,15 +42,19 @@ Required system packages:
    * openssl
    * sqlite3
    * sed
-   * git
    * icecast (2)
    * gstreamer (python module, good and bad plugins)
    * ffmpeg
    * dialog
    * rsync
+   * A HTTPS server for the WebUI - apache recommend
+
+
+Optional for :doc:`/mod/extern`:
+
+   * git
    * clang
    * `id3edit <https://github.com/rstemmer/id3edit>`_
-   * A HTTPS server for the WebUI - apache recommend
 
 Required gstreamer packages:
 
@@ -387,8 +391,10 @@ There are some external tools necessary.
 Furthermore there are lots of python packages needed.
 You can use the ``check.sh`` script to see what packages are missing.
 
-The missing ``id3edit`` tool is part of MusicDB.
-It's installation is described in this documentation later on.
+The missing ``id3edit`` tool is optional since MusicDB 7.1.0.
+It is only required by the :doc:`/mod/extern` module
+which is used to export the music collection onto an external storage device like an SD card
+or a Smartphone.
 
 Download MusicDB
 ^^^^^^^^^^^^^^^^
@@ -396,14 +402,18 @@ Download MusicDB
 .. code-block:: bash
 
    # as user in ~/projects
+   git clone https://github.com/rstemmer/musicdb.git
+
+   # optional for MusicDB extern module
    git clone https://github.com/rstemmer/libprinthex.git
    git clone https://github.com/rstemmer/id3edit.git
-   git clone https://github.com/rstemmer/musicdb.git
 
 
 
 libprinthex
 ^^^^^^^^^^^
+
+Since MusicDB 7.1.0 id3edit is optional. It is only required by the :doc:`/mod/extern` module.
 
 .. code-block:: bash
 
@@ -414,6 +424,8 @@ libprinthex
 
 id3edit
 ^^^^^^^
+
+Since MusicDB 7.1.0 id3edit is optional. It is only required by the :doc:`/mod/extern` module.
 
 .. code-block:: bash
 
