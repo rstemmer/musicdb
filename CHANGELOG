@@ -16,6 +16,7 @@ Run  git log --oneline  for more details
 ┝━ MINOR CHANGES
 │ + [WebUI] When showing song settings, set keyboard focus to the genre input element
 │ + [WebUI] Beside the origin, the date an album got added will also be shown in the headlines tooltip
+│ + [WebUI] Review and minor improvements of moderator.html
 └───────────────────────────────────────╌╌
 
 

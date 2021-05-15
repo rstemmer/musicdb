@@ -1,18 +1,32 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 
-<html lang="de" manifest="webui/manifest.appcache">
+<html lang="en">
     <head>
-        <!-- Make things clear -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <title>MusicDB</title>
 
-        <!-- Make things fancy -->
+        <!-- Make Things Clear -->
+        <meta name="viewport"         content="width=device-width, initial-scale=1.0">
+        <meta name="description"      content="MusicDB WebUI to access the music collection and  moderate the music stream.">
+        <meta name="theme-color"      content="#181819">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="format-detection" content="date=no">
+        <meta name="format-detection" content="address=no">
+        <meta name="format-detection" content="email=no">
+        <meta name="google"           content="notranslate">
+
+        <!-- Make Things Fancy -->
         <!-- icons -->
-        <link rel="icon"              type="image/svg+xml" href="img/mdblogo-dark.svg">
-        <link rel="apple-touch-icon" sizes="152x152"   href="pics/TouchIcon.png">
-        <!-- styles -->
+        <link rel="icon" type="image/svg+xml" href="img/mdblogo-dark.svg">
+
+        <!-- Apple-stuff - currently not supported -->
+        <!--
+        <link rel="apple-touch-icon" sizes="152x152" href="pics/TouchIcon.png">
+        <meta name="apple-mobile-web-app-capable"          content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        -->
+
+        <!-- Base Styles -->
         <link rel="stylesheet" href="css/fonts.css">
         <link rel="stylesheet" href="css/base.css">
         <link rel="stylesheet" href="css/style.css">
@@ -20,7 +34,7 @@
         <link rel="stylesheet" href="css/moderator/frames.css">
         <link rel="stylesheet" href="css/moderator/panels.css">
         <link rel="stylesheet" href="css/moderator/animation.css">
-        <!-- tools/helper -->
+        <!-- Tools  and Base Classes -->
         <link rel="stylesheet" href="css/tools/hovpacity.css">
         <link rel="stylesheet" href="css/tools/frames.css">
         <link rel="stylesheet" href="css/tools/Table.css">
@@ -42,7 +56,7 @@
         <link rel="stylesheet" href="css/tools/FileSelect.css">
         <link rel="stylesheet" href="css/tools/Input.css">
         <link rel="stylesheet" href="css/tools/ArtistInput.css">
-        <!-- mods -->
+        <!-- UI Modules -->
         <link rel="stylesheet" href="css/uimod/MessageBar.css">
         <link rel="stylesheet" href="css/uimod/TimeFrameSelection.css">
         <link rel="stylesheet" href="css/uimod/TagList.css">
@@ -102,8 +116,8 @@
 
 
 
-        <!-- Make things work -->
-        <!-- tools -->
+        <!-- Make Things Work -->
+        <!-- Tools and Base Classes -->
         <script src="js/tools/Element.js"></script>
         <script src="js/tools/PopupElement.js"></script>
         <script src="js/tools/Levenshtein.js"></script>
@@ -135,7 +149,7 @@
         <script src="js/tools/FileSelect.js"></script>
         <script src="js/tools/Input.js"></script>
         <script src="js/tools/ArtistInput.js"></script>
-        <!-- scripts -->
+        <!-- UI Modules-->
         <script src="js/uimod/MessageBar.js"></script>
         <script src="js/uimod/TimeFrameSelection.js"></script>
         <script src="js/uimod/ThumbnailSelection.js"></script>
@@ -200,25 +214,15 @@
         <script src="js/views/QueueControlView.js"></script>
         <script src="js/uimod/videostream.js"></script>
 
-
+        <!-- Web Socket Interface and Configuration -->
         <script src="config.js"></script>
         <script src="js/musicdb.js"></script>
-        
-        
+
         <!-- This needs to be the last one. It connects to the server and starts running the functionality. -->
         <script src="js/moderator/moderator.js"></script>
 
-        <title>MusicDB</title>
-
-        <!-- UNCOMMENT FOR DEBUGGING DIVS
-        <style type="text/css">
-        div
-        {
-            outline: 1px solid #f00;
-        }
-        </style>
-        -->
     </head>
+
 
 
     <body class="bgcolor fgcolor">
@@ -227,19 +231,7 @@
             <div class="panels" data-panels="1" id="Panels">
 
                 <div class="panel" data-visible="false" id="VideoPanel">
-
-                        <!--
-                    <div id="detachable_trigger"></div>
-                    <div id="detachable_video" class="detachable fmcolor" data-detached="false">
-                        <video
-                            id="VideoStreamPlayer"
-                            class="detachable_content"
-                            data-detached="false"
-                            preload=none>
-                        </video>
-                    </div>
-                        -->
-
+                <!-- Mount Point for the Video Panel -->
                 </div>
 
                 <div class="panel" data-visible="true" id="moderatorpanel">
