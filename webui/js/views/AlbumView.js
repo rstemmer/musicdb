@@ -50,9 +50,8 @@ class AlbumView extends MainView2
         super("AlbumView", headline, artwork);
 
         // Create Settings
-        this.settings_tags  = document.createElement("div");
-        this.settings_color = document.createElement("div");
-        this.settings_color.classList.add("flex-row");
+        this.settings_tags  = new Element("div");
+        this.settings_color = new Element("div", ["flex-row"]);
         this.settings_hide  = new SettingsCheckbox(
             "Hide Album",
             "When the album is hidden, it will not be shown in the Artists list.</br>Furthermore it is not considered by the random song selection algorithm.</br>You can make the album visible again with the MusicDB Management tools (See Main Menu).");
@@ -71,21 +70,18 @@ class AlbumView extends MainView2
         this.subgenreview = new TagListView();
 
         // Create Layout
-        this.songscell    = document.createElement("div");
-        this.songscell.classList.add("flex-grow");
-        this.songscell.id = "SongList";
+        this.songscell    = new Element("div", ["flex-grow"], "SongList");
 
         this.tagscell     = new Element("div", ["hovpacity"], "TagsCell");
-        //this.tagscell.id  = "TagsCell";
         this.tagscell.AppendChild(this.genreview);
         this.tagscell.AppendChild(this.subgenreview);
 
-        this.settingscell = document.createElement("div");
-        this.settingscell.appendChild(this.settings.GetHTMLElement());
+        this.settingscell = new Element("div")
+        this.settingscell.AppendChild(this.settings);
 
         // Create Album View Element
-        this.column1.appendChild(this.settingscell);
-        this.column1.appendChild(this.songscell);
+        this.column1.appendChild(this.settingscell.GetHTMLElement());
+        this.column1.appendChild(this.songscell.GetHTMLElement());
         this.column2.appendChild(this.tagscell.GetHTMLElement());
     }
 
@@ -119,9 +115,9 @@ class AlbumView extends MainView2
         // Update Settings
         this.colorselect     = new ColorSchemeSelection("audio", currentalbumid);
         this.artworkuploader = new ArtworkUploader(MDBArtist.name, MDBAlbum.name, MDBAlbum.id);
-        this.settings_color.innerHTML = "";
-        this.settings_color.appendChild(this.artworkuploader.GetHTMLElement());
-        this.settings_color.appendChild(this.colorselect.GetHTMLElement());
+        this.settings_color.RemoveChilds();
+        this.settings_color.AppendChild(this.artworkuploader.GetHTMLElement());
+        this.settings_color.AppendChild(this.colorselect.GetHTMLElement());
 
         this.settings_hide.SetState(MDBAlbum.hidden);
         this.settings_hide.SetHandler((state)=>
@@ -132,9 +128,9 @@ class AlbumView extends MainView2
 
         this.genreedit          = new TagListEdit("genre");
         this.subgenreedit       = new TagListEdit("subgenre");
-        this.settings_tags.innerHTML = "";
-        this.settings_tags.appendChild(this.genreedit.GetHTMLElement());
-        this.settings_tags.appendChild(this.subgenreedit.GetHTMLElement());
+        this.settings_tags.RemoveChilds();
+        this.settings_tags.AppendChild(this.genreedit);
+        this.settings_tags.AppendChild(this.subgenreedit);
 
         this.settings.SelectTab(this.tagstabid);
         this.settings.Hide();
@@ -153,7 +149,7 @@ class AlbumView extends MainView2
 
     UpdateSongList(MDBCDs)
     {
-        this.songscell.innerHTML = "";
+        this.songscell.RemoveChilds();
         this.songtiles = new Object();
 
         for(let cdnum in MDBCDs)
@@ -163,12 +159,10 @@ class AlbumView extends MainView2
             // If more than 1 CD, create a small headline
             if(MDBCDs.length > 1)
             {
-                let headline = document.createElement("div");
-                headline.classList.add("smallfont");
-                headline.classList.add("hlcolor");
-                headline.classList.add("CDNumber");
-                headline.innerText = "CD " + (parseInt(cdnum) + 1);
-                this.songscell.appendChild(headline);
+                let headline     = new Element("div", ["smallfont", "hlcolor", "CDNumber"]);
+                let headlinetext = "CD " + (parseInt(cdnum) + 1);
+                headline.SetInnerText(headlinetext);
+                this.songscell.AppendChild(headline);
             }
 
             // Create actual song list
@@ -180,8 +174,8 @@ class AlbumView extends MainView2
                 let songsettings = new SongSettings(MDBSong, MDBTags);
                 let songtile     = new SongEntryTile(MDBSong, MDBTags);
 
-                this.songscell.appendChild(songtile.GetHTMLElement());
-                this.songscell.appendChild(songsettings.GetHTMLElement());
+                this.songscell.AppendChild(songtile);
+                this.songscell.AppendChild(songsettings);
 
                 this.songtiles[songid] = new Object();
                 this.songtiles[songid].tile     = songtile;
