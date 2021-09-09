@@ -110,6 +110,9 @@ class ArtistsView extends LeftView
                     );
             }
 
+            if(configuration.ArtistsView.showrelease == false)
+                tile.HideReleaseDate();
+
             this.tiles[musicid] = tile;
             artistelement.AppendChild(tile);
         }

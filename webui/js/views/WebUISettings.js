@@ -40,9 +40,19 @@ class WebUISettings extends MainSettingsView
             }
         );
 
+        this.avshowreleasecheckbox = new SettingsCheckbox(
+            "Show album release date in Artists View",
+            "If set, the release date of an album is shown next to its name in the Artists View. If false, the release date will not be shown.</br>In any case, the albums of an artist are sorted by their release date.",
+            (state)=>{
+                if(state == true) this.ChangeSetting("ArtistsView", "showrelease", true);
+                else              this.ChangeSetting("ArtistsView", "showrelease", false);
+            }
+        );
+
         let settingslist = new SettingsList();
         settingslist.AddEntry(this.videocheckbox);
         settingslist.AddEntry(this.lyricscheckbox);
+        settingslist.AddEntry(this.avshowreleasecheckbox);
 
         this.element.appendChild(settingslist.GetHTMLElement());
         this.settings = null;
@@ -56,6 +66,7 @@ class WebUISettings extends MainSettingsView
 
         this.videocheckbox.SetState( settings.WebUI.videomode == "enabled");
         this.lyricscheckbox.SetState(settings.WebUI.lyrics    == "enabled");
+        this.avshowreleasecheckbox.SetState(settings.ArtistsView.showrelease == true);
         return;
     }
 
