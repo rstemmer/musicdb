@@ -30,7 +30,7 @@
  *   │  # Song name (+)(>) ░ │               │
  *   │  # Song name (+)(>) ░ ├───────────────┤
  *   │  # Song name (+)(>) ░ │ Tags          │
- *   │  # Song name (+)(>) ░ │ Colors        │
+ *   │  # Song name (+)(>) ░ │               │
  *   └───────────────────────┴───────────────┘
  * 
  */
@@ -75,10 +75,10 @@ class AlbumView extends MainView2
         this.songscell.classList.add("flex-grow");
         this.songscell.id = "SongList";
 
-        this.tagscell     = document.createElement("div");
-        this.tagscell.id  = "TagsCell";
-        this.tagscell.appendChild(this.genreview.GetHTMLElement());
-        this.tagscell.appendChild(this.subgenreview.GetHTMLElement());
+        this.tagscell     = new Element("div", ["hovpacity"], "TagsCell");
+        //this.tagscell.id  = "TagsCell";
+        this.tagscell.AppendChild(this.genreview);
+        this.tagscell.AppendChild(this.subgenreview);
 
         this.settingscell = document.createElement("div");
         this.settingscell.appendChild(this.settings.GetHTMLElement());
@@ -86,7 +86,7 @@ class AlbumView extends MainView2
         // Create Album View Element
         this.column1.appendChild(this.settingscell);
         this.column1.appendChild(this.songscell);
-        this.column2.appendChild(this.tagscell);
+        this.column2.appendChild(this.tagscell.GetHTMLElement());
     }
 
 

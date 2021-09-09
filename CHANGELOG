@@ -12,6 +12,7 @@ Run  git log --oneline  for more details
 │
 ┝━ MINOR CHANGES
 │ * [WebUI] Long artist names in Artist View are handled correct now
+│ * [WebUI] The tags in the Album View under the artwork are less opaque now
 └───────────────────────────────────────╌╌
 
 ┍━━━━┫ 2021-05-15 ┣━━━━┫ 7.1.0 ┣━━━━━━━━╍╍

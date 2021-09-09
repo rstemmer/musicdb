@@ -36,11 +36,11 @@
 }
 
 
-#AlbumView #TagsCell .tagview
+#AlbumView #TagsCell
 {
-    flex-wrap:      wrap;
-    margin:         1rem;
+    margin:         0 2rem;
 }
+
 
 #AlbumView .ArtworkUploader
 {
