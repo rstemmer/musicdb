@@ -59,7 +59,14 @@
 {
     flex-basis:         100%;
     width:              0;      /* To align to album entries */
+    margin:             0 0.3em;
+
     overflow:           hidden;
+    white-space:        nowrap;
+
+    background-image:   linear-gradient(to right, var(--fgcolor) 80%, rgba(0,0,0,1) 100%);
+    background-clip:    text;
+    color:              transparent;
 }
 .artistentry > div
 {

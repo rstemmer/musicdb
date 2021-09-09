@@ -7,6 +7,13 @@
 
 Run  git log --oneline  for more details
 
+┍━━━━┫ 2021-??-?? ┣━━━━┫ 7.2.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│
+┝━ MINOR CHANGES
+│ * [WebUI] Long artist names in Artist View are handled correct now
+└───────────────────────────────────────╌╌
+
 ┍━━━━┫ 2021-05-15 ┣━━━━┫ 7.1.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ + [extern] id3edit is now an optional dependency. It is only used for the music export feature (musicdb extern) of MusicDB

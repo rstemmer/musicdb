@@ -124,6 +124,7 @@ class ArtistsView extends LeftView
         // Add artist headline
         let headline = new Element("span", ["fgcolor"], "Artist_" + MDBArtist.id);
         headline.SetInnerText(MDBArtist.name);
+        headline.SetTooltip(MDBArtist.name);
         return headline;
     }
 
