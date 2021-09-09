@@ -145,6 +145,16 @@ class ColorSchemeSelection extends Element
     onPreview(colorname, colorvalue)
     {
         this.ApplyColorScheme();
+
+        // Calculate Accessibility (color contrast) to W3.org:
+        // https://www.w3.org/TR/WCAG21/#contrast-minimum
+        let rl_fg = CalculateRelativeLuminance(this.fginput.GetColor());
+        let rl_hl = CalculateRelativeLuminance(this.hlinput.GetColor());
+        let rl_bg = CalculateRelativeLuminance(this.bginput.GetColor());
+
+        let fgcontrast = CalculateContrast(rl_fg, rl_bg);
+        let hlcontrast = CalculateContrast(rl_hl, rl_bg);
+        window.console?.log(`Contrast: FG: ${fgcontrast}, HL: ${hlcontrast}`);
     }
 
 
