@@ -65,6 +65,16 @@ class Element
     {
         this.element.innerText = text;
     }
+
+
+    Show()
+    {
+        this.element.style.display = "block";
+    }
+    Hide()
+    {
+        this.element.style.display = "none";
+    }
 }
 
 
