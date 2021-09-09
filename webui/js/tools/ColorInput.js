@@ -159,8 +159,6 @@ class ColorSchemeSelection extends Element
         let fgcontrast = CalculateContrast(rl_fg, rl_bg);
         let hlcontrast = CalculateContrast(rl_hl, rl_bg);
 
-        window.console?.log(`Contrast: FG: ${fgcontrast}, HL: ${hlcontrast}`);
-
         // Background should be dark, so only the lower 10% of the scale is considered.
         // To scale this up to 0…100, the color is multiplied by 1000 and cut to 100 max
         let bgvalue = rl_bg * 1000;

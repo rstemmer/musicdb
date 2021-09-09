@@ -84,7 +84,6 @@ class IndicatorBar extends Element
     // position: 0..100
     SetIndicator(position)
     {
-        window.console?.log(`SetIndicator(${position})`);
         this.indicator.GetHTMLElement().style.left = `${position}%`;
     }
 
