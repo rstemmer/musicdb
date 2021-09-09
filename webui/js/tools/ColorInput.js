@@ -21,7 +21,7 @@ class ColorInput extends Element
     // when label == null, no label will be created
     constructor(label, tooltip, initcolor, onsave, onpreview)
     {
-        super("div", ["ColorInput"]);
+        super("div", ["ColorInput", "flex-row"]);
 
         this.input          = document.createElement("input");
         this.input.type     = "color";
@@ -114,9 +114,19 @@ class ColorSchemeSelection extends Element
             (color)=>{this.onSave("hlcolor", color);}, 
             (color)=>{this.onPreview("hlcolor", color);});
 
-        this.AppendChild(this.bginput);
-        this.AppendChild(this.fginput);
-        this.AppendChild(this.hlinput);
+        this._CreateColorControl(this.bginput);
+        this._CreateColorControl(this.fginput);
+        this._CreateColorControl(this.hlinput);
+    }
+
+
+
+    _CreateColorControl(colorinput)
+    {
+        let element = new Element("div", ["flex-row", "flex-right"]);
+        element.AppendChild(colorinput);
+        // TODO: Add quality graph
+        this.AppendChild(element);
     }
 
 
