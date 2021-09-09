@@ -114,9 +114,9 @@ class ColorSchemeSelection extends Element
             (color)=>{this.onSave("hlcolor", color);}, 
             (color)=>{this.onPreview("hlcolor", color);});
 
-        this.element.appendChild(this.bginput.GetHTMLElement());
-        this.element.appendChild(this.fginput.GetHTMLElement());
-        this.element.appendChild(this.hlinput.GetHTMLElement());
+        this.AppendChild(this.bginput);
+        this.AppendChild(this.fginput);
+        this.AppendChild(this.hlinput);
     }
 
 
