@@ -93,6 +93,7 @@ class ColorSchemeSelection extends Element
         this.musictype  = musictype;
         this.musicid    = musicid;
 
+        // Color input elements
         this.bginput = new ColorInput(
             "Background Color",
             "Change background color",
@@ -114,18 +115,25 @@ class ColorSchemeSelection extends Element
             (color)=>{this.onSave("hlcolor", color);}, 
             (color)=>{this.onPreview("hlcolor", color);});
 
-        this._CreateColorControl(this.bginput);
-        this._CreateColorControl(this.fginput);
-        this._CreateColorControl(this.hlinput);
+
+        // Quality indicators
+        this.bgindicator = new IndicatorBar("Darkness",  5, 10,  5);
+        this.fgindicator = new IndicatorBar("Contrast", 70, 90, 20);
+        this.hlindicator = new IndicatorBar("Contrast", 40, 70, 20);
+        this.UpdateIndicators();
+
+        this._CreateColorControl(this.bginput, this.bgindicator);
+        this._CreateColorControl(this.fginput, this.fgindicator);
+        this._CreateColorControl(this.hlinput, this.hlindicator);
     }
 
 
 
-    _CreateColorControl(colorinput)
+    _CreateColorControl(colorinput, qualityindicator)
     {
         let element = new Element("div", ["flex-row", "flex-right"]);
         element.AppendChild(colorinput);
-        // TODO: Add quality graph
+        element.AppendChild(qualityindicator);
         this.AppendChild(element);
     }
 
@@ -136,6 +144,32 @@ class ColorSchemeSelection extends Element
         this.bginput.SetColor(bgcolor);
         this.fginput.SetColor(fgcolor);
         this.hlinput.SetColor(hlcolor);
+    }
+
+
+
+    UpdateIndicators()
+    {
+        // Calculate Accessibility (color contrast) to W3.org:
+        // https://www.w3.org/TR/WCAG21/#contrast-minimum
+        let rl_bg = CalculateRelativeLuminance(this.bginput.GetColor());
+        let rl_fg = CalculateRelativeLuminance(this.fginput.GetColor());
+        let rl_hl = CalculateRelativeLuminance(this.hlinput.GetColor());
+
+        let fgcontrast = CalculateContrast(rl_fg, rl_bg);
+        let hlcontrast = CalculateContrast(rl_hl, rl_bg);
+
+        window.console?.log(`Contrast: FG: ${fgcontrast}, HL: ${hlcontrast}`);
+
+        // Background should be dark, so only the lower 10% of the scale is considered.
+        // To scale this up to 0…100, the color is multiplied by 1000 and cut to 100 max
+        let bgvalue = rl_bg * 1000;
+        if(bgvalue > 100)
+            bgvalue = 100;
+
+        this.bgindicator.SetIndicator(bgvalue);
+        this.fgindicator.SetIndicator((fgcontrast / 21) * 100);    // 21 is max
+        this.hlindicator.SetIndicator((hlcontrast / 21) * 100);    // 21 is max
     }
 
 
@@ -155,16 +189,7 @@ class ColorSchemeSelection extends Element
     onPreview(colorname, colorvalue)
     {
         this.ApplyColorScheme();
-
-        // Calculate Accessibility (color contrast) to W3.org:
-        // https://www.w3.org/TR/WCAG21/#contrast-minimum
-        let rl_fg = CalculateRelativeLuminance(this.fginput.GetColor());
-        let rl_hl = CalculateRelativeLuminance(this.hlinput.GetColor());
-        let rl_bg = CalculateRelativeLuminance(this.bginput.GetColor());
-
-        let fgcontrast = CalculateContrast(rl_fg, rl_bg);
-        let hlcontrast = CalculateContrast(rl_hl, rl_bg);
-        window.console?.log(`Contrast: FG: ${fgcontrast}, HL: ${hlcontrast}`);
+        this.UpdateIndicators();
     }
 
 

@@ -9,6 +9,7 @@ Run  git log --oneline  for more details
 
 ┍━━━━┫ 2021-??-?? ┣━━━━┫ 7.2.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
+│ + [WebUI] A color scheme quality indicator has been added to the color settings
 │
 ┝━ MINOR CHANGES
 │ * [WebUI] Long artist names in Artist View are handled correct now

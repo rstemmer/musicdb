@@ -51,7 +51,7 @@ class AlbumView extends MainView2
 
         // Create Settings
         this.settings_tags  = new Element("div");
-        this.settings_color = new Element("div", ["flex-row"]);
+        this.settings_color = new Element("div", ["flex-column"]);
         this.settings_hide  = new SettingsCheckbox(
             "Hide Album",
             "When the album is hidden, it will not be shown in the Artists list.</br>Furthermore it is not considered by the random song selection algorithm.</br>You can make the album visible again with the MusicDB Management tools (See Main Menu).");
