@@ -201,7 +201,7 @@ class AlbumView extends MainView2
 
         // Update song tile
         newsongtile.SetRightClickCallback((event)=>{songsettings.ToggleVisibility(); event.preventDefault();});
-        this.songscell.replaceChild(newsongtile.GetHTMLElement(), oldsongtile.GetHTMLElement());
+        this.songscell.ReplaceChild(newsongtile, oldsongtile);
 
         // Update internal data
         this.songtiles[songid].tile = newsongtile;
