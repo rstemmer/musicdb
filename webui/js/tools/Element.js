@@ -63,6 +63,17 @@ class Element
 
 
 
+    AddCSSClass(cssclass)
+    {
+        this.element.classList.add(cssclass);
+    }
+    RemoveCSSClass(cssclass)
+    {
+        this.element.classList.remove(cssclass);
+    }
+
+
+
     SetTooltip(tooltip)
     {
         this.element.title = tooltip;
@@ -73,6 +84,10 @@ class Element
     SetInnerText(text)
     {
         this.element.innerText = text;
+    }
+    SetInnerHTML(html)
+    {
+        this.element.innerHTML = html;
     }
 
 
