@@ -41,6 +41,10 @@ class GenreSelectionView extends Element
         let genres = tagmanager.GetGenres();
         for(let genre of genres)
         {
+            // If Other-Genre shall be hidden, skip adding it to the View :)
+            if(genre.name === "Other" && configuration.GenreSelectionView.showother === false)
+                continue;
+
             let tag = new Tag(genre);
             tag.SetClickAction(()=>{this.onTagClicked(tag, genre);});
 

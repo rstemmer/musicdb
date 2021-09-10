@@ -49,10 +49,20 @@ class WebUISettings extends MainSettingsView
             }
         );
 
+        this.gsvshowothercheckbox= new SettingsCheckbox(
+            "Show \"Other\" genre in the gere lists of the Genre Selection View",
+            "If set, the default genre \"Other\" is listed in the set of selectable genres.</br>This setting does not hide the default genre from the list of genres to tag a song or album with.</br><span style=\"color:red\">Requires reloading the WebUI!</span> (Press F5)",
+            (state)=>{
+                if(state == true) this.ChangeSetting("GenreSelectionView", "showother", true);
+                else              this.ChangeSetting("GenreSelectionView", "showother", false);
+            }
+        );
+
         let settingslist = new SettingsList();
         settingslist.AddEntry(this.videocheckbox);
         settingslist.AddEntry(this.lyricscheckbox);
         settingslist.AddEntry(this.avshowreleasecheckbox);
+        settingslist.AddEntry(this.gsvshowothercheckbox);
 
         this.AppendChild(settingslist);
         this.settings = null;
@@ -67,6 +77,7 @@ class WebUISettings extends MainSettingsView
         this.videocheckbox.SetState( settings.WebUI.videomode == "enabled");
         this.lyricscheckbox.SetState(settings.WebUI.lyrics    == "enabled");
         this.avshowreleasecheckbox.SetState(settings.ArtistsView.showrelease == true);
+        this.gsvshowothercheckbox.SetState(settings.GenreSelectionView.showother == true);
         return;
     }
 

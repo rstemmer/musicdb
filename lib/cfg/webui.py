@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,6 +49,9 @@ The following sections and keys are available:
     If false, the release date will not be shown.
     In any case, the albums of an artist are sorted by their release date.
 
+[GenreSelectionView]->showother (boolean):
+    If true, the default genre "Other" will be listed.
+
 [debug]->blurartwork (boolean):
     If true, all artworks are blurred.
     This is useful to avoid copyright violations on screenshots that shall be public available
@@ -83,7 +86,8 @@ class WebUIConfig(Config):
         if version < 2:
             logging.info("Updating webui.ini to version 2")
             self.Set("meta",  "version",     2)
-            self.Set("ArtistsView", "showrelease", True)
+            self.Set("ArtistsView",        "showrelease", True)
+            self.Set("GenreSelectionView", "showother",   True)
 
 
 
@@ -105,6 +109,9 @@ class WebUIConfig(Config):
         cfg["ArtistsView"] = {}
         cfg["ArtistsView"]["showrelease"] = self.Get(bool, "ArtistsView", "showrelease", True)
 
+        cfg["GenreSelectionView"] = {}
+        cfg["GenreSelectionView"]["showother"] = self.Get(bool, "GenreSelectionView", "showother", True)
+
         cfg["debug"] = {}
         cfg["debug"]["blurartwork"] = self.Get(bool, "debug", "blurartwork", False)
         return cfg;
@@ -122,11 +129,12 @@ class WebUIConfig(Config):
         Returns:
             *Nothing*
         """
-        self.Set("meta",  "version",     cfg["meta"]["version"])
-        self.Set("WebUI", "videomode",   cfg["WebUI"]["videomode"])
-        self.Set("WebUI", "lyrics",      cfg["WebUI"]["lyrics"])
-        self.Set("ArtistsView", "showrelease", cfg["ArtistsView"]["showrelease"])
-        self.Set("debug", "blurartwork", cfg["debug"]["blurartwork"])
+        self.Set("meta",               "version",     cfg["meta"]["version"])
+        self.Set("WebUI",              "videomode",   cfg["WebUI"]["videomode"])
+        self.Set("WebUI",              "lyrics",      cfg["WebUI"]["lyrics"])
+        self.Set("ArtistsView",        "showrelease", cfg["ArtistsView"]["showrelease"])
+        self.Set("GenreSelectionView", "showother",   cfg["GenreSelectionView"]["showother"])
+        self.Set("debug",              "blurartwork", cfg["debug"]["blurartwork"])
         return
 
 
