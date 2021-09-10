@@ -117,9 +117,14 @@ class ColorSchemeSelection extends Element
 
 
         // Quality indicators
-        this.bgindicator = new IndicatorBar("Darkness",  5, 10,  5);
-        this.fgindicator = new IndicatorBar("Contrast", 70, 90, 20);
-        this.hlindicator = new IndicatorBar("Contrast", 40, 70, 20);
+        // Evaluate Accessibility (color contrast) to W3.org:
+        // https://www.w3.org/TR/WCAG21/#contrast-minimum
+        //  At least 4.5/21=21%, better 7.0/21=33%
+        //  +10 because I use transparency,
+        //  -10 because low contrast sets focus to the album artwork
+        this.bgindicator = new IndicatorBar("Lightness",  5, 10,  5);
+        this.fgindicator = new IndicatorBar("Contrast", 33+10, 90-10, 20);
+        this.hlindicator = new IndicatorBar("Contrast", 21+10, 70-10, 20);
         this.UpdateIndicators();
 
         this._CreateColorControl(this.bginput, this.bgindicator);
@@ -150,8 +155,6 @@ class ColorSchemeSelection extends Element
 
     UpdateIndicators()
     {
-        // Calculate Accessibility (color contrast) to W3.org:
-        // https://www.w3.org/TR/WCAG21/#contrast-minimum
         let rl_bg = CalculateRelativeLuminance(this.bginput.GetColor());
         let rl_fg = CalculateRelativeLuminance(this.fginput.GetColor());
         let rl_hl = CalculateRelativeLuminance(this.hlinput.GetColor());
