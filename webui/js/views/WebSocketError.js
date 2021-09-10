@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ class WebSocketError extends MainView2
 
         let errormsg = new MessageBarError(`Connecting to MusicDB (<tt>${WEBSOCKET_URL}</tt>) failed.`);
         errormsg.Show();
-        this.column1.appendChild(errormsg.GetHTMLElement());
+        this.column1.AppendChild(errormsg);
 
         let message = "";
         message += "<h1>Web Socket Error</h1>";
@@ -71,9 +71,9 @@ class WebSocketError extends MainView2
         //message += "";
         //message += "</p>";
 
-        let messagebox = document.createElement("div");
-        messagebox.innerHTML = message;
-        this.column1.appendChild(messagebox);
+        let messagebox = new Element("div");
+        messagebox.SetInnerHTML(message);
+        this.column1.AppendChild(messagebox);
     }
 
 

@@ -80,9 +80,9 @@ class AlbumView extends MainView2
         this.settingscell.AppendChild(this.settings);
 
         // Create Album View Element
-        this.column1.appendChild(this.settingscell.GetHTMLElement());
-        this.column1.appendChild(this.songscell.GetHTMLElement());
-        this.column2.appendChild(this.tagscell.GetHTMLElement());
+        this.column1.AppendChild(this.settingscell);
+        this.column1.AppendChild(this.songscell);
+        this.column2.AppendChild(this.tagscell);
     }
 
 

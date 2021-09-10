@@ -22,11 +22,11 @@ class Welcome extends MainView2
     {
         let headline = new SettingsHeadline("MusicDB", "This view is shown because there is no song or video queue avaliable.");
         super("Welcome", headline, new MusicDBLogo);
-        this.element.classList.add("Welcome");
+        this.AddCSSClass("Welcome");
 
         let nosongswarning = new MessageBarWarning("There is no Music in the Queue");
         nosongswarning.Show();
-        this.column1.appendChild(nosongswarning.GetHTMLElement());
+        this.column1.AppendChild(nosongswarning);
 
         let message = "";
         message += "<h1>Welcome to MusicDB</h1>";
@@ -49,9 +49,9 @@ class Welcome extends MainView2
         message += " In case of questions just create an <a target=\"_blank\" href=\"https://github.com/rstemmer/musicdb/issues\">Issue at GitHub.com</a>.";
         message += "</p>";
 
-        let messagebox = document.createElement("div");
-        messagebox.innerHTML = message;
-        this.column1.appendChild(messagebox);
+        let messagebox = new Element("div");
+        messagebox.SetInnerHTML(message);
+        this.column1.AppendChild(messagebox);
     }
 
 
