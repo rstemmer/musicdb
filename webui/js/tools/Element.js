@@ -51,6 +51,15 @@ class Element
     {
         this.element.innerHTML = "";
     }
+    ReplaceChild(newchild, oldchild)
+    {
+        if(typeof oldchild.GetHTMLElement === "function")
+            oldchild = oldchild.GetHTMLElement();
+        if(typeof newchild.GetHTMLElement === "function")
+            newchild = newchild.GetHTMLElement();
+
+        this.element.replaceChild(newchild, oldchild);
+    }
 
 
 
