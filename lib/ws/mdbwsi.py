@@ -428,7 +428,10 @@ class MusicDBWebSocketInterface(object):
         elif fncname == "AddRandomVideoToQueue":
             retval = self.AddRandomVideoToQueue(args["position"])
         elif fncname == "AddAlbumToQueue":
-            retval = self.AddAlbumToQueue(args["albumid"], args["position"])
+            if "cd" in args:
+                retval = self.AddAlbumToQueue(args["albumid"], args["position"], args["cd"])
+            else:
+                retval = self.AddAlbumToQueue(args["albumid"], args["position"])
         elif fncname == "AddRandomSongToQueue":
             if "albumid" in args:
                 retval = self.AddRandomSongToQueue(args["position"], args["albumid"])
@@ -2225,9 +2228,13 @@ class MusicDBWebSocketInterface(object):
         return None
 
 
-    def AddAlbumToQueue(self, albumid, position):
+    def AddAlbumToQueue(self, albumid, position, cd=None):
         """
-        This method adds all songs of an album (from all CDs) at the end of the queue.
+        This method adds all songs of an album at any position of the queue.
+
+        If *cd* is ``None`` (or not given), all songs of all CDs are added to the queue.
+        If *cd* is an integer, it limits the CD that will be added.
+        The CD number starts with ``0`` for the first CD of an album.
 
         The position can be ``"next"`` if the songs shall be placed behind the current playing song.
         So, all new added songs will be played next.
@@ -2240,6 +2247,7 @@ class MusicDBWebSocketInterface(object):
         Args:
             albumid (int): ID of the album that shall be added
             position (str/int): ``"next"``, ``"last"`` or Song-Queue Entry ID - Determines where the songs get added
+            cd (None/int): (Optional) Only this CD of the album should be added to the queue. Starting with ``0`` for the first CD of an album.
 
         Returns:
             ``None``
@@ -2248,6 +2256,8 @@ class MusicDBWebSocketInterface(object):
             .. code-block:: javascript
 
                 MusicDB_Call("AddAlbumToQueue", {albumid:23});
+                MusicDB_Call("AddAlbumToQueue", {albumid:42, position:"next"});
+                MusicDB_Call("AddAlbumToQueue", {albumid:13, position:"last", cd=1});
 
         """
         try:
@@ -2260,6 +2270,15 @@ class MusicDBWebSocketInterface(object):
             return None
 
         sortedcds = self.GetSortedAlbumCDs(albumid)
+
+        # If there shall be only a specific CD added, limit sortedcds to that specific one
+        if type(cd) == int:
+            if cd >= len(sortedcds):
+                logging.warning("CD index to select is larger than available CDs. Given was CD \"%s\", available are \"%i\" CDs. \033[1;30m(Doing nothing)", str(cd), len(sortedcds))
+                return None
+            sortedcds = [sortedcds[cd], ]
+
+        # Insert all CDs song-vise into to queue
         for cd in sortedcds:
             for entry in cd:
                 song = entry["song"]

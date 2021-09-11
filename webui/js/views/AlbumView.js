@@ -157,11 +157,17 @@ class AlbumView extends MainView2
             let MDBSongList = MDBCDs[cdnum];
 
             // If more than 1 CD, create a small headline
+            // Use this headline also for allowing adding the CD into the queue.
+            // The music ID for CDs is AlbumID.CDNum
             if(MDBCDs.length > 1)
             {
-                let headline     = new Element("div", ["smallfont", "hlcolor", "CDNumber"]);
-                let headlinetext = "CD " + (parseInt(cdnum) + 1);
+                let cdname       = parseInt(cdnum) + 1;
+                let albumid      = MDBSongList[0].song["albumid"];
+                let headline     = new Draggable("div", ["smallfont", "hlcolor", "CDNumber"]);
+                let headlinetext = "CD " + cdname;
                 headline.SetInnerText(headlinetext);
+                headline.ConfigDraggable("CD", `${albumid}.${cdnum}`, "insert");
+                headline.BecomeDraggable();
                 this.songscell.AppendChild(headline);
             }
 

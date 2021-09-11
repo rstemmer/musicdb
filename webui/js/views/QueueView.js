@@ -141,7 +141,7 @@ class QueueDropZone extends DropTarget
 {
     constructor(entryid)
     {
-        super("div", ["QueueDropZone", "QueueTile"], "dropzone"+entryid, ["song", "video", "album"]);
+        super("div", ["QueueDropZone", "QueueTile"], "dropzone"+entryid, ["song", "video", "album", "CD"]);
         
         this.entryid    = entryid;
         this.BecomeDropTarget();
@@ -154,7 +154,7 @@ class QueueDropZone extends DropTarget
         let draggable = document.getElementById(draggableid);
         let entryid   = draggable.dataset.entryid;
         let musictype = draggable.dataset.musictype;
-        let musicid   = parseInt(draggable.dataset.musicid);
+        let musicid   = draggable.dataset.musicid;
         let droptask  = draggable.dataset.droptask;
         //window.console && console.log(`Droped ${musictype} with id ${musicid}, ${droptask} at ${this.entryid}`);
 
@@ -173,15 +173,25 @@ class QueueDropZone extends DropTarget
             case "insert":
                 if(musictype == "song")
                 {
-                    MusicDB_Call("AddSongToQueue", {songid: musicid, position: this.entryid});
+                    let songid = parseInt(musicid);
+                    MusicDB_Call("AddSongToQueue", {songid: songid, position: this.entryid});
                 }
                 else if(musictype == "video")
                 {
-                    MusicDB_Call("AddVideoToQueue", {videoid: musicid, position: this.entryid});
+                    let videoid = parseInt(musicid);
+                    MusicDB_Call("AddVideoToQueue", {videoid: videoid, position: this.entryid});
                 }
                 else if(musictype == "album")
                 {
-                    MusicDB_Call("AddAlbumToQueue", {albumid: musicid, position: this.entryid});
+                    let albumid = parseInt(musicid);
+                    MusicDB_Call("AddAlbumToQueue", {albumid: albumid, position: this.entryid});
+                }
+                else if(musictype == "CD")
+                {
+                    let [albumid, cdnum] = musicid.split('.');
+                    albumid = parseInt(albumid);
+                    cdnum   = parseInt(cdnum);
+                    MusicDB_Call("AddAlbumToQueue", {albumid: albumid, position: this.entryid, cd: cdnum});
                 }
                 break;
 
