@@ -19,16 +19,23 @@
 class Element
 {
     /* Basic HTML Element
-     * type: like "div" or "span"
+     * type: A: a string like "div" or "span"
+     *       B: an object representing an existing HTML element
      * classes: A set of CSS classes
      * id: element ID
      */
     constructor(type, classes=[], id=null)
     {
-        this.element = document.createElement(type);
+        if(typeof type === "object")
+            this.element = type;
+        else
+            this.element = document.createElement(type);
+
         this.element.classList.add(...classes);
+
         if(typeof id === "string")
             this.element.id = id;
+
         this.displaystyle = this.element.style.display;
     }
 
