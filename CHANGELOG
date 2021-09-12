@@ -18,6 +18,7 @@ Run  git log --oneline  for more details
 ┝━ MINOR CHANGES
 │ * [WebUI] Long artist names in Artist View are handled correct now
 │ * [WebUI] The tags in the Album View under the artwork are less opaque now
+│ + [WebUI] Mouse over album name in Artist View shows complete name as tool tip
 └───────────────────────────────────────╌╌
 
 

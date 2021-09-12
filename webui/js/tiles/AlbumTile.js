@@ -34,6 +34,7 @@ class BaseAlbumTile extends Draggable
 
         this.titleelement= new Element("span", ["fgcolor"]);
         this.titleelement.SetInnerText(albumname);
+        this.titleelement.SetTooltip(albumname);
         this.metadata.AppendChild(this.titleelement);
 
         if(size == "medium")
