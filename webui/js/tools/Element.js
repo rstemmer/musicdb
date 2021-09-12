@@ -75,6 +75,17 @@ class Element
 
 
 
+    SetData(property, value)
+    {
+        this.element.dataset[property] = value;
+    }
+    GetData(property)
+    {
+        return this.element.dataset[property];
+    }
+
+
+
     SetTooltip(tooltip)
     {
         this.element.title = tooltip;
