@@ -29,6 +29,7 @@ class Element
         this.element.classList.add(...classes);
         if(typeof id === "string")
             this.element.id = id;
+        this.displaystyle = this.element.style.display;
     }
 
 
@@ -93,10 +94,11 @@ class Element
 
     Show()
     {
-        this.element.style.display = "block";
+        this.element.style.display = this.displaystyle;
     }
     Hide()
     {
+        this.displaystyle = this.element.style.display;
         this.element.style.display = "none";
     }
 }
