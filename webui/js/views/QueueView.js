@@ -106,6 +106,11 @@ class QueueView extends Element
             if(queueposition > 0)
                 tile.BecomeDraggable();
 
+            // When the user presses the remove button, the tile should be hidden as soon as possible.
+            // If the music cannot be removed from the queue it will appear on queue refresh,
+            // otherwise it is already gone and the user experiences fast response
+            buttonbox.SetOnRemoveCallback(()=>{tile.Hide(); dropzone.Hide();});
+
             super.AppendChild(tile);
             super.AppendChild(dropzone);
             queueposition += 1;
