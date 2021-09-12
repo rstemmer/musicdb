@@ -92,6 +92,23 @@ class Element
     }
 
 
+    InsertBefore(newelement)
+    {
+        if(typeof newelement.GetHTMLElement === "function")
+            newelement = newelement.GetHTMLElement();
+        this.element.parentElement.insertBefore(newelement, this.element)
+    }
+    InsertAfter(newelement)
+    {
+        if(typeof newelement.GetHTMLElement === "function")
+            newelement = newelement.GetHTMLElement();
+        if(this.element.nextSibling !== null)
+            this.element.parentElement.insertBefore(newelement, this.element.nextSibling)
+        else
+            this.element.parentElement.appendChild(newelement);
+    }
+
+
     Show()
     {
         this.element.style.display = this.displaystyle;

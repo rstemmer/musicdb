@@ -179,9 +179,6 @@ class QueueDropZone extends DropTarget
                 // Therefore the tile that shall be moved and its corresponding drop zone will be loaded
                 // into tilea and zonea.
                 // Then it gets moved.
-                // Because there is no inertAfter method and the tile of interest may be moved to the end of the queue
-                // this situation becomes a bit hacky.
-                // This is fine because this situation is temporary (some milliseconds), and only for visual reasons.
                 //
                 // Before:
                 //  tile b
@@ -192,15 +189,14 @@ class QueueDropZone extends DropTarget
                 //
                 // After:
                 //  tile b
-                //  zone a \
-                //  tile a  > Note that the order is destroyed !
-                //  zone b /  
+                //  zone b
+                //  tile a
+                //  zone a
 
-                let tilea = document.getElementById(`QueueEntry${entryid}_${musictype}_${musicid}`);
-                let zonea = tilea.nextSibling;
-                let zoneb = this.GetHTMLElement();
-                zoneb.parentElement.insertBefore(zonea, zoneb);
-                zoneb.parentElement.insertBefore(tilea, zoneb);
+                let tile = draggable;
+                let zone = draggable.nextSibling;
+                this.InsertAfter(zone);
+                this.InsertAfter(tile);
                 break;
 
             case "insert":
