@@ -91,12 +91,9 @@ class SongEntryTile extends Draggable
         this.flagbar      = new FlagBar(MDBSong, MDBTags.moods);
 
         this.lyricsbutton = new SVGButton(this.LyricsStateToIconName(MDBSong.lyricsstate), ()=>{this.ShowLyrics();});
-        this.appendbutton = new SVGButton("Append", ()=>{this.AddSongToQueue("last");});
-        this.insertbutton = new SVGButton("Insert", ()=>{this.AddSongToQueue("next");});
         this.lyricsbutton.SetTooltip("Show song lyrics");
-        this.appendbutton.SetTooltip("Append song to the queue");
-        this.insertbutton.SetTooltip("Insert song into the queue after current playing song");
         this.lyricsbutton.GetHTMLElement().classList.add("hovpacity");
+        this.insertbuttons= new ButtonBox_AddSongToQueue(this.songid);
 
         super.AppendChild(this.songnum);
         super.AppendChild(this.playingicon);
@@ -104,8 +101,7 @@ class SongEntryTile extends Draggable
         super.AppendChild(this.flagbar);
         if(configuration.WebUI.lyrics == "enabled")
             super.AppendChild(this.lyricsbutton);
-        super.AppendChild(this.appendbutton);
-        super.AppendChild(this.insertbutton);
+        super.AppendChild(this.insertbuttons);
         this.element.dataset.highlight = false;
 
         if(MDBSong.disabled)

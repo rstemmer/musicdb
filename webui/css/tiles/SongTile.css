@@ -87,6 +87,10 @@
     opacity:        0.5;
 }
 
+.SongEntryTile > .ButtonBox
+{
+    margin-left:    1.5ch;
+}
 
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
