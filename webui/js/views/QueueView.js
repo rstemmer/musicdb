@@ -173,6 +173,34 @@ class QueueDropZone extends DropTarget
                     MusicDB_Call("MoveSongInQueue", {entryid:entryid, afterid:this.entryid});
                 else if(musictype == "video")
                     MusicDB_Call("MoveVideoInQueue", {entryid:entryid, afterid:this.entryid});
+
+                // For a responsive user experience, the Move-Action needs to be faked
+                // until the response from the back-end comes.
+                // Therefore the tile that shall be moved and its corresponding drop zone will be loaded
+                // into tilea and zonea.
+                // Then it gets moved.
+                // Because there is no inertAfter method and the tile of interest may be moved to the end of the queue
+                // this situation becomes a bit hacky.
+                // This is fine because this situation is temporary (some milliseconds), and only for visual reasons.
+                //
+                // Before:
+                //  tile b
+                //  zone b <--------,
+                //   ...            |
+                //  tile a -- Move -'
+                //  zone a
+                //
+                // After:
+                //  tile b
+                //  zone a \
+                //  tile a  > Note that the order is destroyed !
+                //  zone b /  
+
+                let tilea = document.getElementById(`QueueEntry${entryid}_${musictype}_${musicid}`);
+                let zonea = tilea.nextSibling;
+                let zoneb = this.GetHTMLElement();
+                zoneb.parentElement.insertBefore(zonea, zoneb);
+                zoneb.parentElement.insertBefore(tilea, zoneb);
                 break;
 
             case "insert":

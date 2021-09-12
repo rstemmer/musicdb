@@ -16,6 +16,7 @@ Run  git log --oneline  for more details
 │ + [WebUI] The CD-Number headline can be used to add only a specific CD of an Album into the Queue
 │ * [WebUI] Responsiveness increaded
 │    + Queue tile disappears immediately after clicking the remove icon
+│    + Moving tiles in the Queue View is now faked until the back-end responses
 │
 ┝━ MINOR CHANGES
 │ * [WebUI] Long artist names in Artist View are handled correct now
