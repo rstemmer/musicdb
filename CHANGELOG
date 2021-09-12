@@ -17,6 +17,7 @@ Run  git log --oneline  for more details
 │ * [WebUI] Responsiveness increaded
 │    + Queue tile disappears immediately after clicking the remove icon
 │    + Moving tiles in the Queue View is now faked until the back-end responses
+│    + For new added songs, a fake queue entry will be shown until the new queue got loaded from the back end
 │
 ┝━ MINOR CHANGES
 │ * [WebUI] Long artist names in Artist View are handled correct now

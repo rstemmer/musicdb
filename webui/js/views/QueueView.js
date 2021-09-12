@@ -45,6 +45,36 @@ class QueueView extends Element
 
 
 
+    // position: "next", "last", or queue entry ID
+    AddFakeEntry(musictype, position)
+    {
+        let faketile     = new FakeQueueTile(musictype);
+        let fakedropzone = new QueueDropZone(null);
+
+        if(position === "last")
+        {
+            super.AppendChild(faketile);
+            super.AppendChild(fakedropzone);
+        }
+        else if(position === "next")
+        {
+            let firsttile     = this.element.firstChild;
+            let firstdropzone = new Element(firsttile.nextSibling);
+            firstdropzone.InsertAfter(fakedropzone);
+            firstdropzone.InsertAfter(faketile);
+        }
+        else
+        {
+            let dropzoneid      = "dropzone"+position;
+            let dropzoneelement = document.getElementById(dropzoneid);
+            let dropzone        = new Element(dropzoneelement);
+            dropzone.InsertAfter(fakedropzone);
+            dropzone.InsertAfter(faketile);
+        }
+    }
+
+
+
     // musictype: "audio" or "video"
     Update(musictype, MDBQueue)
     {
@@ -204,6 +234,7 @@ class QueueDropZone extends DropTarget
                 {
                     let songid = parseInt(musicid);
                     MusicDB_Call("AddSongToQueue", {songid: songid, position: this.entryid});
+                    queueview.AddFakeEntry(musictype, this.entryid)
                 }
                 else if(musictype == "video")
                 {

@@ -43,12 +43,18 @@ class ButtonBox_AddMusicToQueue extends ButtonBox
         this.musicid   = musicid;
         this.musictype = musictype;
 
-        this.appendbutton = new SVGButton("Append", ()=>{this.AddMusicToQueue("last");});
-        this.insertbutton = new SVGButton("Insert", ()=>{this.AddMusicToQueue("next");});
+        this.appendbutton = new SVGButton("Append", ()=>{this._AddMusicToQueue("last");});
+        this.insertbutton = new SVGButton("Insert", ()=>{this._AddMusicToQueue("next");});
         this.AddButton(this.appendbutton, `Append this ${this.musictype} on the queue`);
         this.AddButton(this.insertbutton, `Insert this ${this.musictype} into the queue after current playing ${this.musictype}`);
     }
 
+
+    _AddMusicToQueue(position)
+    {
+        queueview.AddFakeEntry(this.musictype, position);
+        this.AddMusicToQueue(position);
+    }
 
     AddMusicToQueue(position)
     {
