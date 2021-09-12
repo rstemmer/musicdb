@@ -16,21 +16,11 @@
 
 "use strict";
 
-class ButtonBox
+class ButtonBox extends Element
 {
     constructor()
     {
-        this.element = document.createElement("div");
-        this.element.classList.add("ButtonBox");
-        this.element.classList.add("flex-row");
-        this.element.classList.add("hovpacity");
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
+        super("div", ["ButtonBox", "flex-row", "hovpacity"]);
     }
 
 
@@ -39,7 +29,7 @@ class ButtonBox
     {
         if(tooltip !== null)
             svgbutton.SetTooltip(tooltip);
-        this.element.appendChild(svgbutton.GetHTMLElement());
+        this.AppendChild(svgbutton.GetHTMLElement());
     }
 }
 
