@@ -73,6 +73,17 @@ class QueueView extends Element
         }
     }
 
+    // When the user skips the current playing music, remove it immediately
+    //  and do not wait until the updated Queue comes from the back-end
+    FakeEntrySkipping()
+    {
+        let firstelement  = this.element.firstChild;
+        let firsttile     = new Element(firstelement);
+        let firstdropzone = new Element(firstelement.nextSibling);
+        firsttile.Hide();
+        firstdropzone.Hide();
+    }
+
 
 
     // musictype: "audio" or "video"

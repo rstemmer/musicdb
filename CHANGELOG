@@ -14,8 +14,9 @@ Run  git log --oneline  for more details
 │ + [WebUI] Option to hide the release date of albums in the Artists View added
 │ + [WebUI] Option to hide the default genre "Other" in the Genre Selection View added
 │ + [WebUI] The CD-Number headline can be used to add only a specific CD of an Album into the Queue
-│ * [WebUI] Responsiveness increaded
+│ * [WebUI] Responsiveness increased
 │    + Queue tile disappears immediately after clicking the remove icon
+│    + First queue tile disappears immediately after clicking the Next button
 │    + Moving tiles in the Queue View is now faked until the back-end responses
 │    + For new added songs, a fake queue entry will be shown until the new queue got loaded from the back end
 │

@@ -170,7 +170,7 @@ class MusicDBControls extends Element
         // Create Next Button
         let nextbutton = new Element("div", ["nextbutton"]);
         this.UpdateButton(nextbutton, `Next ${musicname}`, `Play Next ${musicname} from the Queue`, "unknwon");
-        nextbutton.element.onclick = (event) => {MusicDB_Call(`PlayNext${musicname}`);};
+        nextbutton.element.onclick = (event) => {queueview.FakeEntrySkipping(); MusicDB_Call(`PlayNext${musicname}`);};
 
         // Put all Buttons Together
         let element = new Element("div", ["musicdbcontrols"]);
