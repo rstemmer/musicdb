@@ -86,7 +86,7 @@ class QueueView extends Element
 
         // Fake random added song to fill up the queue
         if(this.numberofentries === 2)
-            this.AddFakeEntrie("song", "last"); // TODO: May not be "song"
+            this.AddFakeEntry("song", "last"); // TODO: May not be "song"
     }
 
 
