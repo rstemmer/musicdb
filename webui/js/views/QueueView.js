@@ -22,6 +22,7 @@ class QueueView extends Element
     {
         super("div", ["QueueView"]);
         this.streamviewmount = new Element("div");
+        this.numberofentries = 0;
     }
 
 
@@ -82,6 +83,10 @@ class QueueView extends Element
         let firstdropzone = new Element(firstelement.nextSibling);
         firsttile.Hide();
         firstdropzone.Hide();
+
+        // Fake random added song to fill up the queue
+        if(this.numberofentries === 2)
+            this.AddFakeEntrie("song", "last"); // TODO: May not be "song"
     }
 
 
@@ -156,6 +161,8 @@ class QueueView extends Element
             super.AppendChild(dropzone);
             queueposition += 1;
         }
+
+        this.numberofentries = MDBQueue.length;
     }
 
 
