@@ -1,16 +1,18 @@
-![MusicDB Logo](graphics/MusicDB/mdblogo.png?raw=true)
+![MusicDB WebUI Screenshot](graphics/Screenshots/WebUI-2021-09-17.png?raw=true)
 
 # MusicDB
 
-MusicDB is a music manager with focus on remote access to your music collection using a WebUI.
+**Your Music. Your Cloud.**
+
+MusicDB is a music manager with focus on remote access to your music collection using a web-based user interface.
 It allows you to manage an audio stream based on a song-queue.
-The WebUI is focusing on being a presentation of your music rather than being a database frontend.
+The WebUI is focusing on being a presentation of your music rather than being a database front-end.
 
 So, when you are listening to your music, you do not work with software.
 Instead you explore your music collection.
 
 I started this project on 4th January 2014.
-Since I finished a first test version, I use it nearly every day.
+Since I finished a first prototype within one weekend, I use MusicDB almost every day.
 Time to share it with the world. :smiley:
 
 **For more details, a list of features and screenshots see the start page [rstemmer.github.io/musicdb/](https://rstemmer.github.io/musicdb/index.html).**
@@ -19,23 +21,7 @@ A detailed description of MusicDB and its components can be found in the documen
 
 For news, follow [@MusicDBProject](https://twitter.com/MusicDBProject) on Twitter.
 
-## Table of Contents
-
-* [MusicDB](#musicdb)
-  * [Table of Contents](#table-of-contents)
-  * [Important News](#important-news)
-  * [Social](#social)
-* [Using MusicDB](#using-musicdb)
-  * [Requirements](#requirements)
-  * [Download](#download)
-  * [Installation and Update](#installation-and-update)
-  * [Usage](#usage)
-* [Development](#development)
-  * [Documentation](#documentation)
-  * [Contributing](#contributing)
-* [Roadmap](#roadmap)
-  * [Branches](#branches)
-  * [Releases](#releases)
+For ongoing work and future plans see the [GitHub Projects](https://github.com/rstemmer/musicdb/projects).
 
 
 ## Important News
@@ -80,12 +66,12 @@ Lines starting with "**:wrench: Change:**" are steps you have to do *before* or 
 
 
 
-## Social
+## Socialize
 
 Providing and maintaining open source software comes with some downsides and a lot of work.
 I'd like to know if anyone is using this software, and what you are doing with it. :smiley:
 
-So feel free to use the new [GitHub Discussions](https://github.com/rstemmer/musicdb/discussions) feature to provide some feedback.
+So feel free to use the new [GitHub Discussions](https://github.com/rstemmer/musicdb/discussions) feature to provide some feedback. Or simply ☆ the repository.
 
 You can also follow my project account [@MusicDBProject](https://twitter.com/MusicDBProject) on Twitter
 and share some screenshots :wink:
@@ -115,9 +101,9 @@ In case MusicDB does not run on outdated operating systems, update your system :
   * [Firefox](https://www.mozilla.org/en-US/) (**Recommended**)
   * [Chrome](https://www.google.com/chrome/index.html) (**Not yet supported** as long as mandatory [CSS features](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) are missing)
   * [Opera](https://www.opera.com/) (Not tested - see Chrome)
-  * [Edge](https://www.microsoft.com/edge/) (**Not supported** - No Linux version available)
+  * [Edge](https://www.microsoft.com/edge/) (Not tested - see Chrome)
   * [Safari](https://www.apple.com/safari/) (Not tested)
-* An Unicode capable file system (Any *modern* file system should work)
+* A Unicode capable file system (Any *modern* file system should work)
 * A terminal that supports Unicode, with an Unicode capable font configured (I use KDE's [Konsole](https://www.kde.org/applications/system/konsole/) with [Hack](https://sourcefoundry.org/hack/))
 
 The `install.sh` script checks for tools needed to install MusicDB.
@@ -137,13 +123,22 @@ I then will fix MusicDB as soon as possible.
 
 ## Installation and Update
 
+### Download
+
+The latest releases can be found in the [GitHubs Releases Section](https://github.com/rstemmer/musicdb/releases).
+You can also use `git clone` and install from the *master* branch.
+
+```sh
+git clone https://github.com/rstemmer/musicdb.git
+```
+
 ### Installation of MusicDB
 
 To install MusicDB, read [:notebook: How to Install MusicDB](https://rstemmer.github.io/musicdb/build/html/usage/install.html) in the documentation.
 
 ### Update to a New Version
 
-For updating, you can do following steps.
+Updating can be done by the following simple steps.
 Read the *Important News* for manual steps to do before updating to a new major release.
 Only execute the scripts as root, that are followed by the comment "as root"!
 
@@ -153,16 +148,6 @@ git pull
 
 cd scripts
 ./update.sh # as root
-```
-
-
-## Download
-
-To get the latest version of MusicDB, clone this repository.
-The *master* branch can be considered stable.
-
-```sh
-git clone https://github.com/rstemmer/musicdb.git
 ```
 
 ## Usage
@@ -216,16 +201,30 @@ Most important will be the [:notebook: Quick Start Section](https://rstemmer.git
 ## Contributing
 
 Every help is welcome.
+You don't need to be a hacker to contribute to open source projects.
 
 
 ### What you can do
 
 * Give feedback via [GitHub Discussions](https://github.com/rstemmer/musicdb/discussions).
-* Create an [Issue](https://github.com/rstemmer/musicdb/issues) when you find a bug.
+  * How do you use MusicDB? How many songs do you mange with it?
+  * Why do you *not* use MusicDB?
+  * Ask questions to anything.
+* Create an [Issue](https://github.com/rstemmer/musicdb/issues).
+  * Report bugs MusicDB.
+  * Report issues with the documentation.
+  * Request features you like to see in MusicDB.
 * Improve the documentation.
+  * Improve readability by fixing grammar and typos.
+  * Create an issue for sections you do not understand.
 * Suggesting features via *Issue* or *Discussions*.
+  * What is missing that you need.
 * See if there is an *Issue* you are able to fix, or to give hints on how to fix it.
+  * Post your ideas to address an existing issue.
+  * Provide some dirty hacks that may help addressing an issue.
 * Fix bugs or add features.
+  * Edit the code to solve an issue or reduce its impact.
+  * Add new features.
 
 
 ### Before you change code
@@ -233,7 +232,7 @@ Every help is welcome.
 * Read [:notebook: Working on MusicDB's Code](https://rstemmer.github.io/musicdb/build/html/basics/workflow.html)
 * … and [:notebook: Philosophy of MusicDB](https://rstemmer.github.io/musicdb/build/html/basics/concept.html)
 * Branch from *master*.
-* Please don't commit *docs/build*,
+* Please don't commit *docs/build*.
 
 
 # Roadmap
@@ -250,63 +249,6 @@ The following list contains all huge improvements I'm planning to add to MusicDB
 * [Planning State] More ideas can be found on the [Roadmap GitHub Project page](https://github.com/rstemmer/musicdb/projects/4)
 
 
-The following subsections cover more information regarding releases and branches.
 
-## Branches
-
-
-The following branches exist in the MusicDB git repository contains.
-
-<details>
-<summary> master - Ready to Use </summary>
-
-This is the main branch and contains the latest stable version of MusicDB.
-This is the version you should install.
-If you want to do some changes to the code, you should branch from this branch.
-
-</details>
-
-<details>
-<summary> develop - Work in Progress </summary>
-
-This branch is the branch I'm working on. It may contain incomplete features and untested code.
-If there you have trouble with the master branch, and the git log promises a solution to that problem, 
-you can try using this branch.
-
-When there are lots of commits that are not yet merges with master, you should be very careful.
-I also do not guarantee that this branch is compatible with the current master branch.
-Make a backup of your MusicDB data directory before using installing MusicDB from this branch.
-
-</details>
-
-<details>
-<summary>feature-???</summary>
-
-These branches are for adding *game-changing* features into MusicDB.
-They are not strictly bound to a release.
-It is not even clear if the features will be finished at all.
-
-Do never use code from this branch in production!
-
-</details>
-
-<details>
-<summary> mobileapp - The mobile app is dead </summary>
-
-I started to build a tiny mobile app that downloads your whole music collection via WLAN onto your smartphone.
-For the app, I use the [kivy](https://kivy.org/#home) framework.
-
-There were so many problems with the framework and the build environment that I canceled the development.
-For example, I had to use Python 2 because there was no SSL support for Python 3 included.
-The build environment used proprietary 32bit executables and may more problems like that.
-
-</details>
-
-
-## Releases
-
-With version 5.0.0 I started to use the Releases feature of GitHub.
-They can be found in [GitHubs Releases Section](https://github.com/rstemmer/musicdb/releases).
-Some special old releases are tagged in the git repository as well.
-
+![MusicDB Logo](graphics/MusicDB/mdblogo.png?raw=true)
 
