@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,20 +17,11 @@
 "use strict";
 
 
-class ToolBar
+class ToolBar extends Element
 {
     constructor()
     {
-        this.element = document.createElement("div");
-        this.element.classList.add("ToolBar");
-        this.element.classList.add("flex-row");
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
+        super("div", ["ToolBar", "flex-row"]);
     }
 
 
@@ -40,42 +31,32 @@ class ToolBar
     // button.GetHTMLElement() must exist and return a div element
     AddButton(button)
     {
-        this.element.appendChild(button.GetHTMLElement());
+        this.AppendChild(button);
     }
 
 
 
     AddSpacer(grow=false)
     {
-        let spacer = document.createElement("span");
-        spacer.classList.add("spacer");
+        let spacer = new Element("span", ["spacer"]);
         if(grow)
-            spacer.classList.add("flex-grow");
-        this.element.appendChild(spacer);
+            spacer.AddCSSClass("flex-grow");
+        this.AppendChild(spacer);
     }
 }
 
 
 
-class ToolGroup
+class ToolGroup extends Element
 {
     constructor(buttons = [])
     {
-        this.element = document.createElement("div");
-        this.element.classList.add("ToolGroup");
-        this.element.classList.add("flex-row");
+        super("div", ["ToolGroup", "flex-row"]);
 
         for(let button of buttons)
         {
             this.AddButton(button);
         }
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
@@ -86,9 +67,9 @@ class ToolGroup
     // returns the outer container div element
     AddButton(button)
     {
-        let div = document.createElement("div");
-        div.appendChild(button.GetHTMLElement());
-        this.element.appendChild(div);
+        let div = new Element("div");
+        div.AppendChild(button);
+        this.AppendChild(div);
         return div;
     }
 }
@@ -106,9 +87,9 @@ class SwitchGroup extends ToolGroup
         {
             let button = buttons[index];
             let box    = this.AddButton(button);
-            box.onclick= ()=>{this.Select(index);};
-            box.dataset.selected = false;
-            box.dataset.enabled  = true;
+            box.GetHTMLElement().onclick= ()=>{this.Select(index);};
+            box.SetData("selected", false);
+            box.SetData("enabled",  true);
 
             this.buttons.push(new Object());
             this.buttons[index].button  = button;
@@ -135,10 +116,10 @@ class SwitchGroup extends ToolGroup
 
         for(let entry of this.buttons)
         {
-            entry.box.dataset.selected = false;
+            entry.box.SetData("selected", false);
         }
 
-        this.buttons[index].box.dataset.selected = true;
+        this.buttons[index].box.SetData("selected", true);
 
         this.selected = index;
         return;
@@ -148,15 +129,19 @@ class SwitchGroup extends ToolGroup
 
     Disable(index)
     {
-        this.buttons[index].box.dataset.enabled = false;
-        this.buttons[index].enabled             = false;
+        this._SetEnabledState(index, false);
         return;
     }
 
     Enable(index)
     {
-        this.buttons[index].box.dataset.enabled = true;
-        this.buttons[index].enabled             = true;
+        this._SetEnabledState(index, true);
+        return;
+    }
+    _SetEnabledState(index, state)
+    {
+        this.buttons[index].box.SetData("enabled", state);
+        this.buttons[index].enabled = state;
         return;
     }
 
