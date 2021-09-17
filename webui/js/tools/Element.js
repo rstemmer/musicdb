@@ -91,6 +91,15 @@ class Element
         return this.element.dataset[property];
     }
 
+    SetValue(value)
+    {
+        this.element.value = value;
+    }
+    GetValue()
+    {
+        return this.element.value;
+    }
+
 
 
     SetTooltip(tooltip)
