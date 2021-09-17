@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,14 +16,11 @@
 
 "use strict";
 
-class AlphabetBar
+class AlphabetBar extends Element
 {
     constructor()
     {
-        this.element = document.createElement("div");
-        this.element.id = "AlphabetBar";
-        this.element.classList.add("hlcolor");
-        this.element.classList.add("smallfont");
+        super("div", ["hlcolor", "smallfont"], "AlphabetBar");
         let alphabet = ["↑",
                         "A","B","C","D",
                         "E","F","G","H",
@@ -37,25 +34,17 @@ class AlphabetBar
         for(let marker of alphabet)
         {
             let button = this.CreateButton(marker);
-            this.element.appendChild(button);
+            this.AppendChild(button);
         }
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
     }
 
 
 
     CreateButton(marker)
     {
-        let button = document.createElement("span");
-        button.classList.add("button");
-        button.innerText = marker;
-        button.onclick   = ()=>{artistsview.ScrollToMarker(marker);};
+        let button = new Element("span", ["button"]);
+        button.SetInnerText(marker);
+        button.element.onclick = ()=>{artistsview.ScrollToMarker(marker);};
         return button;
     }
 }
