@@ -314,6 +314,8 @@ class LyricsEdit extends Element
                 this.InsertLinesAroundSelection(":: comment", "::");
                 break;
         }
+        this.ValidateLyricsState();
+        this.ValidateUpdateState();
         return;
     }
 
