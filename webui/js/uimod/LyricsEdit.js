@@ -90,6 +90,9 @@ class LyricsEdit
 
     SetEditMode()
     {
+        this.msg_saved.Hide();
+        this.msg_notsaved.Hide();
+
         if(this.element.dataset.editable == "true")
             return; // Already editable
 
