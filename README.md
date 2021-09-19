@@ -15,7 +15,20 @@ I started this project on 4th January 2014.
 Since I finished a first prototype within one weekend, I use MusicDB almost every day.
 Time to share it with the world. :smiley:
 
-**For more details, a list of features and screenshots see the start page [rstemmer.github.io/musicdb/](https://rstemmer.github.io/musicdb/index.html).**
+## Details
+
+* Storing your music at one place (Server), and listen to it wherever you are (via Stream)
+* The client is a web application running on all operating systems that have a Firefox browser
+* Albums and songs are represented by their artwork, not by rows in a table
+* Fuzzy search allows you to have some typos when searching a song
+* Scales with music collections of hundreds of albums
+* Explicit tag system for genres and sub-genres
+* Allows you to hide all albums except for those of a genre you currently want to listen to
+* Flags to annotate songs with specific moods or for other user-defined purposes
+* Focus on the file systems (Keeps your music directory clean)
+* Simple lyrics management
+
+**For more details and screenshots see the start page [rstemmer.github.io/musicdb/](https://rstemmer.github.io/musicdb/index.html).**
 
 A detailed description of MusicDB and its components can be found in the documentation: [Overview of MusicDB](https://rstemmer.github.io/musicdb/build/html/basics/overview.html)
 
