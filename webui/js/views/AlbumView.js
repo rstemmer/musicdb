@@ -83,6 +83,8 @@ class AlbumView extends MainView2
         this.column1.AppendChild(this.settingscell);
         this.column1.AppendChild(this.songscell);
         this.column2.AppendChild(this.tagscell);
+
+        this.currentalbumtags = null;
     }
 
 
@@ -97,7 +99,8 @@ class AlbumView extends MainView2
 
     UpdateInformation(MDBAlbum, MDBArtist, MDBTags, MDBCDs)
     {
-        let currentalbumid = mdbmodemanager.GetCurrentAlbumID();
+        let currentalbumid    = mdbmodemanager.GetCurrentAlbumID();
+        this.currentalbumtags = MDBTags;
 
         // Update Headline
         this.headline.UpdateInformation(MDBAlbum, MDBArtist)
@@ -128,9 +131,12 @@ class AlbumView extends MainView2
 
         this.genreedit          = new TagListEdit("genre");
         this.subgenreedit       = new TagListEdit("subgenre");
+        this.applytoall         = new TextButton("Approve", "Apply to all Songs without Genre Tag", ()=>{this.ApplyGenreSettingsToAllUntaggedSongs();},
+            "Tag all Songs of this Album with the albums Genre and Sub-Genre Tag, if the Songs are not tagged at all. Only approved tags will be added.");
         this.settings_tags.RemoveChilds();
         this.settings_tags.AppendChild(this.genreedit);
         this.settings_tags.AppendChild(this.subgenreedit);
+        this.settings_tags.AppendChild(this.applytoall);
 
         this.settings.SelectTab(this.tagstabid);
         this.settings.Hide();
@@ -142,6 +148,38 @@ class AlbumView extends MainView2
 
         this.colorselect.SetColors(MDBAlbum.bgcolor, MDBAlbum.fgcolor, MDBAlbum.hlcolor);
 
+        return;
+    }
+
+
+
+    ApplyGenreSettingsToAllUntaggedSongs()
+    {
+        // Get Genres and Sub-Genres
+        let albumgenres    = this.currentalbumtags.genres;
+        let albumsubgenres = this.currentalbumtags.subgenres;
+        let albumtags      = [...albumgenres, ...albumsubgenres];
+        
+        // For all song entries
+        for(let songid in this.songtiles)
+        {
+            let songgenres    = this.songtiles[songid].tags.genres;
+            let songsubgenres = this.songtiles[songid].tags.subgenres;
+            if(songgenres.length === 0 && songsubgenres.length === 0)
+            {
+                for(let tag of albumtags)
+                {
+                    let approval = tag.approval;
+                    let tagid    = tag.tagid;
+
+                    if(approval <= 0)
+                        continue;   // Not user approved. Only tag songs if the user is sure.
+
+                    MusicDB_Request("SetSongTag", "UpdateTags", 
+                        {songid:songid, tagid:tagid, approval:0, confidence:1.0});
+                }
+            }
+        }
         return;
     }
 
@@ -222,7 +260,8 @@ class AlbumView extends MainView2
 
     UpdateTagInformation(MDBTags)
     {
-        let currentalbumid = mdbmodemanager.GetCurrentAlbumID();
+        let currentalbumid    = mdbmodemanager.GetCurrentAlbumID();
+        this.currentalbumtags = MDBTags;
 
         // Update existing tags
         this.genreedit.Update(   "album", currentalbumid, MDBTags);

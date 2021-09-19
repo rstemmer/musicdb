@@ -10,6 +10,8 @@ Run  git log --oneline  for more details
 ┍━━━━┫ 2021-??-?? ┣━━━━┫ 7.2.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ + [WebAPI] AddAlbumToQueue allows via optional third parameter to limit the Album to a specific CD
+│ + [WebAPI] SetSongTag now has optional parameters for defining approval and confidence information
+│ + [WebUI] Allow propagating album tags to untagged songs
 │ + [WebUI] A color scheme quality indicator has been added to the color settings
 │ + [WebUI] Option to hide the release date of albums in the Artists View added
 │ + [WebUI] Option to hide the default genre "Other" in the Genre Selection View added
