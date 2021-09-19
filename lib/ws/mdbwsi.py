@@ -344,7 +344,10 @@ class MusicDBWebSocketInterface(object):
             method = "broadcast"
             fncname= "GetMDBState"
         elif fncname == "SetSongTag":
-            retval = self.SetSongTag(args["songid"], args["tagid"])
+            if "approval" in args and "confidence" in args:
+                retval = self.SetSongTag(args["songid"], args["tagid"], args["approval"], args["confidence"])
+            else:
+                retval = self.SetSongTag(args["songid"], args["tagid"])
             retval = self.GetSong(args["songid"])
             method = "broadcast"
             fncname= "GetSong"
@@ -2967,11 +2970,13 @@ class MusicDBWebSocketInterface(object):
         return None
 
 
-    def SetSongTag(self, songid, tagid):
+    def SetSongTag(self, songid, tagid, approval=1, confidence=None):
         """
         Sets a tag for a song.
-        This method sets the approval-level to 1 (Set by User) and confidence to 1.0 for this tag.
+        This method sets the approval-level to 1 (Set by User) and confidence to 1.0 for this tag by default.
         So, this method can also be used to approve an AI set tag.
+
+        It is also possible to set a "guesses" tag by setting ``approval`` to ``0`` and ``confidence`` to a value less that ``1.0``.
 
         If tagging is disabled nothing will be done. 
 
@@ -2986,6 +2991,8 @@ class MusicDBWebSocketInterface(object):
         Args:
             songid (int): ID of the song
             tagid (int): ID of the tag
+            apprival (int): (optional) ``0``: for "just a guess", not approved. ``1``: Approved by the user.
+            confidence (float): (optional) A value between ``0.0`` and ``1.0`` representing the confidence that an none-approved tag is valid.
 
         Return:
             ``None``
@@ -2994,6 +3001,10 @@ class MusicDBWebSocketInterface(object):
             .. code-block:: javascript
 
                 MusicDB_Call("SetSongTag", {songid:songid, tagid:tagid});
+
+            .. code-block:: javascript
+
+                MusicDB_Call("SetSongTag", {songid:songid, tagid:tagid, approval:0, confidence:0.5});
 
             .. code-block:: javascript
 
@@ -3014,7 +3025,7 @@ class MusicDBWebSocketInterface(object):
             logging.info("Changing tags disabled. \033[1;33m!!")
             return None
 
-        self.database.SetTargetTag("song", songid, tagid)
+        self.database.SetTargetTag("song", songid, tagid, approval, confidence)
         albumid = self.database.GetSongById(songid)["albumid"]
         self.tags.DeriveAlbumTags(albumid)
         return None
