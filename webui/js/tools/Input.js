@@ -36,7 +36,7 @@ class Input extends Element
         if(typeof this.oninput !== "function")
             return;
 
-        let value = this.element.value;
+        let value = this.GetValue();
         let valid = this.oninput(value);
         this.SetValidState(valid);
     }
@@ -46,23 +46,20 @@ class Input extends Element
     SetValidState(valid)
     {
         this.element.dataset.valid = valid;
+        this.SetData("valid", valid);
     }
     GetValidState(valid)
     {
-        return this.element.dataset.valid === "true";
+        return this.GetData("valid") === "true";
     }
 
 
 
     SetValue(value)
     {
-        this.element.value = value;
+        super.SetValue(value);
         this.onInput();
         return;
-    }
-    GetValue()
-    {
-        return this.element.value;
     }
 
 
