@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Video Streaming Server &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-mdbapi.videostream">
+  <section id="module-mdbapi.videostream">
 <span id="video-streaming-server"></span><h1>Video Streaming Server<a class="headerlink" href="#module-mdbapi.videostream" title="Permalink to this headline">¶</a></h1>
 <p>This module implements the video stream that streams the music videos.
 This module provides a thread that takes the videos from a <a class="reference internal" href="videoqueue.html#mdbapi.videoqueue.VideoQueue" title="mdbapi.videoqueue.VideoQueue"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.videoqueue.VideoQueue</span></code></a> to stream them.</p>
@@ -677,7 +682,7 @@ This module provides a thread that takes the videos from a <a class="reference i
 <li><p>The <a class="reference internal" href="#mdbapi.videostream.VideoStreamManager" title="mdbapi.videostream.VideoStreamManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">VideoStreamManager</span></code></a> that does management behind streaming.</p></li>
 </ul>
 </div></blockquote>
-<div class="section" id="interface">
+<section id="interface">
 <h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
 <p>This module maintains a global state!
 All functions work on the settings in the <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> configuration object and the internal state of this module.</p>
@@ -692,8 +697,8 @@ All functions work on the settings in the <a class="reference internal" href="..
 <li><p><a class="reference internal" href="#mdbapi.videostream.VideoStreamManager" title="mdbapi.videostream.VideoStreamManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">VideoStreamManager</span></code></a> is the class to manage the Stream.</p></li>
 </ul>
 </div></blockquote>
-</div>
-<div class="section" id="streaming-thread">
+</section>
+<section id="streaming-thread">
 <h2>Streaming Thread<a class="headerlink" href="#streaming-thread" title="Permalink to this headline">¶</a></h2>
 <p>The Streaming Thread mainly manages updating the queue based on played videos by the stream player (WebUI).
 This thread is the point where the music managed by MusicDB gets handed over to the users web browser
@@ -704,8 +709,8 @@ It can be accessed via <a class="reference internal" href="#mdbapi.videostream.V
 This will only be updated by the VideoStreamingThread.
 It contains the following information:</p>
 <p>More details are in the <a class="reference internal" href="#mdbapi.videostream.VideoStreamingThread" title="mdbapi.videostream.VideoStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">VideoStreamingThread()</span></code></a> description.</p>
-</div>
-<div class="section" id="command-queue">
+</section>
+<section id="command-queue">
 <h2>Command Queue<a class="headerlink" href="#command-queue" title="Permalink to this headline">¶</a></h2>
 <p>The Command Queue is a FIFO buffer of tuple.
 Each tuple has a command name and an optional argument.
@@ -713,8 +718,8 @@ For the whole Module, there is only one global Command Queue.</p>
 <p>Each instance of the <a class="reference internal" href="#mdbapi.videostream.VideoStreamManager" title="mdbapi.videostream.VideoStreamManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">VideoStreamManager</span></code></a> class writes into the same queue following the <em>First Come First Serve</em> (FCFS) protocol.
 The <a class="reference internal" href="#mdbapi.videostream.VideoStreamingThread" title="mdbapi.videostream.VideoStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">VideoStreamingThread()</span></code></a> reads the command from that queue and processes them.</p>
 <p>More details are in the <a class="reference internal" href="#mdbapi.videostream.VideoStreamingThread" title="mdbapi.videostream.VideoStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">VideoStreamingThread()</span></code></a> description.</p>
-</div>
-<div class="section" id="event-management">
+</section>
+<section id="event-management">
 <h2>Event Management<a class="headerlink" href="#event-management" title="Permalink to this headline">¶</a></h2>
 <p>This module provided a callback interface to react on events triggered by Streaming Thread or by actions done by the <a class="reference internal" href="#mdbapi.videostream.VideoStreamManager" title="mdbapi.videostream.VideoStreamManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">VideoStreamManager</span></code></a> class.</p>
 <p>The following two functions can be used to register or remove a callback function:</p>
@@ -754,8 +759,8 @@ The video to play is provided by the event as well.</p>
 </pre></div>
 </div>
 <dl class="py function">
-<dt id="mdbapi.videostream.StartVideoStreamingThread">
-<code class="sig-prename descclassname"><span class="pre">mdbapi.videostream.</span></code><code class="sig-name descname"><span class="pre">StartVideoStreamingThread</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">musicdb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#StartVideoStreamingThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.StartVideoStreamingThread" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videostream.StartVideoStreamingThread">
+<span class="sig-prename descclassname"><span class="pre">mdbapi.videostream.</span></span><span class="sig-name descname"><span class="pre">StartVideoStreamingThread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">musicdb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#StartVideoStreamingThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.StartVideoStreamingThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function starts the Streaming Thread <code class="xref py py-mod docutils literal notranslate"><span class="pre">VideoStreamingThread</span></code>.
 You should use this function instead of calling the Streaming Thread function directly.</p>
 <p>By calling this function, the global state of this module gets reset.
@@ -777,8 +782,8 @@ This included removing all commands from the Command Queue.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mdbapi.videostream.StopVideoStreamingThread">
-<code class="sig-prename descclassname"><span class="pre">mdbapi.videostream.</span></code><code class="sig-name descname"><span class="pre">StopVideoStreamingThread</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#StopVideoStreamingThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.StopVideoStreamingThread" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videostream.StopVideoStreamingThread">
+<span class="sig-prename descclassname"><span class="pre">mdbapi.videostream.</span></span><span class="sig-name descname"><span class="pre">StopVideoStreamingThread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#StopVideoStreamingThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.StopVideoStreamingThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function stops the Streaming Thread.
 The function is blocking and waits until the thread is closed.</p>
 <dl class="field-list simple">
@@ -789,8 +794,8 @@ The function is blocking and waits until the thread is closed.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mdbapi.videostream.VideoStreamingThread">
-<code class="sig-prename descclassname"><span class="pre">mdbapi.videostream.</span></code><code class="sig-name descname"><span class="pre">VideoStreamingThread</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamingThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamingThread" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videostream.VideoStreamingThread">
+<span class="sig-prename descclassname"><span class="pre">mdbapi.videostream.</span></span><span class="sig-name descname"><span class="pre">VideoStreamingThread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamingThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamingThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>This thread manages the streaming of the videos from the Video Queue.</p>
 <p>The thread tracks the played video using the <a class="reference internal" href="tracker.html"><span class="doc">Song Tracker</span></a> module.
 It does not track randomly added videos.
@@ -825,12 +830,12 @@ It is expected that all clients stop playing the current video if <code class="d
 In case it is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, all clients that were used to play the videos continue playing the current video.</p>
 </dd></dl>
 
-</div>
-<div class="section" id="stream-manager-class">
+</section>
+<section id="stream-manager-class">
 <h2>Stream Manager Class<a class="headerlink" href="#stream-manager-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="mdbapi.videostream.VideoStreamManager">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.videostream.</span></code><code class="sig-name descname"><span class="pre">VideoStreamManager</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videostream.VideoStreamManager">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mdbapi.videostream.</span></span><span class="sig-name descname"><span class="pre">VideoStreamManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides an interface to the Streaming Thread (<a class="reference internal" href="#mdbapi.videostream.VideoStreamingThread" title="mdbapi.videostream.VideoStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">VideoStreamingThread()</span></code></a>) and the Video Queue that will be streamed.</p>
 <p>The communication is implemented with a command queue.
 More details about those commands can be found in the <a class="reference internal" href="#mdbapi.videostream.VideoStreamingThread" title="mdbapi.videostream.VideoStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">VideoStreamingThread()</span></code></a> description.
@@ -856,8 +861,8 @@ The thread handles the skip to the next video and starts streaming the new file.
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mdbapi.videostream.VideoStreamManager.GetStreamState">
-<code class="sig-name descname"><span class="pre">GetStreamState</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager.GetStreamState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager.GetStreamState" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videostream.VideoStreamManager.GetStreamState">
+<span class="sig-name descname"><span class="pre">GetStreamState</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager.GetStreamState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager.GetStreamState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the current state of the Streaming Thread as a dictionary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -867,8 +872,8 @@ The thread handles the skip to the next video and starts streaming the new file.
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videostream.VideoStreamManager.Play">
-<code class="sig-name descname"><span class="pre">Play</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">play</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager.Play"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager.Play" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videostream.VideoStreamManager.Play">
+<span class="sig-name descname"><span class="pre">Play</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">play</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager.Play"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager.Play" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the play-state.</p>
 <blockquote>
 <div><ul class="simple">
@@ -890,8 +895,8 @@ the <a class="reference internal" href="#mdbapi.videostream.VideoStreamingThread
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videostream.VideoStreamManager.PlayNextVideo">
-<code class="sig-name descname"><span class="pre">PlayNextVideo</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager.PlayNextVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager.PlayNextVideo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videostream.VideoStreamManager.PlayNextVideo">
+<span class="sig-name descname"><span class="pre">PlayNextVideo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager.PlayNextVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager.PlayNextVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function triggers the Streaming Thread to play the next video in the queue.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -901,8 +906,8 @@ the <a class="reference internal" href="#mdbapi.videostream.VideoStreamingThread
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videostream.VideoStreamManager.PushCommand">
-<code class="sig-name descname"><span class="pre">PushCommand</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager.PushCommand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager.PushCommand" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videostream.VideoStreamManager.PushCommand">
+<span class="sig-name descname"><span class="pre">PushCommand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager.PushCommand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager.PushCommand" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class internal interface to the <a class="reference internal" href="#command-queue">Command Queue</a> used to communicate with the <a class="reference internal" href="#mdbapi.videostream.VideoStreamingThread" title="mdbapi.videostream.VideoStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">VideoStreamingThread()</span></code></a>.
 You should not access the queue directly, because the Streaming Thread expects valid data inside the queue.
 This is guaranteed by the methods that use this method.</p>
@@ -920,8 +925,8 @@ This is guaranteed by the methods that use this method.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videostream.VideoStreamManager.RegisterCallback">
-<code class="sig-name descname"><span class="pre">RegisterCallback</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager.RegisterCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager.RegisterCallback" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videostream.VideoStreamManager.RegisterCallback">
+<span class="sig-name descname"><span class="pre">RegisterCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager.RegisterCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager.RegisterCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a callback function that reacts on Streaming related events.
 For more details see the module description at the top of this document.</p>
 <dl class="field-list simple">
@@ -935,8 +940,8 @@ For more details see the module description at the top of this document.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videostream.VideoStreamManager.RemoveCallback">
-<code class="sig-name descname"><span class="pre">RemoveCallback</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager.RemoveCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager.RemoveCallback" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videostream.VideoStreamManager.RemoveCallback">
+<span class="sig-name descname"><span class="pre">RemoveCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager.RemoveCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager.RemoveCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a function from the list of callback functions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -949,8 +954,8 @@ For more details see the module description at the top of this document.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videostream.VideoStreamManager.VideoEnded">
-<code class="sig-name descname"><span class="pre">VideoEnded</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queueentryid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager.VideoEnded"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager.VideoEnded" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videostream.VideoStreamManager.VideoEnded">
+<span class="sig-name descname"><span class="pre">VideoEnded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queueentryid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videostream.html#VideoStreamManager.VideoEnded"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videostream.VideoStreamManager.VideoEnded" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method informs the Streaming Thread the video was completely streams.
 It sets the <code class="docutils literal notranslate"><span class="pre">lastplayed</span></code> statistics of the video and
 triggers the Streaming Thread to play the next video in the queue.</p>
@@ -967,8 +972,8 @@ triggers the Streaming Thread to play the next video in the queue.</p>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -1013,6 +1018,7 @@ triggers the Streaming Thread to play the next video in the queue.</p>
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

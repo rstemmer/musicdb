@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>MusicDB Configuration &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="musicdb-configuration">
+  <section id="musicdb-configuration">
 <h1>MusicDB Configuration<a class="headerlink" href="#musicdb-configuration" title="Permalink to this headline">¶</a></h1>
 <p>The following sections represent the sections of the MusicDB Configuration file.
 The sections have the following structure:</p>
@@ -673,7 +678,7 @@ The sections have the following structure:</p>
 <dt>option (type):</dt><dd><p>description</p>
 </dd>
 </dl>
-<div class="section" id="meta">
+<section id="meta">
 <h2>meta<a class="headerlink" href="#meta" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>version (integer):</dt><dd><p>This is the version number of configuration.
@@ -682,8 +687,8 @@ When new sections or keys are added (or old ones removed), the version number ge
 After updating MusicDB compare your configuration with the new one and update the file by yourself (including the version number)</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="server">
+</section>
+<section id="server">
 <h2>server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>pidfile (path to file):</dt><dd><p>This is the place where the PID file gets placed</p>
@@ -698,8 +703,8 @@ Read <a class="reference internal" href="../mod/server.html"><span class="doc">s
 Here, settings done inside the WebUI are stored.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="websocket">
+</section>
+<section id="websocket">
 <h2>websocket<a class="headerlink" href="#websocket" title="Permalink to this headline">¶</a></h2>
 <p>Please keep in mind that websockets are secured.
 TLS is always enabled.
@@ -726,8 +731,8 @@ For example, <code class="docutils literal notranslate"><span class="pre">0.0.0.
 <dt>key (base64 encoded key):</dt><dd><p>A key that is used to identify clients that are allowed to use the websocket interface.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="tls">
+</section>
+<section id="tls">
 <h2>TLS<a class="headerlink" href="#tls" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>cert (path to SSL Certificate file):</dt><dd><p>File to the certificate used for the TLS secured websockets</p>
@@ -735,15 +740,15 @@ For example, <code class="docutils literal notranslate"><span class="pre">0.0.0.
 <dt>key (path to SSL Key file):</dt><dd><p>File of the key for the certificate</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="database">
+</section>
+<section id="database">
 <h2>database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>path (path to file):</dt><dd><p>Path to the MusicDB Database file</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="music">
+</section>
+<section id="music">
 <h2>music<a class="headerlink" href="#music" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>path (path to directory):</dt><dd><p>Path to the music collection.
@@ -760,8 +765,8 @@ In this directory, the Artist-directories are stored.</p>
 <dt>ignoresongs (/ separated list of file names):</dt><dd><p>Ignore these files names when looking for songs</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="artwork">
+</section>
+<section id="artwork">
 <h2>artwork<a class="headerlink" href="#artwork" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>path (path to directory):</dt><dd><p>Path to the artwork root directory where all artworks are stored at</p>
@@ -774,8 +779,8 @@ At least <code class="docutils literal notranslate"><span class="pre">&quot;50,<
 <dt>manifest (path to file):</dt><dd><p>Name where the manifest file to tell the browser to cache the artwork will be generated at</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="videoframes">
+</section>
+<section id="videoframes">
 <h2>videoframes<a class="headerlink" href="#videoframes" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>path (path to directory):</dt><dd><p>Path to the video frames root directory where all artworks are stored at</p>
@@ -788,8 +793,8 @@ At least <code class="docutils literal notranslate"><span class="pre">&quot;50,<
 <dt>previewlength (seconds ∈ ℕ):</dt><dd><p>Length of the preview in seconds.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="uploads">
+</section>
+<section id="uploads">
 <h2>uploads<a class="headerlink" href="#uploads" title="Permalink to this headline">¶</a></h2>
 <dl>
 <dt>allow (boolean):</dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code> users are allowed to upload artworks.</p>
@@ -803,8 +808,8 @@ The server just rejects all attempts to upload files.</p>
 <dt>path (path to directory):</dt><dd><p>Path to the directory for temporary uploads and meta data</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="extern">
+</section>
+<section id="extern">
 <h2>extern<a class="headerlink" href="#extern" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>configtemplate (path to file):</dt><dd><p>Path to the template configuration for external storages</p>
@@ -816,8 +821,8 @@ The server just rejects all attempts to upload files.</p>
 <dt>songmap (filename):</dt><dd><p>Name of the map-file of the stored music</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="tracker">
+</section>
+<section id="tracker">
 <h2>tracker<a class="headerlink" href="#tracker" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>dbpath (path to file):</dt><dd><p>Path to the tracker database</p>
@@ -827,15 +832,15 @@ If there is a time gap of <em>cuttime</em> minutes or more between the current p
 the relationship gets ignored.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="lycra">
+</section>
+<section id="lycra">
 <h2>lycra<a class="headerlink" href="#lycra" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>dbpath (path to file):</dt><dd><p>Path to the database the lyrics will be cached at</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="icecast">
+</section>
+<section id="icecast">
 <h2>Icecast<a class="headerlink" href="#icecast" title="Permalink to this headline">¶</a></h2>
 <p>The default values all match the default Icecast configuration provided by MusicDB.
 The password got generated during the installation process and can be considered as secure.
@@ -853,8 +858,8 @@ The default password was generated during the installation process of MusicDB an
 <dt>mountname (string starting with <code class="docutils literal notranslate"><span class="pre">/</span></code>):</dt><dd><p>This is the name of the mount MusicDB uses.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="randy">
+</section>
+<section id="randy">
 <h2>Randy<a class="headerlink" href="#randy" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>nodisabled (boolean):</dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">true</span></code> no disabled songs will be chosen</p>
@@ -879,8 +884,8 @@ The default password was generated during the installation process of MusicDB an
 This prevents spending infinite amount of time getting a song even if the data base does not provide enough songs.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="log">
+</section>
+<section id="log">
 <h2>log<a class="headerlink" href="#log" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>logfile (path to file):</dt><dd><p>Output for the logs. Can also be <code class="docutils literal notranslate"><span class="pre">stdout</span></code> or <code class="docutils literal notranslate"><span class="pre">stderr</span></code></p>
@@ -894,8 +899,8 @@ If no file shall be created, use <code class="docutils literal notranslate"><spa
 At least <code class="docutils literal notranslate"><span class="pre">requests,</span> <span class="pre">urllib3,</span> <span class="pre">PIL</span></code> is recommended</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="debug">
+</section>
+<section id="debug">
 <h2>debug<a class="headerlink" href="#debug" title="Permalink to this headline">¶</a></h2>
 <p>These flags can be used to prevent damage or messing up data while debugging or testing.
 Furthermore, it can be used to disable some features that do not work.</p>
@@ -917,8 +922,8 @@ This is <code class="docutils literal notranslate"><span class="pre">1</span></c
 Currently, the Music Video feature is in beta state.</p>
 </dd>
 </dl>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -963,6 +968,7 @@ Currently, the Music Video feature is in beta state.</p>
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>MusicDB Websocket Server &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-mdbapi.server">
+  <section id="module-mdbapi.server">
 <span id="musicdb-websocket-server"></span><h1>MusicDB Websocket Server<a class="headerlink" href="#module-mdbapi.server" title="Permalink to this headline">¶</a></h1>
 <p>This is the main module to run the MusicDB Server.</p>
 <p>To start and run the server, the following sequence of function calls is necessary:</p>
@@ -707,8 +712,8 @@ If the server is not started, the objects are all <code class="docutils literal 
 </div>
 </div></blockquote>
 <dl class="py function">
-<dt id="mdbapi.server.Initialize">
-<code class="sig-prename descclassname"><span class="pre">mdbapi.server.</span></code><code class="sig-name descname"><span class="pre">Initialize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">databaseobj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#Initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.server.Initialize" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.server.Initialize">
+<span class="sig-prename descclassname"><span class="pre">mdbapi.server.</span></span><span class="sig-name descname"><span class="pre">Initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">databaseobj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#Initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.server.Initialize" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function initializes the whole server.
 It initializes lots of global objects that get shared between multiple connections.</p>
 <p>The following things happen when this method gets called:</p>
@@ -744,8 +749,8 @@ It initializes lots of global objects that get shared between multiple connectio
 </dd></dl>
 
 <dl class="py function">
-<dt id="mdbapi.server.Run">
-<code class="sig-prename descclassname"><span class="pre">mdbapi.server.</span></code><code class="sig-name descname"><span class="pre">Run</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#Run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.server.Run" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.server.Run">
+<span class="sig-prename descclassname"><span class="pre">mdbapi.server.</span></span><span class="sig-name descname"><span class="pre">Run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#Run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.server.Run" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the servers main loop.</p>
 <p>Inside the loop all MusicDB Websocket Server events get handled by calling <a class="reference internal" href="../lib/websockets.html#lib.ws.server.MusicDBWebSocketServer.HandleEvents" title="lib.ws.server.MusicDBWebSocketServer.HandleEvents"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.ws.server.MusicDBWebSocketServer.HandleEvents()</span></code></a>.
 When a shutdown gets triggered the <a class="reference internal" href="#mdbapi.server.Shutdown" title="mdbapi.server.Shutdown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Shutdown()</span></code></a> function gets called and the server stops.</p>
@@ -754,15 +759,15 @@ When a shutdown gets triggered the <a class="reference internal" href="#mdbapi.s
 </dd></dl>
 
 <dl class="py function">
-<dt id="mdbapi.server.SIGTERM_Handler">
-<code class="sig-prename descclassname"><span class="pre">mdbapi.server.</span></code><code class="sig-name descname"><span class="pre">SIGTERM_Handler</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#SIGTERM_Handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.server.SIGTERM_Handler" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.server.SIGTERM_Handler">
+<span class="sig-prename descclassname"><span class="pre">mdbapi.server.</span></span><span class="sig-name descname"><span class="pre">SIGTERM_Handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#SIGTERM_Handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.server.SIGTERM_Handler" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is the handler for the system signal TERM.
 It signals the server to shut down.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mdbapi.server.Shutdown">
-<code class="sig-prename descclassname"><span class="pre">mdbapi.server.</span></code><code class="sig-name descname"><span class="pre">Shutdown</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#Shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.server.Shutdown" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.server.Shutdown">
+<span class="sig-prename descclassname"><span class="pre">mdbapi.server.</span></span><span class="sig-name descname"><span class="pre">Shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#Shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.server.Shutdown" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function stops the server and all its dependent threads.</p>
 <p>The following things happen when this function gets called:</p>
 <blockquote>
@@ -781,8 +786,8 @@ If the shutdown got forced, for example due to a critical error, the exit code i
 </dd></dl>
 
 <dl class="py function">
-<dt id="mdbapi.server.SignalHandler">
-<code class="sig-prename descclassname"><span class="pre">mdbapi.server.</span></code><code class="sig-name descname"><span class="pre">SignalHandler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stack</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#SignalHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.server.SignalHandler" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.server.SignalHandler">
+<span class="sig-prename descclassname"><span class="pre">mdbapi.server.</span></span><span class="sig-name descname"><span class="pre">SignalHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stack</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#SignalHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.server.SignalHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the general signal handle for the MusicDB Server.
 This function reacts on system signals and calls the handler of a specific signal.</p>
 <dl class="field-list simple">
@@ -797,8 +802,8 @@ This function reacts on system signals and calls the handler of a specific signa
 </dd></dl>
 
 <dl class="py function">
-<dt id="mdbapi.server.StartWebSocketServer">
-<code class="sig-prename descclassname"><span class="pre">mdbapi.server.</span></code><code class="sig-name descname"><span class="pre">StartWebSocketServer</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#StartWebSocketServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.server.StartWebSocketServer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.server.StartWebSocketServer">
+<span class="sig-prename descclassname"><span class="pre">mdbapi.server.</span></span><span class="sig-name descname"><span class="pre">StartWebSocketServer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#StartWebSocketServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.server.StartWebSocketServer" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function creates and starts the actual MusicDB Websocket Server.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -808,8 +813,8 @@ This function reacts on system signals and calls the handler of a specific signa
 </dd></dl>
 
 <dl class="py function">
-<dt id="mdbapi.server.UpdateCaches">
-<code class="sig-prename descclassname"><span class="pre">mdbapi.server.</span></code><code class="sig-name descname"><span class="pre">UpdateCaches</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#UpdateCaches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.server.UpdateCaches" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.server.UpdateCaches">
+<span class="sig-prename descclassname"><span class="pre">mdbapi.server.</span></span><span class="sig-name descname"><span class="pre">UpdateCaches</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/server.html#UpdateCaches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.server.UpdateCaches" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function handles the <em>refresh</em> command from the named pipe.
 Its task is to trigger updating the servers cache and to inform the clients to update.</p>
 <p>On server side:</p>
@@ -828,7 +833,7 @@ Its task is to trigger updating the servers cache and to inform the clients to u
 </div>
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
@@ -873,6 +878,7 @@ Its task is to trigger updating the servers cache and to inform the clients to u
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

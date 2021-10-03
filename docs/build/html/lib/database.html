@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Database &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="database">
+  <section id="database">
 <h1>Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h1>
 <p>All databases have a table ‘’meta’’ with the following scheme:</p>
 <blockquote>
@@ -691,11 +696,11 @@
 </div></blockquote>
 <p>One important key is ‘’version’ that allows to identify old schemes and allows an easy update of the database.
 There may be other keys depending on the databases. In that case they are described in the documentations of the related modules.</p>
-<span class="target" id="module-lib.db.database"></span><div class="section" id="database-class">
+<span class="target" id="module-lib.db.database"></span><section id="database-class">
 <h2>Database Class<a class="headerlink" href="#database-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="lib.db.database.Database">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.db.database.</span></code><code class="sig-name descname"><span class="pre">Database</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.database.Database" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.db.database.Database">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.db.database.</span></span><span class="sig-name descname"><span class="pre">Database</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.database.Database" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the base class for all database classes in MusicDB.
 It establishes the connection to the sqlite3 databases.</p>
 <p>The connection timeout is set to <code class="docutils literal notranslate"><span class="pre">20</span></code>.</p>
@@ -708,8 +713,8 @@ It establishes the connection to the sqlite3 databases.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="lib.db.database.Database.Compress">
-<code class="sig-name descname"><span class="pre">Compress</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Compress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.database.Database.Compress" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.db.database.Database.Compress">
+<span class="sig-name descname"><span class="pre">Compress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Compress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.database.Database.Compress" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to compress a string before storing it into the database.</p>
 <p>To keep a consistent database, use only this method and the complementary method <a class="reference internal" href="#lib.db.database.Database.Decompress" title="lib.db.database.Database.Decompress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Decompress()</span></code></a>.
 It uses <em>gzip</em> for compression.</p>
@@ -724,8 +729,8 @@ It uses <em>gzip</em> for compression.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.db.database.Database.Decompress">
-<code class="sig-name descname"><span class="pre">Decompress</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blob</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Decompress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.database.Database.Decompress" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.db.database.Database.Decompress">
+<span class="sig-name descname"><span class="pre">Decompress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blob</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Decompress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.database.Database.Decompress" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to decompress a compresses string after reading it from the database.</p>
 <p>To keep a consistent database, use only this method and the complementary method <a class="reference internal" href="#lib.db.database.Database.Compress" title="lib.db.database.Database.Compress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Compress()</span></code></a>.
 It uses <em>gzip</em> for decompression.</p>
@@ -740,8 +745,8 @@ It uses <em>gzip</em> for decompression.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.db.database.Database.Execute">
-<code class="sig-name descname"><span class="pre">Execute</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sql</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.database.Database.Execute" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.db.database.Database.Execute">
+<span class="sig-name descname"><span class="pre">Execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sql</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.Execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.database.Database.Execute" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method executes a SQL command.
 When the command fails, the database gets rolled back.
 Otherwise the changes gets committed.</p>
@@ -780,8 +785,8 @@ Otherwise the changes gets committed.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.db.database.Database.ExecuteScript">
-<code class="sig-name descname"><span class="pre">ExecuteScript</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sqlscript</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.ExecuteScript"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.database.Database.ExecuteScript" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.db.database.Database.ExecuteScript">
+<span class="sig-name descname"><span class="pre">ExecuteScript</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sqlscript</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.ExecuteScript"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.database.Database.ExecuteScript" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method executes multiple SQL commands stored in <code class="docutils literal notranslate"><span class="pre">sqlscript</span></code>.
 When the command fails, the database gets rolled back.
 Otherwise the changes gets committed.</p>
@@ -799,8 +804,8 @@ Otherwise the changes gets committed.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.db.database.Database.GetFromDatabase">
-<code class="sig-name descname"><span class="pre">GetFromDatabase</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sql</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.GetFromDatabase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.database.Database.GetFromDatabase" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.db.database.Database.GetFromDatabase">
+<span class="sig-name descname"><span class="pre">GetFromDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sql</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/database.html#Database.GetFromDatabase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.database.Database.GetFromDatabase" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets values from the database by executing a SQL command and fetching the results.
 When the command fails, the database gets rolled back.</p>
 <p>values can be a single value, a list, a dictionary or a tuple.</p>
@@ -840,8 +845,8 @@ Each row is represented by a tuple of values.</p>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -886,6 +891,7 @@ Each row is represented by a tuple of values.</p>
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

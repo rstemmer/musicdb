@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Scripts &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="scripts">
+  <section id="scripts">
 <h1>Scripts<a class="headerlink" href="#scripts" title="Permalink to this headline">¶</a></h1>
 <p>There are several scripts to make it easier to use MusicDB.
 The scripts and how they work are described in the following sections.</p>
@@ -693,7 +698,7 @@ musicdb-shutdown.sh
 </div>
 <p>There are some more scripts in the MusicDB scripts directory that are used for the installation process.
 See the <a class="reference internal" href="install.html"><span class="doc">Installation &amp; Update</span></a> documentation to learn about <code class="docutils literal notranslate"><span class="pre">install.sh</span></code> and <code class="docutils literal notranslate"><span class="pre">check.sh</span></code>.</p>
-<div class="section" id="musicdb-boot">
+<section id="musicdb-boot">
 <h2>musicdb-boot<a class="headerlink" href="#musicdb-boot" title="Permalink to this headline">¶</a></h2>
 <p>This script starts all depending processes that are needed by the server.
 Only exception is the HTTP server that must be started by the user.</p>
@@ -718,16 +723,16 @@ The processes started by this script will run with their own user ID as configur
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>icecast -b -c <span class="nv">$ICECASTCONFIG</span> &gt; /dev/null
 </pre></div>
 </div>
-</div>
-<div class="section" id="musicdb-shutdown">
+</section>
+<section id="musicdb-shutdown">
 <h2>musicdb-shutdown<a class="headerlink" href="#musicdb-shutdown" title="Permalink to this headline">¶</a></h2>
 <p>Same procedure as <code class="docutils literal notranslate"><span class="pre">musicdb-boot</span></code>.
 Just instead of starting the processes, they get stopped.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>killall icecast &gt; dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="musicdb-start">
+</section>
+<section id="musicdb-start">
 <h2>musicdb-start<a class="headerlink" href="#musicdb-start" title="Permalink to this headline">¶</a></h2>
 <p>This scripts starts the MusicDB WebSocket Server.
 If the server is already running (determined by the existence of the PID-file), nothing will be done.
@@ -736,8 +741,8 @@ This user should be created during the installation process</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>su -l -c <span class="s2">&quot;musicdb server&quot;</span> <span class="s2">&quot;musicdb&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="musicdb-stop">
+</section>
+<section id="musicdb-stop">
 <h2>musicdb-stop<a class="headerlink" href="#musicdb-stop" title="Permalink to this headline">¶</a></h2>
 <p>This script stops the MusicDB server.
 It reads the configuration (/etc/musicdb.ini) to determine the pid-file in which the PID of the MusicDB server is stored.
@@ -745,8 +750,8 @@ Then the server just gets killed by its PID.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">kill</span> <span class="k">$(</span> cat <span class="nv">$MUSICDB_PIDFILE</span> <span class="k">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="update">
+</section>
+<section id="update">
 <h2>update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
 <p>This script only updates the files in the server directory.
 So only a code update will be done.</p>
@@ -755,8 +760,8 @@ It does not ask the user to confirm the auto-detected setup of the installation.
 <p>Data updates (like new database schemes) must be done by the developer himself <strong>or</strong>
 use the argument <code class="docutils literal notranslate"><span class="pre">--major</span></code> for a major release update.
 Then a post-update process gets started that updates the configuration and database schemes.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -801,6 +806,7 @@ Then a post-update process gets started that updates the configuration and datab
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

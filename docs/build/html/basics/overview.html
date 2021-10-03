@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Overview of MusicDB &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,16 +670,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="overview-of-musicdb">
+  <section id="overview-of-musicdb">
 <h1>Overview of MusicDB<a class="headerlink" href="#overview-of-musicdb" title="Permalink to this headline">¶</a></h1>
 <p>The following graph shows a complete overview of MusicDB’s information flow through all its components.
 It shows what happens with the music and its annotated information like the meta data and artworks.
 Furthermore the image shows how everything is connected and how MusicDB integrates in the system.</p>
-<div class="figure align-default">
-<img alt="../_images/Map2_1.svg" src="../_images/Map2_1.svg" /></div>
+<figure class="align-default">
+<img alt="../_images/Map2_1.svg" src="../_images/Map2_1.svg" /></figure>
 <p>In the following sections, I describe the tasks of each block and how the interact with each other.
 The sections represent the colors of the rectangles and arrows, that represent the components of the environment of MusicDB.</p>
-<div class="section" id="music-information-purple">
+<section id="music-information-purple">
 <h2>Music Information (Purple)<a class="headerlink" href="#music-information-purple" title="Permalink to this headline">¶</a></h2>
 <p>There are two main paths (bold purple arrows) the data of the music collections goes to reach the listener.
 One path is for the audio part the listener wants to hear,
@@ -682,62 +687,62 @@ the other path is for the information the listener wants to see when he listens 
 <p>Everything starts with the users music collection shown in the bottom left corner.
 This collection is the source of all information MusicDB works with.
 As the arrow shows, MusicDB will never change anything in the users files.</p>
-</div>
-<div class="section" id="musicdb-data-blue">
+</section>
+<section id="musicdb-data-blue">
 <h2>MusicDB Data (Blue)<a class="headerlink" href="#musicdb-data-blue" title="Permalink to this headline">¶</a></h2>
 <p>The music files get read by <a class="reference internal" href="#musicdb-components-green">MusicDB Components (Green)</a>.
 At this point, the Music Collection gets split in two separate kind of information:
 The <a class="reference internal" href="#artwork-cache">Artwork Cache</a> for the artworks and the <a class="reference internal" href="#music-database">Music Database</a> for the meta data.</p>
-<div class="section" id="music-database">
+<section id="music-database">
 <h3>Music Database<a class="headerlink" href="#music-database" title="Permalink to this headline">¶</a></h3>
 <p>The Music Database is the central storage for information of music.
 It is a cache for the artist, album and song names.
 Furthermore the database contains information associated with the albums and songs like genre tags, mood flags and lyrics.
 A detailed explanation of the database can be found in the <a class="reference internal" href="../lib/musicdb.html"><span class="doc">MusicDatabase</span></a> documentation.</p>
-</div>
-<div class="section" id="artwork-cache">
+</section>
+<section id="artwork-cache">
 <h3>Artwork Cache<a class="headerlink" href="#artwork-cache" title="Permalink to this headline">¶</a></h3>
 <p>The artwork cache contains all albums artworks and scaled version of those artworks managed by the <a class="reference internal" href="../mdbapi/artwork.html"><span class="doc">Artwork Management</span></a>.</p>
-</div>
-<div class="section" id="musicdb-data-configuration">
+</section>
+<section id="musicdb-data-configuration">
 <h3>MusicDB Data &amp; Configuration<a class="headerlink" href="#musicdb-data-configuration" title="Permalink to this headline">¶</a></h3>
 <p>Beside the music database, there are lots of other data in the MusicDB data directory.
 For example the <a class="reference internal" href="config.html"><span class="doc">MusicDB Configuration</span></a> and the database of the <a class="reference internal" href="../mdbapi/tracker.html"><span class="doc">Song Tracker</span></a>.
 There are also files storing the state of the server (selected genres) and allowing controlling the server via <a class="reference internal" href="../lib/namedpipe.html"><span class="doc">NamedPipe</span></a></p>
-</div>
-</div>
-<div class="section" id="musicdb-components-green">
+</section>
+</section>
+<section id="musicdb-components-green">
 <h2>MusicDB Components (Green)<a class="headerlink" href="#musicdb-components-green" title="Permalink to this headline">¶</a></h2>
 <p>MusicDB itself can be divided into three parts: The <a class="reference internal" href="#musicdb-webui">MusicDB WebUI</a>, the <cite>MusicDB Server</cite> and the <a class="reference internal" href="#command-line-modules">Command-Line Modules</a>.</p>
-<div class="section" id="command-line-modules">
+<section id="command-line-modules">
 <h3>Command-Line Modules<a class="headerlink" href="#command-line-modules" title="Permalink to this headline">¶</a></h3>
 <p>The command line modules provide the interface from the users music collection to the MusicDB world.
 These modules manage the <a class="reference internal" href="#music-database">Music Database</a>, the <a class="reference internal" href="#artwork-cache">Artwork Cache</a> and many more.
 Details of the modules can be found in the <a class="reference internal" href="mods.html"><span class="doc">MusicDB Commandline Modules</span></a> documentation.
 One special module is the <a class="reference internal" href="#musicdb-server">MusicDB Server</a> module that will be described later in this section.</p>
-</div>
-<div class="section" id="musicdb-webui">
+</section>
+<section id="musicdb-webui">
 <h3>MusicDB WebUI<a class="headerlink" href="#musicdb-webui" title="Permalink to this headline">¶</a></h3>
 <p>The MusicDB WebUI is the front end part of MusicDB.
 It is written in JavaScript and gets executed on the client side.
 A WebSocket connection gets established to communicate with the <a class="reference internal" href="#musicdb-server">MusicDB Server</a> using the <a class="reference internal" href="webapi.html"><span class="doc">MusicDB Websocket API</span></a>.
 The WebUI allows the user to interact with the audio stream by adding, removing or moving songs in the queue of songs to play in future.
 Furthermore the WebUI shows all kind of information of the music currently playing and the music collection.</p>
-</div>
-<div class="section" id="musicdb-server">
+</section>
+<section id="musicdb-server">
 <h3>MusicDB Server<a class="headerlink" href="#musicdb-server" title="Permalink to this headline">¶</a></h3>
 <p>While the other modules are simple tools that get executed, do their job, and exit,
 the MusicDB Server module runs permanent to serve information to the WebUI via <a class="reference internal" href="webapi.html"><span class="doc">MusicDB Websocket API</span></a>,
 and to provide an audio stream.
 Details of how the server works can be found in the <a class="reference internal" href="../mdbapi/server.html"><span class="doc">MusicDB Websocket Server</span></a> and <a class="reference internal" href="../mdbapi/audiostream.html"><span class="doc">Audio Streaming Server</span></a> documentation.</p>
-</div>
-</div>
-<div class="section" id="external-servers-black">
+</section>
+</section>
+<section id="external-servers-black">
 <h2>External Servers (Black)<a class="headerlink" href="#external-servers-black" title="Permalink to this headline">¶</a></h2>
 <p>There are two external tools involved in the MusicDB setup.
 The <a class="reference internal" href="#http-server">HTTP Server</a> serves the <a class="reference internal" href="#musicdb-webui">MusicDB WebUI</a>.
 The <a class="reference internal" href="#icecast-server">Icecast Server</a> manages the audio stream provided by the <a class="reference internal" href="#musicdb-server">MusicDB Server</a></p>
-<div class="section" id="http-server">
+<section id="http-server">
 <h3>HTTP Server<a class="headerlink" href="#http-server" title="Permalink to this headline">¶</a></h3>
 <p>To serve the WebUI files to the client, a HTTP server is needed.
 In the setup shown in the figure above, <a class="reference external" href="https://httpd.apache.org/">Apache</a> is used.
@@ -746,21 +751,21 @@ The audio file access is needed by the WebUI to provide the possibility to liste
 Of course it can also be used to serve the documentation.
 The HTTP server is not bound to MusicDB in the way MPD is.
 So Apache can be replaced by any other web server.</p>
-</div>
-<div class="section" id="icecast-server">
+</section>
+<section id="icecast-server">
 <h3>Icecast Server<a class="headerlink" href="#icecast-server" title="Permalink to this headline">¶</a></h3>
 <p>The <a class="reference external" href="https://icecast.org/">Icecast</a> server gets the audio data from the <a class="reference internal" href="#musicdb-server">MusicDB Server</a> and provides additional encryption and user management based protection to the stream.
 From the point of view from Icecast, MusicDB is a Source Client.
 More details are documented in the <a class="reference internal" href="../lib/icecast.html"><span class="doc">Icecast Interface</span></a> documentation.</p>
-</div>
-</div>
-<div class="section" id="consuming-music-orange">
+</section>
+</section>
+<section id="consuming-music-orange">
 <h2>Consuming Music (Orange)<a class="headerlink" href="#consuming-music-orange" title="Permalink to this headline">¶</a></h2>
 <p>At the top of the figure, all information streams come together to the user.
 The user can see and control the audio stream using a web browser.
 To listen to the stream the user can connect with any media player that can receive mp3 audio streams.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -805,6 +810,7 @@ To listen to the stream the user can connect with any media player that can rece
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

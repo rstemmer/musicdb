@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>MusicDB Test VMs &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="musicdb-test-vms">
+  <section id="musicdb-test-vms">
 <h1>MusicDB Test VMs<a class="headerlink" href="#musicdb-test-vms" title="Permalink to this headline">¶</a></h1>
 <p>To test MusicDB I created some VMs with different Linux distributions.
 Most time I test on my productive installation.</p>
@@ -673,9 +678,9 @@ Most time I test on my productive installation.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qemu-system-x86_64 -hda <span class="nv">$SYSDISK</span> -hdb MusicDB.cow -hdc music.cow -m <span class="m">1024</span> -net user,hostfwd<span class="o">=</span>tcp::10022-:22 -net nic -enable-kvm
 </pre></div>
 </div>
-<div class="section" id="qemu-installation">
+<section id="qemu-installation">
 <h2>qemu Installation<a class="headerlink" href="#qemu-installation" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="basic-setup">
+<section id="basic-setup">
 <h3>Basic Setup<a class="headerlink" href="#basic-setup" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install qemu</span>
 pacman -S qemu-headless
@@ -686,8 +691,8 @@ chattr +C /data/vms
 chown user:user /data/vms
 </pre></div>
 </div>
-</div>
-<div class="section" id="disk-images">
+</section>
+<section id="disk-images">
 <h3>Disk Images<a class="headerlink" href="#disk-images" title="Permalink to this headline">¶</a></h3>
 <p>I use multiple images to make the test environment more composable:</p>
 <blockquote>
@@ -700,9 +705,9 @@ chown user:user /data/vms
 qemu-img create -f qcow2 /data/vms/music.cow 10G
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="system-setup">
+</section>
+</section>
+<section id="system-setup">
 <h2>System Setup<a class="headerlink" href="#system-setup" title="Permalink to this headline">¶</a></h2>
 <p>All system installations have the following setup:</p>
 <blockquote>
@@ -729,7 +734,7 @@ qemu-img create -f qcow2 /data/vms/music.cow 10G
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir -p /data/music
 </pre></div>
 </div>
-<div class="section" id="installing-updating-musicdb-test-environment">
+<section id="installing-updating-musicdb-test-environment">
 <h3>Installing/Updating MusicDB Test Environment<a class="headerlink" href="#installing-updating-musicdb-test-environment" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">icecast</span></code> is not needed because it only handles encryption what is not necessary for test runs.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># download</span>
@@ -742,8 +747,8 @@ git clone git@m45ch1n3.de:/data/git/musicdb.git
 ./install.sh
 </pre></div>
 </div>
-</div>
-<div class="section" id="create-dummy-files">
+</section>
+<section id="create-dummy-files">
 <h3>Create Dummy Files<a class="headerlink" href="#create-dummy-files" title="Permalink to this headline">¶</a></h3>
 <p>The following code shows, how to create a simple fake song.
 To create a complete fake album, the script <code class="docutils literal notranslate"><span class="pre">testenv/mkalbum.sh</span></code> can be used.
@@ -758,11 +763,11 @@ lame silence.wav
 id3edit --create --set-name <span class="s2">&quot;Silence&quot;</span> --set-album <span class="s2">&quot;Full of Null&quot;</span> --set-artist <span class="s2">&quot;Lame Sox&quot;</span> --set-release <span class="s2">&quot;2017&quot;</span> --set-track <span class="s2">&quot;01/10&quot;</span> --set-cd <span class="s2">&quot;1/1&quot;</span> silence.mp3
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="test-systems">
+</section>
+</section>
+<section id="test-systems">
 <h2>Test Systems<a class="headerlink" href="#test-systems" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="debian">
+<section id="debian">
 <h3>Debian<a class="headerlink" href="#debian" title="Permalink to this headline">¶</a></h3>
 <p><strong>Version:</strong> 9.1.0 AMD64</p>
 <p>I used a <em>qemu</em> installation with GUI on my development PC to install Debian.
@@ -796,13 +801,13 @@ systemctl disable mpd
 <p class="admonition-title">Attention</p>
 <p>On Debian, uses the ancient Python 2 when calling <code class="docutils literal notranslate"><span class="pre">python</span></code>! m(</p>
 </div>
-</div>
-<div class="section" id="raspian">
+</section>
+<section id="raspian">
 <h3>Raspian<a class="headerlink" href="#raspian" title="Permalink to this headline">¶</a></h3>
 <p>TODO
 <a class="reference external" href="https://azeria-labs.com/emulate-raspberry-pi-with-qemu/">https://azeria-labs.com/emulate-raspberry-pi-with-qemu/</a></p>
-</div>
-<div class="section" id="arch-linux">
+</section>
+<section id="arch-linux">
 <h3>Arch Linux<a class="headerlink" href="#arch-linux" title="Permalink to this headline">¶</a></h3>
 <p><strong>Version:</strong> <em>latest</em> (x86-64)</p>
 <p>Compared to my development system that is also Arch Linux, this is only a minimal installation.
@@ -816,9 +821,9 @@ wget https://ftp.fau.de/archlinux/iso/2017.09.01/archlinux-2017.09.01-x86_64.iso
 qemu-system-x86_64 -cdrom archlinux-2017.09.01-x86_64.iso -hda arch.cow -boot <span class="nv">order</span><span class="o">=</span>d -m <span class="m">1024</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
@@ -863,6 +868,7 @@ qemu-system-x86_64 -cdrom archlinux-2017.09.01-x86_64.iso -hda arch.cow -boot <s
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

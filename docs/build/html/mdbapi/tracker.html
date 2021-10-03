@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Song Tracker &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-mdbapi.tracker">
+  <section id="module-mdbapi.tracker">
 <span id="song-tracker"></span><h1>Song Tracker<a class="headerlink" href="#module-mdbapi.tracker" title="Permalink to this headline">¶</a></h1>
 <p>This module provides a tracker to track songs and videos that were streamed.
 The goal of the tracker is to collect information which songs and videos can be played in series.
@@ -688,11 +693,11 @@ The user can then get the information which song/video were played after (or bef
 <span class="n">tracker</span><span class="o">.</span><span class="n">AddSong</span><span class="p">(</span><span class="s2">&quot;Truther/2013 - Real Album/23 Illuminati.mp3&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="section" id="tracker-class">
+<section id="tracker-class">
 <h2>Tracker Class<a class="headerlink" href="#tracker-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="mdbapi.tracker.Tracker">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.tracker.</span></code><code class="sig-name descname"><span class="pre">Tracker</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#Tracker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tracker.Tracker" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tracker.Tracker">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mdbapi.tracker.</span></span><span class="sig-name descname"><span class="pre">Tracker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#Tracker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tracker.Tracker" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class tracks music (songs and videos) that were played after each other.
 So it gets tracked what songs or videos the user put together into the queue because their style fit to each other.</p>
 <p>Only completely played music should considered.
@@ -722,8 +727,8 @@ This could mess up the database with relations that were counted twice!</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mdbapi.tracker.Tracker.Track">
-<code class="sig-name descname"><span class="pre">Track</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">targetid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#Tracker.Track"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tracker.Tracker.Track" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tracker.Tracker.Track">
+<span class="sig-name descname"><span class="pre">Track</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">targetid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tracker.html#Tracker.Track"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tracker.Tracker.Track" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method tracks the relation to the given target with the last added target.
 A target can be a song or a video.
 This new target should be a target that was recently and completely played.</p>
@@ -747,8 +752,8 @@ This is the case when there was previously a target added.</p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-lib.db.trackerdb">
+</section>
+<section id="module-lib.db.trackerdb">
 <span id="tracker-database"></span><h2>Tracker Database<a class="headerlink" href="#module-lib.db.trackerdb" title="Permalink to this headline">¶</a></h2>
 <p>This module is used to manage the Tracker Database.</p>
 <p>The database stores the relation between two songs or videos.
@@ -789,12 +794,12 @@ It is prevented by the method creating the relation.</p>
 </dd>
 </dl>
 <p>This classes uses a global lock (using Python <code class="docutils literal notranslate"><span class="pre">threading.RLock</span></code>) to avoid that relations change during complex operation.</p>
-</div>
-<div class="section" id="trackerdatabase-class">
+</section>
+<section id="trackerdatabase-class">
 <h2>TrackerDatabase Class<a class="headerlink" href="#trackerdatabase-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="lib.db.trackerdb.TrackerDatabase">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.db.trackerdb.</span></code><code class="sig-name descname"><span class="pre">TrackerDatabase</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.db.trackerdb.TrackerDatabase">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.db.trackerdb.</span></span><span class="sig-name descname"><span class="pre">TrackerDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derived from <a class="reference internal" href="../lib/database.html#lib.db.database.Database" title="lib.db.database.Database"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.db.database.Database</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -805,8 +810,8 @@ It is prevented by the method creating the relation.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="lib.db.trackerdb.TrackerDatabase.AddRelation">
-<code class="sig-name descname"><span class="pre">AddRelation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ida</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.AddRelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.AddRelation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.db.trackerdb.TrackerDatabase.AddRelation">
+<span class="sig-name descname"><span class="pre">AddRelation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ida</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.AddRelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.AddRelation" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds a relation between two targets.
 A target can be a song or a video.</p>
 <p>It does not matter which one is greater, <em>ida</em> or <em>idb</em>.
@@ -833,8 +838,8 @@ If <em>ida</em> and <em>idb</em> are the same ID, they get ignored.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.db.trackerdb.TrackerDatabase.GetRelations">
-<code class="sig-name descname"><span class="pre">GetRelations</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.GetRelations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.GetRelations" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.db.trackerdb.TrackerDatabase.GetRelations">
+<span class="sig-name descname"><span class="pre">GetRelations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.GetRelations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.GetRelations" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the related songs or videos of a song or a video, depending on the value of <em>target</em>.</p>
 <p>The method returns a list of dictionaries.
 Each dictionary contains the ID of the related song or video, and the weight of the relation.</p>
@@ -864,8 +869,8 @@ Each dictionary contains the ID of the related song or video, and the weight of 
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.db.trackerdb.TrackerDatabase.RemoveRelation">
-<code class="sig-name descname"><span class="pre">RemoveRelation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ida</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveRelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveRelation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.db.trackerdb.TrackerDatabase.RemoveRelation">
+<span class="sig-name descname"><span class="pre">RemoveRelation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ida</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveRelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveRelation" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes a relation between two targets.
 A target can be a song, a video or a video.</p>
 <p>It does not matter which one is greater, <em>ida</em> or <em>idb</em>.
@@ -892,8 +897,8 @@ If <em>ida</em> and <em>idb</em> are the same ID, they get ignored.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.db.trackerdb.TrackerDatabase.RemoveSong">
-<code class="sig-name descname"><span class="pre">RemoveSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.db.trackerdb.TrackerDatabase.RemoveSong">
+<span class="sig-name descname"><span class="pre">RemoveSong</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes all relations to a song.
 This is usefull in case a song gets removed from the database.</p>
 <p>If the song relation does not exist, nothing will be done.</p>
@@ -911,8 +916,8 @@ This is usefull in case a song gets removed from the database.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.db.trackerdb.TrackerDatabase.RemoveVideo">
-<code class="sig-name descname"><span class="pre">RemoveVideo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videoid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveVideo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.db.trackerdb.TrackerDatabase.RemoveVideo">
+<span class="sig-name descname"><span class="pre">RemoveVideo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videoid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/db/trackerdb.html#TrackerDatabase.RemoveVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.db.trackerdb.TrackerDatabase.RemoveVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes all relations to a video.
 This is useful in case a video gets removed from the database.</p>
 <p>If the video relation does not exist, nothing will be done.</p>
@@ -931,8 +936,8 @@ This is useful in case a video gets removed from the database.</p>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -977,6 +982,7 @@ This is useful in case a video gets removed from the database.</p>
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

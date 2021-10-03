@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>MusicDB Song Queue &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,11 +670,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-mdbapi.songqueue">
+  <section id="module-mdbapi.songqueue">
 <span id="musicdb-song-queue"></span><h1>MusicDB Song Queue<a class="headerlink" href="#module-mdbapi.songqueue" title="Permalink to this headline">¶</a></h1>
 <p>This module implements the Song Queue.
 The song queue consists of a global FIFO organized list.</p>
-<div class="section" id="queue-management">
+<section id="queue-management">
 <h2>Queue Management<a class="headerlink" href="#queue-management" title="Permalink to this headline">¶</a></h2>
 <p>An entry in this queue is a dictionary having the following keys:</p>
 <blockquote>
@@ -695,8 +700,8 @@ This UUID is a 128 bit integer.</p>
 </div></blockquote>
 <p>Furthermore this module cooperates the Randy module (see: <a class="reference internal" href="randy.html"><span class="doc">Randomizer</span></a>)
 When the queue runs empty, a new random song gets append to the queue.</p>
-</div>
-<div class="section" id="event-management">
+</section>
+<section id="event-management">
 <h2>Event Management<a class="headerlink" href="#event-management" title="Permalink to this headline">¶</a></h2>
 <p>This module provided a callback interface to react on events triggered on changes in the Song Queue.</p>
 <p>The following two functions can be used to register or remove a callback function:</p>
@@ -736,12 +741,12 @@ The second parameter contains an event specific argument, or <code class="docuti
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entry </span><span class="si">%d</span><span class="s2"> is a randomly added song.&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">queueentry</span><span class="p">[</span><span class="s2">&quot;entryid&quot;</span><span class="p">]))</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="song-queue-class">
+</section>
+<section id="song-queue-class">
 <h2>Song Queue Class<a class="headerlink" href="#song-queue-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="mdbapi.songqueue.SongQueue">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.songqueue.</span></code><code class="sig-name descname"><span class="pre">SongQueue</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mdbapi.songqueue.</span></span><span class="sig-name descname"><span class="pre">SongQueue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class implements a queue to manage songs to play.
 Whenever the queue changes, its data gets stored in the MusicDB State Directory</p>
 <p>When the constructor detects that there is no queue yet (not even an empty one),
@@ -759,8 +764,8 @@ If this fails, a new empty queue gets created.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.AddRandomSong">
-<code class="sig-name descname"><span class="pre">AddRandomSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'last'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.AddRandomSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.AddRandomSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.AddRandomSong">
+<span class="sig-name descname"><span class="pre">AddRandomSong</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'last'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.AddRandomSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.AddRandomSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds a random song into the queue.</p>
 <p>The position in the queue, where the song gets insert can be changed by setting the <code class="docutils literal notranslate"><span class="pre">position</span></code> argument:</p>
 <blockquote>
@@ -790,8 +795,8 @@ If there is no song found by Randy, then nothing gets added to the queue and <co
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.AddSong">
-<code class="sig-name descname"><span class="pre">AddSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'last'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">israndom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.AddSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.AddSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.AddSong">
+<span class="sig-name descname"><span class="pre">AddSong</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'last'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">israndom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.AddSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.AddSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>With this method, a new song can be insert into the queue.</p>
 <p>The position in the queue, where the song gets insert can be changed by setting the <code class="docutils literal notranslate"><span class="pre">position</span></code> argument:</p>
 <blockquote>
@@ -824,8 +829,8 @@ The method also triggers the <code class="docutils literal notranslate"><span cl
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.CurrentSong">
-<code class="sig-name descname"><span class="pre">CurrentSong</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.CurrentSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.CurrentSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.CurrentSong">
+<span class="sig-name descname"><span class="pre">CurrentSong</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.CurrentSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.CurrentSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the current song in the queue.</p>
 <p>The method returns element 0 from the queue which is the current song that can be streamed or gets already streamed.
 The song shall remain in the queue until it got completely streamed.
@@ -864,23 +869,23 @@ This method triggers the <code class="docutils literal notranslate"><span class=
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.Event_SongChanged">
-<code class="sig-name descname"><span class="pre">Event_SongChanged</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.Event_SongChanged"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.Event_SongChanged" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.Event_SongChanged">
+<span class="sig-name descname"><span class="pre">Event_SongChanged</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.Event_SongChanged"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.Event_SongChanged" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="#mdbapi.songqueue.SongQueue.TriggerEvent" title="mdbapi.songqueue.SongQueue.TriggerEvent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TriggerEvent()</span></code></a> with event name <code class="docutils literal notranslate"><span class="pre">&quot;SongChanged&quot;</span></code>
 More details in the module description at the top of this document.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.Event_SongQueueChanged">
-<code class="sig-name descname"><span class="pre">Event_SongQueueChanged</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.Event_SongQueueChanged"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.Event_SongQueueChanged" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.Event_SongQueueChanged">
+<span class="sig-name descname"><span class="pre">Event_SongQueueChanged</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.Event_SongQueueChanged"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.Event_SongQueueChanged" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="#mdbapi.songqueue.SongQueue.TriggerEvent" title="mdbapi.songqueue.SongQueue.TriggerEvent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TriggerEvent()</span></code></a> with event name <code class="docutils literal notranslate"><span class="pre">&quot;SongQueueChanged&quot;</span></code>.
 More details in the module description at the top of this document.</p>
 <p>This method also tries to save the queue into the MusicDB State Directory.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.GenerateID">
-<code class="sig-name descname"><span class="pre">GenerateID</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.GenerateID"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.GenerateID" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.GenerateID">
+<span class="sig-name descname"><span class="pre">GenerateID</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.GenerateID"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.GenerateID" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method generate a unique ID.
 In detail, it is a <a class="reference external" href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)">Version 4 Universally Unique Identifier (UUID)</a> .
 It will be returned as an integer.</p>
@@ -899,8 +904,8 @@ It will be returned as an integer.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.GetQueue">
-<code class="sig-name descname"><span class="pre">GetQueue</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.GetQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.GetQueue" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.GetQueue">
+<span class="sig-name descname"><span class="pre">GetQueue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.GetQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.GetQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a copy of the song queue.</p>
 <p>The queue is a list of dictionaries.
 The content of the dictionary is described in the description of this module.</p>
@@ -923,8 +928,8 @@ The content of the dictionary is described in the description of this module.</p
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.GetSong">
-<code class="sig-name descname"><span class="pre">GetSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entryid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.GetSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.GetSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.GetSong">
+<span class="sig-name descname"><span class="pre">GetSong</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entryid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.GetSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.GetSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the song ID of the entry addressed by the entry ID</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -940,8 +945,8 @@ The content of the dictionary is described in the description of this module.</p
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.Load">
-<code class="sig-name descname"><span class="pre">Load</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.Load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.Load" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.Load">
+<span class="sig-name descname"><span class="pre">Load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.Load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.Load" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method loads the last stored song queue for the MusicDB State Directory
 via <a class="reference internal" href="../lib/config.html#lib.cfg.mdbstate.MDBState.LoadSongQueue" title="lib.cfg.mdbstate.MDBState.LoadSongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.cfg.mdbstate.MDBState.LoadSongQueue()</span></code></a>.</p>
 <dl class="field-list simple">
@@ -952,8 +957,8 @@ via <a class="reference internal" href="../lib/config.html#lib.cfg.mdbstate.MDBS
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.MoveSong">
-<code class="sig-name descname"><span class="pre">MoveSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entryid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">afterid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.MoveSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.MoveSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.MoveSong">
+<span class="sig-name descname"><span class="pre">MoveSong</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entryid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">afterid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.MoveSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.MoveSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method moves an entry, addressed by <code class="docutils literal notranslate"><span class="pre">entryid</span></code> behind another entry addressed by <code class="docutils literal notranslate"><span class="pre">afterid</span></code>.
 If both IDs are the same, the method returns immediately without doing anything.
 When <code class="docutils literal notranslate"><span class="pre">entryid</span></code> addresses the current song, the method returns with value <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
@@ -975,8 +980,8 @@ When <code class="docutils literal notranslate"><span class="pre">entryid</span>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.NextSong">
-<code class="sig-name descname"><span class="pre">NextSong</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.NextSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.NextSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.NextSong">
+<span class="sig-name descname"><span class="pre">NextSong</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.NextSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.NextSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the next song in the queue.
 This entry will be the next current song.</p>
 <p>The method pops the last current element from the queue.
@@ -1017,8 +1022,8 @@ The <code class="docutils literal notranslate"><span class="pre">SongChanged</sp
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.RegisterCallback">
-<code class="sig-name descname"><span class="pre">RegisterCallback</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.RegisterCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.RegisterCallback" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.RegisterCallback">
+<span class="sig-name descname"><span class="pre">RegisterCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.RegisterCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.RegisterCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a callback function that reacts on Song Queue related events.
 For more details see the module description at the top of this document.</p>
 <dl class="field-list simple">
@@ -1032,8 +1037,8 @@ For more details see the module description at the top of this document.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.RemoveCallback">
-<code class="sig-name descname"><span class="pre">RemoveCallback</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.RemoveCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.RemoveCallback" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.RemoveCallback">
+<span class="sig-name descname"><span class="pre">RemoveCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.RemoveCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.RemoveCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a function from the list of callback functions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1046,8 +1051,8 @@ For more details see the module description at the top of this document.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.RemoveSong">
-<code class="sig-name descname"><span class="pre">RemoveSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entryid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.RemoveSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.RemoveSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.RemoveSong">
+<span class="sig-name descname"><span class="pre">RemoveSong</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entryid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.RemoveSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.RemoveSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes the entry with the ID <code class="docutils literal notranslate"><span class="pre">entryid</span></code> from the queue.
 Removing the current song is not allowed!
 Call <a class="reference internal" href="#mdbapi.songqueue.SongQueue.NextSong" title="mdbapi.songqueue.SongQueue.NextSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NextSong()</span></code></a> instead.</p>
@@ -1067,8 +1072,8 @@ Call <a class="reference internal" href="#mdbapi.songqueue.SongQueue.NextSong" t
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.Save">
-<code class="sig-name descname"><span class="pre">Save</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.Save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.Save" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.Save">
+<span class="sig-name descname"><span class="pre">Save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.Save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.Save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the current queue into a csv file in the MusicDB State Directory.
 Therefor the <a class="reference internal" href="../lib/config.html#lib.cfg.mdbstate.MDBState.SaveSongQueue" title="lib.cfg.mdbstate.MDBState.SaveSongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.cfg.mdbstate.MDBState.SaveSongQueue()</span></code></a> gets used.</p>
 <dl class="field-list simple">
@@ -1079,8 +1084,8 @@ Therefor the <a class="reference internal" href="../lib/config.html#lib.cfg.mdbs
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.songqueue.SongQueue.TriggerEvent">
-<code class="sig-name descname"><span class="pre">TriggerEvent</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.TriggerEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.TriggerEvent" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.songqueue.SongQueue.TriggerEvent">
+<span class="sig-name descname"><span class="pre">TriggerEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/songqueue.html#SongQueue.TriggerEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.songqueue.SongQueue.TriggerEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function triggers an event.
 It iterates through all registered callback functions and calls them.</p>
 <p>The arguments to the functions are the name of the even (<code class="docutils literal notranslate"><span class="pre">name</span></code>) and addition arguments (<code class="docutils literal notranslate"><span class="pre">arg</span></code>).
@@ -1101,8 +1106,8 @@ That argument will be <code class="docutils literal notranslate"><span class="pr
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -1147,6 +1152,7 @@ That argument will be <code class="docutils literal notranslate"><span class="pr
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

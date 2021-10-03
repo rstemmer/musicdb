@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>MP3 Transcoder &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,14 +670,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-lib.stream.mp3transcoder">
+  <section id="module-lib.stream.mp3transcoder">
 <span id="mp3-transcoder"></span><h1>MP3 Transcoder<a class="headerlink" href="#module-lib.stream.mp3transcoder" title="Permalink to this headline">¶</a></h1>
 <p>This module transcodes the users source music into mp3 data that can be streamed via <a class="reference internal" href="icecast.html#lib.stream.icecast.IcecastInterface" title="lib.stream.icecast.IcecastInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.stream.icecast.IcecastInterface</span></code></a>.
 Therefore it uses the <a class="reference internal" href="gstreamer.html#lib.stream.gstreamer.GStreamerInterface" title="lib.stream.gstreamer.GStreamerInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.stream.gstreamer.GStreamerInterface</span></code></a> class.
 A <a class="reference internal" href="#gstreamer-pipeline">GStreamer Pipeline</a> will be created to transcode m4a, mp3 and flac files into a specific mp3 encoding.
 The output of the GStreamer Pipeline gets written into a <a class="reference internal" href="#unix-pipe">UNIX Pipe</a>.
 The data can then be accessed via <code class="xref py py-mod docutils literal notranslate"><span class="pre">GetChunk</span></code>.</p>
-<div class="section" id="gstreamer-pipeline">
+<section id="gstreamer-pipeline">
 <h2>GStreamer Pipeline<a class="headerlink" href="#gstreamer-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>As shown in the graph below, GStreamer is used for the transcoding.
 The files get read by the <code class="docutils literal notranslate"><span class="pre">filesrc</span></code> element and then be decoded.
@@ -710,15 +715,15 @@ ffpribe out.mp3
 </pre></div>
 </div>
 </div></blockquote>
-</div>
-<div class="section" id="unix-pipe">
+</section>
+<section id="unix-pipe">
 <h2>UNIX Pipe<a class="headerlink" href="#unix-pipe" title="Permalink to this headline">¶</a></h2>
 <p>A UNIX Pipe is connected to the <code class="docutils literal notranslate"><span class="pre">fdsink</span></code> GStreamer Element.
 <code class="docutils literal notranslate"><span class="pre">fdsink</span></code> writes into the pipe.
 Then <a class="reference internal" href="#lib.stream.mp3transcoder.MP3Transcoder.GetChunk" title="lib.stream.mp3transcoder.MP3Transcoder.GetChunk"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MP3Transcoder.GetChunk()</span></code></a> reads some chunks from the mp3 data encoded by the <code class="docutils literal notranslate"><span class="pre">lamemp3enc</span></code> Element.</p>
 <p>The pipe is accessed non-blocking.</p>
-</div>
-<div class="section" id="transcoding">
+</section>
+<section id="transcoding">
 <h2>Transcoding<a class="headerlink" href="#transcoding" title="Permalink to this headline">¶</a></h2>
 <p>Transcoding will be done in a separate thread.
 To safely work with the <a class="reference internal" href="#lib.stream.mp3transcoder.MP3Transcoder" title="lib.stream.mp3transcoder.MP3Transcoder"><code class="xref py py-class docutils literal notranslate"><span class="pre">MP3Transcoder</span></code></a> class, you should use the provided context management:</p>
@@ -728,12 +733,12 @@ To safely work with the <a class="reference internal" href="#lib.stream.mp3trans
 </pre></div>
 </div>
 </div></blockquote>
-</div>
-<div class="section" id="mp3transcoder-class">
+</section>
+<section id="mp3transcoder-class">
 <h2>MP3Transcoder Class<a class="headerlink" href="#mp3transcoder-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="lib.stream.mp3transcoder.MP3Transcoder">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.stream.mp3transcoder.</span></code><code class="sig-name descname"><span class="pre">MP3Transcoder</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.stream.mp3transcoder.MP3Transcoder">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.stream.mp3transcoder.</span></span><span class="sig-name descname"><span class="pre">MP3Transcoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – The absolute path of the audio file that shall be transcoded</p>
@@ -751,8 +756,8 @@ To safely work with the <a class="reference internal" href="#lib.stream.mp3trans
 </pre></div>
 </div>
 <dl class="py method">
-<dt id="lib.stream.mp3transcoder.MP3Transcoder.Cancel">
-<code class="sig-name descname"><span class="pre">Cancel</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.Cancel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.Cancel" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.stream.mp3transcoder.MP3Transcoder.Cancel">
+<span class="sig-name descname"><span class="pre">Cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.Cancel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.Cancel" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method cancels a currently running transcoding process.
 If there is no transcoding going on, nothing happens.</p>
 <p>The GStreamer object gets set into CANCEL state.
@@ -760,8 +765,8 @@ The connection to GStreamer stays established!</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.stream.mp3transcoder.MP3Transcoder.GetChunk">
-<code class="sig-name descname"><span class="pre">GetChunk</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.GetChunk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.GetChunk" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.stream.mp3transcoder.MP3Transcoder.GetChunk">
+<span class="sig-name descname"><span class="pre">GetChunk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.GetChunk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.GetChunk" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads a chunk of data that gets provided by the GStreamer <code class="docutils literal notranslate"><span class="pre">fdsink</span></code> element from the GStreamer Pipeline.
 This element writes into a UNIX Pipe.
 It tries to read <code class="docutils literal notranslate"><span class="pre">size</span></code> bytes of data.</p>
@@ -832,8 +837,8 @@ When there were less than <code class="docutils literal notranslate"><span class
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.stream.mp3transcoder.MP3Transcoder.Transcode">
-<code class="sig-name descname"><span class="pre">Transcode</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.Transcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.Transcode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.stream.mp3transcoder.MP3Transcoder.Transcode">
+<span class="sig-name descname"><span class="pre">Transcode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.Transcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.Transcode" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method starts the transcoding process of a file as thread.
 After setting the <code class="docutils literal notranslate"><span class="pre">path</span></code> as source for the audio data,
 a thread gets started that runs the GStreamer Pipeline.
@@ -856,8 +861,8 @@ If an error occurs <code class="docutils literal notranslate"><span class="pre">
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.stream.mp3transcoder.MP3Transcoder.onDecoderPadAdded">
-<code class="sig-name descname"><span class="pre">onDecoderPadAdded</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dbin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.onDecoderPadAdded"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.onDecoderPadAdded" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.stream.mp3transcoder.MP3Transcoder.onDecoderPadAdded">
+<span class="sig-name descname"><span class="pre">onDecoderPadAdded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dbin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pad</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3transcoder.html#MP3Transcoder.onDecoderPadAdded"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3transcoder.MP3Transcoder.onDecoderPadAdded" title="Permalink to this definition">¶</a></dt>
 <dd><p>Args:</p>
 <p>Returns:</p>
 <p class="rubric">Example</p>
@@ -868,8 +873,8 @@ If an error occurs <code class="docutils literal notranslate"><span class="pre">
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -914,6 +919,7 @@ If an error occurs <code class="docutils literal notranslate"><span class="pre">
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

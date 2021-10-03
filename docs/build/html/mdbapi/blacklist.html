@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Blacklist &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,14 +670,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="blacklist">
+  <section id="blacklist">
 <h1>Blacklist<a class="headerlink" href="#blacklist" title="Permalink to this headline">¶</a></h1>
 <p>This module manages the blacklists used by <a class="reference internal" href="randy.html#module-mdbapi.randy" title="mdbapi.randy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">randy</span></code></a>.</p>
-<div class="section" id="module-mdbapi.blacklist">
+<section id="module-mdbapi.blacklist">
 <span id="blacklist-module"></span><h2>Blacklist Module<a class="headerlink" href="#module-mdbapi.blacklist" title="Permalink to this headline">¶</a></h2>
 <p>The <em>blacklist</em> module provides an interface to the blacklists of artist, albums, songs and videos
 that shall not be played for a certain (configured) time.</p>
-<div class="section" id="id1">
+<section id="id1">
 <h3>Blacklist<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>There are four FIFO organized blacklists: For videos, songs, albums and artists.
 Each blacklist holds the IDs of the last played videos, songs, albums and artists.</p>
@@ -708,13 +713,13 @@ The key of the dictionary are:</p>
 </dl>
 </div></blockquote>
 <p>Both entries can be <code class="docutils literal notranslate"><span class="pre">None</span></code> when not set.</p>
-</div>
-</div>
-<div class="section" id="blacklist-interface-class">
+</section>
+</section>
+<section id="blacklist-interface-class">
 <h2>Blacklist Interface Class<a class="headerlink" href="#blacklist-interface-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="mdbapi.blacklist.BlacklistInterface">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.blacklist.</span></code><code class="sig-name descname"><span class="pre">BlacklistInterface</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.blacklist.BlacklistInterface">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mdbapi.blacklist.</span></span><span class="sig-name descname"><span class="pre">BlacklistInterface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides methods to manage the blacklists used by <a class="reference internal" href="randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Randy</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -728,8 +733,8 @@ The key of the dictionary are:</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mdbapi.blacklist.BlacklistInterface.AddSong">
-<code class="sig-name descname"><span class="pre">AddSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">song</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.AddSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.AddSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.blacklist.BlacklistInterface.AddSong">
+<span class="sig-name descname"><span class="pre">AddSong</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">song</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.AddSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.AddSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method pushes a song onto the blacklists.
 If the song is <code class="docutils literal notranslate"><span class="pre">None</span></code> nothing happens.</p>
 <p>This method should be the only place where the blacklist gets changed.
@@ -749,8 +754,8 @@ After adding a song, the lists get stored in the MusicDB State Directory to be p
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.blacklist.BlacklistInterface.AddVideo">
-<code class="sig-name descname"><span class="pre">AddVideo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.AddVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.AddVideo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.blacklist.BlacklistInterface.AddVideo">
+<span class="sig-name descname"><span class="pre">AddVideo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.AddVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.AddVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method pushes a video onto the video blacklist.
 If the video is <code class="docutils literal notranslate"><span class="pre">None</span></code> nothing happens.</p>
 <div class="admonition note">
@@ -774,8 +779,8 @@ After adding a video, the lists get stored in the MusicDB State Directory to be 
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.blacklist.BlacklistInterface.CheckAllListsForSong">
-<code class="sig-name descname"><span class="pre">CheckAllListsForSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">song</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.CheckAllListsForSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.CheckAllListsForSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.blacklist.BlacklistInterface.CheckAllListsForSong">
+<span class="sig-name descname"><span class="pre">CheckAllListsForSong</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">song</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.CheckAllListsForSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.CheckAllListsForSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a song, its album or artist is on one of the blacklists.
 If it is so, the method returns <code class="docutils literal notranslate"><span class="pre">True</span></code>.
 If none are on the blacklists, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.</p>
@@ -794,8 +799,8 @@ If none are on the blacklists, <code class="docutils literal notranslate"><span 
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.blacklist.BlacklistInterface.CheckAllListsForVideo">
-<code class="sig-name descname"><span class="pre">CheckAllListsForVideo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.CheckAllListsForVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.CheckAllListsForVideo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.blacklist.BlacklistInterface.CheckAllListsForVideo">
+<span class="sig-name descname"><span class="pre">CheckAllListsForVideo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.CheckAllListsForVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.CheckAllListsForVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a video on the blacklists.
 If it is so, the method returns <code class="docutils literal notranslate"><span class="pre">True</span></code>.
 If none are on the blacklists, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned.</p>
@@ -814,8 +819,8 @@ If none are on the blacklists, <code class="docutils literal notranslate"><span 
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.blacklist.BlacklistInterface.CheckSongList">
-<code class="sig-name descname"><span class="pre">CheckSongList</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">song</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.CheckSongList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.CheckSongList" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.blacklist.BlacklistInterface.CheckSongList">
+<span class="sig-name descname"><span class="pre">CheckSongList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">song</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.CheckSongList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.CheckSongList" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a song is on the song blacklists.
 If it is so, the method returns <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 <p>If the song is <code class="docutils literal notranslate"><span class="pre">None</span></code> nothing happens.</p>
@@ -833,8 +838,8 @@ If it is so, the method returns <code class="docutils literal notranslate"><span
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist">
-<code class="sig-name descname"><span class="pre">GetIDsFromBlacklist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blacklistname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.GetIDsFromBlacklist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist">
+<span class="sig-name descname"><span class="pre">GetIDsFromBlacklist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blacklistname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.GetIDsFromBlacklist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.GetIDsFromBlacklist" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of IDs (as Integer) from the blacklist.
 It checks each entry in the list if it is <code class="docutils literal notranslate"><span class="pre">None</span></code>.
 If it is <code class="docutils literal notranslate"><span class="pre">None</span></code>, it gets ignored.</p>
@@ -858,8 +863,8 @@ all entries in the blacklist are valid.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.blacklist.BlacklistInterface.GetValidIDsFromBlacklists">
-<code class="sig-name descname"><span class="pre">GetValidIDsFromBlacklists</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.GetValidIDsFromBlacklists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.GetValidIDsFromBlacklists" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.blacklist.BlacklistInterface.GetValidIDsFromBlacklists">
+<span class="sig-name descname"><span class="pre">GetValidIDsFromBlacklists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.GetValidIDsFromBlacklists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.GetValidIDsFromBlacklists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns all Video, Song, Album and Artist IDs from the blacklist.
 The IDs are separated into three lists.
 This method checks the time stamp and removes all IDs that are older than configured.</p>
@@ -878,8 +883,8 @@ This method checks the time stamp and removes all IDs that are older than config
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.blacklist.BlacklistInterface.ValidateBlacklist">
-<code class="sig-name descname"><span class="pre">ValidateBlacklist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blacklistname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.ValidateBlacklist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.ValidateBlacklist" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.blacklist.BlacklistInterface.ValidateBlacklist">
+<span class="sig-name descname"><span class="pre">ValidateBlacklist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blacklistname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/blacklist.html#BlacklistInterface.ValidateBlacklist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.blacklist.BlacklistInterface.ValidateBlacklist" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method validates a specific blacklist.
 It checks each entry in the list if its time stamp is still in the configured time range.
 If not, the entry gets set to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
@@ -898,8 +903,8 @@ If not, the entry gets set to <code class="docutils literal notranslate"><span c
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -944,6 +949,7 @@ If not, the entry gets set to <code class="docutils literal notranslate"><span c
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

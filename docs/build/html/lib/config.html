@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Configuration &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="configuration">
+  <section id="configuration">
 <h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
 <p>The following class diagram shows the implementation of MusicDBs configuration and state management.
 Only the more important methods are shown in the diagram.
@@ -689,9 +694,9 @@ For a list of all methods see the related documentation of the class.</p>
    csv    -&gt; mdbstate [arrowtail=open]
 }</p></object></div>
 </div></blockquote>
-<div class="section" id="base-classes">
+<section id="base-classes">
 <h2>Base Classes<a class="headerlink" href="#base-classes" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="module-lib.cfg.config">
+<section id="module-lib.cfg.config">
 <span id="config"></span><h3>Config<a class="headerlink" href="#module-lib.cfg.config" title="Permalink to this headline">¶</a></h3>
 <p>This module handles the reading and writing of ini-files.
 The definition of names is shown in the ini file example below.</p>
@@ -702,11 +707,11 @@ The definition of names is shown in the ini file example below.</p>
 </div>
 </div></blockquote>
 <dl class="py class">
-<dt id="lib.cfg.config.Config">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.cfg.config.</span></code><code class="sig-name descname"><span class="pre">Config</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.config.Config">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.cfg.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
-<dt id="lib.cfg.config.Config.AllowNoneValue">
-<code class="sig-name descname"><span class="pre">AllowNoneValue</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">allow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.AllowNoneValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.AllowNoneValue" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.config.Config.AllowNoneValue">
+<span class="sig-name descname"><span class="pre">AllowNoneValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">allow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.AllowNoneValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.AllowNoneValue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method enables the possibility to configure (read) a <code class="docutils literal notranslate"><span class="pre">None</span></code> value.
 In case a value has the string <code class="docutils literal notranslate"><span class="pre">&quot;None&quot;</span></code>, the <a class="reference internal" href="#lib.cfg.config.Config.Get" title="lib.cfg.config.Config.Get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Get()</span></code></a> method returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.
 The upper case N is important!</p>
@@ -738,8 +743,8 @@ The upper case N is important!</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.config.Config.Get">
-<code class="sig-name descname"><span class="pre">Get</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datatype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">islist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Get" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.config.Config.Get">
+<span class="sig-name descname"><span class="pre">Get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datatype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">islist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Get" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads a value from the configuration.
 The values in the file are all stored as string.
 Using the <em>datatype</em> parameter will convert that string into a python data type.</p>
@@ -783,8 +788,8 @@ A list of the striped values (without leading or trailing spaces) gets returned 
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.config.Config.Load">
-<code class="sig-name descname"><span class="pre">Load</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Load" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.config.Config.Load">
+<span class="sig-name descname"><span class="pre">Load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Load" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method loads a configuration file.
 If the <em>path</em> parameter is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, the path given while instantiating the class will be overwritten.
 If the file was already loaded, it gets reloaded.</p>
@@ -802,8 +807,8 @@ If the file was already loaded, it gets reloaded.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.config.Config.OptionAvailable">
-<code class="sig-name descname"><span class="pre">OptionAvailable</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.OptionAvailable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.OptionAvailable" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.config.Config.OptionAvailable">
+<span class="sig-name descname"><span class="pre">OptionAvailable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.OptionAvailable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.OptionAvailable" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to check if an option exists in the configuration file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -819,22 +824,22 @@ If the file was already loaded, it gets reloaded.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.config.Config.Reload">
-<code class="sig-name descname"><span class="pre">Reload</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Reload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Reload" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.config.Config.Reload">
+<span class="sig-name descname"><span class="pre">Reload</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Reload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Reload" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method just calls <a class="reference internal" href="#lib.cfg.config.Config.Load" title="lib.cfg.config.Config.Load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Load()</span></code></a> without a path argument.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.config.Config.Save">
-<code class="sig-name descname"><span class="pre">Save</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Save" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.config.Config.Save">
+<span class="sig-name descname"><span class="pre">Save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Save" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method saves all set values back to the configuration file.</p>
 <p>Changing configuration can be prevented by setting the file attributes to read only.</p>
 <p>If writing fails not because of missing write permission, an exception gets raised.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.config.Config.Set">
-<code class="sig-name descname"><span class="pre">Set</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Set" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.config.Config.Set">
+<span class="sig-name descname"><span class="pre">Set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/config.html#Config.Set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.config.Config.Set" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method sets an option.
 The value gets casted to a string.
 If the section or option does not exist, it will be created.</p>
@@ -856,13 +861,13 @@ This is necessary because there is no reliable destructor in python to.</p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-lib.cfg.csv">
+</section>
+<section id="module-lib.cfg.csv">
 <span id="csvfile"></span><h3>CSVFile<a class="headerlink" href="#module-lib.cfg.csv" title="Permalink to this headline">¶</a></h3>
 <p>This module handles the reading and writing of csv-files.</p>
 <dl class="py class">
-<dt id="lib.cfg.csv.CSVFile">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.cfg.csv.</span></code><code class="sig-name descname"><span class="pre">CSVFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.csv.CSVFile">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.cfg.csv.</span></span><span class="sig-name descname"><span class="pre">CSVFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class reads <a class="reference external" href="https://tools.ietf.org/html/rfc4180">Comma Separated Value (CSV)</a> files as used by MusicDB.</p>
 <p>The class does not cache the files content.
 Every read access accesses the actual file.
@@ -888,8 +893,8 @@ Do not change the layout of the files!</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="lib.cfg.csv.CSVFile.Read">
-<code class="sig-name descname"><span class="pre">Read</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Read" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.csv.CSVFile.Read">
+<span class="sig-name descname"><span class="pre">Read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Read" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads the file and returns its a table represented as a list of dictionaries.
 The dictionary has a key for each column in the header of the file.
 So each entry in the list represents one row of the file,
@@ -923,8 +928,8 @@ and each entry in the dictionary represents one cell or column in that row.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.csv.CSVFile.Write">
-<code class="sig-name descname"><span class="pre">Write</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Write" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.csv.CSVFile.Write">
+<span class="sig-name descname"><span class="pre">Write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/csv.html#CSVFile.Write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.csv.CSVFile.Write" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write rows into the csv file.
 The first row will be the header of the table.</p>
 <p>If there is no header given, the keys of the first dictionary will be used.
@@ -975,9 +980,9 @@ The header also filters the values to store.</p>
 
 </dd></dl>
 
-</div>
-</div>
-<div class="section" id="musicdb-configuration">
+</section>
+</section>
+<section id="musicdb-configuration">
 <h2>MusicDB Configuration<a class="headerlink" href="#musicdb-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Detail of the MusicDB Configuration can be found under <a class="reference internal" href="../basics/config.html"><span class="doc">MusicDB Configuration</span></a>.</p>
 <span class="target" id="module-lib.cfg.musicdb"></span><p>All sections and options can be accessed by their names: <code class="docutils literal notranslate"><span class="pre">MusicDBConfig(...).section.option</span></code>.</p>
@@ -1020,12 +1025,12 @@ The read value must be writen into an attribute named as the option, inside an i
 </div>
 </div></blockquote>
 <dl class="py class">
-<dt id="lib.cfg.musicdb.MusicDBConfig">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.cfg.musicdb.</span></code><code class="sig-name descname"><span class="pre">MusicDBConfig</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.musicdb.MusicDBConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.cfg.musicdb.</span></span><span class="sig-name descname"><span class="pre">MusicDBConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides the access to the MusicDB configuration file.</p>
 <dl class="py method">
-<dt id="lib.cfg.musicdb.MusicDBConfig.GetDirectory">
-<code class="sig-name descname"><span class="pre">GetDirectory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig.GetDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig.GetDirectory" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.musicdb.MusicDBConfig.GetDirectory">
+<span class="sig-name descname"><span class="pre">GetDirectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">option</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig.GetDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig.GetDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets a string from the config file and checks if it is an existing directory.
 If not it prints a warning and creates the directory if possible.
 If it fails with an permission-error an additional error gets printed.
@@ -1047,8 +1052,8 @@ The “invalid” path will be returned anyway, because it may be OK that the di
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.musicdb.MusicDBConfig.GetFile">
-<code class="sig-name descname"><span class="pre">GetFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">section</span></em>, <em class="sig-param"><span class="pre">option</span></em>, <em class="sig-param"><span class="pre">default</span></em>, <em class="sig-param"><span class="pre">logger=&lt;function</span> <span class="pre">error&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig.GetFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig.GetFile" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.musicdb.MusicDBConfig.GetFile">
+<span class="sig-name descname"><span class="pre">GetFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">section</span></em>, <em class="sig-param"><span class="pre">option</span></em>, <em class="sig-param"><span class="pre">default</span></em>, <em class="sig-param"><span class="pre">logger=&lt;function</span> <span class="pre">error&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/musicdb.html#MusicDBConfig.GetFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.musicdb.MusicDBConfig.GetFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method gets a string from the config file and checks if it is an existing file.
 If not it prints an error.
 Except printing the error nothing is done.
@@ -1070,8 +1075,8 @@ The “invalid” will be returned anyway, because it may be OK that the file do
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-lib.cfg.webui">
+</section>
+<section id="module-lib.cfg.webui">
 <span id="webui-configuration"></span><h2>WebUI Configuration<a class="headerlink" href="#module-lib.cfg.webui" title="Permalink to this headline">¶</a></h2>
 <p>This module takes care of the WebUI configuration.</p>
 <p>The following sections and keys are available:</p>
@@ -1082,6 +1087,9 @@ The “invalid” will be returned anyway, because it may be OK that the file do
 <span class="k">[WebUI]</span>
 <span class="na">videomode</span><span class="o">=</span><span class="s">disabled</span>
 <span class="na">lyrics</span><span class="o">=</span><span class="s">enabled</span>
+
+<span class="k">[ArtistsView]</span>
+<span class="na">showrelease</span><span class="o">=</span><span class="s">true</span>
 
 <span class="k">[debug]</span>
 <span class="na">blurartwork</span><span class="o">=</span><span class="s">false</span>
@@ -1097,13 +1105,19 @@ This includes, but is not limited to, the buttons of the main menu</p>
 <dt>[WebUI]-&gt;lyrics (string: <code class="docutils literal notranslate"><span class="pre">&quot;enabled&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;disabled&quot;</span></code>):</dt><dd><p>Defines if lyrics should be present in the WebUI or not.
 This includes, but is not limited to, the lyrics state buttons in the Song Lists of the albums</p>
 </dd>
+<dt>[ArtistsView]-&gt;showrelease (boolean):</dt><dd><p>If true, the release date of an album is shown next to its name.
+If false, the release date will not be shown.
+In any case, the albums of an artist are sorted by their release date.</p>
+</dd>
+<dt>[GenreSelectionView]-&gt;showother (boolean):</dt><dd><p>If true, the default genre “Other” will be listed.</p>
+</dd>
 <dt>[debug]-&gt;blurartwork (boolean):</dt><dd><p>If true, all artworks are blurred.
 This is useful to avoid copyright violations on screenshots that shall be public available</p>
 </dd>
 </dl>
 <dl class="py class">
-<dt id="lib.cfg.webui.WebUIConfig">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.cfg.webui.</span></code><code class="sig-name descname"><span class="pre">WebUIConfig</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/webui.html#WebUIConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.webui.WebUIConfig" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.webui.WebUIConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.cfg.webui.</span></span><span class="sig-name descname"><span class="pre">WebUIConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/webui.html#WebUIConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.webui.WebUIConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class holds the configuration for the WebUI.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1111,8 +1125,8 @@ This is useful to avoid copyright violations on screenshots that shall be public
 </dd>
 </dl>
 <dl class="py method">
-<dt id="lib.cfg.webui.WebUIConfig.LoadConfig">
-<code class="sig-name descname"><span class="pre">LoadConfig</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/webui.html#WebUIConfig.LoadConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.webui.WebUIConfig.LoadConfig" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.webui.WebUIConfig.LoadConfig">
+<span class="sig-name descname"><span class="pre">LoadConfig</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/webui.html#WebUIConfig.LoadConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.webui.WebUIConfig.LoadConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method loads the current WebUI configuration and returns them in a dictionary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -1122,8 +1136,8 @@ This is useful to avoid copyright violations on screenshots that shall be public
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.webui.WebUIConfig.SaveConfig">
-<code class="sig-name descname"><span class="pre">SaveConfig</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/webui.html#WebUIConfig.SaveConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.webui.WebUIConfig.SaveConfig" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.webui.WebUIConfig.SaveConfig">
+<span class="sig-name descname"><span class="pre">SaveConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/webui.html#WebUIConfig.SaveConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.webui.WebUIConfig.SaveConfig" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method saves the current WebUI configuration.
 It is important that the whole configuration is included in <em>cfg</em>.</p>
 <dl class="field-list simple">
@@ -1138,8 +1152,8 @@ It is important that the whole configuration is included in <em>cfg</em>.</p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-lib.cfg.extern">
+</section>
+<section id="module-lib.cfg.extern">
 <span id="external-storage-configuration"></span><h2>External Storage Configuration<a class="headerlink" href="#module-lib.cfg.extern" title="Permalink to this headline">¶</a></h2>
 <p>This class reads the configuration of an external music storage.
 All sections and options can be accessed by their names: <code class="docutils literal notranslate"><span class="pre">ExternConfig(...).section.option</span></code>.
@@ -1154,12 +1168,12 @@ If values get changed, they will not be stored!</p>
 </pre></div>
 </div>
 <dl class="py class">
-<dt id="lib.cfg.extern.ExternConfig">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.cfg.extern.</span></code><code class="sig-name descname"><span class="pre">ExternConfig</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/extern.html#ExternConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.extern.ExternConfig" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.extern.ExternConfig">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.cfg.extern.</span></span><span class="sig-name descname"><span class="pre">ExternConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/extern.html#ExternConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.extern.ExternConfig" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</div>
-<div class="section" id="module-lib.cfg.mdbstate">
+</section>
+<section id="module-lib.cfg.mdbstate">
 <span id="musicdb-state"></span><h2>MusicDB State<a class="headerlink" href="#module-lib.cfg.mdbstate" title="Permalink to this headline">¶</a></h2>
 <p>This module takes care that the state of MusicDB will persist over several sessions.
 This is not done automatically by the <a class="reference internal" href="#lib.cfg.mdbstate.MDBState" title="lib.cfg.mdbstate.MDBState"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDBState</span></code></a> class.
@@ -1168,8 +1182,8 @@ Each read or write process to the files that hold the state will be triggered by
 <p>All files inside the state directory are managed by the <a class="reference internal" href="#lib.cfg.mdbstate.MDBState" title="lib.cfg.mdbstate.MDBState"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDBState</span></code></a> class.
 The content of those files should not be changed by any user because its content gets not validated.</p>
 <dl class="py class">
-<dt id="lib.cfg.mdbstate.MDBState">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.cfg.mdbstate.</span></code><code class="sig-name descname"><span class="pre">MDBState</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">musicdb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.cfg.mdbstate.</span></span><span class="sig-name descname"><span class="pre">MDBState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">musicdb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class holds the MusicDB internal state.</p>
 <p>The following table shows which method is responsible for which file in the MusicDB State Directory.</p>
 <blockquote>
@@ -1233,8 +1247,8 @@ As soon as the genre gets activated via the WebUIs genre selection interface, it
 </dd>
 </dl>
 <dl class="py method">
-<dt id="lib.cfg.mdbstate.MDBState.GetFilterList">
-<code class="sig-name descname"><span class="pre">GetFilterList</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.GetFilterList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.GetFilterList" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.GetFilterList">
+<span class="sig-name descname"><span class="pre">GetFilterList</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.GetFilterList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.GetFilterList" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a list of the activated genre
 The list consists of the names of the genres as configured by the user.
 That are the names returned by <a class="reference internal" href="musicdb.html#lib.db.musicdb.MusicDatabase.GetAllTags" title="lib.db.musicdb.MusicDatabase.GetAllTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.GetAllTags()</span></code></a>.</p>
@@ -1255,8 +1269,8 @@ Before the comparison, the state file gets reloaded so that external changes get
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.mdbstate.MDBState.GetUIMode">
-<code class="sig-name descname"><span class="pre">GetUIMode</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.GetUIMode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.GetUIMode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.GetUIMode">
+<span class="sig-name descname"><span class="pre">GetUIMode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.GetUIMode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.GetUIMode" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method simply returns the content of <code class="docutils literal notranslate"><span class="pre">[MusicDB]-&gt;uimode</span></code> in the state.ini file.
 In case the value is invalid or not set, <code class="docutils literal notranslate"><span class="pre">&quot;audio&quot;</span></code> gets returned.</p>
 <p>Valid strings are <code class="docutils literal notranslate"><span class="pre">&quot;audio&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code></p>
@@ -1268,8 +1282,8 @@ In case the value is invalid or not set, <code class="docutils literal notransla
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.mdbstate.MDBState.LoadBlacklists">
-<code class="sig-name descname"><span class="pre">LoadBlacklists</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songbllen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumbllen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artistbllen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videobllen</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadBlacklists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.LoadBlacklists">
+<span class="sig-name descname"><span class="pre">LoadBlacklists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songbllen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumbllen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artistbllen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videobllen</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadBlacklists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadBlacklists" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns a dictionary with the blacklist used by <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a>.
 The blacklists are managed by the <a class="reference internal" href="../mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface" title="mdbapi.blacklist.BlacklistInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">BlacklistInterface</span></code></a> class.
 This method also handles the blacklist length by adding empty entries or cutting off exceeding ones.</p>
@@ -1289,8 +1303,8 @@ This method also handles the blacklist length by adding empty entries or cutting
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.mdbstate.MDBState.LoadSongQueue">
-<code class="sig-name descname"><span class="pre">LoadSongQueue</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadSongQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadSongQueue" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.LoadSongQueue">
+<span class="sig-name descname"><span class="pre">LoadSongQueue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadSongQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadSongQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads the song queue from the state directory.</p>
 <p>The method returns the queue as needed inside <a class="reference internal" href="../mdbapi/songqueue.html#mdbapi.songqueue.SongQueue" title="mdbapi.songqueue.SongQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.songqueue.SongQueue()</span></code></a>:
 A list of dictionaries, each containing the <code class="docutils literal notranslate"><span class="pre">entryid</span></code> and <code class="docutils literal notranslate"><span class="pre">songid</span></code> as integers and <code class="docutils literal notranslate"><span class="pre">israndom</span></code> as boolean.</p>
@@ -1303,8 +1317,8 @@ A list of dictionaries, each containing the <code class="docutils literal notran
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.mdbstate.MDBState.LoadVideoQueue">
-<code class="sig-name descname"><span class="pre">LoadVideoQueue</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadVideoQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadVideoQueue" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.LoadVideoQueue">
+<span class="sig-name descname"><span class="pre">LoadVideoQueue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.LoadVideoQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.LoadVideoQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method reads the video queue from the state directory.</p>
 <p>The method returns the queue as needed inside <a class="reference internal" href="../mdbapi/videoqueue.html#mdbapi.videoqueue.VideoQueue" title="mdbapi.videoqueue.VideoQueue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.videoqueue.VideoQueue()</span></code></a>:
 A list of dictionaries, each containing the <code class="docutils literal notranslate"><span class="pre">entryid</span></code> and <code class="docutils literal notranslate"><span class="pre">videoid</span></code> as integers and <code class="docutils literal notranslate"><span class="pre">israndom</span></code> as boolean.</p>
@@ -1317,8 +1331,8 @@ A list of dictionaries, each containing the <code class="docutils literal notran
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.mdbstate.MDBState.ReadList">
-<code class="sig-name descname"><span class="pre">ReadList</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.ReadList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.ReadList" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.ReadList">
+<span class="sig-name descname"><span class="pre">ReadList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.ReadList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.ReadList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads a list from the mdbstate directory.
 The <code class="docutils literal notranslate"><span class="pre">listname</span></code> argument defines which file gets read: <code class="docutils literal notranslate"><span class="pre">config.server.statedir/listname.csv</span></code>.</p>
 <p>This method should only be used by class internal methods.
@@ -1335,8 +1349,8 @@ So deleting a file is an option to reset an internal state of MusicDB.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.mdbstate.MDBState.SaveBlacklists">
-<code class="sig-name descname"><span class="pre">SaveBlacklists</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blacklists</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveBlacklists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.SaveBlacklists">
+<span class="sig-name descname"><span class="pre">SaveBlacklists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blacklists</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveBlacklists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveBlacklists" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method stores the blacklist in the related CSV files.
 The data structure of the dictionary is expected to be the same, <a class="reference internal" href="../mdbapi/blacklist.html#mdbapi.blacklist.BlacklistInterface" title="mdbapi.blacklist.BlacklistInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.blacklist.BlacklistInterface</span></code></a> uses.</p>
 <dl class="field-list simple">
@@ -1350,8 +1364,8 @@ The data structure of the dictionary is expected to be the same, <a class="refer
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.mdbstate.MDBState.SaveSongQueue">
-<code class="sig-name descname"><span class="pre">SaveSongQueue</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveSongQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveSongQueue" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.SaveSongQueue">
+<span class="sig-name descname"><span class="pre">SaveSongQueue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveSongQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveSongQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method saves a song queue.
 The data structure of the queue must be exact as the one expected when the queue shall be loaded.</p>
 <dl class="field-list simple">
@@ -1365,8 +1379,8 @@ The data structure of the queue must be exact as the one expected when the queue
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.mdbstate.MDBState.SaveVideoQueue">
-<code class="sig-name descname"><span class="pre">SaveVideoQueue</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveVideoQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveVideoQueue" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.SaveVideoQueue">
+<span class="sig-name descname"><span class="pre">SaveVideoQueue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SaveVideoQueue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SaveVideoQueue" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method saves a video queue.
 The data structure of the queue must be exact as the one expected when the queue shall be loaded.</p>
 <dl class="field-list simple">
@@ -1380,8 +1394,8 @@ The data structure of the queue must be exact as the one expected when the queue
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.mdbstate.MDBState.SetUIMode">
-<code class="sig-name descname"><span class="pre">SetUIMode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SetUIMode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SetUIMode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.SetUIMode">
+<span class="sig-name descname"><span class="pre">SetUIMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.SetUIMode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.SetUIMode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the UI mode in the state.ini file.
 Before writing the data <code class="docutils literal notranslate"><span class="pre">mode</span></code> gets checked if it contains a valid value.
 If mode is an invalid argument, an exception gets raised.</p>
@@ -1402,8 +1416,8 @@ If mode is an invalid argument, an exception gets raised.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.cfg.mdbstate.MDBState.WriteList">
-<code class="sig-name descname"><span class="pre">WriteList</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.WriteList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.WriteList" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.cfg.mdbstate.MDBState.WriteList">
+<span class="sig-name descname"><span class="pre">WriteList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/cfg/mdbstate.html#MDBState.WriteList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.cfg.mdbstate.MDBState.WriteList" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method write a list of rows into the related file.
 The <code class="docutils literal notranslate"><span class="pre">listname</span></code> argument defines which file gets written: <code class="docutils literal notranslate"><span class="pre">config.server.statedir/listname.csv</span></code>.</p>
 <p>When there is no header given (list of column names), the keys of the rows-dictionaries are used.</p>
@@ -1424,8 +1438,8 @@ The <code class="docutils literal notranslate"><span class="pre">listname</span>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -1470,6 +1484,7 @@ The <code class="docutils literal notranslate"><span class="pre">listname</span>
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

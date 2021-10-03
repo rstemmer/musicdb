@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>MusicDBTags &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-mdbapi.tags">
+  <section id="module-mdbapi.tags">
 <span id="musicdbtags"></span><h1>MusicDBTags<a class="headerlink" href="#module-mdbapi.tags" title="Permalink to this headline">¶</a></h1>
 <p>This class handles the different tags for songs and albums.
 Details about the concept of tags can be found here in the <a class="reference internal" href="../lib/musicdb.html#module-lib.db.musicdb" title="lib.db.musicdb"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lib.db.musicdb</span></code></a> documentation.</p>
@@ -678,11 +683,11 @@ Details about the concept of tags can be found here in the <a class="reference i
 <span class="n">tags</span><span class="o">.</span><span class="n">CreateSubgenre</span><span class="p">(</span><span class="s2">&quot;Dark Metal&quot;</span><span class="p">,</span> <span class="s2">&quot;Metal&quot;</span><span class="p">)</span>  <span class="c1"># Create a subgenre of &quot;Metal&quot; and name it &quot;Dark Metal&quot;</span>
 </pre></div>
 </div>
-<div class="section" id="musicdbtags-class">
+<section id="musicdbtags-class">
 <h2>MusicDBTags Class<a class="headerlink" href="#musicdbtags-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="mdbapi.tags.MusicDBTags">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.tags.</span></code><code class="sig-name descname"><span class="pre">MusicDBTags</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mdbapi.tags.</span></span><span class="sig-name descname"><span class="pre">MusicDBTags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -695,20 +700,20 @@ Details about the concept of tags can be found here in the <a class="reference i
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mdbapi.tags.MusicDBTags.CreateGenre">
-<code class="sig-name descname"><span class="pre">CreateGenre</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.CreateGenre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.CreateGenre" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags.CreateGenre">
+<span class="sig-name descname"><span class="pre">CreateGenre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.CreateGenre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.CreateGenre" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase.CreateTag" title="lib.db.musicdb.MusicDatabase.CreateTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.CreateTag()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.tags.MusicDBTags.CreateMood">
-<code class="sig-name descname"><span class="pre">CreateMood</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.CreateMood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.CreateMood" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags.CreateMood">
+<span class="sig-name descname"><span class="pre">CreateMood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.CreateMood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.CreateMood" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase.CreateTag" title="lib.db.musicdb.MusicDatabase.CreateTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.CreateTag()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.tags.MusicDBTags.CreateSubgenre">
-<code class="sig-name descname"><span class="pre">CreateSubgenre</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parentname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.CreateSubgenre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.CreateSubgenre" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags.CreateSubgenre">
+<span class="sig-name descname"><span class="pre">CreateSubgenre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parentname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.CreateSubgenre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.CreateSubgenre" title="Permalink to this definition">¶</a></dt>
 <dd><p>The parent name gets translated to its genre id.
 As mentioned in the tag concept (see <a class="reference internal" href="../lib/musicdb.html#module-lib.db.musicdb" title="lib.db.musicdb"><code class="xref py py-mod docutils literal notranslate"><span class="pre">musicdb</span></code></a>), only subgenre can have parents.
 And those parents must be of class genre.</p>
@@ -716,26 +721,26 @@ And those parents must be of class genre.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.tags.MusicDBTags.DeleteGenre">
-<code class="sig-name descname"><span class="pre">DeleteGenre</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.DeleteGenre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.DeleteGenre" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags.DeleteGenre">
+<span class="sig-name descname"><span class="pre">DeleteGenre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.DeleteGenre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.DeleteGenre" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase.DeleteTag" title="lib.db.musicdb.MusicDatabase.DeleteTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.DeleteTag()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.tags.MusicDBTags.DeleteMood">
-<code class="sig-name descname"><span class="pre">DeleteMood</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.DeleteMood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.DeleteMood" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags.DeleteMood">
+<span class="sig-name descname"><span class="pre">DeleteMood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.DeleteMood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.DeleteMood" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase.DeleteTag" title="lib.db.musicdb.MusicDatabase.DeleteTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.DeleteTag()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.tags.MusicDBTags.DeleteSubgenre">
-<code class="sig-name descname"><span class="pre">DeleteSubgenre</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.DeleteSubgenre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.DeleteSubgenre" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags.DeleteSubgenre">
+<span class="sig-name descname"><span class="pre">DeleteSubgenre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.DeleteSubgenre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.DeleteSubgenre" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase.DeleteTag" title="lib.db.musicdb.MusicDatabase.DeleteTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.DeleteTag()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.tags.MusicDBTags.DeriveAlbumTags">
-<code class="sig-name descname"><span class="pre">DeriveAlbumTags</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.DeriveAlbumTags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.DeriveAlbumTags" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags.DeriveAlbumTags">
+<span class="sig-name descname"><span class="pre">DeriveAlbumTags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.DeriveAlbumTags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.DeriveAlbumTags" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method derives album tags from its song tags.
 It looks for all songs of the album and their specific genre and sub genre tags.
 Tags with a confidence level greater or equal to 1.0 will be collected and set as genres for the album.
@@ -751,26 +756,26 @@ The set genres have a confidence of the average appearance of the tag over all t
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.tags.MusicDBTags.GetAllGenres">
-<code class="sig-name descname"><span class="pre">GetAllGenres</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.GetAllGenres"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.GetAllGenres" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags.GetAllGenres">
+<span class="sig-name descname"><span class="pre">GetAllGenres</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.GetAllGenres"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.GetAllGenres" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetAllTags" title="lib.db.musicdb.MusicDatabase.GetAllTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.GetAllTags()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.tags.MusicDBTags.GetAllMoods">
-<code class="sig-name descname"><span class="pre">GetAllMoods</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.GetAllMoods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.GetAllMoods" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags.GetAllMoods">
+<span class="sig-name descname"><span class="pre">GetAllMoods</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.GetAllMoods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.GetAllMoods" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetAllTags" title="lib.db.musicdb.MusicDatabase.GetAllTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.GetAllTags()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.tags.MusicDBTags.GetAllSubgenres">
-<code class="sig-name descname"><span class="pre">GetAllSubgenres</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.GetAllSubgenres"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.GetAllSubgenres" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags.GetAllSubgenres">
+<span class="sig-name descname"><span class="pre">GetAllSubgenres</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.GetAllSubgenres"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.GetAllSubgenres" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetAllTags" title="lib.db.musicdb.MusicDatabase.GetAllTags"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.GetAllTags()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.tags.MusicDBTags.ModifyGenre">
-<code class="sig-name descname"><span class="pre">ModifyGenre</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newcolor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.ModifyGenre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.ModifyGenre" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags.ModifyGenre">
+<span class="sig-name descname"><span class="pre">ModifyGenre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newcolor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.ModifyGenre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.ModifyGenre" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="#mdbapi.tags.MusicDBTags.ModifyTag" title="mdbapi.tags.MusicDBTags.ModifyTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ModifyTag()</span></code></a>.</p>
 <p>All arguments can also be <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
 <dl class="field-list simple">
@@ -788,8 +793,8 @@ The set genres have a confidence of the average appearance of the tag over all t
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.tags.MusicDBTags.ModifyMood">
-<code class="sig-name descname"><span class="pre">ModifyMood</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newcolor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.ModifyMood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.ModifyMood" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags.ModifyMood">
+<span class="sig-name descname"><span class="pre">ModifyMood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newcolor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.ModifyMood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.ModifyMood" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="#mdbapi.tags.MusicDBTags.ModifyTag" title="mdbapi.tags.MusicDBTags.ModifyTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ModifyTag()</span></code></a>.</p>
 <p>All arguments can also be <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
 <dl class="field-list simple">
@@ -807,8 +812,8 @@ The set genres have a confidence of the average appearance of the tag over all t
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.tags.MusicDBTags.ModifySubgenre">
-<code class="sig-name descname"><span class="pre">ModifySubgenre</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newparent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newcolor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.ModifySubgenre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.ModifySubgenre" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags.ModifySubgenre">
+<span class="sig-name descname"><span class="pre">ModifySubgenre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newparent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newicon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newcolor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.ModifySubgenre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.ModifySubgenre" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="#mdbapi.tags.MusicDBTags.ModifyTag" title="mdbapi.tags.MusicDBTags.ModifyTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ModifyTag()</span></code></a>.</p>
 <p>All arguments can also be <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
 <dl class="field-list simple">
@@ -827,8 +832,8 @@ The set genres have a confidence of the average appearance of the tag over all t
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.tags.MusicDBTags.ModifyTag">
-<code class="sig-name descname"><span class="pre">ModifyTag</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tagclass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newparent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newicon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newcolor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.ModifyTag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.ModifyTag" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.tags.MusicDBTags.ModifyTag">
+<span class="sig-name descname"><span class="pre">ModifyTag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tagname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tagclass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newparent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newicon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newcolor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newposy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/tags.html#MusicDBTags.ModifyTag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.tags.MusicDBTags.ModifyTag" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase.ModifyTag" title="lib.db.musicdb.MusicDatabase.ModifyTag"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.ModifyTag()</span></code></a></p>
 <p>The icontype gets determined by the <em>newicon</em>-value if not <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 <p>The parentid gets determined by the <em>newparent</em>-name.</p>
@@ -848,8 +853,8 @@ The set genres have a confidence of the average appearance of the tag over all t
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -894,6 +899,7 @@ The set genres have a confidence of the average appearance of the tag over all t
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

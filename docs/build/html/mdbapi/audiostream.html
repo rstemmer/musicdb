@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Audio Streaming Server &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-mdbapi.audiostream">
+  <section id="module-mdbapi.audiostream">
 <span id="audio-streaming-server"></span><h1>Audio Streaming Server<a class="headerlink" href="#module-mdbapi.audiostream" title="Permalink to this headline">¶</a></h1>
 <p>This module implements the audio stream that streams the songs.
 This module provides a thread that takes the songs from a <a class="reference internal" href="songqueue.html#mdbapi.songqueue.SongQueue" title="mdbapi.songqueue.SongQueue"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.songqueue.SongQueue</span></code></a> to stream them via Icecast.
@@ -679,7 +684,7 @@ Further more this module provides some callback interfaces to inform the rest of
 <li><p>The <a class="reference internal" href="#mdbapi.audiostream.AudioStreamManager" title="mdbapi.audiostream.AudioStreamManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AudioStreamManager</span></code></a> that does management behind streaming.</p></li>
 </ul>
 </div></blockquote>
-<div class="section" id="interface">
+<section id="interface">
 <h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
 <p>This module maintains a global state!
 All functions work on the settings in the <a class="reference internal" href="../lib/config.html#lib.cfg.musicdb.MusicDBConfig" title="lib.cfg.musicdb.MusicDBConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicDBConfig</span></code></a> configuration object and the internal state of this module.</p>
@@ -694,8 +699,8 @@ All functions work on the settings in the <a class="reference internal" href="..
 <li><p><a class="reference internal" href="#mdbapi.audiostream.AudioStreamManager" title="mdbapi.audiostream.AudioStreamManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AudioStreamManager</span></code></a> is the class to manage the Stream.</p></li>
 </ul>
 </div></blockquote>
-</div>
-<div class="section" id="streaming-thread">
+</section>
+<section id="streaming-thread">
 <h2>Streaming Thread<a class="headerlink" href="#streaming-thread" title="Permalink to this headline">¶</a></h2>
 <p>The Streaming Thread mainly manages sending mp3-file chunks to the Icecast server.
 This thread is the point where the music managed by MusicDB gets handed over to Icecast so the user can listen to it.</p>
@@ -711,8 +716,8 @@ It contains the following information:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">isplaying</span></code> (bool): <code class="docutils literal notranslate"><span class="pre">True</span></code> when streaming, otherwise <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
 </ul>
 </div></blockquote>
-</div>
-<div class="section" id="command-queue">
+</section>
+<section id="command-queue">
 <h2>Command Queue<a class="headerlink" href="#command-queue" title="Permalink to this headline">¶</a></h2>
 <p>The Command Queue is a FIFO buffer of tuple.
 Each tuple has a command name and an optional argument.
@@ -730,8 +735,8 @@ If streaming is paused, only the next song gets selected as new current song.</p
 </dd>
 </dl>
 </div></blockquote>
-</div>
-<div class="section" id="event-management">
+</section>
+<section id="event-management">
 <h2>Event Management<a class="headerlink" href="#event-management" title="Permalink to this headline">¶</a></h2>
 <p>This module provided a callback interface to react on events triggered by Streaming Thread or by actions done by the <a class="reference internal" href="#mdbapi.audiostream.AudioStreamManager" title="mdbapi.audiostream.AudioStreamManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">AudioStreamManager</span></code></a> class.</p>
 <p>The following two functions can be used to register or remove a callback function:</p>
@@ -769,8 +774,8 @@ Argument is the current playtime of the song in seconds.</p>
 </pre></div>
 </div>
 <dl class="py function">
-<dt id="mdbapi.audiostream.AudioStreamingThread">
-<code class="sig-prename descclassname"><span class="pre">mdbapi.audiostream.</span></code><code class="sig-name descname"><span class="pre">AudioStreamingThread</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamingThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamingThread" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.audiostream.AudioStreamingThread">
+<span class="sig-prename descclassname"><span class="pre">mdbapi.audiostream.</span></span><span class="sig-name descname"><span class="pre">AudioStreamingThread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamingThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamingThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>This thread manages the streaming of the songs from the Song Queue to the Icecast server.</p>
 <p>The thread tracks the played song using the <a class="reference internal" href="tracker.html"><span class="doc">Song Tracker</span></a> module.
 Randomly added songs will not be tracked, only songs added by the user.
@@ -792,8 +797,8 @@ The stream status will be set correctly (<code class="docutils literal notransla
 </dd></dl>
 
 <dl class="py function">
-<dt id="mdbapi.audiostream.StartAudioStreamingThread">
-<code class="sig-prename descclassname"><span class="pre">mdbapi.audiostream.</span></code><code class="sig-name descname"><span class="pre">StartAudioStreamingThread</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">musicdb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#StartAudioStreamingThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.StartAudioStreamingThread" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.audiostream.StartAudioStreamingThread">
+<span class="sig-prename descclassname"><span class="pre">mdbapi.audiostream.</span></span><span class="sig-name descname"><span class="pre">StartAudioStreamingThread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">musicdb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#StartAudioStreamingThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.StartAudioStreamingThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function starts the Streaming Thread <code class="xref py py-mod docutils literal notranslate"><span class="pre">AudioStreamingThread</span></code>.
 You should use this function instead of calling the Streaming Thread function directly.</p>
 <p>By calling this function, the global state of this module gets reset.
@@ -815,8 +820,8 @@ This included removing all commands from the Command Queue.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mdbapi.audiostream.StopAudioStreamingThread">
-<code class="sig-prename descclassname"><span class="pre">mdbapi.audiostream.</span></code><code class="sig-name descname"><span class="pre">StopAudioStreamingThread</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#StopAudioStreamingThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.StopAudioStreamingThread" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.audiostream.StopAudioStreamingThread">
+<span class="sig-prename descclassname"><span class="pre">mdbapi.audiostream.</span></span><span class="sig-name descname"><span class="pre">StopAudioStreamingThread</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#StopAudioStreamingThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.StopAudioStreamingThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function stops the Streaming Thread.
 The function is blocking and waits until the thread is closed.</p>
 <dl class="field-list simple">
@@ -826,12 +831,12 @@ The function is blocking and waits until the thread is closed.</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="stream-manager-class">
+</section>
+<section id="stream-manager-class">
 <h2>Stream Manager Class<a class="headerlink" href="#stream-manager-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="mdbapi.audiostream.AudioStreamManager">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.audiostream.</span></code><code class="sig-name descname"><span class="pre">AudioStreamManager</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamManager" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.audiostream.AudioStreamManager">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mdbapi.audiostream.</span></span><span class="sig-name descname"><span class="pre">AudioStreamManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides an interface to the Streaming Thread (<a class="reference internal" href="#mdbapi.audiostream.AudioStreamingThread" title="mdbapi.audiostream.AudioStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AudioStreamingThread()</span></code></a>) and the Song Queue that will be streamed.</p>
 <p>The communication is implemented with a command queue.
 More details about those commands can be found in the <a class="reference internal" href="#mdbapi.audiostream.AudioStreamingThread" title="mdbapi.audiostream.AudioStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AudioStreamingThread()</span></code></a> description.
@@ -857,8 +862,8 @@ The thread handles the skip to the next song and starts streaming the new file.<
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mdbapi.audiostream.AudioStreamManager.GetStreamState">
-<code class="sig-name descname"><span class="pre">GetStreamState</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamManager.GetStreamState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamManager.GetStreamState" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.audiostream.AudioStreamManager.GetStreamState">
+<span class="sig-name descname"><span class="pre">GetStreamState</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamManager.GetStreamState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamManager.GetStreamState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the current state of the Streaming Thread as a dictionary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -868,8 +873,8 @@ The thread handles the skip to the next song and starts streaming the new file.<
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.audiostream.AudioStreamManager.Play">
-<code class="sig-name descname"><span class="pre">Play</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">play</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamManager.Play"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamManager.Play" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.audiostream.AudioStreamManager.Play">
+<span class="sig-name descname"><span class="pre">Play</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">play</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamManager.Play"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamManager.Play" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the play-state.</p>
 <blockquote>
 <div><ul class="simple">
@@ -891,8 +896,8 @@ the <a class="reference internal" href="#mdbapi.audiostream.AudioStreamingThread
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.audiostream.AudioStreamManager.PlayNextSong">
-<code class="sig-name descname"><span class="pre">PlayNextSong</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamManager.PlayNextSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamManager.PlayNextSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.audiostream.AudioStreamManager.PlayNextSong">
+<span class="sig-name descname"><span class="pre">PlayNextSong</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamManager.PlayNextSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamManager.PlayNextSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function triggers the Streaming Thread to play the next song in the queue.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -902,8 +907,8 @@ the <a class="reference internal" href="#mdbapi.audiostream.AudioStreamingThread
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.audiostream.AudioStreamManager.PushCommand">
-<code class="sig-name descname"><span class="pre">PushCommand</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamManager.PushCommand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamManager.PushCommand" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.audiostream.AudioStreamManager.PushCommand">
+<span class="sig-name descname"><span class="pre">PushCommand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamManager.PushCommand"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamManager.PushCommand" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class internal interface to the <a class="reference internal" href="#command-queue">Command Queue</a> used to communicate with the <a class="reference internal" href="#mdbapi.audiostream.AudioStreamingThread" title="mdbapi.audiostream.AudioStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AudioStreamingThread()</span></code></a>.
 You should not access the queue directly, because the Streaming Thread expects valid data inside the queue.
 This is guaranteed by the methods that use this method.</p>
@@ -921,8 +926,8 @@ This is guaranteed by the methods that use this method.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.audiostream.AudioStreamManager.RegisterCallback">
-<code class="sig-name descname"><span class="pre">RegisterCallback</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamManager.RegisterCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamManager.RegisterCallback" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.audiostream.AudioStreamManager.RegisterCallback">
+<span class="sig-name descname"><span class="pre">RegisterCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamManager.RegisterCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamManager.RegisterCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a callback function that reacts on Streaming related events.
 For more details see the module description at the top of this document.</p>
 <dl class="field-list simple">
@@ -936,8 +941,8 @@ For more details see the module description at the top of this document.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.audiostream.AudioStreamManager.RemoveCallback">
-<code class="sig-name descname"><span class="pre">RemoveCallback</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamManager.RemoveCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamManager.RemoveCallback" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.audiostream.AudioStreamManager.RemoveCallback">
+<span class="sig-name descname"><span class="pre">RemoveCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/audiostream.html#AudioStreamManager.RemoveCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.audiostream.AudioStreamManager.RemoveCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a function from the list of callback functions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -951,8 +956,8 @@ For more details see the module description at the top of this document.</p>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -997,6 +1002,7 @@ For more details see the module description at the top of this document.</p>
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

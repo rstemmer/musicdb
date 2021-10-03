@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Randomizer &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="randomizer">
+  <section id="randomizer">
 <h1>Randomizer<a class="headerlink" href="#randomizer" title="Permalink to this headline">¶</a></h1>
 <p>Randomness is art.
 In context of an audio player and its task to play random songs most people would use a general purpose random-function provided by the programming languages they use.
@@ -677,11 +682,11 @@ For humans, real randomness does not <em>feel</em> random.
 Real randomness allows playing multiple songs form the same album after each other.
 Humans would neither expect, nor want such behavior of a randomizer.
 This is why MusicDB uses a less random randomizer that feels more random.</p>
-<div class="section" id="module-mdbapi.randy">
+<section id="module-mdbapi.randy">
 <span id="randy-module"></span><h2>Randy Module<a class="headerlink" href="#module-mdbapi.randy" title="Permalink to this headline">¶</a></h2>
 <p>The <em>randy</em> module provides a way to select random songs or videos that can be put into the Song/Video Queue.
 The selection of random music follows certain constraints.</p>
-<div class="section" id="song-selection-algorithm">
+<section id="song-selection-algorithm">
 <h3>Song Selection Algorithm<a class="headerlink" href="#song-selection-algorithm" title="Permalink to this headline">¶</a></h3>
 <p>Selecting a random song is done in two stages, the <a class="reference internal" href="#database-stage">Database Stage</a> and the <a class="reference internal" href="#blacklist-stage">Blacklist Stage</a>
 The first stage selects a song from a limited set of songs, the second stage checks if the song is on a blacklist.
@@ -691,7 +696,7 @@ In each stage, a song can be rejected and the algorithm starts at the beginning.
 <p>The process of trying to get a good song gets repeated until a good song is found.
 If over constraint, this ends in an infinite loop!</p>
 </div>
-<div class="section" id="database-stage">
+<section id="database-stage">
 <h4>Database Stage<a class="headerlink" href="#database-stage" title="Permalink to this headline">¶</a></h4>
 <p>In the first stage, a song gets chosen by the database via <a class="reference internal" href="../lib/musicdb.html#lib.db.musicdb.MusicDatabase.GetRandomSong" title="lib.db.musicdb.MusicDatabase.GetRandomSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lib.db.musicdb.MusicDatabase.GetRandomSong()</span></code></a>.
 There are 4 parameters that define the constraints applied on set of possible songs:</p>
@@ -715,8 +720,8 @@ There are 4 parameters that define the constraints applied on set of possible so
 <p>Because the database only takes album tags into account, the song tags gets checked afterwards.
 If the song has a confirmed genre tag, and if this tag does not match the filter, the song gets rejected.
 Song genres that are automatically set by an algorithm (and not confirmed by the user) will be ignored because the algorithm may be wrong.</p>
-</div>
-<div class="section" id="blacklist-stage">
+</section>
+<section id="blacklist-stage">
 <h4>Blacklist Stage<a class="headerlink" href="#blacklist-stage" title="Permalink to this headline">¶</a></h4>
 <p>The selected song from the first stage now gets compared to the blacklists via
 <a class="reference internal" href="blacklist.html#mdbapi.blacklist.BlacklistInterface.CheckAllListsForSong" title="mdbapi.blacklist.BlacklistInterface.CheckAllListsForSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.blacklist.BlacklistInterface.CheckAllListsForSong()</span></code></a> or
@@ -725,19 +730,19 @@ If the song, or its album or artist, is listed in one of blacklist,
 then the song, a song from the same album or from the same artist was played recently.
 So, the chosen song gets dropped and the finding-process starts again.</p>
 <p>Is the blacklist length set to 0, the specific blacklist is disabled</p>
-</div>
-</div>
-<div class="section" id="video-selection-algorithm">
+</section>
+</section>
+<section id="video-selection-algorithm">
 <h3>Video Selection Algorithm<a class="headerlink" href="#video-selection-algorithm" title="Permalink to this headline">¶</a></h3>
 <p>The selection of a video is a slightly simplified way as done for Songs.
 For the blacklist stage it does not considers any Artist and Album associations and therefore the corresponding blacklists.</p>
-</div>
-</div>
-<div class="section" id="randy-class">
+</section>
+</section>
+<section id="randy-class">
 <h2>Randy Class<a class="headerlink" href="#randy-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="mdbapi.randy.Randy">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.randy.</span></code><code class="sig-name descname"><span class="pre">Randy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.randy.Randy" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.randy.Randy">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mdbapi.randy.</span></span><span class="sig-name descname"><span class="pre">Randy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.randy.Randy" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides methods to get a random song or video under certain constraints.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -751,8 +756,8 @@ For the blacklist stage it does not considers any Artist and Album associations 
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mdbapi.randy.Randy.GetSong">
-<code class="sig-name descname"><span class="pre">GetSong</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.randy.Randy.GetSong">
+<span class="sig-name descname"><span class="pre">GetSong</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method chooses a random song in a two-stage process as described in the module description.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -768,8 +773,8 @@ The amount of tries can be configured in the MusicDB Configuration</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.randy.Randy.GetSongFromAlbum">
-<code class="sig-name descname"><span class="pre">GetSongFromAlbum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSongFromAlbum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSongFromAlbum" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.randy.Randy.GetSongFromAlbum">
+<span class="sig-name descname"><span class="pre">GetSongFromAlbum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetSongFromAlbum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetSongFromAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a random song from a specific album.</p>
 <p>If the selected song is listed in the blacklist for songs, a new one will be selected.
 Entries in the album and artist blacklist will be ignored because the artist and album is forced by the user.
@@ -796,8 +801,8 @@ The amount of tries can be configured in the MusicDB Configuration</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.randy.Randy.GetVideo">
-<code class="sig-name descname"><span class="pre">GetVideo</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetVideo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.randy.Randy.GetVideo">
+<span class="sig-name descname"><span class="pre">GetVideo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/randy.html#Randy.GetVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.randy.Randy.GetVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method chooses a random video in a simplified two-stage process as described in the module description.
 This method will be refined in future to fully behave like the <a class="reference internal" href="#mdbapi.randy.Randy.GetSong" title="mdbapi.randy.Randy.GetSong"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetSong()</span></code></a> method.</p>
 <div class="admonition warning">
@@ -815,8 +820,8 @@ The amount of tries can be configured in the MusicDB Configuration</p>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -861,6 +866,7 @@ The amount of tries can be configured in the MusicDB Configuration</p>
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
