@@ -50,7 +50,7 @@ class AlbumView extends MainView2
         super("AlbumView", headline, artwork);
 
         // Create Settings
-        this.settings_tags  = new Element("div");
+        this.settings_tags  = new Element("div", ["flex-column"], "AlbumGenreSettings");
         this.settings_color = new Element("div", ["flex-column"]);
         this.settings_hide  = new SettingsCheckbox(
             "Hide Album",
