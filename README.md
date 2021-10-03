@@ -17,10 +17,10 @@ Time to share it with the world. :smiley:
 
 ## Details
 
-* Storing your music at one place (Server), and listen to it wherever you are (via Stream)
+* Store your music at one place (Server), and listen to it wherever you are (via Stream)
 * The client is a web application running on all operating systems that have a Firefox browser
-* Albums and songs are represented by their artwork, not by rows in a table
-* Fuzzy search allows you to have some typos when searching a song
+* Albums and songs are represented by their artwork, not by rows in tables and lists
+* Fuzzy search allows you to have some typos when searching your music collection
 * Scales with music collections of hundreds of albums
 * Explicit tag system for genres and sub-genres
 * Allows you to hide all albums except for those of a genre you currently want to listen to
