@@ -20,7 +20,7 @@ class TextButton extends Element
 {
     constructor(iconname, text, onclick, tooltip)
     {
-        super("div", ["TextButton", "flex-row", "hlcolor"]);
+        super("div", ["TextButton", "flex-row", "hlcolor", "frame"]);
         this.icon = new SVGIcon(iconname);
         this.text = new Element("span");
         this.text.SetInnerText(text);

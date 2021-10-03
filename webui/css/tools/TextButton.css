@@ -19,6 +19,7 @@
 .TextButton
 {
     margin:         0.4rem;
+    padding:        0.4rem 2ch;
     align-items:    center;
 }
 
