@@ -7,7 +7,7 @@
 
 Run  git log --oneline  for more details
 
-┍━━━━┫ 2021-??-?? ┣━━━━┫ 7.2.0 ┣━━━━━━━━╍╍
+┍━━━━┫ 2021-10-03 ┣━━━━┫ 7.2.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ + [WebAPI] AddAlbumToQueue allows via optional third parameter to limit the Album to a specific CD
 │ + [WebAPI] SetSongTag now has optional parameters for defining approval and confidence information
@@ -21,6 +21,7 @@ Run  git log --oneline  for more details
 │    + First queue tile disappears immediately after clicking the Next button
 │    + Moving tiles in the Queue View is now faked until the back-end responses
 │    + For new added songs, a fake queue entry will be shown until the new queue got loaded from the back end
+│ * Solved Issues: #63, #37
 │
 ┝━ MINOR CHANGES
 │ * [WebUI] Long artist names in Artist View are handled correct now
