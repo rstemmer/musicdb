@@ -131,8 +131,8 @@ class AlbumView extends MainView2
 
         this.genreedit          = new TagListEdit("genre");
         this.subgenreedit       = new TagListEdit("subgenre");
-        this.applytoall         = new TextButton("Approve", "Apply to all Songs without Genre Tag", ()=>{this.ApplyGenreSettingsToAllUntaggedSongs();},
-            "Tag all Songs of this Album with the albums Genre and Sub-Genre Tag, if the Songs are not tagged at all. Only approved tags will be added.");
+        this.applytoall         = new TextButton("Approve", `Apply to ${this.CountUntaggedSongs()} Songs that have no Genre Tag`, ()=>{this.ApplyGenreSettingsToAllUntaggedSongs();},
+            "Tag all Songs of this Album with the albums Genre and Sub-Genre Tag, if the Songs are not tagged at all. Only approved album tags will be added. The new set song tags can be approved or discard by the user when the song gets played.");
         this.settings_tags.RemoveChilds();
         this.settings_tags.AppendChild(this.genreedit);
         this.settings_tags.AppendChild(this.subgenreedit);
@@ -181,6 +181,24 @@ class AlbumView extends MainView2
             }
         }
         return;
+    }
+
+
+
+    CountUntaggedSongs()
+    {
+        let counter = 0;
+        // For all song entries
+        for(let songid in this.songtiles)
+        {
+            let songgenres    = this.songtiles[songid].tags.genres;
+            let songsubgenres = this.songtiles[songid].tags.subgenres;
+            if(songgenres.length === 0 && songsubgenres.length === 0)
+            {
+                counter++;
+            }
+        }
+        return counter;
     }
 
 
