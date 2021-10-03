@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -44,24 +44,17 @@ const LYRICSSTATE_NONE     = 4; // There are no lyrics for this song - it is an 
 
 
 
-class LyricsEdit
+class LyricsEdit extends Element
 {
     constructor()
     {
-        this.element = document.createElement("div");
-        this.element.classList.add("LyricsEdit");
-        this.element.classList.add("flex-column");
+        super("div", ["LyricsEdit", "flex-column"]);
 
         this.mainbar = this.CreateMainBar();
         this.toolbar = this.CreateToolBar();
-        this.textbox = document.createElement("div");
-        this.textbox.classList.add("seriffont");
-        this.textbox.classList.add("lyricstext");
-        this.editbox = document.createElement("textarea");
-        this.editbox.classList.add("frame");
-        this.editbox.classList.add("seriffont");
-        this.editbox.classList.add("lyricstext");
-        this.editbox.oninput    = ()=>{this.onInput(event);};
+        this.textbox = new Element("div", ["seriffont", "lyricstext"]);
+        this.editbox = new Element("textarea", ["seriffont", "lyricstext", "frame"]);
+        this.editbox.element.oninput    = ()=>{this.onInput(event);};
         //this.editbox.onmouseup  = ()=>{this.onMouseUp(event);};
         //this.editbox.onkeyup    = ()=>{this.onKeyUp(event);};
         //this.editbox.oncopy     = ()=>{this.onCopy(event);};
@@ -70,32 +63,28 @@ class LyricsEdit
         this.msg_notsaved = new MessageBarWarning("Changes not yet saved!");
         this.msg_saved    = new MessageBarConfirm("Changes successfully saved");
 
-        this.element.dataset.editable = false;
+        this.SetData("editable", false);
 
-        this.element.appendChild(this.msg_notsaved.GetHTMLElement());
-        this.element.appendChild(this.msg_saved.GetHTMLElement());
-        this.element.appendChild(this.mainbar.GetHTMLElement());
-        this.element.appendChild(this.toolbar.GetHTMLElement());
-        this.element.appendChild(this.textbox);
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
+        this.AppendChild(this.msg_notsaved);
+        this.AppendChild(this.msg_saved);
+        this.AppendChild(this.mainbar);
+        this.AppendChild(this.toolbar);
+        this.AppendChild(this.textbox);
     }
 
 
 
     SetEditMode()
     {
-        if(this.element.dataset.editable == "true")
+        this.msg_saved.Hide();
+        this.msg_notsaved.Hide();
+
+        if(this.GetData("editable") == "true")
             return; // Already editable
 
-        this.element.dataset.editable = true;
-        this.editbox.value = this.lyrics;
-        this.element.replaceChild(this.editbox, this.textbox);
+        this.SetData("editable", "true");
+        this.editbox.SetValue(this.lyrics);
+        this.ReplaceChild(this.editbox, this.textbox);
 
         this.ValidateLyricsState();
     }
@@ -107,12 +96,12 @@ class LyricsEdit
         this.msg_saved.Hide();
         this.msg_notsaved.Hide();
 
-        if(this.element.dataset.editable == "false")
+        if(this.GetData("editable") == "false")
             return; // Already readonly
 
-        this.element.dataset.editable = false;
+        this.SetData("editable", "false");
         this.RenderLyrics();
-        this.element.replaceChild(this.textbox, this.editbox);
+        this.ReplaceChild(this.textbox, this.editbox);
     }
 
 
@@ -136,7 +125,7 @@ class LyricsEdit
         loadbutton.SetTooltip( "Reload lyrics and state from the MusicDB database");
         savebutton.SetTooltip( "Save lyrics and state to the MusicDB database");
 
-        mainbar.GetHTMLElement().classList.add("lyricstools");
+        mainbar.AddCSSClass("lyricstools");
 
         this.stateselect = new SwitchGroup([ls_empty, ls_fromfile, ls_fromnet, ls_userappr, ls_none], 0);
         this.stateselect.SetChangeEvent(()=>{this.ValidateUpdateState();});
@@ -160,7 +149,7 @@ class LyricsEdit
         backgroundbutton.SetTooltip("Format selected characters as \"Less Important\" / Background");
         commentbutton.SetTooltip("Format selected lines as Comments");
 
-        toolbar.GetHTMLElement().classList.add("lyricstools");
+        toolbar.AddCSSClass("lyricstools");
 
         toolbar.AddButton(new ToolGroup([refrainbutton, backgroundbutton, commentbutton]));
         toolbar.AddSpacer(true /*grow*/);
@@ -179,7 +168,7 @@ class LyricsEdit
         this.origstate   = lyricsstate;  // /
 
         this.stateselect.Select(this.lyricsstate);
-        this.editbox.value = this.lyrics;
+        this.editbox.SetValue(this.lyrics);
 
         this.RenderLyrics();
         this.ValidateLyricsState();
@@ -190,7 +179,7 @@ class LyricsEdit
 
     ValidateLyricsState()
     {
-        let hascode   = this.editbox.value.length > 0; // Lyrics markup code length available?
+        let hascode   = this.editbox.GetValue().length > 0; // Lyrics markup code length available?
         let selection = this.stateselect.GetSelectionIndex();
 
         // 1.: When there are no lyrics, and the state is not "None" (no lyrics),
@@ -232,7 +221,7 @@ class LyricsEdit
         {
             this.msg_notsaved.Show();
         }
-        else if(this.editbox.value != this.origlyrics)
+        else if(this.editbox.GetValue() != this.origlyrics)
         {
             // FIXME: It can happen that origlyrics has invalid characters.
             // Some of them will be removed by the edit box!
@@ -257,7 +246,7 @@ class LyricsEdit
 
     Save()
     {
-        this.lyrics      = this.editbox.value;
+        this.lyrics      = this.editbox.GetValue();
         this.lyricsstate = this.stateselect.GetSelectionIndex();
         MusicDB_Call("SetSongLyrics", {songid: this.songid, lyrics: this.lyrics, lyricsstate: this.lyricsstate});
 
@@ -274,7 +263,7 @@ class LyricsEdit
     {
         if(this.lyrics == null)
         {
-            this.textbox.innerHTML = "";
+            this.textbox.SetInnerHTML("");
             return;
         }
 
@@ -305,7 +294,7 @@ class LyricsEdit
             }
         }
 
-        this.textbox.innerHTML = html;
+        this.textbox.SetInnerHTML(html);
         return;
     }
 
@@ -325,6 +314,8 @@ class LyricsEdit
                 this.InsertLinesAroundSelection(":: comment", "::");
                 break;
         }
+        this.ValidateLyricsState();
+        this.ValidateUpdateState();
         return;
     }
 
@@ -332,16 +323,17 @@ class LyricsEdit
 
     InsertCharactersAroundSelection(text1, text2)
     {
-        let begin = this.editbox.selectionStart;
-        let end   = this.editbox.selectionEnd;
-        let text  = this.editbox.value;
+        let editelement = this.editbox.GetHTMLElement();
+        let begin = editelement.selectionStart;
+        let end   = editelement.selectionEnd;
+        let text  = editelement.value;
 
         let starttext   = text.substring(0,     begin);
         let middletext  = text.substring(begin, end);
         let endtext     = text.substring(end,   text.length);
 
         let newtext = starttext + text1 + middletext + text2 + endtext;
-        this.editbox.value = newtext;
+        editelement.value = newtext;
         return;
     }
 
@@ -349,8 +341,9 @@ class LyricsEdit
 
     InsertLinesAroundSelection(line1, line2)
     {
-        let begin = this.editbox.selectionStart;
-        let end   = this.editbox.selectionEnd;
+        let editelement = this.editbox.GetHTMLElement();
+        let begin = editelement.selectionStart;
+        let end   = editelement.selectionEnd;
 
         this.InsertLineBeforeSelection(begin, line1);
         this.InsertLineAfterSelection(end+line1.length+1, line2);
@@ -362,7 +355,7 @@ class LyricsEdit
 
     InsertLineBeforeSelection(begin, line)
     {
-        let text  = this.editbox.value;
+        let text = this.editbox.GetValue();
 
         while(begin != 0 && text[begin] != '\n')
             begin--;
@@ -375,7 +368,7 @@ class LyricsEdit
         newtext += line + '\n';
         newtext += text.substring(begin);
 
-        this.editbox.value = newtext;
+        this.editbox.SetValue(newtext);
 
         return;
     }
@@ -384,7 +377,7 @@ class LyricsEdit
 
     InsertLineAfterSelection(end, line)
     {
-        let text = this.editbox.value;
+        let text = this.editbox.GetValue();
 
         while(end != text.length && text[end] != '\n')
             end++;
@@ -399,7 +392,7 @@ class LyricsEdit
         newtext += line + '\n';
         newtext += text.substring(end);
 
-        this.editbox.value = newtext;
+        this.editbox.SetValue(newtext);
 
         return;
     }

@@ -21,7 +21,7 @@ class ColorInput extends Element
     // when label == null, no label will be created
     constructor(label, tooltip, initcolor, onsave, onpreview)
     {
-        super("div", ["ColorInput"]);
+        super("div", ["ColorInput", "flex-row"]);
 
         this.input          = document.createElement("input");
         this.input.type     = "color";
@@ -93,6 +93,7 @@ class ColorSchemeSelection extends Element
         this.musictype  = musictype;
         this.musicid    = musicid;
 
+        // Color input elements
         this.bginput = new ColorInput(
             "Background Color",
             "Change background color",
@@ -114,9 +115,31 @@ class ColorSchemeSelection extends Element
             (color)=>{this.onSave("hlcolor", color);}, 
             (color)=>{this.onPreview("hlcolor", color);});
 
-        this.element.appendChild(this.bginput.GetHTMLElement());
-        this.element.appendChild(this.fginput.GetHTMLElement());
-        this.element.appendChild(this.hlinput.GetHTMLElement());
+
+        // Quality indicators
+        // Evaluate Accessibility (color contrast) to W3.org:
+        // https://www.w3.org/TR/WCAG21/#contrast-minimum
+        //  At least 4.5/21=21%, better 7.0/21=33%
+        //  +10 because I use transparency,
+        //  -10 because low contrast sets focus to the album artwork
+        this.bgindicator = new IndicatorBar("Lightness",  5, 10,  5);
+        this.fgindicator = new IndicatorBar("Contrast", 33+10, 90-10, 20);
+        this.hlindicator = new IndicatorBar("Contrast", 21+10, 70-10, 20);
+        this.UpdateIndicators();
+
+        this._CreateColorControl(this.bginput, this.bgindicator);
+        this._CreateColorControl(this.fginput, this.fgindicator);
+        this._CreateColorControl(this.hlinput, this.hlindicator);
+    }
+
+
+
+    _CreateColorControl(colorinput, qualityindicator)
+    {
+        let element = new Element("div", ["flex-row", "flex-right"]);
+        element.AppendChild(colorinput);
+        element.AppendChild(qualityindicator);
+        this.AppendChild(element);
     }
 
 
@@ -126,6 +149,28 @@ class ColorSchemeSelection extends Element
         this.bginput.SetColor(bgcolor);
         this.fginput.SetColor(fgcolor);
         this.hlinput.SetColor(hlcolor);
+    }
+
+
+
+    UpdateIndicators()
+    {
+        let rl_bg = CalculateRelativeLuminance(this.bginput.GetColor());
+        let rl_fg = CalculateRelativeLuminance(this.fginput.GetColor());
+        let rl_hl = CalculateRelativeLuminance(this.hlinput.GetColor());
+
+        let fgcontrast = CalculateContrast(rl_fg, rl_bg);
+        let hlcontrast = CalculateContrast(rl_hl, rl_bg);
+
+        // Background should be dark, so only the lower 10% of the scale is considered.
+        // To scale this up to 0…100, the color is multiplied by 1000 and cut to 100 max
+        let bgvalue = rl_bg * 1000;
+        if(bgvalue > 100)
+            bgvalue = 100;
+
+        this.bgindicator.SetIndicator(bgvalue);
+        this.fgindicator.SetIndicator((fgcontrast / 21) * 100);    // 21 is max
+        this.hlindicator.SetIndicator((hlcontrast / 21) * 100);    // 21 is max
     }
 
 
@@ -145,6 +190,7 @@ class ColorSchemeSelection extends Element
     onPreview(colorname, colorvalue)
     {
         this.ApplyColorScheme();
+        this.UpdateIndicators();
     }
 
 

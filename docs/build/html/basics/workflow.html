@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Workflow for development &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,14 +670,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="workflow-for-development">
+  <section id="workflow-for-development">
 <h1>Workflow for development<a class="headerlink" href="#workflow-for-development" title="Permalink to this headline">¶</a></h1>
 <p>This section of the documentation describes how to develop MusicDB</p>
-<div class="section" id="working-on-code">
+<section id="working-on-code">
 <h2>Working on code<a class="headerlink" href="#working-on-code" title="Permalink to this headline">¶</a></h2>
 <p>Only change code in the <em>develop</em> branch of the repository.</p>
 <p>Please read the <a class="reference internal" href="concept.html"><span class="doc">Philosophy of MusicDB</span></a> chapter and keep them in mind when writing code and adding features.</p>
-<div class="section" id="rebuilding-the-documentation">
+<section id="rebuilding-the-documentation">
 <h3>Rebuilding the Documentation<a class="headerlink" href="#rebuilding-the-documentation" title="Permalink to this headline">¶</a></h3>
 <p>Do not commit the build directory of the docs until it is really meaningful.
 Usually building the documentation is only necessary for a new release.
@@ -680,9 +685,9 @@ When developing code, you usually read and edit the docs in the source code.
 There may be special cases where rebuilding the documentation can be a good idea.
 For example when finishing a new feature.
 Then commit the whole build directory.</p>
-</div>
-</div>
-<div class="section" id="using-git">
+</section>
+</section>
+<section id="using-git">
 <h2>Using git<a class="headerlink" href="#using-git" title="Permalink to this headline">¶</a></h2>
 <p>In the repository, there are can appear the following branches:</p>
 <blockquote>
@@ -706,7 +711,7 @@ It gets branched from <em>master</em> and merged into <em>master</em> and <em>de
 </dl>
 </div></blockquote>
 <p>When the <em>develop</em> or <em>sprint-$SPRINT</em> branch reaches a stable point, they gets merged to <em>master</em>, and a new release tag gets set.</p>
-<div class="section" id="micro-commits">
+<section id="micro-commits">
 <h3>Micro Commits<a class="headerlink" href="#micro-commits" title="Permalink to this headline">¶</a></h3>
 <p>Do use <em>micro commits</em>.
 So, each bugfix and improvement should be committed independently.</p>
@@ -730,8 +735,8 @@ So, each bugfix and improvement should be committed independently.</p>
 <p>With micro commits, a one-line commit messages is usually enough.
 Write in this message what the commit does,
 and to what feature of bug it is related to.</p>
-</div>
-<div class="section" id="createing-a-hotfix">
+</section>
+<section id="createing-a-hotfix">
 <h3>Createing a Hotfix<a class="headerlink" href="#createing-a-hotfix" title="Permalink to this headline">¶</a></h3>
 <p>Hotfix branch names always start with <code class="docutils literal notranslate"><span class="pre">hotfix-</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git checkout -b hotfix-<span class="nv">$HOTFIX</span> master
@@ -751,8 +756,8 @@ git merge --no-ff hotfix-<span class="nv">$HOTFIX</span>    <span class="c1"># m
 git push origin
 </pre></div>
 </div>
-</div>
-<div class="section" id="merging-develop-to-master">
+</section>
+<section id="merging-develop-to-master">
 <h3>Merging Develop to Master<a class="headerlink" href="#merging-develop-to-master" title="Permalink to this headline">¶</a></h3>
 <p>Before merging the <em>develop</em> branch to <em>master</em>, make sure everything described in <a class="reference internal" href="#releasing-a-new-version">Releasing a New Version</a> is done.
 This will be done in the <em>develop</em> branch.
@@ -762,9 +767,9 @@ git merge --no-ff develop     <span class="c1"># merge develop into the master b
 git tag -a <span class="s2">&quot;v</span><span class="nv">$major</span><span class="s2">.</span><span class="nv">$minor</span><span class="s2">.</span><span class="nv">$patch</span><span class="s2">&quot;</span>  <span class="c1"># tag with version number</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="releasing-a-new-version">
+</section>
+</section>
+<section id="releasing-a-new-version">
 <h2>Releasing a New Version<a class="headerlink" href="#releasing-a-new-version" title="Permalink to this headline">¶</a></h2>
 <p>The following things need to be updated for a new release:</p>
 <blockquote>
@@ -779,8 +784,8 @@ git tag -a <span class="s2">&quot;v</span><span class="nv">$major</span><span cl
 <p>Further more, the <em>develop</em> and <em>master</em> branch must be merged and tagged when it is not just a bugfix.</p>
 <p>The version number is defined as <code class="docutils literal notranslate"><span class="pre">$major.$minor.$patch</span></code>.
 Tags follow the scheme <code class="docutils literal notranslate"><span class="pre">&quot;v$major.$minor.$patch&quot;</span></code>.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -825,6 +830,7 @@ Tags follow the scheme <code class="docutils literal notranslate"><span class="p
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

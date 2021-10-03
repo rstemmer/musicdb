@@ -85,18 +85,15 @@ class SongEntryTile extends Draggable
         this.songid       = MDBSong.id;
         this.songnum      = this.CreateSongNumber(MDBSong);
         this.playingicon  = new SVGIcon("StatusPlaying");
-        this.playingicon.GetHTMLElement().dataset.playing = false;
-        this.playingicon.GetHTMLElement().classList.add("playingicon");
+        this.playingicon.SetData("playing", false);
+        this.playingicon.AddCSSClass("playingicon");
         this.songname     = this.CreateSongName(MDBSong);
         this.flagbar      = new FlagBar(MDBSong, MDBTags.moods);
 
         this.lyricsbutton = new SVGButton(this.LyricsStateToIconName(MDBSong.lyricsstate), ()=>{this.ShowLyrics();});
-        this.appendbutton = new SVGButton("Append", ()=>{this.AddSongToQueue("last");});
-        this.insertbutton = new SVGButton("Insert", ()=>{this.AddSongToQueue("next");});
         this.lyricsbutton.SetTooltip("Show song lyrics");
-        this.appendbutton.SetTooltip("Append song to the queue");
-        this.insertbutton.SetTooltip("Insert song into the queue after current playing song");
-        this.lyricsbutton.GetHTMLElement().classList.add("hovpacity");
+        this.lyricsbutton.AddCSSClass("hovpacity");
+        this.insertbuttons= new ButtonBox_AddSongToQueue(this.songid);
 
         super.AppendChild(this.songnum);
         super.AppendChild(this.playingicon);
@@ -104,18 +101,13 @@ class SongEntryTile extends Draggable
         super.AppendChild(this.flagbar);
         if(configuration.WebUI.lyrics == "enabled")
             super.AppendChild(this.lyricsbutton);
-        super.AppendChild(this.appendbutton);
-        super.AppendChild(this.insertbutton);
-        this.element.dataset.highlight = false;
+        super.AppendChild(this.insertbuttons);
+        super.SetData("highlight", false);
 
         if(MDBSong.disabled)
-        {
-            this.element.classList.add("hovpacity");
-        }
+            super.AddCSSClass("hovpacity");
         else if(MDBSong.favorite == -1)
-        {
-            this.element.classList.add("hovpacity");
-        }
+            super.AddCSSClass("hovpacity");
 
         this.ConfigDraggable("song", this.songid, "insert");
         this.BecomeDraggable();
@@ -160,14 +152,12 @@ class SongEntryTile extends Draggable
 
     CreateSongNumber(MDBSong)
     {
-        let songnum = document.createElement("div");
-        songnum.classList.add("songnumber");
-        songnum.classList.add("hlcolor");
+        let songnum = new Element("div", ["songnumber", "hlcolor"]);
 
         if(MDBSong.number != 0)
-            songnum.innerText = MDBSong.number
+            songnum.SetInnerText(MDBSong.number)
         else
-            songnum.innerText = "⚪";
+            songnum.SetInnerText("⚪");
         return songnum;
     }
 
@@ -179,12 +169,11 @@ class SongEntryTile extends Draggable
             songname   = songname.replace(    " ∕ ", " / ");
         let disabled   = MDBSong.disabled;
         let lastplayed = new Date(MDBSong.lastplayed * 1000);
-        let element    = document.createElement("div");
-        element.classList.add("songname");
+        let element    = new Element("div", ["songname"]);
 
         // Set HLColor if disabled
         if(disabled)
-            element.classList.add("hlcolor");
+            element.AddCSSClass("hlcolor");
 
         // Create tool tip
         // Source: https://gist.github.com/kmaida/6045266
@@ -199,11 +188,8 @@ class SongEntryTile extends Draggable
         else
             tooltip = songname;
 
-        element.title = tooltip;
-
-        // Set Name
-        element.innerText = songname;
-
+        element.SetTooltip(tooltip);
+        element.SetInnerText(songname);
         return element;
     }
 
@@ -218,18 +204,18 @@ class SongEntryTile extends Draggable
 
     SetPlayingState(state)
     {
-        this.playingicon.GetHTMLElement().dataset.playing = state;
+        this.playingicon.SetData("playing", state);
     }
     GetPlayingState()
     {
-        return this.playingicon.GetHTMLElement().dataset.playing;
+        return this.playingicon.GetData("playing");
     }
 
 
 
     Highlight(state)
     {
-        this.element.dataset.highlight = state;
+        this.SetData("highlight", state);
     }
 }
 

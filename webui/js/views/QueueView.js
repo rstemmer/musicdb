@@ -22,6 +22,7 @@ class QueueView extends Element
     {
         super("div", ["QueueView"]);
         this.streamviewmount = new Element("div");
+        this.numberofentries = 0;
     }
 
 
@@ -41,6 +42,51 @@ class QueueView extends Element
     UnmountStreamView()
     {
         this.streamviewmount.RemoveChilds();
+    }
+
+
+
+    // position: "next", "last", or queue entry ID
+    AddFakeEntry(musictype, position)
+    {
+        let faketile     = new FakeQueueTile(musictype);
+        let fakedropzone = new QueueDropZone(null);
+
+        if(position === "last")
+        {
+            super.AppendChild(faketile);
+            super.AppendChild(fakedropzone);
+        }
+        else if(position === "next")
+        {
+            let firsttile     = this.element.firstChild;
+            let firstdropzone = new Element(firsttile.nextSibling);
+            firstdropzone.InsertAfter(fakedropzone);
+            firstdropzone.InsertAfter(faketile);
+        }
+        else
+        {
+            let dropzoneid      = "dropzone"+position;
+            let dropzoneelement = document.getElementById(dropzoneid);
+            let dropzone        = new Element(dropzoneelement);
+            dropzone.InsertAfter(fakedropzone);
+            dropzone.InsertAfter(faketile);
+        }
+    }
+
+    // When the user skips the current playing music, remove it immediately
+    //  and do not wait until the updated Queue comes from the back-end
+    FakeEntrySkipping()
+    {
+        let firstelement  = this.element.firstChild;
+        let firsttile     = new Element(firstelement);
+        let firstdropzone = new Element(firstelement.nextSibling);
+        firsttile.Hide();
+        firstdropzone.Hide();
+
+        // Fake random added song to fill up the queue
+        if(this.numberofentries === 2)
+            this.AddFakeEntry("song", "last"); // TODO: May not be "song"
     }
 
 
@@ -106,10 +152,17 @@ class QueueView extends Element
             if(queueposition > 0)
                 tile.BecomeDraggable();
 
+            // When the user presses the remove button, the tile should be hidden as soon as possible.
+            // If the music cannot be removed from the queue it will appear on queue refresh,
+            // otherwise it is already gone and the user experiences fast response
+            buttonbox.SetOnRemoveCallback(()=>{tile.Hide(); dropzone.Hide();});
+
             super.AppendChild(tile);
             super.AppendChild(dropzone);
             queueposition += 1;
         }
+
+        this.numberofentries = MDBQueue.length;
     }
 
 
@@ -141,7 +194,7 @@ class QueueDropZone extends DropTarget
 {
     constructor(entryid)
     {
-        super("div", ["QueueDropZone", "QueueTile"], "dropzone"+entryid, ["song", "video", "album"]);
+        super("div", ["QueueDropZone", "QueueTile"], "dropzone"+entryid, ["song", "video", "album", "CD"]);
         
         this.entryid    = entryid;
         this.BecomeDropTarget();
@@ -154,7 +207,7 @@ class QueueDropZone extends DropTarget
         let draggable = document.getElementById(draggableid);
         let entryid   = draggable.dataset.entryid;
         let musictype = draggable.dataset.musictype;
-        let musicid   = parseInt(draggable.dataset.musicid);
+        let musicid   = draggable.dataset.musicid;
         let droptask  = draggable.dataset.droptask;
         //window.console && console.log(`Droped ${musictype} with id ${musicid}, ${droptask} at ${this.entryid}`);
 
@@ -168,20 +221,55 @@ class QueueDropZone extends DropTarget
                     MusicDB_Call("MoveSongInQueue", {entryid:entryid, afterid:this.entryid});
                 else if(musictype == "video")
                     MusicDB_Call("MoveVideoInQueue", {entryid:entryid, afterid:this.entryid});
+
+                // For a responsive user experience, the Move-Action needs to be faked
+                // until the response from the back-end comes.
+                // Therefore the tile that shall be moved and its corresponding drop zone will be loaded
+                // into tilea and zonea.
+                // Then it gets moved.
+                //
+                // Before:
+                //  tile b
+                //  zone b <--------,
+                //   ...            |
+                //  tile a -- Move -'
+                //  zone a
+                //
+                // After:
+                //  tile b
+                //  zone b
+                //  tile a
+                //  zone a
+
+                let tile = draggable;
+                let zone = draggable.nextSibling;
+                this.InsertAfter(zone);
+                this.InsertAfter(tile);
                 break;
 
             case "insert":
                 if(musictype == "song")
                 {
-                    MusicDB_Call("AddSongToQueue", {songid: musicid, position: this.entryid});
+                    let songid = parseInt(musicid);
+                    MusicDB_Call("AddSongToQueue", {songid: songid, position: this.entryid});
+                    queueview.AddFakeEntry(musictype, this.entryid)
                 }
                 else if(musictype == "video")
                 {
-                    MusicDB_Call("AddVideoToQueue", {videoid: musicid, position: this.entryid});
+                    let videoid = parseInt(musicid);
+                    MusicDB_Call("AddVideoToQueue", {videoid: videoid, position: this.entryid});
                 }
                 else if(musictype == "album")
                 {
-                    MusicDB_Call("AddAlbumToQueue", {albumid: musicid, position: this.entryid});
+                    let albumid = parseInt(musicid);
+                    MusicDB_Call("AddAlbumToQueue", {albumid: albumid, position: this.entryid});
+                }
+                else if(musictype == "CD")
+                {
+                    let [albumid, cdnum] = musicid.split('.');
+                    albumid = parseInt(albumid);
+                    cdnum   = parseInt(cdnum);
+                    MusicDB_Call("AddAlbumToQueue", {albumid: albumid, position: this.entryid, cd: cdnum});
                 }
                 break;
 

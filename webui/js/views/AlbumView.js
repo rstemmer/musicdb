@@ -30,7 +30,7 @@
  *   │  # Song name (+)(>) ░ │               │
  *   │  # Song name (+)(>) ░ ├───────────────┤
  *   │  # Song name (+)(>) ░ │ Tags          │
- *   │  # Song name (+)(>) ░ │ Colors        │
+ *   │  # Song name (+)(>) ░ │               │
  *   └───────────────────────┴───────────────┘
  * 
  */
@@ -50,9 +50,8 @@ class AlbumView extends MainView2
         super("AlbumView", headline, artwork);
 
         // Create Settings
-        this.settings_tags  = document.createElement("div");
-        this.settings_color = document.createElement("div");
-        this.settings_color.classList.add("flex-row");
+        this.settings_tags  = new Element("div", ["flex-column"], "AlbumGenreSettings");
+        this.settings_color = new Element("div", ["flex-column"]);
         this.settings_hide  = new SettingsCheckbox(
             "Hide Album",
             "When the album is hidden, it will not be shown in the Artists list.</br>Furthermore it is not considered by the random song selection algorithm.</br>You can make the album visible again with the MusicDB Management tools (See Main Menu).");
@@ -71,22 +70,21 @@ class AlbumView extends MainView2
         this.subgenreview = new TagListView();
 
         // Create Layout
-        this.songscell    = document.createElement("div");
-        this.songscell.classList.add("flex-grow");
-        this.songscell.id = "SongList";
+        this.songscell    = new Element("div", ["flex-grow"], "SongList");
 
-        this.tagscell     = document.createElement("div");
-        this.tagscell.id  = "TagsCell";
-        this.tagscell.appendChild(this.genreview.GetHTMLElement());
-        this.tagscell.appendChild(this.subgenreview.GetHTMLElement());
+        this.tagscell     = new Element("div", ["hovpacity"], "TagsCell");
+        this.tagscell.AppendChild(this.genreview);
+        this.tagscell.AppendChild(this.subgenreview);
 
-        this.settingscell = document.createElement("div");
-        this.settingscell.appendChild(this.settings.GetHTMLElement());
+        this.settingscell = new Element("div")
+        this.settingscell.AppendChild(this.settings);
 
         // Create Album View Element
-        this.column1.appendChild(this.settingscell);
-        this.column1.appendChild(this.songscell);
-        this.column2.appendChild(this.tagscell);
+        this.column1.AppendChild(this.settingscell);
+        this.column1.AppendChild(this.songscell);
+        this.column2.AppendChild(this.tagscell);
+
+        this.currentalbumtags = null;
     }
 
 
@@ -101,7 +99,8 @@ class AlbumView extends MainView2
 
     UpdateInformation(MDBAlbum, MDBArtist, MDBTags, MDBCDs)
     {
-        let currentalbumid = mdbmodemanager.GetCurrentAlbumID();
+        let currentalbumid    = mdbmodemanager.GetCurrentAlbumID();
+        this.currentalbumtags = MDBTags;
 
         // Update Headline
         this.headline.UpdateInformation(MDBAlbum, MDBArtist)
@@ -119,9 +118,9 @@ class AlbumView extends MainView2
         // Update Settings
         this.colorselect     = new ColorSchemeSelection("audio", currentalbumid);
         this.artworkuploader = new ArtworkUploader(MDBArtist.name, MDBAlbum.name, MDBAlbum.id);
-        this.settings_color.innerHTML = "";
-        this.settings_color.appendChild(this.artworkuploader.GetHTMLElement());
-        this.settings_color.appendChild(this.colorselect.GetHTMLElement());
+        this.settings_color.RemoveChilds();
+        this.settings_color.AppendChild(this.artworkuploader.GetHTMLElement());
+        this.settings_color.AppendChild(this.colorselect.GetHTMLElement());
 
         this.settings_hide.SetState(MDBAlbum.hidden);
         this.settings_hide.SetHandler((state)=>
@@ -132,9 +131,12 @@ class AlbumView extends MainView2
 
         this.genreedit          = new TagListEdit("genre");
         this.subgenreedit       = new TagListEdit("subgenre");
-        this.settings_tags.innerHTML = "";
-        this.settings_tags.appendChild(this.genreedit.GetHTMLElement());
-        this.settings_tags.appendChild(this.subgenreedit.GetHTMLElement());
+        this.applytoall         = new TextButton("Approve", `Apply to ${this.CountUntaggedSongs()} Songs that have no Genre Tag`, ()=>{this.ApplyGenreSettingsToAllUntaggedSongs();},
+            "Tag all Songs of this Album with the albums Genre and Sub-Genre Tag, if the Songs are not tagged at all. Only approved album tags will be added. The new set song tags can be approved or discard by the user when the song gets played.");
+        this.settings_tags.RemoveChilds();
+        this.settings_tags.AppendChild(this.genreedit);
+        this.settings_tags.AppendChild(this.subgenreedit);
+        this.settings_tags.AppendChild(this.applytoall);
 
         this.settings.SelectTab(this.tagstabid);
         this.settings.Hide();
@@ -151,9 +153,59 @@ class AlbumView extends MainView2
 
 
 
+    ApplyGenreSettingsToAllUntaggedSongs()
+    {
+        // Get Genres and Sub-Genres
+        let albumgenres    = this.currentalbumtags.genres;
+        let albumsubgenres = this.currentalbumtags.subgenres;
+        let albumtags      = [...albumgenres, ...albumsubgenres];
+        
+        // For all song entries
+        for(let songid in this.songtiles)
+        {
+            let songgenres    = this.songtiles[songid].tags.genres;
+            let songsubgenres = this.songtiles[songid].tags.subgenres;
+            if(songgenres.length === 0 && songsubgenres.length === 0)
+            {
+                for(let tag of albumtags)
+                {
+                    let approval = tag.approval;
+                    let tagid    = tag.tagid;
+
+                    if(approval <= 0)
+                        continue;   // Not user approved. Only tag songs if the user is sure.
+
+                    MusicDB_Request("SetSongTag", "UpdateTags", 
+                        {songid:songid, tagid:tagid, approval:0, confidence:1.0});
+                }
+            }
+        }
+        return;
+    }
+
+
+
+    CountUntaggedSongs()
+    {
+        let counter = 0;
+        // For all song entries
+        for(let songid in this.songtiles)
+        {
+            let songgenres    = this.songtiles[songid].tags.genres;
+            let songsubgenres = this.songtiles[songid].tags.subgenres;
+            if(songgenres.length === 0 && songsubgenres.length === 0)
+            {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+
+
     UpdateSongList(MDBCDs)
     {
-        this.songscell.innerHTML = "";
+        this.songscell.RemoveChilds();
         this.songtiles = new Object();
 
         for(let cdnum in MDBCDs)
@@ -161,14 +213,18 @@ class AlbumView extends MainView2
             let MDBSongList = MDBCDs[cdnum];
 
             // If more than 1 CD, create a small headline
+            // Use this headline also for allowing adding the CD into the queue.
+            // The music ID for CDs is AlbumID.CDNum
             if(MDBCDs.length > 1)
             {
-                let headline = document.createElement("div");
-                headline.classList.add("smallfont");
-                headline.classList.add("hlcolor");
-                headline.classList.add("CDNumber");
-                headline.innerText = "CD " + (parseInt(cdnum) + 1);
-                this.songscell.appendChild(headline);
+                let cdname       = parseInt(cdnum) + 1;
+                let albumid      = MDBSongList[0].song["albumid"];
+                let headline     = new Draggable("div", ["smallfont", "hlcolor", "CDNumber"]);
+                let headlinetext = "CD " + cdname;
+                headline.SetInnerText(headlinetext);
+                headline.ConfigDraggable("CD", `${albumid}.${cdnum}`, "insert");
+                headline.BecomeDraggable();
+                this.songscell.AppendChild(headline);
             }
 
             // Create actual song list
@@ -180,8 +236,8 @@ class AlbumView extends MainView2
                 let songsettings = new SongSettings(MDBSong, MDBTags);
                 let songtile     = new SongEntryTile(MDBSong, MDBTags);
 
-                this.songscell.appendChild(songtile.GetHTMLElement());
-                this.songscell.appendChild(songsettings.GetHTMLElement());
+                this.songscell.AppendChild(songtile);
+                this.songscell.AppendChild(songsettings);
 
                 this.songtiles[songid] = new Object();
                 this.songtiles[songid].tile     = songtile;
@@ -207,7 +263,7 @@ class AlbumView extends MainView2
 
         // Update song tile
         newsongtile.SetRightClickCallback((event)=>{songsettings.ToggleVisibility(); event.preventDefault();});
-        this.songscell.replaceChild(newsongtile.GetHTMLElement(), oldsongtile.GetHTMLElement());
+        this.songscell.ReplaceChild(newsongtile, oldsongtile);
 
         // Update internal data
         this.songtiles[songid].tile = newsongtile;
@@ -222,7 +278,8 @@ class AlbumView extends MainView2
 
     UpdateTagInformation(MDBTags)
     {
-        let currentalbumid = mdbmodemanager.GetCurrentAlbumID();
+        let currentalbumid    = mdbmodemanager.GetCurrentAlbumID();
+        this.currentalbumtags = MDBTags;
 
         // Update existing tags
         this.genreedit.Update(   "album", currentalbumid, MDBTags);

@@ -62,15 +62,6 @@ class SVGIcon extends SVGBase
         let maskurl = `url("img/icons/${name}.svg");`;
         this.element.style.cssText = "mask: "+maskurl;
     }
-
-    Show()
-    {
-        this.element.style.display = "block";
-    }
-    Hide()
-    {
-        this.element.style.display = "none";
-    }
 }
 
 

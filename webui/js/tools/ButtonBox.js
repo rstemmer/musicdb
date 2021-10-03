@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,21 +16,11 @@
 
 "use strict";
 
-class ButtonBox
+class ButtonBox extends Element
 {
     constructor()
     {
-        this.element = document.createElement("div");
-        this.element.classList.add("ButtonBox");
-        this.element.classList.add("flex-row");
-        this.element.classList.add("hovpacity");
-    }
-
-
-
-    GetHTMLElement()
-    {
-        return this.element;
+        super("div", ["ButtonBox", "flex-row", "hovpacity"]);
     }
 
 
@@ -39,50 +29,110 @@ class ButtonBox
     {
         if(tooltip !== null)
             svgbutton.SetTooltip(tooltip);
-        this.element.appendChild(svgbutton.GetHTMLElement());
+        this.AppendChild(svgbutton.GetHTMLElement());
     }
 }
 
 
-class ButtonBox_AddVideoToQueue extends ButtonBox
+class ButtonBox_AddMusicToQueue extends ButtonBox
 {
-    constructor(videoid)
+    // musictype: "song", "video"
+    constructor(musictype, musicid)
     {
         super();
-        this.videoid = videoid;
-        this.AddButton(new SVGButton("Append", ()=>{this.AddVideoToQueue("last");}), "Append this video on the queue");
-        this.AddButton(new SVGButton("Insert", ()=>{this.AddVideoToQueue("next");}), "Insert this video into the queue after current playing song");
+        this.musicid   = musicid;
+        this.musictype = musictype;
+
+        this.appendbutton = new SVGButton("Append", ()=>{this._AddMusicToQueue("last");});
+        this.insertbutton = new SVGButton("Insert", ()=>{this._AddMusicToQueue("next");});
+        this.AddButton(this.appendbutton, `Append this ${this.musictype} on the queue`);
+        this.AddButton(this.insertbutton, `Insert this ${this.musictype} into the queue after current playing ${this.musictype}`);
     }
 
 
-    AddVideoToQueue(position)
+    _AddMusicToQueue(position)
     {
-        event.preventDefault();
-        event.stopPropagation();
-        MusicDB_Call("AddVideoToQueue", {videoid: this.videoid, position: position});
-    }
-}
-
-
-
-class ButtonBox_AddSongToQueue extends ButtonBox
-{
-    constructor(songid)
-    {
-        super();
-        this.songid = songid;
-        this.AddButton(new SVGButton("Append", ()=>{this.AddSongToQueue("last");}), "Append this song on the queue");
-        this.AddButton(new SVGButton("Insert", ()=>{this.AddSongToQueue("next");}), "Insert this song into the queue after current playing song");
+        queueview.AddFakeEntry(this.musictype, position);
+        this.AddMusicToQueue(position);
     }
 
-
-    AddSongToQueue(position)
+    AddMusicToQueue(position)
     {
         event.preventDefault();
         //event.stopPropagation();
         // The onClick event must be propagated to the Search Result Preview
         // so that the preview recognizes an action an can close itself.
-        MusicDB_Call("AddSongToQueue", {songid: this.songid, position: position});
+        if(this.musictype == "song")
+            MusicDB_Call("AddSongToQueue", {songid: this.musicid, position: position});
+        else
+            MusicDB_Call("AddVideoToQueue", {videoid: this.videoid, position: position});
+    }
+}
+
+
+class ButtonBox_AddVideoToQueue extends ButtonBox_AddMusicToQueue
+{
+    constructor(videoid)
+    {
+        super("video", videoid);
+    }
+}
+
+
+
+class ButtonBox_AddSongToQueue extends ButtonBox_AddMusicToQueue
+{
+    constructor(songid)
+    {
+        super("song", songid);
+    }
+}
+
+
+
+class ButtonBox_QueueControls extends ButtonBox_AddMusicToQueue
+{
+    constructor()
+    {
+        super();
+        this.UpdateTooltips();
+    }
+
+
+
+    AddMusicToQueue(position)
+    {
+        let musicdbmode = mdbmodemanager.GetCurrentMode();
+        let command     = null;
+        if(musicdbmode == "audio")
+        {
+            command = "AddRandomSongToQueue";
+        }
+        else if(musicdbmode == "video")
+        {
+            command = "AddRandomVideoToQueue";
+        }
+
+        MusicDB_Call(command, {position: position});
+        return;
+    }
+
+
+
+    UpdateTooltips()
+    {
+        let musicdbmode = mdbmodemanager.GetCurrentMode();
+        if(musicdbmode == "audio")
+        {
+            this.appendbutton.SetTooltip("Add random song to the queue end");
+            this.insertbutton.SetTooltip("Add random song to the queue begin");
+        }
+        else if(musicdbmode == "video")
+        {
+            this.appendbutton.SetTooltip("Add random video to the queue end");
+            this.insertbutton.SetTooltip("Add random video to the queue begin");
+        }
+        return;
     }
 }
 
@@ -114,9 +164,10 @@ class ButtonBox_RelationControl extends ButtonBox
 
 class ButtonBox_QueueEntryControls extends ButtonBox
 {
-    constructor(musictype, musicid, entryid)
+    constructor(musictype, musicid, entryid, onremove=undefined)
     {
         super();
+        this.SetOnRemoveCallback(onremove);
 
         if(musictype == "audio")
         {
@@ -130,71 +181,29 @@ class ButtonBox_QueueEntryControls extends ButtonBox
     }
 
 
+    SetOnRemoveCallback(onremove)
+    {
+        this.onremove = onremove;
+    }
+
+
     GetSongRelationship(musicid)
     {
         MusicDB_Request("GetSongRelationship", "ShowSongRelationship", {songid: musicid});
     }
     RemoveSongFromQueue(entryid)
     {
+        if(typeof this.onremove === "function")
+            this.onremove();
         MusicDB_Call("RemoveSongFromQueue", {entryid: entryid});
     }
     RemoveVideoFromQueue(entryid)
     {
+        if(typeof this.onremove === "function")
+            this.onremove();
         MusicDB_Call("RemoveVideoFromQueue", {entryid: entryid});
     }
 
-}
-
-
-
-class ButtonBox_QueueControls extends ButtonBox
-{
-    constructor()
-    {
-        super();
-
-        this.addlast = new SVGButton("Add",    ()=>{this.AddRandomMusic("last");});
-        this.addnext = new SVGButton("Insert", ()=>{this.AddRandomMusic("next");});
-        this.AddButton(this.addlast);
-        this.AddButton(this.addnext);
-    }
-
-
-
-    AddRandomMusic(position)
-    {
-        let musictype = mdbmodemanager.GetCurrentMode();
-        let command   = null;
-        if(musictype == "audio")
-        {
-            command = "AddRandomSongToQueue";
-        }
-        else if(musictype == "video")
-        {
-            command = "AddRandomVideoToQueue";
-        }
-
-        MusicDB_Call(command, {position: position});
-        return;
-    }
-
-
-
-    UpdateTooltips()
-    {
-        let musictype = mdbmodemanager.GetCurrentMode();
-        if(musictype == "audio")
-        {
-            this.addlast.SetTooltip("Add random song to the queue end");
-            this.addnext.SetTooltip("Add random song to the queue begin");
-        }
-        else if(musictype == "video")
-        {
-            this.addlast.SetTooltip("Add random video to the queue end");
-            this.addnext.SetTooltip("Add random video to the queue begin");
-        }
-        return;
-    }
 }
 
 // vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

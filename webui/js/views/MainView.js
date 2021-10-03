@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ class MainView extends Element
         super("div", ["MainView", "flex-column"], id);
         this.headline   = headline
         if(this.headline != null)
-            this.element.appendChild(this.headline.GetHTMLElement());
+            this.AppendChild(this.headline);
 
         this.UnlockView();
     }
@@ -80,34 +80,29 @@ class MainView2 extends MainView
     {
         super(id, headline);
         // reset settings from base class
-        this.element.innerHTML = "";    
-        this.element.classList.remove("flex-column");
-        this.element.classList.add("flex-row");
+        this.RemoveChilds();
+        this.RemoveCSSClass("flex-column");
+        this.AddCSSClass("flex-row");
 
         this.artwork = artwork;
-        this.artwork.GetHTMLElement().classList.add("MainArtwork");
+        this.artwork.AddCSSClass("MainArtwork");
 
-        this.column1 = document.createElement("div");
-        this.column1.classList.add("column1");
-        this.column1.classList.add("flex-column");
-        this.column1.classList.add("flex-grow");
-        this.column2 = document.createElement("div");
-        this.column2.classList.add("column2");
-        this.column2.classList.add("flex-column");
+        this.column1 = new Element("div", ["column1", "flex-column", "flex-grow"]);
+        this.column2 = new Element("div", ["column2", "flex-column"]);
 
-        this.column1.appendChild(this.headline.GetHTMLElement());
-        this.column2.appendChild(this.artwork.GetHTMLElement());
-        this.element.appendChild(this.column1);
-        this.element.appendChild(this.column2);
+        this.column1.AppendChild(this.headline);
+        this.column2.AppendChild(this.artwork);
+        this.AppendChild(this.column1);
+        this.AppendChild(this.column2);
     }
 
 
 
     ReplaceArtwork(newartwork)
     {
-        this.column2.replaceChild(newartwork.GetHTMLElement(), this.artwork.GetHTMLElement());
+        this.column2.ReplaceChild(newartwork, this.artwork);
         this.artwork = newartwork;
-        this.artwork.GetHTMLElement().classList.add("MainArtwork");
+        this.artwork.AddCSSClass("MainArtwork");
         return;
     }
 }

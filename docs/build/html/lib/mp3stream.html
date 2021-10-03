@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>MP3 Stream Interface &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,15 +670,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-lib.stream.mp3stream">
+  <section id="module-lib.stream.mp3stream">
 <span id="mp3-stream-interface"></span><h1>MP3 Stream Interface<a class="headerlink" href="#module-lib.stream.mp3stream" title="Permalink to this headline">¶</a></h1>
 <p>This module provides a class to read any audio file and provide it as mp3 frames.
 Transcoding is done by the <a class="reference internal" href="mp3transcoder.html"><span class="doc">MP3 Transcoder</span></a> module.</p>
-<div class="section" id="mp3stream-class">
+<section id="mp3stream-class">
 <h2>MP3Stream Class<a class="headerlink" href="#mp3stream-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="lib.stream.mp3stream.MP3Stream">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.stream.mp3stream.</span></code><code class="sig-name descname"><span class="pre">MP3Stream</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3stream.html#MP3Stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3stream.MP3Stream" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.stream.mp3stream.MP3Stream">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.stream.mp3stream.</span></span><span class="sig-name descname"><span class="pre">MP3Stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3stream.html#MP3Stream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3stream.MP3Stream" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class allows frame wise access to mp3 frames generated from an valid audio file by transcoding it.
 See <a class="reference internal" href="mp3transcoder.html"><span class="doc">MP3 Transcoder</span></a> for more details about the transcoding process.
 The frame wise access can be done by the <a class="reference internal" href="#lib.stream.mp3stream.MP3Stream.Frames" title="lib.stream.mp3stream.MP3Stream.Frames"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Frames()</span></code></a> generator.
@@ -692,8 +697,8 @@ Beside the mp3 frames the generator returns lots of information extracted from t
 </pre></div>
 </div>
 <dl class="py method">
-<dt id="lib.stream.mp3stream.MP3Stream.AnalyzeHeader">
-<code class="sig-name descname"><span class="pre">AnalyzeHeader</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">header</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3stream.html#MP3Stream.AnalyzeHeader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3stream.MP3Stream.AnalyzeHeader" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.stream.mp3stream.MP3Stream.AnalyzeHeader">
+<span class="sig-name descname"><span class="pre">AnalyzeHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">header</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3stream.html#MP3Stream.AnalyzeHeader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3stream.MP3Stream.AnalyzeHeader" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method analyzes a MP3 Frame Header and returns all information that are implicit included in these 4 bytes.
 It is build for the internal use inside this class.</p>
 <p>Primary source for analyzing the header is <a class="reference external" href="http://mpgedit.org/mpgedit/mpeg_format/MP3Format.html">mpgedit.org (no HTTPS)</a>
@@ -764,8 +769,8 @@ The returned dictionary contains the following keys:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.stream.mp3stream.MP3Stream.Frames">
-<code class="sig-name descname"><span class="pre">Frames</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3stream.html#MP3Stream.Frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3stream.MP3Stream.Frames" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.stream.mp3stream.MP3Stream.Frames">
+<span class="sig-name descname"><span class="pre">Frames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/stream/mp3stream.html#MP3Stream.Frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.stream.mp3stream.MP3Stream.Frames" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a generator that returns a mp3 frame each iteration.
 There will be no ID3 Tag or any other meta data.</p>
 <p>The returned dictionary contains the following information:</p>
@@ -818,8 +823,8 @@ This warning will only be printed once for each file.</p>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -864,6 +869,7 @@ This warning will only be printed once for each file.</p>
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

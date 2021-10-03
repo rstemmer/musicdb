@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Upload Management &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-mdbapi.uploadmanager">
+  <section id="module-mdbapi.uploadmanager">
 <span id="upload-management"></span><h1>Upload Management<a class="headerlink" href="#module-mdbapi.uploadmanager" title="Permalink to this headline">¶</a></h1>
 <p>The communication is handled via notification to allow continuing uploading even when the connection gets lost in the meanwhile.</p>
 <p>The upload is performed chunk-wise.
@@ -696,11 +701,11 @@ the Management Thread takes care about post processing or removing no longer nee
 <p>The upload manager also takes care about the validity of the uploaded file (via SHA-1 checksum).</p>
 <p>The task state is persistently stored inside the uploads directory within a JSON file in a <em>tasks</em> sub-directory.
 The file name is the task ID (equivalent to the Upload ID) + <code class="docutils literal notranslate"><span class="pre">.json</span></code>.</p>
-<div class="section" id="uploadmanager-class">
+<section id="uploadmanager-class">
 <h2>UploadManager Class<a class="headerlink" href="#uploadmanager-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="mdbapi.uploadmanager.UploadManager">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.uploadmanager.</span></code><code class="sig-name descname"><span class="pre">UploadManager</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mdbapi.uploadmanager.</span></span><span class="sig-name descname"><span class="pre">UploadManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class manages uploading content to the server MusicDB runs on.
 All data is stored in the uploads-directory configured in the MusicDB configuration.</p>
 <dl class="field-list simple">
@@ -715,8 +720,8 @@ All data is stored in the uploads-directory configured in the MusicDB configurat
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.AnnotateUpload">
-<code class="sig-name descname"><span class="pre">AnnotateUpload</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uploadid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.AnnotateUpload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.AnnotateUpload" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.AnnotateUpload">
+<span class="sig-name descname"><span class="pre">AnnotateUpload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uploadid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.AnnotateUpload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.AnnotateUpload" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to add additional information to an upload.
 This can be done during or after the upload process.</p>
 <dl class="field-list simple">
@@ -736,8 +741,8 @@ This can be done during or after the upload process.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.GetTaskByID">
-<code class="sig-name descname"><span class="pre">GetTaskByID</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uploadid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.GetTaskByID"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.GetTaskByID" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.GetTaskByID">
+<span class="sig-name descname"><span class="pre">GetTaskByID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uploadid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.GetTaskByID"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.GetTaskByID" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns an existing task from the tasklist.
 The task gets identified by its ID aka Upload ID</p>
 <p>When the task does not exits, the clients get an <code class="docutils literal notranslate"><span class="pre">&quot;InternalError&quot;</span></code> notification.
@@ -759,8 +764,8 @@ The tasks state is then <code class="docutils literal notranslate"><span class="
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.GetTasks">
-<code class="sig-name descname"><span class="pre">GetTasks</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.GetTasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.GetTasks" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.GetTasks">
+<span class="sig-name descname"><span class="pre">GetTasks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.GetTasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.GetTasks" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The dictionary with all upload tasks</p>
@@ -769,8 +774,8 @@ The tasks state is then <code class="docutils literal notranslate"><span class="
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.ImportArtwork">
-<code class="sig-name descname"><span class="pre">ImportArtwork</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.ImportArtwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.ImportArtwork" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.ImportArtwork">
+<span class="sig-name descname"><span class="pre">ImportArtwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.ImportArtwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.ImportArtwork" title="Permalink to this definition">¶</a></dt>
 <dd><p>Task state must be <code class="docutils literal notranslate"><span class="pre">&quot;startimport&quot;</span></code> and content type must be <code class="docutils literal notranslate"><span class="pre">&quot;artwork&quot;</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -780,8 +785,8 @@ The tasks state is then <code class="docutils literal notranslate"><span class="
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.ImportVideo">
-<code class="sig-name descname"><span class="pre">ImportVideo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.ImportVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.ImportVideo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.ImportVideo">
+<span class="sig-name descname"><span class="pre">ImportVideo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.ImportVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.ImportVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Task state must be <code class="docutils literal notranslate"><span class="pre">&quot;startimport&quot;</span></code> and content type must be <code class="docutils literal notranslate"><span class="pre">&quot;video&quot;</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -791,8 +796,8 @@ The tasks state is then <code class="docutils literal notranslate"><span class="
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.ImportVideoArtwork">
-<code class="sig-name descname"><span class="pre">ImportVideoArtwork</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.ImportVideoArtwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.ImportVideoArtwork" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.ImportVideoArtwork">
+<span class="sig-name descname"><span class="pre">ImportVideoArtwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.ImportVideoArtwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.ImportVideoArtwork" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> on success</p>
@@ -801,8 +806,8 @@ The tasks state is then <code class="docutils literal notranslate"><span class="
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.InitiateUpload">
-<code class="sig-name descname"><span class="pre">InitiateUpload</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uploadid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mimetype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contenttype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filesize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checksum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sourcefilename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.InitiateUpload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.InitiateUpload" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.InitiateUpload">
+<span class="sig-name descname"><span class="pre">InitiateUpload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uploadid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mimetype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contenttype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filesize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checksum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sourcefilename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.InitiateUpload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.InitiateUpload" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initiates an upload of a file into a MusicDB managed file space.
 After calling this method, a notification gets triggered to request the first chunk of data from the clients.
 In case uploads are deactivated in the MusicDB Configuration, an <code class="docutils literal notranslate"><span class="pre">&quot;InternalError&quot;</span></code> Notification gets sent to the clients.</p>
@@ -827,8 +832,8 @@ In case uploads are deactivated in the MusicDB Configuration, an <code class="do
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.IntegrateUploadedFile">
-<code class="sig-name descname"><span class="pre">IntegrateUploadedFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uploadid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">triggerimport</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.IntegrateUploadedFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.IntegrateUploadedFile" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.IntegrateUploadedFile">
+<span class="sig-name descname"><span class="pre">IntegrateUploadedFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uploadid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">triggerimport</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.IntegrateUploadedFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.IntegrateUploadedFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method integrated the uploaded files into the music directory.
 The whole file tree will be created following the MusicDB naming scheme.</p>
 <p>The upload task must be in <code class="docutils literal notranslate"><span class="pre">preprocesses</span></code> state. If not, nothing happens.</p>
@@ -851,14 +856,14 @@ This happens asynchronously inside the Upload Manager Thread.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.IntegrateVideo">
-<code class="sig-name descname"><span class="pre">IntegrateVideo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.IntegrateVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.IntegrateVideo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.IntegrateVideo">
+<span class="sig-name descname"><span class="pre">IntegrateVideo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.IntegrateVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.IntegrateVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>When an annotation needed for creating the video file path in the music directory is missing, <code class="docutils literal notranslate"><span class="pre">False</span></code> gets returned and an error message written into the log</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.LoadTasks">
-<code class="sig-name descname"><span class="pre">LoadTasks</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.LoadTasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.LoadTasks" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.LoadTasks">
+<span class="sig-name descname"><span class="pre">LoadTasks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.LoadTasks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.LoadTasks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads all task from the JSON files inside the tasks-directory.
 The list of active tasks will be replaced by the loaded tasks.</p>
 <dl class="field-list simple">
@@ -869,8 +874,8 @@ The list of active tasks will be replaced by the loaded tasks.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.NewChunk">
-<code class="sig-name descname"><span class="pre">NewChunk</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uploadid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rawdata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.NewChunk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.NewChunk" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.NewChunk">
+<span class="sig-name descname"><span class="pre">NewChunk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uploadid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rawdata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.NewChunk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.NewChunk" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method processes a new chunk received from the uploading client.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -889,8 +894,8 @@ The list of active tasks will be replaced by the loaded tasks.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.NotifyClient">
-<code class="sig-name descname"><span class="pre">NotifyClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notification</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.NotifyClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.NotifyClient" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.NotifyClient">
+<span class="sig-name descname"><span class="pre">NotifyClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notification</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.NotifyClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.NotifyClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method triggers a client-notification.</p>
 <p>There are three kind of notifications:</p>
 <blockquote>
@@ -932,8 +937,8 @@ This includes the following keys - independent of the state of the upload:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.PreProcessArtwork">
-<code class="sig-name descname"><span class="pre">PreProcessArtwork</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.PreProcessArtwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.PreProcessArtwork" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.PreProcessArtwork">
+<span class="sig-name descname"><span class="pre">PreProcessArtwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.PreProcessArtwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.PreProcessArtwork" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>task</strong> (<em>dict</em>) – the task object of an upload-task</p>
@@ -942,8 +947,8 @@ This includes the following keys - independent of the state of the upload:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.PreProcessUploadedFile">
-<code class="sig-name descname"><span class="pre">PreProcessUploadedFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.PreProcessUploadedFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.PreProcessUploadedFile" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.PreProcessUploadedFile">
+<span class="sig-name descname"><span class="pre">PreProcessUploadedFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.PreProcessUploadedFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.PreProcessUploadedFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method initiates pre-processing of an uploaded file.
 Depending on the <em>contenttype</em> different post processing methods are called:</p>
 <blockquote>
@@ -966,8 +971,8 @@ When an error occurred, the state will become <code class="docutils literal notr
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.PreProcessVideo">
-<code class="sig-name descname"><span class="pre">PreProcessVideo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.PreProcessVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.PreProcessVideo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.PreProcessVideo">
+<span class="sig-name descname"><span class="pre">PreProcessVideo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.PreProcessVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.PreProcessVideo" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>task</strong> (<em>dict</em>) – the task object of an upload-task</p>
@@ -976,8 +981,8 @@ When an error occurred, the state will become <code class="docutils literal notr
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.RegisterCallback">
-<code class="sig-name descname"><span class="pre">RegisterCallback</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.RegisterCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.RegisterCallback" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.RegisterCallback">
+<span class="sig-name descname"><span class="pre">RegisterCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.RegisterCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.RegisterCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a callback function that reacts on Upload related events.
 For more details see the module description at the top of this document.</p>
 <dl class="field-list simple">
@@ -991,8 +996,8 @@ For more details see the module description at the top of this document.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.RemoveCallback">
-<code class="sig-name descname"><span class="pre">RemoveCallback</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.RemoveCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.RemoveCallback" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.RemoveCallback">
+<span class="sig-name descname"><span class="pre">RemoveCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.RemoveCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.RemoveCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a function from the list of callback functions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1005,14 +1010,14 @@ For more details see the module description at the top of this document.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.RemoveTask">
-<code class="sig-name descname"><span class="pre">RemoveTask</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.RemoveTask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.RemoveTask" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.RemoveTask">
+<span class="sig-name descname"><span class="pre">RemoveTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.RemoveTask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.RemoveTask" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal notranslate"><span class="pre">tasks/${Task</span> <span class="pre">ID}.json</span></code></p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.RequestRemoveUpload">
-<code class="sig-name descname"><span class="pre">RequestRemoveUpload</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uploadid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.RequestRemoveUpload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.RequestRemoveUpload" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.RequestRemoveUpload">
+<span class="sig-name descname"><span class="pre">RequestRemoveUpload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uploadid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.RequestRemoveUpload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.RequestRemoveUpload" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method triggers removing a specific upload.
 This includes the uploaded file as well as the upload task information and annotations.</p>
 <p>The upload task can be in any state.
@@ -1029,8 +1034,8 @@ When the remove-operation is triggered, its state gets changed to <code class="d
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.SaveTask">
-<code class="sig-name descname"><span class="pre">SaveTask</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.SaveTask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.SaveTask" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.SaveTask">
+<span class="sig-name descname"><span class="pre">SaveTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.SaveTask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.SaveTask" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method saves a task in the uploads directory under <code class="docutils literal notranslate"><span class="pre">tasks/${Task</span> <span class="pre">ID}.json</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1043,8 +1048,8 @@ When the remove-operation is triggered, its state gets changed to <code class="d
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.UpdateTaskState">
-<code class="sig-name descname"><span class="pre">UpdateTaskState</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errormessage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.UpdateTaskState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.UpdateTaskState" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.UpdateTaskState">
+<span class="sig-name descname"><span class="pre">UpdateTaskState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errormessage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.UpdateTaskState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.UpdateTaskState" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates and saves the state of an task.
 An <code class="docutils literal notranslate"><span class="pre">&quot;StateUpdate&quot;</span></code> notification gets send as well.</p>
 <p>If <em>errormessage</em> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, the notification gets send as <code class="docutils literal notranslate"><span class="pre">&quot;InternalError&quot;</span></code> with the message</p>
@@ -1063,8 +1068,8 @@ An <code class="docutils literal notranslate"><span class="pre">&quot;StateUpdat
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.uploadmanager.UploadManager.UploadCompleted">
-<code class="sig-name descname"><span class="pre">UploadCompleted</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.UploadCompleted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.UploadCompleted" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.uploadmanager.UploadManager.UploadCompleted">
+<span class="sig-name descname"><span class="pre">UploadCompleted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/uploadmanager.html#UploadManager.UploadCompleted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.uploadmanager.UploadManager.UploadCompleted" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method continues the file management after an upload was completed.
 The following tasks were performed:</p>
 <blockquote>
@@ -1086,8 +1091,8 @@ Otherwise with a <code class="docutils literal notranslate"><span class="pre">&q
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -1132,6 +1137,7 @@ Otherwise with a <code class="docutils literal notranslate"><span class="pre">&q
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

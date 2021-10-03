@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>lib.ws.mdbwsi &mdash; MusicDB 7.0.0 documentation</title>
+  <title>lib.ws.mdbwsi &mdash; MusicDB 7.1.0 documentation</title>
   
 
   
@@ -30,6 +30,10 @@
   
 
   
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   
 
@@ -37,7 +41,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="MusicDB 7.0.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="MusicDB 7.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -67,7 +71,7 @@
             
             
               <div class="version">
-                7.0
+                7.1
               </div>
             
           
@@ -91,7 +95,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -222,7 +226,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -278,7 +282,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mod/add.html#select-album">Select Album</a></li>
@@ -335,7 +339,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../mdbapi/artwork.html#database">Database</a></li>
@@ -452,7 +456,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -564,7 +568,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -578,7 +582,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -1009,7 +1013,10 @@
             <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;broadcast&quot;</span>
             <span class="n">fncname</span><span class="o">=</span> <span class="s2">&quot;GetMDBState&quot;</span>
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;SetSongTag&quot;</span><span class="p">:</span>
-            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SetSongTag</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;tagid&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s2">&quot;approval&quot;</span> <span class="ow">in</span> <span class="n">args</span> <span class="ow">and</span> <span class="s2">&quot;confidence&quot;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+                <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SetSongTag</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;tagid&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;approval&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;confidence&quot;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SetSongTag</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;tagid&quot;</span><span class="p">])</span>
             <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSong</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;songid&quot;</span><span class="p">])</span>
             <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;broadcast&quot;</span>
             <span class="n">fncname</span><span class="o">=</span> <span class="s2">&quot;GetSong&quot;</span>
@@ -1093,7 +1100,10 @@
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;AddRandomVideoToQueue&quot;</span><span class="p">:</span>
             <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddRandomVideoToQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;AddAlbumToQueue&quot;</span><span class="p">:</span>
-            <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddAlbumToQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s2">&quot;cd&quot;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+                <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddAlbumToQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;cd&quot;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddAlbumToQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">fncname</span> <span class="o">==</span> <span class="s2">&quot;AddRandomSongToQueue&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="s2">&quot;albumid&quot;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
                 <span class="n">retval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AddRandomSongToQueue</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;albumid&quot;</span><span class="p">])</span>
@@ -2890,9 +2900,13 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="MusicDBWebSocketInterface.AddAlbumToQueue"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue">[docs]</a>    <span class="k">def</span> <span class="nf">AddAlbumToQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+<div class="viewcode-block" id="MusicDBWebSocketInterface.AddAlbumToQueue"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.AddAlbumToQueue">[docs]</a>    <span class="k">def</span> <span class="nf">AddAlbumToQueue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">albumid</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">cd</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This method adds all songs of an album (from all CDs) at the end of the queue.</span>
+<span class="sd">        This method adds all songs of an album at any position of the queue.</span>
+
+<span class="sd">        If *cd* is ``None`` (or not given), all songs of all CDs are added to the queue.</span>
+<span class="sd">        If *cd* is an integer, it limits the CD that will be added.</span>
+<span class="sd">        The CD number starts with ``0`` for the first CD of an album.</span>
 
 <span class="sd">        The position can be ``&quot;next&quot;`` if the songs shall be placed behind the current playing song.</span>
 <span class="sd">        So, all new added songs will be played next.</span>
@@ -2905,6 +2919,7 @@
 <span class="sd">        Args:</span>
 <span class="sd">            albumid (int): ID of the album that shall be added</span>
 <span class="sd">            position (str/int): ``&quot;next&quot;``, ``&quot;last&quot;`` or Song-Queue Entry ID - Determines where the songs get added</span>
+<span class="sd">            cd (None/int): (Optional) Only this CD of the album should be added to the queue. Starting with ``0`` for the first CD of an album.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ``None``</span>
@@ -2913,6 +2928,8 @@
 <span class="sd">            .. code-block:: javascript</span>
 
 <span class="sd">                MusicDB_Call(&quot;AddAlbumToQueue&quot;, {albumid:23});</span>
+<span class="sd">                MusicDB_Call(&quot;AddAlbumToQueue&quot;, {albumid:42, position:&quot;next&quot;});</span>
+<span class="sd">                MusicDB_Call(&quot;AddAlbumToQueue&quot;, {albumid:13, position:&quot;last&quot;, cd=1});</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
@@ -2925,6 +2942,15 @@
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">sortedcds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GetSortedAlbumCDs</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span>
+
+        <span class="c1"># If there shall be only a specific CD added, limit sortedcds to that specific one</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cd</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sortedcds</span><span class="p">):</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;CD index to select is larger than available CDs. Given was CD </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">, available are </span><span class="se">\&quot;</span><span class="si">%i</span><span class="se">\&quot;</span><span class="s2"> CDs. </span><span class="se">\033</span><span class="s2">[1;30m(Doing nothing)&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">cd</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">sortedcds</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">sortedcds</span> <span class="o">=</span> <span class="p">[</span><span class="n">sortedcds</span><span class="p">[</span><span class="n">cd</span><span class="p">],</span> <span class="p">]</span>
+
+        <span class="c1"># Insert all CDs song-vise into to queue</span>
         <span class="k">for</span> <span class="n">cd</span> <span class="ow">in</span> <span class="n">sortedcds</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">cd</span><span class="p">:</span>
                 <span class="n">song</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;song&quot;</span><span class="p">]</span>
@@ -3613,11 +3639,13 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="MusicDBWebSocketInterface.SetSongTag"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag">[docs]</a>    <span class="k">def</span> <span class="nf">SetSongTag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">tagid</span><span class="p">):</span>
+<div class="viewcode-block" id="MusicDBWebSocketInterface.SetSongTag"><a class="viewcode-back" href="../../../basics/webapi.html#lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongTag">[docs]</a>    <span class="k">def</span> <span class="nf">SetSongTag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">tagid</span><span class="p">,</span> <span class="n">approval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets a tag for a song.</span>
-<span class="sd">        This method sets the approval-level to 1 (Set by User) and confidence to 1.0 for this tag.</span>
+<span class="sd">        This method sets the approval-level to 1 (Set by User) and confidence to 1.0 for this tag by default.</span>
 <span class="sd">        So, this method can also be used to approve an AI set tag.</span>
+
+<span class="sd">        It is also possible to set a &quot;guesses&quot; tag by setting ``approval`` to ``0`` and ``confidence`` to a value less that ``1.0``.</span>
 
 <span class="sd">        If tagging is disabled nothing will be done. </span>
 
@@ -3632,6 +3660,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            songid (int): ID of the song</span>
 <span class="sd">            tagid (int): ID of the tag</span>
+<span class="sd">            apprival (int): (optional) ``0``: for &quot;just a guess&quot;, not approved. ``1``: Approved by the user.</span>
+<span class="sd">            confidence (float): (optional) A value between ``0.0`` and ``1.0`` representing the confidence that an none-approved tag is valid.</span>
 
 <span class="sd">        Return:</span>
 <span class="sd">            ``None``</span>
@@ -3640,6 +3670,10 @@
 <span class="sd">            .. code-block:: javascript</span>
 
 <span class="sd">                MusicDB_Call(&quot;SetSongTag&quot;, {songid:songid, tagid:tagid});</span>
+
+<span class="sd">            .. code-block:: javascript</span>
+
+<span class="sd">                MusicDB_Call(&quot;SetSongTag&quot;, {songid:songid, tagid:tagid, approval:0, confidence:0.5});</span>
 
 <span class="sd">            .. code-block:: javascript</span>
 
@@ -3660,7 +3694,7 @@
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Changing tags disabled. </span><span class="se">\033</span><span class="s2">[1;33m!!&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">SetTargetTag</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">tagid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">SetTargetTag</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="n">songid</span><span class="p">,</span> <span class="n">tagid</span><span class="p">,</span> <span class="n">approval</span><span class="p">,</span> <span class="n">confidence</span><span class="p">)</span>
         <span class="n">albumid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">GetSongById</span><span class="p">(</span><span class="n">songid</span><span class="p">)[</span><span class="s2">&quot;albumid&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">DeriveAlbumTags</span><span class="p">(</span><span class="n">albumid</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
@@ -4240,7 +4274,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'7.0.0',
+            VERSION:'7.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
@@ -4248,6 +4282,7 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../../_static/doctools.js"></script>

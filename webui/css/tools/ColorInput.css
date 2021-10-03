@@ -45,6 +45,16 @@
     margin-left:        auto;
 }
 
+.ColorSchemeSelection .IndicatorBar
+{
+    margin-left:        2ch;
+    width:              50%;
+}
+.ColorSchemeSelection .IndicatorBar > .GradientBar
+{
+    width:              10ch;
+    height:             50%;
+}
 
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 

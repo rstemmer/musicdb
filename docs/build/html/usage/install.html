@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Installation &amp; Update &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="installation-update">
+  <section id="installation-update">
 <h1>Installation &amp; Update<a class="headerlink" href="#installation-update" title="Permalink to this headline">¶</a></h1>
 <p>The following sections describe how to install MusicDB and its dependencies.</p>
 <div class="admonition attention">
@@ -685,12 +690,12 @@ MusicDB does not support outdated dependencies.</p>
 <p>Before updating MusicDB <strong>backup the MusicDB Data directory</strong>.
 Major updates change the configuration file and the database scheme.</p>
 </div>
-<div class="section" id="installation-automatic">
+<section id="installation-automatic">
 <h2>Installation (Automatic)<a class="headerlink" href="#installation-automatic" title="Permalink to this headline">¶</a></h2>
 <p>To install MusicDB, there is a script <code class="docutils literal notranslate"><span class="pre">scripts/install.sh</span></code> that will help you.
 Execute this script from the scripts directory to install MusicDB.
 The following subsections explain how to install MusicDB using this script.</p>
-<div class="section" id="install-dependencies">
+<section id="install-dependencies">
 <h3>Install Dependencies<a class="headerlink" href="#install-dependencies" title="Permalink to this headline">¶</a></h3>
 <p>Execute the <code class="docutils literal notranslate"><span class="pre">check.sh</span></code> script to see what dependencies are missing.
 Install at least all mandatory (none optional) dependencies.
@@ -747,8 +752,8 @@ You can use your system package manager or pythons package manager <code class="
 <p>Execute <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code> to install a basic set of Python modules needed for MusicDB.
 I recommend to try to get the modules from the distributions package manager
 so that they are updated with each system update.</p>
-</div>
-<div class="section" id="additional-steps-for-ubuntu">
+</section>
+<section id="additional-steps-for-ubuntu">
 <h3>Additional Steps for Ubuntu<a class="headerlink" href="#additional-steps-for-ubuntu" title="Permalink to this headline">¶</a></h3>
 <p><strong>Important for Ubuntu users (and maybe Debian) only</strong></p>
 <p>Usually I do not support Ubuntu for several technical reasons.
@@ -764,8 +769,8 @@ apt install icecast2             <span class="c1"># Do not use the configuration
 pip3 install -r requirements.txt <span class="c1"># pip is called pip3 on Ubuntu</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="executing-the-install-sh-script">
+</section>
+<section id="executing-the-install-sh-script">
 <h3>Executing the install.sh Script<a class="headerlink" href="#executing-the-install-sh-script" title="Permalink to this headline">¶</a></h3>
 <p>Now you can simply execute the <code class="docutils literal notranslate"><span class="pre">install.sh</span></code> script from the scripts directory in the source directory,
 after you have cloned the <a class="reference external" href="https://github.com/rstemmer/musicdb">MusicDB git repository</a> from GitHub.</p>
@@ -817,15 +822,15 @@ For details on how the files are created, search inside the <code class="docutil
 After solving the problem you can just restart the install script.
 Make sure the settings are the same or still valid.
 The script always tries to determine the state of a single installation step and recognizes if it is already done.</p>
-</div>
-<div class="section" id="configuring-musicdb">
+</section>
+<section id="configuring-musicdb">
 <h3>Configuring MusicDB<a class="headerlink" href="#configuring-musicdb" title="Permalink to this headline">¶</a></h3>
 <p>To configure MusicDB edit the <code class="docutils literal notranslate"><span class="pre">musicdb.ini</span></code> file in the data directory (that is also linked to /etc/musicdb.ini).
 Furthermore you should check <code class="docutils literal notranslate"><span class="pre">icecast/config.xml</span></code> (also in MusicDB’s data directory) if those settings are what you want.
 Details are described in the following section.</p>
-</div>
-</div>
-<div class="section" id="configuring-musicdb-webui">
+</section>
+</section>
+<section id="configuring-musicdb-webui">
 <h2>Configuring MusicDB WebUI<a class="headerlink" href="#configuring-musicdb-webui" title="Permalink to this headline">¶</a></h2>
 <p>The WebUI configuration must be done inside the file <code class="docutils literal notranslate"><span class="pre">webui/config.js</span></code></p>
 <p>At the begin of this file, the variable <code class="docutils literal notranslate"><span class="pre">WEBSOCKET_URL</span></code> must be configured.
@@ -877,8 +882,8 @@ The update process saves the lines with the configuration and restores them afte
 </pre></div>
 </div>
 <p>When everything is correct, and the server is running, the WebUI can be reached via <code class="docutils literal notranslate"><span class="pre">http://localhost/musicdb/webui/moderator.html</span></code></p>
-</div>
-<div class="section" id="id1">
+</section>
+<section id="id1">
 <h2>Configuring MusicDB<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>MusicDB comes with good default settings.
 The passwords for accessing IceCast are auto-generated (<code class="docutils literal notranslate"><span class="pre">openssl</span> <span class="pre">rand</span> <span class="pre">-base64</span> <span class="pre">32</span></code>) during the installation process.
@@ -890,8 +895,8 @@ When everything is set up as you like, you may want to change the following sett
 <li><p>In /etc/musicdb.ini: <code class="docutils literal notranslate"><span class="pre">[websocket]-&gt;address</span> <span class="pre">=</span> <span class="pre">0.0.0.0</span></code></p></li>
 </ul>
 </div></blockquote>
-</div>
-<div class="section" id="first-run">
+</section>
+<section id="first-run">
 <h2>First Run<a class="headerlink" href="#first-run" title="Permalink to this headline">¶</a></h2>
 <p>For starting and stopping the MusicDB WebSocket Server and its dependent processes,
 the scripts described in <a class="reference internal" href="scripts.html"><span class="doc">Scripts</span></a> are recommended.</p>
@@ -900,13 +905,13 @@ the scripts described in <a class="reference internal" href="scripts.html"><span
 certificates are “good”.
 Open the WebSocket URL in the browser with <code class="docutils literal notranslate"><span class="pre">https</span></code> instead of <code class="docutils literal notranslate"><span class="pre">wss</span></code> and create an exception.
 So if your WebSocket address is <code class="docutils literal notranslate"><span class="pre">wss://localhost:9000</span></code> visit <cite>https://localhost:9000</cite>.</p>
-</div>
-<div class="section" id="update">
+</section>
+<section id="update">
 <h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
 <p>For updating, you can do following steps.
 Read the <em>Important News</em> of the README.md file for manual steps to do before updating to a new major release.
 Only execute the scripts as root, that are followed by the comment “as root”!</p>
-<div class="section" id="update-to-a-new-version">
+<section id="update-to-a-new-version">
 <h3>Update to a New Version<a class="headerlink" href="#update-to-a-new-version" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git checkout master <span class="c1"># Only install from master branch!</span>
 git pull
@@ -915,9 +920,9 @@ git pull
 ./update.sh <span class="c1"># as root</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="installation-manually">
+</section>
+</section>
+<section id="installation-manually">
 <h2>Installation (Manually)<a class="headerlink" href="#installation-manually" title="Permalink to this headline">¶</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1035,7 +1040,7 @@ See this section as an incomplete documentation of the internal installation pro
 </tbody>
 </table>
 <p>The following steps give an idea of how to install MusicDB.</p>
-<div class="section" id="system-preparation">
+<section id="system-preparation">
 <h3>System Preparation<a class="headerlink" href="#system-preparation" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
@@ -1058,8 +1063,8 @@ mkdir /data/musicdb <span class="o">&amp;&amp;</span> chown -R musicdb:musicdb /
 mkdir /data/music   <span class="o">&amp;&amp;</span> chown -R user:musicdb    /data/music
 </pre></div>
 </div>
-</div>
-<div class="section" id="id2">
+</section>
+<section id="id2">
 <h3>Install dependencies<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>Some:</p>
 <blockquote>
@@ -1093,8 +1098,8 @@ The following list gives you some details about the listed modules.</p>
 <p>On Debian the <code class="docutils literal notranslate"><span class="pre">python</span></code> command runs the ancient Python 2.
 Whenever this documentation is talking about Python, Python 3 is meant!</p>
 </div>
-</div>
-<div class="section" id="basic-packages">
+</section>
+<section id="basic-packages">
 <h3>Basic packages<a class="headerlink" href="#basic-packages" title="Permalink to this headline">¶</a></h3>
 <p>There are some external tools necessary.
 Furthermore there are lots of python packages needed.
@@ -1103,8 +1108,8 @@ You can use the <code class="docutils literal notranslate"><span class="pre">che
 It is only required by the <a class="reference internal" href="../mod/extern.html"><span class="doc">extern - Music File Uploader</span></a> module
 which is used to export the music collection onto an external storage device like an SD card
 or a Smartphone.</p>
-</div>
-<div class="section" id="download-musicdb">
+</section>
+<section id="download-musicdb">
 <h3>Download MusicDB<a class="headerlink" href="#download-musicdb" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># as user in ~/projects</span>
 git clone https://github.com/rstemmer/musicdb.git
@@ -1114,8 +1119,8 @@ git clone https://github.com/rstemmer/libprinthex.git
 git clone https://github.com/rstemmer/id3edit.git
 </pre></div>
 </div>
-</div>
-<div class="section" id="libprinthex">
+</section>
+<section id="libprinthex">
 <h3>libprinthex<a class="headerlink" href="#libprinthex" title="Permalink to this headline">¶</a></h3>
 <p>Since MusicDB 7.1.0 id3edit is optional. It is only required by the <a class="reference internal" href="../mod/extern.html"><span class="doc">extern - Music File Uploader</span></a> module.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> libprinthex
@@ -1123,8 +1128,8 @@ git clone https://github.com/rstemmer/id3edit.git
 ./install.sh
 </pre></div>
 </div>
-</div>
-<div class="section" id="id3">
+</section>
+<section id="id3">
 <h3>id3edit<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>Since MusicDB 7.1.0 id3edit is optional. It is only required by the <a class="reference internal" href="../mod/extern.html"><span class="doc">extern - Music File Uploader</span></a> module.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> id3edit
@@ -1132,8 +1137,8 @@ git clone https://github.com/rstemmer/id3edit.git
 ./install.sh
 </pre></div>
 </div>
-</div>
-<div class="section" id="musicdb">
+</section>
+<section id="musicdb">
 <h3>musicdb<a class="headerlink" href="#musicdb" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /srv/musicdb
 cp ~/projects/musicdb/update.sh .
@@ -1170,9 +1175,9 @@ touch debuglog.ansi <span class="o">&amp;&amp;</span> chown musicdb:musicdb debu
 cp ~/projects/musicdb/share/logrotate.conf /etc/logrotate.d/musicdb
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
@@ -1217,6 +1222,7 @@ cp ~/projects/musicdb/share/logrotate.conf /etc/logrotate.d/musicdb
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

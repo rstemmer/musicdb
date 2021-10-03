@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>genres - Genre Manager with CLUI &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,17 +670,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-mod.genres">
+  <section id="module-mod.genres">
 <span id="genres-genre-manager-with-clui"></span><h1>genres - Genre Manager with CLUI<a class="headerlink" href="#module-mod.genres" title="Permalink to this headline">¶</a></h1>
 <p>Execute <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">genres</span></code> to execute this module.
 This command runs a command line “GUI” to manage genre tags.
 Every change gets write to the database immediately.
 Press <code class="docutils literal notranslate"><span class="pre">Ctrl-D</span></code> to exit the tag manager.</p>
-<div class="section" id="managing-genres">
+<section id="managing-genres">
 <h2>Managing Genres<a class="headerlink" href="#managing-genres" title="Permalink to this headline">¶</a></h2>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="../_images/genres.png" src="../_images/genres.png" />
-</div>
+</figure>
 <p>After calling the <em>genres</em> module, the form shown on the screenshot above appears.
 There you can add, edit or remove main and sub genres.
 On the left side, a list of all available main genres gets shown.
@@ -691,11 +696,11 @@ For main genres, the position gets printed in gray color right to the name.</p>
 <p>This position indicates where the genre shall appear in lists in the WebUI.
 For main genres, it is the <em>Genre Select</em> box show in the screenshot below.
 Those positions are not mandatory and will be ignored for sub genres anyway.</p>
-<div class="figure align-default">
+<figure class="align-default">
 <img alt="../_images/genres-box.png" src="../_images/genres-box.png" />
-</div>
-</div>
-<div class="section" id="updating-caches">
+</figure>
+</section>
+<section id="updating-caches">
 <h2>Updating Caches<a class="headerlink" href="#updating-caches" title="Permalink to this headline">¶</a></h2>
 <p>Even if with each change the database gets updated, the WebSocket server and client many have outdated caches.
 To to propagate the changes on the genres to the server and clients, force an cache update writing <code class="docutils literal notranslate"><span class="pre">&quot;refresh&quot;</span></code> into MusicDBs fifo file.
@@ -706,8 +711,8 @@ The following command line shows how to do this with a default installation setu
 </pre></div>
 </div>
 </div></blockquote>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -752,6 +757,7 @@ The following command line shows how to do this with a default installation setu
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

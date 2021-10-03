@@ -30,20 +30,18 @@ class BaseAlbumTile extends Draggable
 
         this.artwork     = new AlbumArtwork(MDBAlbum, size);
 
-        this.metadata                 = document.createElement("div");
-        this.metadata.classList.add("smallfont");
+        this.metadata    = new Element("div", ["smallfont"]);
 
-        this.titleelement             = document.createElement("span");
-        this.titleelement.textContent = albumname;
-        this.titleelement.classList.add("fgcolor");
-        this.metadata.appendChild(this.titleelement);
+        this.titleelement= new Element("span", ["fgcolor"]);
+        this.titleelement.SetInnerText(albumname);
+        this.titleelement.SetTooltip(albumname);
+        this.metadata.AppendChild(this.titleelement);
 
         if(size == "medium")
         {
-            this.releaseelement           = document.createElement("span");
-            this.releaseelement.textContent=albumrelease
-            this.releaseelement.classList.add("hlcolor");
-            this.metadata.appendChild(this.releaseelement);
+            this.releaseelement = new Element("span", ["hlcolor"]);
+            this.releaseelement.SetInnerText(albumrelease);
+            this.metadata.AppendChild(this.releaseelement);
         }
 
         super.AppendChild(this.artwork);
@@ -53,6 +51,13 @@ class BaseAlbumTile extends Draggable
 
         this.ConfigDraggable("album", albumid, "insert", size); // Use size as ID-Prefix
         this.BecomeDraggable();
+    }
+
+
+
+    HideReleaseDate()
+    {
+        this.releaseelement.Hide();
     }
 }
 

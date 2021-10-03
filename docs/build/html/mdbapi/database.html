@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>MusicDBDatabase &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,15 +670,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-mdbapi.database">
+  <section id="module-mdbapi.database">
 <span id="musicdbdatabase"></span><h1>MusicDBDatabase<a class="headerlink" href="#module-mdbapi.database" title="Permalink to this headline">¶</a></h1>
 <p>This module is the core of the music handling of MusicDB.
 It is the interface between the music and its entries in the database (<a class="reference internal" href="../lib/musicdb.html#module-lib.db.musicdb" title="lib.db.musicdb"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lib.db.musicdb</span></code></a>).</p>
-<div class="section" id="musicdbdatabase-class">
+<section id="musicdbdatabase-class">
 <h2>MusicDBDatabase Class<a class="headerlink" href="#musicdbdatabase-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="mdbapi.database.MusicDBDatabase">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.database.</span></code><code class="sig-name descname"><span class="pre">MusicDBDatabase</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mdbapi.database.</span></span><span class="sig-name descname"><span class="pre">MusicDBDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class supports the following features</p>
 <blockquote>
 <div><ul class="simple">
@@ -726,8 +731,8 @@ It is the interface between the music and its entries in the database (<a class=
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.AddAlbum">
-<code class="sig-name descname"><span class="pre">AddAlbum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artistid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddAlbum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddAlbum" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.AddAlbum">
+<span class="sig-name descname"><span class="pre">AddAlbum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artistid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddAlbum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds an album to the database in the following steps:</p>
 <blockquote>
 <div><ol class="arabic simple">
@@ -768,8 +773,8 @@ It is save to add the failed song later by using the <a class="reference interna
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.AddArtist">
-<code class="sig-name descname"><span class="pre">AddArtist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddArtist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddArtist" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.AddArtist">
+<span class="sig-name descname"><span class="pre">AddArtist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddArtist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddArtist" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <em>AddArtist</em> method adds a new artist to the database.
 This is done in the following steps:</p>
 <blockquote>
@@ -799,8 +804,8 @@ This is done in the following steps:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.AddLyricsFromFile">
-<code class="sig-name descname"><span class="pre">AddLyricsFromFile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddLyricsFromFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddLyricsFromFile" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.AddLyricsFromFile">
+<span class="sig-name descname"><span class="pre">AddLyricsFromFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddLyricsFromFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddLyricsFromFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to add lyrics from the file of a song into the database.
 It tries to load the metadata from the song file.
 If that succeeds, the song entry gets loaded from the database and the lyrics state of that entry gets checked.
@@ -818,8 +823,8 @@ Otherwise the files lyrics get rejected.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.AddSong">
-<code class="sig-name descname"><span class="pre">AddSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artistid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.AddSong">
+<span class="sig-name descname"><span class="pre">AddSong</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artistid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albumid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds a song to the MusicDB database.
 To do so, the following steps were done:</p>
 <blockquote>
@@ -860,8 +865,8 @@ If album ID was <code class="docutils literal notranslate"><span class="pre">Non
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.AddVideo">
-<code class="sig-name descname"><span class="pre">AddVideo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videopath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artistid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddVideo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.AddVideo">
+<span class="sig-name descname"><span class="pre">AddVideo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videopath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artistid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AddVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AddVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method adds a video to the MusicDB database.
 To do so, the following steps were done:</p>
 <blockquote>
@@ -898,8 +903,8 @@ If not, an <code class="docutils literal notranslate"><span class="pre">Assertio
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.AnalysePath">
-<code class="sig-name descname"><span class="pre">AnalysePath</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AnalysePath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AnalysePath" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.AnalysePath">
+<span class="sig-name descname"><span class="pre">AnalysePath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.AnalysePath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.AnalysePath" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method analyses a path to a song or video and extracts all the information encoded in the path.
 The path must consist of three parts: The artist directory, the album directory and the song file.
 For videos only two parts are expected: The artist directory and the video file</p>
@@ -941,8 +946,8 @@ Otherwise <code class="docutils literal notranslate"><span class="pre">None</spa
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.FindLostPaths">
-<code class="sig-name descname"><span class="pre">FindLostPaths</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.FindLostPaths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.FindLostPaths" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.FindLostPaths">
+<span class="sig-name descname"><span class="pre">FindLostPaths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.FindLostPaths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.FindLostPaths" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks all artist, album and song entries if the paths to their related directories and files are still valid.
 Entries with invalid paths gets returned in three lists: <code class="docutils literal notranslate"><span class="pre">artists,</span> <span class="pre">albums,</span> <span class="pre">songs</span></code></p>
 <p>This method does not check if the song is cached in the Song Cache.</p>
@@ -954,8 +959,8 @@ Entries with invalid paths gets returned in three lists: <code class="docutils l
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.FindNewPaths">
-<code class="sig-name descname"><span class="pre">FindNewPaths</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.FindNewPaths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.FindNewPaths" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.FindNewPaths">
+<span class="sig-name descname"><span class="pre">FindNewPaths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.FindNewPaths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.FindNewPaths" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method searches inside the music directory for valid artist, album song and video paths.
 If those paths are not in the database, they will be returned.
 So this method returns four lists: artist-, album-, song-, and video- paths.
@@ -980,8 +985,8 @@ Each a list of paths that are valid but unknown by the database. Empty lists if 
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.FixAttributes">
-<code class="sig-name descname"><span class="pre">FixAttributes</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.FixAttributes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.FixAttributes" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.FixAttributes">
+<span class="sig-name descname"><span class="pre">FixAttributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.FixAttributes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.FixAttributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method changes the access permissions and ownership of a file or directory.
 Only the addressed files or directory’s permissions gets changed, not their parents.</p>
 <blockquote>
@@ -1005,8 +1010,8 @@ Only the addressed files or directory’s permissions gets changed, not their pa
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.RemoveAlbum">
-<code class="sig-name descname"><span class="pre">RemoveAlbum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveAlbum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveAlbum" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.RemoveAlbum">
+<span class="sig-name descname"><span class="pre">RemoveAlbum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveAlbum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes an album from the database.
 The files gets not touched, and so it does not matter if they even exists.
 All related information will also be removed.</p>
@@ -1031,8 +1036,8 @@ No recovery possible!</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.RemoveArtist">
-<code class="sig-name descname"><span class="pre">RemoveArtist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveArtist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveArtist" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.RemoveArtist">
+<span class="sig-name descname"><span class="pre">RemoveArtist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveArtist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveArtist" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removes an artist from the database.
 The files gets not touched, and so it does not matter if they even exists.
 All related information will also be removed.</p>
@@ -1057,8 +1062,8 @@ No recovery possible!</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.RemoveSong">
-<code class="sig-name descname"><span class="pre">RemoveSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.RemoveSong">
+<span class="sig-name descname"><span class="pre">RemoveSong</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.RemoveSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.RemoveSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method removed a song from the database.
 The file gets not touched, and so it does not matter if it even exists.
 All related information will also be removed.</p>
@@ -1079,8 +1084,8 @@ No recovery possible!</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.TryAnalysePathFor">
-<code class="sig-name descname"><span class="pre">TryAnalysePathFor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.TryAnalysePathFor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.TryAnalysePathFor" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.TryAnalysePathFor">
+<span class="sig-name descname"><span class="pre">TryAnalysePathFor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.TryAnalysePathFor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.TryAnalysePathFor" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a path is valid for a specific target.</p>
 <p>The check is done in the following steps:</p>
 <blockquote>
@@ -1107,8 +1112,8 @@ No recovery possible!</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.UpdateAlbum">
-<code class="sig-name descname"><span class="pre">UpdateAlbum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateAlbum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateAlbum" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.UpdateAlbum">
+<span class="sig-name descname"><span class="pre">UpdateAlbum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albumid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateAlbum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateAlbum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates an already existing album entry in the database.
 So in case some information in the filesystem were changed (renaming, new files, …) the database gets updated.
 The following steps will be done to do this:</p>
@@ -1148,8 +1153,8 @@ The following steps will be done to do this:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.UpdateArtist">
-<code class="sig-name descname"><span class="pre">UpdateArtist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateArtist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateArtist" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.UpdateArtist">
+<span class="sig-name descname"><span class="pre">UpdateArtist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateArtist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateArtist" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates an already existing artist entry in the database.</p>
 <p>Updates information are:</p>
 <blockquote>
@@ -1174,8 +1179,8 @@ The following steps will be done to do this:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.UpdateChecksum">
-<code class="sig-name descname"><span class="pre">UpdateChecksum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateChecksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateChecksum" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.UpdateChecksum">
+<span class="sig-name descname"><span class="pre">UpdateChecksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateChecksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateChecksum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method can be used to add or update the checksum of the file of a song into the database.
 The method does not care if there is already a checksum.</p>
 <div class="admonition note">
@@ -1194,8 +1199,8 @@ So after calling that methods, calling this <code class="docutils literal notran
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.UpdateServerCache">
-<code class="sig-name descname"><span class="pre">UpdateServerCache</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateServerCache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateServerCache" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.UpdateServerCache">
+<span class="sig-name descname"><span class="pre">UpdateServerCache</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateServerCache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateServerCache" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method signals the MusicDB Websocket Server to update its caches by writing <code class="docutils literal notranslate"><span class="pre">refresh</span></code> into its named pipe.
 This should always be called when there are new artists, albums or songs added to the database.</p>
 <dl class="field-list simple">
@@ -1206,8 +1211,8 @@ This should always be called when there are new artists, albums or songs added t
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.UpdateSong">
-<code class="sig-name descname"><span class="pre">UpdateSong</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateSong" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.UpdateSong">
+<span class="sig-name descname"><span class="pre">UpdateSong</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">songid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateSong"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateSong" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates a song entry and parts of the related album entry.
 The following steps will be done to do this:</p>
 <blockquote>
@@ -1257,8 +1262,8 @@ The following steps will be done to do this:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.database.MusicDBDatabase.UpdateVideo">
-<code class="sig-name descname"><span class="pre">UpdateVideo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videoid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateVideo" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.database.MusicDBDatabase.UpdateVideo">
+<span class="sig-name descname"><span class="pre">UpdateVideo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videoid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/database.html#MusicDBDatabase.UpdateVideo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.database.MusicDBDatabase.UpdateVideo" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates a video entry in the database.
 The following steps will be done to do this:</p>
 <blockquote>
@@ -1305,8 +1310,8 @@ The following steps will be done to do this:</p>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -1351,6 +1356,7 @@ The following steps will be done to do this:</p>
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

@@ -19,16 +19,24 @@
 class Element
 {
     /* Basic HTML Element
-     * type: like "div" or "span"
+     * type: A: a string like "div" or "span"
+     *       B: an object representing an existing HTML element
      * classes: A set of CSS classes
      * id: element ID
      */
     constructor(type, classes=[], id=null)
     {
-        this.element = document.createElement(type);
+        if(typeof type === "object")
+            this.element = type;
+        else
+            this.element = document.createElement(type);
+
         this.element.classList.add(...classes);
+
         if(typeof id === "string")
             this.element.id = id;
+
+        this.displaystyle = this.element.style.display;
     }
 
 
@@ -51,6 +59,46 @@ class Element
     {
         this.element.innerHTML = "";
     }
+    ReplaceChild(newchild, oldchild)
+    {
+        if(typeof oldchild.GetHTMLElement === "function")
+            oldchild = oldchild.GetHTMLElement();
+        if(typeof newchild.GetHTMLElement === "function")
+            newchild = newchild.GetHTMLElement();
+
+        this.element.replaceChild(newchild, oldchild);
+    }
+
+
+
+    AddCSSClass(cssclass)
+    {
+        this.element.classList.add(cssclass);
+    }
+    RemoveCSSClass(cssclass)
+    {
+        this.element.classList.remove(cssclass);
+    }
+
+
+
+    SetData(property, value)
+    {
+        this.element.dataset[property] = value;
+    }
+    GetData(property)
+    {
+        return this.element.dataset[property];
+    }
+
+    SetValue(value)
+    {
+        this.element.value = value;
+    }
+    GetValue()
+    {
+        return this.element.value;
+    }
 
 
 
@@ -64,6 +112,38 @@ class Element
     SetInnerText(text)
     {
         this.element.innerText = text;
+    }
+    SetInnerHTML(html)
+    {
+        this.element.innerHTML = html;
+    }
+
+
+    InsertBefore(newelement)
+    {
+        if(typeof newelement.GetHTMLElement === "function")
+            newelement = newelement.GetHTMLElement();
+        this.element.parentElement.insertBefore(newelement, this.element)
+    }
+    InsertAfter(newelement)
+    {
+        if(typeof newelement.GetHTMLElement === "function")
+            newelement = newelement.GetHTMLElement();
+        if(this.element.nextSibling !== null)
+            this.element.parentElement.insertBefore(newelement, this.element.nextSibling)
+        else
+            this.element.parentElement.appendChild(newelement);
+    }
+
+
+    Show()
+    {
+        this.element.style.display = this.displaystyle;
+    }
+    Hide()
+    {
+        this.displaystyle = this.element.style.display;
+        this.element.style.display = "none";
     }
 }
 

@@ -344,7 +344,10 @@ class MusicDBWebSocketInterface(object):
             method = "broadcast"
             fncname= "GetMDBState"
         elif fncname == "SetSongTag":
-            retval = self.SetSongTag(args["songid"], args["tagid"])
+            if "approval" in args and "confidence" in args:
+                retval = self.SetSongTag(args["songid"], args["tagid"], args["approval"], args["confidence"])
+            else:
+                retval = self.SetSongTag(args["songid"], args["tagid"])
             retval = self.GetSong(args["songid"])
             method = "broadcast"
             fncname= "GetSong"
@@ -428,7 +431,10 @@ class MusicDBWebSocketInterface(object):
         elif fncname == "AddRandomVideoToQueue":
             retval = self.AddRandomVideoToQueue(args["position"])
         elif fncname == "AddAlbumToQueue":
-            retval = self.AddAlbumToQueue(args["albumid"], args["position"])
+            if "cd" in args:
+                retval = self.AddAlbumToQueue(args["albumid"], args["position"], args["cd"])
+            else:
+                retval = self.AddAlbumToQueue(args["albumid"], args["position"])
         elif fncname == "AddRandomSongToQueue":
             if "albumid" in args:
                 retval = self.AddRandomSongToQueue(args["position"], args["albumid"])
@@ -2225,9 +2231,13 @@ class MusicDBWebSocketInterface(object):
         return None
 
 
-    def AddAlbumToQueue(self, albumid, position):
+    def AddAlbumToQueue(self, albumid, position, cd=None):
         """
-        This method adds all songs of an album (from all CDs) at the end of the queue.
+        This method adds all songs of an album at any position of the queue.
+
+        If *cd* is ``None`` (or not given), all songs of all CDs are added to the queue.
+        If *cd* is an integer, it limits the CD that will be added.
+        The CD number starts with ``0`` for the first CD of an album.
 
         The position can be ``"next"`` if the songs shall be placed behind the current playing song.
         So, all new added songs will be played next.
@@ -2240,6 +2250,7 @@ class MusicDBWebSocketInterface(object):
         Args:
             albumid (int): ID of the album that shall be added
             position (str/int): ``"next"``, ``"last"`` or Song-Queue Entry ID - Determines where the songs get added
+            cd (None/int): (Optional) Only this CD of the album should be added to the queue. Starting with ``0`` for the first CD of an album.
 
         Returns:
             ``None``
@@ -2248,6 +2259,8 @@ class MusicDBWebSocketInterface(object):
             .. code-block:: javascript
 
                 MusicDB_Call("AddAlbumToQueue", {albumid:23});
+                MusicDB_Call("AddAlbumToQueue", {albumid:42, position:"next"});
+                MusicDB_Call("AddAlbumToQueue", {albumid:13, position:"last", cd=1});
 
         """
         try:
@@ -2260,6 +2273,15 @@ class MusicDBWebSocketInterface(object):
             return None
 
         sortedcds = self.GetSortedAlbumCDs(albumid)
+
+        # If there shall be only a specific CD added, limit sortedcds to that specific one
+        if type(cd) == int:
+            if cd >= len(sortedcds):
+                logging.warning("CD index to select is larger than available CDs. Given was CD \"%s\", available are \"%i\" CDs. \033[1;30m(Doing nothing)", str(cd), len(sortedcds))
+                return None
+            sortedcds = [sortedcds[cd], ]
+
+        # Insert all CDs song-vise into to queue
         for cd in sortedcds:
             for entry in cd:
                 song = entry["song"]
@@ -2948,11 +2970,13 @@ class MusicDBWebSocketInterface(object):
         return None
 
 
-    def SetSongTag(self, songid, tagid):
+    def SetSongTag(self, songid, tagid, approval=1, confidence=None):
         """
         Sets a tag for a song.
-        This method sets the approval-level to 1 (Set by User) and confidence to 1.0 for this tag.
+        This method sets the approval-level to 1 (Set by User) and confidence to 1.0 for this tag by default.
         So, this method can also be used to approve an AI set tag.
+
+        It is also possible to set a "guesses" tag by setting ``approval`` to ``0`` and ``confidence`` to a value less that ``1.0``.
 
         If tagging is disabled nothing will be done. 
 
@@ -2967,6 +2991,8 @@ class MusicDBWebSocketInterface(object):
         Args:
             songid (int): ID of the song
             tagid (int): ID of the tag
+            apprival (int): (optional) ``0``: for "just a guess", not approved. ``1``: Approved by the user.
+            confidence (float): (optional) A value between ``0.0`` and ``1.0`` representing the confidence that an none-approved tag is valid.
 
         Return:
             ``None``
@@ -2975,6 +3001,10 @@ class MusicDBWebSocketInterface(object):
             .. code-block:: javascript
 
                 MusicDB_Call("SetSongTag", {songid:songid, tagid:tagid});
+
+            .. code-block:: javascript
+
+                MusicDB_Call("SetSongTag", {songid:songid, tagid:tagid, approval:0, confidence:0.5});
 
             .. code-block:: javascript
 
@@ -2995,7 +3025,7 @@ class MusicDBWebSocketInterface(object):
             logging.info("Changing tags disabled. \033[1;33m!!")
             return None
 
-        self.database.SetTargetTag("song", songid, tagid)
+        self.database.SetTargetTag("song", songid, tagid, approval, confidence)
         albumid = self.database.GetSongById(songid)["albumid"]
         self.tags.DeriveAlbumTags(albumid)
         return None

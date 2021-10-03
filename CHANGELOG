@@ -7,6 +7,29 @@
 
 Run  git log --oneline  for more details
 
+┍━━━━┫ 2021-10-03 ┣━━━━┫ 7.2.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ + [WebAPI] AddAlbumToQueue allows via optional third parameter to limit the Album to a specific CD
+│ + [WebAPI] SetSongTag now has optional parameters for defining approval and confidence information
+│ + [WebUI] Allow propagating album tags to untagged songs
+│ + [WebUI] A color scheme quality indicator has been added to the color settings
+│ + [WebUI] Option to hide the release date of albums in the Artists View added
+│ + [WebUI] Option to hide the default genre "Other" in the Genre Selection View added
+│ + [WebUI] The CD-Number headline can be used to add only a specific CD of an Album into the Queue
+│ * [WebUI] Responsiveness increased
+│    + Queue tile disappears immediately after clicking the remove icon
+│    + First queue tile disappears immediately after clicking the Next button
+│    + Moving tiles in the Queue View is now faked until the back-end responses
+│    + For new added songs, a fake queue entry will be shown until the new queue got loaded from the back end
+│ * Solved Issues: #63, #37
+│
+┝━ MINOR CHANGES
+│ * [WebUI] Long artist names in Artist View are handled correct now
+│ * [WebUI] The tags in the Album View under the artwork are less opaque now
+│ + [WebUI] Mouse over album name in Artist View shows complete name as tool tip
+└───────────────────────────────────────╌╌
+
+
 ┍━━━━┫ 2021-05-15 ┣━━━━┫ 7.1.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ + [extern] id3edit is now an optional dependency. It is only used for the music export feature (musicdb extern) of MusicDB
@@ -16,7 +39,6 @@ Run  git log --oneline  for more details
 │ + [WebUI] Beside the origin, the date an album got added will also be shown in the headlines tooltip
 │ + [WebUI] Review and minor improvements of moderator.html
 └───────────────────────────────────────╌╌
-
 
 
 ┍━━━━┫ 2021-02-28 ┣━━━━┫ 7.0.0 ┣━━━━━━━━╍╍

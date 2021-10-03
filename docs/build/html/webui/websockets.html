@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Websocket Connection &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,12 +670,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="websocket-connection">
+  <section id="websocket-connection">
 <h1>Websocket Connection<a class="headerlink" href="#websocket-connection" title="Permalink to this headline">¶</a></h1>
 <p>For the concept and the documentation of the MusicDB API see <a class="reference internal" href="../basics/webapi.html"><span class="doc">MusicDB Websocket API</span></a>.
 This document focus on the functions and infrastructure to connect to the server and access the API.
 Reading the concept page first will help to understand this page.</p>
-<div class="section" id="connection-process">
+<section id="connection-process">
 <h2>Connection Process<a class="headerlink" href="#connection-process" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
@@ -742,8 +747,8 @@ Reading the concept page first will help to understand this page.</p>
 
 }</p></object></div>
 </div></blockquote>
-</div>
-<div class="section" id="watchdog">
+</section>
+<section id="watchdog">
 <h2>Watchdog<a class="headerlink" href="#watchdog" title="Permalink to this headline">¶</a></h2>
 <p>The existence of a watchdog timer in this code has historical reasons.
 There was a bug in the server that caused a loss of the connection to all clients.
@@ -767,8 +772,8 @@ Keep this in mind when configuring the Watchdog.</p>
 <p>The following functions implement the Watchdog.
 They are used internal by the socket object as shown in the figure above.
 Usually they need not to be called from the user of the <em>musicdb.js</em> file.</p>
-</div>
-<div class="section" id="communication-with-the-server">
+</section>
+<section id="communication-with-the-server">
 <h2>Communication with the server<a class="headerlink" href="#communication-with-the-server" title="Permalink to this headline">¶</a></h2>
 <p>The address of the server can be set in the following variable in <em>config.js</em>:</p>
 <dl class="simple">
@@ -789,16 +794,16 @@ This is the same key as in the MusicDB configuration (musicdb.ini) under <code c
 This key gets generated during the first installation of MusicDB with a random key and can be changed if wanted.</p>
 </dd>
 </dl>
-<div class="section" id="sending-data">
+<section id="sending-data">
 <h3>Sending Data<a class="headerlink" href="#sending-data" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="receiving-data">
+</section>
+<section id="receiving-data">
 <h3>Receiving Data<a class="headerlink" href="#receiving-data" title="Permalink to this headline">¶</a></h3>
 <p>When a notification was sent from the server to the clients, the function <code class="docutils literal notranslate"><span class="pre">onMusicDBNotification</span></code> will be called.
 For a general message the function <code class="docutils literal notranslate"><span class="pre">onMusicDBMessage</span></code>.</p>
-</div>
-</div>
-<div class="section" id="minimal-usage">
+</section>
+</section>
+<section id="minimal-usage">
 <h2>Minimal usage<a class="headerlink" href="#minimal-usage" title="Permalink to this headline">¶</a></h2>
 <p>This code example shows a minimal example on how to use the JavaScript code for the websocket connection to the MusicDB Websocket Server.</p>
 <blockquote>
@@ -847,8 +852,8 @@ For a general message the function <code class="docutils literal notranslate"><s
 </pre></div>
 </div>
 </div></blockquote>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -893,6 +898,7 @@ For a general message the function <code class="docutils literal notranslate"><s
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

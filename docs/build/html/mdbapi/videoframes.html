@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Video Frames and Preview Management &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-mdbapi.videoframes">
+  <section id="module-mdbapi.videoframes">
 <span id="video-frames-and-preview-management"></span><h1>Video Frames and Preview Management<a class="headerlink" href="#module-mdbapi.videoframes" title="Permalink to this headline">¶</a></h1>
 <p>This module handles the thumbnails (frames) and previews (git-animation) of videos.
 Its main task is to cache, scale and provide them to the GUI.</p>
@@ -673,7 +678,7 @@ Its main task is to cache, scale and provide them to the GUI.</p>
 <p class="admonition-title">Attention</p>
 <p>Frame and preview scaling has not been implemented yet.</p>
 </div>
-<div class="section" id="definitions">
+<section id="definitions">
 <h2>Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline">¶</a></h2>
 <dl class="simple">
 <dt>frame:</dt><dd><p>One frame extracted from a music video stored as a picture.</p>
@@ -687,8 +692,8 @@ This animation will can be played when the cursor hovers above the video.
 The file names begin with the prefix <code class="docutils literal notranslate"><span class="pre">preview</span></code>.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="database">
+</section>
+<section id="database">
 <h2>Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h2>
 <p>The thumbnail and preview data is part of the video entry in the MusicDB Database.
 The thumbnail and preview part consists of the following entries:</p>
@@ -712,8 +717,8 @@ The thumbnail and preview part consists of the following entries:</p>
 To access a scaled version of the artwork, the scale as suffix can be used.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="path-structure">
+</section>
+<section id="path-structure">
 <h2>Path structure<a class="headerlink" href="#path-structure" title="Permalink to this headline">¶</a></h2>
 <p>The video frames root directory can be configured in the MusicDB Configuration file.
 Everything related to video frames takes place in this directory.
@@ -757,14 +762,14 @@ and gets the permission <code class="docutils literal notranslate"><span class="
 <p>Existing frames and previews will not be overwritten.
 In case the settings change, video frames and previews need to be removed manually before recreating them.</p>
 </div>
-</div>
-<div class="section" id="https-server">
+</section>
+<section id="https-server">
 <h2>HTTPS Server<a class="headerlink" href="#https-server" title="Permalink to this headline">¶</a></h2>
 <p>Web browsers has to prefix the path with <code class="docutils literal notranslate"><span class="pre">videoframes/</span></code>.
 So, the server must be configured.
 The resulting path will then be for example <code class="docutils literal notranslate"><span class="pre">&quot;videoframes/$framesdirectory/$previewfile&quot;</span></code>.</p>
-</div>
-<div class="section" id="scaling">
+</section>
+<section id="scaling">
 <h2>Scaling<a class="headerlink" href="#scaling" title="Permalink to this headline">¶</a></h2>
 <p>Scales that shall be provides are set in the MusicDB Configuration as list of edge-lengths.
 For example, to generate 50×27 and 150×83 versions of a frame,
@@ -772,8 +777,8 @@ the configuration would look like this: <code class="docutils literal notranslat
 The scaled frames get stored as progressive JPEGs to get a better responsiveness for the WebUI.</p>
 <p>Usually videos do not have a ration of 1:1.
 If the aspect ration of a frame differs from the desired thumbnail, the borders will be cropped.</p>
-</div>
-<div class="section" id="configuration">
+</section>
+<section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
 <p>An example configuration can look like the following one:</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[videoframes]</span>
@@ -788,8 +793,8 @@ would have the following absolute path:
 <code class="docutils literal notranslate"><span class="pre">/data/musicdb/videoframes/Rammstein/Sonne/preview</span> <span class="pre">(150×83).webp</span></code>.
 Inside the database, this path is stored as <code class="docutils literal notranslate"><span class="pre">Rammstein</span> <span class="pre">-</span> <span class="pre">Sonne</span></code>.
 Inside the HTML code of the WebUI the following path would be used: <code class="docutils literal notranslate"><span class="pre">Rammstein/Sonne/preview</span> <span class="pre">(150×83).webp</span></code>.</p>
-</div>
-<div class="section" id="algorithm">
+</section>
+<section id="algorithm">
 <h2>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h2>
 <p>To update the frames cache the following steps are done:</p>
 <blockquote>
@@ -800,12 +805,12 @@ Inside the HTML code of the WebUI the following path would be used: <code class=
 <li><p>Update database entry with the directory name in the database via <a class="reference internal" href="#mdbapi.videoframes.VideoFrames.SetVideoFrames" title="mdbapi.videoframes.VideoFrames.SetVideoFrames"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SetVideoFrames()</span></code></a></p></li>
 </ol>
 </div></blockquote>
-</div>
-<div class="section" id="videoframes-class">
+</section>
+<section id="videoframes-class">
 <h2>VideoFrames Class<a class="headerlink" href="#videoframes-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="mdbapi.videoframes.VideoFrames">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mdbapi.videoframes.</span></code><code class="sig-name descname"><span class="pre">VideoFrames</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videoframes.VideoFrames">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mdbapi.videoframes.</span></span><span class="sig-name descname"><span class="pre">VideoFrames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class implements the concept described above.
 The most important method is <a class="reference internal" href="#mdbapi.videoframes.VideoFrames.UpdateVideoFrames" title="mdbapi.videoframes.VideoFrames.UpdateVideoFrames"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateVideoFrames()</span></code></a> that generates all frames and previews for a given video.</p>
 <dl class="field-list simple">
@@ -823,8 +828,8 @@ The most important method is <a class="reference internal" href="#mdbapi.videofr
 </dd>
 </dl>
 <dl class="py method">
-<dt id="mdbapi.videoframes.VideoFrames.ChangeThumbnail">
-<code class="sig-name descname"><span class="pre">ChangeThumbnail</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.ChangeThumbnail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.ChangeThumbnail" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videoframes.VideoFrames.ChangeThumbnail">
+<span class="sig-name descname"><span class="pre">ChangeThumbnail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.ChangeThumbnail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.ChangeThumbnail" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a thumbnail image files, including scaled a version, from a video.
 The image will be generated from a frame addressed by the <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> argument.</p>
 <p>To generate the thumbnail, <code class="docutils literal notranslate"><span class="pre">ffmpeg</span></code> is used in the following way:</p>
@@ -852,8 +857,8 @@ If the time stamp is not between 0 and the total length, the method returns <cod
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videoframes.VideoFrames.CreateAnimation">
-<code class="sig-name descname"><span class="pre">CreateAnimation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">framepaths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">animationpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.CreateAnimation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.CreateAnimation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videoframes.VideoFrames.CreateAnimation">
+<span class="sig-name descname"><span class="pre">CreateAnimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">framepaths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">animationpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.CreateAnimation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.CreateAnimation" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a WebP animation from frames that are addresses by a sorted list of paths.
 Frame paths that do not exists or cannot be opened will be ignored.
 If there already exists an animation addressed by animation path, nothing will be done.</p>
@@ -872,8 +877,8 @@ If there already exists an animation addressed by animation path, nothing will b
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videoframes.VideoFrames.CreateFramesDirectory">
-<code class="sig-name descname"><span class="pre">CreateFramesDirectory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videoname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.CreateFramesDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.CreateFramesDirectory" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videoframes.VideoFrames.CreateFramesDirectory">
+<span class="sig-name descname"><span class="pre">CreateFramesDirectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videoname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.CreateFramesDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.CreateFramesDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates the directory that contains all frames and previews for a video.
 The ownership of the created directory will be the music user and music group set in the configuration file.
 The permissions will be set to <code class="docutils literal notranslate"><span class="pre">rwxrwxr-x</span></code>.
@@ -892,8 +897,8 @@ If the directory already exists, only the attributes will be updated.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videoframes.VideoFrames.CreateFramesDirectoryName">
-<code class="sig-name descname"><span class="pre">CreateFramesDirectoryName</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videoname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.CreateFramesDirectoryName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.CreateFramesDirectoryName" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videoframes.VideoFrames.CreateFramesDirectoryName">
+<span class="sig-name descname"><span class="pre">CreateFramesDirectoryName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">artistname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videoname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.CreateFramesDirectoryName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.CreateFramesDirectoryName" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates the name for a frames directory regarding the following schema:
 <code class="docutils literal notranslate"><span class="pre">$Artistname/$Videoname</span></code>.
 If there is a <code class="docutils literal notranslate"><span class="pre">/</span></code> in the name, it gets replaced by <code class="docutils literal notranslate"><span class="pre">∕</span></code> (U+2215, DIVISION SLASH)</p>
@@ -911,8 +916,8 @@ If there is a <code class="docutils literal notranslate"><span class="pre">/</sp
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videoframes.VideoFrames.GenerateFrames">
-<code class="sig-name descname"><span class="pre">GenerateFrames</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videopath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.GenerateFrames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.GenerateFrames" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videoframes.VideoFrames.GenerateFrames">
+<span class="sig-name descname"><span class="pre">GenerateFrames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">videopath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.GenerateFrames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.GenerateFrames" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates all frame files, including scaled frames, from a video.
 After generating the frames, animations can be generated via <a class="reference internal" href="#mdbapi.videoframes.VideoFrames.GeneratePreviews" title="mdbapi.videoframes.VideoFrames.GeneratePreviews"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GeneratePreviews()</span></code></a>.</p>
 <p>To generate the frames, <code class="docutils literal notranslate"><span class="pre">ffmpeg</span></code> is used in the following way:</p>
@@ -946,8 +951,8 @@ The method will return <code class="docutils literal notranslate"><span class="p
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videoframes.VideoFrames.GeneratePreviews">
-<code class="sig-name descname"><span class="pre">GeneratePreviews</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.GeneratePreviews"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.GeneratePreviews" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videoframes.VideoFrames.GeneratePreviews">
+<span class="sig-name descname"><span class="pre">GeneratePreviews</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.GeneratePreviews"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.GeneratePreviews" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates all preview animations (.webp), including scaled versions, from frames.
 The frames can be generated via <a class="reference internal" href="#mdbapi.videoframes.VideoFrames.GenerateFrames" title="mdbapi.videoframes.VideoFrames.GenerateFrames"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GenerateFrames()</span></code></a>.</p>
 <p>In case there is already a preview file, the method returns <code class="docutils literal notranslate"><span class="pre">True</span></code> without doing anything.</p>
@@ -962,8 +967,8 @@ The frames can be generated via <a class="reference internal" href="#mdbapi.vide
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videoframes.VideoFrames.ScaleFrame">
-<code class="sig-name descname"><span class="pre">ScaleFrame</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">framenumber</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.ScaleFrame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.ScaleFrame" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videoframes.VideoFrames.ScaleFrame">
+<span class="sig-name descname"><span class="pre">ScaleFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">framenumber</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.ScaleFrame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.ScaleFrame" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a scaled version of the existing frames for a video.
 The aspect ration of the frame will be maintained.
 In case the resulting aspect ratio differs from the source file,
@@ -984,8 +989,8 @@ the borders of the source frame will be cropped in the scaled version.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videoframes.VideoFrames.ScaleThumbnail">
-<code class="sig-name descname"><span class="pre">ScaleThumbnail</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.ScaleThumbnail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.ScaleThumbnail" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videoframes.VideoFrames.ScaleThumbnail">
+<span class="sig-name descname"><span class="pre">ScaleThumbnail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.ScaleThumbnail"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.ScaleThumbnail" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method creates a scaled version of the existing thumbnail for a video.
 The aspect ration of the frame will be maintained.
 In case the resulting aspect ratio differs from the source file,
@@ -1003,8 +1008,8 @@ the borders of the source frame will be cropped in the scaled version.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videoframes.VideoFrames.SetVideoFrames">
-<code class="sig-name descname"><span class="pre">SetVideoFrames</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videoid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">framesdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thumbnailfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">previewfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.SetVideoFrames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.SetVideoFrames" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videoframes.VideoFrames.SetVideoFrames">
+<span class="sig-name descname"><span class="pre">SetVideoFrames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">videoid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">framesdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thumbnailfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">previewfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.SetVideoFrames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.SetVideoFrames" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set Database entry for the video with video ID <code class="docutils literal notranslate"><span class="pre">videoid</span></code>.
 Using this method defines the frames directory to which all further paths are relative to.
 The thumbnail file addresses a static source frame (like <code class="docutils literal notranslate"><span class="pre">frame-01.jpg</span></code>),
@@ -1034,8 +1039,8 @@ If not, <code class="docutils literal notranslate"><span class="pre">False</span
 </dd></dl>
 
 <dl class="py method">
-<dt id="mdbapi.videoframes.VideoFrames.UpdateVideoFrames">
-<code class="sig-name descname"><span class="pre">UpdateVideoFrames</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.UpdateVideoFrames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.UpdateVideoFrames" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mdbapi.videoframes.VideoFrames.UpdateVideoFrames">
+<span class="sig-name descname"><span class="pre">UpdateVideoFrames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">video</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mdbapi/videoframes.html#VideoFrames.UpdateVideoFrames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mdbapi.videoframes.VideoFrames.UpdateVideoFrames" title="Permalink to this definition">¶</a></dt>
 <dd><ol class="arabic simple">
 <li><p>Create frames directory (<a class="reference internal" href="#mdbapi.videoframes.VideoFrames.CreateFramesDirectory" title="mdbapi.videoframes.VideoFrames.CreateFramesDirectory"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CreateFramesDirectory()</span></code></a>)</p></li>
 <li><p>Generate frames (<a class="reference internal" href="#mdbapi.videoframes.VideoFrames.GenerateFrames" title="mdbapi.videoframes.VideoFrames.GenerateFrames"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GenerateFrames()</span></code></a>)</p></li>
@@ -1053,8 +1058,8 @@ If not, <code class="docutils literal notranslate"><span class="pre">False</span
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -1099,6 +1104,7 @@ If not, <code class="docutils literal notranslate"><span class="pre">False</span
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

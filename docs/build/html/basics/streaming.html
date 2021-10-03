@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>MusicDB Stream &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,7 +670,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="musicdb-stream">
+  <section id="musicdb-stream">
 <h1>MusicDB Stream<a class="headerlink" href="#musicdb-stream" title="Permalink to this headline">¶</a></h1>
 <p>This is the overall documentation of the streaming process in MusicDB</p>
 <p>For streaming, two major open source projects are involved.
@@ -673,7 +678,7 @@ Reading and transcoding the audio files is done by the <a class="reference exter
 Streaming the done using <a class="reference external" href="https://icecast.org/">Icecast</a>.</p>
 <p>After describing the general data flow from the file to the users client,
 a more detailed explanation of how the stream is implemented in MusicDB follows.</p>
-<div class="section" id="general-data-flow">
+<section id="general-data-flow">
 <h2>General Data Flow<a class="headerlink" href="#general-data-flow" title="Permalink to this headline">¶</a></h2>
 <p>The following graph shows the data flow from the audio file to the listener:</p>
 <blockquote>
@@ -703,13 +708,13 @@ Details about this process is described in <a class="reference internal" href=".
 <p>After transcoding, the mp3 frames gets read and processed by the <a class="reference internal" href="../lib/mp3stream.html"><span class="doc">MP3 Stream Interface</span></a>.
 Then each mp3 frame gets send to the <a class="reference external" href="https://icecast.org/">Icecast</a> process using <em>libshout</em></p>
 <p>The audio stream provided by Icecast can new be received by any multimedia player that can connect to audio streams.</p>
-</div>
-<div class="section" id="stream-implementation">
+</section>
+<section id="stream-implementation">
 <h2>Stream Implementation<a class="headerlink" href="#stream-implementation" title="Permalink to this headline">¶</a></h2>
 <p>The following image shows how the stream management is implemented and integrated into MusicDB.
 Furthermore it shows where user actions are handled, and where events come from.</p>
-<div class="figure align-default">
-<img alt="../_images/stream.svg" src="../_images/stream.svg" /></div>
+<figure class="align-default">
+<img alt="../_images/stream.svg" src="../_images/stream.svg" /></figure>
 <p>The <em>purple</em> parts are the implementation of the streaming functionality.
 It starts from the <a class="reference internal" href="../mdbapi/songqueue.html"><span class="doc">MusicDB Song Queue</span></a> that provides a queue with all songs that shall be streamed.
 The <a class="reference internal" href="../mdbapi/audiostream.html#mdbapi.audiostream.AudioStreamingThread" title="mdbapi.audiostream.AudioStreamingThread"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mdbapi.audiostream.AudioStreamingThread()</span></code></a> gets the song at index 0 and streams it
@@ -725,8 +730,8 @@ At the same time, the <code class="docutils literal notranslate"><span class="pr
 <p>Furthermore the <em>blue</em> components are involved in the streaming.
 The <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy" title="mdbapi.randy.Randy"><code class="xref py py-class docutils literal notranslate"><span class="pre">mdbapi.randy.Randy</span></code></a> class is used to get random songs when the queue runs empty, or when the user wants to add a random song to the queue.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">AudioStreamingThread</span></code> informs the <a class="reference internal" href="../mdbapi/tracker.html"><span class="doc">Song Tracker</span></a> about new played songs and when songs were skipped.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -771,6 +776,7 @@ The <a class="reference internal" href="../mdbapi/randy.html#mdbapi.randy.Randy"
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

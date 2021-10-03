@@ -41,25 +41,27 @@ class GenreSelectionView extends Element
         let genres = tagmanager.GetGenres();
         for(let genre of genres)
         {
+            // If Other-Genre shall be hidden, skip adding it to the View :)
+            if(genre.name === "Other" && configuration.GenreSelectionView.showother === false)
+                continue;
+
             let tag = new Tag(genre);
             tag.SetClickAction(()=>{this.onTagClicked(tag, genre);});
-
-            let tagelement = tag.GetHTMLElement();
 
             // Check if genre is active
             if(this.activegenres.indexOf(genre.name) >= 0)
             {
-                tagelement.dataset.active = true;
-                tagelement.title = "Deactivate genre for album selection";
+                tag.SetData("active", true);
+                tag.SetTooltip("Deactivate genre for album selection");
             }
             else
             {
-                tagelement.dataset.active = false;
-                tagelement.title = "Activate genre for album selection";
+                tag.SetData("active", false);
+                tag.SetTooltip("Activate genre for album selection");
             }
 
             // append button
-            super.AppendChild(tagelement);
+            super.AppendChild(tag);
         }
 
         return;
@@ -67,18 +69,16 @@ class GenreSelectionView extends Element
 
 
 
-    onTagClicked(tagobject, mdbtag)
+    onTagClicked(tag, mdbtag)
     {
-        let tagelement = tagobject.GetHTMLElement();
-
         // Update visual state
         let active;
-        if(tagelement.dataset.active === "true")
+        if(tag.GetData("active") === "true")
             active = false;
         else
             active = true;
 
-        tagelement.dataset.active = active;
+        tag.SetData("active", active);
 
 
         // Send update to server

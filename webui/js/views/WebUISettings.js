@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@ class WebUISettings extends MainSettingsView
         super("WebUISettings", "WebUI Settings", "Enable or disable features of the WebUI. These settings are applied to all clients. The behavior of the MusicDB server is not affected in any way.");
 
         this.videocheckbox = new SettingsCheckbox(
-            "Video Mode",
-            "This switch allows hiding or showing all WebUI elements corresponding to music videos.</br>This includes the Song/Video mode switch in the main menu.",
+            "Enable Video Mode",
+            "This switch allows hiding or showing all WebUI elements corresponding to music videos.</br>This includes the Song/Video mode switch in the main menu.</br><span style=\"color:red\">Experimental Feature!</span>",
             (state)=>{
                 if(state == true) this.ChangeSetting("WebUI", "videomode", "enabled");
                 else              this.ChangeSetting("WebUI", "videomode", "disabled");
@@ -32,7 +32,7 @@ class WebUISettings extends MainSettingsView
         );
 
         this.lyricscheckbox = new SettingsCheckbox(
-            "Lyrics",
+            "Enable Lyrics",
             "When lyrics are disabled, the Lyrics-State icon of songs listed in the Album Views are hidden.</br>This switch will not remove any information, it just hides the related user interface elements.",
             (state)=>{
                 if(state == true) this.ChangeSetting("WebUI", "lyrics", "enabled");
@@ -40,11 +40,31 @@ class WebUISettings extends MainSettingsView
             }
         );
 
+        this.avshowreleasecheckbox = new SettingsCheckbox(
+            "Show album release date in Artists View",
+            "If set, the release date of an album is shown next to its name in the Artists View. If false, the release date will not be shown.</br>In any case, the albums of an artist are sorted by their release date.",
+            (state)=>{
+                if(state == true) this.ChangeSetting("ArtistsView", "showrelease", true);
+                else              this.ChangeSetting("ArtistsView", "showrelease", false);
+            }
+        );
+
+        this.gsvshowothercheckbox= new SettingsCheckbox(
+            "Show \"Other\" genre in the gere lists of the Genre Selection View",
+            "If set, the default genre \"Other\" is listed in the set of selectable genres.</br>This setting does not hide the default genre from the list of genres to tag a song or album with.</br><span style=\"color:red\">Requires reloading the WebUI!</span> (Press F5)",
+            (state)=>{
+                if(state == true) this.ChangeSetting("GenreSelectionView", "showother", true);
+                else              this.ChangeSetting("GenreSelectionView", "showother", false);
+            }
+        );
+
         let settingslist = new SettingsList();
         settingslist.AddEntry(this.videocheckbox);
         settingslist.AddEntry(this.lyricscheckbox);
+        settingslist.AddEntry(this.avshowreleasecheckbox);
+        settingslist.AddEntry(this.gsvshowothercheckbox);
 
-        this.element.appendChild(settingslist.GetHTMLElement());
+        this.AppendChild(settingslist);
         this.settings = null;
     }
 
@@ -56,6 +76,8 @@ class WebUISettings extends MainSettingsView
 
         this.videocheckbox.SetState( settings.WebUI.videomode == "enabled");
         this.lyricscheckbox.SetState(settings.WebUI.lyrics    == "enabled");
+        this.avshowreleasecheckbox.SetState(settings.ArtistsView.showrelease == true);
+        this.gsvshowothercheckbox.SetState(settings.GenreSelectionView.showother == true);
         return;
     }
 

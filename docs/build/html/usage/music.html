@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Music &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../lib/clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../lib/clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,10 +670,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="music">
+  <section id="music">
 <h1>Music<a class="headerlink" href="#music" title="Permalink to this headline">¶</a></h1>
 <p>This chapter explains how to handle music files for and with MusicDB.</p>
-<div class="section" id="naming">
+<section id="naming">
 <h2>Naming<a class="headerlink" href="#naming" title="Permalink to this headline">¶</a></h2>
 <p>The path to a song follows the scheme <code class="docutils literal notranslate"><span class="pre">artist</span> <span class="pre">directory/album</span> <span class="pre">directory/song</span> <span class="pre">file</span></code>.
 The names of the artist and album director and the song files must follow a specific scheme.</p>
@@ -681,24 +686,24 @@ Do <em>not</em> use FRACTION SLASH because it influences how numbers around that
 <p>When using the <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">database</span> <span class="pre">add</span></code> command, you have to rename the files and directories before.
 When using <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">add</span></code> MusicDB provides a user interface that supports you by renaming the files
 and checks if the names are following the scheme.</p>
-<div class="section" id="artist-directory-name">
+<section id="artist-directory-name">
 <h3>Artist Directory Name<a class="headerlink" href="#artist-directory-name" title="Permalink to this headline">¶</a></h3>
 <p>The name of the artist directory is the name of the artist.</p>
-</div>
-<div class="section" id="album-directory-name">
+</section>
+<section id="album-directory-name">
 <h3>Album Directory Name<a class="headerlink" href="#album-directory-name" title="Permalink to this headline">¶</a></h3>
 <p>The album directory name consists of the release date of the album and the album name itself, separated by a space surrounded dash: <code class="docutils literal notranslate"><span class="pre">$Release</span> <span class="pre">-</span> <span class="pre">$Albumname</span></code>.
 The release date is the year using 4 digits.
 For example: <code class="docutils literal notranslate"><span class="pre">2016</span> <span class="pre">-</span> <span class="pre">Ærdenbrand</span></code></p>
-</div>
-<div class="section" id="song-file-name">
+</section>
+<section id="song-file-name">
 <h3>Song File Name<a class="headerlink" href="#song-file-name" title="Permalink to this headline">¶</a></h3>
 <p>For song files two slightly different schemes exists, depending if the album is split into multiple CDs or not.
 For single CD albums the file name is constructed out of the song number and the song name separated by a space: <code class="docutils literal notranslate"><span class="pre">$Songnumber</span> <span class="pre">$Songname.$Fileextension</span></code>.
 In case the album has multiple dist, the disk number is set in front of the song number separated by a dash: <code class="docutils literal notranslate"><span class="pre">$CDNumber-$Songnumber</span> <span class="pre">$Songname.$Fileextension</span></code>.</p>
 <p>A complete path to a song file would be: <code class="docutils literal notranslate"><span class="pre">$Artistname/$Release</span> <span class="pre">-</span> <span class="pre">$Albumname/$Songnumber</span> <span class="pre">$Songname.$Fileextension</span></code>. For example: <code class="docutils literal notranslate"><span class="pre">Rammstein/2005</span> <span class="pre">-</span> <span class="pre">Rosenrot/01</span> <span class="pre">Benzin.flac</span></code></p>
-</div>
-<div class="section" id="music-video-file-name">
+</section>
+<section id="music-video-file-name">
 <h3>Music Video File Name<a class="headerlink" href="#music-video-file-name" title="Permalink to this headline">¶</a></h3>
 <p>The music video files are placed in the artists directory beneath the album directories.
 They also follow a similar naming scheme: <code class="docutils literal notranslate"><span class="pre">$Release</span> <span class="pre">-</span> <span class="pre">$Videoname.$Fileextension</span></code>.
@@ -707,9 +712,9 @@ This may be a different year than a corresponding album or song was released.
 Separated by a space surrounded dash, the name of song or music video is required.
 Then, separated by a dot, the file extension.
 A complete path to the music video <em>Sonne</em> by <em>Rammstein</em> would be: <code class="docutils literal notranslate"><span class="pre">Rammstein/2001</span> <span class="pre">-</span> <span class="pre">Sonne.m4v</span></code></p>
-</div>
-</div>
-<div class="section" id="importing-albums-to-musicdb">
+</section>
+</section>
+<section id="importing-albums-to-musicdb">
 <h2>Importing Albums to MusicDB<a class="headerlink" href="#importing-albums-to-musicdb" title="Permalink to this headline">¶</a></h2>
 <p>There are three ways to import music:</p>
 <blockquote>
@@ -731,7 +736,7 @@ If you do not see the new added album in the WebUI, trigger the server again by 
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;refresh&quot;</span> &gt; <span class="nv">$DATADIR</span>/musicdb.fifo
 </pre></div>
 </div>
-<div class="section" id="using-the-database-module">
+<section id="using-the-database-module">
 <h3>Using the database module<a class="headerlink" href="#using-the-database-module" title="Permalink to this headline">¶</a></h3>
 <p>The following example shows how to add artists and albums using the <code class="docutils literal notranslate"><span class="pre">database</span></code> module.
 For details see <a class="reference internal" href="../mod/database.html"><span class="doc">database - Music DB Management</span></a>.</p>
@@ -744,8 +749,8 @@ musicdb database add <span class="nv">$MusicPath</span>/<span class="nv">$Artist
 musicdb artwork -u
 </pre></div>
 </div>
-</div>
-<div class="section" id="using-the-repair-module">
+</section>
+<section id="using-the-repair-module">
 <h3>Using the repair module<a class="headerlink" href="#using-the-repair-module" title="Permalink to this headline">¶</a></h3>
 <p>The following example shows how to add artists and albums using the <code class="docutils literal notranslate"><span class="pre">repair</span></code> module.
 For details see <a class="reference internal" href="../mod/repair.html"><span class="doc">repair - Repair Database Entries</span></a>.</p>
@@ -756,8 +761,8 @@ For details see <a class="reference internal" href="../mod/repair.html"><span cl
 musicdb artwork -u
 </pre></div>
 </div>
-</div>
-<div class="section" id="using-the-add-module">
+</section>
+<section id="using-the-add-module">
 <h3>Using the add module<a class="headerlink" href="#using-the-add-module" title="Permalink to this headline">¶</a></h3>
 <p>The following example shows how to add artists and albums using the <code class="docutils literal notranslate"><span class="pre">add</span></code> module.
 For details see <a class="reference internal" href="../mod/add.html"><span class="doc">add - Add New Album to MusicDB</span></a>.</p>
@@ -766,17 +771,17 @@ For details see <a class="reference internal" href="../mod/add.html"><span class
 <span class="c1"># repair the names</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="updating-songs">
+</section>
+</section>
+<section id="updating-songs">
 <h2>Updating Songs<a class="headerlink" href="#updating-songs" title="Permalink to this headline">¶</a></h2>
 <p>When updating a song file, or when renaming it, MusicDB won’t find it anymore because of the changed path.
 Call the <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">repair</span></code> module to repair the connection between file and database entry.
 Select the “Orphan File” in the left list, press <code class="docutils literal notranslate"><span class="pre">tab</span></code> to switch to the right list and select the “Orphan DB Entry”.
 Then press <code class="docutils literal notranslate"><span class="pre">u</span></code> to update the database entry with the new file.
 For further details see <a class="reference internal" href="../mod/repair.html"><span class="doc">repair - Repair Database Entries</span></a>.</p>
-</div>
-<div class="section" id="importing-videos-to-musicdb">
+</section>
+<section id="importing-videos-to-musicdb">
 <h2>Importing Videos to MusicDB<a class="headerlink" href="#importing-videos-to-musicdb" title="Permalink to this headline">¶</a></h2>
 <p>Use the <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">database</span></code> command: <a class="reference internal" href="../mod/database.html"><span class="doc">database - Music DB Management</span></a> to import videos.
 And the <code class="docutils literal notranslate"><span class="pre">musicdb</span> <span class="pre">videoframes</span></code> command: <a class="reference internal" href="../mod/videoframes.html"><span class="doc">videoframes - Video Frames and Preview Manager</span></a> to generate the artwork used by the WebUI.</p>
@@ -785,8 +790,8 @@ musicdb database add <span class="nv">$MusicPath</span>/<span class="nv">$Artist
 musicdb videoframes --video <span class="nv">$MusicPath</span>/<span class="nv">$ArtistName</span>/<span class="nv">$Release</span><span class="se">\ </span>-<span class="se">\ </span><span class="nv">$VideoName</span>.<span class="nv">$Ext</span> -u
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -831,6 +836,7 @@ musicdb videoframes --video <span class="nv">$MusicPath</span>/<span class="nv">
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

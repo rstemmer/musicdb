@@ -105,6 +105,12 @@
 }
 
 
+.blurredtext
+{
+    filter:         blur(0.2rem);
+}
+
+
 .unicodeicon
 {
     color:              var(--hlcolor);

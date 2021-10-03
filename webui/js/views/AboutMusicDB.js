@@ -1,5 +1,5 @@
 // MusicDB,  a music manager with web-bases UI that focus on music.
-// Copyright (C) 2017-2020  Ralf Stemmer <ralf.stemmer@gmx.net>
+// Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,9 +16,9 @@
 
 "use strict";
 
-// The following two constants were automatically generated during the installation process!
-const MUSICDB_VERSION = "7.0.0";
-const WEBUI_VERSION = "3.0.0";
+// The following two constants should be automatically generated during the installation process! TODO
+const MUSICDB_VERSION = "7.2.0";
+const WEBUI_VERSION = "3.1.0";
 
 class AboutMusicDB
 {

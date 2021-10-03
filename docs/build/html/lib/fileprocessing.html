@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Fileprocessing Methods &mdash; MusicDB 7.1.0 documentation</title>
@@ -29,6 +30,10 @@
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   
@@ -92,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Concepts</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Concepts</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basics/comparison.html">Comparison to Other Tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../basics/comparison.html#introducing-other-tools">Introducing other tools</a></li>
@@ -223,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Usage</span></p>
+<p class="caption" role="heading"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../usage/install.html">Installation &amp; Update</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../usage/install.html#installation-automatic">Installation (Automatic)</a><ul>
@@ -279,7 +284,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">CLI Modules</span></p>
+<p class="caption" role="heading"><span class="caption-text">CLI Modules</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mod/add.html">add - Add New Album to MusicDB</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mod/add.html#select-album">Select Album</a></li>
@@ -336,7 +341,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">API Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../mdbapi/artwork.html">Artwork Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../mdbapi/artwork.html#database">Database</a></li>
@@ -453,7 +458,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Libraries</span></p>
+<p class="caption" role="heading"><span class="caption-text">Libraries</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="clui.html">Command Line User Interface</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="clui.html#module-lib.clui.text">Text</a></li>
@@ -565,7 +570,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">JaveScript Classes</span></p>
+<p class="caption" role="heading"><span class="caption-text">JaveScript Classes</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../webui/websockets.html">Websocket Connection</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../webui/websockets.html#connection-process">Connection Process</a></li>
@@ -579,7 +584,7 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../other/impressum.html">Impressum</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../other/impressum.html#angaben-gemasz-5-tmg">Angaben gemäß § 5 TMG</a></li>
@@ -665,13 +670,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-lib.fileprocessing">
+  <section id="module-lib.fileprocessing">
 <span id="fileprocessing-methods"></span><h1>Fileprocessing Methods<a class="headerlink" href="#module-lib.fileprocessing" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="fileprocessing-class">
+<section id="fileprocessing-class">
 <h2>Fileprocessing Class<a class="headerlink" href="#fileprocessing-class" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="lib.fileprocessing.Fileprocessing">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lib.fileprocessing.</span></code><code class="sig-name descname"><span class="pre">Fileprocessing</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.fileprocessing.Fileprocessing">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lib.fileprocessing.</span></span><span class="sig-name descname"><span class="pre">Fileprocessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class extends the interface to the <a class="reference internal" href="filesystem.html#lib.filesystem.Filesystem" title="lib.filesystem.Filesystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">lib.filesystem.Filesystem</span></code></a> class.
 It provides file processing methods.
 These methods may execute other linux shell commands.</p>
@@ -701,8 +706,8 @@ The paths of methods from <a class="reference internal" href="filesystem.html#li
 </dd>
 </dl>
 <dl class="py method">
-<dt id="lib.fileprocessing.Fileprocessing.Checksum">
-<code class="sig-name descname"><span class="pre">Checksum</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sha256'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.Checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.Checksum" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.fileprocessing.Fileprocessing.Checksum">
+<span class="sig-name descname"><span class="pre">Checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sha256'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.Checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.Checksum" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method calculates the checksum of a file and returns it hexadecimal encoded as a string.
 If the file does not exists, <code class="docutils literal notranslate"><span class="pre">None</span></code> gets returned.</p>
 <p>The default algorithm is SHA-256</p>
@@ -728,8 +733,8 @@ If the file does not exists, <code class="docutils literal notranslate"><span cl
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.fileprocessing.Fileprocessing.ConvertToMP3">
-<code class="sig-name descname"><span class="pre">ConvertToMP3</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">srcpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dstpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.ConvertToMP3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.ConvertToMP3" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.fileprocessing.Fileprocessing.ConvertToMP3">
+<span class="sig-name descname"><span class="pre">ConvertToMP3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">srcpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dstpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.ConvertToMP3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.ConvertToMP3" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method converts any audio file format to an mp3 file using <code class="docutils literal notranslate"><span class="pre">ffmpeg</span></code>.</p>
 <p>The encoder is <em>libmp3lame</em> and the bitrate is esoteric 320kbit/s.
 If the destination file exists, it will be overwritten.</p>
@@ -760,8 +765,8 @@ In the past, there were lots of trouble with “incomplete” files.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.fileprocessing.Fileprocessing.ExistsProgram">
-<code class="sig-name descname"><span class="pre">ExistsProgram</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">programname</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.ExistsProgram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.ExistsProgram" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.fileprocessing.Fileprocessing.ExistsProgram">
+<span class="sig-name descname"><span class="pre">ExistsProgram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">programname</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.ExistsProgram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.ExistsProgram" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a program exists.</p>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">fp</span><span class="o">.</span><span class="n">ExistsProgram</span><span class="p">(</span><span class="s2">&quot;ffmpeg&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
@@ -779,8 +784,8 @@ In the past, there were lots of trouble with “incomplete” files.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.fileprocessing.Fileprocessing.OptimizeM4ATags">
-<code class="sig-name descname"><span class="pre">OptimizeM4ATags</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mdbsong</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdbalbum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdbartist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">srcpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dstpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.OptimizeM4ATags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.OptimizeM4ATags" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.fileprocessing.Fileprocessing.OptimizeM4ATags">
+<span class="sig-name descname"><span class="pre">OptimizeM4ATags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mdbsong</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdbalbum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdbartist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">srcpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dstpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.OptimizeM4ATags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.OptimizeM4ATags" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method fixes the Tags of an m4a file.
 The data for the Tags come from the MusicDBDatabase.
 For writing the new tags, <code class="docutils literal notranslate"><span class="pre">ffmpeg</span></code> is used.</p>
@@ -830,8 +835,8 @@ The source file must have the file extension <code class="docutils literal notra
 </dd></dl>
 
 <dl class="py method">
-<dt id="lib.fileprocessing.Fileprocessing.OptimizeMP3Tags">
-<code class="sig-name descname"><span class="pre">OptimizeMP3Tags</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mdbsong</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdbalbum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdbartist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">srcpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dstpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absartworkpath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forceID3v230</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.OptimizeMP3Tags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.OptimizeMP3Tags" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lib.fileprocessing.Fileprocessing.OptimizeMP3Tags">
+<span class="sig-name descname"><span class="pre">OptimizeMP3Tags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mdbsong</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdbalbum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mdbartist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">srcpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dstpath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">absartworkpath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forceID3v230</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lib/fileprocessing.html#Fileprocessing.OptimizeMP3Tags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lib.fileprocessing.Fileprocessing.OptimizeMP3Tags" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method fixed the ID3 tags of an mp3 file.
 For writing the new ID3 tags, <code class="docutils literal notranslate"><span class="pre">id3edit</span></code> is used.</p>
 <p>Source and destination path can be the same.
@@ -882,8 +887,8 @@ The <code class="docutils literal notranslate"><span class="pre">id3edit</span><
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -928,6 +933,7 @@ The <code class="docutils literal notranslate"><span class="pre">id3edit</span><
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

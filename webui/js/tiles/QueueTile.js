@@ -41,6 +41,25 @@ class QueueTile extends Tile
 
 
 
+class FakeQueueTile extends Tile
+{
+    // musictype: "audio" or "video"
+    constructor(musictype)
+    {
+        super();
+        if(musictype === "song")
+            musictype = "audio";    // TODO: This is shit. Fix it! musictype needs to be defined!
+        let buttonbox = new ButtonBox_QueueEntryControls(musictype, null, null);
+        let title     = new Element("span", ["Title", "fgcolor", "blurredtext", "flex-grow"]);
+        let subtitle  = new Element("div", ["Subtitle", "hlcolor", "blurredtext", "smallfont", "flex-grow"]);
+        title.SetInnerText("This is a Dummy Title");
+        subtitle.SetInnerText("And this is a dummy sub-title");
+        super.MakeElement(null, title.GetHTMLElement(), new Array(buttonbox), subtitle.GetHTMLElement(), null);
+    }
+}
+
+
+
 class SongQueueTile extends QueueTile
 {
     constructor(queueentryid, MDBSong, MDBAlbum, MDBArtist, buttonbox)

@@ -47,6 +47,14 @@ class MusicDBControls extends Element
     }
 
 
+    UpdateButton(button, text, tooltip, state)
+    {
+        button.SetInnerText(text);
+        button.SetTooltip(tooltip);
+        button.SetData("state", state);
+    }
+
+
     SetAudioStatus(state) // "playing"/"stopped"
     {
         if(typeof this.predictiontimeoutid === "number")
@@ -56,17 +64,15 @@ class MusicDBControls extends Element
             return; // Status is already set
         }
 
+        let playbutton = this.controls["audio"].playbutton
+
         if(state == "playing")
         {
-            this.controls["audio"].playbutton.textContent   = "Pause Audio Stream";
-            this.controls["audio"].playbutton.title         = "Pause audio streaming on server side for all clients";
-            this.controls["audio"].playbutton.dataset.state = "stop";
+            this.UpdateButton(playbutton, "Pause Audio Stream", "Pause audio streaming on server side for all clients", "stop");
         }
         else if(state == "stopped")
         {
-            this.controls["audio"].playbutton.textContent   = "Play Audio Stream";
-            this.controls["audio"].playbutton.title         = "Continue audio streaming on server side for all clients";
-            this.controls["audio"].playbutton.dataset.state = "play";
+            this.UpdateButton(playbutton, "Play Audio Stream", "Continue audio streaming on server side for all clients", "play");
         }
     }
     SetVideoStatus(state) // "playing"/"stopped"
@@ -78,17 +84,15 @@ class MusicDBControls extends Element
             return; // Status is already set
         }
 
+        let playbutton = this.controls["video"].playbutton
+
         if(state == "playing")
         {
-            this.controls["video"].playbutton.textContent   = "Pause Video Stream";
-            this.controls["video"].playbutton.title         = "Pause video streaming for all clients";
-            this.controls["video"].playbutton.dataset.state = "stop";
+            this.UpdateButton(playbutton, "Pause Video Stream", "Pause video streaming for all clients", "stop");
         }
         else if(state == "stopped")
         {
-            this.controls["video"].playbutton.textContent   = "Play Video Stream";
-            this.controls["video"].playbutton.title         = "Continue video streaming for all clients";
-            this.controls["video"].playbutton.dataset.state = "play";
+            this.UpdateButton(playbutton, "Play Video Stream", "Continue video streaming for all clients", "play");
         }
     }
 
@@ -99,7 +103,7 @@ class MusicDBControls extends Element
     {
         // To be more responsive, directly update the button state and do not wait on the servers response
         // The server response that finally sets the actual state.
-        let btnstate = this.controls[mode].playbutton.dataset.state;
+        let btnstate = this.controls[mode].playbutton.GetData("state");
         let newstate;
 
         // Assume new state
@@ -130,56 +134,48 @@ class MusicDBControls extends Element
 
     onPredictionFailed(mode, predictedstate)
     {
-        this.controls[mode].playbutton.textContent   = "Play/Pause Failed!";
-        this.controls[mode].playbutton.title         = "Connection to MusicDB Server lost";
-        this.controls[mode].playbutton.dataset.state = "error";
+        let playbutton = this.controls[mode].playbutton
+        this.UpdateButton(playbutton, "Play/Pause Failed!", "Connection to MusicDB Server lost", "error");
         return;
     }
 
 
 
-    _CreateControls(type)
+    _CreateControls(streamtype)
     {
         let controls   = new Object();
+        let streamname;
+        let musicname;
+        if(streamtype === "audio")
+        {
+            streamname = "Audio";
+            musicname  = "Song";
+        }
+        else if(streamtype === "video")
+        {
+            streamname = "Video";
+            musicname  = "Video";
+        }
+        else
+        {
+            window.console?.error(`type must be "audio" or "video". Typed was "${type}"!`);
+            return;
+        }
 
         // Create Play/Pause Button
-        let playbutton = document.createElement("div");
-        playbutton.dataset.state = "unknown";
-        playbutton.classList.add("playbutton");
-        if(type == "audio")
-        {
-            playbutton.textContent = "Play/Pause Audio Stream";
-            playbutton.title       = "Update Audio Stream State";
-            playbutton.onclick     = (event) => {this.onPlayPause("audio");};
-        }
-        else if(type == "video")
-        {
-            playbutton.textContent = "Play/Pause Video Stream";
-            playbutton.title       = "Update Video Stream State";
-            playbutton.onclick     = (event) => {this.onPlayPause("video");};
-        }
+        let playbutton = new Element("div", ["playbutton"]);
+        this.UpdateButton(playbutton, `Play/Pause ${streamname} Stream`, `Update ${streamname} Stream State`, "unknwon");
+        playbutton.element.onclick = (event) => {this.onPlayPause(streamtype);};
         
         // Create Next Button
-        let nextbutton = document.createElement("div");
-        nextbutton.classList.add("nextbutton");
-        if(type == "audio")
-        {
-            nextbutton.textContent = "Next Song";
-            nextbutton.title       = "Play Next Song from Queue";
-            nextbutton.onclick     = (event) => { MusicDB_Call("PlayNextSong"); };
-        }
-        else if(type == "video")
-        {
-            nextbutton.textContent = "Next Video";
-            nextbutton.title       = "Play Next Video from Queue";
-            nextbutton.onclick     = (event) => { MusicDB_Call("PlayNextVideo"); };
-        }
+        let nextbutton = new Element("div", ["nextbutton"]);
+        this.UpdateButton(nextbutton, `Next ${musicname}`, `Play Next ${musicname} from the Queue`, "unknwon");
+        nextbutton.element.onclick = (event) => {queueview.FakeEntrySkipping(); MusicDB_Call(`PlayNext${musicname}`);};
 
         // Put all Buttons Together
-        let element = document.createElement("div");
-        element.classList.add("musicdbcontrols");
-        element.appendChild(playbutton);
-        element.appendChild(nextbutton);
+        let element = new Element("div", ["musicdbcontrols"]);
+        element.AppendChild(playbutton);
+        element.AppendChild(nextbutton);
 
         controls["playbutton"] = playbutton;
         controls["nextbutton"] = nextbutton;
