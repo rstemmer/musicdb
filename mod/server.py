@@ -23,13 +23,21 @@ The start is done in the following steps:
     #. Initialize the server by calling :meth:`mdbapi.Initialize`
     #. Start the websocket server by calling :meth:`mdbapi.StartWebSocketServer`
     #. Create a named pipe (this will be deleted at exit)
+    #. Set SystemD status to ``READY=1``
     #. Enter the event loop by running :meth:`mdbapi.Run`
 
 Read :doc:`/mdbapi/server` for details
 
 Example:
 
-    This example shows the easiest way to start MusicDB Server.
+    The recommended way to start and stop MusicDB is using SystemD:
+
+    .. code-block:: bash
+
+        systemctl start musicdb
+        systemctl stop musicdb
+
+    The following example shows the easiest way to start MusicDB Server.
     The following commands must be called as root. 
     There will appear warnings and errors when ``icecast`` is not running.
 
@@ -49,12 +57,14 @@ Example:
     .. code-block:: bash
 
         echo shutdown > /data/musicdb/musicdb.fifo
+
 """
 
 import traceback
 import argparse
 import atexit
 import logging
+import systemd.daemon
 
 import gi
 gi.require_version('Gst', '1.0')
@@ -114,6 +124,9 @@ class server(MDBModule):
         if retval == False:
             srv.Shutdown()
             return 1
+
+        # Tell SystemD that MusicDB is ready now
+        systemd.daemon.notify("READY=1")
 
         # enter event loop
         srv.Run()

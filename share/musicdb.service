@@ -1,0 +1,19 @@
+# systemd unit file for MusicDB
+
+[Unit]
+Description=MusicDB WebSocket Server
+After=network.target
+
+[Service]
+ExecStart=/usb/bin/env python /opt/muiscdb/server/musicdb server
+Environment=PYTHONUNBUFFERED=1
+Restart=on-failure
+Type=notify
+User=musicdb
+Group=musicdb
+ProtectSystem=full
+
+[Install]
+WantedBy=default.target
+
+# vim: syntax=systemd nospell
