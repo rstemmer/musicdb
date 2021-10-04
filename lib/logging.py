@@ -95,7 +95,7 @@ class MusicDBLogger():
     This class provides the logging management itself and handles the logging configuration.
 
     Args:
-        path (str): A "path" where the logs will be written. Use ``"stdout"`` or ``"stderr"`` to show them on the screen.
+        path (str): A "path" where the logs will be written. Use ``"stdout"`` or ``"stderr"`` to show them on the screen. Use ``"journal"`` to write to SystemDs journal.
         loglevelname (str): Name of the lowest log level that shall be shown: ``"DEBUG"``, ``"INFO"``, ``"WARNING"``, ``"ERROR"`` or ``"CRITICAL"``.
         debugpath (str): Path to a file where everything (DEBUG) shall be logged in. ``None`` for not such a file.
         config: A MusicDB Configuration object that hold the ignore list. If ``None`` the configuration will not be appied.
@@ -108,53 +108,9 @@ class MusicDBLogger():
     loglevelmap["CRITICAL"] = logging.CRITICAL
 
     def __init__(self, logpath="stderr", loglevelname="INFO", debugpath=None, config=None):
-        # configure loglevel
-        loglevelname = loglevelname.upper()
-        loglevel     = MusicDBLogger.loglevelmap[loglevelname]
-
         # create output handler
-        self.handler = []   # list of handler, at least one: stderr. maybe a file for more details
-
-        # primary handler
-        if logpath == "stdout":
-            phandler = logging.StreamHandler(sys.stdout)
-        elif logpath == "stderr":
-            phandler = logging.StreamHandler(sys.stderr)
-        elif logpath == "journal":
-            phandler = journal.JournalHandler(SYSLOG_IDENTIFIER="musicdb")
-        else:
-            phandler = logging.FileHandler(logpath)
-
-        phandler.setLevel(loglevel)
-        self.handler.append(phandler)
-
-
-        # secondary handler
-        if debugpath:
-            shandler = logging.FileHandler(debugpath)
-            shandler.setLevel(logging.DEBUG)
-            self.handler.append(shandler)
-
-
-        # configure formatter
-        if config:
-            self.formatter = MBDLogFormatter(config.log.ignore)
-        else:
-            self.formatter = MBDLogFormatter([])
-
-        for h in self.handler:
-            h.setFormatter(self.formatter)
-
-
-        # Add handler
-        for h in self.handler:
-            logging.root.addHandler(h)
-
-
-        # Show the user where to find the debugging infos
-        if debugpath:
-            logging.debug("logging debugging info in %s", debugpath)
-        logging.debug("setting display-loglevel to \033[1;36m%s", loglevelname)
+        self.handler = []   # list of handler. At least one: stderr. Maybe a file for more details
+        self.Reconfigure(logpath, loglevelname, debugpath, config)
 
 
 
@@ -171,8 +127,18 @@ class MusicDBLogger():
 
 
     def Reconfigure(self, logpath="stderr", loglevelname="DEBUG", debugpath=None, config=None):
-        logging.debug("Reconfiguring logging behaviour")
-        # configure loglevel
+        """
+        This method allows to reconfigure the setting for the MusicDB logger.
+
+        Args:
+            path (str): A "path" where the logs will be written. Use ``"stdout"`` or ``"stderr"`` to show them on the screen. Use ``"journal"`` to write to SystemDs journal.
+            loglevelname (str): Name of the lowest log level that shall be shown: ``"DEBUG"``, ``"INFO"``, ``"WARNING"``, ``"ERROR"`` or ``"CRITICAL"``.
+            debugpath (str): Path to a file where everything (DEBUG) shall be logged in. ``None`` for not such a file.
+            config: A MusicDB Configuration object that hold the ignore list. If ``None`` the configuration will not be appied.
+
+        Returns:
+            *nothing*
+        """
         loglevelname = loglevelname.upper()
         loglevel     = MusicDBLogger.loglevelmap[loglevelname]
 
@@ -205,7 +171,6 @@ class MusicDBLogger():
             shandler.setLevel(logging.DEBUG)
             self.handler.append(shandler)
 
-
         # configure formatter
         if config:
             self.formatter = MBDLogFormatter(config.log.ignore)
@@ -216,24 +181,17 @@ class MusicDBLogger():
             if h:
                 h.setFormatter(self.formatter)
 
-
         # Add handler
         for h in self.handler:
             if h:
                 logging.root.addHandler(h)
-
 
         # Show the user where to find the debugging infos
         if debugpath != None and debugpath != "/dev/null":
             logging.debug("logging debugging info in %s", debugpath)
         logging.debug("setting display-loglevel to \033[1;36m%s", loglevelname)
 
-        return self
-
-
-    def GetLogger(self, name):
-        logger = logging.getLogger(name)
-        return logger
+        return
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
