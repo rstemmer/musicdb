@@ -78,6 +78,7 @@ CheckPythonModuleExistence "PIL"         req # aka pillow
 CheckPythonModuleExistence "tqdm"        req
 CheckPythonModuleExistence "sphinx" opt     # for documentation
 CheckPythonModuleExistence "sphinx-js" opt  # for documentation
+CheckPythonModuleExistence "systemd"
 
 
 # for documentation

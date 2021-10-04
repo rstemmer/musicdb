@@ -7,6 +7,14 @@
 
 Run  git log --oneline  for more details
 
+┍━━━━┫ 2021-??-?? ┣━━━━┫ 8.0.0 ┣━━━━━━━━╍╍
+┝━ MAJOR CHANGES
+│ + [logging] Allow logging to journald
+│ * Solved Issues: 
+│
+┝━ MINOR CHANGES
+└───────────────────────────────────────╌╌
+
 ┍━━━━┫ 2021-10-03 ┣━━━━┫ 7.2.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
 │ + [WebAPI] AddAlbumToQueue allows via optional third parameter to limit the Album to a specific CD

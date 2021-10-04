@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import logging
 import sys
 import os
 import stat
+from systemd import journal
 
 class MBDLogFormatter(logging.Formatter):
     """
@@ -99,16 +100,17 @@ class MusicDBLogger():
         debugpath (str): Path to a file where everything (DEBUG) shall be logged in. ``None`` for not such a file.
         config: A MusicDB Configuration object that hold the ignore list. If ``None`` the configuration will not be appied.
     """
+    loglevelmap = {}
+    loglevelmap["DEBUG"]    = logging.DEBUG
+    loglevelmap["INFO"]     = logging.INFO
+    loglevelmap["WARNING"]  = logging.WARNING
+    loglevelmap["ERROR"]    = logging.ERROR
+    loglevelmap["CRITICAL"] = logging.CRITICAL
+
     def __init__(self, logpath="stderr", loglevelname="INFO", debugpath=None, config=None):
         # configure loglevel
         loglevelname = loglevelname.upper()
-        loglevelmap = {}
-        loglevelmap["DEBUG"]    = logging.DEBUG
-        loglevelmap["INFO"]     = logging.INFO
-        loglevelmap["WARNING"]  = logging.WARNING
-        loglevelmap["ERROR"]    = logging.ERROR
-        loglevelmap["CRITICAL"] = logging.CRITICAL
-        loglevel = loglevelmap[loglevelname]
+        loglevel     = MusicDBLogger.loglevelmap[loglevelname]
 
         # create output handler
         self.handler = []   # list of handler, at least one: stderr. maybe a file for more details
@@ -118,6 +120,8 @@ class MusicDBLogger():
             phandler = logging.StreamHandler(sys.stdout)
         elif logpath == "stderr":
             phandler = logging.StreamHandler(sys.stderr)
+        elif logpath == "journal":
+            phandler = journal.JournalHandler(SYSLOG_IDENTIFIER="musicdb")
         else:
             phandler = logging.FileHandler(logpath)
 
@@ -170,13 +174,7 @@ class MusicDBLogger():
         logging.debug("Reconfiguring logging behaviour")
         # configure loglevel
         loglevelname = loglevelname.upper()
-        loglevelmap = {}
-        loglevelmap["DEBUG"]    = logging.DEBUG
-        loglevelmap["INFO"]     = logging.INFO
-        loglevelmap["WARNING"]  = logging.WARNING
-        loglevelmap["ERROR"]    = logging.ERROR
-        loglevelmap["CRITICAL"] = logging.CRITICAL
-        loglevel = loglevelmap[loglevelname]
+        loglevel     = MusicDBLogger.loglevelmap[loglevelname]
 
         # remove old handlers
         for h in self.handler:
@@ -191,6 +189,8 @@ class MusicDBLogger():
                 phandler = logging.StreamHandler(sys.stdout)
             elif logpath == "stderr":
                 phandler = logging.StreamHandler(sys.stderr)
+            elif logpath == "journal":
+                phandler = journal.JournalHandler(SYSLOG_IDENTIFIER="musicdb")
             else:
                 phandler = logging.FileHandler(logpath)
                 self.SetFilePermissions(logpath) # Set file permission to rw-rw-r-- !

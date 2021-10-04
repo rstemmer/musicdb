@@ -4,3 +4,4 @@ fuzzywuzzy
 autobahn
 tqdm
 pillow
+systemd
