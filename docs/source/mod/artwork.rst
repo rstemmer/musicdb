@@ -2,11 +2,11 @@
 artwork - Artwork Management
 ============================
 
-.. automodule:: mod.artwork
+.. automodule:: musicdb.mod.artwork
 
 class
 -----
 
-.. autoclass:: mod.artwork.artwork
+.. autoclass:: musicdb.mod.artwork.artwork
    :members:
 

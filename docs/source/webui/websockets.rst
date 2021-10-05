@@ -96,7 +96,7 @@ Only when there are no more messages coming without any reason, the watchdog clo
 When the watchdog timer runs to 0, a callback function ``onMusicDBWatchdogBarks`` gets called.
 
 The watchdog does an automatic reconnect to the server when there are no packages coming from the server.
-The MusicDB Server send in a period of several seconds (max 3) the state of the :mod:`mdbapi.audiostream.AudioStreamingThread` to all clients.
+The MusicDB Server send in a period of several seconds (max 3) the state of the :mod:`musicdb.mdbapi.audiostream.AudioStreamingThread` to all clients.
 On Windows systems, packages can be stuck inside Windows internal buffers for a long time (several seconds).
 Keep this in mind when configuring the Watchdog.
 

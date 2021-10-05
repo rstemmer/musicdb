@@ -32,18 +32,18 @@ Base Classes
 Config
 ^^^^^^
 
-.. automodule:: lib.cfg.config
+.. automodule:: musicdb.lib.cfg.config
 
-.. autoclass:: lib.cfg.config.Config
+.. autoclass:: musicdb.lib.cfg.config.Config
    :members:
 
 
 CSVFile
 ^^^^^^^
 
-.. automodule:: lib.cfg.csv
+.. automodule:: musicdb.lib.cfg.csv
 
-.. autoclass:: lib.cfg.csv.CSVFile
+.. autoclass:: musicdb.lib.cfg.csv.CSVFile
    :members:
 
 
@@ -52,39 +52,37 @@ MusicDB Configuration
 
 Detail of the MusicDB Configuration can be found under :doc:`/basics/config`.
 
-.. automodule:: lib.cfg.musicdb
+.. automodule:: musicdb.lib.cfg.musicdb
 
-.. autoclass:: lib.cfg.musicdb.MusicDBConfig
+.. autoclass:: musicdb.lib.cfg.musicdb.MusicDBConfig
    :members:
 
 
 WebUI Configuration
 -------------------
 
-.. automodule:: lib.cfg.webui
+.. automodule:: musicdb.lib.cfg.webui
 
-.. autoclass:: lib.cfg.webui.WebUIConfig
+.. autoclass:: musicdb.lib.cfg.webui.WebUIConfig
    :members:
 
 
 External Storage Configuration
 -------------------------------
 
-.. automodule:: lib.cfg.extern
+.. automodule:: musicdb.lib.cfg.extern
 
-.. autoclass:: lib.cfg.extern.ExternConfig
+.. autoclass:: musicdb.lib.cfg.extern.ExternConfig
    :members:
 
 
 MusicDB State
 -------------
 
-.. automodule:: lib.cfg.mdbstate
+.. automodule:: musicdb.lib.cfg.mdbstate
 
-.. autoclass:: lib.cfg.mdbstate.MDBState
+.. autoclass:: musicdb.lib.cfg.mdbstate.MDBState
    :members:
-
-
 
 
 

@@ -52,82 +52,82 @@ It provides some primitive UI elements documented in this section of the documen
 Text
 ----
 
-.. automodule:: lib.clui.text
+.. automodule:: musicdb.lib.clui.text
 
-.. autoclass:: lib.clui.text.Text
+.. autoclass:: musicdb.lib.clui.text.Text
    :members:
 
 
 Frame
 -----
 
-.. automodule:: lib.clui.frame
+.. automodule:: musicdb.lib.clui.frame
 
-.. autoclass:: lib.clui.frame.Frame
+.. autoclass:: musicdb.lib.clui.frame.Frame
    :members:
 
 
 Pane
 ----
 
-.. automodule:: lib.clui.pane
+.. automodule:: musicdb.lib.clui.pane
 
-.. autoclass:: lib.clui.pane.Pane
+.. autoclass:: musicdb.lib.clui.pane.Pane
    :members:
 
 
 ButtonView
 ----------
 
-.. automodule:: lib.clui.buttonview
+.. automodule:: musicdb.lib.clui.buttonview
 
-.. autoclass:: lib.clui.buttonview.ButtonView
+.. autoclass:: musicdb.lib.clui.buttonview.ButtonView
    :members:
 
 
 ListView
 --------
 
-.. automodule:: lib.clui.listview
+.. automodule:: musicdb.lib.clui.listview
 
-.. autoclass:: lib.clui.listview.ListView
+.. autoclass:: musicdb.lib.clui.listview.ListView
    :members:
 
 
 Dialog
 ------
 
-.. automodule:: lib.clui.dialog
+.. automodule:: musicdb.lib.clui.dialog
 
-.. autoclass:: lib.clui.dialog.Dialog
+.. autoclass:: musicdb.lib.clui.dialog.Dialog
    :members:
 
 
 TextInput
 ---------
 
-.. automodule:: lib.clui.textinput
+.. automodule:: musicdb.lib.clui.textinput
 
-.. autoclass:: lib.clui.textinput.TextInput
+.. autoclass:: musicdb.lib.clui.textinput.TextInput
    :members:
 
-.. autoclass:: lib.clui.textinput.NoTextInput
+.. autoclass:: musicdb.lib.clui.textinput.NoTextInput
    :members:
 
 BoolInput
 ---------
 
-.. automodule:: lib.clui.boolinput
+.. automodule:: musicdb.lib.clui.boolinput
 
-.. autoclass:: lib.clui.boolinput.BoolInput
+.. autoclass:: musicdb.lib.clui.boolinput.BoolInput
    :members:
 
 
 TabGroup
 --------
 
-.. automodule:: lib.clui.tabgroup
+.. automodule:: musicdb.lib.clui.tabgroup
 
-.. autoclass:: lib.clui.tabgroup.TabGroup
+.. autoclass:: musicdb.lib.clui.tabgroup.TabGroup
    :members:
 

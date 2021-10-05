@@ -2,5 +2,5 @@
 genres - Genre Manager with CLUI
 ================================
 
-.. automodule:: mod.genres
+.. automodule:: musicdb.mod.genres
 

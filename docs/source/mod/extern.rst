@@ -2,12 +2,12 @@
 extern - Music File Uploader
 ============================
 
-.. automodule:: mod.extern
+.. automodule:: musicdb.mod.extern
 
 class
 -----
 
-.. autoclass:: mod.extern.extern
+.. autoclass:: musicdb.mod.extern.extern
    :members:
 
 Automatization

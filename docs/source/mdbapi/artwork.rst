@@ -2,19 +2,19 @@
 Artwork Management
 ==========================
 
-.. automodule:: mdbapi.artwork
+.. automodule:: musicdb.mdbapi.artwork
 
 MusicDBArtwork Class
 --------------------
 
-.. autoclass:: mdbapi.artwork.MusicDBArtwork
+.. autoclass:: musicdb.mdbapi.artwork.MusicDBArtwork
    :members:
 
 ArtworkCache Class
 ------------------
 
-.. automodule:: lib.cache
+.. automodule:: musicdb.lib.cache
 
-.. autoclass:: lib.cache.ArtworkCache
+.. autoclass:: musicdb.lib.cache.ArtworkCache
    :members:
 

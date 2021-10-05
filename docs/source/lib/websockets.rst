@@ -10,9 +10,9 @@ As library I use `Autobahn <https://github.com/crossbario/autobahn-python>`_.
 The class *WebSocketServerProtocol* and *WebSocketServerFactory* are base classes from that library.
 The *MusicDBWebSocketInterface* implements the API for the JavaScript clients and is documented under :doc:`/basics/webapi`.
 
-In the following pictures the *blue* elements are related to the :class:`lib.ws.websocket.WebSocket` class.
+In the following pictures the *blue* elements are related to the :class:`musicdb.lib.ws.websocket.WebSocket` class.
 This class abstracts the internals of the *Autobahn* module and provides a low level communication websocket interface.
-The *red* elements to :class:`lib.ws.mdbwsi.MusicDBWebSocketInterface` that implements the high level API the web clients uses.
+The *red* elements to :class:`musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface` that implements the high level API the web clients uses.
 
 The class diagram below shows the Autobahn classes 
 `WebSocketServerProtocol <http://autobahn.readthedocs.io/en/latest/reference/autobahn.asyncio.html#autobahn.asyncio.websocket.WebSocketServerProtocol>`_ 
@@ -53,11 +53,11 @@ The following code may make it a bit more understandable what the *Autobahn* lib
             self.factory          = MusicDBWebSocketFactory()
             self.factory.protocol = MusicDBWebSocketProtocol
 
-The methods ``onWSDisconnect`` and ``onWSConnect`` are called from :class:`lib.ws.websocket.WebSocket` and implemented in :class:`lib.ws.mdbwsi.MusicDBWebSocketInterface`.
-They are used to register the callback functions for the :mod:`mdbapi.stream` and :mod:`mdbapi.songqueue` module.
+The methods ``onWSDisconnect`` and ``onWSConnect`` are called from :class:`musicdb.lib.ws.websocket.WebSocket` and implemented in :class:`musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface`.
+They are used to register the callback functions for the :mod:`musicdb.mdbapi.stream` and :mod:`musicdb.mdbapi.songqueue` module.
 
 The following state machine shows how a connections is processed.
-The :meth:`lib.ws.websocket.WebSocket.SendPacket` and :meth:`lib.ws.websocket.WebSocket.BroadcastPacket` method can be called independed from the clients requests.
+The :meth:`musicdb.lib.ws.websocket.WebSocket.SendPacket` and :meth:`musicdb.lib.ws.websocket.WebSocket.BroadcastPacket` method can be called independent from the clients requests.
 Just be sure the ``onWSConnect`` method was called before.
 Otherwise the mechanics behind won't work.
 
@@ -121,22 +121,22 @@ Otherwise the mechanics behind won't work.
 Websocket Server
 ----------------
 
-.. automodule:: lib.ws.server
+.. automodule:: musicdb.lib.ws.server
 
-.. autoclass:: lib.ws.server.MusicDBWebSocketProtocol
+.. autoclass:: musicdb.lib.ws.server.MusicDBWebSocketProtocol
 
-.. autoclass:: lib.ws.server.MusicDBWebSocketServer
+.. autoclass:: musicdb.lib.ws.server.MusicDBWebSocketServer
    :members:
 
 Websocket Protocol
 ------------------
 
-.. automodule:: lib.ws.websocket
+.. automodule:: musicdb.lib.ws.websocket
 
-.. autoclass:: lib.ws.websocket.MusicDBWebSocketFactory
+.. autoclass:: musicdb.lib.ws.websocket.MusicDBWebSocketFactory
    :members:
 
-.. autoclass:: lib.ws.websocket.WebSocket
+.. autoclass:: musicdb.lib.ws.websocket.WebSocket
    :members:
 
 

@@ -4,7 +4,7 @@ LyCra - Lyrics Crawler
 
 LyCra stands for Lyrics Crawler and provides an environment for crawlers to search for lyrics for songs in the database.
 
-A crawler is a Python script in the crawler directory ``lib/crawler``.
+A crawler is a Python script in the crawler directory ``musicdb/lib/crawler``.
 It is a derived class from :class:`lib.crawlerapi.LycraCrawler` as shown in the class diragram below.
 The name of the crawler file must be exact the same name the class of the crawler has.
 If the crawlers' filename is ``Example.py``, the class definition must be ``class Example(LycraCrawler)``.
@@ -29,8 +29,8 @@ A minimal crawler implementation looks like this:
 
    .. code-block:: python
 
-      from lib.crawlerapi import LycraCrawler
-      from lib.db.lycradb import LycraDatabase
+      from musicdb.lib.crawlerapi import LycraCrawler
+      from musicdb.lib.db.lycradb import LycraDatabase
 
       class Example(LycraCrawler):
           def __init__(self, db):
@@ -42,24 +42,24 @@ A minimal crawler implementation looks like this:
 Lycra API Class
 ---------------
 
-.. automodule:: mdbapi.lycra
+.. automodule:: musicdb.mdbapi.lycra
 
-.. autoclass:: mdbapi.lycra.Lycra
+.. autoclass:: musicdb.mdbapi.lycra.Lycra
    :members:
 
 Crawler Base Class
 ------------------
 
-.. autoclass:: lib.crawlerapi.LycraCrawler
+.. autoclass:: musicdb.lib.crawlerapi.LycraCrawler
    :members:
 
 
 Lycra Database
 --------------
 
-.. automodule:: lib.db.lycradb
+.. automodule:: musicdb.lib.db.lycradb
 
-.. autoclass:: lib.db.lycradb.LycraDatabase
+.. autoclass:: musicdb.lib.db.lycradb.LycraDatabase
    :members:
 
 

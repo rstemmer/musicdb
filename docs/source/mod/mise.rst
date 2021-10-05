@@ -2,11 +2,11 @@
 mise - Micro Search Engine
 ==========================
 
-.. automodule:: mod.mise
+.. automodule:: musicdb.mod.mise
 
 class
 -----
 
-.. autoclass:: mod.mise.mise
+.. autoclass:: musicdb.mod.mise.mise
    :members:
 

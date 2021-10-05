@@ -2,5 +2,5 @@
 tags - MusicDB Tag Manager
 ============================
 
-.. automodule:: mod.tags
+.. automodule:: musicdb.mod.tags
 

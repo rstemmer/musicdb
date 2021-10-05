@@ -73,6 +73,6 @@ The following example shows a template of a module:
 
 Its base class is as simple as the following:
 
-.. literalinclude:: ../../../lib/modapi.py
+.. literalinclude:: ../../../musicdb/lib/modapi.py
 
 

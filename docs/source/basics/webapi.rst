@@ -236,13 +236,13 @@ See the related documentation of the event sources for more details
 Server side API
 ---------------
 
-.. automodule:: lib.ws.mdbwsi
+.. automodule:: musicdb.lib.ws.mdbwsi
 
 
 Artists
 ^^^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members: GetArtists,
       GetArtistsWithAlbums,
       GetFilteredArtistsWithVideos
@@ -250,7 +250,7 @@ Artists
 Albums
 ^^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members:   GetAlbums,
       GetHiddenAlbums,
       GetSortedAlbumCDs,
@@ -262,7 +262,7 @@ Albums
 Songs
 ^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members:   GetSong,
       AddSongToQueue,
       AddRandomSongToQueue,
@@ -276,7 +276,7 @@ Songs
 Videos
 ^^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members:   GetVideos,
       GetVideo,
       AddVideoToQueue,
@@ -295,7 +295,7 @@ Videos
 Queue
 ^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members:   GetSongQueue,
       GetVideoQueue,
       AddSongToQueue,
@@ -310,7 +310,7 @@ Queue
 Tag related
 ^^^^^^^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
    :members:   GetTags,
       GetTagsStatistics,
       GetSongTags,
@@ -331,7 +331,7 @@ Tag related
 Lyrics
 ^^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
   :members:    GetSongLyrics,
       GetLyricsCrawlerCache,
       RunLyricsCrawler,
@@ -340,7 +340,7 @@ Lyrics
 Uploading
 ^^^^^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
   :members:    InitiateUpload,
       UploadChunk,
       GetUploads,
@@ -351,7 +351,7 @@ Uploading
 Other
 ^^^^^
 
-.. autoclass:: lib.ws.mdbwsi.MusicDBWebSocketInterface
+.. autoclass:: musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface
   :members:    Find,
       GetAudioStreamState,
       GetVideoStreamState,

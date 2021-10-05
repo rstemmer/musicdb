@@ -2,11 +2,11 @@
 Micro Search Engine
 ===================
 
-.. automodule:: mdbapi.mise
+.. automodule:: musicdb.mdbapi.mise
 
 MusicDBMicroSearchEngine Class
 ------------------------------
 
-.. autoclass:: mdbapi.mise.MusicDBMicroSearchEngine
+.. autoclass:: musicdb.mdbapi.mise.MusicDBMicroSearchEngine
    :members:
 

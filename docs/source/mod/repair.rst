@@ -2,5 +2,5 @@
 repair - Repair Database Entries
 ================================
 
-.. automodule:: mod.repair
+.. automodule:: musicdb.mod.repair
 

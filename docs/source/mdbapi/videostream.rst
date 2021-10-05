@@ -1,13 +1,13 @@
 Video Streaming Server
 ======================
 
-.. automodule:: mdbapi.videostream
+.. automodule:: musicdb.mdbapi.videostream
    :members: StartVideoStreamingThread, StopVideoStreamingThread, VideoStreamingThread
 
 
 Stream Manager Class
 --------------------
 
-.. autoclass:: mdbapi.videostream.VideoStreamManager
+.. autoclass:: musicdb.mdbapi.videostream.VideoStreamManager
    :members:
 

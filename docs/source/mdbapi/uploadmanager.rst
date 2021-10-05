@@ -2,12 +2,12 @@
 Upload Management
 =================
 
-.. automodule:: mdbapi.uploadmanager
+.. automodule:: musicdb.mdbapi.uploadmanager
 
 
 UploadManager Class
 -------------------
 
-.. autoclass:: mdbapi.uploadmanager.UploadManager
+.. autoclass:: musicdb.mdbapi.uploadmanager.UploadManager
    :members:
 

@@ -2,11 +2,11 @@
 MusicDBDatabase
 ===============
 
-.. automodule:: mdbapi.database
+.. automodule:: musicdb.mdbapi.database
 
 MusicDBDatabase Class
 ---------------------
 
-.. autoclass:: mdbapi.database.MusicDBDatabase
+.. autoclass:: musicdb.mdbapi.database.MusicDBDatabase
    :members:
 

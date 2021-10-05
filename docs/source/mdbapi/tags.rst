@@ -1,12 +1,12 @@
 
 MusicDBTags
-==========================
+===========
 
-.. automodule:: mdbapi.tags
+.. automodule:: musicdb.mdbapi.tags
 
 MusicDBTags Class
--------------------
+-----------------
 
-.. autoclass:: mdbapi.tags.MusicDBTags
+.. autoclass:: musicdb.mdbapi.tags.MusicDBTags
    :members:
 

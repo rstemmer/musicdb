@@ -1,12 +1,12 @@
 MusicDB video Queue
 ===================
 
-.. automodule:: mdbapi.videoqueue
+.. automodule:: musicdb.mdbapi.videoqueue
 
 
 Video Queue Class
-----------------
+-----------------
 
-.. autoclass:: mdbapi.videoqueue.VideoQueue
+.. autoclass:: musicdb.mdbapi.videoqueue.VideoQueue
    :members:
 

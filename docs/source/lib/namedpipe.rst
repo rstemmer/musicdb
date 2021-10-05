@@ -2,12 +2,12 @@
 NamedPipe
 =========
 
-.. automodule:: lib.namedpipe
+.. automodule:: musicdb.lib.namedpipe
 
 NamedPipe Class
 ---------------
 
-.. autoclass:: lib.namedpipe.NamedPipe
+.. autoclass:: musicdb.lib.namedpipe.NamedPipe
    :members:
 
 

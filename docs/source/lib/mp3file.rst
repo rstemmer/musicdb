@@ -9,11 +9,11 @@ MP3 File Interface
 
    What this module does is now done by :doc:`/lib/mp3stream`.
 
-.. automodule:: lib.stream.mp3file
+.. automodule:: musicdb.lib.stream.mp3file
 
 MP3File Class
 -------------
 
-.. autoclass:: lib.stream.mp3file.MP3File
+.. autoclass:: musicdb.lib.stream.mp3file.MP3File
    :members:
 
