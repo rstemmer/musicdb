@@ -116,7 +116,7 @@ def CheckConfiguration(configpath):
 
 
 
-if __name__ == "__main__":
+def main():
     ReadVersion()
     print("\033[1;31mMusicDB [\033[1;34m" + VERSION + "\033[1;31m]\033[0m")
 
@@ -248,6 +248,10 @@ if __name__ == "__main__":
     exitcode = modobj.MDBM_Main(args)
     exit(exitcode)
 
+
+
+if __name__ == "__main__":
+    main()
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
