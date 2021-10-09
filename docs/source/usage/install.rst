@@ -22,6 +22,40 @@ The following sections describe how to install MusicDB and its dependencies.
    Major updates change the configuration file and the database scheme.
 
 
+Installation via pacman
+-----------------------
+
+For Arch Linux, a package is provided that can be installed via ``pacman``.
+Download the latest MusicDB package and execute the following commands.
+To make the web interface accessible ``apache`` is used as web server.
+Any other web server can be used as well.
+Finally Icecast is used to provide an SSL secured audio stream.
+This step is optional.
+
+.. warning::
+
+   In Germany, password protecting the audio stream is mandatory for legal reasons (GEMA),
+   if the stream is accessible from the internet.
+
+.. code-block:: bash
+
+   # Install MusicDB
+   pacman -U musicdb-$version-any.pkg.tar.zst
+   systemctl start musicdb
+   systemctl enable musicdb
+
+   # Setup web server for the front end
+   pacman -S apache
+   echo "Include conf/extra/musicdb.conf" > /etc/httpd/conf/httpd.conf
+   systemctl start httpd
+   systemctl enable httpd
+
+   # Setup Icecast for secure audio streaming
+   pacman -S icecast
+   # TODO
+
+
+
 Installation (Automatic)
 ------------------------
 
