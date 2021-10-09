@@ -9,11 +9,17 @@ Run  git log --oneline  for more details
 
 ┍━━━━┫ 2021-??-?? ┣━━━━┫ 8.0.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
+│ * MusicDB got off of /opt and now lives in the system like any other application
+│       -> Expects all your path settings need to be reviewed
+│ + [musicdb] SystemD can now be used to start/stop the server
+│ + [musicdb] Can now be installed via pacman
 │ + [logging] Allow logging to journald
-│ * Solved Issues: 
+│ * Solved Issues: #68
 │
 ┝━ MINOR CHANGES
+│ * [metadata] Uses mutagen instead of mutagenx module
 └───────────────────────────────────────╌╌
+
 
 ┍━━━━┫ 2021-10-03 ┣━━━━┫ 7.2.0 ┣━━━━━━━━╍╍
 ┝━ MAJOR CHANGES
