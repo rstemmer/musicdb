@@ -24,9 +24,9 @@
 import logging
 import os
 import subprocess
-from mutagenx.flac  import FLAC
-from mutagenx.mp3   import MP3
-from mutagenx.mp4   import MP4
+from mutagen.flac  import FLAC
+from mutagen.mp3   import MP3
+from mutagen.mp4   import MP4
 from musicdb.lib.filesystem import Filesystem
 
 class MetaTags(object):
@@ -39,7 +39,7 @@ class MetaTags(object):
 
     def __init__(self, root="/"):
         self.fs         = Filesystem(root)
-        self.file       = None      # the mutagenx file handler/object
+        self.file       = None      # the mutagen file handler/object
         self.ftype      = None      # contains the identifier of the filetype (m4a, mp3, flac)
         self.extension  = None      # contains the actual file extension
         self.path       = None      # contains the full path of the file for debugging
@@ -120,6 +120,7 @@ class MetaTags(object):
         else:
             self.path = None
             raise ValueError("Unsupported file-type %s"%(self.ftype))
+        #print(self.file)
 
 
     def GetAllMetadata(self):
@@ -194,7 +195,7 @@ class MetaTags(object):
                 return True
 
             elif self.ftype == "m4a":
-                artwork = self.file[b"covr"][0]
+                artwork = self.file["covr"][0]
                 with open(imgfilename, "wb") as img:
                     img.write(artwork)
                 return True
@@ -224,7 +225,13 @@ class MetaTags(object):
         """
         try:
             if self.ftype == "m4a" or self.ftype == "m4v":
-                return self.file[b"\xa9nam"][0]
+                if "©nam" in self.file:
+                    return self.file["©nam"][0]
+                elif "sonm" in self.file:
+                    return self.file["sonm"][0]
+                else:
+                    logging.debug("File \"%s\" does not have a song name", self.path)
+                    return None
 
             elif self.ftype == "mp3":
                 name = self.file["TIT2"][0]
@@ -255,8 +262,10 @@ class MetaTags(object):
             The album name as string, or ``None`` if entry does not exist
         """
         if self.ftype == "m4a" or self.ftype == "m4v":
-            if b"\xa9alb" in self.file:
-                return self.file[b"\xa9alb"][0]
+            if "©alb" in self.file:
+                return self.file["©alb"][0]
+            elif "soal" in self.file:
+                return self.file["soal"][0]
             else:
                 logging.debug("File \"%s\" does not have an albumname", self.path)
                 return None
@@ -294,7 +303,15 @@ class MetaTags(object):
         """
         try:
             if self.ftype == "m4a" or self.ftype == "m4v":
-                return self.file[b"\xa9ART"][0]
+                if "©ART" in self.file:
+                    return self.file["©ART"][0]
+                elif "aART" in self.file:
+                    return self.file["aART"][0]
+                elif "soar" in self.file:
+                    return self.file["soar"][0]
+                else:
+                    logging.debug("File \"%s\" does not have an artist name", self.path)
+                    return None
 
             elif self.ftype == "mp3":
                 name = self.file["TPE1"][0]
@@ -325,7 +342,7 @@ class MetaTags(object):
         date = 0
         try:
             if self.ftype == "m4a" or self.ftype == "m4v":
-                date = self.file[b"\xa9day"][0]
+                date = self.file["©day"][0]
                 date = date.split("-")[0]   # get just the year
 
             elif self.ftype == "mp3":
@@ -369,7 +386,7 @@ class MetaTags(object):
         number = 0
         if self.ftype == "m4a":
             try:
-                number = self.file[b"disk"][0][0]
+                number = self.file["disk"][0][0]
             except KeyError as e:
                 number = 0
 
@@ -397,7 +414,7 @@ class MetaTags(object):
         number = 0
         try:
             if self.ftype == "m4a":
-                number = self.file[b"trkn"][0][0]
+                number = self.file["trkn"][0][0]
 
             elif self.ftype == "mp3":
                 number = self.file["TRCK"][0]
@@ -443,15 +460,15 @@ class MetaTags(object):
         """
         # check m4a
         if self.ftype == "m4a" or self.ftype == "m4v":
-            if b"----:com.apple.iTunes:iTunNORM" in self.file:
+            if "----:com.apple.iTunes:iTunNORM" in self.file:
                 return "iTunes"
-            if b"----:com.apple.iTunes:iTunSMPB" in self.file:
+            if "----:com.apple.iTunes:iTunSMPB" in self.file:
                 return "iTunes"
-            if b"apID" in self.file:
+            if "apID" in self.file:
                 return "iTunes"
 
-            if b"\xa9cmt" in self.file:
-                comment = self.file[b"\xa9cmt"][0]
+            if "©cmt" in self.file:
+                comment = self.file["©cmt"][0]
                 comment = comment.lower()
                 index   = comment.find("bandcamp")
                 return "bandcamp"

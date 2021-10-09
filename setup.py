@@ -50,7 +50,7 @@ setuptools.setup(
         install_requires= [
             "autobahn",
             "systemd",
-            "mutagenx",
+            "mutagen",
             "python-Levenshtein",
             "fuzzywuzzy",
             "pillow",
