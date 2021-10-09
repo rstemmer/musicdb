@@ -37,7 +37,7 @@ DEFAULTCONFIGFILE = "/etc/musicdb.ini"
 
 
 def LoadAllModules():
-    moddir = os.path.join(os.path.dirname(sys.argv[0]), "mod")
+    moddir = os.path.join(os.path.dirname(__file__), "mod")
 
     # Get a list of all modules (a tuple (name, path))
     fs = Filesystem(moddir)
@@ -47,6 +47,9 @@ def LoadAllModules():
     # Load all modules
     modules = {}
     for modulename, modulepath in modulefiles:
+        if modulename == "__init__":
+            continue
+
         try:
             spec = importlib.util.spec_from_file_location(modulename, modulepath)
         except Exception as e:
