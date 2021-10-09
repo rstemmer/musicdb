@@ -30,6 +30,7 @@ cp -r share             $tmp
 cp -r sql               $tmp
 cp    README.md         $tmp
 cp    LICENSE           $tmp
+cp    VERSION           $tmp
 cp    CHANGELOG         $tmp
 cp    setup.py          $tmp
 cp    pyproject.toml    $tmp

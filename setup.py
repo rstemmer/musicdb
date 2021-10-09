@@ -7,7 +7,7 @@ import sys
 SOURCEDIR=os.path.dirname(__file__)
 
 def ReadVersion():
-    versionpath = "./musicdb/VERSION"
+    versionpath = SOURCEDIR + "/VERSION"
     with open(versionpath, "r") as versionfile:
         firstline = versionfile.readline()
 
@@ -46,7 +46,6 @@ setuptools.setup(
                     ],
                 },
         package_data={
-            "": ["VERSION"],
             },
         install_requires= [
             "autobahn",

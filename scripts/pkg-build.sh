@@ -15,6 +15,10 @@ oldwd=$(pwd)
 cd $repository
 
 tmp=/tmp/mkpkg
+if [[ -d $tmp ]] ; then
+    rm -r $tmp
+fi
+
 SRCDEST=$tmp BUILDDIR=$tmp PKGDEST=./dist makepkg
 rm -r $tmp
 
