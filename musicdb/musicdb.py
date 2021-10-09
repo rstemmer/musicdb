@@ -31,24 +31,9 @@ from musicdb.maintain.configuration   import ConfigurationMaintainer
 from musicdb.maintain.musicdatabase   import MusicDatabaseMaintainer
 from musicdb.maintain.trackerdatabase import TrackerDatabaseMaintainer
 
-
-VERSION = None
+VERSION = "8.0.0"
 
 DEFAULTCONFIGFILE = "/etc/musicdb.ini"
-
-
-def ReadVersion():
-    global VERSION
-    versionpath = os.path.join(os.path.dirname(sys.argv[0]), "VERSION")
-
-    try:
-        with open(versionpath, "r") as versionfile:
-            firstline = versionfile.readline()
-
-        VERSION = firstline.split("-")[0].strip()
-    except:
-        VERSION = "x.x.x"
-
 
 
 def LoadAllModules():
@@ -117,7 +102,6 @@ def CheckConfiguration(configpath):
 
 
 def main():
-    ReadVersion()
     print("\033[1;31mMusicDB [\033[1;34m" + VERSION + "\033[1;31m]\033[0m")
 
     # Generate argument parser
