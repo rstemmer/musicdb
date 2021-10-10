@@ -30,6 +30,7 @@ from musicdb.lib.logging        import MusicDBLogger
 from musicdb.maintain.configuration   import ConfigurationMaintainer
 from musicdb.maintain.musicdatabase   import MusicDatabaseMaintainer
 from musicdb.maintain.trackerdatabase import TrackerDatabaseMaintainer
+from musicdb.maintain.sslcert         import CertificateTools
 
 VERSION = "8.0.0"
 
@@ -102,6 +103,30 @@ def CheckConfiguration(configpath):
         configuration.Upgrade()
     return None
 
+
+def CheckCertificate(keypath, certpath):
+    certtool = CertificateTools(keypath, certpath)
+    logging.info("Checking \033[0;36mWebSocket TLS Certificates")
+
+    # Check if they exist. Create new if not.
+    if not certtool.CheckExistence():
+        logging.warning("Certificate (%s or %s) missing! - New certificate will be created …", keypath, certpath)
+        if not certtool.Create():
+            logging.critical("Creating new certificates failed! \033[1;30m(Read the documentation for creating a certificate manually)")
+            return False
+        return True
+
+    # Check permissions
+    if not certtool.CheckPermissions():
+        logging.warning("Invalid permissions detected. Trying to fix them …")
+        if not certtool.UpdatePermissions():
+            logging.critical("Unable to update the permissions. The current file permissions are not secure! Please update them to \"musicdb:musicdb r--r-----\"")
+            return False
+        return True
+
+    return True
+
+        
 
 
 def main():
@@ -197,6 +222,11 @@ def main():
     else:
         loglevel = config.log.loglevel
     log.Reconfigure(logfile, loglevel, debugfile, config)
+
+
+    # Check if everything is right with the TLS certificates
+    if not CheckCertificate(config.tls.key, config.tls.cert):
+        exit(1) # The function already provides a meaningful error message
 
 
     # Get module name that shall be executed
