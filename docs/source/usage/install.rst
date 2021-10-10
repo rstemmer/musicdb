@@ -46,7 +46,7 @@ This step is optional.
 
    # Setup web server for the front end
    pacman -S apache
-   echo "Include conf/extra/musicdb.conf" > /etc/httpd/conf/httpd.conf
+   echo "Include conf/extra/musicdb.conf" >> /etc/httpd/conf/httpd.conf
    systemctl start httpd
    systemctl enable httpd
 
