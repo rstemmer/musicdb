@@ -21,6 +21,7 @@ import importlib.util
 import os
 import sys
 import grp
+import pwd
 import logging
 from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
@@ -104,7 +105,7 @@ def CheckConfiguration(configpath):
     return None
 
 
-def CheckCertificate(keypath, certpath):
+def AssertCertificate(keypath, certpath):
     certtool = CertificateTools(keypath, certpath)
     logging.info("Checking \033[0;36mWebSocket TLS Certificates")
 
@@ -126,11 +127,56 @@ def CheckCertificate(keypath, certpath):
 
     return True
 
-        
+
+
+def AssertUserID(expecteduser=None):
+    """
+    Check if MusicDB runs as the right user.
+    If expecteduser is a string, the user as which MusicDB was started must be that user.
+    Otherwise it is just checked that MusicDB does not run as root.
+
+    If something is not correct, a meaningful error message gets printed to stderr.
+    Then the whole application gets exited with exit code 1.
+
+    Returns:
+        *Nothing*
+    """
+    userid   = os.geteuid()
+    pwdentry = pwd.getpwuid(userid)
+    username = pwdentry.pw_name
+    if username == "root":
+        print("\033[1;31mMusicDB got executed as \033[1;33mroot\033[1;31m! \033[1;30m(Please run MusicDB as user)", file=sys.stderr)
+        exit(1)
+    if expecteduser != None and expecteduser != username:
+        print("\033[1;31mMusicDB got executed as user \033[1;33m%s\033[1;31m but should have been executed as user \033[1;32m%s\033[1;31m! \033[1;30m(Please run MusicDB as %s)"%(username, expecteduser, expecteduser), file=sys.stderr)
+        exit(1)
+    return
+
+
+
+def AssertGroupID():
+    """
+    If MusicDB was not executed with the group ``musicdb`` this group will be set as effective group.
+    If it fails, MusicDB gets exit with error code 1 and a meaningful error message
+
+    Returns:
+        *Nothing*
+    """
+    gid   = os.getegid()
+    group = grp.getgrgid(gid)
+    gname = group.gr_name
+    if gname != "musicdb":
+        print("\033[1;31mMusicDB runs in UNIX group \033[1;33m%s\033[1;31m but expects group \033[1;32m%s\033[1;33m."%(gname, "musicdb"), file=sys.stderr)
+        print("\033[1;30m\tTo change the group, run \033[0;32mnewgrp %s\033[1;30m before executing MusicDB\033[0m"%("musicdb"), file=sys.stderr)
+        exit(1)
+    return
+
 
 
 def main():
     print("\033[1;31mMusicDB [\033[1;34m" + VERSION + "\033[1;31m]\033[0m")
+
+    AssertUserID()
 
     # Generate argument parser
     argparser = argparse.ArgumentParser(description="Universal MusicDB command line tool")
@@ -195,12 +241,7 @@ def main():
 
 
     # Check for effective group and print a warning when it is not MusicDB
-    gid   = os.getegid()
-    group = grp.getgrgid(gid)
-    gname = group[0]
-    if gname != config.music.group:
-        print("\033[1;33mMusicDB runs in UNIX group \033[1;31m%s\033[1;33m but expects group \033[1;37m%s\033[1;33m."%(gname, config.music.group))
-        print("\033[1;30m\tTo change the group, run \033[0;37mnewgrp %s\033[1;30m before executing MusicDB\033[0m"%(config.music.group))
+    AssertGroupID()
 
 
     # reconfigure logger
@@ -224,17 +265,19 @@ def main():
     log.Reconfigure(logfile, loglevel, debugfile, config)
 
 
-    # Check if everything is right with the TLS certificates
-    if not CheckCertificate(config.tls.key, config.tls.cert):
-        exit(1) # The function already provides a meaningful error message
-
-
     # Get module name that shall be executed
     try:
         modulename = args.module
     except:
         argparser.print_help()
         exit(1)
+
+
+    # The server requires a bit more attention if everything is secure
+    # If something is wrong, MusicDB exits with error code 1
+    if modulename == "server":
+        AssertUserID("musicdb")
+        AssertCertificate(config.tls.key, config.tls.cert)
 
 
     # get, check and open the database from path
