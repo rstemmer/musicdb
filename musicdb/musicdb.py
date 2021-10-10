@@ -114,7 +114,8 @@ def AssertCertificate(keypath, certpath):
         logging.warning("Certificate (%s or %s) missing! - New certificate will be created …", keypath, certpath)
         if not certtool.Create():
             logging.critical("Creating new certificates failed! \033[1;30m(Read the documentation for creating a certificate manually)")
-            return False
+            print("Creating new certificates failed! \033[1;30m(Read the documentation for creating a certificate manually)", file=sys.stderr)
+            exit(1)
         return True
 
     # Check permissions
@@ -122,7 +123,8 @@ def AssertCertificate(keypath, certpath):
         logging.warning("Invalid permissions detected. Trying to fix them …")
         if not certtool.UpdatePermissions():
             logging.critical("Unable to update the permissions. The current file permissions are not secure! Please update them to \"musicdb:musicdb r--r-----\"")
-            return False
+            print("Unable to update the permissions. The current file permissions are not secure! Please update them to \"musicdb:musicdb r--r-----\"", file=sys.stderr)
+            exit(1)
         return True
 
     return True
