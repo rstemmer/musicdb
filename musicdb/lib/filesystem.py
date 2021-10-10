@@ -18,6 +18,7 @@ import os
 import shutil
 import logging
 import subprocess
+from pathlib import Path
 
 
 class Filesystem(object):
@@ -169,7 +170,7 @@ class Filesystem(object):
             xpath (str): A relative or absolute path to a directory
 
         Returns:
-            ``True`` if the directory exists, otherwise ``False``.
+            ``True`` if the file exists, otherwise ``False``.
         """
         abspath = self.AbsolutePath(xpath)
 
@@ -420,6 +421,58 @@ class Filesystem(object):
 
 
 
+    def GetOwner(self, xpath: str) -> tuple[str,str]:
+        """
+        This method returns the owner of a file or directory.
+        The owner is a tuple of a UNIX user and group as string
+
+        Args:
+            xpath (str): Path to the file or directory
+
+        Returns:
+            A tuple (user, group) to which the file belongs to
+
+        Example:
+
+            .. code-block:: python
+
+                fs = Filesystem("/tmp")
+                user,group = fs.GetOwner("testfile.txt")
+        """
+        abspath  = self.AbsolutePath(xpath)
+        filepath = Path(abspath)
+        user  = filepath.owner()
+        group = filepath.group()
+        return (user, group)
+
+
+
+    def GetMode(self, xpath: str) -> int:
+        """
+        This method returns the mode of a file.
+        The mode consists of the ``stat`` attributes as listed in :meth:`~SetAttributes`.
+
+        Only the first four octal digits will be returned.
+
+        Args:
+            xpath (str): Path to the file or directory
+
+        Returns:
+            A tuple (user, group) to which the file belongs to
+
+        Example:
+
+            .. code-block:: python
+
+                fs = Filesystem("/tmp")
+                mode = fs.GetMode("testfile.txt")
+        """
+        abspath  = self.AbsolutePath(xpath)
+        mode     = os.stat(abspath)
+        return mode.st_mode & 0o7777
+
+
+
     def SetAttributes(self, xpath, owner, group, mode):
         """
         This method sets attributes for a file or directory.
@@ -458,7 +511,7 @@ class Filesystem(object):
             mode: Access permissions
 
         Returns:
-            ``None``
+            ``False`` when updating the mode or ownership fails
 
         Example:
 
@@ -478,10 +531,18 @@ class Filesystem(object):
         """
         abspath = self.AbsolutePath(xpath)
         if mode != None:
-            os.chmod(abspath, mode)
+            try:
+                os.chmod(abspath, mode)
+            except PermissionError as e:
+                logging.error("Setting mode of %s to %s failed with error %s", abspath, oct(mode), str(e))
+                return False
         if owner != None and group != None:
-            shutil.chown(abspath, owner, group)
-        return None
+            try:
+                shutil.chown(abspath, owner, group)
+            except PermissionError as e:
+                logging.error("Setting ownership of %s to %s:%s failed with error %s", abspath, owner, group, str(e))
+                return False
+        return True
 
 
 
