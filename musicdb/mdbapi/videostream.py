@@ -249,7 +249,7 @@ def VideoStreamingThread():
     It is expected that all clients stop playing the current video if ``isstreaming`` is set to ``Flase``.
     In case it is set to ``True``, all clients that were used to play the videos continue playing the current video.
     """
-    from mdbapi.tracker import VideoTracker
+    from musicdb.mdbapi.tracker import VideoTracker
 
     global Config
     global RunThread

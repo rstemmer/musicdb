@@ -249,8 +249,8 @@ def AudioStreamingThread():
 
     The ``TimeChanged`` event gets triggered approximately every second.
     """
-    from lib.stream.icecast import IcecastInterface
-    from mdbapi.tracker     import SongTracker
+    from musicdb.lib.stream.icecast import IcecastInterface
+    from musicdb.mdbapi.tracker     import SongTracker
 
     global Config
     global RunThread
