@@ -5,12 +5,18 @@ Description=MusicDB WebSocket Server
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/musicdb server
 Environment=PYTHONUNBUFFERED=1
-Restart=on-failure
+ExecStart=/usr/bin/musicdb server
+
 Type=notify
+NotifyAccess=main
+
 User=musicdb
 Group=musicdb
+
+Restart=on-failure
+RestartSec=10
+
 ProtectSystem=full
 
 [Install]
