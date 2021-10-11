@@ -38,7 +38,7 @@ class MusicDBWebSocketFactory(WebSocketServerFactory):
     def __init__(self):
         WebSocketServerFactory.__init__(self)
         logging.debug("Using WebSocket module " + str(self.server))
-        from mdbapi.server import cfg
+        from musicdb.mdbapi.server import cfg
 
         self.openHandshakeTimeout   = cfg.websocket.opentimeout
         self.closeHandshakeTimeout  = cfg.websocket.closetimeout
