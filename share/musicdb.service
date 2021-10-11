@@ -5,7 +5,7 @@ Description=MusicDB WebSocket Server
 After=network.target
 
 [Service]
-ExecStart=/usb/bin/env python /opt/muiscdb/server/musicdb server
+ExecStart=/usr/bin/musicdb server
 Environment=PYTHONUNBUFFERED=1
 Restart=on-failure
 Type=notify
