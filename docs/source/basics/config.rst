@@ -178,13 +178,6 @@ cuttime (integer, time in minutes):
    the relationship gets ignored.
 
 
-lycra
------
-
-dbpath (path to file):
-   Path to the database the lyrics will be cached at
-
-
 Icecast
 -------
 

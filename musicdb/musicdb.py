@@ -78,7 +78,7 @@ def LoadAllModules():
 
 
 
-def AssertDatabases(musicdbpath, trackerdbpath, lycradbpath, validate=False):
+def AssertDatabases(musicdbpath, trackerdbpath, validate=False):
     logging.info("Checking \033[0;36mDatabases")
     # 2nd argument is the expected version number
     musicdbmaintainer   = MusicDatabaseMaintainer(  musicdbpath,   5)
@@ -326,14 +326,14 @@ def main():
         AssertUserID("musicdb") # only musicdb is allowed to run the websocket server
         datadirmaintainer.Validate()
         AssertCertificate(config.tls.key, config.tls.cert)
-        AssertDatabases(databasepath, config.tracker.dbpath, config.lycra.dbpath, validate=True)
+        AssertDatabases(databasepath, config.tracker.dbpath, validate=True)
     else:
         success = datadirmaintainer.Check()
         if not success:
             logging.critical("Data directory structure invalid!")
             logging.critical("\tRun MusicDB at least once via \033[1;37msystemctl start musicdb")
             exit(1)
-        AssertDatabases(databasepath, config.tracker.dbpath, config.lycra.dbpath, validate=False)
+        AssertDatabases(databasepath, config.tracker.dbpath, validate=False)
 
 
     try:

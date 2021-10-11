@@ -13,6 +13,7 @@ Run  git log --oneline  for more details
 │       -> Expects all your path settings need to be reviewed
 │ * Missing data directories, files and databases will be created when the server gets started
 │ * Invalid ownership and permissions of files and sub-directories will be fixed when the server gets started
+│ - [lycra] Lyrics Crawler feature removed (Data quality was bad, feature was never used)
 │ + [musicdb] SystemD can now be used to start/stop the server
 │ + [musicdb] Can now be installed via pacman
 │ + [logging] Allow logging to journald

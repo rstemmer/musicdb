@@ -85,8 +85,6 @@ class EXTERN:
     pass
 class TRACKER:
     pass
-class LYCRA:
-    pass
 class ICECAST:
     pass
 class LOG:
@@ -217,11 +215,6 @@ class MusicDBConfig(Config):
         self.tracker = TRACKER()
         self.tracker.dbpath         = self.GetFile( "tracker",  "dbpath",       "/opt/musicdb/data/tracker.db")
         self.tracker.cuttime        = self.Get(int, "tracker",  "cuttime",      "30")
-
-
-        # [lycra]
-        self.lycra = LYCRA()
-        self.lycra.dbpath           = self.GetFile( "lycra",    "dbpath",       "/opt/musicdb/data/lycra.db")
 
 
         # [Icecast]

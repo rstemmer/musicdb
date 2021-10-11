@@ -99,8 +99,6 @@ Tag related
 Lyrics
 
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetSongLyrics`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetLyricsCrawlerCache`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RunLyricsCrawler`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SetSongLyrics`
 
 Uploading
@@ -138,7 +136,6 @@ from musicdb.lib.cfg.mdbstate   import MDBState
 from musicdb.lib.cfg.webui      import WebUIConfig
 from musicdb.lib.filesystem     import Filesystem
 import os
-from musicdb.mdbapi.lycra       import Lycra
 from musicdb.mdbapi.database    import MusicDBDatabase
 from musicdb.mdbapi.mise        import MusicDBMicroSearchEngine
 from musicdb.mdbapi.tags        import MusicDBTags
@@ -319,10 +316,6 @@ class MusicDBWebSocketInterface(object):
             retval = self.GetVideoRelationship(args["videoid"])
         elif fncname == "GetSongLyrics":
             retval = self.GetSongLyrics(args["songid"])
-        elif fncname == "GetLyricsCrawlerCache":
-            retval = self.GetLyricsCrawlerCache(args["songid"])
-        elif fncname == "RunLyricsCrawler":
-            retval = self.RunLyricsCrawler(args["songid"])
         elif fncname == "LoadWebUIConfiguration":
             retval = self.LoadWebUIConfiguration()
         elif fncname == "FindNewContent":
@@ -2653,58 +2646,7 @@ class MusicDBWebSocketInterface(object):
         result["lyrics"]        = self.database.GetLyrics(songid)
         result["lyricsstate"]   = result["song"]["lyricsstate"]
         return result
-    
-    
-    def GetLyricsCrawlerCache(self, songid):
-        """
-        This method returns all cached lyrics for a song.
 
-        A dictionary with two entries gets returned, the *songid* is the same the argument is.
-        The second key is *lyricscache* that holds the values from the lyrics cache.
-        It is a list of dictionaries representing a lyric cache database entry. (See :doc:`/mdbapi/lycra` for details)
-        If there are no cached lyrics, the *lyricscache* entry is ``None``.
-
-        Args:
-            songid (int): ID of the song that lyrics cache shall be returned
-
-        Returns:
-            The songid and a list of cached lyrics.
-        """
-        lycra = Lycra(self.cfg)
-        cache = lycra.GetLyrics(songid)
-        result = {}
-        result["songid"]        = songid
-        result["lyricscache"]   = cache
-        return result
-
-
-    # THIS METHOD MUST BE THREADSAFE!
-    def RunLyricsCrawler(self, songid):
-        """
-        This method starts the process of crawling for lyrics. (See :doc:`/mdbapi/lycra` for details)
-
-        After all available crawler run, the method returns the current lyrics cache.
-        This is identical to :meth:`~musicdb.lib.ws.mdbapi.MusicDBWebSocketInterface.GetLyricsCrawlerCache`.
-
-        Args:
-            songid (int): ID of the song that lyrics cache shall be returned
-
-        Returns:
-            The songid and a list of cached lyrics.
-        """
-        # Get names from separate database to be threadsafe
-        musicdb = MusicDatabase(self.cfg.database.path)
-        song   = musicdb.GetSongById(songid)
-        album  = musicdb.GetAlbumById(song["albumid"])
-        artist = musicdb.GetArtistById(song["artistid"])
-
-        lycra = Lycra(self.cfg)
-        retval= lycra.CrawlForLyrics(artist["name"], album["name"], song["name"], songid)
-        cache = lycra.GetLyrics(songid)
-        result = {}
-        result["songid"]        = songid
-        result["lyricscache"]   = cache
-        return result
 
 
     def SetSongLyrics(self, songid, lyrics, state):
