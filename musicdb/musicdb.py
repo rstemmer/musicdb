@@ -32,6 +32,7 @@ from musicdb.maintain.configuration   import ConfigurationMaintainer
 from musicdb.maintain.musicdatabase   import MusicDatabaseMaintainer
 from musicdb.maintain.trackerdatabase import TrackerDatabaseMaintainer
 from musicdb.maintain.sslcert         import CertificateTools
+from musicdb.maintain.datadirectory   import DataDirectoryMaintainer
 
 VERSION = "8.0.0"
 
@@ -77,21 +78,59 @@ def LoadAllModules():
 
 
 
-def CheckDatabases(musicdbpath, trackerdbpath, lycradbpath):
+def AssertDatabases(musicdbpath, trackerdbpath, lycradbpath, validate=False):
+    logging.info("Checking \033[0;36mDatabases")
     # 2nd argument is the expected version number
     musicdbmaintainer   = MusicDatabaseMaintainer(  musicdbpath,   5)
     trackerdbmaintainer = TrackerDatabaseMaintainer(trackerdbpath, 3)
 
-    logging.info("Checking \033[0;36m%s", musicdbpath)
+    # Validate Databases - Create them if they do not exist
+    if validate:
+        logging.info("Validating database file for \033[0;36m%s", musicdbpath)
+        try:
+            musicdbmaintainer.Validate()
+        except Exception as e:
+            logging.exception("Validating database %s failed with error %s!", musicdbpath, str(e))
+            exit(1)
+
+        logging.info("Validating database file for \033[0;36m%s", trackerdbpath)
+        try:
+            trackerdbmaintainer.Validate()
+        except Exception as e:
+            logging.exception("Validating database %s failed with error %s!", trackerdbpath, str(e))
+            exit(1)
+
+    # Make sure the databases exist
+    fs = Filesystem()
+    if not fs.IsFile(musicdbpath):
+        logging.critical("Database %s missing!", musicdbpath)
+        logging.critical("\tRun MusicDB at least once via \033[1;37msystemctl start musicdb")
+        exit(1)
+
+    if not fs.IsFile(trackerdbpath):
+        logging.critical("Database %s missing!", trackerdbpath)
+        logging.critical("\tRun MusicDB at least once via \033[1;37msystemctl start musicdb")
+        exit(1)
+
+    # Check if Upgrades are required
+    logging.info("Checking database version of \033[0;36m%s", musicdbpath)
     if not musicdbmaintainer.CheckVersion():
         logging.warning("%s is too old!\033[1;34m Upgrading …", musicdbpath)
-        musicdbmaintainer.Upgrade()
+        try:
+            musicdbmaintainer.Upgrade()
+        except Exception as e:
+            logging.exception("Upgrading %s to its latest version failed with error: %s \033[1;30m(Luckily the database has been updated before)", musicdbpath, str(e))
+            exit(1)
 
-    logging.info("Checking \033[0;36m%s", trackerdbpath)
+    logging.info("Checking database version of \033[0;36m%s", trackerdbpath)
     if not trackerdbmaintainer.CheckVersion():
         logging.warning("%s is too old!\033[1;34m Upgrading …", trackerdbpath)
-        trackerdbmaintainer.Upgrade()
-    return None
+        try:
+            trackerdbmaintainer.Upgrade()
+        except Exception as e:
+            logging.exception("Upgrading %s to its latest version failed with error: %s \033[1;30m(Luckily the database has been updated before)", musicdbpath, str(e))
+            exit(1)
+    return True
 
 
 def CheckConfiguration(configpath):
@@ -106,8 +145,8 @@ def CheckConfiguration(configpath):
 
 
 def AssertCertificate(keypath, certpath):
-    certtool = CertificateTools(keypath, certpath)
     logging.info("Checking \033[0;36mWebSocket TLS Certificates")
+    certtool = CertificateTools(keypath, certpath)
 
     # Check if they exist. Create new if not.
     if not certtool.CheckExistence():
@@ -164,6 +203,7 @@ def AssertGroupID():
     Returns:
         *Nothing*
     """
+    logging.debug("Checking if effective group is musicdb")
     gid   = os.getegid()
     group = grp.getgrgid(gid)
     gname = group.gr_name
@@ -242,10 +282,6 @@ def main():
         exit(1)
 
 
-    # Check for effective group and print a warning when it is not MusicDB
-    AssertGroupID()
-
-
     # reconfigure logger
     if args.quiet:
         debugfile = None
@@ -275,26 +311,30 @@ def main():
         exit(1)
 
 
-    # The server requires a bit more attention if everything is secure
-    # If something is wrong, MusicDB exits with error code 1
-    if modulename == "server":
-        AssertUserID("musicdb")
-        AssertCertificate(config.tls.key, config.tls.cert)
+    # Check for effective group and print a warning when it is not MusicDB
+    AssertGroupID()
 
 
     # get, check and open the database from path
     databasepath = config.database.path
 
-    if not fs.IsFile(databasepath):
-        print("\033[1;31mFATAL ERROR: Invalid database path!\n  " 
-                + databasepath + " is not a file or does not exist!\033[0m")
-        exit(1)
-    if fs.GetFileExtension(databasepath) != "db":
-        print("\033[1;31mFATAL ERROR: Invalid database path!\n  " 
-                + databasepath + " has an unexpected extension!\033[0m (.db expected)")
-        exit(1)
 
-    CheckDatabases(databasepath, config.tracker.dbpath, config.lycra.dbpath)
+    # The server requires a bit more attention if everything is secure
+    # If something is wrong, MusicDB exits with error code 1
+    datadirmaintainer = DataDirectoryMaintainer(config)
+    if modulename == "server":
+        AssertUserID("musicdb") # only musicdb is allowed to run the websocket server
+        datadirmaintainer.Validate()
+        AssertCertificate(config.tls.key, config.tls.cert)
+        AssertDatabases(databasepath, config.tracker.dbpath, config.lycra.dbpath, validate=True)
+    else:
+        success = datadirmaintainer.Check()
+        if not success:
+            logging.critical("Data directory structure invalid!")
+            logging.critical("\tRun MusicDB at least once via \033[1;37msystemctl start musicdb")
+            exit(1)
+        AssertDatabases(databasepath, config.tracker.dbpath, config.lycra.dbpath, validate=False)
+
 
     try:
         database = MusicDatabase(databasepath)

@@ -19,9 +19,126 @@ used by MusicDB.
 """
 
 import logging
+import sqlite3
 from datetime           import datetime
 from musicdb.lib.db.database    import Database
 from musicdb.lib.filesystem     import Filesystem
+
+
+class DatabaseMaintainer(object):
+    """
+    This class is a base class for maintaining MusicDB databases.
+
+    Args:
+        databasepath (str): Absolute path to the database to check/upgrade
+        version (int): Expected version of the database
+
+    Raises:
+        TypeError: When *version* is not an integer
+    """
+    def __init__(self, databasepath, version):
+        self.databasepath = databasepath
+        self.version      = version
+        self.filesystem   = Filesystem()
+        self.databasetool = None
+
+
+
+    def GetDatabaseTool(self):
+        """
+        This method returns an instance of the :class:`~DatabaseTools` class to access the database.
+        If the database does not exists yet, ``None`` is returned.
+
+        Returns:
+            Instance of the :class:`~DatabaseTools` or ``None``
+        """
+        if not self.filesystem.IsFile(self.databasepath):
+            return None
+
+        if self.databasetool == None:
+            self.databasetool = DatabaseTools(self.databasepath, self.version)
+
+        return self.databasetool
+
+
+
+    def CheckVersion(self) -> bool:
+        """
+        Checks if the version of the database is the latest one via :meth:`DatabaseTools.CheckVersion`
+
+        Returns:
+            ``True`` if the database is valid, ``False`` if not.
+        """
+        databasetool = self.GetDatabaseTool()
+        if databasetool:
+            return databasetool.CheckVersion()
+        else:
+            return False
+
+
+
+    def CreateIfNotExisting(self, sqlscriptpath: str) -> bool:
+        """
+        If the database does not exist, a new database form,
+        for example, ``/usr/share/muiscdb/sql/*.db.sql`` will be created.
+        The full path must be given via ``sqlscriptpath`` parameter
+
+        Args:
+            sqlscriptpath (str): Path to a SQL script that can be executed by ``sqlite3``
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+        """
+        if not self.filesystem.IsFile(self.databasepath):
+            if not self.filesystem.IsFile(sqlscriptpath):
+                logging.error("The database %s does not exist and cannot be created because the scheme %s does not exist as well!", self.databasepath, sqlscriptpath)
+                return False
+
+            logging.info("Creating %s from scheme %s …", self.databasepath, sqlscriptpath)
+            with open(sqlscriptpath) as sqlfile:
+                sqlcommand = sqlfile.read()
+
+            connection = sqlite3.connect(self.databasepath)
+            cursor = connection.cursor()
+            cursor.executescript(sqlcommand)
+
+        return True
+
+
+
+    def ValidateAttributes(self, expuser: str, expgroup: str, expmode: str):
+        """
+        This method check if the database file has the correct ownership and access mode.
+        If not, it will be set.
+
+        Args:
+            expuser (str): Expected UNIX user
+            expgroup (str): Expected UNIX group
+            expmode (int): Expected access mode (for example ``0x664`` for files)
+
+        Returns:
+            *Nothing*
+        """
+        user, group = self.filesystem.GetOwner(self.databasepath)
+        mode        = self.filesystem.GetMode(self.databasepath)
+        success     = True
+
+        if user != expuser:
+            logging.warning("User of %s is %s but should be %s! \033[1;30m(Will be updated)", self.databasepath, user, expuser)
+            success = False
+        if group != expgroup:
+            logging.warning("Group of %s is %s but should be %s! \033[1;30m(Will be updated)", self.databasepath, group, expgroup)
+            success = False
+        if mode != expmode:
+            logging.warning("Access mode of %s is %s but should be %s! \033[1;30m(Will be updated)", self.databasepath, oct(mode), oct(expmode))
+            success = False
+
+        if not success:
+            self.filesystem.SetAttributes(self.databasepath, expuser, expgroup, expmode)
+
+        return
+
+
 
 
 class DatabaseTools(Database):

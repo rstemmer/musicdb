@@ -18,19 +18,38 @@ This module can be used to check and maintain the MusicDB tracker database ``tra
 """
 
 import logging
-from musicdb.maintain.database  import DatabaseTools
+from musicdb.maintain.database  import DatabaseTools, DatabaseMaintainer
 
 
-class TrackerDatabaseMaintainer(DatabaseTools):
+class TrackerDatabaseMaintainer(DatabaseMaintainer):
     """
     This class provides a basic set of tools to check and upgrade the MusicDB tracker databases.
+    This class is derived from :class:`musicdb.maintain.database.DatabaseMaintainer`.
 
     Args:
         databasepath: Absolute path to the main database (tracker.db) to check/upgrade
         version (int): Expected version of the database
     """
     def __init__(self, databasepath, version):
-        DatabaseTools.__init__(self, databasepath, version)
+        DatabaseMaintainer.__init__(self, databasepath, version)
+        self.expuser     = "musicdb"
+        self.expgroup    = "musicdb"
+        self.expmode     = 0o664
+        return
+
+
+
+    def Validate(self):
+        """
+        This method checks if the database exists and checks its file attributes.
+        If the database does not exist, a new database form ``/usr/share/muiscdb/sql/tracker.db.sql`` will be created.
+        Invalid file attributes will be fixed.
+
+        Returns:
+            *Nothing*
+        """
+        self.CreateIfNotExisting("/usr/share/musicdb/sql/tracker.db.sql")
+        self.ValidateAttributes(self.expuser, self.expgroup, self.expmode)
         return
 
 
@@ -43,11 +62,12 @@ class TrackerDatabaseMaintainer(DatabaseTools):
         Returns:
             *Nothing*
         """
-        self.Backup()
+        dbtool = self.GetDatabaseTool()
+        dbtool.Backup()
 
-        actualversion = self.GetActualVersion()
+        actualversion = dbtool.GetActualVersion()
         if actualversion == 2:
-            self.UpgradeTo3()
+            dbtool.UpgradeTo3()
         return
 
 
@@ -56,12 +76,12 @@ class TrackerDatabaseMaintainer(DatabaseTools):
         """
         Creates a new table *videorelations* uses since MusicDB 7.0.0
         """
-        self.CreateTable("videorelations", "id")
-        self.AddColumn("videorelations", "videoida", "INTEGER");
-        self.AddColumn("videorelations", "videoidb", "INTEGER");
-        self.AddColumn("videorelations", "weight  ", "INTEGER", "1");
+        dbtool.CreateTable("videorelations", "id")
+        dbtool.AddColumn("videorelations", "videoida", "INTEGER");
+        dbtool.AddColumn("videorelations", "videoidb", "INTEGER");
+        dbtool.AddColumn("videorelations", "weight  ", "INTEGER", "1");
 
-        self.SetDatabaseVersion(3)
+        dbtool.SetDatabaseVersion(3)
         return
 
 

@@ -9,19 +9,19 @@
 
 
 # arg 1:  the new package version
-post_install() {
-    #install -dm 755 -o musicdb -g musicdb "/var/lib/musicdb"
-
-    ## TODO: Check if directory exists
-    ## What if not? Should exists, otherwise systemd failed creating the home directory for musicdb
-    #sqlite3 "/var/lib/muiscdb/music.db"   < "/usr/share/musicdb/sql/music.db.sql"
-    #sqlite3 "/var/lib/muiscdb/tracker.db" < "/usr/share/musicdb/sql/tracker.db.sql"
-
-    #chmod 664 "/var/lib/muiscdb/music.db"
-    #chmod 664 "/var/lib/muiscdb/tracker.db"
-    #chown musicdb:musicdb "/var/lib/muiscdb/music.db"
-    #chown musicdb:musicdb "/var/lib/muiscdb/tracker.db"
-}
+#post_install() {
+#    #install -dm 755 -o musicdb -g musicdb "/var/lib/musicdb"
+#
+#    ## TODO: Check if directory exists
+#    ## What if not? Should exists, otherwise systemd failed creating the home directory for musicdb
+#    #sqlite3 "/var/lib/muiscdb/music.db"   < "/usr/share/musicdb/sql/music.db.sql"
+#    #sqlite3 "/var/lib/muiscdb/tracker.db" < "/usr/share/musicdb/sql/tracker.db.sql"
+#
+#    #chmod 664 "/var/lib/muiscdb/music.db"
+#    #chmod 664 "/var/lib/muiscdb/tracker.db"
+#    #chown musicdb:musicdb "/var/lib/muiscdb/music.db"
+#    #chown musicdb:musicdb "/var/lib/muiscdb/tracker.db"
+#}
 
 
 ## arg 1:  the new package version
