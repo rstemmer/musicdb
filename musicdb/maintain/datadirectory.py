@@ -43,7 +43,7 @@ class DataDirectoryMaintainer(object):
         # Collect all sub-directories
         self.subdirpaths = []
         self.AddDirectory(self.config.server.statedir, "musicdb", "musicdb", 0o755)
-        self.AddDirectory("/var/lib/musicdb/webui",    "musicdb", "musicdb", 0o755) # TODO: -> Configuration file
+        self.AddDirectory("/var/lib/musicdb/webdata",  "musicdb", "musicdb", 0o755) # TODO: -> Configuration file
         self.AddDirectory(self.config.artwork.path,    "musicdb", "musicdb", 0o775) # TODO include sub directories
         self.AddDirectory(self.config.uploads.path,    "musicdb", "musicdb", 0o750)
 
@@ -51,7 +51,7 @@ class DataDirectoryMaintainer(object):
         self.filepaths = []
         self.AddFile(self.config.server.webuiconfig,            "musicdb", "musicdb", 0o664, "/usr/share/musicdb/webui.ini")
         self.AddFile(self.config.artwork.path + "/default.jpg", "musicdb", "musicdb", 0o644, "/usr/share/musicdb/default.jpg")
-        self.AddFile("/var/lib/musicdb/webui/config.js",        "musicdb", "musicdb", 0o664, "/usr/share/musicdb/config.js")
+        self.AddFile("/var/lib/musicdb/webdata/config.js",      "musicdb", "musicdb", 0o664, "/usr/share/musicdb/config.js")
 
 
     def AddDirectory(self, expectedpath, user, group, mode):
