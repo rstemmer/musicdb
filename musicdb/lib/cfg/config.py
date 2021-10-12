@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 # MusicDB,  a music manager with web-bases UI that focus on music.
 # Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
@@ -256,29 +254,6 @@ class Config(configparser.ConfigParser, object):
         self.Save() # save after every change… necessary because there are no reliable destructors in python
 
 
-if __name__ == "__main__":
-    import sys
-
-    try:
-        filename = str(sys.argv[1])
-        section  = str(sys.argv[2])
-        item     = str(sys.argv[3])
-    except:
-        print("args: filename section item [default]")
-        exit(1)
-    
-    default  = None
-    try:
-        default = str(sys.argv[4])
-    except:
-        pass
-        
-    try:
-        config = Config(filename)
-        value  = config.Get(str, section, item, default)
-        print(value)
-    except Exception as e:
-        print(e, file=stderr)
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
