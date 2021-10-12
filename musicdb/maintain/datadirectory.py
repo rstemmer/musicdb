@@ -38,6 +38,7 @@ class DataDirectoryMaintainer(object):
         self.config     = config
         self.filesystem = Filesystem()
         # TODO: Use user name and group from config
+        # TODO: Make paths configurable
 
         # Collect all sub-directories
         self.subdirpaths = []
@@ -50,6 +51,7 @@ class DataDirectoryMaintainer(object):
         self.filepaths = []
         self.AddFile(self.config.server.webuiconfig,            "musicdb", "musicdb", 0o664, "/usr/share/musicdb/webui.ini")
         self.AddFile(self.config.artwork.path + "/default.jpg", "musicdb", "musicdb", 0o644, "/usr/share/musicdb/default.jpg")
+        self.AddFile("/var/lib/musicdb/webui/config.js",        "musicdb", "musicdb", 0o664, "/usr/share/musicdb/config.js")
 
 
     def AddDirectory(self, expectedpath, user, group, mode):

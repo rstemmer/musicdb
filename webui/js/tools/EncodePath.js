@@ -42,7 +42,7 @@ function EncodeArtworkPath(imgpath, scaling)
         }
     }
 
-    let encpath = encodeURI         ("artwork/" + subdir + path);
+    let encpath = encodeURI         ("data/artwork/" + subdir + path);
     let encname = encodeURIComponent(name);
     return encpath + encname;
 }
