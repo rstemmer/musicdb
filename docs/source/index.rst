@@ -202,30 +202,40 @@ Other tools and Libraries
 
 There are lots of tools used by MusicDB's modules.
 Whenever a method or function uses an external program, it is mentioned in the documentation.
-Some of them are developed by myself:
 
-``ID3Edit``:
+``ID3Edit`` (optional):
    Is a tool that is used by MusicDB to edit and repair `ID3 Tags (no HTTPS) <http://id3.org/>`_ in mp3-files.
    Type ``id3edit --help`` for a short help. There is no more documentation yet, sorry.
    Source code can be found at `GitHub <https://github.com/rstemmer/id3edit>`__
 
-``libprinthex``:
+``libprinthex`` (optional):
    Supports ID3Edit with fancy hexadecimal outputs for debugging invalid ID3 tags.
    Source code and documentation can be found at `GitHub <https://github.com/rstemmer/libprinthex>`__
+
+``FFmpeg`` (mandatory):
+   Used for analyzing music files. `FFmpeg <https://www.ffmpeg.org/>`_ is used a lot by MusicDB for collecting
+   all kind of information (like meta data or play-time) from music files.
+   This is a mandatory dependency.
+
+``gstreamer`` (mandatory):
+   The `gstreamer <https://gstreamer.freedesktop.org/>`_ framework is used for providing the audio stream of music.
+   It is used as interface to `Icecast <https://icecast.org/>`_.
+
+``Icecast`` (optional, but highly recommended):
+  `Icecast <https://icecast.org/>`_ is a streaming service that not just allows to provide an audio stream.
+  It also come with user management and encryption so that the audio stream can be made private.
+
+``SQLite`` (mandatory):
+   All databases used and maintained by MusicDB are managed via `SQLite <sqlite>`_.
 
 
 Third Party Resources
 ---------------------
 
-The following free third party components are included in MusicDB:
+The following free third party components are included in MusicDB WebUI:
 
-   * `jQuery 3 <https://jquery.com/>`_
-   * `jQuery UI <https://jqueryui.com/>`_
-   * `jQuery nanoScroller.js <https://jamesflorentino.github.io/nanoScrollerJS/>`_
-   * `Silkscreen <https://www.kottke.org/plus/type/silkscreen/index.html>`_
    * `Source Sans Pro <https://github.com/adobe-fonts/source-sans-pro>`_ and `Source Serif Pro <https://github.com/adobe-fonts/source-serif-pro>`_
    * `DejaVuSans <https://github.com/dejavu-fonts/dejavu-fonts>`_
-   * `Font Awesome <https://fontawesome.io/>`_
 
 
 Indices and tables
