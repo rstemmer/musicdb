@@ -144,6 +144,23 @@ def CheckConfiguration(configpath):
     return None
 
 
+def AssertMusicDirectory(path):
+    """
+    - Check if directory exists
+    - Check if there is R/W access to the music directory (group permission)
+    """
+    fs = Filesystem("/")
+    if not fs.IsDirectory(path):
+        logging.critical("Music directory %s does not exist! Update path in configuration or create new music directory.", path)
+        exit(1)
+
+    user, group = fs.GetOwner(path)
+    if group != "musicdb":
+        logging.critical("Music directory %s does not belong to the UNIX group \"musicdb\". MusicDB needs to have permission to manage the music directory")
+        exit(1)
+    return
+
+
 def AssertCertificate(keypath, certpath):
     logging.info("Checking \033[0;36mWebSocket TLS Certificates")
     certtool = CertificateTools(keypath, certpath)
@@ -313,6 +330,7 @@ def main():
 
     # Check for effective group and print a warning when it is not MusicDB
     AssertGroupID()
+    AssertMusicDirectory(config.music.path)
 
 
     # get, check and open the database from path
