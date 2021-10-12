@@ -181,6 +181,22 @@ JavaScript is simply not the right language for such a complex application.
    webui/*
 
 
+MusicDB Maintaining Modules
+===========================
+
+The MusicDB Maintaining Modules take care that the file structure, databases and configurations
+will stay valid.
+With these modules, missing information will be created and invalid settings detected.
+With each start of the MusicDB back-end, these modules check if the environment MusicDB is running in is still valid.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Maintain Modules
+   :glob:
+
+   maintain/*
+
+
 Other tools and Libraries
 =========================
 
