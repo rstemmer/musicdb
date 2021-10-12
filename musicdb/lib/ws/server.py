@@ -40,9 +40,13 @@ class MusicDBWebSocketProtocol(WebSocket, MusicDBWebSocketInterface):
     The server should create a new connection but will not call the ``onWSConnect`` method.
     """
     def __init__(self):
-        WebSocket.__init__(self)
-        MusicDBWebSocketInterface.__init__(self)
-        logging.info("New protocolobject created for connection.")
+        try:
+            WebSocket.__init__(self)
+            MusicDBWebSocketInterface.__init__(self)
+        except Exception as e:
+            logging.exception("Creating new protocol object failed with exception %s", str(e))
+            raise e
+        logging.info("New protocol object created for connection.")
 
 
 class MusicDBWebSocketServer(object):
