@@ -23,6 +23,6 @@ RestartSec=10
 ProtectSystem=full
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
 
 # vim: syntax=systemd nospell
