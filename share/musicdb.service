@@ -4,6 +4,9 @@
 Description=MusicDB WebSocket Server
 After=network.target
 
+Wants=icecast.service
+After=icecast.service
+
 [Service]
 Environment=PYTHONUNBUFFERED=1
 ExecStart=/usr/bin/musicdb server
