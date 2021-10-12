@@ -153,7 +153,7 @@ class MusicDBWebSocketInterface(object):
 
     def __init__(self):
         # Import global variables from the server
-        from mdbapi.server import database, mise, cfg
+        from musicdb.mdbapi.server import database, mise, cfg
         self.database   = database
         self.mise       = mise
         self.cfg        = cfg
