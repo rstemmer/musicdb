@@ -60,6 +60,7 @@ from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.pidfile        import *
 from musicdb.lib.namedpipe      import NamedPipe
+from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.ws.server      import MusicDBWebSocketServer
 from musicdb.mdbapi.mise        import MusicDBMicroSearchEngine
 from musicdb.mdbapi.audiostream import StartAudioStreamingThread, StopAudioStreamingThread
@@ -78,6 +79,55 @@ pipe        = None  # Named pipe for server commands
 tlswsserver = None
 shutdown    = False
 
+
+def SendSignalToServer(signum):
+    """
+    .. warning::
+
+        This method requires root privileges!
+
+    This method can be used by any MusicDB module to send a signal to the MusicDB server.
+    The signals are listen in the `Python Signal Module <https://docs.python.org/3/library/signal.html>`_.
+
+    .. Example:
+
+        .. code-block:: python
+
+            import signal
+            from musicdb.mdbapi.server import SendSignal
+
+            SendSignalToServer(signal.SIGUSR1)  # Trigger server cache refesh
+
+    The bash-equivalent of this call is:
+
+    .. code-block:: bash
+
+        systemctl kill -s $signum --kill-who=main musicdb.service
+
+    Args:
+        signum (Signals): A signal as listed in the `Python Signal Module <https://docs.python.org/3/library/signal.html>`_
+
+    Returns:
+        *Nothing*
+    """
+    fs = Filesystem()
+    try:
+        logging.debug("Sending signal %i to musicdb.service", signum)
+        fs.Execute(["systemctl", "kill", "-s", str(signum), "--kill-who=main", "musicdb.service"])
+    except ChildProcessError as e:
+        logging.error("Sending signal %i to musicdb.service failed with error: %s", signum, str(e))
+    return 
+
+
+def SendRefreshSignalToServer():
+    """
+    Calls :meth:`~SendSignalToServer` with the signal ``signal.SIGUSR1`` which makes the server to refresh its caches.
+    """
+    SendSignalToServer(signal.SIGUSR1)
+
+
+
+
 def SignalHandler(signum, stack):
     """
     This is the general signal handle for the MusicDB Server.
@@ -92,13 +142,16 @@ def SignalHandler(signum, stack):
     if signum == signal.SIGTERM:
         logging.debug("Got signal TERM")
         SIGTERM_Handler()
+    elif signum == signal.SIGUSR1:
+        logging.debug("Got signal USR1")
+        SIGUSR1_Handler()
     else:
         logging.warning("Got unexpected signal %s"%str(signum))
 
 
 def UpdateCaches():
     """
-    This function handles the *refresh* command from the named pipe.
+    This function handles the signal to refresh the server cache.
     Its task is to trigger updating the servers cache and to inform the clients to update.
 
     On server side:
@@ -137,7 +190,6 @@ def UpdateCaches():
         logging.warning("Unexpected error broadcasting a tags-update: %s \033[0;33m(will be ignored)\033[0m", str(e))
 
 
-# Initiate Shutdown
 def SIGTERM_Handler():
     """
     This function is the handler for the system signal TERM.
@@ -146,6 +198,15 @@ def SIGTERM_Handler():
     logging.info("\033[1;36mSIGTERM:\033[1;34m Initiate Shutdown …\033[0m")
     global shutdown
     shutdown = True
+
+
+def SIGUSR1_Handler():
+    """
+    This function is the handler for the system signal USR1.
+    It calls :meth:`~UpdateCaches`
+    """
+    logging.info("\033[1;36mSIGUSR1:\033[1;34m Updating Caches …\033[0m")
+    UpdateCaches()
 
 
 
