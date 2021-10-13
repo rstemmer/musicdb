@@ -22,7 +22,6 @@ The start is done in the following steps:
     #. Initialize the GObject and GStreamer libraries
     #. Initialize the server by calling :meth:`mdbapi.Initialize`
     #. Start the websocket server by calling :meth:`mdbapi.StartWebSocketServer`
-    #. Create a named pipe (this will be deleted at exit)
     #. Set SystemD status to ``READY=1``
     #. Enter the event loop by running :meth:`mdbapi.Run`
 
@@ -36,27 +35,6 @@ Example:
 
         systemctl start musicdb
         systemctl stop musicdb
-
-    The following example shows the easiest way to start MusicDB Server.
-    The following commands must be called as root. 
-    There will appear warnings and errors when ``icecast`` is not running.
-
-    .. code-block:: bash
-
-        musicdb server
-
-    A typical call to start the server as user *musicdb* and to run ``icecast`` is shown in the following example:
-
-    .. code-block:: bash
-
-        icecast -b -c /data/musicdb/icecast/config.xml > /dev/null
-        su -l -c "musicdb --config /data/musicdb/musicdb.ini server" musicdb
-
-    To stop the server, use the named pipe (this can also be done as user):
-
-    .. code-block:: bash
-
-        echo shutdown > /data/musicdb/musicdb.fifo
 
 """
 

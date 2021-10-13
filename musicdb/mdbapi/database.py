@@ -24,7 +24,6 @@ import signal
 from musicdb.lib.fileprocessing import Fileprocessing
 from musicdb.lib.metatags       import MetaTags
 from musicdb.lib.pidfile        import *                    # Check PID File…
-from musicdb.lib.namedpipe      import NamedPipe
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import *
 from musicdb.lib.db.trackerdb   import TrackerDatabase      # To update when a song gets removed
@@ -48,7 +47,6 @@ class MusicDBDatabase(object):
             * :meth:`~AddLyricsFromFile`: Read lyrics from the meta data of a song file into the database
             * :meth:`~UpdateChecksum`: Calculates and adds the checksum of a song file into the database
         * Other
-            * :meth:`~UpdateServerCache`: Signals the WebSocket Server to refresh its internal caches
 
     Args:
         config: MusicDB configuration object
@@ -1314,18 +1312,6 @@ class MusicDBDatabase(object):
         self.db.SetLyrics(song["id"], tagmeta["lyrics"], SONG_LYRICSSTATE_FROMFILE)
         return True
 
-
-
-    def UpdateServerCache(self):
-        """
-        This method signals the MusicDB Websocket Server to update its caches by writing ``refresh`` into its named pipe.
-        This should always be called when there are new artists, albums or songs added to the database.
-
-        Returns:
-            *Nothing*
-        """
-        pipe = NamedPipe(self.cfg.server.fifofile)
-        pipe.WriteLine("refresh")
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

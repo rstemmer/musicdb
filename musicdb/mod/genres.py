@@ -49,6 +49,8 @@ Those positions are not mandatory and will be ignored for sub genres anyway.
 Updating Caches
 ---------------
 
+TODO: DEPRECATED - This behavior changed in MusicDB 8.0.0
+
 Even if with each change the database gets updated, the WebSocket server and client many have outdated caches.
 To to propagate the changes on the genres to the server and clients, force an cache update writing ``"refresh"`` into MusicDBs fifo file.
 This file can be found in MusicDB's data directory.
@@ -403,11 +405,6 @@ class genres(MDBModule):
     def MDBM_Main(self, args):
 
         self.ShowUI()
-
-        # Update caches with the new tags
-        pipe = NamedPipe(self.cfg.server.fifofile)
-        pipe.WriteLine("refresh")
-
         return 0
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

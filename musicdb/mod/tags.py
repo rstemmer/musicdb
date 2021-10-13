@@ -63,12 +63,15 @@ For the create-command (``-c``) only the ``--set-name`` and the ``--set-parent``
 
 .. note::
 
+    TODO: DEPRECATED - This behavior changed in MusicDB 8.0.0
+
     After changing something, the server or clients my need to update cached tag lists.
     This can be done sending the command ``refresh`` via named pipe to the server.
 
     .. code-block:: bash
 
         echo "refresh" > /data/musicdb/musicdb.fifo
+
 
 Style Guide
 -----------
@@ -93,9 +96,6 @@ Create a new tags (``-c $CLASS``)
 
     # Create a subgenre of Metal
     musicdb tags -c subgenre --set-parent Metal --set-name "Dark Metal"
-
-    # Signal server to force cache updates on server and clients
-    echo "refresh" > /data/musicdb/musicdb.fifo
 
 
 Modify a tag (``-m $CLASS``)

@@ -61,7 +61,7 @@ Adding a Column
 
 When a new column shall be added, the following steps are necessary.
 
-    #. Shutdown the server: ``echo "shutdown" > /data/musicdb/musicdb.fifo``
+    #. Shutdown the server: ``systemctl stop musicdb``
     #. Backup the database: ``sqlite3 music.db .dump > backup/music.db.bak``
     #. Update this file.
     #. Update the SQL file *sql/music.sql*

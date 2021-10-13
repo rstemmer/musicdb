@@ -70,6 +70,8 @@ The following subcommands are provided:
 
 .. attention::
 
+    TODO: DEPRECATED - This behavior changed in MusicDB 8.0.0
+
     While adding a new artist, album or song to the database, the file and directory attributes 
     and ownership gets changed to the configured one in the MusicDB Configuration.
 
@@ -121,11 +123,6 @@ class database(MDBModule, MusicDBDatabase):
         else:
             raise ValueError("Invalid target! Target must be \"artist\", \"album\", \"song\" or \"video\".")
         print("\033[1;32mdone")
-
-        # propagate changes
-        print("\033[1;34mTrying to signal \033[1;36mMusicDB-Server\033[1;34m to update its cache … \033[1;31m", end="")
-        self.UpdateServerCache()
-        print("\033[1;32mdone")
         return None
 
 
@@ -157,11 +154,6 @@ class database(MDBModule, MusicDBDatabase):
         elif target == "video":
             self.UpdateVideo(targetid, path)
         print("\033[1;32mdone")
-
-        # propagate changes
-        print("\033[1;34mTrying to signal \033[1;36mMusicDB-Server\033[1;34m to update its cache … \033[1;31m", end="")
-        self.UpdateServerCache()
-        print("\033[1;32mdone")
         return None
 
 
@@ -188,11 +180,6 @@ class database(MDBModule, MusicDBDatabase):
             self.RemoveSong(song["id"])
         else:
             raise ValueError("Invalid target! Target must be \"artist\", \"album\" or \"song\".")
-        print("\033[1;32mdone")
-
-        # propagate changes
-        print("\033[1;34mTrying to signal \033[1;36mMusicDB-Server\033[1;34m to update its cache … \033[1;31m", end="")
-        self.UpdateServerCache()
         print("\033[1;32mdone")
         return None
 

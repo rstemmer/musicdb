@@ -262,7 +262,6 @@ class MusicDBConfig(Config):
         self.server = SERVER()
         # TODO: REMOVE:
         self.server.pidfile         = self.directories.data + "/musicdb.pid"
-        self.server.fifofile        = self.directories.data + "/musicdb.fifo"
 
 
         # [artwork] # TODO: OLD -> REMOVE

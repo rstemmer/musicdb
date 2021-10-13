@@ -857,7 +857,6 @@ class add(MDBModule, MusicDBDatabase):
             
         if data:
             self.RunImportProcess(data)
-            self.UpdateServerCache()
         else:
             self.cli.ClearScreen()
             self.cli.SetCursor(0,0)

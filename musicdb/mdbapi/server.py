@@ -24,13 +24,8 @@ To start and run the server, the following sequence of function calls is necessa
         StartWebSocketServer()
         Run()
 
-When starting the server, a named pipe gets created at the path set in the configuration file.
-MusicDB Server handles the following commands when written into its named pipe:
 
-    * refresh:  :meth:`~mdbapi.server.UpdateCaches` - Update server caches and inform clients to update their caches
-    * shutdown: :meth:`~mdbapi.server.Shutdown` - Shut down the server
-
-Further more does this module maintain global instances of the following classes.
+This module maintain global instances of the following classes.
 Those objects can be used inside the thread the server runs. 
 Usually the main thread.
 Using these objects saves a lot of memory.
@@ -39,16 +34,6 @@ If the server is not started, the objects are all ``None``.
     * :class:`musicdb.lib.db.musicdb.MusicDatabase` as ``database``
     * :class:`musicdb.mdbapi.mise.MusicDBMicroSearchEngine` as ``mise``
     * :class:`musicdb.lib.cfg.musicdb.MusicDBConfig` as ``cfg``
-
-The following example shows how to use the pipe interface:
-
-    .. code-block:: bash
-
-        # Update caches
-        echo "refresh" > /data/musicdb/musicdb.fifo
-
-        # Terminate server
-        echo "shutdown" > /data/musicdb/musicdb.fifo
 
 """
 
@@ -59,7 +44,6 @@ import signal
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.pidfile        import *
-from musicdb.lib.namedpipe      import NamedPipe
 from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.ws.server      import MusicDBWebSocketServer
 from musicdb.mdbapi.mise        import MusicDBMicroSearchEngine
@@ -74,7 +58,6 @@ import logging
 database    = None  # music.db object
 mise        = None  # micro search engine object
 cfg         = None  # overall configuration file
-pipe        = None  # Named pipe for server commands
 # WS Server
 tlswsserver = None
 shutdown    = False
@@ -224,7 +207,6 @@ def Initialize(configobj, databaseobj):
         #. Start the Audio Streaming Thread via :meth:`musicdb.mdbapi.audiostream.StartAudioStreamingThread` (see :doc:`/mdbapi/audiostream` for details)
         #. Start the Video Streaming Thread via :meth:`musicdb.mdbapi.videostream.StartVideoStreamingThread` (see :doc:`/mdbapi/audiostream` for details)
         #. Update MiSE cache via :meth:`musicdb.mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache`
-        #. Create FIFO file for named pipe
 
     Args:
         configobj: :class:`~musicdb.lib.cfg.musicdb.MusicDBConfig` that gets shared between connections
@@ -270,16 +252,8 @@ def Initialize(configobj, databaseobj):
     mise.UpdateCache()
     
     # Signal Handler
-    # The user shall use the FIFO
     signal.signal(signal.SIGTERM, SignalHandler)
-
-    # Named Pipe
-    global pipe
-    logging.info("Open pipe \033[0;36m(" + cfg.server.fifofile + ")\033[0m")
-    logging.info("\t\033[1;36mrefresh\033[1;34m: Update Caches\033[0m")
-    logging.info("\t\033[1;36mshutdown\033[1;34m: Shutdown Server\033[0m")
-    pipe = NamedPipe(cfg.server.fifofile)
-    pipe.Create()
+    signal.signal(signal.SIGUSR1, SignalHandler)
 
     return None
 
@@ -322,7 +296,6 @@ def Shutdown():
         #. Stopping upload management via :meth:`musicdb.mdbapi.uploadmanager.StopUploadManagementThread`
         #. Stop the Audio Streaming Thread via :meth:`musicdb.mdbapi.audiostream.StopAudioStreamingThread`
         #. Stop the Video Streaming Thread via :meth:`musicdb.mdbapi.videostream.StopVideoStreamingThread`
-        #. Removing FIFO file for named pipe
         #. Stop the websocket server
 
     At the end, the program gets terminated. So, this function gets never left.
@@ -350,10 +323,6 @@ def Shutdown():
         logging.debug("Stopping TLS WS Server…")
         tlswsserver.Stop()
 
-    global pipe
-    logging.debug("Removing named pipe…")
-    pipe.Delete()
-
     # dead end
     global shutdown
     if shutdown:
@@ -374,8 +343,6 @@ def Run():
 
     In as an exception occurs the :meth:`~musicdb.mdbapi.server.Shutdown` gets called, too. In this case the exit-code will be ``1``.
     """
-    global pipe
-
     logging.info("Setup complete. \033[1;37mExecuting server.\033[1;34m")
     # enter event loop
     global tlswsserver
@@ -389,12 +356,6 @@ def Run():
         while True:
             tlswsserver.HandleEvents()
             
-            line = pipe.ReadLine()
-            if line == "shutdown":
-                shutdown = True
-            elif line == "refresh":
-                UpdateCaches()
-
             if shutdown:
                 Shutdown()
 
