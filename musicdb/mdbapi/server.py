@@ -202,7 +202,8 @@ def Initialize(configobj, databaseobj):
     # Start/Connect all interfaces
     logging.debug("Starting Streaming Thread…")
     StartAudioStreamingThread(cfg, database)
-    StartVideoStreamingThread(cfg, database)
+    if not cfg.debug.disablevideos:
+        StartVideoStreamingThread(cfg, database)
     
     logging.debug("Updating MiSE Cache…")
     mise.UpdateCache()
