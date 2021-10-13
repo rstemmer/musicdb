@@ -23,7 +23,6 @@ import stat
 import signal
 from musicdb.lib.fileprocessing import Fileprocessing
 from musicdb.lib.metatags       import MetaTags
-from musicdb.lib.pidfile        import *                    # Check PID File…
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import *
 from musicdb.lib.db.trackerdb   import TrackerDatabase      # To update when a song gets removed

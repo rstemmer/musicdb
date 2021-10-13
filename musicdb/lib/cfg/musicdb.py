@@ -258,12 +258,6 @@ class MusicDBConfig(Config):
         self.extern.songmap         = self.Get(str, "extern",   "songmap",      "songmap.csv")
 
 
-        # [server] # TODO: OLD -> REMOVE
-        self.server = SERVER()
-        # TODO: REMOVE:
-        self.server.pidfile         = self.directories.data + "/musicdb.pid"
-
-
         # [artwork] # TODO: OLD -> REMOVE
         self.artwork = ARTWORK()
         # TODO: REMOVE:

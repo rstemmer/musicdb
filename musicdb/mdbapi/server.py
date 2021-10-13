@@ -43,7 +43,6 @@ import time
 import signal
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
-from musicdb.lib.pidfile        import *
 from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.ws.server      import MusicDBWebSocketServer
 from musicdb.mdbapi.mise        import MusicDBMicroSearchEngine

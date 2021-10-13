@@ -18,7 +18,6 @@ This module starts the MusicDB Websocket Server.
 
 The start is done in the following steps:
 
-    #. Create PID file (this will be deleted at exit)
     #. Initialize the GObject and GStreamer libraries
     #. Initialize the server by calling :meth:`mdbapi.Initialize`
     #. Start the websocket server by calling :meth:`mdbapi.StartWebSocketServer`
@@ -49,7 +48,6 @@ gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 
 from musicdb.lib.modapi  import MDBModule
-from musicdb.lib.pidfile import *    # CreatePIDFile
 import musicdb.mdbapi.server as srv
 
 class server(MDBModule):
@@ -82,10 +80,6 @@ class server(MDBModule):
             logging.warning("Icecast disabled!")
         if self.config.debug.disablevideos:
             logging.warning("Videos disabled!")
-            
-        # Create a PID-File
-        CreatePIDFile(self.config.server.pidfile)                  # needed to work with signals
-        atexit.register(DeletePIDFile, self.config.server.pidfile) # Delete PID file on exit
 
         # Prepare GStreamer
         GObject.threads_init()
