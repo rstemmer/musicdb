@@ -92,14 +92,18 @@ class server(MDBModule):
     def MDBM_Main(self, args):
 
         # Show the user that debugging options are enabled
-        if self.config.debug.disablestats > 0:
+        if self.config.debug.disablestats:
             logging.warning("Collecting statistics disabled!")
-        if self.config.debug.disabletracker > 0:
+        if self.config.debug.disabletracker:
             logging.warning("Tracker disabled!")
-        if self.config.debug.disableai > 0:
+        if self.config.debug.disableai:
             logging.warning("AI disabled!")
-        if self.config.debug.disabletagging > 0:
+        if self.config.debug.disabletagging:
             logging.warning("Tagging disabled!")
+        if self.config.debug.disableicecast:
+            logging.warning("Icecast disabled!")
+        if self.config.debug.disablevideos:
+            logging.warning("Videos disabled!")
             
         # Create a PID-File
         CreatePIDFile(self.config.server.pidfile)                  # needed to work with signals

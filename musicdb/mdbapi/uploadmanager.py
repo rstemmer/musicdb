@@ -149,12 +149,12 @@ def UploadManagementThread():
     global RunThread
     global Tasks
 
-    musicdb    = MusicDatabase(Config.database.path)
-    filesystem = Filesystem(Config.uploads.path)
+    musicdb    = MusicDatabase(Config.files.musicdatabase)
+    filesystem = Filesystem(Config.directories.uploads)
     manager    = UploadManager(Config, musicdb)
 
-    if not Config.uploads.allow:
-        logging.warning("Uploads not allowed! \033[1;30m(See MusicDB Configuration: [uploads]->allow)")
+    if len(Config.uploads.allow) == 0:
+        logging.warning("No Uploads Allowed! \033[1;30m(See MusicDB Configuration: [uploads]->allow)")
 
     # Start streaming …
     while RunThread:
@@ -241,11 +241,11 @@ class UploadManager(object):
 
         self.db         = database
         self.cfg        = config
-        self.uploadfs   = Filesystem(self.cfg.uploads.path)
-        self.musicfs    = Filesystem(self.cfg.music.path)
-        self.artworkfs  = Filesystem(self.cfg.artwork.path)
+        self.uploadfs   = Filesystem(self.cfg.directories.uploads)
+        self.musicfs    = Filesystem(self.cfg.directories.music)
+        self.artworkfs  = Filesystem(self.cfg.directories.artwork)
         # TODO: check write permission of all directories
-        self.fileprocessing = Fileprocessing(self.cfg.uploads.path)
+        self.fileprocessing = Fileprocessing(self.cfg.directories.uploads)
         self.dbmanager  = MusicDBDatabase(config, database)
 
         global Tasks
@@ -376,10 +376,10 @@ class UploadManager(object):
         """
         taskid = task["id"]
         data = json.dumps(task)
-        path = self.cfg.uploads.path + "/tasks/" + taskid + ".json"
+        path = self.cfg.directories.uploads + "/tasks/" + taskid + ".json"
 
         if not self.uploadfs.IsDirectory("tasks"):
-            logging.debug("tasks directory missing. Creating \"%s\"", self.cfg.uploads.path + "/tasks")
+            logging.debug("tasks directory missing. Creating \"%s\"", self.cfg.directories.uploads + "/tasks")
             self.uploadfs.CreateSubdirectory("tasks")
 
         with open(path, "w+") as fd:
@@ -404,7 +404,7 @@ class UploadManager(object):
         global Tasks
         Tasks = {}
         for taskfilename in taskfilenames:
-            taskpath = self.cfg.uploads.path + "/tasks/" + taskfilename
+            taskpath = self.cfg.directories.uploads + "/tasks/" + taskfilename
 
             if self.uploadfs.GetFileExtension(taskpath) != "json":
                 continue
@@ -467,14 +467,17 @@ class UploadManager(object):
         if type(sourcefilename) != str:
             raise TypeError("Source file name must be of type string")
 
-        if not self.cfg.uploads.allow:
+        if len(self.cfg.uploads.allow) == 0:
             self.NotifyClient("InternalError", None, "Uploads deactivated")
             logging.warning("Uploads not allowed! \033[1;30m(See MusicDB Configuration: [uploads]->allow)")
             return
+        if not contenttype in self.cfg.uploads.allow:
+            self.NotifyClient("InternalError", None, "Upload of %s not allowed"%(contenttype))
+            logging.warning("Uploads of %s not allowed! \033[1;30m(See MusicDB Configuration: [uploads]->allow)", contenttype)
 
         fileextension   = self.uploadfs.GetFileExtension(sourcefilename)
         destinationname = contenttype + "-" + checksum + "." + fileextension
-        destinationpath = self.cfg.uploads.path + "/" + destinationname
+        destinationpath = self.cfg.directories.uploads + "/" + destinationname
 
         # TODO: Check if there is already a task with the given ID.
         # If this task is in waitforchunk state, the upload can be continued instead of restarting it.

@@ -91,11 +91,8 @@ Configuration
 
 .. code-block:: ini
 
-    [artwork]
-    path=/data/musicdb/artwork
+    [albumcover]
     scales=50, 150, 500
-    manifesttemplate=/srv/musicdb/manifest.appcache.template
-    manifest=/srv/musicdb/manifest.appcache
 
 
 Manifest
@@ -147,8 +144,8 @@ class MusicDBArtwork(object):
         self.db     = database
         self.cfg    = config
         self.fs     = Filesystem()
-        self.musicroot   = Filesystem(self.cfg.music.path)
-        self.artworkroot = Filesystem(self.cfg.artwork.path)
+        self.musicroot   = Filesystem(self.cfg.directories.music)
+        self.artworkroot = Filesystem(self.cfg.directories.artwork)
 
         # Define the prefix that must be used by the WebUI and server to access the artwork files
         # -> $PREFIX/$Artworkname.jpg
@@ -156,8 +153,8 @@ class MusicDBArtwork(object):
 
         # Check if all paths exist that have to exist
         pathlist = []
-        pathlist.append(self.cfg.music.path)
-        pathlist.append(self.cfg.artwork.path)
+        pathlist.append(self.cfg.directories.music)
+        pathlist.append(self.cfg.directories.artwork)
         pathlist.append(self.cfg.artwork.manifesttemplate)
 
         for path in pathlist:
@@ -165,8 +162,8 @@ class MusicDBArtwork(object):
                 raise ValueError("Path \""+ path +"\" does not exist.")
 
         # Instantiate dependent classes
-        self.meta    = MetaTags(self.cfg.music.path)
-        self.awcache = ArtworkCache(self.cfg.artwork.path)
+        self.meta    = MetaTags(self.cfg.directories.music)
+        self.awcache = ArtworkCache(self.cfg.directories.artwork)
 
 
     def GetArtworkFromFile(self, album, tmpawfile):

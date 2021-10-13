@@ -178,7 +178,7 @@ class SongView(ListView, ButtonView):
         # elements are a tuple (original path, new path)
 
         self.cfg       = config
-        self.fs        = Filesystem(self.cfg.music.path)
+        self.fs        = Filesystem(self.cfg.directories.music)
         self.albumpath = albumpath
 
         self.nameinput   = FileNameInput()
@@ -423,7 +423,7 @@ class add(MDBModule, MusicDBDatabase):
     def GetAlbumMetadata(self, albumpath):
         # get all songs from the albums
         songpaths = self.fs.GetFiles(albumpath, self.cfg.music.ignoresongs) # ignores also all directories
-        metatags  = MetaTags(self.cfg.music.path)
+        metatags  = MetaTags(self.cfg.directories.music)
 
         # Try to load a file
         for songpath in songpaths:
@@ -821,7 +821,7 @@ class add(MDBModule, MusicDBDatabase):
 
         if data["runlyrics"]:
             self.cli.PrintText("\033[1;37mRun Lyrics Import\n")
-            metadata = MetaTags(self.cfg.music.path)
+            metadata = MetaTags(self.cfg.directories.music)
 
             for songtuple in data["songs"]:
                 songpath = songtuple[1]

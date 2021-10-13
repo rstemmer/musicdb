@@ -161,9 +161,9 @@ class MusicDBWebSocketInterface(object):
         # The autobahn framework silently hides all exceptions - that sucks
         # So all possible exceptions must be caught here, so that they can be made visible.
         try:
-            self.fs         = Filesystem(self.cfg.music.path)
+            self.fs         = Filesystem(self.cfg.directories.music)
             self.tags       = MusicDBTags(self.cfg, self.database)
-            self.mdbstate   = MDBState(self.cfg.server.statedir, self.database)
+            self.mdbstate   = MDBState(self.cfg.directories.state, self.database)
             self.audiostream= AudioStreamManager(self.cfg, self.database)
             self.videostream= VideoStreamManager(self.cfg, self.database)
             self.songqueue  = SongQueue(self.cfg, self.database)
@@ -1487,7 +1487,7 @@ class MusicDBWebSocketInterface(object):
         Returns:
             A dictionary with all configurations
         """
-        webuicfg = WebUIConfig(self.cfg.server.webuiconfig)
+        webuicfg = WebUIConfig(self.cfg.files.webuiconfig)
         return webuicfg.LoadConfig()
 
 
@@ -1523,7 +1523,7 @@ class MusicDBWebSocketInterface(object):
         Returns:
             A dictionary with all configurations
         """
-        webuicfg = WebUIConfig(self.cfg.server.webuiconfig)
+        webuicfg = WebUIConfig(self.cfg.files.webuiconfig)
         webuicfg.SaveConfig(config)
         return webuicfg.LoadConfig()
 
@@ -2479,7 +2479,7 @@ class MusicDBWebSocketInterface(object):
                 }
         """
         # get raw relationship
-        trackerdb = TrackerDatabase(self.cfg.tracker.dbpath)
+        trackerdb = TrackerDatabase(self.cfg.files.trackerdatabase)
         results   = trackerdb.GetRelations("song", songid)
         parentsid = songid  # store for return value
 
@@ -2568,7 +2568,7 @@ class MusicDBWebSocketInterface(object):
                 }
         """
         # get raw relationship
-        trackerdb = TrackerDatabase(self.cfg.tracker.dbpath)
+        trackerdb = TrackerDatabase(self.cfg.files.trackerdatabase)
         results   = trackerdb.GetRelations("video", videoid)
         parentsid = videoid  # store for return value
 
@@ -3279,7 +3279,7 @@ class MusicDBWebSocketInterface(object):
             return None
 
         try:
-            trackerdb = TrackerDatabase(self.cfg.tracker.dbpath)
+            trackerdb = TrackerDatabase(self.cfg.files.trackerdatabase)
             trackerdb.RemoveRelation("song", songid, relatedsongid)
         except Exception as e:
             logging.warning("Removing song relations failed with error: %s", str(e))
@@ -3302,7 +3302,7 @@ class MusicDBWebSocketInterface(object):
             return None
 
         try:
-            trackerdb = TrackerDatabase(self.cfg.tracker.dbpath)
+            trackerdb = TrackerDatabase(self.cfg.files.trackerdatabase)
             trackerdb.RemoveRelation("video", videoid, relatedvideoid)
         except Exception as e:
             logging.warning("Removing video relations failed with error: %s", str(e))

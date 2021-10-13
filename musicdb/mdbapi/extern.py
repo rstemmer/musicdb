@@ -172,7 +172,7 @@ class MusicDBExtern(object):
         self.mp     = None
         self.fs     = Filesystem("/")
         self.fileprocessor = Fileprocessing("/")
-        self.artworkcache  = ArtworkCache(self.cfg.artwork.path)
+        self.artworkcache  = ArtworkCache(self.cfg.directories.artwork)
         self.SetMountpoint("/mnt")    # initialize self.mp with the default mount point /mnt
 
 
@@ -593,7 +593,7 @@ class MusicDBExtern(object):
         if forcemp3 and srcextension != ".mp3":
             reldstpath = os.path.splitext(reldstpath)[0] + ".mp3"
 
-        abssrcpath      = os.path.join(self.cfg.music.path, relsrcpath)
+        abssrcpath      = os.path.join(self.cfg.directories.music, relsrcpath)
 
         absdstpath      = os.path.join(self.mp,             musicdir)
         absdstpath      = os.path.join(absdstpath,          reldstpath)
@@ -639,10 +639,10 @@ class MusicDBExtern(object):
                     logging.error("   Artwork: %s", mdbalbum["artworkpath"])
                     return False
 
-                absartworkpath = os.path.join(self.cfg.artwork.path, relartworkpath)
+                absartworkpath = os.path.join(self.cfg.directories.artwork, relartworkpath)
 
             else:
-                absartworkpath = os.path.join(self.cfg.artwork.path, mdbalbum["artworkpath"])
+                absartworkpath = os.path.join(self.cfg.directories.artwork, mdbalbum["artworkpath"])
 
         # copy the file
         if forcemp3 and srcextension != ".mp3":

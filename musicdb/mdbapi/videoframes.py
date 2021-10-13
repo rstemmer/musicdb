@@ -188,17 +188,17 @@ class VideoFrames(object):
         self.db     = database
         self.cfg    = config
         self.fs     = Filesystem()
-        self.musicroot  = Filesystem(self.cfg.music.path)
-        self.framesroot = Filesystem(self.cfg.videoframes.path)
-        self.metadata   = MetaTags(self.cfg.music.path)
+        self.musicroot  = Filesystem(self.cfg.directories.music)
+        self.framesroot = Filesystem(self.cfg.directories.artwork)
+        self.metadata   = MetaTags(self.cfg.directories.music)
         self.maxframes  = self.cfg.videoframes.frames
         self.previewlength = self.cfg.videoframes.previewlength
         self.scales     = self.cfg.videoframes.scales
 
         # Check if all paths exist that have to exist
         pathlist = []
-        pathlist.append(self.cfg.music.path)
-        pathlist.append(self.cfg.videoframes.path)
+        pathlist.append(self.cfg.directories.music)
+        pathlist.append(self.cfg.directories.artwork)
 
         for path in pathlist:
             if not self.fs.Exists(path):

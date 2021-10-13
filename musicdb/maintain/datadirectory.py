@@ -37,21 +37,22 @@ class DataDirectoryMaintainer(object):
     def __init__(self, config):
         self.config     = config
         self.filesystem = Filesystem()
-        # TODO: Use user name and group from config
-        # TODO: Make paths configurable
+        self.user       = self.config.musicdb.username
+        self.group      = self.config.musicdb.groupname
 
         # Collect all sub-directories
         self.subdirpaths = []
-        self.AddDirectory(self.config.server.statedir, "musicdb", "musicdb", 0o755)
-        self.AddDirectory("/var/lib/musicdb/webdata",  "musicdb", "musicdb", 0o755) # TODO: -> Configuration file
-        self.AddDirectory(self.config.artwork.path,    "musicdb", "musicdb", 0o775) # TODO include sub directories
-        self.AddDirectory(self.config.uploads.path,    "musicdb", "musicdb", 0o750)
+        self.AddDirectory(self.config.directories.state,   self.user, self.group, 0o755)
+        self.AddDirectory(self.config.directories.webdata, self.user, self.group, 0o755)
+        self.AddDirectory(self.config.directories.artwork, self.user, self.group, 0o775) # TODO include sub directories
+        self.AddDirectory(self.config.directories.uploads, self.user, self.group, 0o750)
 
         # Collect all files (expected directory, initial file source)
+        sourcedir = self.config.directories.share
         self.filepaths = []
-        self.AddFile(self.config.server.webuiconfig,            "musicdb", "musicdb", 0o664, "/usr/share/musicdb/webui.ini")
-        self.AddFile(self.config.artwork.path + "/default.jpg", "musicdb", "musicdb", 0o644, "/usr/share/musicdb/default.jpg")
-        self.AddFile("/var/lib/musicdb/webdata/config.js",      "musicdb", "musicdb", 0o664, "/usr/share/musicdb/config.js")
+        self.AddFile(self.config.files.webuiconfig,       self.user, self.group, 0o664, sourcedir + "/webui.ini")
+        self.AddFile(self.config.files.defaultalbumcover, self.user, self.group, 0o644, sourcedir + "/default.jpg")
+        self.AddFile(self.config.files.webuijsconfig,     self.user, self.group, 0o664, sourcedir + "/config.js")
 
 
     def AddDirectory(self, expectedpath, user, group, mode):

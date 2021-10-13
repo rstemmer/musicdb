@@ -15,10 +15,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 This module takes care that the state of MusicDB will persist over several sessions.
-This is not done automatically by the :class:`~MDBState` class.
+This is *not done automatically* by the :class:`~MDBState` class.
 Each read or write process to the files that hold the state will be triggered by the classes who manage the related information.
 
-The state is stored in several files in a directory that can be configured via ``[server]->statedir``
+The state is stored in several files in a sub-directory ``state`` inside the MusicDB data directory.
+More details can be found in :doc:`/basics/data`.
 
 All files inside the state directory are managed by the :class:`~MDBState` class.
 The content of those files should not be changed by any user because its content gets not validated.
@@ -86,10 +87,10 @@ class MDBState(Config, object):
 
         self.meta.version = self.Get(int, "meta", "version", 0) # 0 = inf
         if self.meta.version < 2:
-            logging.info("Updating mdbstate/state.ini to version 2")
+            logging.info("Updating %s/state.ini to version 2", path)
             self.Set("meta", "version", 2)
         if self.meta.version < 3:
-            logging.info("Updating mdbstate/state.ini to version 3")
+            logging.info("Updating %s/state.ini to version 3", path)
             self.Set("meta", "version", 3)
             self.Set("MusicDB", "uimode", "audio")
 
@@ -97,7 +98,7 @@ class MDBState(Config, object):
     def ReadList(self, listname):
         """
         Reads a list from the mdbstate directory.
-        The ``listname`` argument defines which file gets read: ``config.server.statedir/listname.csv``.
+        The ``listname`` argument defines which file gets read: ``config.directories.state + "/listname.csv"``.
 
         This method should only be used by class internal methods.
         When a file can not be accessed, an empty list gets returned.
@@ -124,7 +125,7 @@ class MDBState(Config, object):
     def WriteList(self, listname, rows, header=None):
         """
         This method write a list of rows into the related file.
-        The ``listname`` argument defines which file gets written: ``config.server.statedir/listname.csv``.
+        The ``listname`` argument defines which file gets written: ``config.directories.state + "/listname.csv"``.
 
         When there is no header given (list of column names), the keys of the rows-dictionaries are used.
 

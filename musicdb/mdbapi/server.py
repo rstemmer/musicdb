@@ -233,8 +233,11 @@ def StartWebSocketServer():
     global tlswsserver
     tlswsserver = MusicDBWebSocketServer()
     
-    retval = tlswsserver.Setup(cfg.websocket.address, cfg.websocket.port
-            , cfg.tls.cert, cfg.tls.key)
+    retval = tlswsserver.Setup(
+            cfg.websocket.bind,
+            cfg.websocket.port,
+            cfg.websocket.cert,
+            cfg.websocket.key)
     if retval == False:
         logging.critical("Setup for websocket server failed!")
         return False

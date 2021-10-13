@@ -28,7 +28,6 @@ from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
 from musicdb.lib.logging        import MusicDBLogger
 
-from musicdb.maintain.configuration   import ConfigurationMaintainer
 from musicdb.maintain.musicdatabase   import MusicDatabaseMaintainer
 from musicdb.maintain.trackerdatabase import TrackerDatabaseMaintainer
 from musicdb.maintain.sslcert         import CertificateTools
@@ -131,17 +130,6 @@ def AssertDatabases(musicdbpath, trackerdbpath, validate=False):
             logging.exception("Upgrading %s to its latest version failed with error: %s \033[1;30m(Luckily the database has been updated before)", musicdbpath, str(e))
             exit(1)
     return True
-
-
-def CheckConfiguration(configpath):
-    # 2nd argument is the expected version number
-    configuration = ConfigurationMaintainer(configpath, 5)
-
-    logging.info("Checking \033[0;36m%s", configpath)
-    if not configuration.CheckVersion():
-        logging.warning("%s is too old!\033[1;34m Upgrading …", configpath)
-        configuration.Upgrade()
-    return None
 
 
 def AssertMusicDirectory(path):
@@ -283,13 +271,11 @@ def main():
     fs = Filesystem("/")
 
 
-    # open the config file
+    # open the configuration file
     args.config = os.path.abspath(args.config)
     if not fs.IsFile(args.config):
         print("\033[1;31mFATAL ERROR: Config-file does not exist!\033[0m (" + args.config + ")")
         exit(1)
-
-    CheckConfiguration(args.config)
 
     try:
         config = MusicDBConfig(args.config)
@@ -330,11 +316,11 @@ def main():
 
     # Check for effective group and print a warning when it is not MusicDB
     AssertGroupID()
-    AssertMusicDirectory(config.music.path)
+    AssertMusicDirectory(config.directories.music)
 
 
     # get, check and open the database from path
-    databasepath = config.database.path
+    databasepath = config.files.musicdatabase
 
 
     # The server requires a bit more attention if everything is secure
@@ -343,15 +329,15 @@ def main():
     if modulename == "server":
         AssertUserID("musicdb") # only musicdb is allowed to run the websocket server
         datadirmaintainer.Validate()
-        AssertCertificate(config.tls.key, config.tls.cert)
-        AssertDatabases(databasepath, config.tracker.dbpath, validate=True)
+        AssertCertificate(config.websocket.key, config.websocket.cert)
+        AssertDatabases(databasepath, config.files.trackerdatabase, validate=True)
     else:
         success = datadirmaintainer.Check()
         if not success:
             logging.critical("Data directory structure invalid!")
             logging.critical("\tRun MusicDB at least once via \033[1;37msystemctl start musicdb")
             exit(1)
-        AssertDatabases(databasepath, config.tracker.dbpath, validate=False)
+        AssertDatabases(databasepath, config.files.trackerdatabase, validate=False)
 
 
     try:

@@ -257,7 +257,7 @@ def VideoStreamingThread():
     global State
 
     # Create all interfaces that are needed by this Thread
-    musicdb = MusicDatabase(Config.database.path)
+    musicdb = MusicDatabase(Config.files.musicdatabase)
     tracker = VideoTracker(Config)
     queue   = VideoQueue(Config, musicdb)
 

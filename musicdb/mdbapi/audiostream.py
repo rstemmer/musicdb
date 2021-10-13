@@ -258,9 +258,9 @@ def AudioStreamingThread():
     global State
 
     # Create all interfaces that are needed by this Thread
-    musicdb    = MusicDatabase(Config.database.path)
+    musicdb    = MusicDatabase(Config.files.musicdatabase)
     tracker    = SongTracker(Config)
-    filesystem = Filesystem(Config.music.path)
+    filesystem = Filesystem(Config.directories.music)
     queue      = SongQueue(Config, musicdb)
     randy      = Randy(Config, musicdb)
     icecast    = IcecastInterface(

@@ -131,7 +131,7 @@ class VideoQueue(object):
 
         self.db         = database
         self.cfg        = config
-        self.mdbstate   = MDBState(self.cfg.server.statedir, self.db)
+        self.mdbstate   = MDBState(self.cfg.directories.state, self.db)
         self.blacklist  = BlacklistInterface(self.cfg, self.db)
         self.randy      = Randy(self.cfg, self.db)
 

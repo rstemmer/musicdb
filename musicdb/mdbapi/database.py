@@ -68,8 +68,8 @@ class MusicDBDatabase(object):
 
         self.db     = database
         self.cfg    = config
-        self.fs     = Fileprocessing(self.cfg.music.path)
-        self.meta   = MetaTags(self.cfg.music.path)
+        self.fs     = Fileprocessing(self.cfg.directories.music)
+        self.meta   = MetaTags(self.cfg.directories.music)
 
         # -rw-rw-r--
         self.filepermissions= stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP | stat.S_IROTH
@@ -1150,7 +1150,7 @@ class MusicDBDatabase(object):
         Return:
             ``None``
         """
-        tracker = TrackerDatabase(self.cfg.tracker.dbpath)
+        tracker = TrackerDatabase(self.cfg.files.trackerdatabase)
 
         # remove from music.db
         self.db.RemoveSong(songid)

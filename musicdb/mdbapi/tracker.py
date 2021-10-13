@@ -89,7 +89,7 @@ class Tracker(object):
         # When tracking is disabled, don't even instantiate the databases.
         # Tracking is disabled for a reason, so protect the databases as good as possible!
         if not self.disabled:
-            self.trackerdb = TrackerDatabase(config.tracker.dbpath)
+            self.trackerdb = TrackerDatabase(config.files.trackerdatabase)
 
 
 
