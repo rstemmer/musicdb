@@ -137,7 +137,7 @@ class videoframes(MDBModule, VideoFrames):
                 print("\033[1;31mERROR: Video path "+args.video+" does not exist!\033[0m")
                 return 1
 
-        # Update Cache and Manifest
+        # Update Cache
         if args.update:
             if args.video:
                 self.UpdateVideo(args.video)

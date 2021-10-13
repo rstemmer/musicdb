@@ -258,13 +258,6 @@ class MusicDBConfig(Config):
         self.extern.songmap         = self.Get(str, "extern",   "songmap",      "songmap.csv")
 
 
-        # [artwork] # TODO: OLD -> REMOVE
-        self.artwork = ARTWORK()
-        # TODO: REMOVE:
-        self.artwork.manifesttemplate=self.GetFile( "artwork",  "manifesttemplate", "/opt/musicdb/server/manifest.txt")
-        self.artwork.manifest       = self.Get(str, "artwork",  "manifest",     "/opt/musicdb/server/webui/manifest.appcache")
-
-
         # [music] # TODO: OLD -> REMOVE
         # TODO: REMOVE:
         self.music.owner            = self.Get(str, "music",    "owner",        "user")

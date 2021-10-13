@@ -16,7 +16,7 @@
 """
 This module manages the artworks of an album and caches several scaled versions of it.
 
-There are two main options: ``-u`` to update one or all artworks, and the ``-m`` to update the cache manifest for the webui. Updating artwork implies a manifest update.
+The main options is ``-u`` to update one or all artworks.
 
 Iff there is no artwork assigned to the album, this artwork manager tries to extract the artwork from the metadata of a file of an album.
 If there is an artwork assigned, it will only be scaled to resolution it is not already available yet.
@@ -40,12 +40,6 @@ Examples:
     .. code-block:: bash
 
         musicdb artwork --album $Albumpath -u
-
-    Update only the manifest file (Using :meth:`~musicdb.mdbapi.artwork.GenerateAppCacheManifest`)
-
-    .. code-block:: bash
-
-        musicdb artwork -m
 
     For a user-defined artwork (Using :meth:`~musicdb.mod.artwork.artwork.UpdateAlbum`)
 
@@ -79,8 +73,7 @@ class artwork(MDBModule, MusicDBArtwork):
         parser.add_argument("--album",   action="store", type=str, default=None,
                 help="Only update this album")
 
-        parser.add_argument("-m", "--manifest", action="store_true", help="generate a new app-cache-manifest")
-        parser.add_argument("-u", "--update",   action="store_true", help="update artwork-cache on the disk (updates also the manifest)")
+        parser.add_argument("-u", "--update",   action="store_true", help="update artwork-cache on the disk")
 
 
     def UpdateArtist(self):
@@ -151,24 +144,12 @@ class artwork(MDBModule, MusicDBArtwork):
                 print("\033[1;31mERROR: Album path "+args.album+" does not exist!\033[0m")
                 return 1
 
-        # Update Cache and Manifest
+        # Update Cache
         if args.update:
             if args.album:
                 self.UpdateAlbum(args.album, args.artwork)
             else:
                 self.UpdateArtist()
-
-            try:
-                self.GenerateAppCacheManifest()
-            except PermissionError:
-                logging.error("Cannot write manifest file due to permission error")
-
-        # Only update Manifest
-        elif args.manifest:
-            try:
-                self.GenerateAppCacheManifest()
-            except PermissionError:
-                logging.error("Cannot write manifest file due to permission error")
 
         return 0
 

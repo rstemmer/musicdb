@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
 """
 This module handles the artwork (cover) of albums.
 Its main task is to cache, scale and provide them to the GUI.
-
-It also manages the manifest-file needed by some browsers to make them cache the artwork files
 
 
 Database
@@ -95,14 +93,6 @@ Configuration
     scales=50, 150, 500
 
 
-Manifest
---------
-
-To make a web browser cache all the artworks that can end up in hundreds of megabytes of data a cache manifest file is needed.
-Further more, these files are available if the client is offline.
-This is mandatory to "store" the WebUI as iOS app on the iOS home screen.
-The manifest gets generated in :meth:`~musicdb.mdbapi.artwork.GenerateAppCacheManifest`.
-
 Algorithm
 ---------
 
@@ -147,15 +137,10 @@ class MusicDBArtwork(object):
         self.musicroot   = Filesystem(self.cfg.directories.music)
         self.artworkroot = Filesystem(self.cfg.directories.artwork)
 
-        # Define the prefix that must be used by the WebUI and server to access the artwork files
-        # -> $PREFIX/$Artworkname.jpg
-        self.manifestawprefix = "artwork"
-
         # Check if all paths exist that have to exist
         pathlist = []
         pathlist.append(self.cfg.directories.music)
         pathlist.append(self.cfg.directories.artwork)
-        pathlist.append(self.cfg.artwork.manifesttemplate)
 
         for path in pathlist:
             if not self.fs.Exists(path):
@@ -339,43 +324,6 @@ class MusicDBArtwork(object):
         retval = self.SetArtwork(album["id"], artworkpath, imagename)
         return retval
 
-
-
-    def GenerateAppCacheManifest(self):
-        """
-        This method creates a manifest file for web browsers.
-        Creating is done in two steps.
-        First the template given in the configuration gets copied.
-        Second the paths of all artworks get append to the file.
-        Also, those of the scaled versions (as given in the config file).
-
-        Returns:
-            *Nothing*
-
-        Raises:
-            PermissonError: When there is no write access to the manifest file
-        """
-        # copy manifest template
-        template = open(self.cfg.artwork.manifesttemplate, "r")
-        manifest = open(self.cfg.artwork.manifest,         "w")
-
-        for line in template:
-            manifest.write(line)
-
-        template.close()
-
-        # and append all artworkd
-        albums = self.db.GetAllAlbums()
-        awpaths     = [ album["artworkpath"] for album in albums ]
-        resolutions = [ str(s)+"x"+str(s) for s in self.cfg.artwork.scales ]
-        resolutions.append(".")
-        for resolution in resolutions:
-            for awpath in awpaths:
-                path = os.path.join(self.manifestawprefix, resolution)
-                path = os.path.join(path, awpath)
-                manifest.write(path + "\n")
-
-        manifest.close()
 
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

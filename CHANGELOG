@@ -19,6 +19,7 @@ Run  git log --oneline  for more details
 │ + [musicdb] SystemD can now be used to start/stop the server
 │ + [musicdb] Can now be installed via pacman
 │ + [logging] Allow logging to journald
+│ + [artwork] Long broken app-cache manifest generation removed
 │ * Solved Issues: #68
 │
 ┝━ MINOR CHANGES
