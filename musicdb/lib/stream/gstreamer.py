@@ -138,13 +138,13 @@ class GStreamerInterface(object):
         # Find element
         factory = Gst.ElementFactory.find(elementname)
         if not factory:
-            logging.critical("GStreamer Element %s not installed! - Adding %s failed.", elementname, name)
+            logging.error("GStreamer Element %s not installed! - Adding %s failed.", elementname, name)
             return None
 
         # Create instance of element
         element = Gst.ElementFactory.create(factory, name)
         if not element:
-            print("GStreamer Element %s not created, even though it exists! - Adding %s failed.", elementname, name)
+            logging.error("GStreamer Element %s not created, even though it exists! - Adding %s failed.", elementname, name)
             return None
 
         # Add element to pipeline
@@ -178,10 +178,6 @@ class GStreamerInterface(object):
     def Execute(self):
         """
         Only call this method when the pipeline execution is in IDLE state!
-
-        Args:
-
-        Returns:
 
         Example:
 
