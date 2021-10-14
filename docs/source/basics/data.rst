@@ -6,3 +6,9 @@ In this section, all data and configuration files, as well as all directories us
 
 TODO
 
+Music Directory
+---------------
+
+The expected ownership is ``$user:musicdb`` with the permission ``rwxrwxr-x``.
+Keep in mind that also the web-server needs to have read access for the "preview"-feature.
+
