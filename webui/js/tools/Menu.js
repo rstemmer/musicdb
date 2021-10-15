@@ -117,6 +117,7 @@ class Menu extends Element
     {
         super("div", ["Menu", "flex-column", ...classes], elementid);
         this.entries = new Object();
+        this.sections= new Object();
         this.HideMenu();
     }
 
@@ -176,6 +177,8 @@ class Menu extends Element
         let section = new Element("div", ["section"]);
         section.AppendChild(sectiontitle);
         section.AppendChild(element);
+
+        this.sections[headlinetext] = section;
         this.AppendChild(section);
     }
 
@@ -213,6 +216,27 @@ class Menu extends Element
             return;
         }
         this.entries[entryname].Show();
+    }
+
+
+
+    HideSection(sectionheadline)
+    {
+        if(!(sectionheadline in this.sections))
+        {
+            window.console && console.warn(`Invalid section name ${sectionheadline}`);
+            return;
+        }
+        this.sections[sectionheadline].Hide();
+    }
+    ShowSection(sectionheadline)
+    {
+        if(!(sectionheadline in this.sections))
+        {
+            window.console && console.warn(`Invalid section name ${sectionheadline}`);
+            return;
+        }
+        this.sections[sectionheadline].Show();
     }
 }
 
