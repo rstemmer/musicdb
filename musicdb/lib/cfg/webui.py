@@ -21,14 +21,23 @@ The following sections and keys are available:
     .. code-block:: ini
 
         [meta]
-        version=1
+        version=3
 
         [WebUI]
         videomode=disabled
         lyrics=enabled
+        showstreamplayer=False
 
         [ArtistsView]
-        showrelease=true
+        showrelease=True
+
+        [GenreSelectionView]
+        showother=True
+
+        [Stream]
+        url=http://127.0.0.1:8000/stream
+        username=
+        password=
 
         [debug]
         blurartwork=false
@@ -44,6 +53,10 @@ The following sections and keys are available:
     Defines if lyrics should be present in the WebUI or not.
     This includes, but is not limited to, the lyrics state buttons in the Song Lists of the albums
 
+[WebUI]->showstreamplayer (boolean):
+    If True, then the MusicDB audio stream player is shown in the main menu.
+    This player can them be used to connect to the audio stream from the WebUI.
+
 [ArtistsView]->showrelease (boolean):
     If true, the release date of an album is shown next to its name.
     If false, the release date will not be shown.
@@ -51,6 +64,11 @@ The following sections and keys are available:
 
 [GenreSelectionView]->showother (boolean):
     If true, the default genre "Other" will be listed.
+
+[Stream]->url,username,password (strings):
+    Access data to the audio stream that gets managed by MusicDB.
+    If the stream is not protected by the authentication methods of Icecast,
+    no user name or password is required.
 
 [debug]->blurartwork (boolean):
     If true, all artworks are blurred.
@@ -88,6 +106,13 @@ class WebUIConfig(Config):
             self.Set("meta",  "version",     2)
             self.Set("ArtistsView",        "showrelease", True)
             self.Set("GenreSelectionView", "showother",   True)
+        if version < 3:
+            logging.info("Updating webui.ini to version 3")
+            self.Set("meta",  "version",     3)
+            self.Set("WebUI", "showstreamplayer", "False")
+            self.Set("Stream","url",        "http://127.0.0.1:8000/stream")
+            self.Set("Stream","username",   "")
+            self.Set("Stream","password",   "")
 
 
 
@@ -105,12 +130,18 @@ class WebUIConfig(Config):
         cfg["WebUI"] = {}
         cfg["WebUI"]["videomode"]   = self.Get(str,  "WebUI", "videomode",   "disabled")
         cfg["WebUI"]["lyrics"]      = self.Get(str,  "WebUI", "lyrics",      "enabled")
+        cfg["WebUI"]["showstreamplayer"]    = self.Get(str,  "WebUI", "showstreamplayer",   "False")
 
         cfg["ArtistsView"] = {}
         cfg["ArtistsView"]["showrelease"] = self.Get(bool, "ArtistsView", "showrelease", True)
 
         cfg["GenreSelectionView"] = {}
         cfg["GenreSelectionView"]["showother"] = self.Get(bool, "GenreSelectionView", "showother", True)
+
+        cfg["Stream"] = {}
+        cfg["Stream"]["url"]        = self.Get(str, "Stream", "url",      "http://127.0.0.1:8000/stream")
+        cfg["Stream"]["username"]   = self.Get(str, "Stream", "username", "")
+        cfg["Stream"]["password"]   = self.Get(str, "Stream", "password", "")
 
         cfg["debug"] = {}
         cfg["debug"]["blurartwork"] = self.Get(bool, "debug", "blurartwork", False)
@@ -132,8 +163,12 @@ class WebUIConfig(Config):
         self.Set("meta",               "version",     cfg["meta"]["version"])
         self.Set("WebUI",              "videomode",   cfg["WebUI"]["videomode"])
         self.Set("WebUI",              "lyrics",      cfg["WebUI"]["lyrics"])
+        self.Set("WebUI",              "showstreamplayer",  cfg["WebUI"]["showstreamplayer"])
         self.Set("ArtistsView",        "showrelease", cfg["ArtistsView"]["showrelease"])
         self.Set("GenreSelectionView", "showother",   cfg["GenreSelectionView"]["showother"])
+        self.Set("Stream",             "url",         cfg["Stream"]["url"])
+        self.Set("Stream",             "username",    cfg["Stream"]["username"])
+        self.Set("Stream",             "password",    cfg["Stream"]["password"])
         self.Set("debug",              "blurartwork", cfg["debug"]["blurartwork"])
         return
 

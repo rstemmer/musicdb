@@ -199,6 +199,7 @@ class MainMenu extends Menu
                 this.ShowEntry("modeswitch");
             else
                 this.HideEntry("modeswitch");
+            // TODO: Show/Hide AudioStreamPlayer based on [WebUI]->showstreamplayer
         }
 
         return;

@@ -28,6 +28,7 @@ let genreselectionview  = new GenreSelectionView();
 let alphabetbar         = new AlphabetBar();
 let searchinput         = new SearchInput(curtain);
 let musicdbstatus       = new MusicDBStatus();
+let audiostreamplayer   = new AudioStreamPlayer();
 let musicdbcontrols     = new MusicDBControls();
 let queuetimemanager    = new QueueTimeManager();
 
@@ -55,6 +56,7 @@ let configuration       = null; // Needs to be loaded from the Server
 
 // Create Main Menu
 let mainmenu           = new MainMenu(curtain);
+mainmenu.AddSection("MusicDB Stream", audiostreamplayer);
 mainmenu.AddSection("MusicDB Status", musicdbstatus);
 
 
@@ -189,6 +191,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     musicdbcontrols.onMusicDBMessage(fnc, sig, args, pass);
     musicdbstatus.onMusicDBMessage(fnc, sig, args, pass);
     mainmenu.onMusicDBMessage(fnc, sig, args, pass);
+    audiostreamplayer.onMusicDBMessage(fnc, sig, args, pass);
     // Views
     leftviewmanager.onMusicDBMessage(fnc, sig, args, pass);
     mainviewmanager.onMusicDBMessage(fnc, sig, args, pass);
