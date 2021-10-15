@@ -142,7 +142,8 @@ class Element
     }
     Hide()
     {
-        this.displaystyle = this.element.style.display;
+        this.displaystyle = window.getComputedStyle(this.element, null).display;
+        //this.displaystyle = this.element.style.display;
         this.element.style.display = "none";
     }
 }
