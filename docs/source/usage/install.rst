@@ -54,20 +54,33 @@ Installation via pacman
 Initial Setup
 -------------
 
+This section describes the initial setup for MusicDB.
+Those steps are required to provide MusicDB a valid environment.
+
+For the following examples, the placeholder ``$username`` is used to represent the user
+that owns or maintains the music collection.
+The placeholder ``$username`` must be replaced by that user name.
+I also recommend to add your user to the ``musicdb`` group: ``usermod -G musicdb $username``.
+
+Music Directory
+^^^^^^^^^^^^^^^
+
+The music directory is the directory that contains the music files
+that will be managed, presented and streamed by MusicDB.
+It is mandatory for MusicDB to work correctly.
+
 Before you can start the MusicDB server, a music directory needs to be defined.
 This can be done in the :doc:`~/basics/config` file that is placed at ``/etc/musicdb.ini``.
 In this file you need to set the music directory in the section->entry: ``[directories]->music``.
 The default directory is ``/var/music``.
 This directory can be empty but must be accessible by the MusicDB server.
-The expected ownership is ``$user:musicdb`` with the permission ``rwxrwxr-x``.
+The expected ownership is ``$username:musicdb`` with the permission ``rwxrwxr-x``.
 More details about the directories and files managed by MusicDB can be found in the :docs:`~/basics/data` section of the documentation.
 
 The following example expects that you do not have a music directory yet.
 If you have one, just check if the permissions are fine.
 The placeholder ``$username`` must be replaced by the user you use to login into you system (your personal user account).
 Of course it is also possible to create a new user that is only responsible for the music.
-
-I also recommend to add your user to the ``musicdb`` group: ``usermod -G musicdb $username``.
 
 .. code-block:: bash
 
@@ -77,16 +90,71 @@ I also recommend to add your user to the ``musicdb`` group: ``usermod -G musicdb
    chmod ug=rwx,o=rx /var/music
    vim /etc/musicdb.ini  # update [directories]->music
 
-You may also want to change some other settings.
-
-If you want to turn of the debug log file edit ``/etc/musicdb.ini`` and change ``[log]->debugfile`` to ``/dev/null``.
+Websocket Settings
+^^^^^^^^^^^^^^^^^^
 
 For security reasons, by default MusicDB only accepts connections from *localhost*.
 To make the MusicDB websocket server available from the local network, or internet if you setup your router correct, change the following setting: ``[websocket]->bind=0.0.0.0``.
 
+.. code-block:: ini
+
+   [websocket]
+   bind=0.0.0.0
+
 The websocket server required an SSL cert/key pair. This is automatically generated on the first run of the MusicDB server if they do not exist.
 The paths are also configured in ``/etc/musicdb.ini`` in the ``[websocket]`` section.
 If you want to use your own certificates, for example managed by `Let's Encrypt <https://letsencrypt.org/de/>`_, you may want to change that paths as well.
+
+API-Key Setup
+^^^^^^^^^^^^^
+
+MusicDB has no user authentication integrated.
+The MusicDB websocket server relies on the HTTPS server configuration to provide user authentication (For example via LDAP or client-side certificate authentication).
+
+For details see :doc:`/basics/securtiy`
+
+.. note::
+
+   There exists the following assumption:
+   *Anyone can access the Websocket Port. Only authenticated users can access the WebUI (more precise: ``/var/lib/musicdb/webdata/config.js``).*
+
+To only handle websocket traffic from authenticated users, the data must contain a secret only the WebUI knows - the API-Key.
+Before the first run, you have to generate a key and provide it to the MusicDB server configuration
+as well as to the MusicDB WebUI configuration.
+
+To generate a good key you can use ``openssl``:
+
+.. code-block:: bash
+
+   openssl rand -base64 32
+   #> 52bRSRLIeBSOHVxN/L4SQgsxxP8IHmDDskmg8H/d0C0=
+
+This key now must be entered into the server and client configuration:
+
+Server Side
+"""""""""""
+
+``/etc/musicdb.ini``: ``[websocket]->apikey``:
+
+.. code-block:: ini
+
+   [websocket]
+   apikey=52bRSRLIeBSOHVxN/L4SQgsxxP8IHmDDskmg8H/d0C0=
+
+Client Side
+"""""""""""
+
+``/var/lib/webdata/config.js``: ``WEBSOCKET_APIKEY=``
+
+.. code-block:: javascript
+
+   const WEBSOCKET_APIKEY = "52bRSRLIeBSOHVxN/L4SQgsxxP8IHmDDskmg8H/d0C0=";
+
+
+Debugging logs
+^^^^^^^^^^^^^^
+
+If you want to turn of the debug log file edit ``/etc/musicdb.ini`` and change ``[log]->debugfile`` to ``/dev/null``.
 
 
 Start MusicDB Server
@@ -143,7 +211,7 @@ Now the web server is running. You can check the status via ``systemctl status h
 You should now be able to access the MusicDB WebUI via ``http://127.0.0.1/musicdb/``.
 Please consider a Apache server configuration that supports HTTPS.
 
-TODO: Add reference to MusicDB Security Concept
+For details see :doc:`/basics/securtiy`
 
 
 Setup Audio Streaming via Icecast
