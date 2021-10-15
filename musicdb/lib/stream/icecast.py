@@ -50,16 +50,16 @@ The Icecast configuration defines the *Source Client* and how the data from the 
 
 In this section, I only point out the more important settings of the whole Icecast configuration.
 There is a good example configuration provided by MusicDB.
-The following list addresses the settings in the XML file for the Icecast configration.
+The following list addresses the settings in the XML file for the Icecast configuration.
 
     icecast/authentication/source-password:
         This is the password *MusicDB* needs to know to connect to Icecast.
-        So this password must be the same as in MusicDB Configuration ``[icecast]->password``.
+        So this password must be the same as in MusicDB Configuration ``[Icecast]->password``.
 
 There are two ports needed for the MusicDB/Icecast setup.
 One port to connect MusicDB to Icecast, and one to provide the stream to Listeners.
-The MusicDB connection (Port 6666) is bound to localhost and not encrypted.
-The other port (666) can be open to the world because it will be encrypted and protected against unwanted access.
+The MusicDB connection (Port 8001) is bound to localhost and not encrypted.
+The other port (8000) can be open to the world because it will be encrypted and protected against unwanted access.
 
 The ports will be configured in the ``icecast`` section of the configuration file by adding ``listen-socket`` sections:
 
@@ -67,13 +67,13 @@ The ports will be configured in the ``icecast`` section of the configuration fil
 
         <!-- Extern -->
         <listen-socket>
-            <port>666</port>
+            <port>8000</port>
             <ssl>1</ssl>
         </listen-socket>
 
         <!-- Intern -->
         <listen-socket>
-            <port>6666</port>
+            <port>8001</port>
             <ssl>0</ssl>
             <shoutcast-mount>/stream</shoutcast-mount>
         </listen-socket>
@@ -81,8 +81,8 @@ The ports will be configured in the ``icecast`` section of the configuration fil
 
     icecast/listen-socket/shoutcast-mount:
         This setting defines the *Mountpoint* name (starting with "/").
-        It must be the same like the one set in MusicDB's configuration: ``[icecast]->mountname``
-        Further more it must be equal to the name definded in the detailed mount specification: ``icecast/mount/mount-name``.
+        It must be the same like the one set in MusicDB's configuration: ``[Icecast]->mountname``
+        Further more it must be equal to the name defined in the detailed mount specification: ``icecast/mount/mount-name``.
 
 """
 
