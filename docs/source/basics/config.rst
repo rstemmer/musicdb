@@ -63,11 +63,10 @@ bind (IP address):
 
 port (socket port):
    The number of the port, the server is listening on.
+   Because MusicDB is executed as non-root user, the port number must be above ``1024``.
 
-   Here are some lists with restricted ports:
-
-      * `FireFox <https://www-archive.mozilla.org/projects/netlib/PortBanning.html#portlist>`
-      * `Chrome <https://src.chromium.org/viewvc/chrome/trunk/src/net/base/net_util.cc?view=markup>`
+   After changing the port number, you also have to update the ``config.js`` file in the ``webdata`` directory.
+   The default path is ``/var/lib/musicdb/webdata/config.js``, so that the MusicDB WebUI knows which number to use.
 
 opentimeout (time in seconds):
    Time until the connection to the websocket server raises a timeout exception
