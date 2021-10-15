@@ -256,25 +256,25 @@ debug
 These flags can be used to prevent damage or messing up data while debugging or testing.
 Furthermore, it can be used to disable some features that do not work.
 
-disablestats (number ∈ {0,1}):
+disablestats (number ∈ {True, False}):
    Ignore statistic changes for songs (Like, Dislike…).
    They will not be written to the database.
 
-disabletracker (number ∈ {0,1}):
+disabletracker (number ∈ {True, False}):
    Do not track the songs that were played
 
-disableai (number ∈ {0,1}):
+disableai (number ∈ {True, False}):
    Do not use AI related things.
-   On weak computers this should be ``1``.
+   On weak computers this should be ``True``.
 
-disabletagging (number ∈ {0,1}):
+disabletagging (number ∈ {True, False}):
    Do not set or remove any tags for songs or albums
 
-disableicecast (number ∈ {0,1}):
+disableicecast (number ∈ {True, False}):
    Do not try to connect to an IceCast server
 
-disablevideos (number ∈ {0,1}):
+disablevideos (number ∈ {True, False}):
    Disable the support for music videos.
-   This is ``1`` (disabled) by default.
+   This is ``True`` (disabled) by default.
    Currently, the Music Video feature is in beta state.
 
