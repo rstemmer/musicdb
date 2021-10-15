@@ -163,8 +163,40 @@ The following code shows how to install Icecast via ``pacman``.
 
    # Setup Icecast for secure audio streaming
    pacman -S icecast
-   # TODO
+   vim /etc/icecast.xml
 
+The default settings in ``/etc/musicdb.ini`` match the default Icecast settings in ``/etc/icecast.xml``.
+Only the source password needs to be configured.
+Some more details about Icecast can be found in the chapter: :doc:`/lib/icecast`
+
+The following listing shows the changes that are mandatory to make inside the ``icecast.xml`` file
+to connect MusicDB with Icecast.
+You should review the whole settings to make sure that Icecast is doing what you expect
+and to secure the Icecast server.
+
+.. code-block:: xml
+
+   <icecast>
+
+      <!-- … -->
+
+      <authentication>
+         <!-- … -->
+
+         <!-- 
+         The password set here must also be set as password in /etc/musicdb.ini [Icecast]->password
+         -->
+         <source-password>hackme</source-password>
+
+         <!-- … -->
+      </authentication>
+
+      <!-- … -->
+
+   </icecast>
+
+You the can, for example with `VLC <https://www.videolan.org/vlc/index.de.html>`_, connect to the audio stream.
+The stream URL is ``http://127.0.0.1:8000/stream``.
 
 
 
