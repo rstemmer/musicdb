@@ -77,6 +77,11 @@ div#MDBReconnectButton[data-visible=false]
 /* Status Container */
 /********************/
 
+.Menu .section
+{
+    display:            block;
+}
+
 .Menu .sectiontitle
 {
     text-align:         center;

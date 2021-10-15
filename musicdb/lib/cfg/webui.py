@@ -109,7 +109,7 @@ class WebUIConfig(Config):
         if version < 3:
             logging.info("Updating webui.ini to version 3")
             self.Set("meta",  "version",     3)
-            self.Set("WebUI", "showstreamplayer", "False")
+            self.Set("WebUI", "showstreamplayer", False)
             self.Set("Stream","url",        "http://127.0.0.1:8000/stream")
             self.Set("Stream","username",   "")
             self.Set("Stream","password",   "")
@@ -130,7 +130,7 @@ class WebUIConfig(Config):
         cfg["WebUI"] = {}
         cfg["WebUI"]["videomode"]   = self.Get(str,  "WebUI", "videomode",   "disabled")
         cfg["WebUI"]["lyrics"]      = self.Get(str,  "WebUI", "lyrics",      "enabled")
-        cfg["WebUI"]["showstreamplayer"]    = self.Get(str,  "WebUI", "showstreamplayer",   "False")
+        cfg["WebUI"]["showstreamplayer"]    = self.Get(bool,  "WebUI", "showstreamplayer",   "False")
 
         cfg["ArtistsView"] = {}
         cfg["ArtistsView"]["showrelease"] = self.Get(bool, "ArtistsView", "showrelease", True)

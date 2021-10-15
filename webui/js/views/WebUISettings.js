@@ -58,11 +58,21 @@ class WebUISettings extends MainSettingsView
             }
         );
 
+        this.showstreamplayercheckbox = new SettingsCheckbox(
+            "Show Audio Stream Player inside the Main Menu",
+            "If set, an audio stream player is shown in the main menu. This player connects to the configured audio stream. With this audio player it is possible to listen to the MusicDB audio stream directly from the browser.",
+            (state)=>{
+                if(state == true) this.ChangeSetting("WebUI", "showstreamplayer", true);
+                else              this.ChangeSetting("WebUI", "showstreamplayer", false);
+            }
+        );
+
         let settingslist = new SettingsList();
         settingslist.AddEntry(this.videocheckbox);
         settingslist.AddEntry(this.lyricscheckbox);
         settingslist.AddEntry(this.avshowreleasecheckbox);
         settingslist.AddEntry(this.gsvshowothercheckbox);
+        settingslist.AddEntry(this.showstreamplayercheckbox);
 
         this.AppendChild(settingslist);
         this.settings = null;
@@ -78,6 +88,7 @@ class WebUISettings extends MainSettingsView
         this.lyricscheckbox.SetState(settings.WebUI.lyrics    == "enabled");
         this.avshowreleasecheckbox.SetState(settings.ArtistsView.showrelease == true);
         this.gsvshowothercheckbox.SetState(settings.GenreSelectionView.showother == true);
+        this.showstreamplayercheckbox.SetState(settings.WebUI.showstreamplayer == true);
         return;
     }
 

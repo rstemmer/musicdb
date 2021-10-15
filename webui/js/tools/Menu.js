@@ -178,7 +178,9 @@ class Menu extends Element
         section.AppendChild(sectiontitle);
         section.AppendChild(element);
 
-        this.sections[headlinetext] = section;
+        let sectionname = headlinetext.replace(/ /g, "_");
+
+        this.sections[sectionname] = section;
         this.AppendChild(section);
     }
 
@@ -222,21 +224,25 @@ class Menu extends Element
 
     HideSection(sectionheadline)
     {
-        if(!(sectionheadline in this.sections))
+        let sectionname = sectionheadline.replace(/ /g, "_");
+        if(!(sectionname in this.sections))
         {
-            window.console && console.warn(`Invalid section name ${sectionheadline}`);
+            window.console?.warn(`Invalid section name ${sectionname}`);
             return;
         }
-        this.sections[sectionheadline].Hide();
+        this.sections[sectionname].Hide();
+        return;
     }
     ShowSection(sectionheadline)
     {
-        if(!(sectionheadline in this.sections))
+        let sectionname = sectionheadline.replace(/ /g, "_");
+        if(!(sectionname in this.sections))
         {
-            window.console && console.warn(`Invalid section name ${sectionheadline}`);
+            window.console?.warn(`Invalid section name ${sectionname}`);
             return;
         }
-        this.sections[sectionheadline].Show();
+        this.sections[sectionname].Show();
+        return;
     }
 }
 
