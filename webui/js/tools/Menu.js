@@ -166,16 +166,16 @@ class Menu extends Element
 
 
 
-    AddSection(headlinetext, htmlelement)
+    AddSection(headlinetext, element)
     {
-        htmlelement.classList.add("sectionbody");
+        element.AddCSSClass("sectionbody");
 
         let sectiontitle = new Element("div", ["sectiontitle", "hlcolor"]);
         sectiontitle.SetInnerText(headlinetext);
 
         let section = new Element("div", ["section"]);
         section.AppendChild(sectiontitle);
-        section.AppendChild(htmlelement);
+        section.AppendChild(element);
         this.AppendChild(section);
     }
 

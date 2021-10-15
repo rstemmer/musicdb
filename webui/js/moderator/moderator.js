@@ -55,7 +55,7 @@ let configuration       = null; // Needs to be loaded from the Server
 
 // Create Main Menu
 let mainmenu           = new MainMenu(curtain);
-mainmenu.AddSection("MusicDB Status", musicdbstatus.GetHTMLElement()); // FIXME
+mainmenu.AddSection("MusicDB Status", musicdbstatus);
 
 
 
