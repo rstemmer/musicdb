@@ -4,13 +4,39 @@ MusicDB Data Files and Directories
 
 In this section, all data and configuration files, as well as all directories used and maintained by MusicDB are described.
 
-TODO
 
 Music Directory
 ---------------
 
+The music directory is the directory that contains the music files
+that will be managed, presented and streamed by MusicDB.
+It is mandatory for MusicDB to work correctly.
+
 The expected ownership is ``$user:musicdb`` with the permission ``rwxrwxr-x``.
 Keep in mind that also the web-server needs to have read access for the "preview"-feature.
+
+
+MusicDB Data Directory
+----------------------
+
+The default path of the data directory is ``/var/lib/musicdb``.
+It contains all the variable data used and needed by MusicDB, including the databases.
+
+It contains the following sub directories:
+
+
+state/:
+   This directory is used to provide and maintain a consistent state for the MusicDB Websocket Server.
+   It is mainly maintained by :doc:`/lib/mdbstate`
+
+uploads/:
+   The uploads directory contains temporary uploaded data and the state of uploading data.
+   This directory is maintained by :doc:`/mdbapi/uploadmanager`
+
+webdata/:
+   This directory contains all data that needs to be available by the HTTPS web server.
+   It contains the WebUI configuration ``config.js`` as well as the artwork directory.
+   
 
 
 Transition from 7.2.0 to 8.0.0
