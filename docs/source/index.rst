@@ -52,9 +52,6 @@ Some of those tools and libraries are side projects of the MusicDB project and a
 A list of these side projects can be found in the subsection `Other tools and Libraries`_.
 
 With *Python*, the interpreter itself and all python modules needed to run MusicDB are meant.
-A complete list of all dependencies can be found in ``check.sh`` in the scripts directory.
-
-A documentation of the *Bash Scripts* an be found in the chapter :doc:`/usage/scripts`
 
 In the following chapters, the basic concepts and philosophy of MusicDB and its components are explained.
 Furthermore usage guides for MusicDB and how to handle its environment are provided.

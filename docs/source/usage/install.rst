@@ -295,30 +295,6 @@ Before installation:
    apt install icecast2             # Do not use the configuration dialog, MusicDB provides a secure config
                                     # Ignore that check.sh does not find icecast after installation.
                                     # This is because on Debian/Ubuntu the binary is called "icecast2".
-                                    # Important scripts handle this situation of different naming.
-
-
-
-First Run
----------
-
-For starting and stopping the MusicDB WebSocket Server and its dependent processes, 
-the scripts described in :doc:`/usage/scripts` are recommended.
-
-You can access the WebUI by opening the file ``webui/moderator.html`` in your web browser.
-
-The first time you want to connect to the WebSocket server you have to tell the browser that your SSL
-certificates are "good".
-Open the WebSocket URL in the browser with ``https`` instead of ``wss`` and create an exception.
-So if your WebSocket address is ``wss://localhost:9000`` visit `https://localhost:9000`.
-
-
-Update
-------
-
-For updating, you can do following steps.
-Read the *Important News* of the README.md file for manual steps to do before updating to a new major release.
-Only execute the scripts as root, that are followed by the comment "as root"!
 
 
 
