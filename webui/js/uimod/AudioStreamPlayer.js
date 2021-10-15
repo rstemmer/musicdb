@@ -17,17 +17,6 @@
 "use strict";
 
 
-/*
-
-// PLAYGROUND
-let streamplayer        = new Element("audio");
-streamplayer.GetHTMLElement().controls   = true;
-streamplayer.GetHTMLElement().src        = "http://127.0.0.1:8000/stream";
-mainmenu.AddSection("Stream Player", streamplayer);
-//
-
-*/
-
 class AudioStreamPlayer extends Element
 {
     constructor()
