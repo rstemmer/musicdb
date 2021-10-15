@@ -10,6 +10,7 @@ license=('GPL3')
 groups=()
 depends=("python"
     "ffmpeg"
+    "libshout"
     "gstreamer"
     "gst-plugins-base"
     "gst-plugins-base-libs"
