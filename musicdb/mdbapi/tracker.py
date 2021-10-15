@@ -101,8 +101,8 @@ class Tracker(object):
 
         If the time between this target, and the previous one exceeds *N* minutes, it gets ignored and the internal state gets reset.
         So the chain of targets get cut if the time between playing them is too long.
-        The chain of targets gets also cut, if ``targetid`` is ``None`` or invalid.
         The amount of time until this cut takes place can be configured: :doc:`/basics/config`
+        The chain of targets gets also cut, if ``targetid`` is ``None`` or invalid.
 
         If the given target is the same as the last target, then it gets ignored.
 
