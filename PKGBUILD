@@ -41,7 +41,7 @@ backup=("etc/musicdb.ini"
     "etc/httpd/conf/extra/musicdb.conf"
     )
 options=()
-install=musicdb.install
+install=
 changelog=
 source=("$pkgname-$pkgver-src.tar.zst::file://$(pwd)/dist/$pkgname-$pkgver-src.tar.zst")
 noextract=()
