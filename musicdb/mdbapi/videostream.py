@@ -183,6 +183,10 @@ def StartVideoStreamingThread(config, musicdb):
     CommandQueue = []
     State        = {"isstreaming": False, "isplaying": False, "currententry": 0}
 
+    if not Config.debug.disablevideos:
+        logging.warning("Video Streaming Disabled")
+        return True
+
     logging.debug("Starting Video Streaming Thread")
     RunThread = True
     Thread    = threading.Thread(target=VideoStreamingThread)
