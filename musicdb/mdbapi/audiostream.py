@@ -356,15 +356,12 @@ def AudioStreamingThread():
             # Also update the last time played information.
             # In case the loop ended because Icecast failed, update the Status
             if icecast.IsConnected():
-                if not queueentry["israndom"]:  # do not track random songs
-                    try:
-                        tracker.TrackSong(queueentry["songid"])
-                    except Exception as e:
-                        logging.exception("Trying to track song with ID %i failed with error \"%s\".",
-                                queueentry["songid"],
-                                str(e))
-                else:
-                    logging.debug("The played song was added by Randy. So it will not be tracked.")
+                try:
+                    tracker.TrackSong(queueentry["songid"], queueentry["israndom"])
+                except Exception as e:
+                    logging.exception("Trying to track song with ID %i failed with error \"%s\".",
+                            queueentry["songid"],
+                            str(e))
 
                 if not Config.debug.disablestats:
                     musicdb.UpdateSongStatistic(queueentry["songid"], "lastplayed", int(time.time()))

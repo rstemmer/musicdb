@@ -170,6 +170,12 @@ cuttime (integer, time in minutes):
    If there is a time gap of *cuttime* minutes or more between the current played song and the previous one,
    the relationship gets ignored.
 
+trackrandom (boolean ∈ {True, False}):
+   If set to ``True``, the tracker tracks also random song.
+   Otherwise the song gets ignored.
+
+   A detailed description of the behavior can be found in the documentation of the tracking algorithm:
+   :meth:`musicdb.mdbapi.tracker.Tracker.Track`.
 
 
 Icecast

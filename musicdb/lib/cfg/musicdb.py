@@ -191,7 +191,8 @@ class MusicDBConfig(Config):
 
         # [tracker]
         self.tracker = SECTION()
-        self.tracker.cuttime        = self.Get(int, "tracker",  "cuttime",      30)
+        self.tracker.cuttime        = self.Get(int,  "tracker", "cuttime",      30)
+        self.tracker.trackrandom    = self.Get(bool, "tracker", "trackrandom",  False)
 
 
         # [Icecast]

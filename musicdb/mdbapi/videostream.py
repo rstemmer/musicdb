@@ -317,15 +317,12 @@ def VideoStreamingThread():
             logging.debug("Finished streaming video with queue entry id %i", argument)
 
             # Track video
-            if not queueentry["israndom"]:  # do not track random videos
-                try:
-                    tracker.TrackVideo(queueentry["videoid"]);
-                except Exception as e:
-                    logging.exception("Trying to track video with ID %i failed with error \"%s\".",
-                            queueentry["videoid"],
-                                str(e))
-            else:
-                logging.debug("The played video was added by Randy. So it will not be tracked.")
+            try:
+                tracker.TrackVideo(queueentry["videoid"], queueentry["israndom"]);
+            except Exception as e:
+                logging.exception("Trying to track video with ID %i failed with error \"%s\".",
+                        queueentry["videoid"],
+                            str(e))
 
             # Play next video
             queue.NextVideo()

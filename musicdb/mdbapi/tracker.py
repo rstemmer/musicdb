@@ -81,19 +81,18 @@ class Tracker(object):
             raise ValueError("target must be \"song\" or \"video\"");
 
         self.config      = config
-        self.disabled    = config.debug.disabletracker
         self.target      = target
         self.lastid      = None
         self.lastaction  = time.time()
 
         # When tracking is disabled, don't even instantiate the databases.
         # Tracking is disabled for a reason, so protect the databases as good as possible!
-        if not self.disabled:
+        if not self.config.debug.disabletracker:
             self.trackerdb = TrackerDatabase(config.files.trackerdatabase)
 
 
 
-    def Track(self, targetid):
+    def Track(self, targetid, israndom=False):
         """
         This method tracks the relation to the given target with the last added target.
         A target can be a song or a video.
@@ -106,6 +105,12 @@ class Tracker(object):
 
         If the given target is the same as the last target, then it gets ignored.
 
+        The ``israndom`` parameter indicates if a target got added by the randomizer into the queue.
+        The behavior of the tracker then depends on the ``[tracker]->trackrandom`` settings.
+        If ``israndom`` and ``trackrandom`` are both ``True``, the music gets tracked as if it was added by the user.
+        If ``trackrandom`` is ``False``, randomly added music gets not tracked.
+        Anyway, the chain will not be cut. So the next music continues the chain.
+
         After adding a target, the method checks for a new relation between two targets.
         This is the case when there was previously a target added.
 
@@ -113,6 +118,7 @@ class Tracker(object):
 
         Args:
             targetid: ID of the song or video that gets currently played, ``None`` to cut the chain of consecutive targets.
+            israndom (bool): ``True`` indicates that the music was added by the random song selection algorithm Randy.
 
         Returns:
             ``True`` on success. ``False`` in case an error occurred.
@@ -128,6 +134,11 @@ class Tracker(object):
 
             logging.warning(self.target+" ID of new "+self.target+" is not an integer! The type was %s. \033[0;33m(Ignoring the Track-Call and clearing tracking list)", str(type(targetid)))
             return False
+
+        # Track random songs?
+        if israndom == True and self.config.tracker.trackrandom == False:
+            logging.debug("The new "+self.target+" to track (%i) was added by Randy. Tracking randoms songs is disabled. - so it gets ignored", targetid)
+            return True
 
         # If there is a *cuttime* Minute gap, do not associate this target with the previous -> clear list
         timestamp = time.time()
@@ -152,7 +163,7 @@ class Tracker(object):
             logging.debug("Starting new tracking chain with "+self.target+" ID %i.", targetid)
             return True
 
-        if self.disabled:
+        if self.config.debug.disabletracker:
             # do not do anything further when tracer is deactivated
             logging.info("Updating tracker disabled. \033[1;33m!! \033[1;30m(Will not process relationship between %i and %i)", self.lastid, targetid)
             self.lastid = targetid    # fake the last step for better debugging
@@ -181,7 +192,7 @@ class SongTracker(Tracker):
     def __init__(self, config):
         Tracker.__init__(self, config, "song")
 
-    def TrackSong(self, songid):
+    def TrackSong(self, songid, israndom=False):
         """
         See :meth:`~musicdb.mdbapi.tracker.Tracker.Track`
         """
@@ -194,11 +205,11 @@ class VideoTracker(Tracker):
     def __init__(self, config):
         Tracker.__init__(self, config, "video")
 
-    def TrackVideo(self, videoid):
+    def TrackVideo(self, videoid, israndom=False):
         """
         See :meth:`~musicdb.mdbapi.tracker.Tracker.Track`
         """
-        self.Track(videoid);
+        self.Track(videoid, israndom);
 
 
 
