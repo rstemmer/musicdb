@@ -44,6 +44,15 @@ class SettingsMenu extends LeftView
                 },
             "Show WebUI Settings");
 
+        this.views.push(streamsettings);
+        this.AddMenuEntry(
+            new SVGIcon("Song"),
+            "Stream Settings",
+            ()=>{
+                MusicDB_Request("LoadWebUIConfiguration", "ShowStreamSettings");
+                },
+            "Show Stream Settings");
+
         this.views.push(genresettings);
         this.AddMenuEntry(
             new SVGIcon("Tags"),

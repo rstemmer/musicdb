@@ -46,6 +46,7 @@ let queueview           = new QueueView();
 let queuecontrolview    = new QueueControlView();
 
 let webuisettings       = new WebUISettings();
+let streamsettings      = new StreamSettings();
 let genresettings       = new GenreSettings();
 let moodmanager         = new MoodManager();
 let hiddenalbums        = new HiddenAlbums();
@@ -209,6 +210,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     // Setting Views
     settingsmenu.onMusicDBMessage(fnc, sig, args, pass);
     webuisettings.onMusicDBMessage(fnc, sig, args, pass);
+    streamsettings.onMusicDBMessage(fnc, sig, args, pass);
     genresettings.onMusicDBMessage(fnc, sig, args, pass);
     moodmanager.onMusicDBMessage(fnc, sig, args, pass);
     hiddenalbums.onMusicDBMessage(fnc, sig, args, pass);

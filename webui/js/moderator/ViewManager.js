@@ -147,6 +147,10 @@ class MainViewManager extends ViewManager
         {
             this.MountView(webuisettings);
         }
+        else if(fnc == "LoadWebUIConfiguration" && sig == "ShowStreamSettings")
+        {
+            this.MountView(streamsettings);
+        }
         else if(fnc == "GetTags" && sig == "ShowGenreSettings")
         {
             this.MountView(genresettings);

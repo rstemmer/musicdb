@@ -21,6 +21,7 @@ Run  git log --oneline  for more details
 │ + [logging] Allow logging to journald
 │ + [artwork] Long broken app-cache manifest generation removed
 │ + [tracker] Configuration added to decide if random songs shall be tracked: [tracker]->trackrandom
+│ + [WebUI] Audio stream player + settings form added
 │ * Solved Issues: #68, #66
 │
 ┝━ MINOR CHANGES
