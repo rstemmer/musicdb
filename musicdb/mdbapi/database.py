@@ -284,8 +284,11 @@ class MusicDBDatabase(object):
 
         # separate parts of the path
         parts = path.count("/")
-        if parts == 1:  # This my be a video
-            [artist, video] = path.split("/")[-2:]
+        if parts == 1:  # This my be a video or an album (let's see if it is a directory)
+            if self.fs.IsDirectory(path):
+                [artist, album] = path.split("/")[-2:]
+            else:
+                [artist, video] = path.split("/")[-2:]
         elif parts == 2: # This may be a song
             [artist, album, song] = path.split("/")[-3:]
         else:

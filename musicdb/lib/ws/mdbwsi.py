@@ -3323,7 +3323,10 @@ class MusicDBWebSocketInterface(object):
             * ``"release"``:
             * ``"extension"``:
         * For Albums:
-            * ???
+            * ``"path"``: Path to the new album
+            * ``"artistname"``:
+            * ``"albumname"``:
+            * ``"release"``:
         
         Returns:
             A dict with two listst: ``"albums"`` and ``"videos"``. Each list entry is another object with the key listed in the description.
@@ -3344,7 +3347,6 @@ class MusicDBWebSocketInterface(object):
                     }
                 }
         """
-        # FIXME: Scan new artists for alums
         paths = self.music.FindNewPaths()
         albumpaths = paths["albums"]
         videopaths = paths["videos"]
@@ -3372,6 +3374,23 @@ class MusicDBWebSocketInterface(object):
             entry["release"]    = infos["release"]
             entry["extension"]  = infos["extension"]
             newcontent["videos"].append(entry)
+
+        for path in albumpaths:
+            entry = {}
+            infos = self.music.AnalysePath(path)
+            if infos == None:
+                infos = {}
+                infos["artist"]    = "".join(path.split("/")[0])
+                albumdirectory     = "".join(path.split("/")[1:])
+                infos["album"]     = "".join(albumdirectory.split("-")[0].strip())
+                infos["release"]   = "-".join(albumdirectory.split("-")[1:]).strip()
+                infos["release"]   = None
+
+            entry["path"]       = path
+            entry["artistname"] = infos["artist"]
+            entry["albumname"]  = infos["album"]
+            entry["release"]    = infos["release"]
+            newcontent["albums"].append(entry)
 
         return newcontent
 
