@@ -50,6 +50,7 @@ let streamsettings      = new StreamSettings();
 let genresettings       = new GenreSettings();
 let moodmanager         = new MoodManager();
 let hiddenalbums        = new HiddenAlbums();
+let albumimport         = new AlbumImport();
 let videoimport         = new VideoImport();
 let settingsmenu        = new SettingsMenu(); // Accesses references to settings views
 
@@ -214,6 +215,7 @@ function onMusicDBMessage(fnc, sig, args, pass)
     genresettings.onMusicDBMessage(fnc, sig, args, pass);
     moodmanager.onMusicDBMessage(fnc, sig, args, pass);
     hiddenalbums.onMusicDBMessage(fnc, sig, args, pass);
+    albumimport.onMusicDBMessage(fnc, sig, args, pass);
     videoimport.onMusicDBMessage(fnc, sig, args, pass);
 
 

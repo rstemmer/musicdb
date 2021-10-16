@@ -82,6 +82,15 @@ class SettingsMenu extends LeftView
                 },
             "Show list of hidden albums that can be made visible again");
 
+        this.views.push(albumimport);
+        this.AddMenuEntry(
+            new SVGIcon("Import"),
+            "Import Album",
+            ()=>{
+                MusicDB_Request("FindNewContent", "ShowAlbumImport");
+                },
+            "Import Music Album");
+
         this.views.push(videoimport);
         this.AddMenuEntry(
             new SVGIcon("Import"),

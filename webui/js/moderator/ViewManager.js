@@ -163,6 +163,10 @@ class MainViewManager extends ViewManager
         {
             this.MountView(hiddenalbums);
         }
+        else if(fnc == "FindNewContent" && sig == "ShowAlbumImport")
+        {
+            this.MountView(albumimport);
+        }
         else if(fnc == "FindNewContent" && sig == "ShowVideoImport")
         {
             this.MountView(videoimport);
