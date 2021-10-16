@@ -21,6 +21,9 @@ class AlbumImport extends MainSettingsView
     constructor()
     {
         super("AlbumImport", "Import new Albums", "Import new found albums into the MusicDB Music Database. To find new albums, they must be uploaded into the Music Directory managed by MusicDB.");
+
+        this.albumlist = new List();
+        this.AppendChild(this.albumlist);
     }
 
 
@@ -29,6 +32,15 @@ class AlbumImport extends MainSettingsView
     {
         if(newalbumpaths == null)
             return;
+
+        this.albumlist.Clear();
+        for(let newalbum of newalbumpaths)
+        {
+            window.console?.log(newalbum);
+            let entry = new ListEntry();
+            entry.SetInnerText(newalbum.path);
+            this.albumlist.AddEntry(entry);
+        }
         return;
     }
 
@@ -38,7 +50,6 @@ class AlbumImport extends MainSettingsView
     {
         if(fnc == "FindNewContent" && sig == "ShowAlbumImport")
         {
-            window.console && console.log(args);
             this.UpdateView(args.albums);
         }
         return;
