@@ -30,7 +30,7 @@ class List extends Element
     Clear()
     {
         this.entries = new Array();
-        super.Clear();
+        super.RemoveChilds();
     }
 
 
@@ -62,9 +62,9 @@ class List extends Element
 
 
 
-class ListElement extends Element
+class ListEntry extends Element
 {
-    constructor(classes, id=null)
+    constructor(classes=[], id=null)
     {
         super("div", ["ListEntry", "hoverframe", ...classes], id);
     }
