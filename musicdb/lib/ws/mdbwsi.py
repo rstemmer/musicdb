@@ -110,6 +110,13 @@ Uploading
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.IntegrateUpload`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveUpload`
 
+File Handling
+
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SaveWebUIConfiguration`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.LoadWebUIConfiguration`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.FindNewContent`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.FindAlbumSongFiles`
+
 Other
 
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.Find`
@@ -122,9 +129,6 @@ Other
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SetMDBState`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetMDBState`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetTables`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.SaveWebUIConfiguration`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.LoadWebUIConfiguration`
-* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.FindNewContent`
 
 """
 import random
@@ -135,6 +139,7 @@ from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.cfg.mdbstate   import MDBState
 from musicdb.lib.cfg.webui      import WebUIConfig
 from musicdb.lib.filesystem     import Filesystem
+from musicdb.lib.metatags       import MetaTags
 import os
 from musicdb.mdbapi.database    import MusicDBDatabase
 from musicdb.mdbapi.mise        import MusicDBMicroSearchEngine
@@ -320,6 +325,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.LoadWebUIConfiguration()
         elif fncname == "FindNewContent":
             retval = self.FindNewContent()
+        elif fncname == "FindAlbumSongFiles":
+            retval = self.FindAlbumSongFiles(args["albumpath"])
         elif fncname == "GetUploads":
             retval = self.GetUploads()
         elif fncname == "AnnotateUpload":
@@ -3393,6 +3400,75 @@ class MusicDBWebSocketInterface(object):
             newcontent["albums"].append(entry)
 
         return newcontent
+
+
+
+    def FindAlbumSongFiles(self, albumpath):
+        """
+        This method returns a list of song files and information from the given album path.
+
+        .. warning::
+
+            Because this method is supposed to be used before the album has been imported into MusicDB,
+            it is not checked and guaranteed that the returned paths are fulfilling the MusicDB naming scheme
+            (See :doc:`/usage/music`).
+
+        The album path can address an album that has not been imported into the MusicDB yet.
+        The whole method only works on file system level and does not interact with the database.
+
+        Beside the paths to the song files (relative to the music directory),
+        some additional meta data is provided.
+        These data can be used to validate the naming of the paths because they are not necessarily fulfilling the
+        MusicDB music naming scheme.
+        These additional data may also be wrong.
+
+        .. note::
+
+            Before importing a song, a user has to validate the data returned by this method.
+
+        If the album path is not a valid directory inside the music directory, an empty list gets returned.
+
+        Each list entry is a dictionary with the following information:
+
+        * ``path`` (string): relative path to the music file
+        * ``songname`` (string)
+        * ``albumname`` (string)
+        * ``artistname`` (string)
+        * ``releaseyear`` (integer)
+        * ``origin`` (string): Where the files comes from. Where it has been bought.
+        * ``cdnumber`` (integer)
+        * ``songnumber`` (integer)
+        * ``haslyrics`` (boolean): ``True`` when there are lyrics attached to the song file
+
+        Args:
+            albumpath (str): path to an album that may have new/unknown songs. The path must be relative to the music directory.
+
+        Returns:
+            A list of song file information of an album directory
+        """
+        if not self.fs.IsDirectory(albumpath):
+            return []
+
+        files    = self.music.FindNewSongs(albumpath)
+        metadata = MetaTags(self.cfg.directories.music)
+
+        songfiles = []
+        for path in files:
+            entry = {}
+            metadata.Load(path)
+            entry["path"]        = path
+            entry["songname"]    = metadata.GetSongname()
+            entry["albumname"]   = metadata.GetAlbumname()
+            entry["artistname"]  = metadata.GetArtistname()
+            entry["releaseyear"] = metadata.GetReleaseyear()
+            entry["origin"]      = metadata.GetOrigin()
+            entry["cdnumber"]    = metadata.GetCDNumber()
+            entry["songnumber"]  = metadata.GetTracknumber()
+            entry["haslyrics"]   = type(metadata.GetLyrics()) == str
+            songfiles.append(entry)
+
+        return songfiles
+
 
 
     def InitiateUpload(self, uploadid, mimetype, contenttype, filesize, checksum, filename):
