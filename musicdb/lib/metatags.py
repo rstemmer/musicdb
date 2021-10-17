@@ -170,6 +170,13 @@ class MetaTags(object):
 
 
 
+    def CheckArtwork(self):
+        """
+        See :meth:`~StoreArtwork`.
+        This method is the same as ``StoreArtwork(None)``.
+        """
+        return self.StoreArtwork(None)
+
     def StoreArtwork(self, imgfilename):
         """
         This method stores an artwork from the metadata into a file.
@@ -177,12 +184,19 @@ class MetaTags(object):
 
         If the file already exists, it gets overwritten.
 
+        If the path variable is ``None``, the image will not be stored.
+        Then the return value indictes if there is an artwork embedded in the song file.
+
+        If the path variable is not ``None``, the the return value also indicated if storing the artwork
+        into the file succeeded.
+
         Args:
-            imgfilename (str): Absolute path to an image file to store the image at
+            imgfilename (str): Absolute path to an image file to store the image at, or ``None``
 
         Returns:
             ``True`` on success, otherwise ``False``
         """
+        # Get Artwork
         try:
             if self.ftype == "mp3":
                 # Source: http://stackoverflow.com/questions/6171565/how-do-i-read-album-artwork-using-python
@@ -190,29 +204,26 @@ class MetaTags(object):
                 # The suggested API seems to be broken.
                 # This is why I go deeper into the mutagen-classes to get the image:
                 artwork = self.file.tags.getall("APIC")[0]
-                with open(imgfilename, "wb") as img:
-                    img.write(artwork.data)
-                return True
-
             elif self.ftype == "m4a":
                 artwork = self.file["covr"][0]
-                with open(imgfilename, "wb") as img:
-                    img.write(artwork)
-                return True
-
             elif self.ftype == "flac":
                 artwork = self.file.pictures[0].data
-                with open(imgfilename, "wb") as img:
-                    img.write(artwork)
-                return True
 
         except KeyError:
             logging.debug("File \"%s\" does not have a Cover-Image", self.path)
-        except Exception as e:
-            logging.warning("Storing artwork to \"\033[0;33m%s\033[1;33m\" failed with error \"%s\"!"
-                    , imgfilename, e)
+            return False
 
-        return False
+        # Store Artwork
+        if imgfilename != None:
+            try:
+                with open(imgfilename, "wb") as img:
+                    img.write(artwork)
+            except Exception as e:
+                logging.warning("Storing artwork to \"\033[0;33m%s\033[1;33m\" failed with error \"%s\"!",
+                        str(imgfilename), str(e))
+                return False
+
+        return True
 
 
 
