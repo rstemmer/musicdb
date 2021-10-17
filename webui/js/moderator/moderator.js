@@ -14,7 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+// Create some Layers on top of the main layout
 let curtain             = new Curtain();
+let layerbackground     = new LayerBackground();
+let albumimportlayer    = new Layer(layerbackground, "AlbumImportLayer");
 
 // Create Basic MusicDB WebUI Components
 let fullscreenmanager   = new FullscreenManager();
@@ -92,6 +95,8 @@ window.onload = function ()
     document.body.appendChild(mainmenubutton.GetHTMLElement());
     document.body.appendChild(mainmenu.GetHTMLElement());
     document.body.appendChild(musicdbstatus.GetReconnectButtonHTMLElement());
+    document.body.appendChild(layerbackground.GetHTMLElement());
+    document.body.appendChild(albumimportlayer.GetHTMLElement());
 
     leftviewmanager     = new LeftViewManager();
     mainviewmanager     = new MainViewManager();
@@ -217,6 +222,9 @@ function onMusicDBMessage(fnc, sig, args, pass)
     hiddenalbums.onMusicDBMessage(fnc, sig, args, pass);
     albumimport.onMusicDBMessage(fnc, sig, args, pass);
     videoimport.onMusicDBMessage(fnc, sig, args, pass);
+    // Layer
+    albumimportlayer.onMusicDBMessage(fnc, sig, args, pass);
+    
 
 
     // Handle Messages form the server
