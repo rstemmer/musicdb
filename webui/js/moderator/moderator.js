@@ -17,7 +17,7 @@
 // Create some Layers on top of the main layout
 let curtain             = new Curtain();
 let layerbackground     = new LayerBackground();
-let albumimportlayer    = new Layer(layerbackground, "AlbumImportLayer");
+let albumimportlayer    = new AlbumImportLayer(layerbackground, "AlbumImportLayer");
 
 // Create Basic MusicDB WebUI Components
 let fullscreenmanager   = new FullscreenManager();

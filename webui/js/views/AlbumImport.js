@@ -39,9 +39,18 @@ class AlbumImport extends MainSettingsView
             window.console?.log(newalbum);
             let entry = new ListEntry();
             entry.SetInnerText(newalbum.path);
+            entry.SetClickEventCallback((event)=>{this.ImportAlbum(newalbum.path);});
             this.albumlist.AddEntry(entry);
         }
         return;
+    }
+
+
+
+    ImportAlbum(albumpath)
+    {
+        albumimportlayer.Show(); // Hand over to the overlay
+        MusicDB_Request("FindAlbumSongFiles", "ShowAlbumSongFiles", {albumpath:albumpath});
     }
 
 
