@@ -24,8 +24,12 @@ class AlbumImportLayer extends Layer
     constructor(background, id)
     {
         super(background, id)
-        this.albumsettingstable = new AlbumSettingsTable()
+
+        this.albumsettingstable = new AlbumSettingsTable();
+        this.songfilestable     = new SongFilesTable();
+
         this.AppendChild(this.albumsettingstable);
+        this.AppendChild(this.songfilestable);
     }
 
 
@@ -42,6 +46,7 @@ class AlbumImportLayer extends Layer
                 args[0].origin,
                 args[0].hasartwork,
                 args[0].haslyrics);
+            this.songfilestable.Update(args);
         }
     }
 }
