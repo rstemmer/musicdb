@@ -196,6 +196,10 @@ input[data-valid="false"]
 {
     border-bottom:      0.2rem solid #5d1410;
 }
+input:disabled
+{
+    opacity:            0.5;
+}
 
 .inputbox > input
 {

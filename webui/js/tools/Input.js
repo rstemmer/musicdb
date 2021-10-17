@@ -18,27 +18,44 @@
 
 class Input extends Element
 {
-    constructor(type, oninput, initvalue, tooltip="")
+    constructor(type, onvalidate, initvalue, tooltip="")
     {
         super("input", ["Input"]);
         this.element.type    = type;
         this.element.oninput = ()=>{this.onInput();};
         this.element.value   = initvalue;
         this.element.title   = tooltip;
-        this.oninput         = oninput;
+        this.onvalidate      = onvalidate;
         this.onInput(); // initialization is something like input
+    }
+
+
+
+    SetValidateEventCallback(callback)
+    {
+        this.onvalidate = callback;
+    }
+    SetAfterValidateEventCallback(callback)
+    {
+        this.onaftervalidation = callback;
     }
 
 
 
     onInput()
     {
-        if(typeof this.oninput !== "function")
-            return;
-
-        let value = this.GetValue();
-        let valid = this.oninput(value);
-        this.SetValidState(valid);
+        if(typeof this.onvalidate === "function")
+        {
+            let value = this.GetValue();
+            let valid = this.onvalidate(value);
+            this.SetValidState(valid);
+        }
+        if(typeof this.onaftervalidation === "function")
+        {
+            let value = this.GetValue();
+            let valid = this.GetValidState();
+            this.onaftervalidation(value, valid);
+        }
     }
 
 
@@ -67,13 +84,18 @@ class Input extends Element
     {
         this.element.style.width = csswidth;
     }
+
+    SetEnabled(enabled=true)
+    {
+        this.element.disabled = !enabled;
+    }
 }
 
 
 
 class TextInput extends Input
 {
-    constructor(oninput, initvalue="", tooltip="")
+    constructor(oninput="", initvalue="", tooltip="")
     {
         super("text", oninput, initvalue, tooltip)
     }
@@ -81,7 +103,7 @@ class TextInput extends Input
 
 class NumberInput extends Input
 {
-    constructor(oninput, initvalue="", tooltip="")
+    constructor(oninput="", initvalue="", tooltip="")
     {
         super("number", oninput, initvalue, tooltip)
     }
