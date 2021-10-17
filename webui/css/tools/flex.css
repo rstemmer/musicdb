@@ -46,6 +46,12 @@
     justify-content:    center;
 }
 
+.flex-middle
+{
+    display:            flex;
+    align-items:        center
+}
+
 .flex-right
 {
     display:            flex;
