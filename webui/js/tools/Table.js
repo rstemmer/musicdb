@@ -143,7 +143,7 @@ class TableRow extends Element
 
 class TableSpanRow extends TableRow
 {
-    constructor(numcells, classes=[], htmlcontent)
+    constructor(numcells, classes=[], htmlcontent=null)
     {
         super(1, classes);
         this.cells[0].colSpan = numcells;
