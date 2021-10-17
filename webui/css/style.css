@@ -188,7 +188,7 @@ input[type="color"]
     border-bottom:      none;
 }
 
-input[data-valid="true"]:focus
+input[data-valid="true"]
 {
     border-bottom:      0.2rem solid #105810;
 }
