@@ -20,6 +20,20 @@
 {
 }
 
+.AlbumSettingsTable td:not(:last-child)
+{
+    white-space: nowrap;
+}
+
+.AlbumSettingsTable td:last-child
+{
+    width: 100%;
+}
+
+.AlbumSettingsTable td:nth-child(2) > input
+{
+    width:              50ch;
+}
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
