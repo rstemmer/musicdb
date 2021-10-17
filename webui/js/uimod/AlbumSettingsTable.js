@@ -76,6 +76,10 @@ class AlbumSettingsTable extends Table
         this.importartworkinput  = new SVGCheckBox(null);
         this.importlyricsinput   = new SVGCheckBox(null);
 
+        this.artistnameinput.SetAfterValidateEventCallback( (value, valid)=>{return this.EvaluateNewPath();});
+        this.albumnameinput.SetAfterValidateEventCallback(  (value, valid)=>{return this.EvaluateNewPath();});
+        this.releasedateinput.SetAfterValidateEventCallback((value, valid)=>{return this.EvaluateNewPath();});
+
         // Table
         this.headlinerow  = new AlbumSettingsTableHeadline();
         this.artistnamerow = new AlbumSettingsTableRow(
@@ -103,6 +107,9 @@ class AlbumSettingsTable extends Table
             this.importlyricsinput,
             "Try to import the lyrics from the song files");
 
+        this.newpathelement = new Element("span");
+        let  newpathnode    = this.newpathelement.GetHTMLElement();
+
         this.AddRow(this.headlinerow     );
         this.AddRow(this.artistnamerow   );
         this.AddRow(this.albumnamerow    );
@@ -110,6 +117,7 @@ class AlbumSettingsTable extends Table
         this.AddRow(this.originrow       );
         this.AddRow(this.importartworkrow);
         this.AddRow(this.importlyricsrow );
+        this.AddRow(new TableSpanRow(3, [], newpathnode));
     }
 
 
@@ -137,8 +145,71 @@ class AlbumSettingsTable extends Table
 
 
 
-    Update(artistname, albumname, releasedate, origin, hasartwork, haslyrics)
+    EvaluateNewPath()
     {
+        const validspan = `<span style="color: var(--color-brightgreen)">`;
+        const errorspan = `<span style="color: var(--color-brightred)">`;
+        const grayspan  = `<span style="color: var(--color-gray)">`;
+        const closespan = `</span>`;
+
+        let newpathtext = "";
+        let newpathhtml = "";
+
+        // Artist
+        let artistname = this.artistnameinput.GetValue();
+        if(this.artistnameinput.GetValidState() === true)
+            newpathhtml += validspan;
+        else
+            newpathhtml += errorspan;
+        newpathtext += `${artistname}/`;
+        newpathhtml += `${artistname}${closespan}${grayspan}/${closespan}`;
+
+        // Release Year
+        let releaseyear = this.releasedateinput.GetValue();
+        if(this.releasedateinput.GetValidState() === true)
+            newpathhtml += validspan;
+        else
+            newpathhtml += errorspan;
+        newpathtext += `${releaseyear} - `;
+        newpathhtml += `${releaseyear} - ${closespan}`;
+
+        // Album name
+        let albumname = this.albumnameinput.GetValue();
+        if(this.albumnameinput.GetValidState() === true)
+            newpathhtml += validspan;
+        else
+            newpathhtml += errorspan;
+        newpathtext += `${albumname}`;
+        newpathhtml += `${albumname}${closespan}`;
+
+        // Show old file name if the new one is different
+        let oldpathparts = this.oldalbumpath.split("/");
+        let newpathparts = newpathtext.split("/");
+        let oldpathhtml  = "";
+
+        if(oldpathparts[0] != newpathparts[0])
+            oldpathhtml  = `${errorspan}${oldpathparts[0]}${closespan}${grayspan}/${closespan}`
+        else
+            oldpathhtml  = `${grayspan}${oldpathparts[0]}/${closespan}`
+
+        if(oldpathparts[1] != newpathparts[1])
+            oldpathhtml  += `${errorspan}${oldpathparts[1]}${closespan}${grayspan}/${closespan}`
+        else
+            oldpathhtml  += `${grayspan}${oldpathparts[1]}/${closespan}`
+
+        if(this.oldalbumpath != newpathtext)
+            newpathhtml = `${oldpathhtml}${grayspan} ➜ ${newpathhtml}${closespan}`;
+
+        this.newpathelement.RemoveChilds();
+        this.newpathelement.SetInnerHTML(newpathhtml);
+        return newpathtext;
+    }
+
+
+
+    Update(artistname, albumname, releasedate, origin, hasartwork, haslyrics, albumpath)
+    {
+        this.oldalbumpath = albumpath;
         this.artistnameinput.SetValue(artistname);
         this.albumnameinput.SetValue(albumname);
         this.releasedateinput.SetValue(releasedate);

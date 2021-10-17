@@ -39,13 +39,15 @@ class AlbumImportLayer extends Layer
         if(fnc == "FindAlbumSongFiles" && sig == "ShowAlbumSongFiles")
         {
             window.console?.log(args);
+            let albumpath = args[0].path.split("/").slice(0,2).join("/");
             this.albumsettingstable.Update(
                 args[0].artistname,
                 args[0].albumname,
                 args[0].releaseyear,
                 args[0].origin,
                 args[0].hasartwork,
-                args[0].haslyrics);
+                args[0].haslyrics,
+                albumpath);
             this.songfilestable.Update(args);
         }
     }
