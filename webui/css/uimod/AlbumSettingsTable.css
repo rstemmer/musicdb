@@ -16,15 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#AlbumImportLayer
+.AlbumSettingsTable
 {
 }
 
-
-#AlbumImportLayer td > input
-{
-    width:          95%;
-}
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */
