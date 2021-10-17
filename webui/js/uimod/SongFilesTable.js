@@ -60,16 +60,31 @@ class SongFilesTableHeadline extends SongFilesTableRowBase
 
 class SongFilesTableRow extends SongFilesTableRowBase
 {
-    constructor(fileinfos)
+    constructor(fileinfos, maxcds)
     {
         super();
 
-        this.fileinfos = fileinfos
+        this.fileinfos = fileinfos;
+        this.maxcds    = maxcds;
 
-        this.cdnumberinput   = new NumberInput((value)=>{return this.ValidateCDNumber(value); });
-        this.songnumberinput = new NumberInput((value)=>{return this.ValidateSongNumber(value); });
-        this.songnameinput   = new TextInput(  (value)=>{return this.ValidateSongName(value);  });
+        this.cdnumberinput   = new NumberInput();
+        this.songnumberinput = new NumberInput();
+        this.songnameinput   = new TextInput();
         this.newpathelement  = new Element("span");
+
+        this.cdnumberinput.SetValidateEventCallback(  (value)=>{return this.ValidateCDNumber(value);  });
+        this.songnumberinput.SetValidateEventCallback((value)=>{return this.ValidateSongNumber(value);});
+        this.songnameinput.SetValidateEventCallback(  (value)=>{return this.ValidateSongName(value);  });
+        this.cdnumberinput.SetAfterValidateEventCallback(  (value, valid)=>{return this.EvaluateNewPath();});
+        this.songnumberinput.SetAfterValidateEventCallback((value, valid)=>{return this.EvaluateNewPath();});
+        this.songnameinput.SetAfterValidateEventCallback(  (value, valid)=>{return this.EvaluateNewPath();});
+
+        // If there is just one CD, no CD number should be given
+        if(this.maxcds == 1)
+        {
+            this.fileinfos.cdnumber = "";
+            this.cdnumberinput.SetEnabled(false);
+        }
 
         this.cdnumberinput.SetValue(  this.fileinfos.cdnumber);
         this.songnumberinput.SetValue(this.fileinfos.songnumber);
@@ -79,25 +94,99 @@ class SongFilesTableRow extends SongFilesTableRowBase
         this.SetContent(SFT_SONGNUMBER_COLUMN, this.songnumberinput);
         this.SetContent(SFT_SONGNAME_COLUMN,   this.songnameinput);
         this.SetContent(SFT_NEWPATH_COLUMN,    this.newpathelement);
+
+        //this.EvaluateNewPath();
+    }
+
+
+
+    EvaluateNewPath()
+    {
+        const validspan = `<span style="color: var(--color-brightgreen)">`;
+        const errorspan = `<span style="color: var(--color-brightred)">`;
+        const grayspan  = `<span style="color: var(--color-gray)">`;
+        const closespan = `</span>`;
+
+        let newpathtext = "";
+        let newpathhtml = "";
+
+        // First part is the optional CD number
+        if(this.maxcds > 1)
+        {
+            let cdnum = this.cdnumberinput.GetValue();
+            if(this.cdnumberinput.GetValidState() === true)
+                newpathhtml += validspan;
+            else
+                newpathhtml += errorspan;
+
+            newpathtext += `${cdnum} - `;
+            newpathhtml += `${cdnum} - ${closespan}`;
+        }
+
+        // Next the song number
+        let songnum = this.songnumberinput.GetValue();
+        if(this.songnumberinput.GetValidState() === true)
+            newpathhtml += validspan;
+        else
+            newpathhtml += errorspan;
+
+        if(songnum.length == 0)
+            songnum = `??`;
+        if(songnum.length == 1)
+            songnum = `0${songnum}`;
+
+        newpathtext += `${songnum} `;
+        newpathhtml += `${songnum} ${closespan}`;
+
+        // Next comes song name
+        // TODO: Replace "/"
+        let songname = this.songnameinput.GetValue();
+        if(this.songnameinput.GetValidState() === true)
+            newpathhtml += validspan;
+        else
+            newpathhtml += errorspan;
+        //window.console?.log(this.songnameinput.GetValidState());
+
+        newpathtext += `${songname}`;
+        newpathhtml += `${songname}${closespan}`;
+
+        // Last is the extension
+        let fileextension = this.fileinfos.path.split('.').slice(-1)[0];
+        newpathtext += `.${fileextension}`;
+        newpathhtml += `${grayspan}.${fileextension}${closespan}`;
+
+        this.newpathelement.RemoveChilds();
+        this.newpathelement.SetInnerHTML(newpathhtml);
+        return newpathtext;
     }
 
 
 
     ValidateCDNumber(value)
     {
-        if(value < 1 && value > 100)
+        if(value.length == 0 && this.maxcds > 1)
+            return false;
+        if(this.maxcds == 1 && value.length > 0)
+            return false;
+
+        value = parseInt(value, 10);
+        if(value < 1 || value > this.maxcds)
             return false;
         return true;
     }
     ValidateSongNumber(value)
     {
-        if(value < 1 && value > 1000)
+        if(value.length == 0)
+            return false;
+
+        value = parseInt(value, 10);
+        if(value < 1 || value > 1000)
             return false;
         return true;
     }
     ValidateSongName(value)
     {
-        if(value.length <= 0)
+        if(value.length == 0)
             return false;
         return true;
     }
@@ -121,11 +210,19 @@ class SongFilesTable extends Table
 
     Update(files)
     {
+        // Sort
+        files.sort((a,b)=>{return a.songnumber - b.songnumber;});
+
+        // Get max CDs
+        let allcdnumbers = files.map(a => a.cdnumber);
+        let maxcds       = Math.max(...allcdnumbers);
+
+        // Create new table
         this.Clear();
         this.AddRow(this.headlinerow);
         for(let file of files)
         {
-            this.AddRow(new SongFilesTableRow(file));
+            this.AddRow(new SongFilesTableRow(file, maxcds));
         }
     }
 }
