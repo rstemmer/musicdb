@@ -3439,6 +3439,7 @@ class MusicDBWebSocketInterface(object):
         * ``cdnumber`` (integer)
         * ``songnumber`` (integer)
         * ``haslyrics`` (boolean): ``True`` when there are lyrics attached to the song file
+        * ``hasartwork`` (boolean): ``True`` when there is an album cover attached to the song file
 
         Args:
             albumpath (str): path to an album that may have new/unknown songs. The path must be relative to the music directory.
@@ -3465,6 +3466,7 @@ class MusicDBWebSocketInterface(object):
             entry["cdnumber"]    = metadata.GetCDNumber()
             entry["songnumber"]  = metadata.GetTracknumber()
             entry["haslyrics"]   = type(metadata.GetLyrics()) == str
+            entry["hasartwork"]  = metadata.CheckArtwork()
             songfiles.append(entry)
 
         return songfiles
