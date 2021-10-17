@@ -71,7 +71,11 @@ class SongFilesTableRow extends SongFilesTableRowBase
         this.cdnumberinput   = new NumberInput();
         this.songnumberinput = new NumberInput();
         this.songnameinput   = new TextInput();
+        let  newpathcontainer= new Element("div", ["songfilepath", "flex-middle"]);
+        let  songfileicon    = new SVGIcon("SongFile");
         this.newpathelement  = new Element("span");
+        newpathcontainer.AppendChild(songfileicon);
+        newpathcontainer.AppendChild(this.newpathelement);
 
         this.cdnumberinput.SetValidateEventCallback(  (value)=>{return this.ValidateCDNumber(value);  });
         this.songnumberinput.SetValidateEventCallback((value)=>{return this.ValidateSongNumber(value);});
@@ -94,9 +98,7 @@ class SongFilesTableRow extends SongFilesTableRowBase
         this.SetContent(SFT_CDNUMBER_COLUMN,   this.cdnumberinput);
         this.SetContent(SFT_SONGNUMBER_COLUMN, this.songnumberinput);
         this.SetContent(SFT_SONGNAME_COLUMN,   this.songnameinput);
-        this.SetContent(SFT_NEWPATH_COLUMN,    this.newpathelement);
-
-        //this.EvaluateNewPath();
+        this.SetContent(SFT_NEWPATH_COLUMN,    newpathcontainer);
     }
 
 
