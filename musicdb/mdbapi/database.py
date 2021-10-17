@@ -165,19 +165,9 @@ class MusicDBDatabase(object):
                 newpaths["albums"].append(path)
 
         # Check Songs
-        songs           = self.db.GetAllSongs()
-        knownsongpaths  = [song["path"] for song in songs if self.fs.IsFile(song["path"])]
-        songpaths       = self.fs.GetFiles(albumpaths, self.ignoresongs)
-
-        for path in songpaths:
-
-            # check if this is really an audio file
-            extension = self.fs.GetFileExtension(path)
-            if extension not in ["aac", "m4a", "mp3", "flac", "MP3"]:
-                continue
-
-            if path not in knownsongpaths:
-                newpaths["songs"].append(path)
+        for albumpath in albumpaths:
+            newsongpaths = self.FindNewSongs(albumpath)
+            newpaths["songs"].extend(newsongpaths)
 
         # Check Videos
         videos          = self.db.GetVideos()
@@ -194,6 +184,46 @@ class MusicDBDatabase(object):
             if path not in knownvideopaths:
                 newpaths["videos"].append(path)
 
+        return newpaths
+
+
+
+    def FindNewSongs(self, albumpath: str) -> list:
+        """
+        This method searches inside a given album path for new songs.
+        The album part can address an album that is known by the MusicDB, but it can also be an unknown one.
+
+        The songs are filtered by the configured ignore list (see :doc:`basics/config`).
+
+        Furthermore the songs are filtered by their extension.
+        Only the following files are considered: .aac, .m4a, .mp3, .flac
+
+        If the song path in already known (can be found in the database), then the song is ignored as well.
+
+        Args:
+            albumpath (str): path to an album that may have new/unknown songs. The path must be relative to the music directory.
+
+        Returns:
+            A list of new, unknown song paths. If no new songs have be found, an empty list gets returned.
+        """
+        newpaths        = []
+        songs           = self.db.GetAllSongs()
+        knownsongpaths  = [song["path"] for song in songs if self.fs.IsFile(song["path"])]
+        songpaths       = self.fs.GetFiles(albumpath, self.ignoresongs)
+
+        for path in songpaths:
+
+            # check if this is really an audio file
+            extension = self.fs.GetFileExtension(path)
+            if extension == None or extension == []:
+                continue
+
+            extension = extension.lower()
+            if extension not in ["aac", "m4a", "mp3", "flac"]:
+                continue
+
+            if path not in knownsongpaths:
+                newpaths.append(path)
         return newpaths
 
 
