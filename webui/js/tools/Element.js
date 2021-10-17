@@ -149,6 +149,13 @@ class Element
 
         this.element.style.display = "none";
     }
+
+
+
+    SetClickEventCallback(callback)
+    {
+        this.element.onclick = callback;
+    }
 }
 
 
