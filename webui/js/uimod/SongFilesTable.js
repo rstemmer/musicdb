@@ -16,7 +16,7 @@
 
 "use strict";
 
-const SONGFILESTABLEHEADLINE = ["CD", "Song Nr.", "Song Name", "New Path"];
+const SONGFILESTABLEHEADLINE = ["CD", "Song Nr.", "Song Name", "New File Name"];
 const SFT_CDNUMBER_COLUMN   = 0;
 const SFT_SONGNUMBER_COLUMN = 1;
 const SFT_SONGNAME_COLUMN   = 2;
@@ -64,8 +64,9 @@ class SongFilesTableRow extends SongFilesTableRowBase
     {
         super();
 
-        this.fileinfos = fileinfos;
-        this.maxcds    = maxcds;
+        this.fileinfos   = fileinfos;
+        this.oldfilename = this.fileinfos.path.split("/").slice(-1)[0];
+        this.maxcds      = maxcds;
 
         this.cdnumberinput   = new NumberInput();
         this.songnumberinput = new NumberInput();
@@ -139,21 +140,24 @@ class SongFilesTableRow extends SongFilesTableRowBase
         newpathhtml += `${songnum} ${closespan}`;
 
         // Next comes song name
-        // TODO: Replace "/"
         let songname = this.songnameinput.GetValue();
+        songname.replace(" / ", " ∕ "/*division slash*/);
         if(this.songnameinput.GetValidState() === true)
             newpathhtml += validspan;
         else
             newpathhtml += errorspan;
-        //window.console?.log(this.songnameinput.GetValidState());
 
         newpathtext += `${songname}`;
         newpathhtml += `${songname}${closespan}`;
 
         // Last is the extension
-        let fileextension = this.fileinfos.path.split('.').slice(-1)[0];
+        let fileextension = this.fileinfos.path.split(".").slice(-1)[0];
         newpathtext += `.${fileextension}`;
         newpathhtml += `${grayspan}.${fileextension}${closespan}`;
+
+        // Show old file name if the new one is different
+        if(this.oldfilename != newpathtext)
+            newpathhtml = `${errorspan}${this.oldfilename}${grayspan} ➜ ${newpathhtml}`;
 
         this.newpathelement.RemoveChilds();
         this.newpathelement.SetInnerHTML(newpathhtml);
