@@ -157,7 +157,7 @@ class SongFilesTableRow extends SongFilesTableRowBase
 
         // Show old file name if the new one is different
         if(this.oldfilename != newpathtext)
-            newpathhtml = `${errorspan}${this.oldfilename}${grayspan} ➜ ${newpathhtml}`;
+            newpathhtml = `${errorspan}${this.oldfilename}${closespan}${grayspan} ➜ ${newpathhtml}${closespan}`;
 
         this.newpathelement.RemoveChilds();
         this.newpathelement.SetInnerHTML(newpathhtml);
