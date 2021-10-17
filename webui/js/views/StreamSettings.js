@@ -27,7 +27,7 @@ class StreamSettingsTableRowBase extends TableRow
 {
     constructor()
     {
-        super(MOODTABLEHEADLINE.length, ["StreamSettingsTableRow"]);
+        super(STREAMSETTINGSHEADLINE.length, ["StreamSettingsTableRow"]);
     }
 }
 
