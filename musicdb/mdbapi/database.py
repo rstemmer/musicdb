@@ -21,6 +21,7 @@ It is the interface between the music and its entries in the database (:mod:`mus
 import os
 import stat
 import signal
+from pathlib import Path
 from musicdb.lib.fileprocessing import Fileprocessing
 from musicdb.lib.metatags       import MetaTags
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
@@ -145,7 +146,7 @@ class MusicDBDatabase(object):
         newpaths["videos"]  = []
 
         artistpaths = self.fs.GetSubdirectories(None, self.ignoreartists)
-        artistpaths = [self.fs.RemoveRoot(path) for path in artistpaths]
+        artistpaths = self.fs.ToString(artistpaths)
 
         # Check Artists
         artists          = self.db.GetAllArtists()
@@ -159,6 +160,7 @@ class MusicDBDatabase(object):
         albums          = self.db.GetAllAlbums()
         knownalbumpaths = [album["path"] for album in albums if self.fs.IsDirectory(album["path"])]
         albumpaths      = self.fs.GetSubdirectories(artistpaths, self.ignorealbums)
+        albumpaths      = self.fs.ToString(albumpaths)
         
         for path in albumpaths:
             if path not in knownalbumpaths:
@@ -173,6 +175,7 @@ class MusicDBDatabase(object):
         videos          = self.db.GetVideos()
         knownvideopaths = [video["path"] for video in videos if self.fs.IsFile(video["path"])]
         videopaths      = self.fs.GetFiles(artistpaths)
+        videopaths      = self.fs.ToString(videopaths)
 
         for path in videopaths:
 
@@ -210,6 +213,7 @@ class MusicDBDatabase(object):
         songs           = self.db.GetAllSongs()
         knownsongpaths  = [song["path"] for song in songs if self.fs.IsFile(song["path"])]
         songpaths       = self.fs.GetFiles(albumpath, self.ignoresongs)
+        songpaths       = self.fs.ToString(songpaths)
 
         for path in songpaths:
 
@@ -260,7 +264,7 @@ class MusicDBDatabase(object):
         
 
 
-    def AnalysePath(self, path):
+    def AnalysePath(self, musicpath):
         """
         This method analyses a path to a song or video and extracts all the information encoded in the path.
         The path must consist of three parts: The artist directory, the album directory and the song file.
@@ -291,12 +295,15 @@ class MusicDBDatabase(object):
         This method does not check if the path exists!
 
         Args:
-            path (str): A path of a song including artist and album directory or a video including the artists directory.
+            musicpath (str/Path): A path of a song including artist and album directory or a video including the artists directory.
 
         Returns:
             On success, a dictionary with information about the artist, album and song or video is returned.
             Otherwise ``None`` gets returned.
         """
+
+        path = str(musicpath)
+
         # Define all possibly used variables to a avoid undefined behavior
         result = {}
         result["artist"]    = None

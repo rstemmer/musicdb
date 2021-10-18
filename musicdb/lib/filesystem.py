@@ -1,5 +1,5 @@
 # MusicDB,  a music manager with web-bases UI that focus on music.
-# Copyright (C) 2017-2021  Ralf Stemmer <ralf.stemmer@gmx.net>
+# Copyright (C) 2017 - 2021  Ralf Stemmer <ralf.stemmer@gmx.net>
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,15 +19,18 @@ import shutil
 import logging
 import subprocess
 from pathlib import Path
+from typing  import Union, Optional
 
 
 class Filesystem(object):
     """
     This class provides an interface to the filesystem.
-    The whole class assumes that it is used with an Unicode capable unix-style filesystem.
+    The whole class assumes that it is used with an Unicode capable UNIX-style filesystem.
 
     Whenever I write about *root director* the path set in this class as root is meant.
     Otherwise I would call it *system root directory*.
+
+    The root path must exist and must be a directory.
 
     Some naming conventions:
 
@@ -37,32 +40,58 @@ class Filesystem(object):
 
 
     Args:
-        root(str): Path to the internal used root directory. It is allowd to start with "./".
+        root (str/Path): Path to the internal used root directory. It is allowed to start with "./".
 
     Raises:
-        ValueError: if the root path does not start with ``"/"`` or does not exist
+        ValueError: If the root path does not exist
+        TypeError: If root is not of type ``str`` or ``Path``.
     """
     def __init__(self, root="/"):
-        if root[0:2] == "./":
-            root = os.path.abspath(root)
+        if type(root) != Path and type(root) != str:
+            raise TypeError("root path must be of type str or pathlib.Path");
 
-        if root[0] != "/":
-            raise ValueError("invalid root-path: \""+root+"\" does not start with \"/\"")
-        if not os.path.isdir(root):
-            logging.error("invalid root-path: \""+root+"\"")
-            raise ValueError("invalid root-path: \""+root+"\" does not exist")
+        if type(root) == str:
+            self._root = Path(root)
+        else:
+            self._root = root
 
-        self._root = root
+        self._root = self._root.expanduser()
+        self._root = self._root.resolve()
+
+        if not self._root.is_dir():
+            logging.error("root path \"%s\" is not an existing directory!", str(root))
+            raise ValueError("root path \"%s\" is not an existing directory!"%(str(root)))
 
 
 
-    def RemoveRoot(self, abspath):
+    def ToString(self, paths: Union[str, Path, list[Union[str, Path]]]) -> Union[str, list[str]]:
+        """
+        Converts a Path object or a list of path objects into a string or a list of strings
+
+        Args:
+            paths (str,Path,list): A single path or a list of paths
+
+        Returns:
+            A single string or a list of strings
+        """
+        if type(paths) != list:
+            return str(paths)
+        strings = [str(path) for path in paths]
+        return strings
+
+
+
+    def RemoveRoot(self, path: Union[str, Path]) -> Path:
         """
         This method makes a path relative to the root path.
         The existence of the path gets not checked!
 
+        It is assumed that ``path`` is an absolute path.
+        Anyway it will be processed by :meth:`~AbsolutePath` to resolve
+        a user directory ``~``.
+
         Args:
-            abspath (str): A path that shall be made relative
+            abspath (str, Path): A path that shall be made relative
 
         Returns:
             A relative path to the root directory
@@ -83,25 +112,36 @@ class Filesystem(object):
                 _ = fs.RemoveRoot("/data/backup/Artist/Album")
                 # -> ValueError-Excpetion
         """
-        if abspath[0:len(self._root)] != self._root:
-            raise ValueError("Path \""+abspath+"\" has not the expected root of \""+self._root+"\"")
-
-        relpath = abspath[len(self._root) + 1:] # +1 to remove the / between root and subdir
+        abspath = self.AbsolutePath(path)
+        relpath = abspath.relative_to(self._root)   # Raises ValueError
         return relpath
+
+    def TryRemoveRoot(self, path: Union[str, Path]) -> Path:
+        """
+        Like :meth:`~RemoveRoot` just that exceptions are suppressed.
+        If an exception occurs, ``path`` gets returned as it is.
+        """
+        try:
+            retval = self.RemoveRoot(path)
+        except Exception:
+            retval = Path(path)
+        return retval
         
 
 
-    def AbsolutePath(self, xpath):
+    def AbsolutePath(self, xpath: Union[str, Path]) -> Path:
         """
         This method returns an absolute path by adding the root directory to the path.
         If the path is already absolute (starts with ``"/"``) it gets returned as it is.
-
-        If the path starts with ``"./"`` the root path gets prepended.
+        
+        If the path starts with a ``~`` the user home directories will be resolved.
 
         If path is exact ``"."``, the root path gets returned.
 
+        In all other cases the root path gets prepended.
+
         Args:
-            xpath (str): A relative or absolute path
+            xpath (str/Path): A relative or absolute path
 
         Returns:
             An absolute path
@@ -109,78 +149,78 @@ class Filesystem(object):
         Raises:
             TypeError: If *xpath* is ``None``
         """
-        if xpath == None:
-            TypeError("xpath must have a value!")
-
-        if xpath[0] == "/":
-            abspath = xpath
-        elif xpath[0:2] == "./":
-            abspath = os.path.join(self._root, xpath[2:])
-        elif xpath == ".":
-            abspath = self._root
+        if type(xpath) == str:
+            path = Path(xpath)
         else:
-            abspath = os.path.join(self._root, xpath)
-        return abspath
+            path = xpath
+
+        # Check if already absolute
+        if path.is_absolute():
+            return path
+
+        # Check if user directory
+        if str(path)[0] == "~":
+            return path.expanduser()
+
+        # Make absolute
+        path = self._root / path
+        path = path.resolve()
+        return path
 
 
 
-    def AssertDirectory(self, xpath):
+    def AssertDirectory(self, xpath: Union[str, Path]) -> bool:
         """
-        Raises an AssertionError if :meth:`~musicdb.lib.filesystem.Filesystem.IsDirectory` fails.
+        Raises an AssertionError if :meth:`~IsDirectory` fails.
         """
         retval = self.IsDirectory(xpath)
         if retval == False:
-            raise AssertionError("invalid path: \""+xpath+"\"")
+            raise AssertionError("Path \""+xpath+"\" is not a Directory")
 
         return True
 
     
-    def IsDirectory(self, xpath):
+    def IsDirectory(self, xpath: Union[str, Path]) -> bool:
         """
         This method checks if a directory exists.
 
         Args:
-            xpath (str): A relative or absolute path to a directory
+            xpath (str/Path): A relative or absolute path to a directory
 
         Returns:
             ``True`` if the directory exists, otherwise ``False``.
         """
         abspath = self.AbsolutePath(xpath)
-
-        if not os.path.isdir(abspath):
-            return False
-        return True
+        return abspath.is_dir()
 
 
 
-    def AssertFile(self, xpath):
+    def AssertFile(self, xpath: Union[str, Path]):
         """
         Raises an AssertionError if :meth:`~musicdb.lib.filesystem.Filesystem.IsFile` fails.
         """
         retval = self.IsFile(xpath)
         if retval == False:
-            raise AssertionError("invalid file: \""+realpath+"\"")
+            raise AssertionError("Path \""+xpath+"\" is not a File")
         return True
 
-    def IsFile(self, xpath):
+
+    def IsFile(self, xpath: Union[str, Path]) -> bool:
         """
         This method checks if a file exists.
 
         Args:
-            xpath (str): A relative or absolute path to a directory
+            xpath (str/Path): A relative or absolute path to a directory
 
         Returns:
             ``True`` if the file exists, otherwise ``False``.
         """
         abspath = self.AbsolutePath(xpath)
-
-        if not os.path.isfile(abspath):
-            return False
-        return True
+        return abspath.is_file()
 
 
 
-    def Exists(self, xpath):
+    def Exists(self, xpath: Union[str, Path]) -> bool:
         """
         This method checks if a path exist. It can be a file or a directory
 
@@ -191,11 +231,11 @@ class Filesystem(object):
             ``True`` if the path exists, otherwise ``False``.
         """
         abspath = self.AbsolutePath(xpath)
-        return os.path.exists(abspath)
+        return abspath.exists()
 
 
 
-    def RemoveFile(self, xpath):
+    def RemoveFile(self, xpath: Union[str, Path]) -> bool:
         """
         This method removes a file from the filesystem.
 
@@ -206,7 +246,7 @@ class Filesystem(object):
         If the file does not exist, ``False`` gets returned
 
         Args:
-            xpath (str): A relative or absolute path to a file
+            xpath (str/Path): A relative or absolute path to a file
 
         Returns:
             ``False`` if the file does not exist.
@@ -216,14 +256,14 @@ class Filesystem(object):
         if not self.IsFile(abspath):
             return False
 
-        os.remove(abspath)
+        abspath.unlink()
         return True
 
 
 
-    def RemoveDirectory(self, xpath):
+    def RemoveDirectory(self, xpath: Union[str, Path]) -> bool:
         """
-        This method removes a directory tree from the filesystem.
+        This method removes a directory from the filesystem.
 
         .. warning::
 
@@ -232,10 +272,10 @@ class Filesystem(object):
         If the file does not exist, ``False`` gets returned
 
         Args:
-            xpath (str): A relative or absolute path to a directory
+            xpath (str/Path): A relative or absolute path to a directory
 
         Returns:
-            ``False`` if the directory does not exist.
+            ``False`` if the directory does not exist
         """
         abspath = self.AbsolutePath(xpath)
         
@@ -247,20 +287,21 @@ class Filesystem(object):
 
 
 
-    def MoveFile(self, xsrcpath, xdstpath):
+    def MoveFile(self, xsrcpath: Union[str, Path], xdstpath: Union[str, Path]) -> bool:
         """
         This method moves a file in the filesystem.
         **Handle with care!**
 
         If the source file does not exist, ``False`` gets returned.
-        To move directories, see :meth:`~MoveDirectory`
+        To move directories, see :meth:`~MoveDirectory`.
+        The directory in that the file shall be moved must exist.
 
         Args:
-            xsrcpath (str): A relative or absolute path of the source
-            xdstpath (str): A relative or absolute path where the source file shall be moves to
+            xsrcpath (str/Path): A relative or absolute path of the source
+            xdstpath (str/Path): A relative or absolute path where the source file shall be moves to
 
         Returns:
-            ``False`` if the file does not exist.
+            ``False`` if the file or the destination directory does not exist
         """
         abssource = self.AbsolutePath(xsrcpath)
         absdest   = self.AbsolutePath(xdstpath)
@@ -268,23 +309,27 @@ class Filesystem(object):
         if not self.IsFile(abssource):
             return False
 
-        shutil.move(abssource, absdest)
+        try:
+            shutil.move(abssource, absdest)
+        except FileNotFoundError as e:
+            return False
         return True
 
-    def MoveDirectory(self, xsrcpath, xdstpath):
+    def MoveDirectory(self, xsrcpath: Union[str, Path], xdstpath: Union[str, Path]) -> bool:
         """
-        This method moves a directory in the file system.
+        This method moves a directory in the filesystem.
         **Handle with care!**
 
         If the source directory does not exist, ``False`` gets returned.
-        To move files, see :meth:`~MoveFile`
+        To move files, see :meth:`~MoveFile`.
+        The directory in that the directory shall be moved in must exist.
 
         Args:
-            xsrcpath (str): A relative or absolute path of the source
-            xdstpath (str): A relative or absolute path where the source file shall be moves to
+            xsrcpath (str/Path): A relative or absolute path of the source
+            xdstpath (str/Path): A relative or absolute path where the source file shall be moves to
 
         Returns:
-            ``False`` if the file does not exist.
+            ``False`` if the source directory does not exist.
         """
         abssource = self.AbsolutePath(xsrcpath)
         absdest   = self.AbsolutePath(xdstpath)
@@ -292,11 +337,41 @@ class Filesystem(object):
         if not self.IsDirectory(abssource):
             return False
 
-        shutil.move(abssource, absdest)
+        try:
+            shutil.move(abssource, absdest)
+        except FileNotFoundError as e:
+            return False
         return True
 
 
-    def CopyFile(self, xsrcpath, xdstpath):
+
+    def Rename(self, xsrcpath: Union[str, Path], xdstpath: Union[str, Path]) -> bool:
+        """
+        Renames a file or a directory.
+        If the destination file name exists, it gets overwritten.
+        **Handle with care!**
+
+        If the source file or directory does not exist, ``False`` gets returned.
+        To move a file or directory to different places see :meth:`~MoveFile` or :meth:`~MoveDirectory`.
+
+        Args:
+            xsrcpath (str/Path): A relative or absolute path of the source
+            xdstpath (str/Path): A relative or absolute path where the source file shall be moves to
+
+        Returns:
+            ``False`` if the source file or directory does not exist.
+        """
+        abssource = self.AbsolutePath(xsrcpath)
+        abstarget = self.AbsolutePath(xdstpath)
+
+        if not self.Exists(abssource):
+            return False
+
+        abssource.rename(abstarget)
+        return True
+
+
+    def CopyFile(self, xsrcpath: Union[str, Path], xdstpath: Union[str, Path]) -> bool:
         """
         This method copies a file.
         **Handle with care!**
@@ -312,8 +387,8 @@ class Filesystem(object):
             cp -p $SRCPATH $DSTPATH
 
         Args:
-            xsrcpath (str): A relative or absolute path of the source
-            xdstpath (str): A relative or absolute path where the source file shall be copied to
+            xsrcpath (str/Path): A relative or absolute path of the source
+            xdstpath (str/Path): A relative or absolute path where the source file shall be copied to
 
         Returns:
             ``False`` if the file does not exist.
@@ -330,34 +405,34 @@ class Filesystem(object):
 
     
 
-    def CreateSubdirectory(self, xnewpath):
+    def CreateSubdirectory(self, xnewpath: Union[str, Path]) -> bool:
         """
         This method creates a subdirectory.
         The directories are made recursively.
         So *xnewpath* can address the last directory of a path that will be created.
 
         Args:
-            xnewpath: A path that addresses a new directory
+            xnewpath (str/Path): A path that addresses a new directory
 
         Returns:
             ``True``
         """
         absnewpath = self.AbsolutePath(xnewpath)
-        os.makedirs(absnewpath, exist_ok=True)
+        absnewpath.mkdir(parents=True, exist_ok=True)
         return True
 
 
 
-    def GetFileExtension(self, xpath):
+    def GetFileExtension(self, xpath: Union[str, Path]) -> str:
         """
         This method returns the file extension of the file addressed by *xpath*.
-        The file must *not* exist.
+        It will not be checked if the file exists.
 
         If xpath does not address a file or the file does not have an extension, ``None`` gets returned.
         Otherwise only the extension without the leading ``"."`` gets returned.
 
         Args:
-            xpath (str): A path or name of a file that extension shall be returned
+            xpath (str/Path): A path or name of a file that extension shall be returned
 
         Returns:
             The file extension without the leading dot, or ``None`` if the file does not have an extension.
@@ -372,8 +447,13 @@ class Filesystem(object):
                     print("File Extension is: \"%s\""%(ext))    # in this example: "txt"
 
         """
-        extension = os.path.splitext(xpath)[1]  # ([1] to get the extension from the returned tuple)
-        if not extension:
+        if type(xpath) == str:
+            path = Path(xpath)
+        else:
+            path = xpath
+
+        extension = path.suffix
+        if extension == "":
             return None
 
         extension = extension[1:]               # remove the "." (".py"->"py")
@@ -381,17 +461,25 @@ class Filesystem(object):
 
 
 
-    def GetFileName(self, xpath):
+    def GetFileName(self, xpath: Union[str, Path], incldir=True) -> str:
         """
         This method returns the file name of the file addressed by *xpath*.
         It is not required and not checked that the file exist.
         The name of a file does not include the file extension.
 
+        If ``incldir`` is ``True`` (default), the full path including the directories is returd.
+        So the returned path is the argument without any suffix.
+        When ``xpath`` addresses a directory and ``inclddir`` is ``True``, the behavior is not defined!
+
+        If ``incldir`` is ``False`` only the file name is returned without suffix and without directories.
+
+        The return type is a string.
+
         Args:
-            xpath (str): A path or name of a file that name shall be returned
+            xpath (str/Path): A path or name of a file that name shall be returned
 
         Returns:
-            The name of the file.
+            The name of the file including directories if ``incldir==True``.
 
         Example:
 
@@ -400,34 +488,66 @@ class Filesystem(object):
                 name = fs.GetFileName("this/is/a/test.txt")
                 print(name) # "this/is/a/test"
 
+                name = fs.GetFileName("this/is/a/test.txt", incldir=False)
+                print(name) # "test"
+
+                name = fs.GetFileName("this/is/a", incldir=False)
+                print(name) # "a"
+
         """
-        name = os.path.split(xpath)[1]          # [1] get the filename from the returned tuple
-        name = os.path.splitext(name)[0]        # [0] to get the name from the returned tuple
-        return name
+        if type(xpath) == str:
+            path = Path(xpath)
+        else:
+            path = xpath
+
+        if incldir:
+            suffix = path.suffix
+            name   = str(path)[:-len(suffix)]
+        else:
+            file = Path(path.name)  # Get full file name from path
+            name = file.stem        # Get only the name without suffix
+
+        return str(name)
+
+    def GetDirectoryName(self, xpath: Union[str, Path]) -> str:
+        """
+        See :meth:`~GetFileName`, but ``incldir`` is always ``False``.
+        So this method returns the last directory of a path.
+        """
+        return self.GetFileName(xpath, incldir=False)
 
 
 
-    def GetDirectory(self, xpath):
+    def GetDirectory(self, xpath: Union[str, Path]) -> Path:
         """
         This method returns the directory a file or folder is stored in.
+        If is not required and not checked if the path exists.
 
         Args:
-            xpath (str): A path to a file (path must not exist)
+            xpath (str/Path): A path to a file or directory
 
         Returns:
             The directory of that file
+
+        Example:
+
+            .. code-block:: python
+
+                directory = fs.GetDirectory("this/is/a/test.txt")
+                print(str(directory)) # "this/is/a"
         """
-        return os.path.split(xpath)[0]
+        directory = os.path.split(xpath)[0]
+        return Path(directory)
 
 
 
-    def GetOwner(self, xpath: str) -> tuple[str,str]:
+    def GetOwner(self, xpath: Union[str, Path]) -> tuple[str,str]:
         """
         This method returns the owner of a file or directory.
         The owner is a tuple of a UNIX user and group as string
 
         Args:
-            xpath (str): Path to the file or directory
+            xpath (str/Path): Path to the file or directory
 
         Returns:
             A tuple (user, group) to which the file belongs to
@@ -438,16 +558,17 @@ class Filesystem(object):
 
                 fs = Filesystem("/tmp")
                 user,group = fs.GetOwner("testfile.txt")
+                print("User: " + user)      # "User: root"
+                print("Group: " + group)    # "Group: root"
         """
-        abspath  = self.AbsolutePath(xpath)
-        filepath = Path(abspath)
-        user  = filepath.owner()
-        group = filepath.group()
+        abspath = self.AbsolutePath(xpath)
+        user    = abspath.owner()
+        group   = abspath.group()
         return (user, group)
 
 
 
-    def GetMode(self, xpath: str) -> int:
+    def GetMode(self, xpath: Union[str, Path]) -> int:
         """
         This method returns the mode of a file.
         The mode consists of the ``stat`` attributes as listed in :meth:`~SetAttributes`.
@@ -455,10 +576,10 @@ class Filesystem(object):
         Only the first four octal digits will be returned.
 
         Args:
-            xpath (str): Path to the file or directory
+            xpath (str/Path): Path to the file or directory
 
         Returns:
-            A tuple (user, group) to which the file belongs to
+            An integer with ``st_mode & 0o7777`` of the addressed file or directory.
 
         Example:
 
@@ -468,12 +589,12 @@ class Filesystem(object):
                 mode = fs.GetMode("testfile.txt")
         """
         abspath  = self.AbsolutePath(xpath)
-        mode     = os.stat(abspath)
+        mode     = abspath.stat()
         return mode.st_mode & 0o7777
 
 
 
-    def SetAttributes(self, xpath, owner, group, mode):
+    def SetAttributes(self, xpath: Union[str, Path], owner: Optional[str]=None, group: Optional[str]=None, mode: Optional[int]=None) -> bool:
         """
         This method sets attributes for a file or directory.
         The *mode* is the access permissions as defined in the *stats* module.
@@ -505,7 +626,7 @@ class Filesystem(object):
 
 
         Args:
-            xpath (str): Path to the file or directory
+            xpath (str/Path): Path to the file or directory
             owner (str): Name of the owner of the file or directory
             group (str): Name of the group
             mode: Access permissions
@@ -530,32 +651,35 @@ class Filesystem(object):
 
         """
         abspath = self.AbsolutePath(xpath)
+
         if mode != None:
             try:
-                os.chmod(abspath, mode)
+                abspath.chmod(mode)
             except PermissionError as e:
                 logging.error("Setting mode of %s to %s failed with error %s", abspath, oct(mode), str(e))
                 return False
+
         if owner != None and group != None:
             try:
                 shutil.chown(abspath, owner, group)
             except PermissionError as e:
                 logging.error("Setting ownership of %s to %s:%s failed with error %s", abspath, owner, group, str(e))
                 return False
+
         return True
 
 
 
-    def GetModificationDate(self, xpath):
+    def GetModificationDate(self, xpath: Union[str, Path]) -> int:
         """
         This method returns the date when a file or directory was modified the last time.
         (See `os.path.getmtime <https://docs.python.org/3/library/os.path.html#os.path.getmtime>`_)
 
         Args:
-            xpath (str): Path to the file or directory
+            xpath (str/Path): Path to the file or directory
 
         Returns:
-            The modification date of the file or directory as unix time value in seconds (integer)
+            The modification date of the file or directory as UNIX time value in seconds (integer)
 
         Example:
             
@@ -567,44 +691,48 @@ class Filesystem(object):
 
         """
         abspath = self.AbsolutePath(xpath)
-        mtime = int(os.path.getmtime(abspath))
+        mtime   = int(os.path.getmtime(abspath))
         return mtime
 
 
 
-    def ListDirectory(self, xpath=None):
+    def ListDirectory(self, xpath: Union[str, Path, None]=None) -> list[Path]:
         """
         This method returns a list of entries in the directory addressed by *xpath*.
         The list can contain files and directories.
         If *xpath* is not a directory, an empty list will be returned.
         If *xpath* is ``None``, the root directory will be used.
-        The list contains only the names including hidden files that starts with a ``"."``.
+
+        The list contains only the names (relative to root directory) including hidden files that starts with a ``"."``.
         The special directories ``"."`` and ``".."`` are not included.
 
         Args:
-            xpath (str): Path to a directory. If ``None`` the root directory will be used
+            xpath (str/Path): Path to a directory. If ``None`` the root directory will be used
 
         Returns:
-            A list of entries in the directory.
+            A list of entries (files and directories) in the directory.
         """
         if xpath == None:
-            xpath = self._root
+            abspath = self._root
+        else:
+            abspath = self.AbsolutePath(xpath)
 
-        abspath = self.AbsolutePath(xpath)
-        if not self.IsDirectory(xpath):
+        if not self.IsDirectory(abspath):
             return []
 
-        retval  = os.listdir(abspath)
-        return retval
+        paths = [path for path in abspath.iterdir()]
+        paths = [self.TryRemoveRoot(path) for path in paths]
+        return paths
 
 
 
-    # Returns a list with directories
-    def GetSubdirectories(self, xparents=None, ignore=None):
+    def GetSubdirectories(self, xparents: Optional[list[Union[str, Path]]]=None, ignore: Optional[list[str,Path]]=None) -> list[Path]:
         """
-        This method returns a filtered list with subdirectories for one or more parent directories.
+        This method returns a filtered list with sub-directories for one or more parent directories.
         If *xparents* is ``None``, the root directory will be used.
-        Using the root directory leads to returning absolute paths!
+
+        This method returns relative ``Path`` objects.
+        If a path is not relative to the root path, then an absolute path is returned.
 
         The *ignore* parameter is a list of names that will be ignored and won't appear in the returned list of subdirectories.
 
@@ -629,22 +757,31 @@ class Filesystem(object):
 
             .. code-block:: python
 
+                fs = Filesystem("/tmp")
+
                 subdirs = fs.GetSubdirectories(["dir1", "dir2"], ["tmp"])
+
                 print(subdirs)  # > ['dir1/subdir', 'dir1/testdir', 'dir2/test']
 
         """
 
         if xparents == None:
-            xparents = [self._root]
+            parents = [self._root]
         elif type(xparents) != list:
-            xparents = [xparents]
+            parents = [xparents]
+        else:
+            parents = xparents
+
+        # Make sure all paths are of type Path and relative
+        parents = [Path(parent) for parent in parents]
+        parents = [self.TryRemoveRoot(parent) for parent in parents]
 
         if type(ignore) != list:
             ignore = [ignore]
         
         pathlist  = []
 
-        for parent in xparents:
+        for parent in parents:
             self.AssertDirectory(parent)
 
             paths = []
@@ -652,18 +789,16 @@ class Filesystem(object):
             entries = self.ListDirectory(parent)
             for entry in entries:
                 # check if entry shall be ignored
-                if ignore and entry in ignore:
+                name = self.GetDirectoryName(entry)
+                if ignore and name in ignore:
                     continue
 
-                # create a complete path out of the enty-name (file or dir name)
-                path = os.path.join(parent, entry)
-                
-                # check if this is a valid subdir
-                if not self.IsDirectory(path):
+                # check if this is a valid sub-directory
+                if not self.IsDirectory(entry):
                     continue
 
                 # append valid path to the pathlist
-                paths.append(path)
+                paths.append(entry)
 
             pathlist.extend(paths)
 
@@ -671,7 +806,7 @@ class Filesystem(object):
 
 
 
-    def GetFiles(self, xparents=None, ignore=None):
+    def GetFiles(self, xparents: Union[str,Path,None]=None, ignore: Optional[list[str,Path]]=None) -> list[Path]:
         """
         This method returns a filtered list with files for one or more parent directories.
         If *xparents* is ``None``, the root directory will be used.
@@ -679,7 +814,10 @@ class Filesystem(object):
 
         The *ignore* parameter is a list of names that will be ignored and won't appear in the returned list of subdirectories.
 
-        This method works like :meth:`~musicdb.lib.filesystem.Filesystem.GetSubdirectories` but with files
+        All paths returned are relative to the root directory if possible.
+        If not, the they are absolute.
+
+        This method works like :meth:`~GetSubdirectories` but with files
 
         Args:
             xparents: A parent directory or a list of parent directories
@@ -689,18 +827,23 @@ class Filesystem(object):
             A list of paths relative to the root directory, including the parent directory ("parent/filename")
 
         """
-
         if xparents == None:
-            xparents = [self._root]
+            parents = [self._root]
         elif type(xparents) != list:
-            xparents = [xparents]
+            parents = [xparents]
+        else:
+            parents = xparents
+
+        # Make sure all paths are of type Path and relative
+        parents = [Path(parent) for parent in parents]
+        parents = [self.TryRemoveRoot(parent) for parent in parents]
 
         if type(ignore) != list:
             ignore = [ignore]
 
         pathlist = []
 
-        for parent in xparents:
+        for parent in parents:
             self.AssertDirectory(parent)
 
             paths = []
@@ -708,18 +851,16 @@ class Filesystem(object):
             entries = self.ListDirectory(parent)
             for entry in entries:
                 # check if entry shall be ignored
-                if ignore and entry in ignore:
+                name = self.GetFileName(entry)
+                if ignore and name in ignore:
                     continue
 
-                # create a complete path
-                path = os.path.join(parent, entry)
-
                 # if it's a file, add it to the paths list, otherwise ignore it
-                if not self.IsFile(path):
+                if not self.IsFile(entry):
                     continue
 
                 # append valid path to the path list
-                paths.append(path)
+                paths.append(entry)
 
             pathlist.extend(paths)
 
@@ -727,7 +868,7 @@ class Filesystem(object):
 
 
 
-    def Execute(self, commandline):
+    def Execute(self, commandline: list[str]):
         """
         Executes an external program.
         The command line is a list of arguments with the executable name as first element.
@@ -778,14 +919,6 @@ class Filesystem(object):
         os.sync()
 
 
-    ## returns an absolute path of PATH. If necessary, ROOT will automatically be added
-    #def AbsolutePath(self, path):
-    #    if path[0:len(self._root)] != self._root:
-    #        path = os.path.join(self._root, path)
-    #def IsDirectory(self, path, isabsolute=False):
-    #def IsFile(self, path, isabsolute=False):
-    #def ListDirectory(self, path):
-
     # TODO/FIXME: Sehr ähnlich zu TryAnalysePath aus mdbapi.database. Ggf irgendwie vereinen
     # -> no, they follow different ideas. But both require better documentation!
 
@@ -793,6 +926,7 @@ class Filesystem(object):
     # The path should be relative to the music root directory, otherwise its obviously not valid
     # As all functions of this type, there is no guarantee
     def IsArtistPath(self, path, ignorealbums=None, ignoresongs=None, isabsolute=False):
+        logging.warning("Filesystem.IsArtistPath is DEPRECATED")
         if isabsolute:
             path = self.RemoveRoot(path)
 
@@ -813,6 +947,7 @@ class Filesystem(object):
 
 
     def IsAlbumPath(self, path, ignoresongs=None, isabsolute=False):
+        logging.warning("Filesystem.IsAlbumPath is DEPRECATED")
         if isabsolute:
             path = self.RemoveRoot(path)
 
@@ -839,7 +974,7 @@ class Filesystem(object):
         return False
 
 
-    def AnalyseAlbumDirectoryName(self, albumdirname):
+    def AnalyseAlbumDirectoryName(self, albumdirname: str) -> dict:
         """
         This method analyses the name of an album directory.
         If it does not follow the scheme of an album directory name, ``None`` gets returned, otherwise the albumname and release year.
@@ -884,7 +1019,7 @@ class Filesystem(object):
         
 
 
-    def IsVideoPath(self, path, isabsolute=False):
+    def IsVideoPath(self, path: Union[str, Path], isabsolute: bool=False) -> bool:
         """
         This method checks if the given path is a possible path to a music video.
         It checks if the path follows the naming scheme and exists as file.
@@ -905,7 +1040,7 @@ class Filesystem(object):
 
         # Check path structure
         try:
-            [artist, video] = path.split("/")
+            [artist, video] = str(path).split("/")
         except:
             logging.debug("Video path (%s) is not inside an artist directory!", path)
             return False
@@ -917,7 +1052,7 @@ class Filesystem(object):
         return True
 
 
-    def AnalyseVideoFileName(self, videofilename):
+    def AnalyseVideoFileName(self, videofilename: str) -> dict:
         """
         This method analyses the name of a video file.
         Only the file name is expected, not a whole path!
@@ -953,18 +1088,23 @@ class Filesystem(object):
                     print(infos["extension"])   # "m4v"
 
         """
+        if type(videofilename) == str:
+            filename = videofilename
+        else:
+            filename = str(videofilename)
+
         video = {}
 
         # Check for " - " spacer
         try:
-            if videofilename[4:7] != " - ":
+            if filename[4:7] != " - ":
                 return None
         except:
             return None
 
         # Try to get the release year
         try:
-            release = videofilename.split(" - ")[0]
+            release = filename.split(" - ")[0]
             release = int(release)
         except:
             return None
@@ -972,9 +1112,9 @@ class Filesystem(object):
 
         # Extract name and extension
         try:
-            videofilename      = videofilename.split(" - ")[1]   # remove release part
-            video["name"]      = self.GetFileName(videofilename)
-            video["extension"] = self.GetFileExtension(videofilename)
+            filename           = filename.split(" - ")[1]   # remove release part
+            video["name"]      = self.GetFileName(filename)
+            video["extension"] = self.GetFileExtension(filename)
         except:
             return None
 
@@ -1025,7 +1165,7 @@ class Filesystem(object):
         return True
 
 
-    def AnalyseSongFileName(self, songfilename):
+    def AnalyseSongFileName(self, songfilename: str) -> dict:
         """
         This method analyses the name of a song file.
         If it does not follow the scheme, ``None`` gets returned, otherwise all information encoded in the name as dictionary.

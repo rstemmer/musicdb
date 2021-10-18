@@ -74,7 +74,7 @@ class MP3Stream(object):
     As soon as the object gets created, it starts the transcoding process.
 
     Args:
-        path (str):
+        path (str/Path):
             An absolute path to a valid audio file
 
     Example:

@@ -94,10 +94,7 @@ from musicdb.lib.stream.gstreamer import GStreamerInterface
 class MP3Transcoder(object):
     """
     Args:
-        path (str): The absolute path of the audio file that shall be transcoded
-
-    Raises:
-        TypeError: When path is not of type string
+        path (str/Path): The absolute path of the audio file that shall be transcoded
 
     Example:
         
@@ -111,9 +108,6 @@ class MP3Transcoder(object):
     """
 
     def __init__(self, path):
-        if type(path) != str:
-            raise TypeError("Path must be of type string!")
-
         self.path            = path
         self.gstreamer       = GStreamerInterface("transcoder")
         self.gstreamerthread = None
@@ -126,7 +120,7 @@ class MP3Transcoder(object):
 
         self.unixpipesource, self.unixpipesink = os.pipe2(os.O_NONBLOCK)
 
-        self.source.set_property("location", self.path)
+        self.source.set_property("location", str(self.path))
         self.encoder.set_property("target", 1)
         self.encoder.set_property("bitrate", 320)
         self.encoder.set_property("cbr", True)

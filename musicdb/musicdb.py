@@ -44,8 +44,9 @@ def LoadAllModules():
 
     # Get a list of all modules (a tuple (name, path))
     fs = Filesystem(moddir)
-    modulepaths = fs.GetFiles()
-    modulefiles = [(fs.GetFileName(path), path) for path in modulepaths if fs.GetFileExtension(path) == "py"]
+    modulepaths = fs.GetFiles() # Get all files in the module path
+    modulepaths = [path for path in modulepaths if fs.GetFileExtension(path) == "py"]          # Only consider Python files
+    modulefiles = [(str(fs.GetFileName(path)), fs.AbsolutePath(path)) for path in modulepaths] # Identify modules
 
     # Load all modules
     modules = {}

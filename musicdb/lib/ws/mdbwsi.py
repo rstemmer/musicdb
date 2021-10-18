@@ -3358,6 +3358,10 @@ class MusicDBWebSocketInterface(object):
         albumpaths = paths["albums"]
         videopaths = paths["videos"]
 
+        # Transcode Path objects to strings
+        albumpaths = [str(path) for path in albumpaths]
+        videopaths = [str(path) for path in videopaths]
+
         newcontent = {}
         newcontent["albums"] = []
         newcontent["videos"] = []
@@ -3398,7 +3402,6 @@ class MusicDBWebSocketInterface(object):
             entry["albumname"]  = infos["album"]
             entry["release"]    = infos["release"]
             newcontent["albums"].append(entry)
-
         return newcontent
 
 
@@ -3457,7 +3460,7 @@ class MusicDBWebSocketInterface(object):
         for path in files:
             entry = {}
             metadata.Load(path)
-            entry["path"]        = path
+            entry["path"]        = str(path)
             entry["songname"]    = metadata.GetSongname()
             entry["albumname"]   = metadata.GetAlbumname()
             entry["artistname"]  = metadata.GetArtistname()

@@ -34,7 +34,7 @@ class MetaTags(object):
     This class can be used to access the metadata of the music files.
 
     Args:
-        root (str): All paths used in this class are relative to this path. Default is ``"/"``.
+        root (str/Path): All paths used in this class are relative to this path. Default is ``"/"``.
     """
 
     def __init__(self, root="/"):
@@ -63,24 +63,29 @@ class MetaTags(object):
         A warning gets written into the log and a ``ValueError`` exception raised.
 
         Args:
-            path (str): path to the song file that shall be loaded
+            path (str/Path): path to the song file that shall be loaded
 
         Returns:
             *Nothing*
 
         Raises:
-            TypeError: If path is not a string
+            TypeError: If path is not a string or pathlib.Path object
             ValueError: If file not exist or file cannot be read.
             ValueError: If the file extension or file format is not supported
         """
         logging.debug("Analysing file from %s", path)
-        if type(path) != str:
-            raise TypeError("Path must be a string!")
+        if type(path) == str:
+            self.path = path
+        else:
+            try:
+                self.path = str(path)
+            except Exception as e:
+                raise TypeError("Path must be a string or Path object!")
 
         # do some filename-management
-        self.path = self.fs.AbsolutePath(path)
+        self.path = self.fs.AbsolutePath(self.path)
         if not self.fs.IsFile(self.path):
-            raise ValueError("File \"%s\" does not exist"%(self.path))
+            raise ValueError("File \"%s\" does not exist"%(str(self.path)))
         
         # remember the path for debugging
         self.extension = self.fs.GetFileExtension(self.path)
@@ -101,9 +106,9 @@ class MetaTags(object):
             self.ftype = "mp3"
         else:
             self.path = None
-            raise ValueError("Unsupported file extension \"%s\" of \"%s\""%(self.extension, path))
+            raise ValueError("Unsupported file extension \"%s\" of \"%s\""%(self.extension, str(self.path)))
 
-        logging.debug("Loading file of type %s from \"%s\"", self.ftype, self.path)
+        logging.debug("Loading file of type %s from \"%s\"", self.ftype, str(self.path))
 
         # open the file
         if self.ftype == "flac":
@@ -119,8 +124,9 @@ class MetaTags(object):
             self.file = None
         else:
             self.path = None
-            raise ValueError("Unsupported file-type %s"%(self.ftype))
-        #print(self.file)
+            raise ValueError("Unsupported file-type %s of %s"%(self.ftype, str(self.path)))
+        return
+
 
 
     def GetAllMetadata(self):
