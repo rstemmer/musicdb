@@ -65,6 +65,7 @@ from musicdb.lib.metatags       import MetaTags
 from musicdb.mdbapi.database    import MusicDBDatabase
 from musicdb.mdbapi.artwork     import MusicDBArtwork
 from musicdb.mdbapi.videoframes import VideoFrames
+from musicdb.mdbapi.musicdirectory  import MusicDirectory
 
 Config      = None
 Thread      = None
@@ -243,7 +244,7 @@ class UploadManager(object):
         self.db         = database
         self.cfg        = config
         self.uploadfs   = Filesystem(self.cfg.directories.uploads)
-        self.musicfs    = Filesystem(self.cfg.directories.music)
+        self.musicfs    = MusicDirectory(self.cfg)
         self.artworkfs  = Filesystem(self.cfg.directories.artwork)
         # TODO: check write permission of all directories
         self.fileprocessing = Fileprocessing(self.cfg.directories.uploads)
