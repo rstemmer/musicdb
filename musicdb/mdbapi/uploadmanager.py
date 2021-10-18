@@ -55,6 +55,7 @@ import time
 import logging
 import datetime
 import threading
+from pathlib            import Path
 from PIL                import Image
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
@@ -376,7 +377,7 @@ class UploadManager(object):
         """
         taskid = task["id"]
         data = json.dumps(task)
-        path = self.cfg.directories.uploads + "/tasks/" + taskid + ".json"
+        path = self.uploadfs.GetRoot() / "tasks" / Path(taskid+".json")
 
         if not self.uploadfs.IsDirectory("tasks"):
             logging.debug("tasks directory missing. Creating \"%s\"", self.cfg.directories.uploads + "/tasks")
@@ -399,12 +400,12 @@ class UploadManager(object):
         """
         logging.debug("Loading Upload-Tasks…")
         
-        taskfilenames = self.uploadfs.ListDirectory("tasks")
+        taskfilepaths = self.uploadfs.ListDirectory("tasks")
 
         global Tasks
         Tasks = {}
-        for taskfilename in taskfilenames:
-            taskpath = self.cfg.directories.uploads + "/tasks/" + taskfilename
+        for taskfilepath in taskfilepaths:
+            taskpath = self.uploadfs.AbsolutePath(taskfilepath)
 
             if self.uploadfs.GetFileExtension(taskpath) != "json":
                 continue
