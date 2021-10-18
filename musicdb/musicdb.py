@@ -23,6 +23,7 @@ import sys
 import grp
 import pwd
 import logging
+import traceback
 from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
@@ -56,18 +57,21 @@ def LoadAllModules():
             spec = importlib.util.spec_from_file_location(modulename, modulepath)
         except Exception as e:
             print("\033[1;33mWARNING: Loading spec for module \033[0;33m%s\033[1;33m failed with following error: \033[0;33m%s\033[1;30m (Module will not be loaded)\033[0m"%(modulename, str(e)))
+            print(traceback.format_exc())
             continue
 
         try:
             module = importlib.util.module_from_spec(spec)
         except Exception as e:
             print("\033[1;33mWARNING: Importing module \033[0;33m%s\033[1;33m failed with following error: \033[0;33m%s\033[1;30m (Module will not be loaded)\033[0m"%(modulename, str(e)))
+            print(traceback.format_exc())
             continue
 
         try:
             spec.loader.exec_module(module)
         except Exception as e:
             print("\033[1;33mWARNING: Initial execution of module \033[0;33m%s\033[1;33m failed with following error: \033[0;33m%s\033[1;30m (Module will not be loaded)\033[0m"%(modulename, str(e)))
+            print(traceback.format_exc())
             continue
 
         modules[modulename] = module
