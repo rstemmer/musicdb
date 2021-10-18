@@ -142,6 +142,7 @@ from musicdb.lib.filesystem     import Filesystem
 from musicdb.lib.metatags       import MetaTags
 import os
 from musicdb.mdbapi.database    import MusicDBDatabase
+from musicdb.mdbapi.musicdirectory  import MusicDirectory
 from musicdb.mdbapi.mise        import MusicDBMicroSearchEngine
 from musicdb.mdbapi.tags        import MusicDBTags
 from musicdb.mdbapi.audiostream import AudioStreamManager
@@ -3366,10 +3367,11 @@ class MusicDBWebSocketInterface(object):
         newcontent["albums"] = []
         newcontent["videos"] = []
 
+        musicdirectory = MusicDirectory(self.cfg)
         for path in videopaths:
             entry = {}
             # Try analyse path. If it fails, assume infos
-            infos = self.music.AnalysePath(path)
+            infos = musicdirectory.AnalysePath(path)
             if infos == None:
                 infos = {}
                 infos["artist"]    = "".join(path.split("/")[0])
@@ -3388,7 +3390,7 @@ class MusicDBWebSocketInterface(object):
 
         for path in albumpaths:
             entry = {}
-            infos = self.music.AnalysePath(path)
+            infos = musicdirectory.AnalysePath(path)
             if infos == None:
                 infos = {}
                 infos["artist"]    = "".join(path.split("/")[0])

@@ -27,6 +27,7 @@ from musicdb.lib.metatags       import MetaTags
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import *
 from musicdb.lib.db.trackerdb   import TrackerDatabase      # To update when a song gets removed
+from musicdb.mdbapi.musicdirectory  import MusicDirectory
 
 
 class MusicDBDatabase(object):
@@ -36,9 +37,7 @@ class MusicDBDatabase(object):
         * File management
             * :meth:`~FindLostPaths`: Check if all paths in the *songs*, *albums* and *artists* table are valid.
             * :meth:`~FindNewPaths`: Check if there are new songs, albums or artists in the music collection that are not in the database.
-            * :meth:`~FixAttributes`: Change the access mode and ownership of the music to match the configutation
-            * :meth:`~AnalysePath`: Extract song information from its file path
-            * :meth:`~TyrAnalysePathFor`: Check if the given path is valid for an artist, album or song
+            * :meth:`~FindNewSongs`:
         * Database management
             * :meth:`~AddArtist`, :meth:`~AddAlbum`, :meth:`~AddSong`, :meth:`~AddVideo`: Adds a new artist, album, song video to the database
             * :meth:`~UpdateArtist`, :meth:`~UpdateAlbum`, :meth:`~UpdateSong`: Updates a artist, album or song path in the database
@@ -66,7 +65,8 @@ class MusicDBDatabase(object):
 
         self.db     = database
         self.cfg    = config
-        self.fs     = Fileprocessing(self.cfg.directories.music)
+        self.fileprocessing = Fileprocessing(self.cfg.directories.music)
+        self.musicdirectory = MusicDirectory(config)
         self.meta   = MetaTags(self.cfg.directories.music)
 
         # -rw-rw-r--
@@ -98,19 +98,19 @@ class MusicDBDatabase(object):
         # Check Artists
         artists = self.db.GetAllArtists()
         for artist in artists:
-            if not self.fs.IsDirectory(artist["path"]):
+            if not self.musicdirectory.IsDirectory(artist["path"]):
                 lostartists.append(artist)
 
         # Check Albums
         albums = self.db.GetAllAlbums()
         for album in albums:
-            if not self.fs.IsDirectory(album["path"]):
+            if not self.musicdirectory.IsDirectory(album["path"]):
                 lostalbums.append(album)
 
         # Check Songs
         songs = self.db.GetAllSongs()
         for song in songs:
-            if not self.fs.IsFile(song["path"]):
+            if not self.musicdirectory.IsFile(song["path"]):
                 lostsongs.append(song)
 
         return lostartists, lostalbums, lostsongs
@@ -145,12 +145,12 @@ class MusicDBDatabase(object):
         newpaths["songs"]   = []
         newpaths["videos"]  = []
 
-        artistpaths = self.fs.GetSubdirectories(None, self.ignoreartists)
-        artistpaths = self.fs.ToString(artistpaths)
+        artistpaths = self.musicdirectory.GetSubdirectories(None, self.ignoreartists)
+        artistpaths = self.musicdirectory.ToString(artistpaths)
 
         # Check Artists
         artists          = self.db.GetAllArtists()
-        knownartistpaths = [artist["path"] for artist in artists if self.fs.IsDirectory(artist["path"])]
+        knownartistpaths = [artist["path"] for artist in artists if self.musicdirectory.IsDirectory(artist["path"])]
 
         for path in artistpaths:
             if path not in knownartistpaths:
@@ -158,9 +158,9 @@ class MusicDBDatabase(object):
 
         # Check Albums
         albums          = self.db.GetAllAlbums()
-        knownalbumpaths = [album["path"] for album in albums if self.fs.IsDirectory(album["path"])]
-        albumpaths      = self.fs.GetSubdirectories(artistpaths, self.ignorealbums)
-        albumpaths      = self.fs.ToString(albumpaths)
+        knownalbumpaths = [album["path"] for album in albums if self.musicdirectory.IsDirectory(album["path"])]
+        albumpaths      = self.musicdirectory.GetSubdirectories(artistpaths, self.ignorealbums)
+        albumpaths      = self.musicdirectory.ToString(albumpaths)
         
         for path in albumpaths:
             if path not in knownalbumpaths:
@@ -173,14 +173,14 @@ class MusicDBDatabase(object):
 
         # Check Videos
         videos          = self.db.GetVideos()
-        knownvideopaths = [video["path"] for video in videos if self.fs.IsFile(video["path"])]
-        videopaths      = self.fs.GetFiles(artistpaths)
-        videopaths      = self.fs.ToString(videopaths)
+        knownvideopaths = [video["path"] for video in videos if self.musicdirectory.IsFile(video["path"])]
+        videopaths      = self.musicdirectory.GetFiles(artistpaths)
+        videopaths      = self.musicdirectory.ToString(videopaths)
 
         for path in videopaths:
 
             # check if this is really an audio file
-            extension = self.fs.GetFileExtension(path)
+            extension = self.musicdirectory.GetFileExtension(path)
             if extension not in ["mp4", "m4v", "webm"]:
                 continue
 
@@ -211,14 +211,14 @@ class MusicDBDatabase(object):
         """
         newpaths        = []
         songs           = self.db.GetAllSongs()
-        knownsongpaths  = [song["path"] for song in songs if self.fs.IsFile(song["path"])]
-        songpaths       = self.fs.GetFiles(albumpath, self.ignoresongs)
-        songpaths       = self.fs.ToString(songpaths)
+        knownsongpaths  = [song["path"] for song in songs if self.musicdirectory.IsFile(song["path"])]
+        songpaths       = self.musicdirectory.GetFiles(albumpath, self.ignoresongs)
+        songpaths       = self.musicdirectory.ToString(songpaths)
 
         for path in songpaths:
 
             # check if this is really an audio file
-            extension = self.fs.GetFileExtension(path)
+            extension = self.musicdirectory.GetFileExtension(path)
             if extension == None or extension == []:
                 continue
 
@@ -232,233 +232,6 @@ class MusicDBDatabase(object):
 
 
 
-
-    def FixAttributes(self, path):
-        """
-        This method changes the access permissions and ownership of a file or directory.
-        Only the addressed files or directory's permissions gets changed, not their parents.
-
-            * File permissions: ``rw-rw-r--``
-            * Directory permissions: ``rwxrwxr-x``
-            * Ownership as configured in the settings: ``[music]->owner``:``[music]->group``
-
-        Args:
-            path (str): Path to an artist, album or song, relative to the music directory
-
-        Returns:
-            *Nothing*
-
-        Raises:
-            ValueError if path is neither a file nor a directory.
-        """
-        # check if file or dir permissions must be used
-        if self.fs.IsDirectory(path):
-            permissions = self.dirpermissions
-        elif self.fs.IsFile(path):
-            permissions = self.filepermissions
-        else:
-            raise ValueError("Path \""+str(path)+"\" is not a directory or file")
-
-        # change attributes and ownership
-        self.fs.SetAttributes(path, self.cfg.music.owner, self.cfg.music.group, permissions)
-        
-
-
-    def AnalysePath(self, musicpath):
-        """
-        This method analyses a path to a song or video and extracts all the information encoded in the path.
-        The path must consist of three parts: The artist directory, the album directory and the song file.
-        For videos only two parts are expected: The artist directory and the video file
-
-        A valid path has one the following structures: 
-        
-            * ``{artistname}/{albumrelease} - {albumname}/{songnumber} {songname}.{extension}``
-            * ``{artistname}/{albumrelease} - {albumname}/{cdnumber}-{songnumber} {songname}.{extension}``
-            * ``{artistname}/{videorelease} - {videoname}.{extension}``
-
-        The returned dictionary holds all the extracted information from the scheme listed above.
-        The following entries exists but may be ``None`` depending if the path addresses a video or song.
-
-            * artist
-            * release
-            * album
-            * song
-            * video
-            * songnumber
-            * cdnumber
-            * extension
-
-        In case there is no *cdnumber* specified for a song, this entry is ``1``.
-        The names can have all printable Unicode characters and of cause spaces.
-
-        If an error occurs because the path does not follow the scheme, ``None`` gets returned.
-        This method does not check if the path exists!
-
-        Args:
-            musicpath (str/Path): A path of a song including artist and album directory or a video including the artists directory.
-
-        Returns:
-            On success, a dictionary with information about the artist, album and song or video is returned.
-            Otherwise ``None`` gets returned.
-        """
-
-        path = str(musicpath)
-
-        # Define all possibly used variables to a avoid undefined behavior
-        result = {}
-        result["artist"]    = None
-        result["album"]     = None
-        result["song"]      = None
-        result["video"]     = None
-        result["release"]   = None
-        result["songnumber"]= None
-        result["cdnumber"]  = None
-        result["extension"] = None
-        artist = None
-        album  = None
-        song   = None
-        video  = None
-
-        # separate parts of the path
-        parts = path.count("/")
-        if parts == 1:  # This my be a video or an album (let's see if it is a directory)
-            if self.fs.IsDirectory(path):
-                [artist, album] = path.split("/")[-2:]
-            else:
-                [artist, video] = path.split("/")[-2:]
-        elif parts == 2: # This may be a song
-            [artist, album, song] = path.split("/")[-3:]
-        else:
-            logging.warning("Analysing \"%s\" failed!", path)
-            logging.warning("Path cannot be split into three parts {artist}/{album}/{song} or two parts {artist}/{video}")
-            return None
-
-        # analyze the artist information
-        result["artist"] = artist
-
-        # analyze the album information
-        if album:
-            albuminfos = self.fs.AnalyseAlbumDirectoryName(album)
-            if albuminfos == None:
-                logging.warning("Analysing \"%s\" failed!", path)
-                logging.warning("Unexpected album directory name. Expecting \"{year} - {name}\"")
-                return None
-
-            result["release"] = albuminfos["release"]
-            result["album"]   = albuminfos["name"]
-
-        # analyze the song information
-        if song:
-            try:
-                songname   = song.split(" ")[1:]
-                songnumber = song.split(" ")[0]
-
-                try:
-                    [cdnumber, songnumber] = songnumber.split("-")
-                except:
-                    cdnumber = 1
-
-                songnumber = int(songnumber)
-                cdnumber   = int(cdnumber)
-                songname   = " ".join(songname)
-                extension  = os.path.splitext(songname)[1][1:]  # get extension without leading "."
-                songname   = os.path.splitext(songname)[0]      # remove extension
-            except:
-                logging.warning("Analysing \"%s\" failed!", path)
-                logging.warning("Unexpected song file name. Expected \"[{cdnumber}-]{songnumber} {songname}.{ending}\".")
-                return None
-
-            result["song"]       = songname
-            result["songnumber"] = songnumber
-            result["cdnumber"]   = cdnumber
-            result["extension"]  = extension
-
-        # analyze the video information
-        if video:
-            videoinfos = self.fs.AnalyseVideoFileName(video)
-            if videoinfos == None:
-                logging.warning("Analyzing \"%s\" failed!", path)
-                logging.warning("Unexpected video file name. Expecting \"{year} - {name}.{extension}\"")
-                return None
-
-            result["release"]   = videoinfos["release"]
-            result["video"]     = videoinfos["name"]
-            result["extension"] = videoinfos["extension"]
-
-        return result
-
-
-
-    def TryAnalysePathFor(self, target="all", path=None):
-        """
-        This method checks if a path is valid for a specific target.
-
-        The check is done in the following steps:
-
-            #. Get all song paths
-            #. Apply an information extraction on all found song paths using :meth:`~musicdb.mdbapi.database.MusicDBDatabase.AnalysePath`
-
-        This guarantees, that all files are valid to process with MusicDB.
-
-        Args:
-            target (str): Optional, default value is ``"all"``. One of the following targets: ``"all"``, ``"artist"``, ``"album"`` or ``"song"``
-            path (str): Optional, default value is ``None``. Path to an artist, album or song. If target is ``"all"``, path can be ``None``.
-
-        Returns:
-            ``True`` If the path is valid for the given target. Otherwise ``False`` gets returned.
-
-        Raises:
-            ValueError: when *target* is not ``"all"``, ``"artist"``, ``"album"`` or ``"song"``
-        """
-        if path == None and target != "all":
-            logging.error("Path to check if it is a valid for %s may not be None!", target)
-            return False
-
-        # Get all song paths
-        try:
-            if target == "all":
-                artistpaths = self.fs.GetSubdirectories(path,        self.ignoreartists)
-                albumpaths  = self.fs.GetSubdirectories(artistpaths, self.ignorealbums)
-                songpaths   = self.fs.GetFiles(albumpaths, self.ignoresongs)
-
-            elif target == "artist":
-                albumpaths  = self.fs.GetSubdirectories(path, self.ignorealbums)
-                songpaths   = self.fs.GetFiles(albumpaths, self.ignoresongs)
-
-            elif target == "album":
-                songpaths   = self.fs.GetFiles(path, self.ignoresongs)
-
-            elif target == "song":
-                songpaths   = [path]
-
-            else:
-                raise ValueError("target not in {all, artist, album, song}")
-
-        except Exception as e:
-            logging.error("FATAL ERROR: The given path (\"%s\") was not a valid %s-path!\033[1;30m (%s)", path, target, str(e))
-            return False
-
-        n = len(songpaths)
-        if n < 1:
-            logging.error("No songs in %s-path (%s)", target, path)
-            return False
-
-        for songpath in songpaths:
-            if not os.path.exists(songpath):
-                logging.error("The song path %s does not exist.", songpath)
-                return False
-
-        # Scan all songpathes - if they are not analysable, give an error
-        for songpath in songpaths:
-            result = self.AnalysePath(songpath)
-            if result == False:
-                logging.error("Invalid path: " + songpath)
-                return False
-
-        return True
-
-
-
     def AddArtist(self, artistpath):
         """
         The *AddArtist* method adds a new artist to the database.
@@ -467,7 +240,7 @@ class MusicDBDatabase(object):
             #. Check if the artist path is inside the music root directory
             #. Check if the artist is already in the database
             #. Extract the artist name from the path
-            #. Set directory attributes and ownership using :meth:`~musicdb.mdbapi.database.MusicDBDatabase.FixAttributes`
+            #. Set file attributes and ownership using :meth:`~musicdb.mdbapi.musicdirectory.MusicDirectory.FixAttributes`
             #. Add artist to database
             #. Call :meth:`~musicdb.mdbapi.database.MusicDBDatabase.AddAlbum` for all subdirectories of the artistpath. (Except for the directory-names in the *ignorealbum* list)
 
@@ -482,12 +255,10 @@ class MusicDBDatabase(object):
             ValueError: If artist is already in the database
         """
         # remove the leading part to the music directory
-        try:
-            artistpath = self.fs.RemoveRoot(artistpath) # remove the path to the musicdirectory
-        except ValueError:
-            pass
+        artistpath = self.musicdirectory.TryRemoveRoot(artistpath)
+        artistpath = self.musicdirectory.ToString(artistpath)
 
-        if not self.fs.IsDirectory(artistpath):
+        if not self.musicdirectory.IsDirectory(artistpath):
             raise ValueError("Artist path " + artistpath + " is not a directory!")
 
         # Check if the artist already exists in the database
@@ -500,7 +271,7 @@ class MusicDBDatabase(object):
 
         # fix attributes to fit in mdb environment before adding it to the database
         try:
-            self.FixAttributes(artistpath)
+            self.musicdirectory.FixAttributes(videopath)
         except Exception as e:
             logging.warning("Fixing file attributes failed with error: %s \033[1;30m(leaving permissions as they are)",
                     str(e))
@@ -510,7 +281,7 @@ class MusicDBDatabase(object):
         artist = self.db.GetArtistByPath(artistpath)
 
         # Add all albums to the artist
-        albumpaths = self.fs.GetSubdirectories(artistpath, self.ignorealbums)
+        albumpaths = self.musicdirectory.GetSubdirectories(artistpath, self.ignorealbums)
         for albumpath in albumpaths:
             self.AddAlbum(albumpath, artist["id"])
 
@@ -537,23 +308,21 @@ class MusicDBDatabase(object):
         Returns:
             ``None``
         """
-        try:
-            newpath = self.fs.RemoveRoot(newpath) # remove the path to the musicdirectory
-        except:
-            pass
+        artistpath = self.musicdirectory.TryRemoveRoot(newpath)
+        artistpath = self.musicdirectory.ToString(artistpath)
 
         artist     = self.db.GetArtistById(artistid)
-        artist["path"] = newpath
-        artist["name"] = os.path.basename(newpath)
+        artist["path"] = artistpath
+        artist["name"] = os.path.basename(artistpath)
         self.db.WriteArtist(artist)
 
         albums = self.db.GetAlbumsByArtistId(artistid)
         for album in albums:
             albumpath    = album["path"]
             albumpath    = albumpath.split(os.sep)
-            albumpath[0] = newpath
+            albumpath[0] = artistpath
             albumpath    = os.sep.join(albumpath)
-            if self.fs.IsDirectory(albumpath):
+            if self.musicdirectory.IsDirectory(albumpath):
                 self.UpdateAlbum(album["id"], albumpath)
 
         return None
@@ -567,10 +336,10 @@ class MusicDBDatabase(object):
             #. Check if the album already exists in the database
             #. Get all songs of the album by getting all files inside the directory except those on the *ignoresongs*-list.
             #. Load the metadata from one of those songs using :meth:`musicdb.lib.metatags.MetaTags.GetAllMetadata`
-            #. Analyze the path of one of those songs using :meth:`~musicdb.mdbapi.database.MusicDBDatabase.AnalysePath`
+            #. Analyze the path of one of the song using :meth:`~musicdb.mdbapi.musicdirectory.MusicDirectory.AnalysePath`
             #. If *artistid* is not given as parameter, it gets read from the database identifying the artist by its path.
             #. Get modification date using :meth:`~musicdb.lib.filesystem.FileSystem.GetModificationDate`
-            #. Set directory attributes and ownership using :meth:`~musicdb.mdbapi.database.MusicDBDatabase.FixAttributes`
+            #. Set file attributes and ownership using :meth:`~musicdb.mdbapi.musicdirectory.MusicDirectory.FixAttributes`
             #. Create new entry for the new album in the database and get the default values
             #. Add each song of the album to the database by calling :meth:`~musicdb.mdbapi.database.MusicDBDatabase.AddSong`
             #. Write all collected information of the album into the database
@@ -594,12 +363,10 @@ class MusicDBDatabase(object):
 
         """
         # remove the leading part to the music directory (it may be already removed)
-        try:
-            albumpath = self.fs.RemoveRoot(albumpath) # remove the path to the musicdirectory
-        except ValueError:
-            pass
+        albumpath = self.musicdirectory.TryRemoveRoot(albumpath)
+        albumpath = self.musicdirectory.ToString(albumpath)
 
-        if not self.fs.IsDirectory(albumpath):
+        if not self.musicdirectory.IsDirectory(albumpath):
             raise ValueError("Artist path " + artistpath + " is not a directory!")
 
         # Check if the album already exists in the database
@@ -614,21 +381,21 @@ class MusicDBDatabase(object):
         album["path"]       = albumpath
 
         # get all songs from the albums - this is important to collect all infos for the album entry
-        paths = self.fs.GetFiles(albumpath, self.ignoresongs) # ignores also all directories
+        paths = self.musicdirectory.GetFiles(albumpath, self.ignoresongs) # ignores also all directories
 
         # remove files that are not music
         songpaths = []
         for path in paths:
-            if self.fs.GetFileExtension(path) in ["mp3", "m4a", "aac", "flac"]:
+            if self.musicdirectory.GetFileExtension(path) in ["mp3", "m4a", "aac", "flac"]:
                 songpaths.append(path)
 
         # analyse the first one for the album-entry
         self.meta.Load(songpaths[0])
         tagmeta = self.meta.GetAllMetadata()
-        fsmeta  = self.AnalysePath(songpaths[0])
+        fsmeta  = self.musicdirectory.AnalysePath(songpaths[0])
         if fsmeta == None:
             raise AssertionError("Analysing path \"%s\" failed!", songpaths[0])
-        moddate = self.fs.GetModificationDate(albumpath)
+        moddate = self.musicdirectory.GetModificationDate(albumpath)
 
         # usually, the filesystem is always right, but in case of iTunes, the meta data are
         # FIX: NO! THEY ARE NOT! - THE FILESYSTEM IS _ALWAYS_ RIGHT!
@@ -647,7 +414,7 @@ class MusicDBDatabase(object):
 
         # fix attributes to fit in mdb environment before adding it to the database
         try:
-            self.FixAttributes(albumpath)
+            self.musicdirectory.FixAttributes(videopath)
         except Exception as e:
             logging.warning("Fixing file attributes failed with error: %s \033[1;30m(leaving permissions as they are)",
                     str(e))
@@ -722,21 +489,20 @@ class MusicDBDatabase(object):
         Raises:
             AssertionError: When the new path is invalid
         """
-        album = self.db.GetAlbumById(albumid)
-        try:
-            newpath = self.fs.RemoveRoot(newpath) # remove the path to the musicdirectory
-        except:
-            pass
+        albumpath = self.musicdirectory.TryRemoveRoot(newpath)
+        albumpath = self.musicdirectory.ToString(albumpath)
 
-        album["path"] = newpath
+        album = self.db.GetAlbumById(albumid)
+
+        album["path"] = albumpath
 
         # get all songs from the albums - this is important to collect all infos for the album entry
-        songpaths = self.fs.GetFiles(newpath, self.ignoresongs) # ignores also all directories
+        songpaths = self.musicdirectory.GetFiles(albumpath, self.ignoresongs) # ignores also all directories
 
         # analyse the first one for the album-entry
         self.meta.Load(songpaths[0])
         tagmeta = self.meta.GetAllMetadata()
-        fsmeta  = self.AnalysePath(songpaths[0])
+        fsmeta  = self.musicdirectory.AnalysePath(songpaths[0])
         if fsmeta == None:
             raise AssertionError("Analysing path \"%s\" failed!", songpaths[0])
 
@@ -750,14 +516,14 @@ class MusicDBDatabase(object):
             songpath    = song["path"]
             songpath    = songpath.split(os.sep)    # [artist, album, song]
             songpath.pop(0)                         # [album, song]         // remove old artist
-            songpath[0] = newpath                   # [artist/album, song]  // add new artist/album string
+            songpath[0] = albumpath                 # [artist/album, song]  // add new artist/album string
             songpath    = os.sep.join(songpath)
 
             # If it does not work, it does not matter.
             # This can be fixed by the user later.
-            # It may faile because not only the albumname changed,
+            # It may fail because not only the album name changed,
             # but also the files inside
-            if self.fs.IsFile(songpath):
+            if self.musicdirectory.IsFile(songpath):
                 self.UpdateSong(song["id"], songpath)
 
         return None
@@ -771,10 +537,10 @@ class MusicDBDatabase(object):
 
             #. Check if the song already exists in the database
             #. Load the metadata from the song using :meth:`musicdb.lib.metatags.MetaTags.GetAllMetadata`
-            #. Analyze the path of one of the song using :meth:`~musicdb.mdbapi.database.MusicDBDatabase.AnalysePath`
+            #. Analyze the path of one of the song using :meth:`~musicdb.mdbapi.musicdirectory.MusicDirectory.AnalysePath`
             #. If *artistid* is not given as parameter, it gets read from the database identifying the artist by its path.
             #. If *albumid* is not given as parameter, it gets read from the database identifying the album by its path.
-            #. Set file attributes and ownership using :meth:`~musicdb.mdbapi.database.MusicDBDatabase.FixAttributes`
+            #. Set file attributes and ownership using :meth:`~musicdb.mdbapi.musicdirectory.MusicDirectory.FixAttributes`
             #. Add song to database
             #. If the parameter *albumid* was ``None`` the *numofsongs* entry of the determined album gets incremented
             #. If there are lyrics in the song file, they get also inserted into the database
@@ -798,10 +564,8 @@ class MusicDBDatabase(object):
         """
         # do some checks
         # remove the root-path to the music directory
-        try:
-            songpath = self.fs.RemoveRoot(songpath) # remove the path to the musicdirectory
-        except:
-            pass
+        songpath = self.musicdirectory.TryRemoveRoot(songpath)
+        songpath = self.musicdirectory.ToString(songpath)
 
         # Check if the song already exists in the database
         song = self.db.GetSongByPath(songpath)
@@ -817,7 +581,7 @@ class MusicDBDatabase(object):
             return None
 
         tagmeta = self.meta.GetAllMetadata()
-        fsmeta  = self.AnalysePath(songpath)
+        fsmeta  = self.musicdirectory.AnalysePath(songpath)
         if fsmeta == None:
             raise AssertionError("Invalid path-format: " + songpath)
 
@@ -836,7 +600,7 @@ class MusicDBDatabase(object):
         song["dislikes"]    = 0
         song["favorite"]    = 0
         song["lyricsstate"] = SONG_LYRICSSTATE_EMPTY
-        song["checksum"]    = self.fs.Checksum(songpath)
+        song["checksum"]    = self.fileprocessing.Checksum(songpath)
         song["lastplayed"]  = 0
         song["liverecording"]=0
         song["badaudio"]    = 0
@@ -877,7 +641,7 @@ class MusicDBDatabase(object):
 
         # fix attributes to fit in mdb environment before adding it to the database
         try:
-            self.FixAttributes(songpath)
+            self.musicdirectory.FixAttributes(videopath)
         except Exception as e:
             logging.warning("Fixing file attributes failed with error: %s \033[1;30m(leaving permissions as they are)",
                     str(e))
@@ -938,12 +702,9 @@ class MusicDBDatabase(object):
             AssertionError: When the new path is invalid
             Exception: When loading the meta data failes
         """
-        try:
-            newpath = self.fs.RemoveRoot(newpath) # remove the path to the musicdirectory
-        except:
-            pass
+        songpath = self.musicdirectory.TryRemoveRoot(newpath)
+        songpath = self.musicdirectory.ToString(songpath)
         song     = self.db.GetSongById(songid)
-        songpath = newpath
 
         # Get all information from the songpath and its meta data
         try:
@@ -953,7 +714,7 @@ class MusicDBDatabase(object):
             raise e
 
         tagmeta = self.meta.GetAllMetadata()
-        fsmeta  = self.AnalysePath(songpath)
+        fsmeta  = self.musicdirectory.AnalysePath(songpath)
         if fsmeta == None:
             raise AssertionError("Invalid path-format: " + songpath)
 
@@ -964,7 +725,7 @@ class MusicDBDatabase(object):
         song["cd"]       = fsmeta["cdnumber"]
         song["playtime"] = tagmeta["playtime"]
         song["bitrate"]  = tagmeta["bitrate"]
-        song["checksum"] = self.fs.Checksum(songpath)
+        song["checksum"] = self.fileprocessing.Checksum(songpath)
 
         self.db.WriteSong(song)
 
@@ -990,9 +751,9 @@ class MusicDBDatabase(object):
 
             #. Check if the video already exists in the database
             #. Load the metadata from the video using :meth:`musicdb.lib.metatags.MetaTags.GetAllMetadata`
-            #. Analyze the path of one of the video using :meth:`~musicdb.mdbapi.database.MusicDBDatabase.AnalysePath`
+            #. Analyze the path of one of the video using :meth:`~musicdb.mdbapi.musicdirectory.MusicDirectory.AnalysePath`
             #. If *artistid* is not given as parameter, it gets read from the database identifying the artist by its path.
-            #. Set file attributes and ownership using :meth:`~musicdb.mdbapi.database.MusicDBDatabase.FixAttributes`
+            #. Set file attributes and ownership using :meth:`~musicdb.mdbapi.musicdirectory.MusicDirectory.FixAttributes`
             #. Add video to database
 
         This method assumes that the artist the video belongs to exists in the database.
@@ -1013,10 +774,8 @@ class MusicDBDatabase(object):
         """
         # do some checks
         # remove the root-path to the music directory
-        try:
-            videopath = self.fs.RemoveRoot(videopath) # remove the path to the music directory
-        except:
-            pass
+        videopath = self.musicdirectory.TryRemoveRoot(videopath)
+        videopath = self.musicdirectory.ToString(videopath)
 
         # Check if the video already exists in the database
         video = self.db.GetVideoByPath(videopath)
@@ -1032,11 +791,11 @@ class MusicDBDatabase(object):
             return False
 
         tagmeta = self.meta.GetAllMetadata()
-        fsmeta  = self.AnalysePath(videopath)
+        fsmeta  = self.musicdirectory.AnalysePath(videopath)
         if fsmeta == None:
             raise AssertionError("Invalid path-format: " + videopath)
 
-        moddate = self.fs.GetModificationDate(videopath)
+        moddate = self.musicdirectory.GetModificationDate(videopath)
 
         # artistid may be not given by the arguments of this method.
         # In this case, it must be searched in the database
@@ -1071,7 +830,7 @@ class MusicDBDatabase(object):
         video["favorite"]    = 0
         video["liverecording"]=0
         video["badaudio"]    = 0
-        video["checksum"]    = self.fs.Checksum(videopath)
+        video["checksum"]    = self.fileprocessing.Checksum(videopath)
         video["lastplayed"]  = 0
         video["lyricsvideo"] = 0
         video["bgcolor"]     = "#101010"
@@ -1082,7 +841,7 @@ class MusicDBDatabase(object):
 
         # Fix attributes to fit in MusicDB environment before adding it to the database
         try:
-            self.FixAttributes(videopath)
+            self.musicdirectory.FixAttributes(videopath)
         except Exception as e:
             logging.warning("Fixing file attributes failed with error: %s \033[1;30m(leaving permissions as they are)",
                     str(e))
@@ -1130,12 +889,9 @@ class MusicDBDatabase(object):
             AssertionError: When the new path is invalid
             Exception: When loading the meta data failes
         """
-        try:
-            newpath = self.fs.RemoveRoot(newpath) # remove the path to the music directory
-        except:
-            pass
+        videopath = self.musicdirectory.TryRemoveRoot(newpath)
+        videopath = self.musicdirectory.ToString(videopath)
         video     = self.db.GetVideoById(videoid)
-        videopath = newpath
 
         # Get all information from the video path and its meta data
         try:
@@ -1145,8 +901,8 @@ class MusicDBDatabase(object):
             raise e
 
         tagmeta = self.meta.GetAllMetadata()
-        moddate = self.fs.GetModificationDate(videopath)
-        fsmeta  = self.AnalysePath(videopath)
+        moddate = self.musicdirectory.GetModificationDate(videopath)
+        fsmeta  = self.musicdirectory.AnalysePath(videopath)
         if fsmeta == None:
             raise AssertionError("Invalid path-format: " + videopath)
 
@@ -1160,7 +916,7 @@ class MusicDBDatabase(object):
         video["codec"]       = tagmeta["codec"]
         video["xresolution"] = tagmeta["xresolution"]
         video["yresolution"] = tagmeta["yresolution"]
-        video["checksum"]    = self.fs.Checksum(videopath)
+        video["checksum"]    = self.fileprocessing.Checksum(videopath)
         video["vbegin"]      = 0
         video["vend"]        = video["playtime"]
 
@@ -1273,15 +1029,8 @@ class MusicDBDatabase(object):
             ``True`` on success, otherwise ``False``
         """
         # remove the root-path to the music directory
-        try:
-            songpath = self.fs.RemoveRoot(songpath)
-        except ValueError:
-            # if RemoveRoot raises an ValueError, this only means that song path is already a relative path
-            pass
-        except Exception as e:
-            logging.error("Invalid song path: %s. \033[1;30m(No checksum will be added)", str(e))
-            return False
-
+        songpath = self.musicdirectory.TryRemoveRoot(songpath)
+        songpath = self.musicdirectory.ToString(songpath)
 
         # Check if the song exists in the database
         song = self.db.GetSongByPath(songpath)
@@ -1290,7 +1039,7 @@ class MusicDBDatabase(object):
             return False
 
         # Add new checksum
-        song["checksum"] = self.fs.Checksum(songpath)
+        song["checksum"] = self.fileprocessing.Checksum(songpath)
         self.db.WriteSong(song)
         return True
 
@@ -1313,14 +1062,8 @@ class MusicDBDatabase(object):
             ``True`` on success, otherwise ``False``
         """
         # remove the root-path to the music directory
-        try:
-            songpath = self.fs.RemoveRoot(songpath)
-        except ValueError:
-            # if RemoveRoot raises an ValueError, this only means that song path is already a relative path
-            pass
-        except Exception as e:
-            logging.error("Invalid song path: %s. \033[1;30m(No lyrics will be loaded)", str(e))
-            return False
+        songpath = self.musicdirectory.TryRemoveRoot(songpath)
+        songpath = self.musicdirectory.ToString(songpath)
 
         # Get all information from the song path and its meta data
         try:
