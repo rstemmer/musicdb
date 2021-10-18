@@ -64,6 +64,18 @@ class Filesystem(object):
 
 
 
+    def GetRoot(self):
+        """
+        Returns the root path.
+        User name directories are resolved. The path is absolute.
+
+        Returns:
+            Returns a pathlib.Path object with the root path
+        """
+        return self._root
+
+
+
     def ToString(self, paths: Union[str, Path, list[Union[str, Path]]]) -> Union[str, list[str]]:
         """
         Converts a Path object or a list of path objects into a string or a list of strings
