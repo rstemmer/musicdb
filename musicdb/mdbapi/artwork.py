@@ -231,7 +231,7 @@ class MusicDBArtwork(object):
         # Scale file
         # convert edge-size to resolution
         # [10, 20, 30] -> ["10x10", "20x20", "30x30"]
-        resolutions = [ str(s)+"x"+str(s) for s in self.cfg.artwork.scales ]
+        resolutions = [ str(s)+"x"+str(s) for s in self.cfg.albumcover.scales ]
 
         for resolution in resolutions:
             success = self.awcache.RebuildArtwork(artworkname, resolution)
