@@ -131,10 +131,10 @@ class UploadTable extends Table
             if(upload.state == "remove")
             {
                 // Remove row of no longer existing uploads
-                let uploadid = upload.id;
-                let tablerow = this.entries[uploadid].row;
+                let taskid = upload.id;
+                let tablerow = this.entries[taskid].row;
                 this.RemoveRow(tablerow, true); // Remove row including context row
-                delete this.entries[uploadid];
+                delete this.entries[taskid];
             }
             else if(! this.TryUpdateRow(upload))
             {

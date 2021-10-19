@@ -38,6 +38,10 @@ class ArtworkUploader extends Element
 
     UpdateUploadStatus(uploadstatus)
     {
+        // it is not important that the uploaded temporary file got removed
+        if(uploadstatus == "remove")
+            return;
+
         this.element.innerHTML = "";
         this.element.appendChild(this.fileselect.GetHTMLElement());
         let  statustext = new UploadStatusText(uploadstatus);

@@ -150,7 +150,8 @@ from musicdb.mdbapi.videostream import VideoStreamManager
 from musicdb.mdbapi.songqueue   import SongQueue
 from musicdb.mdbapi.videoqueue  import VideoQueue
 from musicdb.mdbapi.videoframes import VideoFrames
-from musicdb.mdbapi.uploadmanager   import UploadManager
+from musicdb.taskmanagement.taskmanager     import TaskManager
+from musicdb.taskmanagement.uploadmanager   import UploadManager
 import logging
 from threading          import Thread
 import traceback
@@ -175,7 +176,9 @@ class MusicDBWebSocketInterface(object):
             self.songqueue  = SongQueue(self.cfg, self.database)
             self.videoqueue = VideoQueue(self.cfg, self.database)
             self.music      = MusicDBDatabase(self.cfg, self.database)
-            self.uploadmanager = UploadManager(self.cfg, self.database)
+
+            self.taskmanager    = TaskManager(self.cfg, self.database)
+            self.uploadmanager  = UploadManager(self.cfg, self.database)
         except Exception as e:
             logging.exception(e)
             raise e
@@ -186,7 +189,7 @@ class MusicDBWebSocketInterface(object):
         self.videostream.RegisterCallback(self.onVideoStreamEvent)
         self.songqueue.RegisterCallback(self.onSongQueueEvent)
         self.videoqueue.RegisterCallback(self.onVideoQueueEvent)
-        self.uploadmanager.RegisterCallback(self.onUploadEvent)
+        self.taskmanager.RegisterCallback(self.onUploadEvent)
         return None
         
 
@@ -195,7 +198,7 @@ class MusicDBWebSocketInterface(object):
         self.videostream.RemoveCallback(self.onVideoStreamEvent)
         self.songqueue.RemoveCallback(self.onSongQueueEvent)
         self.videoqueue.RemoveCallback(self.onVideoQueueEvent)
-        self.uploadmanager.RemoveCallback(self.onUploadEvent)
+        self.taskmanager.RemoveCallback(self.onUploadEvent)
         return None
 
 
@@ -331,11 +334,11 @@ class MusicDBWebSocketInterface(object):
         elif fncname == "GetUploads":
             retval = self.GetUploads()
         elif fncname == "AnnotateUpload":
-            retval = self.AnnotateUpload(args["uploadid"], args)
+            retval = self.AnnotateUpload(args["taskid"], args)
         elif fncname == "IntegrateUpload":
-            retval = self.IntegrateUpload(args["uploadid"], args["triggerimport"])
+            retval = self.IntegrateUpload(args["taskid"], args["triggerimport"])
         elif fncname == "RemoveUpload":
-            retval = self.RemoveUpload(args["uploadid"])
+            retval = self.RemoveUpload(args["taskid"])
         # Call-Methods (retval will be ignored unless method gets not changed)
         elif fncname == "SaveWebUIConfiguration":
             retval = self.SaveWebUIConfiguration(args["config"])
@@ -475,9 +478,9 @@ class MusicDBWebSocketInterface(object):
         elif fncname == "SetVideoThumbnail":
             retval = self.SetVideoThumbnail(args["videoid"], args["timestamp"])
         elif fncname == "InitiateUpload":
-            retval = self.InitiateUpload(args["uploadid"], args["mimetype"], args["contenttype"], args["filesize"], args["checksum"], args["filename"])
+            retval = self.InitiateUpload(args["taskid"], args["mimetype"], args["contenttype"], args["filesize"], args["checksum"], args["filename"])
         elif fncname == "UploadChunk":
-            retval = self.UploadChunk(args["uploadid"], args["chunkdata"])
+            retval = self.UploadChunk(args["taskid"], args["chunkdata"])
         else:
             logging.warning("Unknown function: %s! \033[0;33m(will be ignored)", str(fncname))
             return None
@@ -3478,12 +3481,12 @@ class MusicDBWebSocketInterface(object):
 
 
 
-    def InitiateUpload(self, uploadid, mimetype, contenttype, filesize, checksum, filename):
+    def InitiateUpload(self, taskid, mimetype, contenttype, filesize, checksum, filename):
         """
         This method uses :meth:`musicdb.mdbapi.uploadmanager.UploadManager.InitiateUpload`.
 
         Args:
-            uploadid (str): Unique ID to identify the upload task 
+            taskid (str): Unique ID to identify the upload task 
             mimetype (str): MIME-Type of the file (example: ``"image/png"``)
             contenttype (str): Type of the content: (``"video"``, ``"album"``, ``"artwork"``)
             filesize (int): Size of the complete file in bytes
@@ -3499,21 +3502,21 @@ class MusicDBWebSocketInterface(object):
                 // TODO
 
         """
-        self.uploadmanager.InitiateUpload(uploadid, mimetype, contenttype, filesize, checksum, filename)
+        self.uploadmanager.InitiateUpload(taskid, mimetype, contenttype, filesize, checksum, filename)
         return
 
 
-    def UploadChunk(self, uploadid, chunkdata):
+    def UploadChunk(self, taskid, chunkdata):
         """
         Args:
-            uploadid (str): Unique ID to identify the upload task
+            taskid (str): Unique ID to identify the upload task
             chunkdata (str): Hex-string of the chunk
         """
         #import base64
         #rawdata = bytes(base64.b64decode(chunkdata))
 
         rawdata  = bytes.fromhex(chunkdata) # TODO: JavaScript does not provide a better way
-        self.uploadmanager.NewChunk(uploadid, rawdata);
+        self.uploadmanager.NewChunk(taskid, rawdata);
         return
 
 
@@ -3556,7 +3559,7 @@ class MusicDBWebSocketInterface(object):
         return retval
 
 
-    def AnnotateUpload(self, uploadid, annotations):
+    def AnnotateUpload(self, taskid, annotations):
         """
         Adds some information to an uploaded file that can help during the import process.
         For example a video or album name can be annotated so that after the upload was complete,
@@ -3565,18 +3568,18 @@ class MusicDBWebSocketInterface(object):
         Annotation is an object that can have multiple keys.
 
         Args:
-            uploadid (str): Unique ID to identify the upload task
+            taskid (str): Unique ID to identify the upload task
             annotations (dict): A dictionary with elements to annotate to an upload
 
         Returns:
             *Nothing*
         """
         # Annotate upload
-        self.uploadmanager.AnnotateUpload(uploadid, annotations)
+        self.uploadmanager.AnnotateUpload(taskid, annotations)
         return
 
 
-    def IntegrateUpload(self, uploadid, triggerimport):
+    def IntegrateUpload(self, taskid, triggerimport):
         """
         This method integrated the uploaded files into the music directory.
         The whole file tree will be created following the MusicDB naming scheme.
@@ -3587,14 +3590,14 @@ class MusicDBWebSocketInterface(object):
         This happens asynchronously inside the Upload Manager Thread.
 
         Args:
-            uploadid (str): ID to identify the upload
+            taskid (str): ID to identify the upload
             triggerimport (boolean): When ``true``, the upload manager also imports the music
         """
-        self.uploadmanager.IntegrateUploadedFile(uploadid, triggerimport)
+        self.uploadmanager.IntegrateUploadedFile(taskid, triggerimport)
         return
 
 
-    def RemoveUpload(self, uploadid):
+    def RemoveUpload(self, taskid):
         """
         This method triggers removing a specific upload.
         This includes the uploaded file as well as the upload task information and annotations.
@@ -3605,9 +3608,9 @@ class MusicDBWebSocketInterface(object):
         See :meth:`musicdb.mdbapi.uploadmanager.UploadManager.RequestRemoveUpload` for details.
 
         Args:
-            uploadid (str): ID to identify the upload
+            taskid (str): ID to identify the upload
         """
-        self.uploadmanager.RequestRemoveUpload(uploadid)
+        self.uploadmanager.RequestRemoveUpload(taskid)
         return
 
 

@@ -48,7 +48,7 @@ from musicdb.lib.ws.server      import MusicDBWebSocketServer
 from musicdb.mdbapi.mise        import MusicDBMicroSearchEngine
 from musicdb.mdbapi.audiostream import StartAudioStreamingThread, StopAudioStreamingThread
 from musicdb.mdbapi.videostream import StartVideoStreamingThread, StopVideoStreamingThread
-from musicdb.mdbapi.uploadmanager   import StartUploadManagementThread, StopUploadManagementThread
+from musicdb.taskmanagement.managementthread    import StartTaskManagementThread, StopTaskManagementThread
 import logging
 
 # Global objects
@@ -202,7 +202,7 @@ def Initialize(configobj, databaseobj):
         #. Assign the *configobj* and *databaseobj* to global variables ``cfg`` and ``database`` to share them between multiple connections
         #. Seed Python's random number generator
         #. Instantiate a global :meth:`musicdb.mdbapi.mise.MusicDBMicroSearchEngine` object
-        #. Starting the upload management via :meth:`musicdb.mdbapi.uploadmanager.StartUploadManagementThread`
+        #. Starting the upload, integration and import management via :meth:`musicdb.taskmanagement.managementthread.StartTaskManagementThread`
         #. Start the Audio Streaming Thread via :meth:`musicdb.mdbapi.audiostream.StartAudioStreamingThread` (see :doc:`/mdbapi/audiostream` for details)
         #. Start the Video Streaming Thread via :meth:`musicdb.mdbapi.videostream.StartVideoStreamingThread` (see :doc:`/mdbapi/audiostream` for details)
         #. Update MiSE cache via :meth:`musicdb.mdbapi.mise.MusicDBMicroSearchEngine.UpdateCache`
@@ -238,8 +238,8 @@ def Initialize(configobj, databaseobj):
     global mise
     mise   = MusicDBMicroSearchEngine(database)
 
-    logging.debug("Starting Upload Management…")
-    StartUploadManagementThread(cfg, database)
+    logging.debug("Starting Task Management…")
+    StartTaskManagementThread(cfg, database)
 
     # Start/Connect all interfaces
     logging.debug("Starting Streaming Thread…")
@@ -291,7 +291,7 @@ def Shutdown():
 
     The following things happen when this function gets called:
 
-        #. Stopping upload management via :meth:`musicdb.mdbapi.uploadmanager.StopUploadManagementThread`
+        #. Stopping task management via :meth:`musicdb.taskmanagement.managementthread.StopTaskManagementThread`
         #. Stop the Audio Streaming Thread via :meth:`musicdb.mdbapi.audiostream.StopAudioStreamingThread`
         #. Stop the Video Streaming Thread via :meth:`musicdb.mdbapi.videostream.StopVideoStreamingThread`
         #. Stop the websocket server
@@ -310,8 +310,8 @@ def Shutdown():
         logging.debug("Disconnect from clients…")
         tlswsserver.factory.CloseConnections()
     
-    logging.debug("Stopping Upload Management Thread…")
-    StopUploadManagementThread()
+    logging.debug("Stopping Task Management Thread…")
+    StopTaskManagementThread()
 
     logging.debug("Stopping Streaming Threads…")
     StopAudioStreamingThread()

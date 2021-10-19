@@ -14,41 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-The communication is handled via notification to allow continuing uploading even when the connection gets lost in the meanwhile.
-
-The upload is performed chunk-wise.
-After initiating an Upload, this upload manager requests chunks of data via MusicDB Notifications from the clients.
-All clients are informed about the upload process, not only the client that initiated the upload.
-So each client can show the progress and state.
-
-Task states:
-
-    * ``"waitforchunk"``: A new chunk of data was requested, and is expected from the client
-    * ``"uploadcomplete"``: The whole file is now available in the temporary upload directory
-    * ``"uploadfailed"``: The upload failed
-    * ``"notexisting"`` *virtual state* in case an Upload ID does not match an Upload. This task does not exist.
-    * ``"preprocessed"``: The uploaded file was successfully pre-processed and is ready for importing
-    * ``"invalidcontent"``: Pre-processing failed. The content was unexpected or invalid.
-    * ``"integrated"``: The uploaded file was successfully integrated into the music directory
-    * ``"integrationfailed"``: Integrating the uploaded file into the music directory failed
-    * ``"startimport"``: Importing the integrated file into the music database started
-    * ``"importfailed"``: Import process failed (importing the music or generating the artwork)
-    * ``"importartwork"``: Importing succeeded and generating the artwork started
-    * ``"importcomplete"``: Import process complete and successful
-    * ``"remove"``: Upload is going to be removed - after this state appears, the task ID should no longer be considered as valid.
-
-After upload is complete,
-the Management Thread takes care about post processing or removing no longer needed content
-
-The uploaded file follows the following naming scheme: *contenttype* + ``-`` + *checksum* + ``.`` + source-file-extension
-
-The upload manager also takes care about the validity of the uploaded file (via SHA-1 checksum).
-
-The task state is persistently stored inside the uploads directory within a JSON file in a *tasks* sub-directory.
-The file name is the task ID (equivalent to the Upload ID) + ``.json``.
-
 """
-# TODO: Visualize state machine
 
 import json
 import time
@@ -65,167 +31,15 @@ from musicdb.lib.metatags       import MetaTags
 from musicdb.mdbapi.database    import MusicDBDatabase
 from musicdb.mdbapi.artwork     import MusicDBArtwork
 from musicdb.mdbapi.videoframes import VideoFrames
-from musicdb.mdbapi.musicdirectory  import MusicDirectory
-
-Config      = None
-Thread      = None
-Callbacks   = []
-RunThread   = False
-Tasks       = None
-
-def StartUploadManagementThread(config, musicdb):
-    """
-    This method starts the Upload management thread.
-
-    Args:
-        config: :class:`~musicdb.lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration
-        database: A :class:`~musicdb.lib.db.musicdb.MusicDatabase` instance
-
-    Returns:
-        ``True`` on Success, otherwise ``False``
-
-    Raises:
-        TypeError: When the arguments are not of the correct type.
-    """
-    global Config
-    global Thread
-    global RunThread
-
-    if Thread != None:
-        logging.warning("Upload Management Thread already running")
-        return False
-
-    if type(config) != MusicDBConfig:
-        raise TypeError("config argument not of type MusicDBConfig")
-    if type(musicdb) != MusicDatabase:
-        raise TypeError("database argument not of type MusicDatabase")
+from musicdb.mdbapi.musicdirectory      import MusicDirectory
+from musicdb.taskmanagement.taskmanager import TaskManager
 
 
-    logging.debug("Starting Upload Management Thread")
-    Config    = config
-    RunThread = True
-    Thread    = threading.Thread(target=UploadManagementThread)
-    Thread.start()
-
-    return True
-
-
-
-def StopUploadManagementThread():
-    """
-    This function stops the Upload Management Thread.
-    The function is blocking and waits until the thread is closed.
-
-    Returns:
-        ``True`` on success, otherwise ``False``
-    """
-    global RunThread
-    global Thread
-
-    if Thread == None:
-        logging.warning("There is no Upload Management Thread running!")
-        return False
-
-    logging.debug("Waiting for Upload Management Thread to stop…")
-
-    RunThread = False
-    Thread.join()
-    Thread = None
-
-    logging.debug("Upload Management Thread shut down.")
-    return True
-
-
-
-def UploadManagementThread():
-    """
-    This thread handles the uploaded files.
-    It maintains the storage of temporary data and allows asynchronous file management and importing
-    """
-    # TODO: Remove left over uploads (uploaded files without task-ID)
-    # TODO: Continue uploads that were interrupted
-    # TODO: Identify discontinued uploads
-    # TODO: Handle failed uploads (clean up)
-    global Config
-    global Thread
-    global RunThread
-    global Tasks
-
-    musicdb    = MusicDatabase(Config.files.musicdatabase)
-    filesystem = Filesystem(Config.directories.uploads)
-    manager    = UploadManager(Config, musicdb)
-
-    if len(Config.uploads.allow) == 0:
-        logging.warning("No Uploads Allowed! \033[1;30m(See MusicDB Configuration: [uploads]->allow)")
-
-    # Start streaming …
-    while RunThread:
-        # Sleep a bit to reduce the load on the CPU. If nothing to do, sleep a bit longer
-        if len(Tasks) > 0:
-            time.sleep(1)
-        else:
-            time.sleep(1)
-
-        deletekeys = []
-        for key, task in Tasks.items():
-            state       = task["state"]
-            contenttype = task["contenttype"]
-            logging.debug("Task with state \"%s\" found. (%s)", str(state), str(contenttype));
-
-            if state == "uploadfailed" or state == "importfailed" or state == "importcomplete":
-                if contenttype in ["artwork"]:
-                    task["state"] = "remove"
-                    manager.SaveTask(task)
-
-            elif state == "uploadcomplete":
-                manager.PreProcessUploadedFile(task)
-
-            elif state == "startimport":
-                if contenttype == "video":
-                    success = manager.ImportVideo(task)
-                elif contenttype == "artwork":
-                    success = manager.ImportArtwork(task)
-                else:
-                    logging.error("Invalid content type \"%s\". \033[1;30m(forcing state importfailed)", contenttype);
-                    success = False
-
-                if success:
-                    if contenttype in ["album", "video"]:
-                        task["state"] = "importartwork"
-                    else:
-                        task["state"] = "importcomplete"
-                    manager.SaveTask(task)
-                    manager.NotifyClient("StateUpdate", task)
-                else:
-                    manager.UpdateState(task, "importfailed")
-
-            elif state == "importartwork":
-                if contenttype == "video":
-                    success = manager.ImportVideoArtwork(task)
-                else:
-                    logging.error("Invalid content type \"%s\". \033[1;30m(forcing state importfailed)", contenttype);
-                    success = False
-
-                if success:
-                    manager.UpdateState(task, "importcompleted")
-                else:
-                    manager.UpdateState(task, "importfailed")
-
-            elif state == "remove":
-                manager.RemoveTask(task)
-                deletekeys.append(task["id"])
-
-        # Remove all deleted tasks
-        for key in deletekeys:
-            Tasks.pop(key, None)
-    return
-
-
-
-class UploadManager(object):
+class UploadManager(TaskManager):
     """
     This class manages uploading content to the server MusicDB runs on.
     All data is stored in the uploads-directory configured in the MusicDB configuration.
+    The class is derived from :class:`musicdb.taskmanagement.taskmanager.TaskManager`.
     
     Args:
         config: :class:`~musicdb.lib.cfg.musicdb.MusicDBConfig` object holding the MusicDB Configuration
@@ -236,195 +50,13 @@ class UploadManager(object):
     """
 
     def __init__(self, config, database):
-        if type(config) != MusicDBConfig:
-            raise TypeError("config argument not of type MusicDBConfig")
-        if database != None and type(database) != MusicDatabase:
-            raise TypeError("database argument not of type MusicDatabase or None")
+        TaskManager.__init__(self, config, database)
 
-        self.db         = database
-        self.cfg        = config
-        self.uploadfs   = Filesystem(self.cfg.directories.uploads)
         self.musicfs    = MusicDirectory(self.cfg)
         self.artworkfs  = Filesystem(self.cfg.directories.artwork)
         # TODO: check write permission of all directories
         self.fileprocessing = Fileprocessing(self.cfg.directories.uploads)
         self.dbmanager  = MusicDBDatabase(config, database)
-
-        global Tasks
-        if Tasks == None:
-            self.LoadTasks()
-
-
-
-    #####################################################################
-    # Callback Function Management                                      #
-    #####################################################################
-
-
-
-    def RegisterCallback(self, function):
-        """
-        Register a callback function that reacts on Upload related events.
-        For more details see the module description at the top of this document.
-
-        Args:
-            function: A function that shall be called on an event.
-
-        Returns:
-            *Nothing*
-        """
-        global Callbacks
-        Callbacks.append(function)
-
-
-
-    def RemoveCallback(self, function):
-        """
-        Removes a function from the list of callback functions.
-
-        Args:
-            function: A function that shall be called removed.
-
-        Returns:
-            *Nothing*
-        """
-        global Callbacks
-
-        # Not registered? Then do nothing.
-        if not function in Callbacks:
-            logging.warning("A Streaming Thread callback function should be removed, but did not exist in the list of callback functions!")
-            return
-
-        Callbacks.remove(function)
-
-
-
-    def NotifyClient(self, notification, task, message=None):
-        """
-        This method triggers a client-notification.
-
-        There are three kind of notifications:
-
-            * ``"ChunkRequest"``: A new chunk of data is requested
-            * ``"StateUpdate"``: The state or annotations of an upload-task has been changed. See ``"state"`` value.
-            * ``"InternalError"``: There is an internal error occurred during. See ``"message"`` value.
-
-        The notification comes with the current status of the upload process.
-        This includes the following keys - independent of the state of the upload:
-
-            * uploadid: ID of the upload the notification is associated with
-            * offset: Offset of the requested data in the source file
-            * chunksize: The maximum chunk size
-            * state: The current state of the upload task
-            * message: ``null``/``None`` or a message from the server
-            * uploadtask: The task dictionary itself
-            * uploadslist: Except for ``ChunkRequest`` events, the WebSocket server append the result of :meth:`musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads` to the notification
-
-        *task* can be ``None`` in case the notification is meant to be an information that a given upload ID is invalid.
-
-        Args:
-            notification (str): Name of the notification
-            task (dict): Task structure
-            message (str): (optional) text message (like an error message) to the client
-
-        Returns:
-            *Nothing*
-
-        Raises:
-            ValueError: When notification has an unknown notification name
-        """
-        if not notification in ["ChunkRequest", "StateUpdate", "InternalError"]:
-            raise ValueError("Unknown notification \"%s\""%(notification))
-
-        status = {}
-        if task != None:
-            status["uploadid"]  = task["id"]
-            status["offset"]    = task["offset"]    # offset of the data to request
-            status["chunksize"] = 4096*100          # Upload 400KiB (TODO: Make configurable)
-            status["state"]     = task["state"]
-            status["uploadtask"]= task
-        else:
-            status["uploadid"]  = None
-            status["offset"]    = None
-            status["chunksize"] = None
-            status["state"]     = "notexisting"
-            status["uploadtask"]= None
-
-        status["message"]   = message
-
-        global Callbacks
-        for callback in Callbacks:
-            try:
-                callback(notification, status)
-            except Exception as e:
-                logging.exception("A Upload Management event callback function crashed!")
-
-
-    #####################################################################
-    # State management                                                  #
-    #####################################################################
-
-
-
-    def SaveTask(self, task):
-        """
-        This method saves a task in the uploads directory under ``tasks/${Task ID}.json``
-
-        Args:
-            task (dict): The task to save
-
-        Returns:
-            *Nothing*
-        """
-        taskid = task["id"]
-        data = json.dumps(task)
-        path = self.uploadfs.GetRoot() / "tasks" / Path(taskid+".json")
-
-        if not self.uploadfs.IsDirectory("tasks"):
-            logging.debug("tasks directory missing. Creating \"%s\"", self.cfg.directories.uploads + "/tasks")
-            self.uploadfs.CreateSubdirectory("tasks")
-
-        with open(path, "w+") as fd:
-            fd.write(data)
-
-        return
-
-
-
-    def LoadTasks(self):
-        """
-        Loads all task from the JSON files inside the tasks-directory.
-        The list of active tasks will be replaced by the loaded tasks.
-
-        Returns:
-            *Nothing*
-        """
-        logging.debug("Loading Upload-Tasks…")
-        
-        taskfilepaths = self.uploadfs.ListDirectory("tasks")
-
-        global Tasks
-        Tasks = {}
-        for taskfilepath in taskfilepaths:
-            taskpath = self.uploadfs.AbsolutePath(taskfilepath)
-
-            if self.uploadfs.GetFileExtension(taskpath) != "json":
-                continue
-
-            try:
-                with open(taskpath) as fd:
-                    task = json.load(fd)
-            except Exception as e:
-                logging.warning("Loading task file \"%s\" failed with error \"%s\". \033[1;30m(File will be ignored)", str(taskpath), str(e))
-                continue
-
-            if "id" not in task:
-                logging.warning("File \"%s\" is not a valid task (ID missing). \033[1;30m(File will be ignored)", str(taskpath), str(e))
-                continue
-
-            Tasks[task["id"]] = task
-
-        return
 
 
 
@@ -452,63 +84,7 @@ class UploadManager(object):
             TypeError: When one of the arguments has not the expected type
             ValueError: When *contenttype* does not have the expected values
         """
-        if type(uploadid) != str:
-            raise TypeError("Upload ID must be of type string")
-        if type(mimetype) != str:
-            raise TypeError("mime type must be of type string")
-        if type(contenttype) != str:
-            raise TypeError("content type must be of type string")
-        if contenttype not in ["video", "album", "artwork"]:
-            raise ValueError("content type \"%s\" not valid. \"video\", \"album\" or \"artwork\" expected."%(str(contenttype)))
-        if type(filesize) != int:
-            raise TypeError("file size must be of type int")
-        if filesize <= 0:
-            raise ValueError("file size must be greater than 0")
-        if type(checksum) != str:
-            raise TypeError("Checksum must be of type string")
-        if type(sourcefilename) != str:
-            raise TypeError("Source file name must be of type string")
-
-        if len(self.cfg.uploads.allow) == 0:
-            self.NotifyClient("InternalError", None, "Uploads deactivated")
-            logging.warning("Uploads not allowed! \033[1;30m(See MusicDB Configuration: [uploads]->allow)")
-            return
-        if not contenttype in self.cfg.uploads.allow:
-            self.NotifyClient("InternalError", None, "Upload of %s not allowed"%(contenttype))
-            logging.warning("Uploads of %s not allowed! \033[1;30m(See MusicDB Configuration: [uploads]->allow)", contenttype)
-
-        fileextension   = self.uploadfs.GetFileExtension(sourcefilename)
-        destinationname = contenttype + "-" + checksum + "." + fileextension
-        destinationpath = self.cfg.directories.uploads + "/" + destinationname
-
-        # TODO: Check if there is already a task with the given ID.
-        # If this task is in waitforchunk state, the upload can be continued instead of restarting it.
-
-        # Remove existing upload if destination path exists
-        self.uploadfs.RemoveFile(destinationpath)  # Removes file when it exists
-        
-        # Create File
-        with open(destinationpath, "w+b"):
-            pass
-
-        task = {}
-        task["id"             ] = uploadid
-        task["filesize"       ] = filesize
-        task["offset"         ] = 0
-        task["contenttype"    ] = contenttype
-        task["mimetype"       ] = mimetype
-        task["sourcefilename" ] = sourcefilename
-        task["sourcechecksum" ] = checksum
-        task["destinationpath"] = destinationpath
-        task["videofile"      ] = None              # Path to the video file in the music directory
-        task["state"          ] = "waitforchunk"
-        task["annotations"    ] = {}
-        self.SaveTask(task)
-
-        global Tasks
-        Tasks[uploadid] = task
-
-        self.NotifyClient("ChunkRequest", task)
+        self.InitiateProcess(uploadid, mimetype, contenttype, filesize, checksum, sourcefilename, "waitforchunk")
         return
 
 
@@ -539,60 +115,6 @@ class UploadManager(object):
         return True
 
 
-    def GetTaskByID(self, uploadid):
-        """
-        This method returns an existing task from the tasklist.
-        The task gets identified by its ID aka Upload ID
-
-        When the task does not exits, the clients get an ``"InternalError"`` notification.
-        The tasks state is then ``"notexisting"``.
-
-        Args:
-            uploadid (str): ID of the upload-task
-
-        Returns:
-            A task dictionary
-
-        Raises:
-            TypeError: When *uploadid* is not a string
-            ValueError: When *uploadid* is not a valid key in the Tasks-dictionary
-        """
-        if type(uploadid) != str:
-            raise TypeError("Upload ID must be a string. Type was \"%s\"."%(str(type(uploadid))))
-
-        global Tasks
-        if uploadid not in Tasks:
-            self.NotifiyClient("InternalError", None, "Invalid Upload ID")
-            raise ValueError("Upload ID \"%s\" not in Task Queue.", str(uploadid))
-
-        return Tasks[uploadid]
-
-
-
-    def UpdateTaskState(self, task, state, errormessage=None):
-        """
-        This method updates and saves the state of an task.
-        An ``"StateUpdate"`` notification gets send as well.
-
-        If *errormessage* is not ``None``, the notification gets send as ``"InternalError"`` with the message
-
-        Args:
-            task (dict): Task object to update
-            state (str): New state
-            message (str): Optional message
-
-        Returns:
-            *Nothing*
-        """
-        task["state"] = state
-        self.SaveTask(task)
-        if errormessage:
-            self.NotifyClient("InternalError", task, errormessage)
-        else:
-            self.NotifyClient("StateUpdate", task)
-        return
-
-
 
     def NewChunk(self, uploadid, rawdata):
         """
@@ -618,7 +140,7 @@ class UploadManager(object):
             return False
 
         chunksize = len(rawdata)
-        filepath  = task["destinationpath"]
+        filepath  = task["uploadpath"]
 
         try:
             with open(filepath, "ab") as fd:
@@ -658,26 +180,16 @@ class UploadManager(object):
             ``True`` When the upload was successfully complete, otherwise ``False``
         """
         # Check checksum
-        destchecksum = self.fileprocessing.Checksum(task["destinationpath"], "sha1")
+        destchecksum = self.fileprocessing.Checksum(task["uploadpath"], "sha1")
         if destchecksum != task["sourcechecksum"]:
-            logging.error("Upload Failed: \033[0;36m%s \e[1;30m(Checksum mismatch)", task["destinationpath"]);
+            logging.error("Upload Failed: \033[0;36m%s \e[1;30m(Checksum mismatch)", task["uploadpath"]);
             self.UpdateTaskState(task, "uploadfailed", "Checksum mismatch")
             return False
 
-        logging.info("Upload Complete: \033[0;36m%s", task["destinationpath"]);
+        logging.info("Upload Complete: \033[0;36m%s", task["uploadpath"]);
         self.UpdateTaskState(task, "uploadcomplete")
         # Now, the Management Thread takes care about post processing or removing no longer needed content
         return True
-
-
-
-    def GetTasks(self):
-        """
-        Returns:
-            The dictionary with all upload tasks
-        """
-        global Tasks
-        return Tasks
 
 
 
@@ -704,7 +216,7 @@ class UploadManager(object):
             return False
 
         # Perform post processing
-        logging.debug("Preprocessing upload %s -> %s", str(task["sourcefilename"]), str(task["destinationpath"]))
+        logging.debug("Preprocessing upload %s -> %s", str(task["sourcefilename"]), str(task["uploadpath"]))
         success = False
         if task["contenttype"] == "video":
             success = self.PreProcessVideo(task)
@@ -734,9 +246,9 @@ class UploadManager(object):
         """
         meta = MetaTags()
         try:
-            meta.Load(task["destinationpath"])
+            meta.Load(task["uploadpath"])
         except ValueError:
-            logging.error("The file \"%s\" uploaded as video to %s is not a valid video or the file format is not supported. \033[1;30m(File will be not further processed.)", task["sourcefilename"], task["destinationpath"])
+            logging.error("The file \"%s\" uploaded as video to %s is not a valid video or the file format is not supported. \033[1;30m(File will be not further processed.)", task["sourcefilename"], task["uploadpath"])
             return False
 
         # Get all meta infos (for videos, this does not include any interesting information.
@@ -753,8 +265,8 @@ class UploadManager(object):
         Args:
             task (dict): the task object of an upload-task
         """
-        origfile = task["destinationpath"]
-        extension= self.uploadfs.GetFileExtension(origfile)
+        origfile = task["uploadpath"]
+        extension= self.uploaddirectory.GetFileExtension(origfile)
         jpegfile = origfile[:-len(extension)] + "jpg"
         if extension != "jpg":
             logging.debug("Transcoding artwork file form %s (\"%s\") to JPEG (\"%s\")", extension, origfile, jpegfile);
@@ -762,7 +274,7 @@ class UploadManager(object):
             im = im.convert("RGB")
             im.save(jpegfile, "JPEG", optimize=True, progressive=True)
 
-        task["artworkfile"] = jpegfile
+        task["preprocessedpath"] = jpegfile
         return True
 
 
@@ -858,7 +370,7 @@ class UploadManager(object):
         """
         When an annotation needed for creating the video file path in the music directory is missing, ``False`` gets returned and an error message written into the log
         """
-        uploadedfile  = task["destinationpath"]    # uploaded file
+        uploadedfile  = task["uploadpath"]    # uploaded file
         try:
             artistname    = task["annotations"]["artistname"]
             releasedate   = task["annotations"]["release"]
@@ -867,7 +379,7 @@ class UploadManager(object):
             logging.error("Collection video information for creating its path name failed with key-error for: %s \033[1;30m(Make sure all important annotations are given to that upload: name, artistname, release)", str(e))
             return False
 
-        fileextension = self.uploadfs.GetFileExtension(uploadedfile)
+        fileextension = self.uploaddirectory.GetFileExtension(uploadedfile)
         videofile     = artistname + "/" + releasedate + " - " + videoname + "." + fileextension
 
         task["videofile"] = videofile
@@ -1027,7 +539,7 @@ class UploadManager(object):
             artistname = task["annotations"]["artistname"]
             albumname  = task["annotations"]["albumname"]
             albumid    = task["annotations"]["albumid"]
-            sourcepath = task["artworkfile"]
+            sourcepath = task["preprocessedpath"]
         except KeyError as e:
             logging.error("Collecting artwork information for importing failed with key-error for: %s \033[1;30m(Make sure the artist and album name is annotated as well as the album ID.)", str(e))
             return False
@@ -1053,28 +565,6 @@ class UploadManager(object):
             self.db.WriteVideo(video)
 
         logging.info("Importing Artwork succeeded")
-        return True
-
-
-
-    def RemoveTask(self, task):
-        """
-        ``tasks/${Task ID}.json``
-        """
-        logging.info("Removing uploaded \"%s\" file and task \"%s\" information.", task["sourcefilename"], task["id"])
-        datapath = task["destinationpath"]
-        taskpath = "tasks/" + task["id"] + ".json"
-
-        # if artwork, remove artworkfile as well
-        if task["contenttype"] == "artwork":
-            artworkfile = task["artworkfile"]
-            logging.debug("Removing %s", self.uploadfs.AbsolutePath(artworkfile))
-            self.uploadfs.RemoveFile(artworkfile)
-
-        logging.debug("Removing %s", self.uploadfs.AbsolutePath(datapath))
-        self.uploadfs.RemoveFile(datapath)
-        logging.debug("Removing %s", self.uploadfs.AbsolutePath(taskpath))
-        self.uploadfs.RemoveFile(taskpath)
         return True
 
 

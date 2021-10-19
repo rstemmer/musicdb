@@ -80,7 +80,7 @@ class UploadManager
         
         MusicDB_Call("InitiateUpload", 
             {
-                uploadid: task.id,
+                taskid:   task.id,
                 mimetype: task.mimetype,
                 contenttype: task.contenttype,
                 filesize: task.filesize,
@@ -89,7 +89,7 @@ class UploadManager
             });
 
         if(typeof initialannotations === "object")
-            MusicDB_Call("AnnotateUpload", {uploadid: task.id, ...initialannotations});
+            MusicDB_Call("AnnotateUpload", {taskid: task.id, ...initialannotations});
 
         window.console && console.log(task);
     }
@@ -98,15 +98,15 @@ class UploadManager
     UploadNextChunk(state)
     {
         window.console && console.log("UploadNextChunk");
-        let uploadid  = state.uploadid;
-        let task      = this.uploads[uploadid]
+        let taskid    = state.taskid;
+        let task      = this.uploads[taskid]
         let rawdata   = task.data.subarray(task["offset"], task["offset"] + state.chunksize)
         //let chunkdata = btoa(rawdata); // FIXME: Does not work. rawdata will be implicit converted to string
         let chunkdata = BufferToHexString(rawdata)
         task.offset  += rawdata.length;
 
         window.console && console.log(task);
-        MusicDB_Call("UploadChunk", {uploadid: uploadid, chunkdata: chunkdata});
+        MusicDB_Call("UploadChunk", {taskid: taskid, chunkdata: chunkdata});
     }
 
 
@@ -116,7 +116,7 @@ class UploadManager
         if(fnc == "MusicDB:Upload")
         {
             window.console && console.info(data);
-            let uploadid    = data.uploadid;
+            let taskid      = data.taskid;
             let uploadtask  = data.uploadtask;
             let state       = data.state;
             let contenttype = uploadtask.contenttype;
@@ -138,7 +138,7 @@ class UploadManager
                 if(contenttype == "artwork")
                 {
                     if(state == "preprocessed")
-                        MusicDB_Call("IntegrateUpload", {uploadid: uploadid, triggerimport: true});
+                        MusicDB_Call("IntegrateUpload", {taskid: taskid, triggerimport: true});
                 }
             }
         }
