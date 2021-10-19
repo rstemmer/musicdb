@@ -16,11 +16,7 @@
 """
 """
 
-import json
-import time
 import logging
-import datetime
-import threading
 from pathlib            import Path
 from PIL                import Image
 from musicdb.lib.cfg.musicdb    import MusicDBConfig

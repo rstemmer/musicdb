@@ -81,16 +81,11 @@ The upload manager also takes care about the validity of the uploaded file (via 
 # TODO: Module description: move upload details into upload module
 # TODO: Make globals thread safe
 
-import json
 import time
 import logging
-import datetime
 import threading
-from pathlib            import Path
-from PIL                import Image
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
-from musicdb.lib.filesystem     import Filesystem
 
 from musicdb.taskmanagement.taskmanager     import TaskManager
 from musicdb.taskmanagement.uploadmanager   import UploadManager
@@ -178,7 +173,6 @@ def TaskManagementThread():
 
     try:
         musicdb         = MusicDatabase(Config.files.musicdatabase)
-        filesystem      = Filesystem(Config.directories.uploads)
         taskmanager     = TaskManager(Config, musicdb)
         uploadmanager   = UploadManager(Config, musicdb)
     except Exception as e:

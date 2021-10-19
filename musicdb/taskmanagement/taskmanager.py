@@ -17,9 +17,7 @@
 
 """
 import json
-import time
 import logging
-import datetime
 import threading
 from pathlib            import Path
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
@@ -52,7 +50,7 @@ class TaskManager(object):
         self.db  = database
         self.cfg = config
         self.uploaddirectory = Filesystem(self.cfg.directories.uploads)
-        self.tasksdirectory = Filesystem(self.cfg.directories.tasks)
+        self.tasksdirectory  = Filesystem(self.cfg.directories.tasks)
 
         global Tasks
         with TaskManagerLock:
