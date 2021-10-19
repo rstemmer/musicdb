@@ -52,6 +52,7 @@ class TaskManager(object):
         self.db  = database
         self.cfg = config
         self.uploaddirectory = Filesystem(self.cfg.directories.uploads)
+        self.tasksdirectory = Filesystem(self.cfg.directories.tasks)
 
         global Tasks
         with TaskManagerLock:
@@ -188,11 +189,7 @@ class TaskManager(object):
         """
         taskid = task["id"]
         data = json.dumps(task)
-        path = self.uploaddirectory.GetRoot() / "tasks" / Path(taskid+".json")
-
-        if not self.uploaddirectory.IsDirectory("tasks"):
-            logging.debug("tasks directory missing. Creating \"%s\"", self.cfg.directories.uploads + "/tasks")
-            self.uploaddirectory.CreateSubdirectory("tasks")
+        path = self.tasksdirectory.GetRoot() /  Path(taskid+".json")
 
         with open(path, "w+") as fd:
             fd.write(data)
@@ -211,15 +208,15 @@ class TaskManager(object):
         """
         logging.debug("Loading Upload-Tasks…")
         
-        taskfilepaths = self.uploaddirectory.ListDirectory("tasks")
+        taskfilepaths = self.tasksdirectory.ListDirectory()
 
         global Tasks
         with TaskManagerLock:
             Tasks = {}
             for taskfilepath in taskfilepaths:
-                taskpath = self.uploaddirectory.AbsolutePath(taskfilepath)
+                taskpath = self.tasksdirectory.AbsolutePath(taskfilepath)
 
-                if self.uploaddirectory.GetFileExtension(taskpath) != "json":
+                if self.tasksdirectory.GetFileExtension(taskpath) != "json":
                     logging.debug("Unexpected file in task directory: %s", str(taskfilepath))
                     continue
 
@@ -430,8 +427,8 @@ class TaskManager(object):
             if taskid in Tasks:
                 Tasks.pop(taskid)
 
-        logging.debug("Removing %s", self.uploaddirectory.AbsolutePath(taskpath))
-        self.uploaddirectory.RemoveFile(taskpath)
+        logging.debug("Removing %s", self.tasksdirectory.AbsolutePath(taskpath))
+        self.tasksdirectory.RemoveFile(taskpath)
         return True
 
 

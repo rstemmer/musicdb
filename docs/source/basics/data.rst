@@ -30,8 +30,12 @@ state/:
    It is mainly maintained by :doc:`/lib/mdbstate`
 
 uploads/:
-   The uploads directory contains temporary uploaded data and the state of uploading data.
-   This directory is maintained by :doc:`/mdbapi/uploadmanager`
+   The uploads directory contains temporary uploaded data.
+   This directory is mainly maintained by :doc:`/taskmanagement/uploadmanager`
+
+tasks/:
+   Persistent state of tasks that are processed by the :doc:`/taskmanagement/managementthread`
+   and managed by the :doc:`/taskmanagement/taskmanager`.
 
 webdata/:
    This directory contains all data that needs to be available by the HTTPS web server.

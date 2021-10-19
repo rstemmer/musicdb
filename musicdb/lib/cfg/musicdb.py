@@ -135,6 +135,7 @@ class MusicDBConfig(Config):
         self.directories.data       = self.GetDirectory("directories",  "data",     "/var/lib/musicdb")
         self.directories.webdata    = self.directories.data + "/webdata"
         self.directories.uploads    = self.directories.data + "/uploads"
+        self.directories.tasks      = self.directories.data + "/tasks"
         self.directories.state      = self.directories.data + "/state"
         self.directories.share      = "/usr/share/musicdb"
         self.directories.artwork    = self.directories.webdata + "/artwork"
