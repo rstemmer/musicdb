@@ -66,28 +66,42 @@ class StatusText extends StatusElementBase
     }
 }
 
+/*
+
+    * Unrelated states
+    * Upload related states:
+        * ``"preprocessing"``: The file is currently in preprocessing state. For example if an archive gets unpacked.
+    * Integration related states:
+        * ``"integrating"``: The integration process has started
+    * Import related states:
+ */
 
 
 class UploadStatusText extends StatusText
 {
     constructor(uploadstatus="")
     {
+        // This is a complete list from the MusicDB Task Management Task States
         switch(uploadstatus)
         {
-            case "waitforchunk"     : super("Uploading …",              "active"); break;
-            case "uploadcomplete"   : super("Upload Succeeded",         "good");   break;
-            case "uploadfailed"     : super("Upload Failed",            "bad");    break;
-            case "notexisting"      : super("Internal Chaos",           "bad");    break;
-            case "preprocessed"     : super("Upload Succeeded",         "good");   break;
-            case "invalidcontent"   : super("Invalid Content",          "bad");    break;
-            case "integrated"       : super("Integration Succeeded",    "good");   break;
-            case "integrationfailed": super("Integration Failed",       "bad");    break;
-            case "startimport"      : super("Importing …",              "active"); break;
-            case "importfailed"     : super("Import Failed",            "bad");    break;
-            case "importartwork"    : super("Importing …",              "active"); break;
-            case "importcomplete"   : super("Import Succeeded",         "good");   break;
-            case "remove"           : super("Removing Upload",          "active"); break;
-            default                 : super("No upload processing",     "open");   break;
+            case "notexisting"          : super("Internal Chaos",           "bad");    break;
+            case "waitforchunk"         : super("Uploading …",              "active"); break;
+            case "uploadcomplete"       : super("Upload Succeeded",         "good");   break;
+            case "uploadfailed"         : super("Upload Failed",            "bad");    break;
+            case "preprocessing"        : super("Preprocessing Upload …",   "active"); break;
+            case "readyforintegration"  : super("Upload Succeeded",         "good");   break;
+            case "integrating"          : super("Integrating …",            "active"); break;
+            case "invalidcontent"       : super("Invalid Content",          "bad");    break;
+            case "readyforimport"       : super("Integration Succeeded",    "good");   break;
+            case "integrationfailed"    : super("Integration Failed",       "bad");    break;
+            case "startmusicimport"     : super("Importing Music …",        "active"); break;
+            case "importingmusic"       : super("Importing Music …",        "active"); break;
+            case "startartworkimport"   : super("Importing Artwork …",      "active"); break;
+            case "importingartwork"     : super("Importing Artwork …",      "active"); break;
+            case "importfailed"         : super("Import Failed",            "bad");    break;
+            case "importcomplete"       : super("Import Succeeded",         "good");   break;
+            case "remove"               : super("Removing Upload",          "active"); break;
+            default                     : super("No upload processing",     "open");   break;
         }
     }
 }

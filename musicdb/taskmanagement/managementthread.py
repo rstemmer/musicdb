@@ -36,20 +36,24 @@ Possible Task states:
 
     * Unrelated states
         * ``"notexisting"`` In case a Task ID does not match any file. This task does not exist.
-        * ``"invalidcontent"``: Processing failed. The content was unexpected or invalid.
+        * ``"invalidcontent"``: Processing failed. The content type was unexpected or invalid (Not: artwork, video, album).
         * ``"remove"``: Upload is going to be removed. The task itself as well. After this state appears, the task ID should no longer be considered as valid.
     * Upload related states:
         * ``"waitforchunk"``: A new chunk of data was requested, and is expected from the client
-        * ``"uploadcomplete"``: The whole file is now available in the temporary upload directory
         * ``"uploadfailed"``: The upload failed
-        * ``"preprocessed"``: The uploaded file was successfully pre-processed and is ready for integration or importing
+        * ``"uploadcomplete"``: The whole file is now available in the temporary upload directory and is ready for being preprocessed.
+        * ``"preprocessing"``: The file is currently in preprocessing state. For example if an archive gets unpacked.
     * Integration related states:
-        * ``"integrated"``: The uploaded file was successfully integrated into the music directory
+        * ``"readyforintegration"``: The integration of the file can be started
+        * ``"integrating"``: The integration process has started
         * ``"integrationfailed"``: Integrating the uploaded file into the music directory failed
     * Import related states:
-        * ``"startimport"``: Importing the integrated file into the music database started
+        * ``"readyforimport"``: The uploaded file was successfully integrated into the music directory. The content can now be imported into the MusicDB Database
+        * ``"startmusicimport"``: Importing the integrated file into the music database started
+        * ``"importingmusic"``: The music import process has started
         * ``"importfailed"``: Import process failed (importing the music or generating the artwork)
-        * ``"importartwork"``: Importing succeeded and generating the artwork started
+        * ``"startartworkimport"``: Importing succeeded and generating the artwork started
+        * ``"importingartwork"``: The artwork import process has started
         * ``"importcomplete"``: Import process complete and successful
 
 To each task, there are several additional information, also stored in the JSON file.
@@ -89,6 +93,9 @@ from musicdb.lib.db.musicdb     import MusicDatabase
 
 from musicdb.taskmanagement.taskmanager     import TaskManager
 from musicdb.taskmanagement.uploadmanager   import UploadManager
+from musicdb.taskmanagement.integrationmanager  import IntegrationManager
+from musicdb.taskmanagement.importmanager   import ImportManager
+from musicdb.taskmanagement.artworkmanager  import ArtworkManager
 
 Config      = None
 Thread      = None
@@ -175,6 +182,9 @@ def TaskManagementThread():
         musicdb         = MusicDatabase(Config.files.musicdatabase)
         taskmanager     = TaskManager(Config, musicdb)
         uploadmanager   = UploadManager(Config, musicdb)
+        integrationmanager = IntegrationManager(Config, musicdb)
+        importmanager   = ImportManager(Config, musicdb)
+        artworkmanager  = ArtworkManager(Config, musicdb)
     except Exception as e:
         logging.exception("Initializing Task Management Thread failed with exception: %s", str(e))
 
@@ -194,7 +204,7 @@ def TaskManagementThread():
         deletekeys = []
         for taskid, task in tasks.items():
             try:
-                keeptask = ProcessTask(taskid, task, taskmanager, uploadmanager)
+                keeptask = ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, importmanager)
                 if not keeptask:
                     deletekeys.append(taskid)
             except Exception as e:
@@ -207,7 +217,7 @@ def TaskManagementThread():
 
 
 
-def ProcessTask(taskid, task, taskmanager, uploadmanager):
+def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, importmanager):
     """
     Returns:
         ``True`` when the processing can continue. ``False`` when the task with taskid can be removed from the list of tasks
@@ -217,44 +227,34 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager):
     logging.debug("Task with state \"%s\" found. (%s)", str(state), str(contenttype));
 
     if state == "uploadfailed" or state == "importfailed" or state == "importcomplete":
+        # TODO: Refactor
         if contenttype in ["artwork"]:
             taskmanager.UpdateTaskState(task, "remove")
 
     elif state == "uploadcomplete":
         uploadmanager.PreProcessUploadedFile(task)
 
-    elif state == "startimport":
-        if contenttype == "video":
-            success = uploadmanager.ImportVideo(task)
-        elif contenttype == "artwork":
-            success = uploadmanager.ImportArtwork(task)
-        else:
-            logging.error("Invalid content type \"%s\". \033[1;30m(forcing state importfailed)", contenttype);
-            success = False
+    elif state == "readyforintegration":
+        #integrationmanager.IntegrateUploadedFile(task)
+        # further steps should be triggered by the user!
+        pass
 
-        # TODO: This should be done by the manager class
-        if success:
-            if contenttype in ["album", "video"]:
-                task["state"] = "importartwork"
-            else:
-                task["state"] = "importcomplete"
-            uploadmanager.SaveTask(task)
-            uploadmanager.NotifyClient("StateUpdate", task)
-        else:
-            uploadmanager.UpdateState(task, "importfailed")
+    elif state == "readyforimport":
+        # further steps should be triggered by the user!
+        pass
 
-    elif state == "importartwork":
-        if contenttype == "video":
-            success = uploadmanager.ImportVideoArtwork(task)
-        else:
-            logging.error("Invalid content type \"%s\". \033[1;30m(forcing state importfailed)", contenttype);
-            success = False
+    elif state == "startmusicimport":
+        importmanager.ImportMusic(task)
 
-        # TODO: This should be done by the manager class
-        if success:
-            uploadmanager.UpdateState(task, "importcompleted")
-        else:
-            uploadmanager.UpdateState(task, "importfailed")
+        # TODO: There are 4 types of artwork:
+        # - from audio file for album
+        # - from video file for video
+        # - from upload for album
+        # - from upload for video (not supported)
+        # This needs to be handled separately
+
+    elif state == "startartworkimport":
+        success = artworkmanager.ImportArtwork(task)
 
     elif state == "remove":
         # Different manager may have to perform further tasks

@@ -86,7 +86,7 @@ class ImportForm extends Element
                 break;
             case "uploadcomplete":
                 this.uploadstate.SetState("uploading",     "good");
-                this.uploadstate.SetState("preprocess",    "active");
+                this.uploadstate.SetState("preprocess",    "open");
                 this.uploadstate.SetState("integrate",     "open");
                 this.uploadstate.SetState("importmusic",   "open");
                 this.uploadstate.SetState("importartwork", "open");
@@ -98,9 +98,9 @@ class ImportForm extends Element
                 this.uploadstate.SetState("importmusic",   "open");
                 this.uploadstate.SetState("importartwork", "open");
                 break;
-            case "preprocessed":
-                this.uploadstate.SetState("uploading",     "good");
-                this.uploadstate.SetState("preprocess",    "good");
+            case "preprocessing":
+                this.uploadstate.SetState("uploading",     "bad");
+                this.uploadstate.SetState("preprocess",    "active");
                 this.uploadstate.SetState("integrate",     "open");
                 this.uploadstate.SetState("importmusic",   "open");
                 this.uploadstate.SetState("importartwork", "open");
@@ -112,7 +112,21 @@ class ImportForm extends Element
                 this.uploadstate.SetState("importmusic",   "open");
                 this.uploadstate.SetState("importartwork", "open");
                 break;
-            case "integrated":
+            case "readyforintegration":
+                this.uploadstate.SetState("uploading",     "good");
+                this.uploadstate.SetState("preprocess",    "good");
+                this.uploadstate.SetState("integrate",     "open");
+                this.uploadstate.SetState("importmusic",   "open");
+                this.uploadstate.SetState("importartwork", "open");
+                break;
+            case "integrating":
+                this.uploadstate.SetState("uploading",     "good");
+                this.uploadstate.SetState("preprocess",    "good");
+                this.uploadstate.SetState("integrate",     "active");
+                this.uploadstate.SetState("importmusic",   "open");
+                this.uploadstate.SetState("importartwork", "open");
+                break;
+            case "readyforimport":
                 this.uploadstate.SetState("uploading",     "good");
                 this.uploadstate.SetState("preprocess",    "good");
                 this.uploadstate.SetState("integrate",     "good");
@@ -126,7 +140,7 @@ class ImportForm extends Element
                 this.uploadstate.SetState("importmusic",   "open");
                 this.uploadstate.SetState("importartwork", "open");
                 break;
-            case "startimport":
+            case "importingmusic":
                 this.uploadstate.SetState("uploading",     "good");
                 this.uploadstate.SetState("preprocess",    "good");
                 this.uploadstate.SetState("integrate",     "good");
@@ -140,7 +154,7 @@ class ImportForm extends Element
                 this.uploadstate.SetState("importmusic",   "bad");
                 this.uploadstate.SetState("importartwork", "bad");
                 break;
-            case "importartwork":
+            case "importingartwork":
                 this.uploadstate.SetState("uploading",     "good");
                 this.uploadstate.SetState("preprocess",    "good");
                 this.uploadstate.SetState("integrate",     "good");

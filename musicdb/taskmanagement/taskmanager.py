@@ -285,6 +285,7 @@ class TaskManager(object):
         """
         This method updates and saves the state of an task.
         An ``"StateUpdate"`` notification gets send as well.
+        If the task already is in the state, nothing happens.
 
         If *errormessage* is not ``None``, the notification gets send as ``"InternalError"`` with the message
 
@@ -296,12 +297,17 @@ class TaskManager(object):
         Returns:
             *Nothing*
         """
+        if task["state"] == state:
+            return
+
         task["state"] = state
         self.SaveTask(task)
+
         if errormessage:
             self.NotifyClient("InternalError", task, errormessage)
         else:
             self.NotifyClient("StateUpdate", task)
+
         return
 
 
@@ -408,7 +414,7 @@ class TaskManager(object):
         task = self.GetTaskByID(taskid)
         logging.info("Removing task \"%s\" including uploaded and temporary files.", task["id"])
 
-        taskpath = "tasks/" + task["id"] + ".json"
+        taskfile = task["id"] + ".json"
         datapath = task["uploadpath"]
         preppath = task["preprocessedpath"]
 
@@ -425,8 +431,8 @@ class TaskManager(object):
             if taskid in Tasks:
                 Tasks.pop(taskid)
 
-        logging.debug("Removing %s", self.tasksdirectory.AbsolutePath(taskpath))
-        self.tasksdirectory.RemoveFile(taskpath)
+        logging.debug("Removing %s", self.tasksdirectory.AbsolutePath(taskfile))
+        self.tasksdirectory.RemoveFile(taskfile)
         return True
 
 

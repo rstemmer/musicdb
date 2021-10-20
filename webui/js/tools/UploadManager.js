@@ -137,7 +137,7 @@ class UploadManager
                 // Artwork will be automatically imported
                 if(contenttype == "artwork")
                 {
-                    if(state == "preprocessed")
+                    if(state == "readyforintegration")
                         MusicDB_Call("IntegrateUpload", {taskid: taskid, triggerimport: true});
                 }
             }

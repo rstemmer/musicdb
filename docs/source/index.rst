@@ -178,6 +178,20 @@ JavaScript is simply not the right language for such a complex application.
    webui/*
 
 
+MusicDB Task Management Modules
+===============================
+
+The MusicDB task management system is used to perform several tasks on the Music Database and Music Directory
+triggered by the WebUI.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Management Modules
+   :glob:
+
+   taskmanagement/*
+
+
 MusicDB Maintaining Modules
 ===========================
 
