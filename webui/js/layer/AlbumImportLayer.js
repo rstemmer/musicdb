@@ -25,6 +25,9 @@ class AlbumImportLayer extends Layer
     {
         super(background, id)
 
+        this.oldartistdirectoryname = null;
+        this.oldalbumdirectoryname  = null;
+
         this.albumsettingstable = new AlbumSettingsTable();
         this.songfilestable     = new SongFilesTable();
 
@@ -54,6 +57,11 @@ class AlbumImportLayer extends Layer
 
     onClick_Rename()
     {
+        // Get all renaming requests
+        let albumrenamerequests = this.albumsettingstable.GetRenameRequests();
+        let songrenamerequests  = this.songfilestable.GetRenameRequests();
+        window.console?.log(albumrenamerequests);
+        window.console?.log(songrenamerequests );
     }
 
 
@@ -63,7 +71,10 @@ class AlbumImportLayer extends Layer
         if(fnc == "FindAlbumSongFiles" && sig == "ShowAlbumSongFiles")
         {
             window.console?.log(args);
-            let albumpath = args[0].path.split("/").slice(0,2).join("/");
+            this.oldartistdirectoryname = args[0].path.split("/")[0];
+            this.oldalbumdirectoryname  = args[0].path.split("/")[1];
+            let albumpath = this.oldartistdirectoryname + "/" + this.oldalbumdirectoryname;
+
             this.albumsettingstable.Update(
                 args[0].artistname,
                 args[0].albumname,

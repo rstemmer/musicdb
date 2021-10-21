@@ -157,6 +157,7 @@ class AlbumSettingsTable extends Table
 
         // Artist
         let artistname = this.artistnameinput.GetValue();
+        artistname = artistname.replace(/\//g,"∕" /*Division slash*/);
         if(this.artistnameinput.GetValidState() === true)
             newpathhtml += validspan;
         else
@@ -175,6 +176,7 @@ class AlbumSettingsTable extends Table
 
         // Album name
         let albumname = this.albumnameinput.GetValue();
+        albumname = albumname.replace(/\//g,"∕" /*Division slash*/);
         if(this.albumnameinput.GetValidState() === true)
             newpathhtml += validspan;
         else
@@ -203,6 +205,57 @@ class AlbumSettingsTable extends Table
         this.newpathelement.RemoveChilds();
         this.newpathelement.SetInnerHTML(newpathhtml);
         return newpathtext;
+    }
+
+
+
+    GetArtistDirectoryName()
+    {
+        let artistname = this.artistnameinput.GetValue();
+        artistname = artistname.replace(/\//g,"∕" /*Division slash*/);
+        return artistname;
+    }
+
+    GetAlbumDirectoryName()
+    {
+        // Release Year
+        let releaseyear = this.releasedateinput.GetValue();
+        let albumname   = this.albumnameinput.GetValue();
+        albumname = albumname.replace(/\//g,"∕" /*Division slash*/);
+        return `${releaseyear} - ${albumname}`;
+    }
+
+
+
+    // Returns a array with two objects with two attributes: .newname, .oldname
+    // First object is for the artist, second for the album directory name
+    // If for one or all of them the directories are the same, null will be set instead of an object.
+    GetRenameRequests()
+    {
+        let newartistdirectoryname = this.GetArtistDirectoryName();
+        let newalbumdirectoryname  = this.GetAlbumDirectoryName();
+        let oldartistdirectoryname = this.oldalbumpath.split("/")[0];
+        let oldalbumdirectoryname  = this.oldalbumpath.split("/")[1];
+
+        let renamerequests = new Array();
+        let artistrenamerequest = null;
+        let albumrenamerequest  = null;
+        if(newartistdirectoryname != oldartistdirectoryname)
+        {
+            artistrenamerequest = new Object();
+            artistrenamerequest.newpath = newartistdirectoryname;
+            artistrenamerequest.oldpath = oldartistdirectoryname;
+        }
+        if(newalbumdirectoryname != oldalbumdirectoryname)
+        {
+            albumrenamerequest = new Object();
+            albumrenamerequest.newpath = newalbumdirectoryname;
+            albumrenamerequest.oldpath = oldalbumdirectoryname;
+        }
+        renamerequests.push(artistrenamerequest);
+        renamerequests.push(albumrenamerequest);
+
+        return renamerequests;
     }
 
 

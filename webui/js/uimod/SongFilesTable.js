@@ -143,7 +143,7 @@ class SongFilesTableRow extends SongFilesTableRowBase
 
         // Next comes song name
         let songname = this.songnameinput.GetValue();
-        songname.replace(" / ", " ∕ "/*division slash*/);
+        songname = songname.replace(/\//g,"∕" /*Division slash*/);
         if(this.songnameinput.GetValidState() === true)
             newpathhtml += validspan;
         else
@@ -196,6 +196,23 @@ class SongFilesTableRow extends SongFilesTableRowBase
             return false;
         return true;
     }
+
+
+
+    // Returns an object with two attributes: .oldname, .newname
+    // If new and old paths are the same, null gets returned
+    GetRenameRequest()
+    {
+        let retval = new Object();
+        retval.oldname = this.oldfilename;
+        retval.newname = this.EvaluateNewPath();
+
+        // No rename request when the names are still equal
+        if(retval.oldname == retval.newname)
+            return null;
+
+        return retval;
+    }
 }
 
 
@@ -210,6 +227,24 @@ class SongFilesTable extends Table
         // Table
         this.headlinerow = new SongFilesTableHeadline();
         this.AddRow(this.headlinerow);
+    }
+
+
+
+    // Returns a array of objects with two attributes: .newname, .oldname
+    GetRenameRequests()
+    {
+        let renamerequests = new Array();
+        for(let row of this.rows)
+        {
+            if(typeof row.GetRenameRequest === "function")
+            {
+                let renamerequest = row.GetRenameRequest();
+                if(renamerequest !== null)
+                    renamerequests.push(renamerequest);
+            }
+        }
+        return renamerequests;
     }
 
 
