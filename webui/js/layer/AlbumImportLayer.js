@@ -28,8 +28,32 @@ class AlbumImportLayer extends Layer
         this.albumsettingstable = new AlbumSettingsTable();
         this.songfilestable     = new SongFilesTable();
 
+        this.toolbar            = new ToolBar();
+        this.cancelbutton       = new TextButton("MusicDB", "Cancel",
+            ()=>{this.onClick_Cancel();},
+            "Cancel album import. Nothing will be changed. ");
+        this.renamebutton       = new TextButton("MusicDB", "Rename",
+            ()=>{this.onClick_Rename();},
+            "Apply changes and rename files and directories accordingly.");
+
+        this.toolbar.AddButton(this.cancelbutton);
+        this.toolbar.AddSpacer(true); // grow
+        this.toolbar.AddButton(this.renamebutton);
+
         this.AppendChild(this.albumsettingstable);
         this.AppendChild(this.songfilestable);
+        this.AppendChild(this.toolbar);
+    }
+
+
+
+    onClick_Cancel()
+    {
+        this.Hide();
+    }
+
+    onClick_Rename()
+    {
     }
 
 
