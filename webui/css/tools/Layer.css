@@ -30,9 +30,12 @@
 
     width:              90vw;
     height:             90vh;
+    padding:            2rem;
 
     background-color:   var(--bgcolor);
     background-image:   url(../../img/Noise10.png);
+
+    overflow:           scroll;
 }
 
 
