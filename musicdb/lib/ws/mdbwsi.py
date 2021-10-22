@@ -117,6 +117,9 @@ File Handling
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.LoadWebUIConfiguration`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.FindNewContent`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.FindAlbumSongFiles`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RenameMusicFile`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RenameAlbumDirectory`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.ChangeArtistDirectory`
 
 Other
 
@@ -180,6 +183,7 @@ class MusicDBWebSocketInterface(object):
             self.songqueue  = SongQueue(self.cfg, self.database)
             self.videoqueue = VideoQueue(self.cfg, self.database)
             self.music      = MusicDBDatabase(self.cfg, self.database)
+            self.musicdirectory = MusicDirectory(self.cfg)
 
             self.taskmanager    = TaskManager(self.cfg, self.database)
             self.uploadmanager  = UploadManager(self.cfg, self.database)
@@ -338,6 +342,12 @@ class MusicDBWebSocketInterface(object):
             retval = self.FindNewContent()
         elif fncname == "FindAlbumSongFiles":
             retval = self.FindAlbumSongFiles(args["albumpath"])
+        elif fncname == "RenameMusicFile":
+            retval = self.RenameMusicFile(args["oldpath"], args["newpath"])
+        elif fncname == "RenameAlbumDirectory":
+            retval = self.RenameAlbumDirectory(args["oldpath"], args["newpath"])
+        elif fncname == "ChangeArtistDirectory":
+            retval = self.ChangeArtistDirectory(args["oldalbumpath"], args["newartistdirectory"])
         elif fncname == "GetUploads":
             retval = self.GetUploads()
         elif fncname == "AnnotateUpload":
@@ -3487,6 +3497,344 @@ class MusicDBWebSocketInterface(object):
             songfiles.append(entry)
 
         return songfiles
+
+
+
+    def RenameMusicFile(self, oldpath, newpath):
+        """
+        Renames a song or video file.
+        In general it is not checked if the new path fulfills the Music Naming Scheme (See :doc:`/usage/music`).
+
+        If the song has an entry in the Music Database, its entry is updated as well.
+        In this case the new path must fulfill the Music Naming Scheme.
+
+        The position of the file should be plausible anyway.
+        So a song file should be inside a artist/album/-directory, a video file inside an artist directory.
+
+        The complete path, relative to the Music Directory must be given.
+        Anyway, the artist and album directories must not be different.
+        Only the file name can be different.
+
+        If the old path does not address a file, the Method returns ``False``.
+        If the new path does address an already existing file, the method returns ``False`` as well.
+        No files will be overwritten.
+
+        Args:
+            oldpath (str): Path to the file that shall be renamed
+            newpath (str): New name of the file
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+
+        Example:
+            .. code-block:: javascript
+
+                # Will succeed
+                MusicDB_Call("RenameMusicFile", {
+                        oldpath:"Artist/2021 - Album Name/01 old file name.mp3",
+                        newpath:"Artist/2021 - Album Name/01 new file name.mp3"
+                        });
+
+                # Will succeed, if the song has no entry in the database.
+                # Otherwise it fails because the file names violate the naming scheme.
+                MusicDB_Call("RenameMusicFile", {
+                        oldpath:"Artist/2021 - Album Name/old file name.mp3",
+                        newpath:"Artist/2021 - Album Name/new file name.mp3"
+                        });
+
+                # Will fail if because album name changed as well
+                MusicDB_Request("RenameMusicFile", "ConfirmRename", {
+                        oldpath:"Artist/Old Album Name, Old Song Name.flac",
+                        newpath:"Artist/2021 - New Album Name/01 New Song Name.flac"
+                        },
+                        {
+                        oldfile:"Old Album Name, Old Song Name.flac"
+                        });
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "RenameMusicFile" && sig == "ConfirmRename")
+                    {
+                        if(args === true)
+                            console.log(`Renaming ${pass.oldfile} succeeded.`);
+                    }
+                }
+
+            
+        """
+        # Check if old path is a valid path to a file in the Music Directory
+        if not self.musicdirectory.IsFile(oldpath):
+            logging.warning("Rename Music Path failed because old path \"%s\" does not exists inside the Music Directory", str(oldpath))
+            return False
+
+        # Check if new path addresses an already existing file
+        if self.musicdirectory.Exists(newpath):
+            logging.warning("Rename Music Path failed because new path \"%s\" does already exist inside the Music Directory", str(newpath))
+            return False
+
+        # Check if path if path is plausible
+        oldcontenttype = self.musicdirectory.EstimateContentTypeByPath(oldpath)
+        newcontenttype = self.musicdirectory.EstimateContentTypeByPath(oldpath)
+        if oldcontenttype != newcontenttype:
+            logging.warning("Old path (\"%s\") was estimated as \"%s\", the new one (\"%s\") as \"%s\". \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype, newpath, newcontenttype)
+            return False
+
+        # Check if exists in database
+        databaseentry = None
+        if   oldcontenttype == "song":
+            databaseentry = self.database.GetSongByPath(oldpath)
+        elif oldcontenttype == "video":
+            databaseentry = self.database.GetVideoByPath(oldpath)
+
+        # Rename path
+        logging.info("Renaming \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldpath, newpath)
+        try:
+            success = self.musicdirectory.Rename(oldpath, newpath)
+        except Exception as e:
+            logging.error("Renaming \"%s\" to \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath, str(e))
+            success = False
+
+        if not success:
+            logging.warning("Renaming \"%s\" to \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath)
+            return False
+
+        # Update database if needed
+        if databaseentry != None:
+            targetid = databaseentry["id"]
+            logging.info("Updating database entry for \033[0;36m%s\033[1;34m with ID \033[0;36m%s", oldcontenttype, str(targetid))
+            if   oldcontenttype == "song":
+                self.music.UpdateSong(targetid, newpath)
+            elif oldcontenttype == "video":
+                self.music.UpdateVideo(targetid, newpath)
+
+        return True
+
+
+
+    def RenameAlbumDirectory(self, oldpath, newpath):
+        """
+        Renames an album directory.
+        In general it is not checked if the new path fulfills the Music Naming Scheme (See :doc:`/usage/music`).
+
+        If the album has an entry in the Music Database, its entry is updated as well.
+        In this case the new path must fulfill the Music Naming Scheme.
+
+        The position of the album should be plausible anyway.
+        So it must be placed inside an artist directory.
+
+        The complete path, relative to the Music Directory must be given.
+        Anyway, the artist directories must not be different.
+        Only the album directory name can be different.
+
+        If the old path does not address a directory, the Method returns ``False``.
+        If the new path does address an already existing file or directory, the method returns ``False`` as well.
+        No files will be overwritten.
+
+        Args:
+            oldpath (str): Path to the directory that shall be renamed
+            newpath (str): New name of the file
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+
+        Example:
+            .. code-block:: javascript
+
+                # Will succeed
+                MusicDB_Call("RenameAlbumDirectory", {
+                        oldpath:"Artist/2021 - Old Album Name",
+                        newpath:"Artist/2021 - New Album Name"
+                        });
+
+                # Will succeed, if the album has no entry in the database.
+                # Otherwise it fails because the file names violate the naming scheme.
+                MusicDB_Call("RenameAlbumDirectory", {
+                        oldpath:"Artist/Old Album Name",
+                        newpath:"Artist/New Album Name"
+                        });
+
+                # Will fail because artist name changed as well.
+                MusicDB_Request("RenameAlbumDirectory", "ConfirmRename", {
+                        oldpath:"Artist/Old Album Name",
+                        newpath:"New Artist/2021 - New Album Name"
+                        },
+                        {
+                        oldfile:"Old Album Name, Old Song Name.flac"
+                        });
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "RenameAlbumDirectory" && sig == "ConfirmRename")
+                    {
+                        if(args === true)
+                            console.log(`Renaming ${pass.oldfile} succeeded.`);
+                    }
+                }
+
+        """
+        # Check if old path is a valid path to a file in the Music Directory
+        if not self.musicdirectory.IsDirectory(oldpath):
+            logging.warning("Rename Album Path failed because old path \"%s\" does not exists inside the Music Directory", str(oldpath))
+            return False
+
+        # Check if new path addresses an already existing file
+        if self.musicdirectory.Exists(newpath):
+            logging.warning("Rename Album Path failed because new path \"%s\" does already exist inside the Music Directory", str(newpath))
+            return False
+
+        # Check if path if path is plausible
+        oldcontenttype = self.musicdirectory.EstimateContentTypeByPath(oldpath)
+        newcontenttype = self.musicdirectory.EstimateContentTypeByPath(newpath)
+        if oldcontenttype != newcontenttype:
+            logging.warning("Old path (\"%s\") was estimated as \"%s\", the new one (\"%s\") as \"%s\". \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype, newpath, newcontenttype)
+            return False
+
+        if oldcontenttype != "album":
+            logging.warning("Old path (\"%s\") was estimated as \"%s\". An Album was expected. \033[1;30m(Old path will not be renamed)", oldpath, oldcontenttype)
+            return False
+
+        # Check if exists in database
+        databaseentry = self.database.GetAlbumByPath(oldpath)
+
+        # Rename path
+        logging.info("Renaming \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldpath, newpath)
+        try:
+            success = self.musicdirectory.Rename(oldpath, newpath)
+        except Exception as e:
+            logging.error("Renaming \"%s\" to \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath, str(e))
+            success = False
+
+        if not success:
+            logging.warning("Renaming \"%s\" to \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldpath, newpath)
+            return False
+
+        # Update database if needed
+        if databaseentry != None:
+            targetid = databaseentry["id"]
+            logging.info("Updating database entry for \033[0;36m%s\033[1;34m with ID \033[0;36m%s", oldcontenttype, str(targetid))
+            self.music.UpdateAlbum(targetid, newpath)
+
+        return True
+
+
+
+    def ChangeArtistDirectory(self, oldalbumpath, newartistdirectory):
+        """
+        This method changes the artist directory of an album.
+        If the new artist directory is not existing it will be created.
+        If it exists, the album directory will just be moved into the existing artist directory.
+        The old artist directory will be not be touched, even if it becomes an empty directory. 
+
+        If the album exists in the Music Database, its entry will be updated (including its songs).
+        In this case, a possibly new artist will be imported into the database as well.
+
+        If the album does not exists in the database, only the Music Directory will be updated.
+
+        The complete album path, relative to the Music Directory must be given.
+
+        If the old path does not address a directory, ``False`` gets returned.
+        No files will be overwritten.
+
+        Args:
+            oldalbumpath (str): Path to the album directory inside the old artists directory
+            newartistdirectory (str): Name of the new artist directory in that the addressed album will be moved in.
+
+        Returns:
+            ``True`` on success, otherwise ``False``
+
+        Example:
+            .. code-block:: javascript
+
+                # Will succeed
+                MusicDB_Call("ChangeArtistDirectory", {
+                        oldalbumpath:       "Old Artist/2021 - Album Name",
+                        newartistdirectory: "Already Existing Artist"
+                        });
+
+                # Will succeed
+                MusicDB_Call("ChangeArtistDirectory", {
+                        oldalbumpath:       "Old Artist/2021 - Album Name",
+                        newartistdirectory: "New Artist"
+                        });
+
+
+                # Will fail because new artist directory contains a sub directory
+                MusicDB_Request("ChangeArtistDirectory", "ConfirmRename", {
+                        oldalbumpath:       "Old Artist/2021 - Album Name",
+                        newartistdirectory: "New Artist/subdirectory"
+                        });
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(fnc == "ChangeArtistDirectory" && sig == "ConfirmRename")
+                    {
+                        if(args === true)
+                            console.log(`Renaming ${pass.oldfile} succeeded.`);
+                    }
+                }
+
+        """
+        # Check if old path is a valid path to a file in the Music Directory
+        if not self.musicdirectory.IsDirectory(oldalbumpath):
+            logging.warning("Changing Artist Directory failed because album path \"%s\" does not exists inside the Music Directory", str(oldalbumpath))
+            return False
+
+        # Check if new path addresses an already existing file
+        if self.musicdirectory.IsFile(newartistdirectory):
+            logging.warning("Changing Artist Directory failed because new path \"%s\" does an exist file inside the Music Directory", str(newartistdirectory))
+            return False
+
+        # Check if path if path is plausible
+        oldcontenttype = self.musicdirectory.EstimateContentTypeByPath(oldalbumpath)
+        newcontenttype = self.musicdirectory.EstimateContentTypeByPath(newartistdirectory)
+        if oldcontenttype != "album":
+            logging.warning("Old album path (\"%s\") was estimated as \"%s\". An album was expected. \033[1;30m(Old path will not be renamed)", oldalbumpath, oldcontenttype)
+            return False
+
+        if newcontenttype != "artist":
+            logging.warning("New artist directory (\"%s\") was estimated as \"%s\". An artist directory was expected. \033[1;30m(Old path will not be renamed)", newartistdirectory, newcontenttype)
+            return False
+
+        # Check if album exists in database
+        databaseentry = self.database.GetAlbumByPath(oldalbumpath)
+
+        # Check if artist exists. Create if not.
+        if not self.musicdirectory.IsDirectory(newartistdirectory):
+            self.musicdirectory.CreateSubdirectory(newartistdirectory)
+
+        # Move album into new artist directory
+        logging.info("Moving \033[0;36m%s\033[1;34m ➜ \033[0;36m%s", oldalbumpath, newartistdirectory)
+        try:
+            success = self.musicdirectory.MoveDirectory(oldalbumpath, newartistdirectory)
+        except Exception as e:
+            logging.error("Moving Directory \"%s\" into \"%s\" failed with exception: %s \033[1;30m(Nothing changed, old path is still valid)", oldalbumpath, newartistdirectory, str(e))
+            success = False
+
+        if not success:
+            logging.warning("Moving Directory \"%s\" into \"%s\" failed. \033[1;30m(Nothing changed, old path is still valid)", oldalbumpath, newartistdirectory)
+            return False
+
+        # Update database if needed
+        if databaseentry != None:
+            # Add new artist if needed
+            if not self.database.GetArtistByPath(newartistdirectory):
+                logging.info("Creating new Artist entry \033[0;36m%s\033[1;34m in the Music Database", newartistdirectory)
+                self.database.AddArtist(newartistdirectory, newartistdirectory)
+
+            # Update Album entry
+            targetid = databaseentry["id"]
+            logging.info("Updating database entry for \033[0;36m%s\033[1;34m with ID \033[0;36m%s", oldcontenttype, str(targetid))
+            albumname    = self.musicdirectory.GetDirectoryName(oldalbumpath)
+            newalbumpath = newartistdirectory + "/" + albumname
+            self.music.UpdateAlbum(targetid, newalbumpath)
+
+        return True
 
 
 

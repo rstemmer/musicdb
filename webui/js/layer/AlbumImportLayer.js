@@ -60,8 +60,42 @@ class AlbumImportLayer extends Layer
         // Get all renaming requests
         let albumrenamerequests = this.albumsettingstable.GetRenameRequests();
         let songrenamerequests  = this.songfilestable.GetRenameRequests();
+        let albumdirectoryname  = this.oldalbumdirectoryname;
+        let olddirectory        = this.oldartistdirectoryname + "/" + albumdirectoryname;
+
+        // Rename all song files
+        for(let songrenamerequest of songrenamerequests)
+        {
+            let oldpath = olddirectory + "/" + songrenamerequest.oldname;
+            let newpath = olddirectory + "/" + songrenamerequest.newname;
+            MusicDB_Request("RenameMusicFile", "ConfirmRenaming",
+                {oldpath: oldpath, newpath: newpath},
+                {contenttype: "song", newpath: newpath});
+        }
+
         window.console?.log(albumrenamerequests);
-        window.console?.log(songrenamerequests );
+        // Rename album directory if needed
+        if(albumrenamerequests[1] != null)
+        {
+            let oldalbumpath = this.oldartistdirectoryname + "/" + albumrenamerequests[1].oldname;
+            let newalbumpath = this.oldartistdirectoryname + "/" + albumrenamerequests[1].newname;
+            MusicDB_Request("RenameAlbumDirectory", "ConfirmRenaming",
+                {oldpath: oldalbumpath, newpath: newalbumpath},
+                {contenttype: "album", newpath: newalbumpath});
+
+            albumdirectoryname = albumrenamerequests[1].newname;
+        }
+
+        // Rename album directory if needed
+        if(albumrenamerequests[0] != null)
+        {
+            let oldartistpath = albumrenamerequests[0].oldname;
+            let newartistpath = albumrenamerequests[0].newname;
+            let oldalbumpath  = oldartistpath + "/" + albumdirectoryname;
+            MusicDB_Request("ChangeArtistDirectory", "ConfirmRenaming",
+                {oldalbumpath: oldalbumpath, newartistdirectory: newartistpath},
+                {contenttype: "artist", newpath: newartistpath});
+        }
     }
 
 
@@ -84,6 +118,12 @@ class AlbumImportLayer extends Layer
                 args[0].haslyrics,
                 albumpath);
             this.songfilestable.Update(args);
+        }
+        if(sig == "ConfirmRenaming")
+        {
+            // TODO: Visualize update of success and failure
+            window.console?.log(args);
+            window.console?.log(pass);
         }
     }
 }
