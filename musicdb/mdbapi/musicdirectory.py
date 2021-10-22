@@ -469,6 +469,55 @@ class MusicDirectory(Filesystem):
 
 
 
+    def EstimateContentTypeByPath(self, path):
+        """
+        This method tries to figure out if the path addresses an Artist, Album, Song or Video by analyzing the path.
+        If is *not* checked if the path fulfills the Music Naming Scheme (See: :doc:`/usage/music`).
+
+        The path must be relative.
+        It is not checked if the file or directory exists.
+        The result is just a guess an must be checked in detail for further processing.
+        For example with :meth:`TryAnalysePathFor`.
+
+        Args:
+            path (str): Possible relative path for an Artist, Album, Song or Video
+
+        Returns:
+            A string ``"artist"``, ``"album"``, ``"song"``, ``"video"`` or ``None`` if none can be guessed.
+        """
+        contenttype = None
+        parts       = path.count("/") + 1           # n slash means n+1 parts of a path
+        suffix      = self.GetFileExtension(path)   # If there is a file extension, it may be a file
+
+        # Try to check if path addresses a file.
+        # This only works when the path exists.
+        # If path does not exists, use the suffix-knowledge and just guess.
+        isfile = False
+        if self.Exists(path):
+            isfile = self.IsFile(path)
+        elif suffix != None:
+            # Now check if something points against a file
+            if len(suffix) != 3:
+                isfile = False
+            elif not suffix in ["m4a", "flac", "aac", "mp4", "mp3", "m4v"]:
+                isfile = False
+            else:
+                iffile = True
+
+        # Estimate path type
+        if parts == 1:
+            contenttype = "artist"
+        elif parts == 2:
+            if isfile:
+                contenttype = "video"
+            else:
+                contenttype = "album"
+        elif parts == 3:
+            if isfile:
+                contenttype = "song"
+
+        return contenttype
+
 
 
 
