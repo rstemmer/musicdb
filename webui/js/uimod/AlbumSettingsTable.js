@@ -243,14 +243,14 @@ class AlbumSettingsTable extends Table
         if(newartistdirectoryname != oldartistdirectoryname)
         {
             artistrenamerequest = new Object();
-            artistrenamerequest.newpath = newartistdirectoryname;
-            artistrenamerequest.oldpath = oldartistdirectoryname;
+            artistrenamerequest.newname = newartistdirectoryname;
+            artistrenamerequest.oldname = oldartistdirectoryname;
         }
         if(newalbumdirectoryname != oldalbumdirectoryname)
         {
             albumrenamerequest = new Object();
-            albumrenamerequest.newpath = newalbumdirectoryname;
-            albumrenamerequest.oldpath = oldalbumdirectoryname;
+            albumrenamerequest.newname = newalbumdirectoryname;
+            albumrenamerequest.oldname = oldalbumdirectoryname;
         }
         renamerequests.push(artistrenamerequest);
         renamerequests.push(albumrenamerequest);
