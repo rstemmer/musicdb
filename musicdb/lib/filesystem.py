@@ -342,6 +342,20 @@ class Filesystem(object):
 
         Returns:
             ``False`` if the source directory does not exist.
+
+        Example:
+
+            .. code-block:: python
+
+                # Tree:
+                # dira/subdira/fa1.txt
+                # dirb/
+
+            fs.MoveDirectory("dira/subdira", "dirb")
+
+                # Tree:
+                # dira/
+                # dirb/subdira/fa1.txt
         """
         abssource = self.AbsolutePath(xsrcpath)
         absdest   = self.AbsolutePath(xdstpath)
@@ -360,8 +374,8 @@ class Filesystem(object):
     def Rename(self, xsrcpath: Union[str, Path], xdstpath: Union[str, Path]) -> bool:
         """
         Renames a file or a directory.
-        If the destination file name exists, it gets overwritten.
-        **Handle with care!**
+        If the destination path name exists, the method returns ``False``.
+        Only the last part of a path is allowed to be different, otherwise the renaming fails.
 
         If the source file or directory does not exist, ``False`` gets returned.
         To move a file or directory to different places see :meth:`~MoveFile` or :meth:`~MoveDirectory`.
@@ -372,15 +386,43 @@ class Filesystem(object):
 
         Returns:
             ``False`` if the source file or directory does not exist.
+
+        Exception:
+            OSError: When renaming is not possible
+
+        Example:
+
+            .. code-block:: python
+
+                # Tree:
+                # dira/fa1.txt
+                # dira/fa2.txt
+                # dirb/fb1.txt
+                # dirb/fb2.txt
+
+            fs.Rename("dira", "dirb")                   # -> Returns False, does nothing
+            fs.Rename("dira", "dirc")                   # -> Returns True, renames dira to dirc
+            fs.Rename("dira/fa1.txt", "dira/fa3.txt")   # -> Returns True, renames fa1.txt to fa3.txt
+            fs.Rename("dira/fa1.txt", "dirb/fa3.txt")   # -> Returns False, does nothing
         """
         abssource = self.AbsolutePath(xsrcpath)
         abstarget = self.AbsolutePath(xdstpath)
 
+        # Check that only the last part changed
+        sourcebase = self.GetDirectory(abssource)
+        targetbase = self.GetDirectory(abstarget)
+        if sourcebase != targetbase:
+            return False
+
+        # if target exists, or source does not, do nothing
         if not self.Exists(abssource):
+            return False
+        if self.Exists(abstarget):
             return False
 
         abssource.rename(abstarget)
         return True
+
 
 
     def CopyFile(self, xsrcpath: Union[str, Path], xdstpath: Union[str, Path]) -> bool:
