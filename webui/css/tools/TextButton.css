@@ -28,6 +28,15 @@
     margin-left:    1ch;
 }
 
+.TextButton[data-enabled=true]
+{
+}
+.TextButton[data-enabled=false]
+{
+    opacity:        0.5;
+    border-color:   var(--color-red);
+}
+
 
 /* vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4 
  */

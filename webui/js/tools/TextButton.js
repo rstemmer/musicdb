@@ -29,6 +29,18 @@ class TextButton extends Element
         this.AppendChild(this.icon);
         this.AppendChild(this.text);
         this.element.onclick = onclick;
+        this.Enable();
+    }
+
+
+
+    Enable()
+    {
+        this.SetData("enabled", "true");
+    }
+    Disable()
+    {
+        this.SetData("enabled", "false");
     }
 }
 
