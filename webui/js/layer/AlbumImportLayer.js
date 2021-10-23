@@ -17,6 +17,57 @@
 "use strict";
 
 
+class AlbumImportTasks extends Element
+{
+    constructor()
+    {
+        super("div", ["AlbumImportTaks"]);
+        this.tasks = new Array();
+    }
+
+
+
+    // task must be a function that returns a new status as handled by StatusElementBase.SetStatus
+    // It gets an argument taskid that can be used as pass argument to a request with a certain signature.
+    // This is useful for asynchronous tasks.
+    AddTask(htmllabel, taskfunction)
+    {
+        let task = new Object();
+        task["statuselement"] = new StatusHTMLText(htmllabel, "open");
+        task["taskfunction"]  = taskfunction;
+
+        this.tasks.push(task);
+        this.AppendChild(task["statuselement"]);
+    }
+
+
+
+    SetListenSignature(signature)
+    {
+        this.listensignature = signature;
+    }
+
+
+
+    Clear()
+    {
+        this.tasks = new Array();
+        this.RemoveChilds();
+    }
+
+
+
+    onMusicDBMessage(fnc, sig, args, pass)
+    {
+        if(sig == this.listensignature)
+        {
+            // TODO
+        }
+    }
+}
+
+
+
 class AlbumImportLayer extends Layer
 {
     // background: Instance of the Curtain class that lays behind the Layer.
@@ -28,9 +79,13 @@ class AlbumImportLayer extends Layer
         this.oldartistdirectoryname = null;
         this.oldalbumdirectoryname  = null;
 
-        this.albumsettingstable = new AlbumSettingsTable();
-        this.songfilestable     = new SongFilesTable();
+        // Forms
+        this.albumsettingstable = new AlbumSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
+        this.songfilestable     = new SongFilesTable((isvalid)=>{this.onSongsSettingsValidation(isvalid);});
+        this.tasks              = new AlbumImportTasks();
+        this.tasks.SetListenSignature("ConfirmAlbumImportTask");
 
+        // Tool Bar
         this.toolbar            = new ToolBar();
         this.cancelbutton       = new TextButton("MusicDB", "Cancel",
             ()=>{this.onClick_Cancel();},
@@ -45,6 +100,7 @@ class AlbumImportLayer extends Layer
 
         this.AppendChild(this.albumsettingstable);
         this.AppendChild(this.songfilestable);
+        this.AppendChild(this.tasks);
         this.AppendChild(this.toolbar);
     }
 
@@ -57,8 +113,39 @@ class AlbumImportLayer extends Layer
 
     onClick_Rename()
     {
-        // Get all renaming requests
-        let albumrenamerequests = this.albumsettingstable.GetRenameRequests();
+        // TODO
+    }
+
+
+
+    onAlbumSettingsValidation(isvalid)
+    {
+        this.ValidateForm();
+    }
+    onSongsSettingsValidation(isvalid)
+    {
+        this.ValidateForm();
+    }
+    ValidateForm()
+    {
+        let albumvalid = this.albumsettingstable.CheckIfValid();
+        let songsvalid = this.songfilestable.CheckIfValid();
+
+        this.PrepareImportTasks();
+
+        if(albumvalid && songsvalid)
+            this.renamebutton.Enable();
+        else
+            this.renamebutton.Disable();
+    }
+
+
+
+    PrepareImportTasks()
+    {
+        this.tasks.Clear();
+
+        // Song Renaming Tasks
         let songrenamerequests  = this.songfilestable.GetRenameRequests();
         let albumdirectoryname  = this.oldalbumdirectoryname;
         let olddirectory        = this.oldartistdirectoryname + "/" + albumdirectoryname;
@@ -66,35 +153,50 @@ class AlbumImportLayer extends Layer
         // Rename all song files
         for(let songrenamerequest of songrenamerequests)
         {
-            let oldpath = olddirectory + "/" + songrenamerequest.oldname;
-            let newpath = olddirectory + "/" + songrenamerequest.newname;
-            MusicDB_Request("RenameMusicFile", "ConfirmRenaming",
-                {oldpath: oldpath, newpath: newpath},
-                {contenttype: "song", newpath: newpath});
-        }
+            let oldpath  = olddirectory + "/" + songrenamerequest.oldname;
+            let newpath  = olddirectory + "/" + songrenamerequest.newname;
+            let htmldiff = songrenamerequest.htmldiff;
 
-        window.console?.log(albumrenamerequests);
-        // Rename album directory if needed
-        if(albumrenamerequests[1] != null)
-        {
-            let oldalbumpath = this.oldartistdirectoryname + "/" + albumrenamerequests[1].oldname;
-            let newalbumpath = this.oldartistdirectoryname + "/" + albumrenamerequests[1].newname;
-            MusicDB_Request("RenameAlbumDirectory", "ConfirmRenaming",
-                {oldpath: oldalbumpath, newpath: newalbumpath},
-                {contenttype: "album", newpath: newalbumpath});
-
-            albumdirectoryname = albumrenamerequests[1].newname;
+            this.tasks.AddTask(`Rename Song:&nbsp;${htmldiff}`,
+                (taskid)=>{
+                    MusicDB_Request("RenameMusicFile", "ConfirmAlbumImportTask",
+                        {oldpath: oldpath, newpath: newpath},
+                        {taskid: taskid});}
+                );
         }
 
         // Rename album directory if needed
-        if(albumrenamerequests[0] != null)
+        let albumrenamerequest = this.albumsettingstable.GetAlbumRenameRequest();
+        if(albumrenamerequest != null)
         {
-            let oldartistpath = albumrenamerequests[0].oldname;
-            let newartistpath = albumrenamerequests[0].newname;
+            let oldalbumpath = this.oldartistdirectoryname + "/" + albumrenamerequest.oldname;
+            let newalbumpath = this.oldartistdirectoryname + "/" + albumrenamerequest.newname;
+            let htmldiff     = albumrenamerequest.htmldiff;
+            this.tasks.AddTask(`Rename Album:&nbsp;${htmldiff}`,
+                (taskid)=>{
+                    MusicDB_Request("RenameAlbumDirectory", "ConfirmAlbumImportTask",
+                        {oldpath: oldalbumpath, newpath: newalbumpath},
+                        {taskid: taskid});}
+                );
+
+            // Update album directory to the new expected name
+            albumdirectoryname = albumrenamerequest.newname;
+        }
+
+        // Change artist directory if needed
+        let artistrenamerequest = this.albumsettingstable.GetArtistRenameRequest();
+        if(artistrenamerequest != null)
+        {
+            let oldartistpath = artistrenamerequest.oldname;
+            let newartistpath = artistrenamerequest.newname;
             let oldalbumpath  = oldartistpath + "/" + albumdirectoryname;
-            MusicDB_Request("ChangeArtistDirectory", "ConfirmRenaming",
-                {oldalbumpath: oldalbumpath, newartistdirectory: newartistpath},
-                {contenttype: "artist", newpath: newartistpath});
+            let htmldiff      = artistrenamerequest.htmldiff;
+            this.tasks.AddTask(`Change Artist:&nbsp;${htmldiff}`,
+                (taskid)=>{
+                    MusicDB_Request("ChangeArtistDirectory", "ConfirmAlbumImportTask",
+                        {oldalbumpath: oldalbumpath, newartistdirectory: newartistpath},
+                        {taskid: taskid});}
+                );
         }
     }
 
@@ -118,6 +220,7 @@ class AlbumImportLayer extends Layer
                 args[0].haslyrics,
                 albumpath);
             this.songfilestable.Update(args);
+            this.ValidateForm();
         }
         if(sig == "ConfirmRenaming")
         {
