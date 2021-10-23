@@ -66,6 +66,24 @@ class StatusText extends StatusElementBase
     }
 }
 
+
+class StatusHTMLText extends StatusText
+{
+    constructor(htmltext=null, state=null)
+    {
+        super(null, state);
+        if(typeof htmltext === "string")
+            this.SetHTMLText(htmltext);
+    }
+
+
+
+    SetHTMLText(htmltext)
+    {
+        this.SetInnerHTML(htmltext);
+    }
+}
+
 /*
 
     * Unrelated states
