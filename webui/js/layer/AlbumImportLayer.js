@@ -17,24 +17,35 @@
 "use strict";
 
 
+// TODO:
+// This class could have a base class BatchExecution to make the code reusable.
+// Then the status element logic should be optional.
+
 class AlbumImportTasks extends Element
 {
     constructor()
     {
         super("div", ["AlbumImportTaks"]);
-        this.tasks = new Array();
+        this.tasks  = new Array();
+        this.idseed = 1;
+        this.currenttask = null;
+        this.finishedtasks = new Array();
     }
 
 
 
-    // task must be a function that returns a new status as handled by StatusElementBase.SetStatus
-    // It gets an argument taskid that can be used as pass argument to a request with a certain signature.
-    // This is useful for asynchronous tasks.
-    AddTask(htmllabel, taskfunction)
+    // taskfunction and resultevalfunction
+    // must be a function that returns a new status as handled by StatusElementBase.SetStatus
+    //
+    // taskfunction gets an argument webtaskid that can be used as pass argument to a request with a certain signature.
+    // resultsevalfunction gets the typical fnc,sif,args,pass arguments to evaluate if the tasks was successful
+    AddTask(htmllabel, taskfunction, resultevalfunction)
     {
         let task = new Object();
+        task["webuitaskid"]   = this.idseed++;
         task["statuselement"] = new StatusHTMLText(htmllabel, "open");
         task["taskfunction"]  = taskfunction;
+        task["resultevalfunction"] = resultevalfunction;
 
         this.tasks.push(task);
         this.AppendChild(task["statuselement"]);
@@ -57,11 +68,48 @@ class AlbumImportTasks extends Element
 
 
 
+    ExecuteTasks()
+    {
+        if(this.tasks.length <= 0)
+            return;
+
+        this.currenttask = this.tasks[0];
+        this.tasks       = this.tasks.splice(1);
+
+        let state = "unknown";
+        if(typeof this.currenttask["taskfunction"] === "function")
+            state = this.currenttask["taskfunction"](this.currenttask["webuitaskid"]);
+        this.currenttask["statuselement"].SetState(state);
+    }
+
+
+
+    onExecutionFinished(fnc, sig, args, pass)
+    {
+        if(pass?.webuitaskid != this.currenttask["webuitaskid"])
+        {
+            window.console?.error("onExecutionFinished event unexpected task was triggered.");
+            return;
+        }
+
+        let state = "unknown";
+        if(typeof this.currenttask["resultevalfunction"] === "function")
+            state = this.currenttask["resultevalfunction"](fnc, sig, args, pass);
+
+        this.currenttask["statuselement"].SetState(state);
+
+        // This task has now finished. Continue with the next task.
+        this.finishedtasks.push(this.currenttask);
+        this.ExecuteTasks();
+    }
+
+
+
     onMusicDBMessage(fnc, sig, args, pass)
     {
         if(sig == this.listensignature)
         {
-            // TODO
+            this.onExecutionFinished(fnc, sig, args, pass);
         }
     }
 }
@@ -113,7 +161,7 @@ class AlbumImportLayer extends Layer
 
     onClick_Rename()
     {
-        // TODO
+        this.tasks.ExecuteTasks();
     }
 
 
@@ -158,10 +206,15 @@ class AlbumImportLayer extends Layer
             let htmldiff = songrenamerequest.htmldiff;
 
             this.tasks.AddTask(`Rename Song:&nbsp;${htmldiff}`,
-                (taskid)=>{
+                (webuitaskid)=>{
                     MusicDB_Request("RenameMusicFile", "ConfirmAlbumImportTask",
                         {oldpath: oldpath, newpath: newpath},
-                        {taskid: taskid});}
+                        {webuitaskid: webuitaskid});
+                    return "active";},
+                (fnc, sig, args, pass)=>{
+                    if(args === true) return "good";
+                    else              return "bad";
+                }
                 );
         }
 
@@ -173,10 +226,15 @@ class AlbumImportLayer extends Layer
             let newalbumpath = this.oldartistdirectoryname + "/" + albumrenamerequest.newname;
             let htmldiff     = albumrenamerequest.htmldiff;
             this.tasks.AddTask(`Rename Album:&nbsp;${htmldiff}`,
-                (taskid)=>{
+                (webuitaskid)=>{
                     MusicDB_Request("RenameAlbumDirectory", "ConfirmAlbumImportTask",
                         {oldpath: oldalbumpath, newpath: newalbumpath},
-                        {taskid: taskid});}
+                        {webuitaskid: webuitaskid});
+                    return "active";},
+                (fnc, sig, args, pass)=>{
+                    if(args === true) return "good";
+                    else              return "bad";
+                }
                 );
 
             // Update album directory to the new expected name
@@ -192,10 +250,15 @@ class AlbumImportLayer extends Layer
             let oldalbumpath  = oldartistpath + "/" + albumdirectoryname;
             let htmldiff      = artistrenamerequest.htmldiff;
             this.tasks.AddTask(`Change Artist:&nbsp;${htmldiff}`,
-                (taskid)=>{
+                (webuitaskid)=>{
                     MusicDB_Request("ChangeArtistDirectory", "ConfirmAlbumImportTask",
                         {oldalbumpath: oldalbumpath, newartistdirectory: newartistpath},
-                        {taskid: taskid});}
+                        {webuitaskid: webuitaskid});
+                    return "active";},
+                (fnc, sig, args, pass)=>{
+                    if(args === true) return "good";
+                    else              return "bad";
+                }
                 );
         }
     }
@@ -222,11 +285,11 @@ class AlbumImportLayer extends Layer
             this.songfilestable.Update(args);
             this.ValidateForm();
         }
-        if(sig == "ConfirmRenaming")
+        if(sig == "ConfirmAlbumImportTask")
         {
-            // TODO: Visualize update of success and failure
             window.console?.log(args);
             window.console?.log(pass);
+            this.tasks.onMusicDBMessage(fnc, sig, args, pass);
         }
     }
 }
