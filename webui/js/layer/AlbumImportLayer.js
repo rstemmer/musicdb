@@ -98,6 +98,12 @@ class AlbumImportTasks extends Element
 
         this.currenttask["statuselement"].SetState(state);
 
+        if(state == "bad")
+        {
+            window.console?.error("Finished task returned status \"bad\". Batch execution will be stopped.");
+            return;
+        }
+
         // This task has now finished. Continue with the next task.
         this.finishedtasks.push(this.currenttask);
         this.ExecuteTasks();
@@ -261,6 +267,40 @@ class AlbumImportLayer extends Layer
                 }
                 );
         }
+
+        // Import Album
+        this.tasks.AddTask("Import Album",
+            (webuitaskid)=>{
+                return "active";
+            },
+            (fnc, sig, args, pass)=>{
+                return "good";
+            });
+
+        // Import Artwork
+        if(this.albumsettingstable.GetImportArtworkState() === true)
+        {
+            this.tasks.AddTask("Import Artwork from Song Files",
+                (webuitaskid)=>{
+                    return "active";
+                },
+                (fnc, sig, args, pass)=>{
+                    return "good";
+                });
+        }
+
+        // Import Lyrics
+        if(this.albumsettingstable.GetImportLyricsState() === true)
+        {
+            this.tasks.AddTask("Import Lyrics from Song Files",
+                (webuitaskid)=>{
+                    return "active";
+                },
+                (fnc, sig, args, pass)=>{
+                    return "good";
+                });
+        }
+
     }
 
 

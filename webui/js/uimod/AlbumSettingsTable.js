@@ -79,8 +79,8 @@ class AlbumSettingsTable extends Table
         this.albumnameinput      = new TextInput(  (value)=>{return this.ValidateAlbumName(value);   });
         this.releasedateinput    = new NumberInput((value)=>{return this.ValidateReleaseDate(value); });
         this.origininput         = new TextInput(  (value)=>{return this.ValidateOrigin(value);      });
-        this.importartworkinput  = new SVGCheckBox(null);
-        this.importlyricsinput   = new SVGCheckBox(null);
+        this.importartworkinput  = new SVGCheckBox((state)=>{this.onImportArtworkInputStateChange(state);});
+        this.importlyricsinput   = new SVGCheckBox((state)=>{this.onImportLyricsInputStateChange(state); });
 
         this.artistnameinput.SetAfterValidateEventCallback( (value, valid)=>{return this.EvaluateNewPath();});
         this.albumnameinput.SetAfterValidateEventCallback(  (value, valid)=>{return this.EvaluateNewPath();});
@@ -130,6 +130,18 @@ class AlbumSettingsTable extends Table
     }
 
 
+    onImportArtworkInputStateChange(state)
+    {
+        let validationstatus = this.CheckIfValid();
+        if(typeof this.validationstatuscallback === "function")
+            this.validationstatuscallback(validationstatus);
+    }
+    onImportLyricsInputStateChange(state)
+    {
+        let validationstatus = this.CheckIfValid();
+        if(typeof this.validationstatuscallback === "function")
+            this.validationstatuscallback(validationstatus);
+    }
 
     ValidateArtistName(value)
     {
@@ -330,6 +342,15 @@ class AlbumSettingsTable extends Table
     }
 
 
+    GetImportArtworkState()
+    {
+        return this.importartworkinput.GetSelectionState();
+    }
+
+    GetImportLyricsState()
+    {
+        return this.importlyricsinput.GetSelectionState();
+    }
 
     GetArtistDirectoryName()
     {
