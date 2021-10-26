@@ -74,6 +74,14 @@ class AlbumSettingsTable extends Table
         this.albumdiff  = ""; // old album -> new album
         this.pathdiff   = ""; // old path -> new path
 
+        this.newartistinfo   = new MessageBarInfo("Artist unknown. New artist will be created.");
+        this.newartistinfo.HideCloseButton();
+        this.knownartistinfo = new MessageBarConfirm("Artist known. It already has an entry in the database.");
+        this.knownartistinfo.HideCloseButton();
+        let  artistinfos     = new Element("div", ["flex-column"]);
+        artistinfos.AppendChild(this.newartistinfo);
+        artistinfos.AppendChild(this.knownartistinfo);
+
         // Text Inputs
         this.artistnameinput     = new TextInput(  (value)=>{return this.ValidateArtistName(value);  });
         this.albumnameinput      = new TextInput(  (value)=>{return this.ValidateAlbumName(value);   });
@@ -120,6 +128,7 @@ class AlbumSettingsTable extends Table
 
         this.AddRow(this.headlinerow     );
         this.AddRow(this.artistnamerow   );
+        this.AddRow(new TableSpanRow(3, [], artistinfos.GetHTMLElement()));
         this.AddRow(this.albumnamerow    );
         this.AddRow(this.releasedaterow  );
         this.AddRow(this.originrow       );
@@ -145,6 +154,23 @@ class AlbumSettingsTable extends Table
 
     ValidateArtistName(value)
     {
+        if(value.length <= 0)
+            return false;
+
+        // New Artist?
+        let artistslist = artistscache.FindArtist(value, "strcmp");
+        if(artistslist.length == 1)
+        {
+            this.knownartistinfo.UpdateMessage(`Artist "${value}" known. It already has an entry in the database.`);
+            this.knownartistinfo.Show();
+            this.newartistinfo.Hide();
+        }
+        else
+        {
+            this.newartistinfo.UpdateMessage(`Artist "${value}" unknown. New artist will be created.`);
+            this.newartistinfo.Show();
+            this.knownartistinfo.Hide();
+        }
         return true;
     }
     ValidateAlbumName(value)
