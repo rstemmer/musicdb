@@ -219,9 +219,8 @@ class AlbumSettingsTable extends Table
         let   grayslash = `${grayspan}/${closespan}`;
         let   grayarrow = `${grayspan}&nbsp;➜&nbsp;${closespan}`;
 
-        let oldartistdir;
-        let oldalbumdir;
-        [oldartistdir, oldalbumdir] = this.oldpath.split("/");
+        let oldartistdir  = this.oldpath.split("/")[0] || "";
+        let oldalbumdir   = this.oldpath.split("/")[1] || "";
         let oldartistname = oldartistdir;
         let oldalbumname  = oldalbumdir;
         if(oldalbumname.slice(4,7) == " - ")
