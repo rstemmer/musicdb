@@ -230,8 +230,10 @@ class AlbumImportLayer extends Layer
                         {webuitaskid: webuitaskid});
                     return "active";},
                 (fnc, sig, args, pass)=>{
-                    if(args === true) return "good";
-                    else              return "bad";
+                    if(typeof args?.id === "number")
+                        return "good";
+                    else
+                        return "bad";
                 }
                 );
         }
