@@ -36,7 +36,8 @@ class MessageBar extends Element
         this.element.appendChild(this.message);
         this.element.appendChild(this.closebutton.GetHTMLElement());
 
-        this.autohidedelay = null;
+        this.autohidedelay   = null;
+        this.hideclosebutton = false;
 
         this.Hide();
     }
@@ -58,18 +59,34 @@ class MessageBar extends Element
 
 
 
+    ShowCloseButton()
+    {
+        this.hideclosebutton = false;
+        this.closebutton.Show();
+    }
+    HideCloseButton()
+    {
+        this.hideclosebutton = true;
+        this.closebutton.Hide();
+    }
+
+
+
     Show()
     {
         this.element.style.display = "flex";
 
         if(typeof this.autohidedelay === "number")
         {
-            this.closebutton.Hide();
+            this.HideCloseButton();
             window.setTimeout(()=>{this.Hide()}, this.autohidedelay);
         }
         else
         {
-            this.closebutton.Show();
+            if(this.hideclosebutton === true)
+                this.ShowCloseButton();
+            else
+                this.HideCloseButton();
         }
     }
 
