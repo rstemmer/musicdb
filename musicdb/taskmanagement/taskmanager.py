@@ -465,6 +465,8 @@ class TaskManager(object):
         This method removed a task and all temporary data that belongs to it.
         It also removes the task from the tasks list.
 
+        Temporary files are ``"uploadpath"``, ``"preprocessedpath"``
+
         Args:
             taskid (str): ID Of the task that shall be removed
 
@@ -472,7 +474,7 @@ class TaskManager(object):
             *Nothing*
         """
         task = self.GetTaskByID(taskid)
-        logging.info("Removing task \"%s\" including uploaded and temporary files.", task["id"])
+        logging.debug("Removing task \"%s\" including uploaded and temporary files.", task["id"])
 
         taskfile = task["id"] + ".json"
         datapath = task["uploadpath"]

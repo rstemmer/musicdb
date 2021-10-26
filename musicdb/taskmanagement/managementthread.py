@@ -229,9 +229,7 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, im
     logging.debug("Task with state \"%s\" found. (%s)", str(state), str(contenttype));
 
     if state == "uploadfailed" or state == "importfailed" or state == "importcomplete":
-        # TODO: Refactor
-        if contenttype in ["artwork"]:
-            taskmanager.UpdateTaskState(task, "remove")
+        taskmanager.UpdateTaskState(task, "remove")
 
     elif state == "uploadcomplete":
         uploadmanager.PreProcessUploadedFile(task)
@@ -259,8 +257,6 @@ def ProcessTask(taskid, task, taskmanager, uploadmanager, integrationmanager, im
         success = artworkmanager.ImportArtwork(task)
 
     elif state == "remove":
-        # Different manager may have to perform further tasks
-        #taskmanager.RemoveTask(task)
         return False
 
     return True
