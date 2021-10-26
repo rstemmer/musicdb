@@ -175,6 +175,8 @@ class AlbumSettingsTable extends Table
     }
     ValidateAlbumName(value)
     {
+        if(value.length <= 0)
+            return false;
         return true;
     }
     ValidateReleaseDate(value)
