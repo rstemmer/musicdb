@@ -641,7 +641,7 @@ class MusicDBDatabase(object):
 
         # fix attributes to fit in mdb environment before adding it to the database
         try:
-            self.musicdirectory.FixAttributes(videopath)
+            self.musicdirectory.FixAttributes(songpath)
         except Exception as e:
             logging.warning("Fixing file attributes failed with error: %s \033[1;30m(leaving permissions as they are)",
                     str(e))
