@@ -17,41 +17,19 @@
 "use strict";
 
 
-// TODO:
-// This class could have a base class BatchExecution to make the code reusable.
-// Then the status element logic should be optional.
-
 class AlbumImportTasks extends Element
 {
     constructor()
     {
         super("div", ["AlbumImportTaks"]);
-        this.tasks  = new Array();
-        this.idseed = 1;
-        this.currenttask = null;
-        this.finishedtasks = new Array();
+        this.tasks = new BatchExecution();
     }
 
 
 
-    // taskfunction and resultevalfunction, notificationfunction
-    // must be a function that returns a new status as handled by StatusElementBase.SetStatus
-    // If null gets returned, the state will not changed and nothing else will be done.
-    //   Be careful and use this only to ignore unexpected calls (like with an unexpected task ID)
-    //
-    // taskfunction gets an argument webtaskid that can be used as pass argument to a request with a certain signature.
-    // resultsevalfunction gets the typical fnc,sif,args,pass arguments to evaluate if the tasks was successful
-    // notificationfunction gets the typical fnc,sif,rawdata arguments to evaluate if the tasks was successful
     AddTask(htmllabel, taskfunction, resultevalfunction, notificationfunction=null)
     {
-        let task = new Object();
-        task["webuitaskid"]   = this.idseed++;
-        task["statuselement"] = new StatusHTMLText(htmllabel, "open");
-        task["taskfunction"]  = taskfunction;
-        task["resultevalfunction"] = resultevalfunction;
-        task["notificationfunction"] = notificationfunction;
-
-        this.tasks.push(task);
+        let task = this.tasks.AddTask(htmllabel, taskfunction, resultevalfunction, notificationfunction);
         this.AppendChild(task["statuselement"]);
     }
 
@@ -59,14 +37,14 @@ class AlbumImportTasks extends Element
 
     SetListenSignature(signature)
     {
-        this.listensignature = signature;
+        this.tasks.SetListenSignature(signature);
     }
 
 
 
     Clear()
     {
-        this.tasks = new Array();
+        this.tasks.Clear();
         this.RemoveChilds();
     }
 
@@ -74,105 +52,19 @@ class AlbumImportTasks extends Element
 
     ExecuteTasks()
     {
-        if(this.tasks.length <= 0)
-            return;
-
-        this.currenttask = this.tasks[0];
-        this.tasks       = this.tasks.splice(1);
-
-        let state = "unknown";
-        if(typeof this.currenttask["taskfunction"] === "function")
-            state = this.currenttask["taskfunction"](this.currenttask["webuitaskid"]);
-
-        if(state === null)
-            return;
-
-        this.currenttask["statuselement"].SetState(state);
-    }
-
-
-
-    onNotification(fnc, sig, rawdata)
-    {
-        if(this.currenttask == null)
-            return;
-
-        let state = "unknown";
-        if(typeof this.currenttask["notificationfunction"] === "function")
-            state = this.currenttask["notificationfunction"](fnc, sig, rawdata);
-
-        if(state === null)
-            return;
-
-        this.currenttask["statuselement"].SetState(state);
-
-        if(state == "bad")
-        {
-            window.console?.warn("Finished task returned status \"bad\". Batch execution will be stopped.");
-            return;
-        }
-
-        // If the state is still active, we are not yet done with the whole process.
-        // The task initiator may wait for another notification.
-        if(state == "active")
-            return;
-
-        // This task has now finished. Continue with the next task.
-        this.finishedtasks.push(this.currenttask);
-        this.ExecuteTasks();
-    }
-
-
-
-    onExecutionFinished(fnc, sig, args, pass)
-    {
-        if(this.currenttask == null)
-            return;
-
-        if(pass?.webuitaskid != this.currenttask["webuitaskid"])
-        {
-            window.console?.error("onExecutionFinished event unexpected task was triggered.");
-            return;
-        }
-
-        let state = "unknown";
-        if(typeof this.currenttask["resultevalfunction"] === "function")
-            state = this.currenttask["resultevalfunction"](fnc, sig, args, pass);
-
-        if(state === null)
-            return;
-
-        this.currenttask["statuselement"].SetState(state);
-
-        if(state == "bad")
-        {
-            window.console?.warn("Finished task returned status \"bad\". Batch execution will be stopped.");
-            return;
-        }
-
-        // If the state is still active, we are not yet done with the whole process.
-        // The task initiator may wait for a notification.
-        if(state == "active")
-            return;
-
-        // This task has now finished. Continue with the next task.
-        this.finishedtasks.push(this.currenttask);
-        this.ExecuteTasks();
+        this.tasks.ExecuteTasks();
     }
 
 
 
     onMusicDBMessage(fnc, sig, args, pass)
     {
-        if(sig == this.listensignature)
-        {
-            this.onExecutionFinished(fnc, sig, args, pass);
-        }
+        this.tasks.onMusicDBMessage(fnc, sig, args, pass);
     }
 
     onMusicDBNotification(fnc, sig, rawdata)
     {
-        this.onNotification(fnc, sig, rawdata);
+        this.tasks.onMusicDBNotification(fnc, sig, rawdata);
     }
 }
 
@@ -422,7 +314,7 @@ class AlbumImportLayer extends Layer
     }
     onMusicDBNotification(fnc, sig, rawdata)
     {
-        this.tasks.onNotification(fnc, sig, rawdata);
+        this.tasks.onMusicDBNotification(fnc, sig, rawdata);
     }
 }
 
