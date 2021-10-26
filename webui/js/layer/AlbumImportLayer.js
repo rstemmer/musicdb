@@ -89,16 +89,16 @@ class AlbumImportLayer extends Layer
 
         // Tool Bar
         this.toolbar            = new ToolBar();
-        this.cancelbutton       = new TextButton("MusicDB", "Cancel",
+        this.cancelbutton       = new TextButton("MusicDB", "Cancel and Discard",
             ()=>{this.onClick_Cancel();},
-            "Cancel album import. Nothing will be changed. ");
-        this.renamebutton       = new TextButton("MusicDB", "Rename",
+            "Cancel album import. Nothing will be changed.");
+        this.importbutton       = new TextButton("MusicDB", "Import Album",
             ()=>{this.onClick_Rename();},
-            "Apply changes and rename files and directories accordingly.");
+            "Apply rename files and directories properly and import album into database. Create artis if not existing.");
 
         this.toolbar.AddButton(this.cancelbutton);
         this.toolbar.AddSpacer(true); // grow
-        this.toolbar.AddButton(this.renamebutton);
+        this.toolbar.AddButton(this.importbutton);
 
         this.AppendChild(this.albumsettingstable);
         this.AppendChild(this.songfilestable);
@@ -136,9 +136,9 @@ class AlbumImportLayer extends Layer
         this.PrepareImportTasks();
 
         if(albumvalid && songsvalid)
-            this.renamebutton.Enable();
+            this.importbutton.Enable();
         else
-            this.renamebutton.Disable();
+            this.importbutton.Disable();
     }
 
 
