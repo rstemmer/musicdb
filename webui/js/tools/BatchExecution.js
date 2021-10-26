@@ -113,7 +113,7 @@ class BatchExecution
         if(this.currenttask == null)
             return;
 
-        let state = "unknown";
+        let state = null;
         if(typeof this.currenttask["notificationfunction"] === "function")
             state = this.currenttask["notificationfunction"](fnc, sig, rawdata);
 
@@ -133,7 +133,7 @@ class BatchExecution
             return;
         }
 
-        let state = "unknown";
+        let state = null;
         if(typeof this.currenttask["resultevalfunction"] === "function")
             state = this.currenttask["resultevalfunction"](fnc, sig, args, pass);
 
