@@ -34,18 +34,22 @@ class AlbumImportTasks extends Element
 
 
 
-    // taskfunction and resultevalfunction
+    // taskfunction and resultevalfunction, notificationfunction
     // must be a function that returns a new status as handled by StatusElementBase.SetStatus
+    // If null gets returned, the state will not changed and nothing else will be done.
+    //   Be careful and use this only to ignore unexpected calls (like with an unexpected task ID)
     //
     // taskfunction gets an argument webtaskid that can be used as pass argument to a request with a certain signature.
     // resultsevalfunction gets the typical fnc,sif,args,pass arguments to evaluate if the tasks was successful
-    AddTask(htmllabel, taskfunction, resultevalfunction)
+    // notificationfunction gets the typical fnc,sif,rawdata arguments to evaluate if the tasks was successful
+    AddTask(htmllabel, taskfunction, resultevalfunction, notificationfunction=null)
     {
         let task = new Object();
         task["webuitaskid"]   = this.idseed++;
         task["statuselement"] = new StatusHTMLText(htmllabel, "open");
         task["taskfunction"]  = taskfunction;
         task["resultevalfunction"] = resultevalfunction;
+        task["notificationfunction"] = notificationfunction;
 
         this.tasks.push(task);
         this.AppendChild(task["statuselement"]);
@@ -79,13 +83,52 @@ class AlbumImportTasks extends Element
         let state = "unknown";
         if(typeof this.currenttask["taskfunction"] === "function")
             state = this.currenttask["taskfunction"](this.currenttask["webuitaskid"]);
+
+        if(state === null)
+            return;
+
         this.currenttask["statuselement"].SetState(state);
+    }
+
+
+
+    onNotification(fnc, sig, rawdata)
+    {
+        if(this.currenttask == null)
+            return;
+
+        let state = "unknown";
+        if(typeof this.currenttask["notificationfunction"] === "function")
+            state = this.currenttask["notificationfunction"](fnc, sig, rawdata);
+
+        if(state === null)
+            return;
+
+        this.currenttask["statuselement"].SetState(state);
+
+        if(state == "bad")
+        {
+            window.console?.warn("Finished task returned status \"bad\". Batch execution will be stopped.");
+            return;
+        }
+
+        // If the state is still active, we are not yet done with the whole process.
+        // The task initiator may wait for another notification.
+        if(state == "active")
+            return;
+
+        // This task has now finished. Continue with the next task.
+        this.finishedtasks.push(this.currenttask);
+        this.ExecuteTasks();
     }
 
 
 
     onExecutionFinished(fnc, sig, args, pass)
     {
+        if(this.currenttask == null)
+            return;
+
         if(pass?.webuitaskid != this.currenttask["webuitaskid"])
         {
             window.console?.error("onExecutionFinished event unexpected task was triggered.");
@@ -96,13 +139,21 @@ class AlbumImportTasks extends Element
         if(typeof this.currenttask["resultevalfunction"] === "function")
             state = this.currenttask["resultevalfunction"](fnc, sig, args, pass);
 
+        if(state === null)
+            return;
+
         this.currenttask["statuselement"].SetState(state);
 
         if(state == "bad")
         {
-            window.console?.error("Finished task returned status \"bad\". Batch execution will be stopped.");
+            window.console?.warn("Finished task returned status \"bad\". Batch execution will be stopped.");
             return;
         }
+
+        // If the state is still active, we are not yet done with the whole process.
+        // The task initiator may wait for a notification.
+        if(state == "active")
+            return;
 
         // This task has now finished. Continue with the next task.
         this.finishedtasks.push(this.currenttask);
@@ -117,6 +168,11 @@ class AlbumImportTasks extends Element
         {
             this.onExecutionFinished(fnc, sig, args, pass);
         }
+    }
+
+    onMusicDBNotification(fnc, sig, rawdata)
+    {
+        this.onNotification(fnc, sig, rawdata);
     }
 }
 
@@ -203,6 +259,7 @@ class AlbumImportLayer extends Layer
         let songrenamerequests  = this.songfilestable.GetRenameRequests();
         let albumdirectoryname  = this.oldalbumdirectoryname;
         let olddirectory        = this.oldartistdirectoryname + "/" + albumdirectoryname;
+        let artistdirectoryname = this.oldartistdirectoryname;
 
         // Rename all song files
         for(let songrenamerequest of songrenamerequests)
@@ -266,16 +323,47 @@ class AlbumImportLayer extends Layer
                     else              return "bad";
                 }
                 );
+
+            artistdirectoryname = artistrenamerequest.newname;
         }
 
         // Import Album
+        let newalbumpath = artistdirectoryname + "/" + albumdirectoryname;
         this.tasks.AddTask("Import Album",
             (webuitaskid)=>{
+                MusicDB_Request("InitiateImport", "ConfirmAlbumImportTask",
+                    {contenttype: "album", contentpath: newalbumpath},
+                    {webuitaskid: webuitaskid});
                 return "active";
             },
             (fnc, sig, args, pass)=>{
-                return "good";
-            });
+                if(args == null)
+                    return "bad";
+                else
+                {
+                    window.console?.log(`New MusicDB Task ID: ${args}`);
+                    return "active";
+                }
+            },
+            (fnc, sig, rawdata)=>{
+                if(fnc != "MusicDB:Upload")
+                    return null;
+
+                if(sig == "InternalError")
+                {
+                    window.console?.warn(`Importing Album failed with error: "${rawdata["message"]}"`)
+                    return "bad";
+                }
+                if(sig == "StateUpdate")
+                {
+                    if(rawdata["state"] == "importfailed")
+                        return "bad";
+                    else if(rawdata["state"] == "importcomplete")
+                        return "good";
+                }
+                return "active";
+            }
+            );
 
         // Import Artwork
         if(this.albumsettingstable.GetImportArtworkState() === true)
@@ -331,6 +419,10 @@ class AlbumImportLayer extends Layer
             window.console?.log(pass);
             this.tasks.onMusicDBMessage(fnc, sig, args, pass);
         }
+    }
+    onMusicDBNotification(fnc, sig, rawdata)
+    {
+        this.tasks.onNotification(fnc, sig, rawdata);
     }
 }
 

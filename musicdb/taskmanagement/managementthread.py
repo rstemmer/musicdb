@@ -35,6 +35,7 @@ The file name is the task ID (equivalent to the Upload ID) + ``.json``.
 Possible Task states:
 
     * Unrelated states
+        * ``"new"``: A new created, not yet initialized task.
         * ``"notexisting"`` In case a Task ID does not match any file. This task does not exist.
         * ``"invalidcontent"``: Processing failed. The content type was unexpected or invalid (Not: artwork, video, album).
         * ``"remove"``: Upload is going to be removed. The task itself as well. After this state appears, the task ID should no longer be considered as valid.
@@ -74,6 +75,7 @@ The following keys are in dictionary that represent a task:
         * ``"sourcechecksum"`` (str): Checksum of the original file that got uploaded.
     * Integration related information (May not be valid if the file is not yet integrated into the Music Directory)
         * ``"videopath"`` (str): Path to a video file, relative to the Music Directory
+        * ``"albumpath"`` (str): Path to an album directory, relative to the Music Directory
 
 After upload is complete,
 the Management Thread takes care about post processing or removing no longer needed content

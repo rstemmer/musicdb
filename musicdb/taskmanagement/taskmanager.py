@@ -19,6 +19,7 @@
 import json
 import logging
 import threading
+import uuid
 from pathlib            import Path
 from musicdb.lib.cfg.musicdb    import MusicDBConfig
 from musicdb.lib.db.musicdb     import MusicDatabase
@@ -241,6 +242,53 @@ class TaskManager(object):
 
 
 
+    def CreateTaskID(self):
+        """
+        This method creates a new Task ID.
+        In detail, it is a `Version 4 Universally Unique Identifier (UUID) <https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)>`_ .
+        It will be returned as a string.
+
+        Returns:
+            A UUID to be used as entry ID
+        """
+        return str(uuid.uuid4())
+
+
+
+    def CreateNewTask(self):
+        """
+        This method returns an empty but initialized task.
+        The task state will be set to ``"new"``.
+        The task ID will be created by :meht:`~CreateTaskID`.
+        All other entries are set to ``None``.
+
+        The new task will not be saved and not scheduled!
+
+        Returns:
+            A new task dictionary
+        """
+        task = {}
+        # General Data
+        task["id"             ] = self.CreateTaskID()
+        task["state"          ] = "new"
+        task["contenttype"    ] = None
+        task["mimetype"       ] = None
+        task["annotations"    ] = {}
+        # Upload Related
+        task["filesize"       ] = None
+        task["offset"         ] = None
+        task["sourcefilename" ] = None
+        task["sourcechecksum" ] = None
+        task["uploadpath"     ] = None
+        task["preprocessedpath"]= None
+        # Import/Integration Related
+        task["videopath"      ] = None              # Path to the video file in the music directory
+        task["albumpath"      ] = None              # Path to the album directory in the music directory
+
+        return task
+
+
+
     def GetTasks(self):
         """
         Returns:
@@ -312,6 +360,7 @@ class TaskManager(object):
 
 
 
+    # TODO: Move this to the upload manager
     def InitiateProcess(self, taskid, mimetype, contenttype, filesize, checksum, sourcefilename, initialstate):
         """
         Initiates an upload of a file into a MusicDB managed file space.
@@ -373,30 +422,41 @@ class TaskManager(object):
         with open(uploadpath, "w+b"):
             pass
 
-        task = {}
+        task = self.CreateNewTask()
         # General Data
         task["id"             ] = taskid
         task["state"          ] = initialstate
         task["contenttype"    ] = contenttype
         task["mimetype"       ] = mimetype
-        task["annotations"    ] = {}
         # Upload Related
         task["filesize"       ] = filesize
         task["offset"         ] = 0
         task["sourcefilename" ] = sourcefilename
         task["sourcechecksum" ] = checksum
         task["uploadpath"     ] = uploadpath
-        task["preprocessedpath"]= None
-        # Integration Related
-        task["videofile"      ] = None              # Path to the video file in the music directory
+
         self.SaveTask(task)
+        self.ScheduleTask(task)
+
+        self.NotifyClient("ChunkRequest", task)
+        return
+
+
+    def ScheduleTask(self, task):
+        """
+        This method adds a new task into the list of tasks that will be processed by the :meth:`~musicdb.taskmanagement.managementthread.ManagementThread`.
+
+        Args:
+            task (dict): A new task
+
+        Returns:
+            *Nothing*
+        """
+        taskid = task["id"]
 
         global Tasks
         with TaskManagerLock:
             Tasks[taskid] = task
-
-        self.NotifyClient("ChunkRequest", task)
-        return
 
 
 

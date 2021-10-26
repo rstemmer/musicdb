@@ -108,6 +108,7 @@ Uploading
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetUploads`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.AnnotateUpload`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.IntegrateUpload`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.InitiateImport`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.ImportContent`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.RemoveUpload`
 
@@ -354,6 +355,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.AnnotateUpload(args["taskid"], args)
         elif fncname == "IntegrateUpload":
             retval = self.IntegrateUpload(args["taskid"], args["triggerimport"])
+        elif fncname == "InitiateImport":
+            retval = self.InitiateImport(args["contenttype"], args["contentpath"])
         elif fncname == "ImportContent":
             retval = self.ImportContent(args["taskid"])
         elif fncname == "RemoveUpload":
@@ -3936,6 +3939,7 @@ class MusicDBWebSocketInterface(object):
         return
 
 
+    # TODO: Refactor the following methods and make them asynchronous
     def IntegrateUpload(self, taskid, triggerimport):
         """
         This method integrates the uploaded files into the music directory.
@@ -3968,6 +3972,52 @@ class MusicDBWebSocketInterface(object):
         return
 
 
+
+    # TODO: Use this for importing Artwork as well
+    # TODO: For Upload -> Integrate -> Import, an existing Task ID may be necessary
+    def InitiateImport(self, contenttype, contentpath):
+        """
+        This method uses :meth:`musicdb.mdbapi.importmanager.ImportManager.InitiateImport` to prepare and start an import task.
+
+        The ``contentpath`` addresses the content that shall be imported.
+        This path must be relative to the music directory.
+
+        Args:
+            contenttype (str): Type of the content: (``"video"``, ``"album"``, ``"artwork"``)
+            contentpath (str): Path to the content that shall be imported. For example to an Album.
+        
+        Returns:
+            The task ID as string
+
+        Example:
+            .. code-block:: javascript
+
+                MusicDB_Request("InitiateImport", "NewTaskID",
+                    {contenttype: "album", contentpath: "artist/2021 - new album"});
+
+                // …
+
+                function onMusicDBMessage(fnc, sig, args, pass)
+                {
+                    if(sig != NewTaskID)
+                        return;
+
+                    if(args == null)
+                        console.error("Initiate Import failed!");
+                    else
+                        console.log(`New Task ID: ${args}`);
+                }
+                function onMuiscDBNotification(fnc, sig, rawdata)
+                {
+                    if(fnc == "MusicDB:Upload" && sig == "StateUpdate")
+                        console.log(`State Update: ${rawdata["state"]}`);
+                }
+
+        """
+        taskid = self.importmanager.InitiateImport(contenttype, contentpath);
+        return taskid
+
+
     def ImportContent(self, taskid):
         """
         This method triggers the import process of data that is already inside the Music Directory.
@@ -3980,6 +4030,7 @@ class MusicDBWebSocketInterface(object):
             taskid (str): ID to identify the upload
             triggerimport (boolean): When ``true``, the integration manager also triggers the import process of the music into the Music Database.
         """
+        logging.error("DEPRECATED: Use Initiate Import")
         task = taskmanager.GetTaskByID(taskid)
         if task["contenttype"] == "artwork":
             self.artworkmanager.ImportArtwork(task)

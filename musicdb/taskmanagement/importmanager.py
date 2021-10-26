@@ -55,28 +55,57 @@ class ImportManager(TaskManager):
 
 
 
-    # TODO: This may be useful to import any music from the file system that is already available
-    #       and not recently uploaded.
-    def InitiateImport(self):
+    def InitiateImport(self, contenttype, contentpath):
         """
+
+        The ``contentpath`` addresses the content that shall be imported.
+        This path must be relative to the music directory.
+        The task state will be set to ``"startmusicimport"``
+
+        Args:
+            contenttype (str): Type of the content: (``"video"``, ``"album"``)
+            contentpath (str): Path to the content that shall be imported. For example to an Album.
+        
+        Returns:
+            The task ID as string or ``None`` if something failed.
         """
-        raise NotImplementedError
+        task = self.CreateNewTask()
+        # General Data
+        task["state"      ] = "startmusicimport"
+        task["contenttype"] = contenttype
+
+        if contenttype == "video":
+            task["videopath"] = contentpath
+        elif contenttype == "album":
+            task["albumpath"] = contentpath
+        else:
+            logging.warning("Unsupported content type for Import (\"%s\"). \033[1;30m(Import will not be started.)", contenttype);
+            return None
+
+        self.SaveTask(task)
+        self.ScheduleTask(task)
+        return task["id"]
 
 
 
-    def ImportMusic(self, task):
+    def ImportMusic(self, task, includeartwork=False):
         """
         This method imports content from the Music Directory into the MusicDB Database.
         Depending on the *contenttype* different import methods are called:
 
             * ``"video"``: :meth:`~ImportVideo`
+            * ``"album"``: :meth:`~ImportAlbum
 
         The task must be in ``"startmusicimport"`` state, otherwise nothing happens but printing an error message.
         If post processing was successful, the task state gets updated to ``"importcomplete"``.
         When an error occurred, the state will become ``"invalidcontent"`` or ``"importfailed"``.
 
+        In case ``includeartwork`` is ``True``, the task state get set to ``"startartworkimport"`` instead of ``"importcomplete"``.
+        This triggers importing the artwork of the imported music content as well.
+
         Args:
             task (dict): the task object of an import-task
+            includeartwork (bool): (Optional, default: ``False``) When ``True``, importing artwork from the imported content will be triggered.
 
         Returns:
             ``True`` on success, otherwise ``False``
@@ -89,8 +118,11 @@ class ImportManager(TaskManager):
         self.UpdateTaskState(task, "importingmusic")
         success = False
         if task["contenttype"] == "video":
-            logging.debug("Importing Video %s", task["videofile"])
+            logging.debug("Importing Video %s", task["videopath"])
             success = self.ImportVideo(task)
+        elif task["contenttype"] == "album":
+            logging.debug("Importing Album %s", task["albumpath"])
+            success = self.ImportAlbum(task)
         else:
             logging.warning("Unsupported content type to import: \"%s\" \033[1;30m(Content will be ignored)", str(task["contenttype"]))
             self.UpdateTaskState(task, "invalidcontent", "Unsupported content type")
@@ -99,13 +131,55 @@ class ImportManager(TaskManager):
         # Update task state
         if success == True:
             logging.debug("Import succeeded");
-            newstate = "startartworkimport"
+            if includeartwork:
+                newstate = "startartworkimport"
+            else:
+                newstate = "importcomplete"
         else:
             newstate = "importfailed"
 
         self.UpdateTaskState(task, newstate)
         return success
 
+
+
+    def ImportAlbum(self, task):
+        """
+        Task state must be ``"importingmusic"`` and content type must be ``"album"``.
+        This method calls :meth:`musicdb.mdbapi.MusicDBDatabase.AddAlbum`.
+
+        Returns:
+            ``True`` on success, otherwise ``False``.
+        """
+        # Check task
+        if task["state"] != "importingmusic":
+            logging.warning("Unexpected task (ID: \"%s\") state \"%s\". Expected state: \"importingmusic\". \033[1;30m(Album will not be imported)", str(task["id"]), str(task["state"]))
+            return False
+
+        if task["contenttype"] != "album":
+            logging.warning("Album expected. Actual type of upload: \"%s\" \033[1;30m(No %s will be imported)", str(task["contenttype"]), str(task["contenttype"]))
+            return False
+
+        if not "albumpath" in task:
+            logging.warning("Missing information. Task \"%s\" dies not provide an album path.", str(task["id"]))
+            return False
+
+        # Start importing Album
+        try:
+            self.databasemanager.AddAlbum(task["albumpath"])
+        except ValueError as e:
+            logging.warning("Importing Album failed with error: %s \033[1;30m(Album will not be imported)", str(e))
+            self.NotifyClient("InternalError", task, "Importing album failed")
+            return False
+        except AssertionError as e:
+            logging.warning("Importing Album failed with error: %s \033[1;30m(Album will not be imported)", str(e))
+            self.NotifyClient("InternalError", task, "Importing album failed")
+            return False
+        except Exception as e:
+            logging.exception("Importing Album failed with error: %s", str(e))
+            self.NotifyClient("InternalError", task, "Importing album failed")
+            return False
+        return True
 
 
 

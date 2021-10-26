@@ -141,6 +141,7 @@ function onMusicDBNotification(fnc, sig, rawdata)
     streamview.onMusicDBNotification(fnc, sig, rawdata);
     uploadmanager.onMusicDBNotification(fnc, sig, rawdata);
     albumview.onMusicDBNotification(fnc, sig, rawdata);
+    albumimportlayer.onMusicDBNotification(fnc, sig, rawdata);
 
     if(fnc == "MusicDB:AudioStream")
     {
