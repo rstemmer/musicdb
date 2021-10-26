@@ -219,6 +219,23 @@ class AlbumImportLayer extends Layer
             artistdirectoryname = artistrenamerequest.newname;
         }
 
+        // Check if Artist needs to be created
+        let artistslist = artistscache.FindArtist(artistdirectoryname, "strcmp");
+        if(artistslist.length !== 1)
+        {
+            this.tasks.AddTask(`Create Artist: ${artistdirectoryname}`,
+                (webuitaskid)=>{
+                    MusicDB_Request("CreateArtist", "ConfirmAlbumImportTask",
+                        {name: artistdirectoryname},
+                        {webuitaskid: webuitaskid});
+                    return "active";},
+                (fnc, sig, args, pass)=>{
+                    if(args === true) return "good";
+                    else              return "bad";
+                }
+                );
+        }
+
         // Import Album
         let newalbumpath = artistdirectoryname + "/" + albumdirectoryname;
         this.tasks.AddTask("Import Album",
