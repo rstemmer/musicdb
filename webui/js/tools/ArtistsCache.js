@@ -45,6 +45,10 @@ class ArtistsCache
     {
         let results = new Array();
 
+        // If no artists are known yet, return an empty array
+        if(this.artists === null)
+            return results;
+
         // strcmp
         if(algorithm == "strcmp")
         {
