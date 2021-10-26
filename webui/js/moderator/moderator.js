@@ -14,18 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// Create some Layers on top of the main layout
-let curtain             = new Curtain();
-let layerbackground     = new LayerBackground();
-let albumimportlayer    = new AlbumImportLayer(layerbackground, "AlbumImportLayer");
-
-// Create Basic MusicDB WebUI Components
+// Create Basic MusicDB Logic Components
 let fullscreenmanager   = new FullscreenManager();
 let mdbmodemanager      = new MDBModeManager();
 let uploadmanager       = new UploadManager();
 let colormanager        = new ColorManager();
 let tagmanager          = new TagManager();
 let artistscache        = new ArtistsCache();
+
+// Create some Layers on top of the main layout
+let curtain             = new Curtain();
+let layerbackground     = new LayerBackground();
+let albumimportlayer    = new AlbumImportLayer(layerbackground, "AlbumImportLayer");
+
+// Create Basic MusicDB WebUI Components
 let musicdbhud          = new MusicDBHUD();
 let genreselectionview  = new GenreSelectionView();
 let alphabetbar         = new AlphabetBar();
