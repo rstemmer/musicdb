@@ -24,6 +24,7 @@ Artists
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtists`
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetArtistsWithAlbums` (Alternative: GetFIlteredArtistsWithAlbums)
 * :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.GetFilteredArtistsWithVideos`
+* :meth:`~musicdb.lib.ws.mdbwsi.MusicDBWebSocketInterface.CreateArtist`
 
 Albums
 
@@ -347,6 +348,8 @@ class MusicDBWebSocketInterface(object):
             retval = self.RenameMusicFile(args["oldpath"], args["newpath"])
         elif fncname == "RenameAlbumDirectory":
             retval = self.RenameAlbumDirectory(args["oldpath"], args["newpath"])
+        elif fncname == "CreateArtist":
+            retval = self.CreateArtist(args["name"])
         elif fncname == "ChangeArtistDirectory":
             retval = self.ChangeArtistDirectory(args["oldalbumpath"], args["newartistdirectory"])
         elif fncname == "GetUploads":
@@ -3722,6 +3725,47 @@ class MusicDBWebSocketInterface(object):
             self.music.UpdateAlbum(targetid, newpath)
 
         return True
+
+
+
+    def CreateArtist(self, name):
+        """
+        This method creates a new Artist with the name ``name``.
+
+        If there is no directory with the same name in the music root directory,
+        a new directory will be created.
+        When creating the directory fails, so that there exists no directory with the artist name,
+        ``None`` will be returned.
+
+        If there is already an artist with the same name existing in the database,
+        its database entry will be returned.
+        If there the artist is unknown, a new entry will be created.
+        The new entry will be returned.
+
+        Args:
+            name (str): Name of the new artist.
+
+        Returns:
+            The artist entry, or ``None`` on error.
+        """
+        if not self.musicdirectory.Exists(name):
+            logging.info("Creating new Artist directory \"%s\".", str(name))
+            self.musicdirectory.CreateSubdirectory(name)
+        else:
+            logging.debug("File system entry for new artist \"%s\" already exists.", str(name))
+
+        if not self.musicdirectory.IsDirectory(name):
+            logging.warning("File system entry for new artist \"%s\" exists and is a file. \033[1;30m(File will not be replaced by the Artist directory. Creating artist canceled.)", str(name))
+            return None
+
+        artist = self.database.GetArtistByPath(name)
+        if artist:
+            logging.debug("Artist \"%s\" already exists in the database. No need to create a new entry.", name)
+        else:
+            logging.info("New Artist \"%s\" will be added to the database.", name)
+            self.database.AddArtist(name, name)
+            artist = self.database.GetArtistByPath(name)
+        return artist
 
 
 
