@@ -404,6 +404,9 @@ class AlbumSettingsTable extends Table
     {
         let newdirectoryname  = this.GetAlbumDirectoryName();
         let olddirectoryname  = this.oldpath.split("/")[1];
+        if(olddirectoryname === undefined)
+            return null;
+
         let renamerequest = null;
         if(newdirectoryname != olddirectoryname)
         {
@@ -418,6 +421,9 @@ class AlbumSettingsTable extends Table
     {
         let newdirectoryname  = this.GetArtistDirectoryName();
         let olddirectoryname  = this.oldpath.split("/")[0];
+        if(olddirectoryname === undefined)
+            return null;
+
         let renamerequest = null;
         if(newdirectoryname != olddirectoryname)
         {

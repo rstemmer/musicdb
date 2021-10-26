@@ -81,6 +81,10 @@ class AlbumImportLayer extends Layer
         this.oldartistdirectoryname = null;
         this.oldalbumdirectoryname  = null;
 
+        // Message Bar
+        this.invalidsourceinfo  = new MessageBarError("Invalid Album Source. There were no songs in the selected Album directory.");
+        this.invalidsourceinfo.HideCloseButton();
+
         // Forms
         this.albumsettingstable = new AlbumSettingsTable((isvalid)=>{this.onAlbumSettingsValidation(isvalid);});
         this.songfilestable     = new SongFilesTable((isvalid)=>{this.onSongsSettingsValidation(isvalid);});
@@ -100,6 +104,7 @@ class AlbumImportLayer extends Layer
         this.toolbar.AddSpacer(true); // grow
         this.toolbar.AddButton(this.importbutton);
 
+        this.AppendChild(this.invalidsourceinfo);
         this.AppendChild(this.albumsettingstable);
         this.AppendChild(this.songfilestable);
         this.AppendChild(this.tasks);
@@ -146,6 +151,12 @@ class AlbumImportLayer extends Layer
     PrepareImportTasks()
     {
         this.tasks.Clear();
+
+        // If there is no valid source artist or album, do nothing.
+        if(this.oldartistdirectoryname === null || this.oldalbumdirectoryname === null)
+        {
+            return;
+        }
 
         // Song Renaming Tasks
         let songrenamerequests  = this.songfilestable.GetRenameRequests();
@@ -309,6 +320,30 @@ class AlbumImportLayer extends Layer
         if(fnc == "FindAlbumSongFiles" && sig == "ShowAlbumSongFiles")
         {
             window.console?.log(args);
+
+            // It can happen that a potential album directory does not contain any songs
+            if(args.length == 0)
+            {
+                // Clear everything and show an error
+                this.albumsettingstable.Update("","","","",false,false,"");
+                this.albumsettingstable.Hide();
+                this.songfilestable.Update([]);
+                this.songfilestable.Hide();
+
+                this.oldartistdirectoryname = null;
+                this.oldalbumdirectoryname  = null;
+
+                this.ValidateForm();
+                this.invalidsourceinfo.Show();
+                return;
+            }
+            else
+            {
+                this.albumsettingstable.Show();
+                this.songfilestable.Show();
+                this.invalidsourceinfo.Hide();
+            }
+
             this.oldartistdirectoryname = args[0].path.split("/")[0];
             this.oldalbumdirectoryname  = args[0].path.split("/")[1];
             let albumpath = this.oldartistdirectoryname + "/" + this.oldalbumdirectoryname;
